@@ -22,7 +22,7 @@ jobs:
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
             cd www
-            cd icsb.edu.bd
+            cd sandeepc7.sg-host.com
             git fetch --all
             git reset --hard origin/main
             /usr/local/php82/bin/php-cli artisan optimize:clear
