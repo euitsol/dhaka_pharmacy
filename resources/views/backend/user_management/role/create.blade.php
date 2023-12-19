@@ -58,8 +58,8 @@
                         </div>
 
                         <div class="row">
-                            @foreach ($groupedPermissions->chunk(2) as $chunks)
-                                <div class="col-md-6">
+                            @foreach ($groupedPermissions->chunk(count($groupedPermissions) / 2) as $chunks)
+                                <div class="col-md-2">
                                     @foreach ($chunks as $prefix => $permissions)
                                         <h3 class="m-0 pl-4 groupName">
                                             <input type="checkbox" class="prefix-checkbox"

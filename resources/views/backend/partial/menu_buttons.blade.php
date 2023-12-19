@@ -11,20 +11,30 @@
         $parameterArray = isset($menuItem['params']) ? $menuItem['params'] : [];
     @endphp
     @if ($check)
-        <li @if ($pageSlug == $menuItem['pageSlug']) class="active" @endif>
+        {{-- <li @if ($pageSlug == $menuItem['pageSlug']) class="active" @endif>
             <a href="{{ route($menuItem['routeName'], $parameterArray) }}">
                 <i class="{{ _($menuItem['iconClass'] ?? 'fa-solid fa-minus') }} @if ($pageSlug == $menuItem['pageSlug']) fa-beat-fade @endif"></i>
+                <p>{{ _($menuItem['label']) }}</p>
+            </a>
+        </li> --}}
+
+
+
+        <li class="nav-item">
+            <a href="{{ route($menuItem['routeName'], $parameterArray) }}"
+                class="nav-link @if ($pageSlug == $menuItem['pageSlug']) active @endif" >
+                <i class="nav-icon {{ $menuItem['iconClass'] ?? 'fa-solid fa-minus' }} @if ($pageSlug == $menuItem['pageSlug']) fa-beat @endif"></i>
                 <p>{{ _($menuItem['label']) }}</p>
             </a>
         </li>
     @endif
     {{-- For Main Menus  --}}
-    @if(!isset($menuItem['routeName']) || $menuItem['routeName'] == '' || $menuItem['routeName'] == null)
+    {{-- @if(!isset($menuItem['routeName']) || $menuItem['routeName'] == '' || $menuItem['routeName'] == null)
         <li @if ($pageSlug == $menuItem['pageSlug']) class="active" @endif>
             <a href="">
                 <i class="{{ _($menuItem['iconClass'] ?? 'fa-solid fa-minus') }} @if ($pageSlug == $menuItem['pageSlug']) fa-beat-fade @endif"></i>
                 <p>{{ _($menuItem['label']) }}</p>
             </a>
         </li>
-    @endif
+    @endif --}}
 @endforeach

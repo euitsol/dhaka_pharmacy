@@ -65,12 +65,20 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
-    public function getBtnStatus()
+    public function getBtnClass()
     {
         if ($this->status == 1) {
-            return 'Disabled';
+            return 'btn-warning';
         } else {
-            return 'Active';
+            return 'btn-success';
+        }
+    }
+    public function getBtnIcon()
+    {
+        if ($this->status == 1) {
+            return 'fa-solid fa-xmark';
+        } else {
+            return 'fa-solid fa-check';
         }
     }
 }

@@ -34,7 +34,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">{{ _('Edit Role') }}</h5>
@@ -52,7 +52,7 @@
                         </div>
                         <div class="row">
                             @foreach ($groupedPermissions->chunk(count($groupedPermissions) / 2) as $chunks)
-                                <div class="col-md-6">
+                                <div class="col-md-2">
                                     @foreach ($chunks as $prefix => $permissions)
                                         <div class="row">
                                             <div class="col-md-12">

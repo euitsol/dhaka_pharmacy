@@ -18,7 +18,7 @@
                 <div class="card-body">
                     @include('alerts.success')
                     <div class="">
-                        <table class="table tablesorter datatable">
+                        <table class="table table-striped datatable">
                             <thead class=" text-primary">
                                 <tr>
                                     <th>{{_('Prefix')}}</th>
@@ -37,20 +37,24 @@
                                     <td>{{$permission->createdBy->name ?? "System Generated"}}</td>
                                     <td>
                                         @include('backend.partial.action_buttons', [
-                                                'menuItems' => [
-                                                    [
-                                                        'routeName' => 'javascript:void(0)',
-                                                        'params' => [$permission->id],
-                                                        'label' => 'View',
-                                                        'className' => 'view',
-                                                    ],
-                                                    [
-                                                        'routeName' => 'um.permission.permission_edit',
-                                                        'params' => [$permission->id],
-                                                        'label' => 'Update',
-                                                    ],
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$permission->id],
+                                                    'className' => 'view',
+                                                    'btnClass' => 'btn-dark',
+                                                    'iconClass' => 'fa-regular fa-eye',
+                                                    'title' => 'View Details',
                                                 ],
-                                            ])
+                                                [
+                                                    'routeName' => 'um.permission.permission_edit',
+                                                    'params' => [$permission->id],
+                                                    'btnClass' => 'btn-primary',
+                                                    'iconClass' => 'fa-regular fa-pen-to-square',
+                                                    'title' => 'Edit Permission',
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                                 @endforeach
@@ -76,7 +80,7 @@ aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">{{ _('Permission Details') }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -85,7 +89,7 @@ aria-hidden="true">
 
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary ml-auto" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary ml-auto" data-bs-dismiss="modal">Close</button>
         </div>
     </div>
 </div>
@@ -103,7 +107,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(data) {
                 var result = `
-                        <table class="table tablesorter">
+                        <table class="table table-striped">
                             <tr>
                                 <th class="text-nowrap">Prefix</th>
                                 <th>:</th>

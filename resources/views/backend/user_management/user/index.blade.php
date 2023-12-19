@@ -20,66 +20,72 @@
                 </div>
                 <div class="card-body">
                     @include('alerts.success')
-                    <div class="">
-                        <table class="table tablesorter datatable">
-                            <thead class=" text-primary">
+                    <table class="table table-striped datatable">
+                        <thead>
+                            <tr>
+                                <th>{{ _('Name') }}</th>
+                                <th>{{ _('Email') }}</th>
+                                <th>{{ _('Role') }}</th>
+                                <th>{{ _('Status') }}</th>
+                                <th>{{ _('Creation date') }}</th>
+                                <th>{{ _('Created by') }}</th>
+                                <th>{{ _('Action') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $user)
                                 <tr>
-                                    <th>{{ _('Name') }}</th>
-                                    <th>{{ _('Email') }}</th>
-                                    <th>{{ _('Role') }}</th>
-                                    <th>{{ _('Status') }}</th>
-                                    <th>{{ _('Creation date') }}</th>
-                                    <th>{{ _('Created by') }}</th>
-                                    <th>{{ _('Action') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $user)
-                                    <tr>
-                                        <td> {{ $user->name }} </td>
-                                        <td> {{ $user->email }} </td>
-                                        <td> {{ $user->role->name }} </td>
-                                        <td>
-                                            <span
-                                                class="badge {{ $user->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $user->status == 1 ? 'Active' : 'Disabled' }}</span>
-                                        </td>
-                                        <td>{{ date('d M, Y', strtotime($user->created_at)) }}</td>
+                                    <td> {{ $user->name }} </td>
+                                    <td> {{ $user->email }} </td>
+                                    <td> {{ $user->role->name }} </td>
+                                    <td>
+                                        <span
+                                            class="badge {{ $user->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $user->status == 1 ? 'Active' : 'Disabled' }}</span>
+                                    </td>
+                                    <td>{{ date('d M, Y', strtotime($user->created_at)) }}</td>
 
-                                        <td> {{ $user->createdBy->name ?? 'system' }} </td>
-                                        <td>
-                                            @include('backend.partial.action_buttons', [
-                                                'menuItems' => [
-                                                    [
-                                                        'routeName' => 'javascript:void(0)',
-                                                        'params' => [$user->id],
-                                                        'label' => 'View',
-                                                        'className' => 'view',
-                                                    ],
-                                                    [
-                                                        'routeName' => 'um.user.status.user_edit',
-                                                        'params' => [$user->id],
-                                                        'label' => $user->getBtnStatus(),
-                                                    ],
-                                                    [
-                                                        'routeName' => 'um.user.user_edit',
-                                                        'params' => [$user->id],
-                                                        'label' => 'Update',
-                                                    ],
-                                                    [
-                                                        'routeName' => 'um.user.user_delete',
-                                                        'params' => [$user->id],
-                                                        'label' => 'Delete',
-                                                        'delete' => true,
-                                                    ],
+                                    <td> {{ $user->createdBy->name ?? 'system' }} </td>
+                                    <td>
+                                        @include('backend.partial.action_buttons', [
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$user->id],
+                                                    'className' => 'view',
+                                                    'btnClass' => 'btn-dark',
+                                                    'iconClass' => 'fa-regular fa-eye',
+                                                    'title' => 'View Details',
                                                 ],
-                                            ])
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                [
+                                                    'routeName' => 'um.user.user_edit',
+                                                    'params' => [$user->id],
+                                                    'btnClass' => 'btn-primary',
+                                                    'iconClass' => 'fa-regular fa-pen-to-square',
+                                                    'title' => 'Edit User',
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.user_delete',
+                                                    'params' => [$user->id],
+                                                    'btnClass' => 'btn-danger',
+                                                    'iconClass' => 'fa-regular fa-trash-can',
+                                                    'delete' => true,
+                                                    'title' => 'Change Status',
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.status.user_edit',
+                                                    'params' => [$user->id],
+                                                    'btnClass' => $user->getBtnClass(),
+                                                    'iconClass' => $user->getBtnIcon(),
+                                                    'title' => 'Delete User',
+                                                ],
+                                            ],
+                                        ])
+                                    </td>
+                                </tr>
+                            @endforeach
 
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="card-footer py-4">
                     <nav class="d-flex justify-content-end" aria-label="...">
@@ -96,7 +102,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{{ _('User Details') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -105,13 +111,11 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary ml-auto" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary ml-auto" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-
-      
 @endsection
 @include('backend.partial.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
 @push('js')
@@ -130,7 +134,7 @@
                         let statusClass = data.user.status = 1 ? 'badge-success' :
                             'badge-warning';
                         var result = `
-                                <table class="table tablesorter">
+                                <table class="table table-striped">
                                     <tr>
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
