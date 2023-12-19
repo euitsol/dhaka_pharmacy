@@ -1,0 +1,13 @@
+name,guard_name,prefix
+user_list,web,User
+user_create,web,User
+user_edit,web,User
+user_delete,web,User
+role_list,web,Role
+role_create,web,Role
+role_edit,web,Role
+role_delete,web,Role
+permission_list,web,Permission
+permission_create,web,Permission
+permission_edit,web,Permission
+permission_delete,web,Permission
