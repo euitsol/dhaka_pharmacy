@@ -9,10 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -46,34 +47,43 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function updatedBy()
-    {
-        return $this->belongsTo(User::class, 'updated_by');
-    }
-
-    public function deletedBy()
-    {
-        return $this->belongsTo(User::class, 'deleted_by');
-    }
-
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
-    public function getBtnClass()
+
+    public function created_user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+    public function updated_user()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+    public function deleted_user()
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
+    }
+
+    public function getStatus()
     {
         if ($this->status == 1) {
-            return 'btn-warning';
+            return 'Active';
         } else {
-            return 'btn-success';
+            return 'Deactive';
         }
     }
-    public function getBtnIcon()
+
+    public function getStatusClass()
+    {
+        if ($this->status == 1) {
+            return 'btn-success';
+        } else {
+            return 'btn-danger';
+        }
+    }
+
+    public function getStatusIcon()
     {
         if ($this->status == 1) {
             return 'fa-solid fa-xmark';
@@ -81,4 +91,5 @@ class User extends Authenticatable
             return 'fa-solid fa-check';
         }
     }
+
 }

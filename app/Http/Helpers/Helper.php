@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-          'um.',  
+          'um.',
         ];
 }
 
 //This will check the permission of the given route name. Can be used for buttons
 function check_access_by_route_name($routeName = null): bool
 {
-    
+
 
 
 
@@ -95,4 +95,10 @@ function storage_url($urlOrArray){
     }
 }
 
-?>
+function timeFormate($time){
+    $dateFormat = env('DATE_FORMAT', 'd-M-Y');
+    $timeFormat = env('TIME_FORMAT', 'H:i A');
+    return date($dateFormat." ".$timeFormat, strtotime($time));
+}
+
+

@@ -4,7 +4,7 @@
 @endpush
 
 @push('js_link')
-    <script src="{{ asset('plugin/datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('backend/js/plugin/datatable/datatables.min.js') }}"></script>
 @endpush
 
 

@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Http\Traits\commonColumnsTrait;
+use App\Http\Traits\AuditColumnsTrait;
 
 return new class extends Migration
 {
-    use commonColumnsTrait;
+    use AuditColumnsTrait;
+
     public function up(): void
     {
         $teams = config('permission.teams');
@@ -29,7 +30,7 @@ return new class extends Migration
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
             $table->softDeletes();
-            $this->addCommonColumns($table);
+            $this->addAuditColumns($table);
 
             $table->unique(['name', 'guard_name']);
         });
@@ -44,7 +45,7 @@ return new class extends Migration
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
             $table->softDeletes();
-            $this->addCommonColumns($table);
+            $this->addAuditColumns($table);
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);
             } else {
@@ -137,11 +138,11 @@ return new class extends Migration
         Schema::drop($tableNames['model_has_permissions']);
         Schema::table('roles', function (Blueprint $table) {
             $table->softDeletes();
-            $this->dropCommonColumns($table);
+            $this->dropAuditColumns($table);
         });
         Schema::table('permissions', function (Blueprint $table) {
             $table->softDeletes();
-            $this->dropCommonColumns($table);
+            $this->dropAuditColumns($table);
         });
     }
 };

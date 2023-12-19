@@ -46,40 +46,13 @@
 
                                     <td> {{ $user->createdBy->name ?? 'system' }} </td>
                                     <td>
-                                        @include('backend.partial.action_buttons', [
-                                            'menuItems' => [
-                                                [
-                                                    'routeName' => 'javascript:void(0)',
-                                                    'params' => [$user->id],
-                                                    'className' => 'view',
-                                                    'btnClass' => 'btn-dark',
-                                                    'iconClass' => 'fa-regular fa-eye',
-                                                    'title' => 'View Details',
-                                                ],
-                                                [
-                                                    'routeName' => 'um.user.user_edit',
-                                                    'params' => [$user->id],
-                                                    'btnClass' => 'btn-primary',
-                                                    'iconClass' => 'fa-regular fa-pen-to-square',
-                                                    'title' => 'Edit User',
-                                                ],
-                                                [
-                                                    'routeName' => 'um.user.user_delete',
-                                                    'params' => [$user->id],
-                                                    'btnClass' => 'btn-danger',
-                                                    'iconClass' => 'fa-regular fa-trash-can',
-                                                    'delete' => true,
-                                                    'title' => 'Change Status',
-                                                ],
-                                                [
-                                                    'routeName' => 'um.user.status.user_edit',
-                                                    'params' => [$user->id],
-                                                    'btnClass' => $user->getBtnClass(),
-                                                    'iconClass' => $user->getBtnIcon(),
-                                                    'title' => 'Delete User',
-                                                ],
-                                            ],
-                                        ])
+                                        @include('backend.partials.action_buttons', [
+                                                'menuItems' => [
+                                                    ['routeName' => 'javascript:void(0)',  'params' => [$user->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $user->id ],
+                                                    ['routeName' => 'um.user.user_edit',   'params' => [$user->id], 'label' => 'Update'],
+                                                    ['routeName' => 'um.user.user_delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
+                                                ]
+                                            ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -96,8 +69,7 @@
     </div>
 
     {{-- User Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -107,17 +79,12 @@
                     </button>
                 </div>
                 <div class="modal-body modal_data">
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary ml-auto" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-@include('backend.partial.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@include('backend.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
 @push('js')
     <script>
         $(document).ready(function() {
@@ -130,25 +97,25 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.user.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.user.status = 1 ? 'badge-success' :
+                        let status = data.status = 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status = 1 ? 'badge-success' :
                             'badge-warning';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
-                                        <td>${data.user.name}</td>
+                                        <td>${data.name}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
-                                        <td>${data.user.email}</td>
+                                        <td>${data.email}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Role</th>
                                         <th>:</th>
-                                        <td>${data.user.role.name}</td>
+                                        <td>${data.role.name}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
@@ -156,24 +123,24 @@
                                         <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created By</th>
-                                        <th>:</th>
-                                        <td>${data.user.created_user}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Updated By</th>
-                                        <th>:</th>
-                                        <td>${data.user.updated_user}</td>
-                                    </tr>
-                                    <tr>
                                         <th class="text-nowrap">Created At</th>
                                         <th>:</th>
-                                        <td>${data.user.created_date}</td>
+                                        <td>${data.creating_time}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Created By</th>
+                                        <th>:</th>
+                                        <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Updated At</th>
                                         <th>:</th>
-                                        <td>${data.user.updated_date}</td>
+                                        <td>${data.updating_time}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Updated By</th>
+                                        <th>:</th>
+                                        <td>${data.updated_by}</td>
                                     </tr>
                                 </table>
                                 `;
