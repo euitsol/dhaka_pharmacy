@@ -2,7 +2,7 @@
 @push('css')
     <style>
         .groupName {
-            background: #b3d0f7;
+            background: #cdcdcd;
             border-bottom: 2px solid #182456;
             font-weight: bold;
             text-transform: uppercase;
@@ -17,7 +17,7 @@
 
         .list-items li {
             list-style: none;
-            background: #b3d0f7;
+            background: #cdcdcd;
             border-bottom: 2px solid #182456;
         }
 
@@ -59,7 +59,7 @@
 
                         <div class="row">
                             @foreach ($groupedPermissions->chunk(count($groupedPermissions) / 2) as $chunks)
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     @foreach ($chunks as $prefix => $permissions)
                                         <h3 class="m-0 pl-4 groupName">
                                             <input type="checkbox" class="prefix-checkbox"
