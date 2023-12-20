@@ -44,6 +44,11 @@
                     </ul>
                 </div>
             </li>
+            @include('backend.partials.menu_buttons', [
+                'menuItems' => [
+                    ['pageSlug' => 'users', 'routeName' => 'umm.user.user_list', 'iconClass' => 'fa-solid fa-users', 'label' => 'Users'],
+                    ]
+               ])
         </ul>
     </div>
 </div>

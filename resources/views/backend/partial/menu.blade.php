@@ -15,6 +15,16 @@
         ],
     ],
 ])
+@include('backend.partial.menu_buttons', [
+    'menuItems' => [
+        [
+            'pageSlug' => 'users',
+            'routeName' => 'umm.user.user_list',
+            'iconClass' => 'fas fa-users',
+            'label' => 'Users',
+        ],
+    ],
+])
 {{-- Admin Management --}}
 <li class="nav-item  
     @if ($pageSlug == 'user' || $pageSlug == 'permission' || $pageSlug == 'role') menu-open @endif
@@ -44,13 +54,4 @@
         ])
     </ul>
 </li>
-@include('backend.partial.menu_buttons', [
-    'menuItems' => [
-        [
-            'pageSlug' => 'users',
-            'routeName' => 'umm.user.user_list',
-            'iconClass' => 'fas fa-users',
-            'label' => 'Users',
-        ],
-    ],
-])
+
