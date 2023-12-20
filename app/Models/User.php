@@ -73,6 +73,14 @@ class User extends Authenticatable
             return 'Deactive';
         }
     }
+    public function getBtnStatus()
+    {
+        if ($this->status == 1) {
+            return 'Deactive';
+        } else {
+            return 'Active';
+        }
+    }
 
     public function getStatusClass()
     {

@@ -15,42 +15,23 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // $roles = [
-        //     1 => 'superadmin',
-        //     2 => 'admin',
-        //     3 => 'user',
-        // ];
 
-        // foreach ($roles as $roleId => $roleName) {
-        //     Role::create(['id' => $roleId,'name' => $roleName]);
-        // }
-
-        // // Create Superadmin
-        // $superadmin = User::create([
-        //     'name' => 'Superadmin',
-        //     'email' => 'superadmin@euitsols.com',
-        //     'password' => Hash::make('superadmin@euitsols.com'),
-        //     'role_id' => 1,
-        // ]);
-        // $superadmin->assignRole($superadmin->role->name);
-
-        // // Create Admin
-        // $admin = User::create([
-        //     'name' => 'Admin',
-        //     'email' => 'admin@euitsols.com',
-        //     'password' => Hash::make('admin@euitsols.com'),
-        //     'role_id' => 2,
-        // ]);
-        // $admin->assignRole($admin->role->name);
-
-        // // Create User
-        // $user = User::create([
-        //     'name' => 'User',
-        //     'email' => 'user@euitsols.com',
-        //     'password' => Hash::make('user@euitsols.com'),
-        //     'role_id' => 3,
-        // ]);
-        // $user->assignRole($user->role->name);
+        // Create Users
+       User::create([
+            'name' => 'User1',
+            'email' => 'user1@euitsols.com',
+            'password' => Hash::make('user1@euitsols.com'),
+        ]);
+       User::create([
+            'name' => 'User2',
+            'email' => 'user2@euitsols.com',
+            'password' => Hash::make('user2@euitsols.com'),
+        ]);
+       User::create([
+            'name' => 'User3',
+            'email' => 'user3@euitsols.com',
+            'password' => Hash::make('user3@euitsols.com'),
+        ]);
 
     }
 }
