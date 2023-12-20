@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserManagementController as AdminUserManagementController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -37,7 +38,7 @@ Route::group(['middleware' => ['auth', 'permission'],'prefix'=>'admin'], functio
 		return Response::download($filePath, $filename);
 	})->name('export.permissions');
 
-	Route::group(['as' => 'um.', 'prefix' => 'user-management'], function () {
+	Route::group(['as' => 'um.', 'prefix' => 'admin-management'], function () {
 		Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
 			Route::get('index', [UserManagementController::class, 'index'])->name('user_list');
 			Route::get('details/{id}', [UserManagementController::class, 'details'])->name('details.user_list');
@@ -66,6 +67,19 @@ Route::group(['middleware' => ['auth', 'permission'],'prefix'=>'admin'], functio
 			Route::get('delete/{id}', [UserManagementController::class, 'r_delete'])->name('role_delete');
 		});
 
+	});
+
+	Route::group(['as' => 'umm.', 'prefix' => 'user-management'], function () {
+		Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
+			Route::get('index', [AdminUserManagementController::class, 'index'])->name('user_list');
+			Route::get('details/{id}', [AdminUserManagementController::class, 'details'])->name('details.user_list');
+			Route::get('create', [AdminUserManagementController::class, 'create'])->name('user_create');
+			Route::post('create', [AdminUserManagementController::class, 'store'])->name('user_create');
+			Route::get('edit/{id}', [AdminUserManagementController::class, 'edit'])->name('user_edit');
+			Route::put('edit/{id}', [AdminUserManagementController::class, 'update'])->name('user_edit');
+			Route::get('status/{id}', [AdminUserManagementController::class, 'status'])->name('status.user_edit');
+			Route::get('delete/{id}', [AdminUserManagementController::class, 'delete'])->name('user_delete');
+		});
 	});
 
 	
