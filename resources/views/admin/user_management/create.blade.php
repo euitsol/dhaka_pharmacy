@@ -34,17 +34,6 @@
                                 value="{{ old('email') }}">
                             @include('alerts.feedback', ['field' => 'email'])
                         </div>
-                        <div class="form-group {{ $errors->has('role') ? ' has-danger' : '' }}">
-                            <label>{{ _('Role') }}</label>
-                            <select name="role" class="form-control {{ $errors->has('role') ? ' is-invalid' : '' }}">
-                                <option selected hidden>{{ _('Select Role') }}</option>
-                                @foreach ($roles as $role)
-                                    <option {{ old('role') == $role->id ? 'selected' : '' }} value="{{ $role->id }}">
-                                        {{ $role->name }}</option>
-                                @endforeach
-                            </select>
-                            @include('alerts.feedback', ['field' => 'role'])
-                        </div>
                         <div class="form-group">
                             <label>Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Enter new password">

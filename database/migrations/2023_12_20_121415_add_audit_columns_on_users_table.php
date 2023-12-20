@@ -7,13 +7,11 @@ use App\Http\Traits\AuditColumnsTrait;
 
 return new class extends Migration
 {
+
     use AuditColumnsTrait;
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->softDeletes();
-            $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
             $this->addAuditColumns($table);
         });
     }
@@ -24,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->softDeletes();
-            $this->dropAuditColumns($table);
+            $this->addAuditColumns($table);
         });
     }
 };

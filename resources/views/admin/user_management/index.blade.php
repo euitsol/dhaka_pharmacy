@@ -25,7 +25,6 @@
                             <tr>
                                 <th>{{ _('Name') }}</th>
                                 <th>{{ _('Email') }}</th>
-                                <th>{{ _('Role') }}</th>
                                 <th>{{ _('Status') }}</th>
                                 <th>{{ _('Creation date') }}</th>
                                 <th>{{ _('Created by') }}</th>
@@ -37,7 +36,6 @@
                                 <tr>
                                     <td> {{ $user->name }} </td>
                                     <td> {{ $user->email }} </td>
-                                    <td> {{ $user->role->name }} </td>
                                     <td>
                                         <span
                                             class="badge {{ $user->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $user->status == 1 ? 'Active' : 'Disabled' }}</span>
@@ -111,11 +109,6 @@
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
                                         <td>${data.email}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Role</th>
-                                        <th>:</th>
-                                        <td>${data.role.name}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

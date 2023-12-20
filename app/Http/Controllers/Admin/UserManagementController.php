@@ -40,12 +40,9 @@ class UserManagementController extends Controller
         $user = new User();
         $user->name = $req->name;
         $user->email = $req->email;
-        $user->role_id = $req->role;
         $user->password = Hash::make($req->password);
         $user->created_by = auth()->user()->id;
         $user->save();
-
-        $user->assignRole($user->role->name);
 
         return redirect()->route('umm.user.user_list')->withStatus(__('User '.$user->name.' created successfully.'));
     }
@@ -60,14 +57,11 @@ class UserManagementController extends Controller
         $user = User::findOrFail($id);
         $user->name = $req->name;
         $user->email = $req->email;
-        $user->role_id = $req->role;
         if($req->password){
             $user->password = Hash::make($req->password);
         }
         $user->updated_by = auth()->user()->id;
         $user->update();
-
-        $user->assignRole($user->role->name);
 
         return redirect()->route('umm.user.user_list')->withStatus(__('User '.$user->name.' updated successfully.'));
     }

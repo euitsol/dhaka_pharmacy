@@ -15,42 +15,32 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
-            1 => 'superadmin',
-            2 => 'admin',
-            3 => 'user',
-        ];
+        // $roles = [
+        //     1 => 'superadmin',
+        //     2 => 'admin',
+        //     3 => 'user',
+        // ];
 
-        foreach ($roles as $roleId => $roleName) {
-            Role::create(['id' => $roleId,'name' => $roleName]);
-        }
+        // foreach ($roles as $roleId => $roleName) {
+        //     Role::create(['id' => $roleId,'name' => $roleName]);
+        // }
 
         // Create Superadmin
-        $superadmin = User::create([
-            'name' => 'Superadmin',
-            'email' => 'superadmin@dev.com',
-            'password' => Hash::make('superadmin@dev.com'),
-            'role_id' => 1,
+       User::create([
+            'name' => 'User1',
+            'email' => 'user1@euitsols.com',
+            'password' => Hash::make('user1@euitsols.com'),
         ]);
-        $superadmin->assignRole($superadmin->role->name);
-
-        // Create Admin
-        $admin = User::create([
-            'name' => 'Admin',
-            'email' => 'admin@dev.com',
-            'password' => Hash::make('admin@dev.com'),
-            'role_id' => 2,
+       User::create([
+            'name' => 'User2',
+            'email' => 'user2@euitsols.com',
+            'password' => Hash::make('user2@euitsols.com'),
         ]);
-        $admin->assignRole($admin->role->name);
-
-        // Create User
-        $user = User::create([
-            'name' => 'User',
-            'email' => 'user@dev.com',
-            'password' => Hash::make('user@dev.com'),
-            'role_id' => 3,
+       User::create([
+            'name' => 'User3',
+            'email' => 'user3@euitsols.com',
+            'password' => Hash::make('user3@euitsols.com'),
         ]);
-        $user->assignRole($user->role->name);
 
     }
 }
