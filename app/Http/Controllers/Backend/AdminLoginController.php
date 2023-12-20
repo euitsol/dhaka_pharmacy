@@ -23,8 +23,6 @@ class AdminLoginController extends Controller
 
         if (Auth::guard('admin')->attempt($credentials)) {
             return redirect()->route('dashboard');
-        } else {
-            return back()->withInput()->withError(__("Invalid credentials"));
         }
     }
 }
