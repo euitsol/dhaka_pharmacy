@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminManagement\AdminController;
+use App\Http\Controllers\Admin\AdminManagement\PermissionController;
+use App\Http\Controllers\Admin\AdminManagement\RoleController;
+use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\UserManagementController as AdminUserManagementController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
-
-use App\Http\Controllers\Backend\AdminManagementController;
-use App\Http\Controllers\Backend\AdminLoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,7 +58,7 @@ Route::prefix('user')->group(function () {
 
 Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], function () {
     Route::get('/dashboard', function () {
-        return view('backend.dashboard.dashboard');
+        return view('admin.dashboard.dashboard');
     })->name('dashboard');
 
 	Route::get('/export-permissions', function () {
@@ -69,36 +70,36 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 
 	Route::group(['as' => 'am.', 'prefix' => 'admin-management'], function () {
 		Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
-			Route::get('index', [AdminManagementController::class, 'index'])->name('admin_list');
-			Route::get('details/{id}', [AdminManagementController::class, 'details'])->name('details.admin_list');
-			Route::get('create', [AdminManagementController::class, 'create'])->name('admin_create');
-			Route::post('create', [AdminManagementController::class, 'store'])->name('admin_create');
-			Route::get('edit/{id}', [AdminManagementController::class, 'edit'])->name('admin_edit');
-			Route::put('edit/{id}', [AdminManagementController::class, 'update'])->name('admin_edit');
-			Route::get('status/{id}', [AdminManagementController::class, 'status'])->name('status.admin_edit');
-			Route::get('delete/{id}', [AdminManagementController::class, 'delete'])->name('admin_delete');
+			Route::get('index', [AdminController::class, 'index'])->name('admin_list');
+			Route::get('details/{id}', [AdminController::class, 'details'])->name('details.admin_list');
+			Route::get('create', [AdminController::class, 'create'])->name('admin_create');
+			Route::post('create', [AdminController::class, 'store'])->name('admin_create');
+			Route::get('edit/{id}', [AdminController::class, 'edit'])->name('admin_edit');
+			Route::put('edit/{id}', [AdminController::class, 'update'])->name('admin_edit');
+			Route::get('status/{id}', [AdminController::class, 'status'])->name('status.admin_edit');
+			Route::get('delete/{id}', [AdminController::class, 'delete'])->name('admin_delete');
 		});
 		Route::group(['as' => 'permission.', 'prefix' => 'permission'], function () {
-			Route::get('index', [AdminManagementController::class, 'p_index'])->name('permission_list');
-			Route::get('details/{id}', [AdminManagementController::class, 'p_details'])->name('details.permission_list');
-			Route::get('create', [AdminManagementController::class, 'P_create'])->name('permission_create');
-			Route::post('create', [AdminManagementController::class, 'p_store'])->name('permission_create');
-			Route::get('edit/{id}', [AdminManagementController::class, 'p_edit'])->name('permission_edit');
-			Route::put('edit/{id}', [AdminManagementController::class, 'p_update'])->name('permission_edit');
+			Route::get('index', [PermissionController::class, 'index'])->name('permission_list');
+			Route::get('details/{id}', [PermissionController::class, 'details'])->name('details.permission_list');
+			Route::get('create', [PermissionController::class, 'create'])->name('permission_create');
+			Route::post('create', [PermissionController::class, 'store'])->name('permission_create');
+			Route::get('edit/{id}', [PermissionController::class, 'edit'])->name('permission_edit');
+			Route::put('edit/{id}', [PermissionController::class, 'update'])->name('permission_edit');
 		});
 		Route::group(['as' => 'role.', 'prefix' => 'role'], function () {
-			Route::get('index', [AdminManagementController::class, 'r_index'])->name('role_list');
-			Route::get('details/{id}', [AdminManagementController::class, 'r_details'])->name('details.role_list');
-			Route::get('create', [AdminManagementController::class, 'r_create'])->name('role_create');
-			Route::post('create', [AdminManagementController::class, 'r_store'])->name('role_create');
-			Route::get('edit/{id}', [AdminManagementController::class, 'r_edit'])->name('role_edit');
-			Route::put('edit/{id}', [AdminManagementController::class, 'r_update'])->name('role_edit');
-			Route::get('delete/{id}', [AdminManagementController::class, 'r_delete'])->name('role_delete');
+			Route::get('index', [RoleController::class, 'index'])->name('role_list');
+			Route::get('details/{id}', [RoleController::class, 'details'])->name('details.role_list');
+			Route::get('create', [RoleController::class, 'create'])->name('role_create');
+			Route::post('create', [RoleController::class, 'store'])->name('role_create');
+			Route::get('edit/{id}', [RoleController::class, 'edit'])->name('role_edit');
+			Route::put('edit/{id}', [RoleController::class, 'update'])->name('role_edit');
+			Route::get('delete/{id}', [RoleController::class, 'delete'])->name('role_delete');
 		});
 
 	});
 
-	Route::group(['as' => 'umm.', 'prefix' => 'user-management'], function () {
+	Route::group(['as' => 'um.', 'prefix' => 'user-management'], function () {
 		Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
 			Route::get('index', [AdminUserManagementController::class, 'index'])->name('user_list');
 			Route::get('details/{id}', [AdminUserManagementController::class, 'details'])->name('details.user_list');

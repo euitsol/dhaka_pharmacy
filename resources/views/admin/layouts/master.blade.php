@@ -40,13 +40,13 @@
 <body class="white-content dark {{ $class ?? '' }}">
     <div class="wrapper">
         @auth()
-            @include('backend.partials.navbars.sidebar')
+            @include('admin.partials.navbars.sidebar')
             <div class="main-panel">
-                @include('backend.partials.navbars.navbar')
+                @include('admin.partials.navbars.navbar')
                     <div class="content">
                         @yield('content')
                     </div>
-                @include('backend.partials.footer')
+                @include('admin.partials.footer')
             </div>
         @endauth
     </div>

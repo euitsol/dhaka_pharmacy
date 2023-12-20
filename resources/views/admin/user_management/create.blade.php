@@ -1,4 +1,4 @@
-@extends('backend.layouts.master', ['pageSlug' => 'users'])
+@extends('admin.layouts.master', ['pageSlug' => 'users'])
 
 @section('content')
     <div class="row px-3 pt-3">
@@ -10,8 +10,8 @@
                             <h4 class="card-title">{{ __('Create User') }}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('backend.partial.button', [
-                                'routeName' => 'umm.user.user_list',
+                            @include('admin.partials.button', [
+                                'routeName' => 'um.user.user_list',
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
                             ])
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('umm.user.user_create') }}">
+                    <form method="POST" action="{{ route('um.user.user_create') }}">
                         @csrf
                         <div class="form-group">
 

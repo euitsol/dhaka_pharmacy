@@ -1,4 +1,4 @@
-@extends('backend.layouts.master', ['pageSlug' => 'users'])
+@extends('admin.layouts.master', ['pageSlug' => 'users'])
 
 @section('content')
     <div class="row">
@@ -10,8 +10,8 @@
                             <h4 class="card-title">User List</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('backend.partial.button', [
-                                'routeName' => 'umm.user.user_create',
+                            @include('admin.partials.button', [
+                                'routeName' => 'um.user.user_create',
                                 'className' => 'btn-primary',
                                 'label' => 'Add User',
                             ])
@@ -44,13 +44,13 @@
 
                                     <td> {{ $user->createdBy->name ?? 'system' }} </td>
                                     <td>
-                                        @include('backend.partials.action_buttons', [
+                                        @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'umm.user.status.user_edit',   'params' => [$user->id], 'label' => $user->getBtnStatus()],
+                                                    ['routeName' => 'um.user.status.user_edit',   'params' => [$user->id], 'label' => $user->getBtnStatus()],
 
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$user->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $user->id ],
-                                                    ['routeName' => 'umm.user.user_edit',   'params' => [$user->id], 'label' => 'Update'],
-                                                    ['routeName' => 'umm.user.user_delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'um.user.user_edit',   'params' => [$user->id], 'label' => 'Update'],
+                                                    ['routeName' => 'um.user.user_delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])
                                     </td>
@@ -84,13 +84,13 @@
         </div>
     </div>
 @endsection
-@include('backend.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
 @push('js')
     <script>
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('umm.user.details.user_list', ['id']) }}");
+                let url = ("{{ route('um.user.details.user_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,

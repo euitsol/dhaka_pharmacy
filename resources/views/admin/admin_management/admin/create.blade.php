@@ -1,4 +1,4 @@
-@extends('backend.layouts.master', ['pageSlug' => 'admin'])
+@extends('admin.layouts.master', ['pageSlug' => 'admin'])
 
 @section('content')
     <div class="row px-3 pt-3">
@@ -10,7 +10,7 @@
                             <h4 class="card-title">{{ __('Create Admin') }}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('backend.partial.button', [
+                            @include('admin.partials.button', [
                                 'routeName' => 'am.admin.admin_list',
                                 'className' => 'btn-primary',
                                 'label' => 'Back',

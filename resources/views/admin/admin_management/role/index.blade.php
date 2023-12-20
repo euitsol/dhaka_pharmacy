@@ -1,4 +1,4 @@
-@extends('backend.layouts.master', ['pageSlug' => 'role'])
+@extends('admin.layouts.master', ['pageSlug' => 'role'])
 
 @section('content')
     <div class="row">
@@ -10,7 +10,7 @@
                             <h4 class="card-title">Role List</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('backend.partial.button', ['routeName' => 'am.role.role_create', 'className' => 'btn-primary', 'label' => 'Add Role'])
+                            @include('admin.partials.button', ['routeName' => 'am.role.role_create', 'className' => 'btn-primary', 'label' => 'Add Role'])
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                                 <td>{{$role->permissionNames}}</td>
                                 <td>{{timeFormate($role->created_at)}}</td>
                                 <td>
-                                    @include('backend.partials.action_buttons', [
+                                    @include('admin.partials.action_buttons', [
                                         'menuItems' => [
                                             ['routeName' => 'javascript:void(0)',  'params' => [$role->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $role->id ],
                                             ['routeName' => 'am.role.role_edit',   'params' => [$role->id], 'label' => 'Update'],
@@ -71,7 +71,7 @@
         </div>
     </div>
 @endsection
-@include('backend.partial.datatable', ['columns_to_show' => [0,1,2,3]])
+@include('admin.partials.datatable', ['columns_to_show' => [0,1,2,3]])
 @push('js')
 <script>
 $(document).ready(function() {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 
-class AdminLoginController extends Controller
+class LoginContorller extends Controller
 {
     public function adminLogin(){
-        return view('backend.admin.login');
+        return view('admin.login');
     }
 
     public function adminLoginCheck(Request $request)
@@ -25,4 +25,6 @@ class AdminLoginController extends Controller
             return redirect()->route('dashboard');
         }
     }
+
+    
 }

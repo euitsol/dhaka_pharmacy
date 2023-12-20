@@ -1,4 +1,4 @@
-@extends('backend.layouts.master', ['pageSlug' => 'permission'])
+@extends('admin.layouts.master', ['pageSlug' => 'permission'])
 
 @section('content')
     <div class="row">
@@ -10,8 +10,8 @@
                             <h4 class="card-title">{{_('Permission List')}}</h4>
                         </div>
                         <div class="col-md-5 text-right">
-                            @include('backend.partial.button', ['routeName' => 'export.permissions', 'className' => 'btn-primary', 'label' => 'Export Permissions'])
-                            @include('backend.partial.button', ['routeName' => 'am.permission.permission_create', 'className' => 'btn-primary', 'label' => 'Add Permission'])
+                            @include('admin.partials.button', ['routeName' => 'export.permissions', 'className' => 'btn-primary', 'label' => 'Export Permissions'])
+                            @include('admin.partials.button', ['routeName' => 'am.permission.permission_create', 'className' => 'btn-primary', 'label' => 'Add Permission'])
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                                     <td>{{timeFormate($permission->created_at)}}</td>
                                     <td>{{$permission->createdBy->name ?? "System Generated"}}</td>
                                     <td>
-                                        @include('backend.partials.action_buttons', [
+                                        @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 ['routeName' => 'javascript:void(0)',  'params' => [$permission->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $permission->id ],
                                                 ['routeName' => 'am.permission.permission_edit',   'params' => [$permission->id], 'label' => 'Update']
@@ -58,7 +58,7 @@
         </div>
     </div>
 @endsection
-@include('backend.partials.datatable', ['columns_to_show' => [0,1,2]])
+@include('admin.partials.datatable', ['columns_to_show' => [0,1,2]])
 
 {{-- Permission Details Modal  --}}
 <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

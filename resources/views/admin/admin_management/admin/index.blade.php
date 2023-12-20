@@ -1,4 +1,4 @@
-@extends('backend.layouts.master', ['pageSlug' => 'admin'])
+@extends('admin.layouts.master', ['pageSlug' => 'admin'])
 
 @section('content')
     <div class="row">
@@ -10,7 +10,7 @@
                             <h4 class="card-title">Admin List</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('backend.partial.button', [
+                            @include('admin.partials.button', [
                                 'routeName' => 'am.admin.admin_create',
                                 'className' => 'btn-primary',
                                 'label' => 'Add new admin',
@@ -46,7 +46,7 @@
 
                                     <td> {{ $admin->createdBy->name ?? 'system' }} </td>
                                     <td>
-                                        @include('backend.partials.action_buttons', [
+                                        @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
                                                     ['routeName' => 'am.admin.status.admin_edit',   'params' => [$admin->id], 'label' => $admin->getBtnStatus()],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$admin->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $admin->id ],
@@ -85,7 +85,7 @@
         </div>
     </div>
 @endsection
-@include('backend.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
 @push('js')
     <script>
         $(document).ready(function() {

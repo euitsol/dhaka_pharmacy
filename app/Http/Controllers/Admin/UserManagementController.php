@@ -18,7 +18,7 @@ class UserManagementController extends Controller
 
     public function index(): View
     {
-        $s['users'] = User::with(['role','created_user'])->where('deleted_at',null)->get();
+        $s['users'] = User::with('created_user')->where('deleted_at',null)->get();
         return view('admin.user_management.index',$s);
     }
     public function details($id): JsonResponse
@@ -44,7 +44,7 @@ class UserManagementController extends Controller
         $user->created_by = auth()->user()->id;
         $user->save();
 
-        return redirect()->route('umm.user.user_list')->withStatus(__('User '.$user->name.' created successfully.'));
+        return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' created successfully.'));
     }
     public function edit($id): View
     {
@@ -63,19 +63,19 @@ class UserManagementController extends Controller
         $user->updated_by = auth()->user()->id;
         $user->update();
 
-        return redirect()->route('umm.user.user_list')->withStatus(__('User '.$user->name.' updated successfully.'));
+        return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' updated successfully.'));
     }
     public function status($id): RedirectResponse
     {
         $user = user::findOrFail($id);
         $this->statusChange($user);
-        return redirect()->route('umm.user.user_list')->withStatus(__('User '.$user->name.' status updated successfully.'));
+        return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' status updated successfully.'));
     }
     public function delete($id): RedirectResponse
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('umm.user.user_list')->withStatus(__('User '.$user->name.' deleted successfully.'));
+        return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' deleted successfully.'));
 
     }
 

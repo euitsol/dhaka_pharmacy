@@ -5,7 +5,7 @@
             <a href="{{ route('dashboard') }}" class="simple-text logo-normal">{{ _('Dhaka Pharmacy') }}</a>
         </div>
         <ul class="nav">
-              @include('backend.partials.menu_buttons', [
+              @include('admin.partials.menu_buttons', [
                 'menuItems' => [
                     ['pageSlug' => 'dashboard', 'routeName' => 'dashboard', 'iconClass' => 'fa-solid fa-chart-line', 'label' => 'Dashboard'],
                     ]
@@ -34,7 +34,7 @@
                     $pageSlug == 'admin'
                 ) show @endif" id="admin-management">
                     <ul class="nav pl-2">
-                        @include('backend.partials.menu_buttons', [
+                        @include('admin.partials.menu_buttons', [
                             'menuItems' => [
                                 ['pageSlug' => 'admin', 'routeName' => 'am.admin.admin_list', 'iconClass' => 'fa-solid fa-minus', 'label' => 'Admins'],
                                 ['pageSlug' => 'role', 'routeName' => 'am.role.role_list', 'iconClass' => 'fa-solid fa-minus', 'label' => 'Roles'],
@@ -44,9 +44,9 @@
                     </ul>
                 </div>
             </li>
-            @include('backend.partials.menu_buttons', [
+            @include('admin.partials.menu_buttons', [
                 'menuItems' => [
-                    ['pageSlug' => 'users', 'routeName' => 'umm.user.user_list', 'iconClass' => 'fa-solid fa-users', 'label' => 'Users'],
+                    ['pageSlug' => 'users', 'routeName' => 'um.user.user_list', 'iconClass' => 'fa-solid fa-users', 'label' => 'Users'],
                     ]
                ])
         </ul>
