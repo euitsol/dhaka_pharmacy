@@ -81,6 +81,24 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <script>
+            @if (session('success'))
+                toastr.success("{{ session('success') }}");
+            @endif
+
+            @if (session('error'))
+                toastr.error("{{ session('error') }}");
+            @endif
+
+            @if (Session::has('info'))
+                toastr.info("{{ session('info') }}");
+            @endif
+
+            @if (Session::has('warning'))
+                toastr.warning("{{ session('warning') }}");
+            @endif
+        </script>
     </div>
 </body>
 </html>

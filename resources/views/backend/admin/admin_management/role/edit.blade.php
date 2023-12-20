@@ -37,9 +37,20 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{ _('Edit Role') }}</h5>
+                    <div class="row">
+                        <div class="col-8">
+                            <h4 class="card-title">{{ __('Update Role') }}</h4>
+                        </div>
+                        <div class="col-4 text-right">
+                            @include('backend.partial.button', [
+                                'routeName' => 'am.role.role_list',
+                                'className' => 'btn-primary',
+                                'label' => 'Back',
+                            ])
+                        </div>
+                    </div>
                 </div>
-                <form method="POST" action="{{ route('um.role.role_edit', $role->id) }}" autocomplete="off">
+                <form method="POST" action="{{ route('am.role.role_edit', $role->id) }}" autocomplete="off">
                     @method('PUT')
                     @csrf
                     <div class="card-body">

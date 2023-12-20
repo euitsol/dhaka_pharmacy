@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\Backend\AdminLoginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 use App\Http\Controllers\Backend\AdminManagementController;
-
+use App\Http\Controllers\Backend\AdminLoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,20 +36,20 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 	Route::get('/export-permissions', function () {
 		$filename = 'permissions.csv';
 		$filePath = createCSV($filename);
-	
+
 		return Response::download($filePath, $filename);
 	})->name('export.permissions');
 
-	Route::group(['as' => 'um.', 'prefix' => 'user-management'], function () {
-		Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
-			Route::get('index', [AdminManagementController::class, 'index'])->name('user_list');
-			Route::get('details/{id}', [AdminManagementController::class, 'details'])->name('details.user_list');
-			Route::get('create', [AdminManagementController::class, 'create'])->name('user_create');
-			Route::post('create', [AdminManagementController::class, 'store'])->name('user_create');
-			Route::get('edit/{id}', [AdminManagementController::class, 'edit'])->name('user_edit');
-			Route::put('edit/{id}', [AdminManagementController::class, 'update'])->name('user_edit');
-			Route::get('status/{id}', [AdminManagementController::class, 'status'])->name('status.user_edit');
-			Route::get('delete/{id}', [AdminManagementController::class, 'delete'])->name('user_delete');
+	Route::group(['as' => 'am.', 'prefix' => 'admin-management'], function () {
+		Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
+			Route::get('index', [AdminManagementController::class, 'index'])->name('admin_list');
+			Route::get('details/{id}', [AdminManagementController::class, 'details'])->name('details.admin_list');
+			Route::get('create', [AdminManagementController::class, 'create'])->name('admin_create');
+			Route::post('create', [AdminManagementController::class, 'store'])->name('admin_create');
+			Route::get('edit/{id}', [AdminManagementController::class, 'edit'])->name('admin_edit');
+			Route::put('edit/{id}', [AdminManagementController::class, 'update'])->name('admin_edit');
+			Route::get('status/{id}', [AdminManagementController::class, 'status'])->name('status.admin_edit');
+			Route::get('delete/{id}', [AdminManagementController::class, 'delete'])->name('admin_delete');
 		});
 		Route::group(['as' => 'permission.', 'prefix' => 'permission'], function () {
 			Route::get('index', [AdminManagementController::class, 'p_index'])->name('permission_list');
@@ -72,5 +71,5 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 
 	});
 
-	
+
 });

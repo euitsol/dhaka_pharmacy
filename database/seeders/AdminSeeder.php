@@ -15,7 +15,6 @@ class AdminSeeder extends Seeder
         $roles = [
             1 => 'superadmin',
             2 => 'admin',
-            3 => 'user',
         ];
 
         foreach ($roles as $roleId => $roleName) {
@@ -39,14 +38,5 @@ class AdminSeeder extends Seeder
             'role_id' => 2,
         ]);
         $admin->assignRole($admin->role->name);
-
-        // Create User
-        $user = Admin::create([
-            'name' => 'User',
-            'email' => 'user@euitsols.com',
-            'password' => Hash::make('user@euitsols.com'),
-            'role_id' => 3,
-        ]);
-        $user->assignRole($user->role->name);
     }
 }

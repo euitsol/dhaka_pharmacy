@@ -17,28 +17,28 @@
                 <a class="@if(
                         $pageSlug == 'role' ||
                         $pageSlug == 'permission'||
-                        $pageSlug == 'user'
-                    )@else collapsed @endif" data-toggle="collapse" href="#user-management" @if (
+                        $pageSlug == 'admin'
+                    )@else collapsed @endif" data-toggle="collapse" href="#admin-management" @if (
                         $pageSlug == 'role' ||
                         $pageSlug == 'permission'||
-                        $pageSlug == 'user'
+                        $pageSlug == 'admin'
                     ) aria-expanded="true" @else aria-expanded="false"@endif>
                     <i class="fa-solid fa-users-gear"></i>
-                    <span class="nav-link-text" >{{ __('User Management') }}</span>
+                    <span class="nav-link-text" >{{ __('Admin Management') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
                 <div class="collapse @if (
                     $pageSlug == 'role' ||
                     $pageSlug == 'permission'||
-                    $pageSlug == 'user'
-                ) show @endif" id="user-management">
+                    $pageSlug == 'admin'
+                ) show @endif" id="admin-management">
                     <ul class="nav pl-2">
                         @include('backend.partials.menu_buttons', [
                             'menuItems' => [
-                                ['pageSlug' => 'user', 'routeName' => 'um.user.user_list', 'iconClass' => 'fa-solid fa-minus', 'label' => 'Users'],
-                                ['pageSlug' => 'role', 'routeName' => 'um.role.role_list', 'iconClass' => 'fa-solid fa-minus', 'label' => 'Roles'],
-                                ['pageSlug' => 'permission', 'routeName' => 'um.permission.permission_list', 'iconClass' => 'fa-solid fa-minus', 'label' => 'Permission'],
+                                ['pageSlug' => 'admin', 'routeName' => 'am.admin.admin_list', 'iconClass' => 'fa-solid fa-minus', 'label' => 'Admins'],
+                                ['pageSlug' => 'role', 'routeName' => 'am.role.role_list', 'iconClass' => 'fa-solid fa-minus', 'label' => 'Roles'],
+                                ['pageSlug' => 'permission', 'routeName' => 'am.permission.permission_list', 'iconClass' => 'fa-solid fa-minus', 'label' => 'Permission'],
                             ]
                         ])
                     </ul>

@@ -21,7 +21,7 @@
     {{-- For Main Menus  --}}
     @if(!isset($menuItem['routeName']) || $menuItem['routeName'] == '' || $menuItem['routeName'] == null)
         <li @if ($pageSlug == $menuItem['pageSlug']) class="active" @endif>
-            <a href="">
+            <a href="javascript:void(0)">
                 <i class="{{ _($menuItem['iconClass'] ?? 'fa-solid fa-minus') }} @if ($pageSlug == $menuItem['pageSlug']) fa-beat-fade @endif"></i>
                 <p>{{ _($menuItem['label']) }}</p>
             </a>
