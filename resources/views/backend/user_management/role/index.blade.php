@@ -32,32 +32,12 @@
                                 <td>{{$role->permissionNames}}</td>
                                 <td>{{date('d M, Y', strtotime($role->created_at))}}</td>
                                 <td>
-                                    @include('backend.partial.action_buttons', [
+                                    @include('backend.partials.action_buttons', [
                                         'menuItems' => [
-                                            [
-                                                'routeName' => 'javascript:void(0)',
-                                                'params' => [$role->id],
-                                                'className' => 'view',
-                                                'btnClass' => 'btn-dark',
-                                                'iconClass' => 'fa-regular fa-eye',
-                                                'title' => 'View Details',
-                                            ],
-                                            [
-                                                'routeName' => 'um.role.role_edit',
-                                                'params' => [$role->id],
-                                                'btnClass' => 'btn-primary',
-                                                'iconClass' => 'fa-regular fa-pen-to-square',
-                                                'title' => 'Edit Role',
-                                            ],
-                                            [
-                                                'routeName' => 'um.role.role_delete',
-                                                'params' => [$role->id],
-                                                'btnClass' => 'btn-danger',
-                                                'iconClass' => 'fa-regular fa-trash-can',
-                                                'delete' => true,
-                                                'title' => 'Change Status',
-                                            ],
-                                        ],
+                                            ['routeName' => 'javascript:void(0)',  'params' => [$role->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $role->id ],
+                                            ['routeName' => 'um.role.role_edit',   'params' => [$role->id], 'label' => 'Update'],
+                                            ['routeName' => 'um.role.role_delete', 'params' => [$role->id], 'label' => 'Delete', 'delete' => true],
+                                        ]
                                     ])
                                 </td>
                             </tr>

@@ -36,24 +36,11 @@
                                     <td>{{date('d M, Y', strtotime($permission->created_at))}}</td>
                                     <td>{{$permission->createdBy->name ?? "System Generated"}}</td>
                                     <td>
-                                        @include('backend.partial.action_buttons', [
+                                        @include('backend.partials.action_buttons', [
                                             'menuItems' => [
-                                                [
-                                                    'routeName' => 'javascript:void(0)',
-                                                    'params' => [$permission->id],
-                                                    'className' => 'view',
-                                                    'btnClass' => 'btn-dark',
-                                                    'iconClass' => 'fa-regular fa-eye',
-                                                    'title' => 'View Details',
-                                                ],
-                                                [
-                                                    'routeName' => 'um.permission.permission_edit',
-                                                    'params' => [$permission->id],
-                                                    'btnClass' => 'btn-primary',
-                                                    'iconClass' => 'fa-regular fa-pen-to-square',
-                                                    'title' => 'Edit Permission',
-                                                ],
-                                            ],
+                                                ['routeName' => 'javascript:void(0)',  'params' => [$permission->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $permission->id ],
+                                                ['routeName' => 'um.permission.permission_edit',   'params' => [$permission->id], 'label' => 'Update'],
+                                            ]
                                         ])
                                     </td>
                                 </tr>
