@@ -15,17 +15,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // $roles = [
-        //     1 => 'superadmin',
-        //     2 => 'admin',
-        //     3 => 'user',
-        // ];
 
-        // foreach ($roles as $roleId => $roleName) {
-        //     Role::create(['id' => $roleId,'name' => $roleName]);
-        // }
-
-        // Create Superadmin
+        // Create Users
        User::create([
             'name' => 'User1',
             'email' => 'user1@euitsols.com',

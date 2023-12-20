@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row px-3 pt-3">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -10,12 +10,12 @@
                             <h4 class="card-title">{{__('Create Permission')}}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('backend.partial.button', ['routeName' => 'um.permission.permission_list', 'className' => 'btn-primary', 'label' => 'Back'])
+                            @include('backend.partial.button', ['routeName' => 'am.permission.permission_list', 'className' => 'btn-primary', 'label' => 'Back'])
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                  <form  method="POST" action="{{route('um.permission.permission_create')}}">
+                  <form  method="POST" action="{{route('am.permission.permission_create')}}">
                     @csrf
                     <div class="form-group">
                       <label>{{_('Name')}}</label>

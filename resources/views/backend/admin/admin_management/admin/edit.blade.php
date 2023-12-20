@@ -1,4 +1,4 @@
-@extends('backend.layouts.master', ['pageSlug' => 'user'])
+@extends('backend.layouts.master', ['pageSlug' => 'admin'])
 
 @section('content')
     <div class="row px-3 pt-3">
@@ -7,32 +7,32 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Edit User')}}</h4>
+                            <h4 class="card-title">{{__('Update Admin')}}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('backend.partial.button', ['routeName' => 'um.user.user_list', 'className' => 'btn-primary', 'label' => 'Back'])
+                            @include('backend.partial.button', ['routeName' => 'am.admin.admin_list', 'className' => 'btn-primary', 'label' => 'Back'])
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                  <form method="POST" action="{{route('um.user.user_edit',$user->id)}}">
+                  <form method="POST" action="{{route('am.admin.admin_edit',$admin->id)}}">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
                       <label>Name</label>
-                      <input type="text" name="name" class="form-control" placeholder="Enter name" value="{{$user->name}}">
+                      <input type="text" name="name" class="form-control" placeholder="Enter name" value="{{$admin->name}}">
                       @include('alerts.feedback', ['field' => 'name'])
                     </div>
                     <div class="form-group">
                       <label>Email</label>
-                      <input type="email" name="email" class="form-control" placeholder="Enter email" value="{{$user->email}}">
+                      <input type="email" name="email" class="form-control" placeholder="Enter email" value="{{$admin->email}}">
                       @include('alerts.feedback', ['field' => 'email'])
                     </div>
                     <div class="form-group {{ $errors->has('role') ? ' has-danger' : '' }}">
                         <label>{{ _('Role') }}</label>
                         <select name="role" class="form-control {{ $errors->has('role') ? ' is-invalid' : '' }}">
                             @foreach ($roles as $role)
-                                <option {{($user->role->id == $role->id) ? 'selected' : ''}} value="{{$role->id}}">{{$role->name}}</option>
+                                <option {{($admin->role->id == $role->id) ? 'selected' : ''}} value="{{$role->id}}">{{$role->name}}</option>
                             @endforeach
                         </select>
                         @include('alerts.feedback', ['field' => 'role'])
@@ -65,7 +65,7 @@
                       <p><b>Password:</b> This field is nullable. It is a password field. Password strength should meet the specified criteria (e.g., include uppercase and lowercase letters, numbers, and special characters). The entered password should be a minimum of 6 characters.</p>
 
                       <p><b>Confirm Password:</b> This field is required when you fill up the 'Password' field. It is a password field. It should match the entered password in the 'Password' field.</p>
-                      
+
                       <p><b>Role:</b> This field is required. This is an option field. It represents the user's role.</p>
                   </div>
               </div>
