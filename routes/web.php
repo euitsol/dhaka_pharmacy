@@ -107,6 +107,11 @@ Route::group(['middleware' => ['auth', 'permission'],'prefix'=>'admin'], functio
 			Route::get('delete/{id}', [AdminUserManagementController::class, 'delete'])->name('user_delete');
 		});
 	});
+	// Route::group(['middleware' =>'auth','prefix'=>'user'], function () {
+	// 	Route::get('/profile', function () {
+	// 		return view('user.profile');
+	// 	})->name('user.profile');
+	// });
 
 	
 });
