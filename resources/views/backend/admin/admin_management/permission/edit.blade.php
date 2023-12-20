@@ -7,15 +7,15 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Edit Permission')}}</h4>
+                            <h4 class="card-title">{{__('Update Permission')}}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('backend.partial.button', ['routeName' => 'um.permission.permission_list', 'className' => 'btn-primary', 'label' => 'Back'])
+                            @include('backend.partial.button', ['routeName' => 'am.permission.permission_list', 'className' => 'btn-primary', 'label' => 'Back'])
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                  <form  method="POST" action="{{route('um.permission.permission_edit',$permission->id)}}">
+                  <form  method="POST" action="{{route('am.permission.permission_edit',$permission->id)}}">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

@@ -1,4 +1,4 @@
-@extends('backend.layouts.master', ['pageSlug' => 'user'])
+@extends('backend.layouts.master', ['pageSlug' => 'admin'])
 
 @section('content')
     <div class="row">
@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">User List</h4>
+                            <h4 class="card-title">Admin List</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('backend.partial.button', [
-                                'routeName' => 'um.user.user_create',
+                                'routeName' => 'am.admin.admin_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add User',
+                                'label' => 'Add new admin',
                             ])
                         </div>
                     </div>
@@ -33,24 +33,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $user)
+                            @foreach ($admins as $admin)
                                 <tr>
-                                    <td> {{ $user->name }} </td>
-                                    <td> {{ $user->email }} </td>
-                                    <td> {{ $user->role->name }} </td>
+                                    <td> {{ $admin->name }} </td>
+                                    <td> {{ $admin->email }} </td>
+                                    <td> {{ $admin->role->name }} </td>
                                     <td>
                                         <span
-                                            class="badge {{ $user->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $user->status == 1 ? 'Active' : 'Disabled' }}</span>
+                                            class="badge {{ $admin->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $admin->status == 1 ? 'Active' : 'Disabled' }}</span>
                                     </td>
-                                    <td>{{ date('d M, Y', strtotime($user->created_at)) }}</td>
+                                    <td>{{ timeFormate($admin->created_at) }}</td>
 
-                                    <td> {{ $user->createdBy->name ?? 'system' }} </td>
+                                    <td> {{ $admin->createdBy->name ?? 'system' }} </td>
                                     <td>
                                         @include('backend.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$user->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $user->id ],
-                                                    ['routeName' => 'um.user.user_edit',   'params' => [$user->id], 'label' => 'Update'],
-                                                    ['routeName' => 'um.user.user_delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'javascript:void(0)',  'params' => [$admin->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $admin->id ],
+                                                    ['routeName' => 'am.admin.admin_edit',   'params' => [$admin->id], 'label' => 'Update'],
+                                                    ['routeName' => 'am.admin.admin_delete', 'params' => [$admin->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'am.admin.status.admin_edit', 'params' => [$admin->id], 'label' => 'Change Status', 'delete' => true],
                                                 ]
                                             ])
                                     </td>
@@ -90,7 +91,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('um.user.details.user_list', ['id']) }}");
+                let url = ("{{ route('am.admin.details.admin_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,

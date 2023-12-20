@@ -17,17 +17,14 @@ class AdminLoginController extends Controller
         return view('backend.admin.login');
     }
 
-    public function adminLoginCheck(AdminRequest $request)
+    public function adminLoginCheck(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
-        // Attempt to authenticate the admin
         if (Auth::guard('admin')->attempt($credentials)) {
-            // Authentication passed
-            return redirect()->route('dashboard'); // Replace 'admin.dashboard' with your actual admin dashboard route
+            return redirect()->route('dashboard');
         } else {
-            // Authentication failed
-            return back()->withInput()->withStatus(__("Invalid credentials"));
+            return back()->withInput()->withError(__("Invalid credentials"));
         }
     }
 }
