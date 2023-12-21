@@ -47,9 +47,15 @@
             {{-- User Management --}}
             <li>
                 <a class="@if(
-                        $pageSlug == 'user'
+                        $pageSlug == 'user'||
+                        $pageSlug == 'kyc' ||
+                        $pageSlug == 'kyc_list' ||
+                        $pageSlug == 'kyc_settings'
                     )@else collapsed @endif" data-toggle="collapse" href="#user-management" @if (
-                        $pageSlug == 'user'
+                        $pageSlug == 'user'||
+                        $pageSlug == 'kyc' ||
+                        $pageSlug == 'kyc_list' ||
+                        $pageSlug == 'kyc_settings'
                     ) aria-expanded="true" @else aria-expanded="false"@endif>
                     <i class="fa-solid fa-users"></i>
                     <span class="nav-link-text" >{{ __('User Management') }}</span>
@@ -57,12 +63,23 @@
                 </a>
 
                 <div class="collapse @if (
-                    $pageSlug == 'user'
+                    $pageSlug == 'user'||
+                    $pageSlug == 'kyc' ||
+                    $pageSlug == 'kyc_list' ||
+                    $pageSlug == 'kyc_settings'
                 ) show @endif" id="user-management">
                     <ul class="nav pl-2">
                         @include('admin.partials.menu_buttons', [
                             'menuItems' => [
-                                ['pageSlug' => 'user', 'routeName' => 'um.user.user_list', 'iconClass' => 'fa-solid fa-minus', 'label' => 'Users'],
+                                ['pageSlug' => 'user', 'routeName' => 'um.user.user_list', 'label' => 'Users'],
+
+                                [
+                                    'pageSlug' => ['kyc_list','kyc_settings'], 'routeName' => 'submenu','label' => 'KYC Verification Center',
+                                    'subMenu'=>[
+                                        ['id'=>'kyc', 'subLabel' => 'KYC List','subRouteName' => 'user_kyc.kyc_list','subPageSlug'=>'kyc_list']
+                                    ],
+                                
+                                ],
                             ]
                         ])
                     </ul>

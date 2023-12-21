@@ -111,7 +111,14 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 			Route::get('delete/{id}', [AdminUserController::class, 'delete'])->name('user_delete');
 		});
 	});
-	
+
+
+
+
+	// KYC ROUTES 
+	Route::group(['as' => 'user_kyc.', 'prefix' => 'user-kyc'], function () {
+		Route::get('index', [AdminController::class, 'index'])->name('kyc_list');
+	});
 });
 Route::group(['middleware' => 'auth','prefix'=>'user'], function () {
 	Route::get('/profile', [ProfileController::class, 'profile'])->name('user.profile');

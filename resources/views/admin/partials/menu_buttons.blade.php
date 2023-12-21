@@ -1,14 +1,18 @@
 @foreach($menuItems as $menuItem)
     @php
         //This function will take the route name and return the access permission.
-        if( !isset($menuItem['routeName']) || $menuItem['routeName'] == '' || $menuItem['routeName'] == null){
+        if( isset($menuItem['routeName']) && $menuItem['routeName'] == 'submenu'){
+            $subMenuCheck = true;
+        }
+        if( !isset($menuItem['routeName']) || $menuItem['routeName'] == '' || $menuItem['routeName'] == null || $menuItem['routeName'] == 'submenu'){
             $check = false;
         }else{
             $check = check_access_by_route_name($menuItem['routeName']);
         }
-
+        
         //Parameters
         $parameterArray = isset($menuItem['params']) ? $menuItem['params'] : [];
+        $subParameterArray = isset($menuItem['subMenu']['subParams']) ? $menuItem['subMenu']['subParams'] : [];
     @endphp
     @if ($check)
         <li @if ($pageSlug == $menuItem['pageSlug']) class="active" @endif>
@@ -17,6 +21,33 @@
                 <p>{{ _($menuItem['label']) }}</p>
             </a>
         </li>
+    @elseif($subMenuCheck)
+        @foreach($menuItem['subMenu'] as $subMenu)
+            @php
+                if(!isset($subMenu['subRouteName']) || $subMenu['subRouteName'] == '' || $subMenu['subRouteName'] == null){
+                    $check = false;
+                }else{
+                    $check = check_access_by_route_name($subMenu['subRouteName']);
+                }
+            @endphp
+            <li @if (isset($menuItem['pageSlug']) && in_array($menuItem['pageSlug'], [$pageSlug])) class="active" @endif>
+                <a class="@if (isset($menuItem['pageSlug']) && in_array($menuItem['pageSlug'], [$pageSlug]))@else collapsed @endif" data-toggle="collapse" href="#@if(isset($menuItem['routeName'])){{$menuItem['routeName']}}@endif" @if (isset($menuItem['pageSlug']) && in_array($menuItem['pageSlug'], [$pageSlug])) aria-expanded="true" @else aria-expanded="false"@endif>
+                    <i class='{{ $menuItem['iconClass'] ?? 'fa-solid fa-minus' }}'></i>
+                    <span class="nav-link-text" >{{ $menuItem['label'] }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+                <div class="collapse @if (isset($subMenu['subPageSlug']) && $pageSlug == $subMenu['subPageSlug']) show @endif" id="@if(isset($menuItem['routeName'])){{$menuItem['routeName']}}@endif">
+                    <ul class="nav pl-2">
+                        <li @if (isset($subMenu['subPageSlug']) && $pageSlug == $subMenu['subPageSlug']) class="active" @endif>
+                            <a href="{{ route($subMenu['subRouteName'], $subParameterArray) }}">
+                                <i class="{{ _($menuItem['subIconClass'] ?? 'fa-solid fa-arrow-right') }}  @if (isset($subMenu['subPageSlug']) && $pageSlug == $subMenu['subPageSlug']) fa-beat-fade @endif"></i>
+                                <p>{{ _($subMenu['subLabel']) }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        @endforeach
     @endif
     {{-- For Main Menus  --}}
     @if(!isset($menuItem['routeName']) || $menuItem['routeName'] == '' || $menuItem['routeName'] == null)
@@ -28,5 +59,3 @@
         </li>
     @endif
 @endforeach
-
-
