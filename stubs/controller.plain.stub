@@ -14,7 +14,7 @@ class {{ class }} extends Controller
     //
 
     public function __construct() {
-        return $this->middleware('auth');
+        return $this->middleware('admin');
     }
 
     public function details($id): JsonResponse
