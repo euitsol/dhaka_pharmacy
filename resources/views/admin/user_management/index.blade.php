@@ -40,7 +40,7 @@
                                         <span
                                             class="badge {{ $user->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $user->status == 1 ? 'Active' : 'Disabled' }}</span>
                                     </td>
-                                    <td>{{ date('d M, Y', strtotime($user->created_at)) }}</td>
+                                    <td>{{ timeFormate($user->created_at) }}</td>
 
                                     <td> {{ $user->createdBy->name ?? 'system' }} </td>
                                     <td>
