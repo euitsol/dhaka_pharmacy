@@ -64,40 +64,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }
-
-    public function getStatus()
-    {
-        if ($this->status == 1) {
-            return 'Active';
-        } else {
-            return 'Deactive';
-        }
-    }
-    public function getBtnStatus()
-    {
-        if ($this->status == 1) {
-            return 'Deactive';
-        } else {
-            return 'Active';
-        }
-    }
-
-    public function getStatusClass()
-    {
-        if ($this->status == 1) {
-            return 'btn-success';
-        } else {
-            return 'btn-danger';
-        }
-    }
-
-    public function getStatusIcon()
-    {
-        if ($this->status == 1) {
-            return 'fa-solid fa-xmark';
-        } else {
-            return 'fa-solid fa-check';
-        }
-    }
-
 }
