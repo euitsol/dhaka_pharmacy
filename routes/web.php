@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserManagement\KycSettingsController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
 use App\Http\Controllers\User\ProfileController;
 
@@ -110,15 +111,19 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 			Route::get('status/{id}', [AdminUserController::class, 'status'])->name('status.user_edit');
 			Route::get('delete/{id}', [AdminUserController::class, 'delete'])->name('user_delete');
 		});
+		// KYC ROUTES 
+		Route::group(['as' => 'user_kyc.', 'prefix' => 'user-kyc'], function () {
+			Route::get('index', [KycSettingsController::class, 'index'])->name('kyc_list');
+			Route::get('/settings', [KycSettingsController::class, 'kycSettings'])->name('kyc_settings_view');
+			Route::post('/settings/update', [KycSettingsController::class, 'kycSettingsUpdate'])->name('kyc_settings_update');
+
+		});
 	});
 
 
 
 
-	// KYC ROUTES 
-	Route::group(['as' => 'user_kyc.', 'prefix' => 'user-kyc'], function () {
-		Route::get('index', [AdminController::class, 'index'])->name('kyc_list');
-	});
+	
 });
 Route::group(['middleware' => 'auth','prefix'=>'user'], function () {
 	Route::get('/profile', [ProfileController::class, 'profile'])->name('user.profile');

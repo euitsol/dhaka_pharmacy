@@ -24,7 +24,7 @@ class UserController extends Controller
     public function index(): View
     {
         $s['users'] = User::with('created_user')->latest()->get();
-        return view('admin.user_management.index',$s);
+        return view('admin.user_management.user.index',$s);
     }
     public function details($id): JsonResponse
     {
@@ -38,7 +38,7 @@ class UserController extends Controller
     public function create(): View
     {
         $s['roles'] = Role::latest()->get();
-        return view('admin.user_management.create',$s);
+        return view('admin.user_management.user.create',$s);
     }
     public function store(UserRequest $req): RedirectResponse
     {
@@ -55,7 +55,7 @@ class UserController extends Controller
     {
         $s['user'] = User::findOrFail($id);
         $s['roles'] = Role::latest()->get();
-        return view('admin.user_management.edit',$s);
+        return view('admin.user_management.user.edit',$s);
     }
     public function update(UserRequest $req, $id): RedirectResponse
     {

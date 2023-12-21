@@ -74,9 +74,10 @@
                                 ['pageSlug' => 'user', 'routeName' => 'um.user.user_list', 'label' => 'Users'],
 
                                 [
-                                    'pageSlug' => ['kyc_list','kyc_settings'], 'routeName' => 'submenu','label' => 'KYC Verification Center',
+                                    'pageSlug' => ['kyc_list','kyc_settings'], 'routeName' => 'submenu','label' => 'KYC Verification Center','id'=>'kyc',
                                     'subMenu'=>[
-                                        ['id'=>'kyc', 'subLabel' => 'KYC List','subRouteName' => 'user_kyc.kyc_list','subPageSlug'=>'kyc_list']
+                                        ['subLabel' => 'KYC List','subRouteName' => 'um.user_kyc.kyc_list','subPageSlug'=>'kyc_list'],
+                                        ['subLabel' => 'KYC Settings','subRouteName' => 'um.user_kyc.kyc_settings_view','subPageSlug'=>'kyc_settings']
                                     ],
                                 
                                 ],
