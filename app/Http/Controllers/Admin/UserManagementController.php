@@ -18,7 +18,7 @@ class UserManagementController extends Controller
 
     public function index(): View
     {
-        $s['users'] = User::with('created_user')->where('deleted_at',null)->get();
+        $s['users'] = User::with('created_user')->latest()->get();
         return view('admin.user_management.index',$s);
     }
     public function details($id): JsonResponse
@@ -32,7 +32,7 @@ class UserManagementController extends Controller
     }
     public function create(): View
     {
-        $s['roles'] = Role::where('deleted_at',null)->latest()->get();
+        $s['roles'] = Role::latest()->get();
         return view('admin.user_management.create',$s);
     }
     public function store(UserRequest $req): RedirectResponse
@@ -49,7 +49,7 @@ class UserManagementController extends Controller
     public function edit($id): View
     {
         $s['user'] = User::findOrFail($id);
-        $s['roles'] = Role::where('deleted_at',null)->latest()->get();
+        $s['roles'] = Role::latest()->get();
         return view('admin.user_management.edit',$s);
     }
     public function update(UserRequest $req, $id): RedirectResponse
