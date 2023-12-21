@@ -11,3 +11,7 @@ permission_list,admin,Permission
 permission_create,admin,Permission
 permission_edit,admin,Permission
 permission_delete,admin,Permission
+user_list,admin,User
+user_create,admin,User
+user_edit,admin,User
+user_delete,admin,User

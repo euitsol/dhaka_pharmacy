@@ -16,7 +16,7 @@ class Controller extends BaseController
         }else{
             $modelData->status = 1;
         }
-        $modelData->updated_by = auth()->user()->id;
+        $modelData->updated_by = admin()->id;
         $modelData->save();
     }
 }

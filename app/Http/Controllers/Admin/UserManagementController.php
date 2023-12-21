@@ -41,7 +41,7 @@ class UserManagementController extends Controller
         $user->name = $req->name;
         $user->email = $req->email;
         $user->password = Hash::make($req->password);
-        $user->created_by = auth()->user()->id;
+        $user->created_by = admin()->id;
         $user->save();
 
         return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' created successfully.'));
@@ -60,7 +60,7 @@ class UserManagementController extends Controller
         if($req->password){
             $user->password = Hash::make($req->password);
         }
-        $user->updated_by = auth()->user()->id;
+        $user->updated_by = admin()->id;
         $user->update();
 
         return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' updated successfully.'));
