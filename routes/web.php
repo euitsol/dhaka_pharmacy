@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\UserManagementController as AdminUserManagementController;
+use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
 use App\Http\Controllers\User\ProfileController;
 
 /*
@@ -101,14 +101,14 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 
 	Route::group(['as' => 'um.', 'prefix' => 'user-management'], function () {
 		Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
-			Route::get('index', [AdminUserManagementController::class, 'index'])->name('user_list');
-			Route::get('details/{id}', [AdminUserManagementController::class, 'details'])->name('details.user_list');
-			Route::get('create', [AdminUserManagementController::class, 'create'])->name('user_create');
-			Route::post('create', [AdminUserManagementController::class, 'store'])->name('user_create');
-			Route::get('edit/{id}', [AdminUserManagementController::class, 'edit'])->name('user_edit');
-			Route::put('edit/{id}', [AdminUserManagementController::class, 'update'])->name('user_edit');
-			Route::get('status/{id}', [AdminUserManagementController::class, 'status'])->name('status.user_edit');
-			Route::get('delete/{id}', [AdminUserManagementController::class, 'delete'])->name('user_delete');
+			Route::get('index', [AdminUserController::class, 'index'])->name('user_list');
+			Route::get('details/{id}', [AdminUserController::class, 'details'])->name('details.user_list');
+			Route::get('create', [AdminUserController::class, 'create'])->name('user_create');
+			Route::post('create', [AdminUserController::class, 'store'])->name('user_create');
+			Route::get('edit/{id}', [AdminUserController::class, 'edit'])->name('user_edit');
+			Route::put('edit/{id}', [AdminUserController::class, 'update'])->name('user_edit');
+			Route::get('status/{id}', [AdminUserController::class, 'status'])->name('status.user_edit');
+			Route::get('delete/{id}', [AdminUserController::class, 'delete'])->name('user_delete');
 		});
 	});
 	

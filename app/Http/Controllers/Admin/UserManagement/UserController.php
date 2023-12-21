@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\UserManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
@@ -13,8 +13,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 
-class UserManagementController extends Controller
+class UserController extends Controller
 {
+    //
+
+    public function __construct() {
+        return $this->middleware('admin');
+    }
 
     public function index(): View
     {
@@ -78,6 +83,4 @@ class UserManagementController extends Controller
         return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' deleted successfully.'));
 
     }
-
-
 }

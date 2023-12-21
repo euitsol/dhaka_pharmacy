@@ -12,7 +12,7 @@
                ])
 
 
-            {{-- User Management --}}
+            {{-- Admin Management --}}
             <li>
                 <a class="@if(
                         $pageSlug == 'role' ||
@@ -44,11 +44,30 @@
                     </ul>
                 </div>
             </li>
-            @include('admin.partials.menu_buttons', [
-                'menuItems' => [
-                    ['pageSlug' => 'users', 'routeName' => 'um.user.user_list', 'iconClass' => 'fa-solid fa-users', 'label' => 'Users'],
-                    ]
-               ])
+            {{-- User Management --}}
+            <li>
+                <a class="@if(
+                        $pageSlug == 'user'
+                    )@else collapsed @endif" data-toggle="collapse" href="#user-management" @if (
+                        $pageSlug == 'user'
+                    ) aria-expanded="true" @else aria-expanded="false"@endif>
+                    <i class="fa-solid fa-users"></i>
+                    <span class="nav-link-text" >{{ __('User Management') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if (
+                    $pageSlug == 'user'
+                ) show @endif" id="user-management">
+                    <ul class="nav pl-2">
+                        @include('admin.partials.menu_buttons', [
+                            'menuItems' => [
+                                ['pageSlug' => 'user', 'routeName' => 'um.user.user_list', 'iconClass' => 'fa-solid fa-minus', 'label' => 'Users'],
+                            ]
+                        ])
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </div>
