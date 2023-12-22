@@ -15,20 +15,20 @@
                 </div>
                 <form method="POST" action="{{route('um.user_kyc.kyc_settings_update')}}" autocomplete="off">
                     @csrf
-                    @forelse($kyc_settings as $setting)
+                    @forelse($kyc_settings as $key=>$setting)
                         <div class="card-body">
                             @include('alerts.success')
                             <div class="d-flex mb-3">
                                 <div class="form-check form-check-radio me-3">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios1"
+                                    <label class="form-check-label" for="exampleRadios{{$key}}">
+                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios{{$key}}"
                                             value="1" {{($setting->status == 1) ? 'checked' : '' }} > ON
                                         <span class="form-check-sign"></span>
                                     </label>
                                 </div>
                                 <div class="form-check form-check-radio">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios2"
+                                    <label class="form-check-label" for="exampleRadios{{$key+1}}">
+                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios{{$key+1}}"
                                             value="2" {{($setting->status == 2) ? 'checked' : '' }} > OFF
                                         <span class="form-check-sign"></span>
                                     </label>
@@ -56,6 +56,7 @@
                             <div class="card-body">
                                 @if(null !== (json_decode($setting->form_data)))
                                     @foreach(json_decode($setting->form_data, true) as $key=>$data)
+                                    <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <div class="input-group">
@@ -92,11 +93,12 @@
                                                 <textarea class="form-control" name="formdata[${count}][option_data]"></textarea>
                                             </div>
                                         </div>
+                                    </div>
                                     @endforeach
                                 @endif
-                                <div class="row addedField">
+                                <div class="row addedField"> </div>
 
-                                </div>
+                                
                             </div>
                         </div>
                     @empty
@@ -104,15 +106,15 @@
                             @include('alerts.success')
                             <div class="d-flex mb-3">
                                 <div class="form-check form-check-radio me-3">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios1"
+                                    <label class="form-check-label" for="exampleRadios{{counte($kyc_settings)+1}}">
+                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios{{counte($kyc_settings)+1}}"
                                             value="1" checked=""> ON
                                         <span class="form-check-sign"></span>
                                     </label>
                                 </div>
                                 <div class="form-check form-check-radio">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios2"
+                                    <label class="form-check-label" for="exampleRadios{{count($kyc_settings)+2}}">
+                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios{{count($kyc_settings)+2}}"
                                             value="2" > OFF
                                         <span class="form-check-sign"></span>
                                     </label>
