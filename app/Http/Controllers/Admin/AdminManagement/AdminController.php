@@ -21,7 +21,7 @@ class AdminController extends Controller
 
     public function index(): View
     {
-        $s['admins'] = Admin::with(['role','created_user'])->where('deleted_at',null)->get();
+        $s['admins'] = Admin::with(['role','created_user'])->latest()->get();
         return view('admin.admin_management.admin.index',$s);
     }
     public function details($id): JsonResponse
@@ -35,7 +35,7 @@ class AdminController extends Controller
     }
     public function create(): View
     {
-        $s['roles'] = Role::where('deleted_at',null)->latest()->get();
+        $s['roles'] = Role::latest()->get();
         return view('admin.admin_management.admin.create',$s);
     }
     public function store(AdminRequest $req): RedirectResponse
@@ -55,7 +55,7 @@ class AdminController extends Controller
     public function edit($id): View
     {
         $s['admin'] = Admin::findOrFail($id);
-        $s['roles'] = Role::where('deleted_at',null)->latest()->get();
+        $s['roles'] = Role::latest()->get();
         return view('admin.admin_management.admin.edit',$s);
     }
     public function update(AdminRequest $req, $id): RedirectResponse

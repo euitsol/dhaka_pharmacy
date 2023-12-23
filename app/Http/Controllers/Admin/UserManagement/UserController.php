@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\UserManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
@@ -13,13 +13,18 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 
-class UserManagementController extends Controller
+class UserController extends Controller
 {
+    //
+
+    public function __construct() {
+        return $this->middleware('admin');
+    }
 
     public function index(): View
     {
-        $s['users'] = User::with('created_user')->where('deleted_at',null)->get();
-        return view('admin.user_management.index',$s);
+        $s['users'] = User::with('created_user')->latest()->get();
+        return view('admin.user_management.user.index',$s);
     }
     public function details($id): JsonResponse
     {
@@ -32,8 +37,8 @@ class UserManagementController extends Controller
     }
     public function create(): View
     {
-        $s['roles'] = Role::where('deleted_at',null)->latest()->get();
-        return view('admin.user_management.create',$s);
+        $s['roles'] = Role::latest()->get();
+        return view('admin.user_management.user.create',$s);
     }
     public function store(UserRequest $req): RedirectResponse
     {
@@ -41,7 +46,7 @@ class UserManagementController extends Controller
         $user->name = $req->name;
         $user->email = $req->email;
         $user->password = Hash::make($req->password);
-        $user->created_by = auth()->user()->id;
+        $user->created_by = admin()->id;
         $user->save();
 
         return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' created successfully.'));
@@ -49,8 +54,8 @@ class UserManagementController extends Controller
     public function edit($id): View
     {
         $s['user'] = User::findOrFail($id);
-        $s['roles'] = Role::where('deleted_at',null)->latest()->get();
-        return view('admin.user_management.edit',$s);
+        $s['roles'] = Role::latest()->get();
+        return view('admin.user_management.user.edit',$s);
     }
     public function update(UserRequest $req, $id): RedirectResponse
     {
@@ -60,7 +65,7 @@ class UserManagementController extends Controller
         if($req->password){
             $user->password = Hash::make($req->password);
         }
-        $user->updated_by = auth()->user()->id;
+        $user->updated_by = admin()->id;
         $user->update();
 
         return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' updated successfully.'));
@@ -78,6 +83,4 @@ class UserManagementController extends Controller
         return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' deleted successfully.'));
 
     }
-
-
 }

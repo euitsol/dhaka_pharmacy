@@ -19,7 +19,7 @@ class RoleController extends Controller
     }
     public function index(): View
     {
-        $s['roles'] = Role::where('deleted_at', null)->with('permissions')->latest()->get()
+        $s['roles'] = Role::with('permissions')->latest()->get()
         ->map(function($role){
             $permissionNames = $role->permissions->pluck('name')->implode(' | ');
             $role->permissionNames = $permissionNames;

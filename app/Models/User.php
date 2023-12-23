@@ -90,14 +90,4 @@ class User extends Authenticatable
             return 'btn-danger';
         }
     }
-
-    public function getStatusIcon()
-    {
-        if ($this->status == 1) {
-            return 'fa-solid fa-xmark';
-        } else {
-            return 'fa-solid fa-check';
-        }
-    }
-
 }
