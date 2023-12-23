@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\UserManagement\KycSettingsController;
+use App\Http\Controllers\Admin\UserManagement\KycSettingsController as UserKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
 use App\Http\Controllers\User\ProfileController;
 
@@ -70,52 +70,64 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 	})->name('export.permissions');
 
 	Route::group(['as' => 'am.', 'prefix' => 'admin-management'], function () {
-		Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
-			Route::get('index', [AdminController::class, 'index'])->name('admin_list');
-			Route::get('details/{id}', [AdminController::class, 'details'])->name('details.admin_list');
-			Route::get('create', [AdminController::class, 'create'])->name('admin_create');
-			Route::post('create', [AdminController::class, 'store'])->name('admin_create');
-			Route::get('edit/{id}', [AdminController::class, 'edit'])->name('admin_edit');
-			Route::put('edit/{id}', [AdminController::class, 'update'])->name('admin_edit');
-			Route::get('status/{id}', [AdminController::class, 'status'])->name('status.admin_edit');
-			Route::get('delete/{id}', [AdminController::class, 'delete'])->name('admin_delete');
+		Route::controller(AdminController::class, 'admin')->prefix('admin')->name('admin.')->group(function () {
+			Route::get('index', 'index')->name('admin_list');
+			Route::get('details/{id}', 'details')->name('details.admin_list');
+			Route::get('create', 'create')->name('admin_create');
+			Route::post('create', 'store')->name('admin_create');
+			Route::get('edit/{id}', 'edit')->name('admin_edit');
+			Route::put('edit/{id}', 'update')->name('admin_edit');
+			Route::get('status/{id}', 'status')->name('status.admin_edit');
+			Route::get('delete/{id}', 'delete')->name('admin_delete');
 		});
-		Route::group(['as' => 'permission.', 'prefix' => 'permission'], function () {
-			Route::get('index', [PermissionController::class, 'index'])->name('permission_list');
-			Route::get('details/{id}', [PermissionController::class, 'details'])->name('details.permission_list');
-			Route::get('create', [PermissionController::class, 'create'])->name('permission_create');
-			Route::post('create', [PermissionController::class, 'store'])->name('permission_create');
-			Route::get('edit/{id}', [PermissionController::class, 'edit'])->name('permission_edit');
-			Route::put('edit/{id}', [PermissionController::class, 'update'])->name('permission_edit');
+		Route::controller(PermissionController::class, 'permission')->prefix('permission')->name('permission.')->group(function () {
+			Route::get('index', 'index')->name('permission_list');
+			Route::get('details/{id}', 'details')->name('details.permission_list');
+			Route::get('create', 'create')->name('permission_create');
+			Route::post('create', 'store')->name('permission_create');
+			Route::get('edit/{id}', 'edit')->name('permission_edit');
+			Route::put('edit/{id}', 'update')->name('permission_edit');
 		});
-		Route::group(['as' => 'role.', 'prefix' => 'role'], function () {
-			Route::get('index', [AdminRoleController::class, 'index'])->name('role_list');
-			Route::get('details/{id}', [AdminRoleController::class, 'details'])->name('details.role_list');
-			Route::get('create', [AdminRoleController::class, 'create'])->name('role_create');
-			Route::post('create', [AdminRoleController::class, 'store'])->name('role_create');
-			Route::get('edit/{id}', [AdminRoleController::class, 'edit'])->name('role_edit');
-			Route::put('edit/{id}', [AdminRoleController::class, 'update'])->name('role_edit');
-			Route::get('delete/{id}', [AdminRoleController::class, 'delete'])->name('role_delete');
+		Route::controller(AdminRoleController::class, 'role')->prefix('role')->name('role.')->group(function () {
+			Route::get('index', 'index')->name('role_list');
+			Route::get('details/{id}', 'details')->name('details.role_list');
+			Route::get('create', 'create')->name('role_create');
+			Route::post('create', 'store')->name('role_create');
+			Route::get('edit/{id}', 'edit')->name('role_edit');
+			Route::put('edit/{id}', 'update')->name('role_edit');
+			Route::get('delete/{id}', 'delete')->name('role_delete');
 		});
 
 	});
 
 	Route::group(['as' => 'um.', 'prefix' => 'user-management'], function () {
-		Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
-			Route::get('index', [AdminUserController::class, 'index'])->name('user_list');
-			Route::get('details/{id}', [AdminUserController::class, 'details'])->name('details.user_list');
-			Route::get('create', [AdminUserController::class, 'create'])->name('user_create');
-			Route::post('create', [AdminUserController::class, 'store'])->name('user_create');
-			Route::get('edit/{id}', [AdminUserController::class, 'edit'])->name('user_edit');
-			Route::put('edit/{id}', [AdminUserController::class, 'update'])->name('user_edit');
-			Route::get('status/{id}', [AdminUserController::class, 'status'])->name('status.user_edit');
-			Route::get('delete/{id}', [AdminUserController::class, 'delete'])->name('user_delete');
+
+		Route::controller(AdminUserController::class, 'user')->prefix('user')->name('user.')->group(function () {
+			Route::get('index', 'index')->name('user_list');
+			Route::get('details/{id}', 'details')->name('details.user_list');
+			Route::get('create', 'create')->name('user_create');
+			Route::post('create', 'store')->name('user_create');
+			Route::get('edit/{id}', 'edit')->name('user_edit');
+			Route::put('edit/{id}', 'update')->name('user_edit');
+			Route::get('status/{id}', 'status')->name('status.user_edit');
+			Route::get('delete/{id}', 'delete')->name('user_delete');
 		});
+
 		// KYC ROUTES 
 		Route::group(['as' => 'user_kyc.', 'prefix' => 'user-kyc'], function () {
-			Route::get('index', [KycSettingsController::class, 'index'])->name('kyc_list');
-			Route::get('/settings', [KycSettingsController::class, 'kycSettings'])->name('kyc_settings_view');
-			Route::post('/settings/update', [KycSettingsController::class, 'kycSettingsUpdate'])->name('kyc_settings_update');
+			Route::controller(AdminUserController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
+				Route::get('index', 'index')->name('user_kyc_list');
+				Route::get('details/{id}', 'details')->name('details.user_kyc_list');
+				Route::get('create', 'create')->name('user_kyc_create');
+				Route::post('create', 'store')->name('user_kyc_create');
+				Route::get('edit/{id}', 'edit')->name('user_kyc_edit');
+				Route::put('edit/{id}', 'update')->name('user_kyc_edit');
+				Route::get('status/{id}', 'status')->name('status.user_kyc_edit');
+				Route::get('delete/{id}', 'delete')->name('user_kyc_delete');
+			});
+			
+			Route::get('/settings', [UserKycController::class, 'kycSettings'])->name('user_kyc_settings');
+			Route::post('/settings', [UserKycController::class, 'kycSettingsUpdate'])->name('user_kyc_settings');
 
 		});
 	});
