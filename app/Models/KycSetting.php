@@ -10,9 +10,8 @@ class KycSetting extends BaseModel
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'type', // Add 'type' to the fillable property
+        'type',
         'status',
-        'form_data',
-        // Add other fields that can be mass assigned if necessary
+        'form_data'
     ];
 }

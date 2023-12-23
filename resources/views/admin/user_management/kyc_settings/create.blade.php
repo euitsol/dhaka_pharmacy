@@ -15,47 +15,39 @@
                 </div>
                 <form method="POST" action="{{route('um.user_kyc.kyc_settings_update')}}" autocomplete="off">
                     @csrf
-                    @forelse($kyc_settings as $key=>$setting)
+                    {{-- @foreach($kyc_setting as $key=>$setting) --}}
                         <div class="card-body">
                             @include('alerts.success')
                             <div class="d-flex mb-3">
                                 <div class="form-check form-check-radio me-3">
-                                    <label class="form-check-label" for="exampleRadios{{$key}}">
-                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios{{$key}}"
-                                            value="1" {{($setting->status == 1) ? 'checked' : '' }} > ON
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios1"
+                                            value="1" {{(optional($kyc_setting)->status == 1) ? 'checked' : '' }} > ON
                                         <span class="form-check-sign"></span>
                                     </label>
                                 </div>
                                 <div class="form-check form-check-radio">
-                                    <label class="form-check-label" for="exampleRadios{{$key+1}}">
-                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios{{$key+1}}"
-                                            value="2" {{($setting->status == 2) ? 'checked' : '' }} > OFF
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios2"
+                                            value="2" {{(optional($kyc_setting)->status == 2) ? 'checked' : '' }} > OFF
                                         <span class="form-check-sign"></span>
                                     </label>
                                 </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label>{{__('Type')}}</label>
-                                <select name="type" class="form-control">
-                                    <option value="user" {{($setting->type == "user") ? 'selected' : '' }}>{{__('User')}}</option>
-                                    <option value="rider" {{($setting->type == "rider") ? 'selected' : '' }}>{{__('Rider')}}</option>
-                                    <option value="pharmacy" {{($setting->type == "pharmacy") ? 'selected' : '' }}>{{__('Pharmacy')}}</option>
-                                    <option value="doctor" {{($setting->type == "doctor") ? 'selected' : '' }}>{{__('Doctor')}}</option>
-                                </select>
+                                @include('alerts.feedback', ['field' => 'status'])
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <label class="m-0">Input Fields</label>
                                 <a href="javascript:void(0)" class="btn btn-dark btn-sm btn-rounded p-6 ml-4 generate_atf"
-                                    data-count="{{count(json_decode($setting->form_data, true))}}"><i class="fa fa-plus-circle"></i>
+                                    data-count="{{(isset($kyc_setting->form_data) && null !== (json_decode($kyc_setting->form_data))) ? count(json_decode($kyc_setting->form_data, true)) : '0'}}"><i class="fa fa-plus-circle"></i>
                                     {{ trans('Add Field') }}
                                 </a>
 
                             </div>
                             <div class="card-body">
-                                @if(null !== (json_decode($setting->form_data)))
-                                    @foreach(json_decode($setting->form_data, true) as $key=>$data)
+                                @if(isset($kyc_setting->form_data) && null !== (json_decode($kyc_setting->form_data)))
+                                    @foreach(json_decode($kyc_setting->form_data, true) as $key=>$data)
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -101,54 +93,6 @@
                                 
                             </div>
                         </div>
-                    @empty
-                        <div class="card-body">
-                            @include('alerts.success')
-                            <div class="d-flex mb-3">
-                                <div class="form-check form-check-radio me-3">
-                                    <label class="form-check-label" for="exampleRadios{{counte($kyc_settings)+1}}">
-                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios{{counte($kyc_settings)+1}}"
-                                            value="1" checked=""> ON
-                                        <span class="form-check-sign"></span>
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-radio">
-                                    <label class="form-check-label" for="exampleRadios{{count($kyc_settings)+2}}">
-                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios{{count($kyc_settings)+2}}"
-                                            value="2" > OFF
-                                        <span class="form-check-sign"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label>{{__('Type')}}</label>
-                                <select name="type" class="form-control">
-                                    <option selected hidden>{{__('Select Type')}}</option>
-                                    <option value="user">{{__('User')}}</option>
-                                    <option value="rider">{{__('Rider')}}</option>
-                                    <option value="pharmacy">{{__('Pharmacy')}}</option>
-                                    <option value="doctor">{{__('Doctor')}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <label class="m-0">Input Fields</label>
-                                <a href="javascript:void(0)" class="btn btn-dark btn-sm btn-rounded p-6 ml-4 generate_atf"
-                                    data-count="0"><i class="fa fa-plus-circle"></i>
-                                    {{ trans('Add Field') }}
-                                </a>
-
-                            </div>
-                            <div class="card-body">
-                                <div class="row addedField">
-
-                                </div>
-                            </div>
-                        </div>
-                    @endforelse
-                    
                     <div class="card-footer">
                         <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
                     </div>
