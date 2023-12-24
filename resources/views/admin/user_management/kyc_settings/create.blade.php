@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'kyc_settings'])
+@extends('admin.layouts.master', ['pageSlug' => 'user_kyc_settings'])
 
 @section('title', 'KYC Settings')
 @push('css')
