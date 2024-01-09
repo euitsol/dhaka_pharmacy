@@ -19,17 +19,17 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                      <label>{{_('Name')}}</label>
+                      <label>{{__('Name')}}</label>
                       <input type="text" name="name" class="form-control" placeholder="Enter permission name" value="{{$permission->name}}">
                       @include('alerts.feedback', ['field' => 'name'])
                     </div>
                     <div class="form-group">
-                      <label>{{_('Prefix')}}</label>
+                      <label>{{__('Prefix')}}</label>
                       <input type="text" name="prefix" class="form-control" placeholder="Enter permission prefix" value="{{$permission->prefix}}">
                       @include('alerts.feedback', ['field' => 'prefix'])
                     </div>
 
-                    <button type="submit" class="btn btn-primary">{{_('Update')}}</button>
+                    <button type="submit" class="btn btn-primary">{{__('Update')}}</button>
                   </form>
                 </div>
               </div>
@@ -38,7 +38,7 @@
           <div class="card">
               <div class="card-body">
                   <p class="card-header">
-                      <b>User</b>
+                      <b>{{__('User')}}</b>
                   </p>
                   <div class="card-body">
                       <p><b>User Name:</b> This field is required. It is a text field with character limit of 6-255

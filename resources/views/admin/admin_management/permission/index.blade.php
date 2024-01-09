@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-7">
-                            <h4 class="card-title">{{_('Permission List')}}</h4>
+                            <h4 class="card-title">{{__('Permission List')}}</h4>
                         </div>
                         <div class="col-md-5 text-right">
                             @include('admin.partials.button', ['routeName' => 'export.permissions', 'className' => 'btn-primary', 'label' => 'Export Permissions'])
@@ -21,11 +21,11 @@
                         <table class="table table-striped datatable">
                             <thead class=" text-primary">
                                 <tr>
-                                    <th>{{_('Prefix')}}</th>
-                                    <th>{{_('Permisson')}}</th>
-                                    <th>{{_('Created at')}}</th>
-                                    <th>{{_('Creadted by')}}</th>
-                                    <th class="text-center">{{_('Action')}}</th>
+                                    <th>{{__('Prefix')}}</th>
+                                    <th>{{__('Permisson')}}</th>
+                                    <th>{{__('Created at')}}</th>
+                                    <th>{{__('Creadted by')}}</th>
+                                    <th class="text-center">{{__('Action')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,7 +66,7 @@ aria-hidden="true">
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">{{ _('Permission Details') }}</h5>
+            <h5 class="modal-title" id="exampleModalLabel">{{ __('Permission Details') }}</h5>
             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

@@ -23,12 +23,12 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
-                                <th>{{ _('Type') }}</th>
-                                <th>{{ _('Status') }}</th>
-                                <th colspan="{{count($count)}}">{{ _('Submitted data') }}</th>
-                                <th>{{ _('Creation date') }}</th>
-                                <th>{{ _('Submitted by') }}</th>
-                                <th>{{ _('Action') }}</th>
+                                <th>{{ __('Type') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th colspan="{{count($count)}}">{{ __('Submitted data') }}</th>
+                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Submitted by') }}</th>
+                                <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,7 +75,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ _('User Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('User Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

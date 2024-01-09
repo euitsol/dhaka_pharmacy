@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">Role List</h4>
+                            <h4 class="card-title">{{__('Role List')}}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', ['routeName' => 'am.role.role_create', 'className' => 'btn-primary', 'label' => 'Add Role'])
@@ -19,10 +19,10 @@
                     <table class="table table-striped datatable">
                         <thead class=" text-primary">
                             <tr>
-                                <th>{{_('Name')}}</th>
-                                <th>{{_('Permission')}}</th>
-                                <th>{{_('Creation Date')}}</th>
-                                <th class="text-center">{{_('Action')}}</th>
+                                <th>{{__('Name')}}</th>
+                                <th>{{__('Permission')}}</th>
+                                <th>{{__('Creation Date')}}</th>
+                                <th class="text-center">{{__('Action')}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,7 +60,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ _('Role Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Role Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

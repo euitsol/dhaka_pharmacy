@@ -11,7 +11,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{ _('User KYC Settings') }}</h5>
+                    <h5 class="title">{{ __('User KYC Settings') }}</h5>
                 </div>
                 <form method="POST" action="{{ route('um.user_kyc.user_kyc_settings') }}" autocomplete="off">
                     @csrf
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
+                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Save') }}</button>
                     </div>
                 </form>
             </div>
@@ -151,10 +151,10 @@
             <div class="card card-user">
                 <div class="card-body">
                     <p class="card-text">
-                        {{ _('Blog') }}
+                        {{ __('Blog') }}
                     </p>
                     <div class="card-description">
-                        {{ _('The role\'s manages user permissions by assigning different roles to users. Each role defines specific access levels and actions a user can perform. It helps ensure proper authorization and security in the system.') }}
+                        {{ __('The role\'s manages user permissions by assigning different roles to users. Each role defines specific access levels and actions a user can perform. It helps ensure proper authorization and security in the system.') }}
                     </div>
                 </div>
             </div>

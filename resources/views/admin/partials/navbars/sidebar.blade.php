@@ -1,8 +1,8 @@
 <div class="sidebar">
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="{{ route('dashboard') }}" class="simple-text logo-mini">{{ _('DP') }}</a>
-            <a href="{{ route('dashboard') }}" class="simple-text logo-normal">{{ _('Dhaka Pharmacy') }}</a>
+            <a href="{{ route('dashboard') }}" class="simple-text logo-mini">{{ __('DP') }}</a>
+            <a href="{{ route('dashboard') }}" class="simple-text logo-normal">{{ __('Dhaka Pharmacy') }}</a>
         </div>
         <ul class="nav">
             @include('admin.partials.menu_buttons', [

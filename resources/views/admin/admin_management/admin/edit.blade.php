@@ -19,12 +19,12 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                      <label>Name</label>
+                      <label>{{__('Name')}}</label>
                       <input type="text" name="name" class="form-control" placeholder="Enter name" value="{{$admin->name}}">
                       @include('alerts.feedback', ['field' => 'name'])
                     </div>
                     <div class="form-group">
-                      <label>Email</label>
+                      <label>{{__('Email')}}</label>
                       <input type="email" name="email" class="form-control" placeholder="Enter email" value="{{$admin->email}}">
                       @include('alerts.feedback', ['field' => 'email'])
                     </div>
@@ -38,15 +38,15 @@
                         @include('alerts.feedback', ['field' => 'role'])
                     </div>
                     <div class="form-group">
-                      <label>Password</label>
+                      <label>{{__('Password')}}</label>
                       <input type="password" name="password" class="form-control" placeholder="Enter new password">
                       @include('alerts.feedback', ['field' => 'password'])
                     </div>
                     <div class="form-group">
-                      <label>Confirm Password</label>
+                      <label>{{__('Confirm Password')}}</label>
                       <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary">{{__('Update')}}</button>
                   </form>
                 </div>
               </div>
@@ -55,7 +55,7 @@
           <div class="card">
               <div class="card-body">
                   <p class="card-header">
-                      <b>User</b>
+                      <b>{{__('User')}}</b>
                   </p>
                   <div class="card-body">
                       <p><b>User Name:</b> This field is required. It is a text field with character limit of 6-255 characters </p>

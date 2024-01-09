@@ -23,12 +23,12 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
-                                <th>{{ _('Name') }}</th>
-                                <th>{{ _('Email') }}</th>
-                                <th>{{ _('Status') }}</th>
-                                <th>{{ _('Creation date') }}</th>
-                                <th>{{ _('Created by') }}</th>
-                                <th>{{ _('Action') }}</th>
+                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created by') }}</th>
+                                <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,7 +73,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ _('Pharmacy Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Pharmacy Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -51,7 +51,7 @@
     <div class="row">
         <div class="col-12">
             <div class="dashboard_wrap d-flex flex-column justify-content-center align-items-center">
-                <h2>{{_('DASHBOARD')}}</h2>
+                <h2>{{__('DASHBOARD')}}</h2>
             </div>
         </div>
     </div>
