@@ -106,3 +106,16 @@ function admin(){
 }
 
 
+function mainMenuCheck($slugs){
+    $check = false;
+    foreach($slugs as $slug){
+                $check = check_access_by_route_name($slug);
+                if($check == true){
+                    break;
+                }
+                
+        }
+    return $check;
+}
+
+
