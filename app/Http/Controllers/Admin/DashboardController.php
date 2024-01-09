@@ -14,7 +14,8 @@ class DashboardController extends Controller
     public function __construct() {
         return $this->middleware('admin');
     }
-    public function dashboard(){
+    public function dashboard(): View
+    {
         return view('admin.dashboard.dashboard');
     }
 }

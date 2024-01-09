@@ -20,12 +20,14 @@ class UserKycSettingsController extends Controller
     }
 
 
-    public function kycSettings(){
+    public function kycSettings():View
+    {
         $s['kyc_setting'] = KycSetting::where('type','user')->first();
         return view('admin.user_management.kyc_settings.create',$s);
     }
 
-    public function kycSettingsUpdate(Request $request){
+    public function kycSettingsUpdate(Request $request): RedirectResponse
+    {
         $data = $this->prepareKycData($request);
 
         // Find an existing record or create a new one based on the status field
@@ -40,7 +42,8 @@ class UserKycSettingsController extends Controller
         return redirect()->route('um.user_kyc.user_kyc_settings')->withStatus(__('KYC settings updated successfully.'));
     }
     
-    private function prepareKycData(Request $request) {
+    private function prepareKycData(Request $request): array
+    {
         $data = [];
         foreach($request->formdata as $key => $formdata) {
             if(isset($formdata['field_name'])) {
@@ -59,7 +62,7 @@ class UserKycSettingsController extends Controller
     } 
 
 
-    private function convertOptionDataToArray($optionData)
+    private function convertOptionDataToArray($optionData): array
     {
         $optionsArray = [];
         $options = explode(';', $optionData);

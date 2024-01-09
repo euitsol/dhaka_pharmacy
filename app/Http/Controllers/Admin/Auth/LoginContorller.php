@@ -17,7 +17,7 @@ class LoginContorller extends Controller
         return view('admin.login');
     }
 
-    public function adminLoginCheck(Request $request)
+    public function adminLoginCheck(Request $request):RedirectResponse
     {
         $credentials = $request->only('email', 'password');
 
@@ -26,11 +26,12 @@ class LoginContorller extends Controller
         }
     }
 
-    public function pharmacyLogin(){
+    public function pharmacyLogin(): View
+    {
         return view('pharmacy.login');
     }
 
-    public function pharmacyLoginCheck(Request $request)
+    public function pharmacyLoginCheck(Request $request): RedirectResponse
     {
         $credentials = $request->only('email', 'password');
 
