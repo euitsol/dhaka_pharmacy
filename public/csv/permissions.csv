@@ -15,3 +15,8 @@ user_list,admin,User
 user_create,admin,User
 user_edit,admin,User
 user_delete,admin,User
+user_kyc_settings,admin,"User KYC Settings"
+user_kyc_list,admin,"User KYC"
+user_kyc_create,admin,"User KYC"
+user_kyc_edit,admin,"User KYC"
+user_kyc_delete,admin,"User KYC"
