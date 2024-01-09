@@ -104,6 +104,9 @@ function timeFormate($time){
 function admin(){
     return auth()->guard('admin')->user();
 }
+function pharmacy(){
+    return auth()->guard('pharmacy')->user();
+}
 
 
 function mainMenuCheck($slugs){

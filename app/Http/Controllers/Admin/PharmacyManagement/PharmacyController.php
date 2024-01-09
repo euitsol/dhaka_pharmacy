@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Http\Controllers\Admin\PharmacyManagement;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+
+class PharmacyController extends Controller
+{
+    //
+
+    public function __construct() {
+        return $this->middleware('admin');
+    }
+
+    // public function details($id): JsonResponse
+    // {
+    //     $data = User::with('role')->findOrFail($id);
+    //     $data->creating_time = timeFormate($data->created_at);
+    //     $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
+    //     $data->created_by = $data->created_by ? $data->created_user->name : 'System';
+    //     $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
+    //     return response()->json($data);
+    // }
+}

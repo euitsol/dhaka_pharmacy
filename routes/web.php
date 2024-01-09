@@ -6,12 +6,13 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Admin\AdminManagement\AdminController;
 use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
-use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
+use App\Http\Controllers\Admin\Auth\LoginContorller as LoginManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserManagement\KycSettingsController as UserKycController;
 use App\Http\Controllers\Admin\UserManagement\SubmittedKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
-use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\Pharmacy\PharmacyProfileController;
+use App\Http\Controllers\User\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,11 +32,16 @@ Route::get('/', function () {
 
 
 Auth::routes();
-Route::get('/admin/login', [AdminLoginController::class, 'adminLogin'])->name('admin.login');
-Route::post('/admin/login', [AdminLoginController::class, 'adminLoginCheck'])->name('admin.login');
+// Admin Login Routes 
+Route::get('/admin/login', [LoginManagementController::class, 'adminLogin'])->name('admin.login');
+Route::post('/admin/login', [LoginManagementController::class, 'adminLoginCheck'])->name('admin.login');
+
+// Pharmacy Login Routes 
+Route::get('/pharmacy/login', [LoginManagementController::class, 'pharmacyLogin'])->name('pharmacy.login');
+Route::post('/pharmacy/login', [LoginManagementController::class, 'pharmacyLoginCheck'])->name('pharmacy.login');
 
 
-// Overwrite Default Routes
+// Overwrite Default Authentication Routes
 
 Route::prefix('user')->group(function () {
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
@@ -139,6 +145,9 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 	
 });
 Route::group(['middleware' => 'auth','prefix'=>'user'], function () {
-	Route::get('/profile', [ProfileController::class, 'profile'])->name('user.profile');
+	Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
+});
+Route::group(['middleware' => 'pharmacy','prefix'=>'pharmacy'], function () {
+	Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('pharmacy.profile');
 });
 

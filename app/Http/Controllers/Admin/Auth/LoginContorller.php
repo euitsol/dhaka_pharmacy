@@ -26,5 +26,18 @@ class LoginContorller extends Controller
         }
     }
 
+    public function pharmacyLogin(){
+        return view('pharmacy.login');
+    }
+
+    public function pharmacyLoginCheck(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('pharmacy')->attempt($credentials)) {
+            return redirect()->route('pharmacy.profile');
+        }
+    }
+
     
 }
