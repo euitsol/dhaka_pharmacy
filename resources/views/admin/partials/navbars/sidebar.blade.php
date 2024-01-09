@@ -135,6 +135,16 @@
                     </div>
                 </li>
             @endif
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'site_settings',
+                        'routeName' => 'settings.site_settings',
+                        'iconClass' => 'fa-solid fa-gears',
+                        'label' => 'Site Settings',
+                    ],
+                ],
+            ])
         </ul>
     </div>
 </div>

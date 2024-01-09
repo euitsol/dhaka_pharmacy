@@ -121,4 +121,23 @@ function mainMenuCheck($slugs){
     return $check;
 }
 
+function availableTimezones(){
+    $timezones = [];
+    $timezoneIdentifiers = DateTimeZone::listIdentifiers();
+
+    foreach ($timezoneIdentifiers as $timezoneIdentifier) {
+        $timezone = new DateTimeZone($timezoneIdentifier);
+        $offset = $timezone->getOffset(new DateTime());
+        $offsetPrefix = $offset < 0 ? '-' : '+';
+        $offsetFormatted = gmdate('H:i', abs($offset));
+
+        $timezones[] = [
+            'timezone' => $timezoneIdentifier,
+            'name' => "(UTC $offsetPrefix$offsetFormatted) $timezoneIdentifier",
+        ];
+    }
+
+    return $timezones;
+}
+
 
