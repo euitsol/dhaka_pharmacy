@@ -17,12 +17,26 @@ class LoginContorller extends Controller
         return view('admin.login');
     }
 
-    public function adminLoginCheck(Request $request)
+    public function adminLoginCheck(Request $request):RedirectResponse
     {
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
             return redirect()->route('dashboard');
+        }
+    }
+
+    public function pharmacyLogin(): View
+    {
+        return view('pharmacy.login');
+    }
+
+    public function pharmacyLoginCheck(Request $request): RedirectResponse
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('pharmacy')->attempt($credentials)) {
+            return redirect()->route('pharmacy.profile');
         }
     }
 

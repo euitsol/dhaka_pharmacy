@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'user_kyc_list'])
+@extends('admin.layouts.master', ['pageSlug' => 'pharmacy'])
 
 @section('content')
     <div class="row">
@@ -7,15 +7,15 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">User KYC List</h4>
+                            <h4 class="card-title">Pharmacy List</h4>
                         </div>
-                        {{-- <div class="col-4 text-right">
+                        <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'um.user.user_kyc_create',
+                                'routeName' => 'pm.pharmacy.pharmacy_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add User',
+                                'label' => 'Add Pharmacy',
                             ])
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -23,36 +23,34 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
-                                <th>{{ __('Type') }}</th>
+                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Email') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th colspan="{{count($count)}}">{{ __('Submitted data') }}</th>
                                 <th>{{ __('Creation date') }}</th>
-                                <th>{{ __('Submitted by') }}</th>
+                                <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($datas as $data)
+                            @foreach ($pharmacies as $pharmacy)
                                 <tr>
-                                    <td> {{ $data->type }} </td>
+                                    <td> {{ $pharmacy->name }} </td>
+                                    <td> {{ $pharmacy->email }} </td>
                                     <td>
                                         <span
-                                            class="badge {{ $data->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $data->status == 1 ? 'Active' : 'Deactive' }}</span>
+                                            class="badge {{ $pharmacy->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $pharmacy->status == 1 ? 'Active' : 'Disabled' }}</span>
                                     </td>
-                                    @foreach(json_decode($data->submitted_data,true) as $sd)
-                                        <td>data</td>
-                                    @endforeach
-                                    <td>{{ timeFormate($data->created_at) }}</td>
+                                    <td>{{ timeFormate($pharmacy->created_at) }}</td>
 
-                                    <td> {{ $data->createdBy->name ?? 'system' }} </td>
+                                    <td> {{ $pharmacy->createdBy->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'um.user.status.user_edit',   'params' => [$user->id], 'label' => $user->getBtnStatus()],
+                                                    ['routeName' => 'pm.pharmacy.status.pharmacy_edit',   'params' => [$pharmacy->id], 'label' => $pharmacy->getBtnStatus()],
 
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$user->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $user->id ],
-                                                    ['routeName' => 'um.user.user_edit',   'params' => [$user->id], 'label' => 'Update'],
-                                                    ['routeName' => 'um.user.user_delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'javascript:void(0)',  'params' => [$pharmacy->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $pharmacy->id ],
+                                                    ['routeName' => 'pm.pharmacy.pharmacy_edit',   'params' => [$pharmacy->id], 'label' => 'Update'],
+                                                    ['routeName' => 'pm.pharmacy.pharmacy_delete', 'params' => [$pharmacy->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])
                                     </td>
@@ -70,12 +68,12 @@
         </div>
     </div>
 
-    {{-- User Details Modal  --}}
+    {{-- Pharmacy Details Modal  --}}
     <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('User Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Pharmacy Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -92,7 +90,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('um.user.details.user_list', ['id']) }}");
+                let url = ("{{ route('pm.pharmacy.details.pharmacy_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -145,7 +143,7 @@
                         $('.view_modal').modal('show');
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error fetching user data:', error);
+                        console.error('Error fetching pharmacy data:', error);
                     }
                 });
             });

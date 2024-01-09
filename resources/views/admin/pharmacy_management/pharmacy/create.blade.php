@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'admin'])
+@extends('admin.layouts.master', ['pageSlug' => 'pharmacy'])
 
 @section('content')
     <div class="row px-3 pt-3">
@@ -7,11 +7,11 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Create Admin') }}</h4>
+                            <h4 class="card-title">{{ __('Create Pharmacy') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'am.admin.admin_list',
+                                'routeName' => 'pm.pharmacy.pharmacy_list',
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
                             ])
@@ -19,43 +19,32 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('am.admin.admin_create') }}">
+                    <form method="POST" action="{{ route('pm.pharmacy.pharmacy_create') }}">
                         @csrf
                         <div class="form-group">
 
-                            <label>{{__('Name')}}</label>
+                            <label>Name</label>
                             <input type="text" name="name" class="form-control" placeholder="Enter name"
                                 value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>{{__('Email')}}</label>
+                            <label>Email</label>
                             <input type="email" name="email" class="form-control" placeholder="Enter email"
                                 value="{{ old('email') }}">
                             @include('alerts.feedback', ['field' => 'email'])
                         </div>
-                        <div class="form-group {{ $errors->has('role') ? ' has-danger' : '' }}">
-                            <label>{{ __('Role') }}</label>
-                            <select name="role" class="form-control {{ $errors->has('role') ? ' is-invalid' : '' }}">
-                                <option selected hidden>{{ __('Select Role') }}</option>
-                                @foreach ($roles as $role)
-                                    <option {{ old('role') == $role->id ? 'selected' : '' }} value="{{ $role->id }}">
-                                        {{ $role->name }}</option>
-                                @endforeach
-                            </select>
-                            @include('alerts.feedback', ['field' => 'role'])
-                        </div>
                         <div class="form-group">
-                            <label>{{__('Password')}}</label>
+                            <label>Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Enter new password">
                             @include('alerts.feedback', ['field' => 'password'])
                         </div>
                         <div class="form-group">
-                            <label>{{__('Confirm Password')}}</label>
+                            <label>Confirm Password</label>
                             <input type="password" name="password_confirmation" class="form-control"
                                 placeholder="Confirm password">
                         </div>
-                        <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
                     </form>
                 </div>
             </div>
@@ -64,10 +53,10 @@
             <div class="card">
                 <div class="card-body">
                     <p class="card-header">
-                        <b>{{__('User')}}</b>
+                        <b>Pharmacy</b>
                     </p>
                     <div class="card-body">
-                        <p><b>User Name:</b> This field is required. It is a text field with character limit of 6-255 characters </p>
+                        <p><b>Pharmacy Name:</b> This field is required. It is a text field with character limit of 6-255 characters </p>
 
                         <p><b>Email:</b> This field is required and unique. It is a email field with a maximum character limit of 255. The entered value must follow the standard email format (e.g., user@example.com).</p>
 

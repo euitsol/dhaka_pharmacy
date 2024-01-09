@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">Admin List</h4>
+                            <h4 class="card-title">{{__('Admin List')}}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -23,13 +23,13 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
-                                <th>{{ _('Name') }}</th>
-                                <th>{{ _('Email') }}</th>
-                                <th>{{ _('Role') }}</th>
-                                <th>{{ _('Status') }}</th>
-                                <th>{{ _('Creation date') }}</th>
-                                <th>{{ _('Created by') }}</th>
-                                <th>{{ _('Action') }}</th>
+                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Role') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created by') }}</th>
+                                <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,7 +74,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ _('Admin Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Admin Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -9,6 +9,8 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
+
+    
     public function statusChange($modelData)
     {
         if($modelData->status == 1){

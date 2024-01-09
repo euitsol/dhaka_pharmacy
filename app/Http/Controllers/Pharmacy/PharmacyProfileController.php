@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Pharmacy;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -9,13 +9,17 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class DashboardController extends Controller
+class PharmacyProfileController extends Controller
 {
+    //
+
     public function __construct() {
-        return $this->middleware('admin');
+        return $this->middleware('pharmacy');
     }
-    public function dashboard(): View
+
+    public function profile():View
     {
-        return view('admin.dashboard.dashboard');
+        return view('pharmacy.profile');
     }
+
 }

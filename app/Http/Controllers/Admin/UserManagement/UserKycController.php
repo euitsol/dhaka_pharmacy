@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class SubmittedKycController extends Controller
+class UserKycController extends Controller
 {
     //
 
@@ -18,8 +18,9 @@ class SubmittedKycController extends Controller
         return $this->middleware('admin');
     }
 
-    public function index(){
-        $s['datas'] = SubmittedKyc::all();
+    public function index():View
+    {
+        $s['datas'] = SubmittedKyc::where('type','user')->latest()->get();
         $s['count']= $s['datas']->map(function($data){
             return count(json_decode($data->submitted_data,true));
         });

@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class ProfileController extends Controller
+class UserProfileController extends Controller
 {
     public function __construct() {
         return $this->middleware('auth');
     }
 
-    public function profile(){
+    public function profile():View
+    {
         return view('user.profile');
     }
 }

@@ -1,8 +1,8 @@
 <div class="sidebar">
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="{{ route('dashboard') }}" class="simple-text logo-mini">{{ _('DP') }}</a>
-            <a href="{{ route('dashboard') }}" class="simple-text logo-normal">{{ _('Dhaka Pharmacy') }}</a>
+            <a href="{{ route('dashboard') }}" class="simple-text logo-mini">{{ __('DP') }}</a>
+            <a href="{{ route('dashboard') }}" class="simple-text logo-normal">{{ __('Dhaka Pharmacy') }}</a>
         </div>
         <ul class="nav">
             @include('admin.partials.menu_buttons', [
@@ -53,38 +53,79 @@
                 </div>
             </li>
             {{-- User Management --}}
-            {{-- {{dd(mainMenuCheck(['user','kyc_list','user_kyc_settings']))}} --}}
-            @if(mainMenuCheck(['user','kyc_list','user_kyc_settings']))
+            @if(mainMenuCheck(['user','user_kyc_list','user_kyc_settings']))
                 <li>
-                    <a class="@if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'kyc_list' || $pageSlug == 'user_kyc_settings') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'user_kyc_list' || $pageSlug == 'user_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#user-management"
-                        @if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'kyc_list' || $pageSlug == 'user_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'user_kyc_list' || $pageSlug == 'user_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-link-text">{{ __('User Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'kyc_list' || $pageSlug == 'user_kyc_settings') show @endif" id="user-management">
+                    <div class="collapse @if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'user_kyc_list' || $pageSlug == 'user_kyc_settings') show @endif" id="user-management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
                                     ['pageSlug' => 'user', 'routeName' => 'um.user.user_list', 'label' => 'Users'],
                             
                                     [
-                                        'pageSlug' => ['kyc_list', 'user_kyc_settings'],
+                                        'pageSlug' => ['user_kyc_list', 'user_kyc_settings'],
                                         'routeName' => 'submenu',
                                         'label' => 'KYC Verification Center',
-                                        'id' => 'kyc',
+                                        'id' => 'user_kyc',
                                         'subMenu' => [
                                             [
                                                 'subLabel' => 'KYC List',
                                                 'subRouteName' => 'um.user_kyc.kyc_list.user_kyc_list',
-                                                'subPageSlug' => 'kyc_list',
+                                                'subPageSlug' => 'user_kyc_list',
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
                                                 'subRouteName' => 'um.user_kyc.user_kyc_settings',
                                                 'subPageSlug' => 'user_kyc_settings',
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
+            {{-- Pharmacy Management --}}
+            @if(mainMenuCheck(['pharmacy','pharmacy_kyc_list','pharmacy_kyc_settings']))
+                <li>
+                    <a class="@if ($pageSlug == 'pharmacy' || $pageSlug == 'kyc' || $pageSlug == 'pharmacy_kyc_list' || $pageSlug == 'pharmacy_kyc_settings') @else collapsed @endif" data-toggle="collapse"
+                        href="#pharmacy-management"
+                        @if ($pageSlug == 'pharmacy' || $pageSlug == 'kyc' || $pageSlug == 'pharmacy_kyc_list' || $pageSlug == 'pharmacy_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-kit-medical"></i>
+                        <span class="nav-link-text">{{ __('Pharmacy Management') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'pharmacy' || $pageSlug == 'kyc' || $pageSlug == 'pharmacy_kyc_list' || $pageSlug == 'pharmacy_kyc_settings') show @endif" id="pharmacy-management">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    ['pageSlug' => 'pharmacy', 'routeName' => 'pm.pharmacy.pharmacy_list', 'label' => 'Pharmacies'],
+                            
+                                    [
+                                        'pageSlug' => ['pharmacy_kyc_list', 'pharmacy_kyc_settings'],
+                                        'routeName' => 'submenu',
+                                        'label' => 'KYC Verification Center',
+                                        'id' => 'pharmacy_kyc',
+                                        'subMenu' => [
+                                            [
+                                                'subLabel' => 'KYC List',
+                                                'subRouteName' => 'pm.pharmacy_kyc.kyc_list.pharmacy_kyc_list',
+                                                'subPageSlug' => 'pharmacy_kyc_list',
+                                            ],
+                                            [
+                                                'subLabel' => 'KYC Settings',
+                                                'subRouteName' => 'pm.pharmacy_kyc.pharmacy_kyc_settings',
+                                                'subPageSlug' => 'pharmacy_kyc_settings',
                                             ],
                                         ],
                                     ],

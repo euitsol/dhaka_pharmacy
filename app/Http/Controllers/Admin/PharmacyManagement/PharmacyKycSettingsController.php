@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\UserManagement;
+namespace App\Http\Controllers\Admin\PharmacyManagement;
 
 use App\Http\Controllers\Controller;
 use App\Models\KycSetting;
@@ -11,36 +11,39 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class KycSettingsController extends Controller
+class PharmacyKycSettingsController extends Controller
 {
-    //
+     //
 
-    public function __construct() {
+     public function __construct() {
         return $this->middleware('admin');
     }
 
 
-    public function kycSettings(){
-        $s['kyc_setting'] = KycSetting::where('type','user')->first();
-        return view('admin.user_management.kyc_settings.create',$s);
+    public function kycSettings():View
+    {
+        $s['kyc_setting'] = KycSetting::where('type','pharmacy')->first();
+        return view('admin.pharmacy_management.kyc_settings.create',$s);
     }
 
-    public function kycSettingsUpdate(Request $request){
+    public function kycSettingsUpdate(Request $request):RedirectResponse
+    {
         $data = $this->prepareKycData($request);
 
         // Find an existing record or create a new one based on the status field
         KycSetting::updateOrCreate(
-            ['type' => 'user'],
+            ['type' => 'pharmacy'],
             [
                 'status' => $request->status,
                 'form_data' => json_encode($data),
             ]
         );
     
-        return redirect()->route('um.user_kyc.user_kyc_settings')->withStatus(__('KYC settings updated successfully.'));
+        return redirect()->route('pm.pharmacy_kyc.pharmacy_kyc_settings')->withStatus(__('KYC settings updated successfully.'));
     }
     
-    private function prepareKycData(Request $request) {
+    private function prepareKycData(Request $request):array
+    {
         $data = [];
         foreach($request->formdata as $key => $formdata) {
             if(isset($formdata['field_name'])) {
@@ -59,7 +62,7 @@ class KycSettingsController extends Controller
     } 
 
 
-    private function convertOptionDataToArray($optionData)
+    private function convertOptionDataToArray($optionData):array
     {
         $optionsArray = [];
         $options = explode(';', $optionData);
@@ -75,5 +78,4 @@ class KycSettingsController extends Controller
 
         return $optionsArray;
     }
-
 }

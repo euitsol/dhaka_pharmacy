@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-            'am.','um.'
+            'am.','um.','pm.'
         ];
 }
 
@@ -103,6 +103,9 @@ function timeFormate($time){
 
 function admin(){
     return auth()->guard('admin')->user();
+}
+function pharmacy(){
+    return auth()->guard('pharmacy')->user();
 }
 
 
