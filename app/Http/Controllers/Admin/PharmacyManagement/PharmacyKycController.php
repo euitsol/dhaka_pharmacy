@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\UserManagement;
+namespace App\Http\Controllers\Admin\PharmacyManagement;
 
 use App\Http\Controllers\Controller;
 use App\Models\SubmittedKyc;
@@ -10,21 +10,19 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class SubmittedKycController extends Controller
+class PharmacyKycController extends Controller
 {
     //
-
     public function __construct() {
         return $this->middleware('admin');
     }
 
     public function index(){
-        $s['datas'] = SubmittedKyc::all();
+        $s['datas'] = SubmittedKyc::where('type','pharmacy')->latest()->get();
         $s['count']= $s['datas']->map(function($data){
             return count(json_decode($data->submitted_data,true));
         });
-        return view('admin.user_management.submitted_kyc.index',$s);
+        return view('admin.pharmacy_management.submitted_kyc.index',$s);
 
     }
-
 }

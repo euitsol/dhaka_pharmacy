@@ -8,9 +8,12 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\Auth\LoginContorller as LoginManagementController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\UserManagement\KycSettingsController as UserKycController;
-use App\Http\Controllers\Admin\UserManagement\SubmittedKycController;
+use App\Http\Controllers\Admin\UserManagement\UserKycSettingsController;
+use App\Http\Controllers\Admin\UserManagement\UserKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
+use App\Http\Controllers\Admin\PharmacyManagement\PharmacyController as AdminPharmacyController;
+use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycController;
+use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycSettingsController;
 use App\Http\Controllers\Pharmacy\PharmacyProfileController;
 use App\Http\Controllers\User\UserProfileController;
 
@@ -76,6 +79,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		return Response::download($filePath, $filename);
 	})->name('export.permissions');
 
+	// Admin Management Routes 
 	Route::group(['as' => 'am.', 'prefix' => 'admin-management'], function () {
 		Route::controller(AdminController::class, 'admin')->prefix('admin')->name('admin.')->group(function () {
 			Route::get('index', 'index')->name('admin_list');
@@ -107,6 +111,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 
 	});
 
+	// Admin User Management Routes 
 	Route::group(['as' => 'um.', 'prefix' => 'user-management'], function () {
 
 		Route::controller(AdminUserController::class, 'user')->prefix('user')->name('user.')->group(function () {
@@ -122,7 +127,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 
 		// KYC ROUTES 
 		Route::group(['as' => 'user_kyc.', 'prefix' => 'user-kyc'], function () {
-			Route::controller(SubmittedKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
+			Route::controller(UserKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
 				Route::get('index', 'index')->name('user_kyc_list');
 				Route::get('details/{id}', 'details')->name('details.user_kyc_list');
 				Route::get('create', 'create')->name('user_kyc_create');
@@ -133,8 +138,42 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 				Route::get('delete/{id}', 'delete')->name('user_kyc_delete');
 			});
 			
-			Route::get('/settings', [UserKycController::class, 'kycSettings'])->name('user_kyc_settings');
-			Route::post('/settings', [UserKycController::class, 'kycSettingsUpdate'])->name('user_kyc_settings');
+			Route::get('/settings', [UserKycSettingsController::class, 'kycSettings'])->name('user_kyc_settings');
+			Route::post('/settings', [UserKycSettingsController::class, 'kycSettingsUpdate'])->name('user_kyc_settings');
+
+		});
+	});
+
+
+	// Admin Pharmacy Management Routes 
+	Route::group(['as' => 'pm.', 'prefix' => 'pharmacy-management'], function () {
+
+		Route::controller(AdminPharmacyController::class, 'pharmacy')->prefix('pharmacy')->name('pharmacy.')->group(function () {
+			Route::get('index', 'index')->name('pharmacy_list');
+			Route::get('details/{id}', 'details')->name('details.pharmacy_list');
+			Route::get('create', 'create')->name('pharmacy_create');
+			Route::post('create', 'store')->name('pharmacy_create');
+			Route::get('edit/{id}', 'edit')->name('pharmacy_edit');
+			Route::put('edit/{id}', 'update')->name('pharmacy_edit');
+			Route::get('status/{id}', 'status')->name('status.pharmacy_edit');
+			Route::get('delete/{id}', 'delete')->name('pharmacy_delete');
+		});
+
+		// KYC ROUTES 
+		Route::group(['as' => 'pharmacy_kyc.', 'prefix' => 'pharmacy-kyc'], function () {
+			Route::controller(PharmacyKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
+				Route::get('index', 'index')->name('pharmacy_kyc_list');
+				Route::get('details/{id}', 'details')->name('details.pharmacy_kyc_list');
+				Route::get('create', 'create')->name('pharmacy_kyc_create');
+				Route::post('create', 'store')->name('pharmacy_kyc_create');
+				Route::get('edit/{id}', 'edit')->name('pharmacy_kyc_edit');
+				Route::put('edit/{id}', 'update')->name('pharmacy_kyc_edit');
+				Route::get('status/{id}', 'status')->name('status.pharmacy_kyc_edit');
+				Route::get('delete/{id}', 'delete')->name('pharmacy_kyc_delete');
+			});
+			
+			Route::get('/settings', [PharmacyKycSettingsController::class, 'kycSettings'])->name('pharmacy_kyc_settings');
+			Route::post('/settings', [PharmacyKycSettingsController::class, 'kycSettingsUpdate'])->name('pharmacy_kyc_settings');
 
 		});
 	});

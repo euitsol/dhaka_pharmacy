@@ -20,3 +20,12 @@ user_kyc_list,admin,"User KYC"
 user_kyc_create,admin,"User KYC"
 user_kyc_edit,admin,"User KYC"
 user_kyc_delete,admin,"User KYC"
+pharmacy_list,admin,Pharmacy
+pharmacy_create,admin,Pharmacy
+pharmacy_edit,admin,Pharmacy
+pharmacy_delete,admin,Pharmacy
+pharmacy_kyc_settings,admin,"User KYC Settings"
+pharmacy_kyc_list,admin,"Pharmacy KYC"
+pharmacy_kyc_create,admin,"Pharmacy KYC"
+pharmacy_kyc_edit,admin,"Pharmacy KYC"
+pharmacy_kyc_delete,admin,"Pharmacy KYC"

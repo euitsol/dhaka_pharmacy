@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'user_kyc_settings'])
+@extends('admin.layouts.master', ['pageSlug' => 'pharmacy_kyc_settings'])
 
 @section('title', 'KYC Settings')
 @push('css')
@@ -11,9 +11,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{ _('User KYC Settings') }}</h5>
+                    <h5 class="title">{{ _('Pharmacy KYC Settings') }}</h5>
                 </div>
-                <form method="POST" action="{{ route('um.user_kyc.user_kyc_settings') }}" autocomplete="off">
+                <form method="POST" action="{{ route('pm.pharmacy_kyc.pharmacy_kyc_settings') }}" autocomplete="off">
                     @csrf
                     {{-- @foreach ($kyc_setting as $key => $setting) --}}
                     <div class="card-body">
