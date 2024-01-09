@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleContro
 use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserManagement\KycSettingsController as UserKycController;
+use App\Http\Controllers\Admin\UserManagement\SubmittedKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
 use App\Http\Controllers\User\ProfileController;
 
@@ -115,7 +116,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 
 		// KYC ROUTES 
 		Route::group(['as' => 'user_kyc.', 'prefix' => 'user-kyc'], function () {
-			Route::controller(AdminUserController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
+			Route::controller(SubmittedKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
 				Route::get('index', 'index')->name('user_kyc_list');
 				Route::get('details/{id}', 'details')->name('details.user_kyc_list');
 				Route::get('create', 'create')->name('user_kyc_create');
