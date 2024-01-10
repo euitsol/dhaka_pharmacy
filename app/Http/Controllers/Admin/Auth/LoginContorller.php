@@ -32,7 +32,7 @@ class LoginContorller extends Controller
     public function pharmacyLogin(): View
     {
         if (Auth::guard('pharmacy')->check()) {
-            return redirect()->route('dashboard');
+            return redirect()->route('pharmacy.profile');
         }
         return view('pharmacy.login');
     }
