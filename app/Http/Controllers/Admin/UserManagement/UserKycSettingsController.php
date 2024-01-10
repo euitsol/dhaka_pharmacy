@@ -30,11 +30,11 @@ class UserKycSettingsController extends Controller
     {
         $data = $this->prepareKycData($request);
 
-        // Find an existing record or create a new one based on the status field
+        $status = $request->status ?? 1;
         KycSetting::updateOrCreate(
             ['type' => 'user'],
             [
-                'status' => $request->status,
+                'status' => $status,
                 'form_data' => json_encode($data),
             ]
         );
