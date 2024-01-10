@@ -45,18 +45,21 @@ class UserKycSettingsController extends Controller
     private function prepareKycData(Request $request): array
     {
         $data = [];
-        foreach($request->formdata as $key => $formdata) {
-            if(isset($formdata['field_name'])) {
-                $data[$key]['field_key'] = Str::slug($formdata['field_name']);
-                $data[$key]['field_name'] = $formdata['field_name'];
-                $data[$key]['type'] = $formdata['type'];
-                $data[$key]['required'] = $formdata['required'];
-    
-                if($formdata['type'] == 'option') {
-                    $data[$key]['option_data']  = $this->convertOptionDataToArray($formdata['option_data']) ?? [];
+        if(!is_null($request->formdata)){
+            foreach($request->formdata as $key => $formdata) {
+                if(isset($formdata['field_name'])) {
+                    $data[$key]['field_key'] = Str::slug($formdata['field_name']);
+                    $data[$key]['field_name'] = $formdata['field_name'];
+                    $data[$key]['type'] = $formdata['type'];
+                    $data[$key]['required'] = $formdata['required'];
+        
+                    if($formdata['type'] == 'option') {
+                        $data[$key]['option_data']  = $this->convertOptionDataToArray($formdata['option_data']) ?? [];
+                    }
                 }
             }
         }
+        
     
         return $data;
     } 
