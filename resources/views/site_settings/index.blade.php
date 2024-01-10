@@ -48,7 +48,7 @@
                                         <label>{{ _('Site Short Name') }}</label>
                                         <input type="text" name="site_short_name"
                                             class="form-control{{ $errors->has('site_short_name') ? ' is-invalid' : '' }} "
-                                            placeholder="{{ _('Site Name') }}"
+                                            placeholder="{{ _('Site Short Name') }}"
                                             value="{{ $SiteSettings['site_short_name'] ?? '' }}">
                                         @include('alerts.feedback', ['field' => 'site_short_name'])
                                     </div>
@@ -68,10 +68,9 @@
 
                                     <div class="form-group{{ $errors->has('site_logo') ? ' has-danger' : '' }}">
                                         <label>{{ _('Site Logo') }}</label>
-
                                         <input type="file" name="site_logo"
-                                            class="form-control image-upload {{ $errors->has('site_logo') ? ' is-invalid' : '' }}"
-                                            @if (isset($SiteSettings['site_logo'])) data-existing-files="{{ storage_url($SiteSettings['site_logo']) }}" @endif
+                                            class="form-control {{ $errors->has('site_logo') ? ' is-invalid' : '' }} image-upload"
+                                            @if (isset($SiteSettings['site_logo'])) data-existing-files="{{ storage_url($SiteSettings['site_logo']) }}" data-delete-url="" @endif
                                             accept="image/*">
                                         @include('alerts.feedback', ['field' => 'site_logo'])
                                     </div>
@@ -80,8 +79,8 @@
                                         <label>{{ _('Site Favicon 16*16') }}</label>
 
                                         <input type="file" name="site_favicon"
-                                            class="form-control image-upload {{ $errors->has('site_favicon') ? ' is-invalid' : '' }}"
-                                            @if (isset($SiteSettings['site_favicon'])) data-existing-files="{{ storage_url($SiteSettings['site_favicon']) }}" @endif
+                                            class="form-control {{ $errors->has('site_favicon') ? ' is-invalid' : '' }} image-upload"
+                                            @if (isset($SiteSettings['site_favicon'])) data-existing-files="{{ storage_url($SiteSettings['site_favicon']) }}" data-delete-url="{{ storage_url($SiteSettings['site_favicon']) }}" @endif
                                             accept="image/*">
                                         @include('alerts.feedback', ['field' => 'site_favicon'])
                                     </div>
