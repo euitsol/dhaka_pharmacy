@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\PharmacyManagement\PharmacyController as AdminPha
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycController;
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycSettingsController;
 use App\Http\Controllers\Pharmacy\PharmacyProfileController;
+use App\Http\Controllers\SiteSettingsController;
 use App\Http\Controllers\User\UserProfileController;
 
 /*
@@ -178,14 +179,21 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		});
 	});
 
+	// Site Settings
+	Route::controller(SiteSettingsController::class, 'site-settings')->prefix('site-settings')->name('settings.')->group(function () {
+		Route::get('index', 'index')->name('site_settings');
+		Route::post('index', 'store')->name('site_settings');
+	});
 
-
-
-	
 });
+
+// User Routes 
 Route::group(['middleware' => 'auth','prefix'=>'user'], function () {
 	Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
 });
+
+
+// Pharmacy Routes 
 Route::group(['middleware' => 'pharmacy','prefix'=>'pharmacy'], function () {
 	Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('pharmacy.profile');
 });

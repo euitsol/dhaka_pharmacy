@@ -14,6 +14,9 @@ use Illuminate\View\View;
 class LoginContorller extends Controller
 {
     public function adminLogin(){
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('dashboard');
+        }
         return view('admin.login');
     }
 
@@ -28,6 +31,9 @@ class LoginContorller extends Controller
 
     public function pharmacyLogin(): View
     {
+        if (Auth::guard('pharmacy')->check()) {
+            return redirect()->route('pharmacy.profile');
+        }
         return view('pharmacy.login');
     }
 
