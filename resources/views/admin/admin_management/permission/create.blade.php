@@ -18,17 +18,17 @@
                   <form  method="POST" action="{{route('am.permission.permission_create')}}">
                     @csrf
                     <div class="form-group">
-                      <label>{{_('Name')}}</label>
+                      <label>{{__('Name')}}</label>
                       <input type="text" name="name" class="form-control" placeholder="Enter permission name" value="{{old('name')}}">
                       @include('alerts.feedback', ['field' => 'name'])
                     </div>
                     <div class="form-group">
-                      <label>{{_('Prefix')}}</label>
+                      <label>{{__('Prefix')}}</label>
                       <input type="text" name="prefix" class="form-control" placeholder="Enter permission prefix" value="{{old('prefix')}}">
                       @include('alerts.feedback', ['field' => 'prefix'])
                     </div>
 
-                    <button type="submit" class="btn btn-primary">{{_('Create')}}</button>
+                    <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
                   </form>
                 </div>
               </div>
@@ -37,7 +37,7 @@
           <div class="card">
               <div class="card-body">
                   <p class="card-header">
-                      <b>User</b>
+                      <b>{{__('User')}}</b>
                   </p>
                   <div class="card-body">
                       <p><b>User Name:</b> This field is required. It is a text field with character limit of 6-255

@@ -51,7 +51,7 @@
                     <div class="card-body">
                         <div class="form-group">
 
-                            <label>Name</label>
+                            <label>{{__('Name')}}</label>
                             <input type="text" name="name" class="form-control" placeholder="Enter role name"
                                 value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
@@ -84,7 +84,7 @@
 
                     </div>
                     <div class="card-footer">
-                      <button type="submit" class="btn btn-fill btn-primary">{{ _('Create') }}</button>
+                      <button type="submit" class="btn btn-fill btn-primary">{{ __('Create') }}</button>
                   </div>
                 </form>
             </div>
@@ -93,7 +93,7 @@
             <div class="card">
                 <div class="card-body">
                     <p class="card-header">
-                        <b>User</b>
+                        <b>{{__('User')}}</b>
                     </p>
                     <div class="card-body">
                         <p><b>User Name:</b> This field is required. It is a text field with character limit of 6-255

@@ -6,6 +6,9 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <title> @yield('title', 'Dhakha Pharmacy') - Dhakha Pharmacy </title>
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{storage_url(settings('site_favicon'))}}">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Favicon-->
     <link rel="icon" href="" type="image/png">

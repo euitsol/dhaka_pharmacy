@@ -55,10 +55,9 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group {{ $errors->has('name') ? ' has-danger' : '' }}">
-                            <label>{{ _('Role Name') }}</label>
+                            <label>{{ __('Name') }}</label>
                             <input type="text" name="name"
-                                class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                placeholder="{{ _('Name') }}" value="{{ $role->name }}">
+                                class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ $role->name }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="row">
@@ -94,7 +93,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-fill btn-primary">{{ _('Update') }}</button>
+                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
                     </div>
                 </form>
             </div>
@@ -103,7 +102,7 @@
             <div class="card">
                 <div class="card-body">
                     <p class="card-header">
-                        <b>User</b>
+                        <b>{{__('User')}}</b>
                     </p>
                     <div class="card-body">
                         <p><b>User Name:</b> This field is required. It is a text field with character limit of 6-255

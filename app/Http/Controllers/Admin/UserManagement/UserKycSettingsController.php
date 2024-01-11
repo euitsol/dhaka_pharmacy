@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class KycSettingsController extends Controller
+class UserKycSettingsController extends Controller
 {
     //
 
@@ -20,19 +20,21 @@ class KycSettingsController extends Controller
     }
 
 
-    public function kycSettings(){
+    public function kycSettings():View
+    {
         $s['kyc_setting'] = KycSetting::where('type','user')->first();
         return view('admin.user_management.kyc_settings.create',$s);
     }
 
-    public function kycSettingsUpdate(Request $request){
+    public function kycSettingsUpdate(Request $request): RedirectResponse
+    {
         $data = $this->prepareKycData($request);
 
-        // Find an existing record or create a new one based on the status field
+        $status = $request->status ?? 1;
         KycSetting::updateOrCreate(
             ['type' => 'user'],
             [
-                'status' => $request->status,
+                'status' => $status,
                 'form_data' => json_encode($data),
             ]
         );
@@ -40,26 +42,30 @@ class KycSettingsController extends Controller
         return redirect()->route('um.user_kyc.user_kyc_settings')->withStatus(__('KYC settings updated successfully.'));
     }
     
-    private function prepareKycData(Request $request) {
+    private function prepareKycData(Request $request): array
+    {
         $data = [];
-        foreach($request->formdata as $key => $formdata) {
-            if(isset($formdata['field_name'])) {
-                $data[$key]['field_key'] = Str::slug($formdata['field_name']);
-                $data[$key]['field_name'] = $formdata['field_name'];
-                $data[$key]['type'] = $formdata['type'];
-                $data[$key]['required'] = $formdata['required'];
-    
-                if($formdata['type'] == 'option') {
-                    $data[$key]['option_data']  = $this->convertOptionDataToArray($formdata['option_data']) ?? [];
+        if(!is_null($request->formdata)){
+            foreach($request->formdata as $key => $formdata) {
+                if(isset($formdata['field_name'])) {
+                    $data[$key]['field_key'] = Str::slug($formdata['field_name']);
+                    $data[$key]['field_name'] = $formdata['field_name'];
+                    $data[$key]['type'] = $formdata['type'];
+                    $data[$key]['required'] = $formdata['required'];
+        
+                    if($formdata['type'] == 'option') {
+                        $data[$key]['option_data']  = $this->convertOptionDataToArray($formdata['option_data']) ?? [];
+                    }
                 }
             }
         }
+        
     
         return $data;
     } 
 
 
-    private function convertOptionDataToArray($optionData)
+    private function convertOptionDataToArray($optionData): array
     {
         $optionsArray = [];
         $options = explode(';', $optionData);

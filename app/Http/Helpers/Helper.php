@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
+use App\Models\SiteSetting;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-            'am.','um.'
+            'am.','um.','pm.','settings.'
         ];
 }
 
@@ -104,5 +105,45 @@ function timeFormate($time){
 function admin(){
     return auth()->guard('admin')->user();
 }
+function pharmacy(){
+    return auth()->guard('pharmacy')->user();
+}
 
+
+function mainMenuCheck($slugs){
+    $check = false;
+    foreach($slugs as $slug){
+                $check = check_access_by_route_name($slug);
+                if($check == true){
+                    break;
+                }
+                
+        }
+    return $check;
+}
+
+function availableTimezones(){
+    $timezones = [];
+    $timezoneIdentifiers = DateTimeZone::listIdentifiers();
+
+    foreach ($timezoneIdentifiers as $timezoneIdentifier) {
+        $timezone = new DateTimeZone($timezoneIdentifier);
+        $offset = $timezone->getOffset(new DateTime());
+        $offsetPrefix = $offset < 0 ? '-' : '+';
+        $offsetFormatted = gmdate('H:i', abs($offset));
+
+        $timezones[] = [
+            'timezone' => $timezoneIdentifier,
+            'name' => "(UTC $offsetPrefix$offsetFormatted) $timezoneIdentifier",
+        ];
+    }
+
+    return $timezones;
+}
+function settings($key){
+    $setting = SiteSetting::where('key',$key)->where('deleted_at', null)->first();
+    if($setting){
+        return $setting->value;
+    }
+}
 
