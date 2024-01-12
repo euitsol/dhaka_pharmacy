@@ -4,7 +4,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-8">
-                        <h4 class="card-title">{{ __('Create Admin') }}</h4>
+                        <h4 class="card-title">{{ __('Create Documentation') }}</h4>
                     </div>
                     <div class="col-4 text-right">
                         <a href="javascript:void(0)" wire:click="cancel()" class="btn btn-sm btn-primary">{{ __('Back') }}</a>
@@ -12,21 +12,22 @@
                 </div>
             </div>
             <div class="card-body">
-                <form>
-                    <input type="hidden" wire:model="post_id">
-                    <div class="form-group">
-                        <label>{{__('Title')}}</label>
-                        <input type="text" wire:model="title" class="form-control" placeholder="Enter name" value="{{ old('title') }}">
-                        @error('title') <span class="text-danger">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group">
-                        <label>{{__('Body')}}</label>
-                        <textarea type="text" class="form-control" wire:model="body" placeholder="Enter Body">{{ old('body') }}</textarea>
-                        @error('body') <span class="text-danger">{{ $message }}</span>@enderror
-                    </div>
-                    <button wire:click.prevent="store()" class="btn btn-primary">{{__('Update')}}</button>
-                    <button wire:click.prevent="cancel()" class="btn btn-danger">{{__('Cancel')}}</button>
-                </form>
+
+            <form>
+                <input type="hidden" wire:model="did">
+                <div class="form-group">
+                    <label>{{__('Module Key')}}</label>
+                    <input type="text" class="form-control" placeholder="Enter module key" wire:model="module_key">
+                    @error('module_key') <span class="text-danger">{{ $message }}</span>@enderror
+                </div>
+                <div class="form-group">
+                    <label>{{__('Documentation')}}</label>
+                    <textarea class="form-control" wire:model="documentation" placeholder="Enter documentation"></textarea>
+                    @error('body') <span class="text-danger">{{ $message }}</span>@enderror
+                </div>
+                <button wire:click.prevent="update()" class="btn btn-primary">{{__('Update')}}</button>
+                <button wire:click.prevent="cancel()" class="btn btn-danger">{{__('Cancel')}}</button>
+            </form>
             </div>
         </div>
     </div>
@@ -34,7 +35,7 @@
         <div class="card">
             <div class="card-body">
                 <p class="card-header">
-                    <b>{{__('Post')}}</b>
+                    <b>{{__('Documentation')}}</b>
                 </p>
                 <div class="card-body">
                     <p><b>User Name:</b> This field is required. It is a text field with character limit of 6-255 characters </p>

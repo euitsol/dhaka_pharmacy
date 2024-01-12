@@ -1,15 +1,9 @@
-@extends('admin.layouts.master', ['pageSlug' => 'posts'])
+@extends('admin.layouts.master', ['pageSlug' => 'documentation'])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            @livewire('posts')
+            @livewire('Documentation')
         </div>
     </div>
 @endsection
-
-
-
-
-
-

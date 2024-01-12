@@ -1,0 +1,9 @@
+<div>
+    @if($updateMode)
+        @include('livewire.documentation.update')
+    @elseif($createMode)
+        @include('livewire.documentation.create')
+    @else
+        @include('livewire.documentation.list')
+    @endif 
+</div>

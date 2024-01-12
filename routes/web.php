@@ -174,10 +174,10 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		Route::get('index', 'index')->name('site_settings');
 		Route::post('index', 'store')->name('site_settings');
 	});
-
-	Route::get('/posts', function () {
-		return view('admin.posts.index');
-	})->name('admin.posts');
+	
+	Route::get('/documentation', function () {
+		return view('admin.documentation.index');
+	})->name('admin.documentation');
 
 });
 

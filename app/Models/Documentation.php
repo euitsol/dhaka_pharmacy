@@ -9,4 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Documentation extends BaseModel
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = [
+        'module_key', 'documentation'
+    ];
 }

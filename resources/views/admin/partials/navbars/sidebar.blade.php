@@ -148,10 +148,10 @@
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [
                     [
-                        'pageSlug' => 'posts',
-                        'routeName' => 'admin.posts',
-                        'iconClass' => 'fa-solid fa-gears',
-                        'label' => 'Posts',
+                        'pageSlug' => 'documentation',
+                        'routeName' => 'admin.documentation',
+                        'iconClass' => 'fa-solid fa-folder-open',
+                        'label' => 'Documentation',
                     ],
                 ],
             ])

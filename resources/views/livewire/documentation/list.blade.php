@@ -2,10 +2,10 @@
     <div class="card-header">
         <div class="row">
             <div class="col-8">
-                <h4 class="card-title">{{__('Admin List')}}</h4>
+                <h4 class="card-title">{{__('Documentation List')}}</h4>
             </div>
             <div class="col-4 text-right">
-                <a href="javascript:void(0)" wire:click="create()" class="btn btn-sm btn-primary">{{ __('Add Posts') }}</a>
+                <a href="javascript:void(0)" wire:click="create()" class="btn btn-sm btn-primary">{{ __('Add Documentation') }}</a>
             </div>
         </div>
     </div>
@@ -19,17 +19,21 @@
             <thead>
                 <tr>
                     <th>{{__('SL')}}</th>
-                    <th>{{__('Title')}}</th>
-                    <th>{{__('Body')}}</th>
+                    <th>{{__('Module Key')}}</th>
+                    <th>{{__('Documentation')}}</th>
+                    <th>{{ __('Creation date') }}</th>
+                    <th>{{ __('Created by') }}</th>
                     <th>{{__('Action')}}</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($posts as $post)
+                @foreach($datas as $data)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $post->title }}</td>
-                    <td>{{ $post->body }}</td>
+                    <td>{{ $data->module_key }}</td>
+                    <td>{{ $data->documentation }}</td>
+                    <td>{{ timeFormate($data->created_at) }}</td> 
+                    <td>{{ $data->created_user->name ?? 'System' }}</td>
                     <td>
 
 
@@ -39,8 +43,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                 
-                                    <a class="dropdown-item" wire:click="edit({{ $post->id }})" href="javascript:void(0)">{{ __('Update') }}</a>
-                                    <a class="dropdown-item" wire:click="delete({{ $post->id }})" href="javascript:void(0)">{{ __('Delete') }}</a>
+                                    <a class="dropdown-item" wire:click="edit({{ $data->id }})" href="javascript:void(0)">{{ __('Update') }}</a>
+                                    <a class="dropdown-item" wire:click="delete({{ $data->id }})" href="javascript:void(0)">{{ __('Delete') }}</a>
                             </div>
                         </div>
                     </td>
