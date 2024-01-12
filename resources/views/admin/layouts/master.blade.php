@@ -2,16 +2,11 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <title> @yield('title', 'Dhakha Pharmacy') - Dhakha Pharmacy </title>
+    <!-- ... (other meta tags and title) ... -->
 
     <!-- Favicon -->
-    <link rel="icon" href="{{storage_url(settings('site_favicon'))}}">
+    <link rel="icon" href="{{ storage_url(settings('site_favicon')) }}">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Favicon-->
-    <link rel="icon" href="" type="image/png">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -23,7 +18,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     @stack('css')
-
+    @livewireStyles <!-- Include Livewire styles here -->
 </head>
 
 <body class="white-content dark {{ $class ?? '' }}">
@@ -32,18 +27,19 @@
             @include('admin.partials.navbars.sidebar')
             <div class="main-panel">
                 @include('admin.partials.navbars.navbar')
-                    <div class="content">
-                        @yield('content')
-                    </div>
+                <div class="content">
+                    @yield('content')
+                </div>
                 @include('admin.partials.footer')
             </div>
         @endauth
     </div>
+
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
 
-
+    <!-- jQuery and other scripts -->
     <script src="{{ asset('white') }}/js/core/jquery.min.js"></script>
     <script src="{{ asset('white') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('white') }}/js/core/bootstrap.min.js"></script>
@@ -54,10 +50,8 @@
     <script src="{{ asset('white') }}/js/color_change.js"></script>
     <script src="{{ asset('backend/js/custom.js') }}"></script>
     @stack('js_link')
-    @stack('js');
-
-
-
+    @stack('js')
+    @livewireScripts <!-- Include Livewire scripts here -->
 </body>
 
 </html>

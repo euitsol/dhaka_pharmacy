@@ -145,6 +145,16 @@
                     ],
                 ],
             ])
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'posts',
+                        'routeName' => 'admin.posts',
+                        'iconClass' => 'fa-solid fa-gears',
+                        'label' => 'Posts',
+                    ],
+                ],
+            ])
         </ul>
     </div>
 </div>

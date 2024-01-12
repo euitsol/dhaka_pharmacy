@@ -61,16 +61,6 @@ Route::prefix('user')->group(function () {
 });
 
 
-
-
-
-
-
-
-
-
-
-
 Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], function () {
 	Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
@@ -184,6 +174,10 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		Route::get('index', 'index')->name('site_settings');
 		Route::post('index', 'store')->name('site_settings');
 	});
+
+	Route::get('/posts', function () {
+		return view('admin.posts.index');
+	})->name('admin.posts');
 
 });
 
