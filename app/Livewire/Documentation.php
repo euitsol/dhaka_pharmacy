@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Http\Requests\DocumentationRequest;
 use App\Models\Documentation as ModelsDocumentation;
 use Livewire\Component;
 class Documentation extends Component
@@ -15,21 +16,19 @@ class Documentation extends Component
     public $createMode = false;
 
 
-    protected $rules = [
-        'module_key' => 'required',
-        'documentation' => 'required',
-    ];
-
-    public function updated($field)
+    protected function rules()
     {
-        $this->validateOnly($field);
+        if ($this->createMode) {
+            return (new DocumentationRequest())->storeRules();
+        } else {
+            return (new DocumentationRequest())->updateRules();
+        }
     }
 
     public function validateField($field)
     {
         $this->validateOnly($field);
     }
-
 
     public function render()
     {
