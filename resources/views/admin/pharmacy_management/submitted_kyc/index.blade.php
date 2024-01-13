@@ -25,7 +25,6 @@
                             <tr>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th colspan="{{count($count)}}">{{ __('Submitted data') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Submitted by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -39,12 +38,9 @@
                                         <span
                                             class="badge {{ $data->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $data->status == 1 ? 'Active' : 'Deactive' }}</span>
                                     </td>
-                                    @foreach(json_decode($data->submitted_data,true) as $sd)
-                                        <td>data</td>
-                                    @endforeach
                                     <td>{{ timeFormate($data->created_at) }}</td>
 
-                                    <td> {{ $data->createdBy->name ?? 'system' }} </td>
+                                    <td> {{ $data->created_user->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [

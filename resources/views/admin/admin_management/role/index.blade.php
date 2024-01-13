@@ -22,6 +22,7 @@
                                 <th>{{__('Name')}}</th>
                                 <th>{{__('Permission')}}</th>
                                 <th>{{__('Creation Date')}}</th>
+                                <th>{{__('Created By')}}</th>
                                 <th class="text-center">{{__('Action')}}</th>
                             </tr>
                         </thead>
@@ -31,6 +32,7 @@
                                 <td>{{$role->name}}</td>
                                 <td>{{$role->permissionNames}}</td>
                                 <td>{{timeFormate($role->created_at)}}</td>
+                                <td> {{ $role->created_user->name ?? 'system' }} </td>
                                 <td>
                                     @include('admin.partials.action_buttons', [
                                         'menuItems' => [

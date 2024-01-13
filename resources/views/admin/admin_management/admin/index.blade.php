@@ -44,7 +44,7 @@
                                     </td>
                                     <td>{{ timeFormate($admin->created_at) }}</td>
 
-                                    <td> {{ $admin->createdBy->name ?? 'system' }} </td>
+                                    <td> {{ $admin->created_user->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [

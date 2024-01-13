@@ -21,9 +21,6 @@ class UserKycController extends Controller
     public function index():View
     {
         $s['datas'] = SubmittedKyc::where('type','user')->latest()->get();
-        $s['count']= $s['datas']->map(function($data){
-            return count(json_decode($data->submitted_data,true));
-        });
         return view('admin.user_management.submitted_kyc.index',$s);
 
     }

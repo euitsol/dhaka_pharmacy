@@ -37,7 +37,7 @@ class Documentation extends Component
         ModelsDocumentation::create([
                 'module_key' => $this->module_key,
                 'documentation' => $this->documentation,
-                'created_by' => auth()->guard('admin')->user()->id,
+                'created_by' => admin()->id,
             ]);
 
         $this->createMode = false;
@@ -71,7 +71,7 @@ class Documentation extends Component
         $data->update([
             'module_key' => $this->module_key,
             'documentation' => $this->documentation,
-            'updated_by' => auth()->guard('admin')->user()->id,
+            'updated_by' => admin()->id,
         ]);
   
         $this->updateMode = false;
