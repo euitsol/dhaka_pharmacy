@@ -4,13 +4,19 @@ namespace App\Livewire;
 
 use App\Models\Documentation as ModelsDocumentation;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Documentation extends Component
 {
 
-    public $datas, $module_key, $documentation, $did;
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
+    public $datas, $module_key, $documentation, $did, $created_user, $creation_date, $updated_user, $updated_date;
     public $updateMode = false;
     public $createMode = false;
+
 
 
     public function render()
@@ -44,6 +50,30 @@ class Documentation extends Component
         session()->flash('message', 'Documentation Created Successfully.');
         $this->resetInputFields();
     }
+
+    public function show(int $did)
+    {
+        $data = ModelsDocumentation::find($did);
+        if($data){
+
+            $this->did = $data->did;
+            $this->module_key = $data->module_key;
+            $this->documentation = $data->documentation;
+            $this->created_user = $data->created_user->name ?? 'System';
+            $this->updated_user = $data->updated_user->name ?? 'N/A';
+            $this->creation_date = $data->created_at;
+            $this->updated_date = $data->updated_at ?? 'N/A';
+        }else{
+            $this->resetInputFields();
+            $this->dispatchBrowserEvent('close-modal');
+        }
+    }
+    public function closeModal()
+    {
+        $this->resetInputFields();
+    }
+
+
     public function edit($id)
     {
         $data = ModelsDocumentation::findOrFail($id);
