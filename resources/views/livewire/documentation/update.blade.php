@@ -7,7 +7,7 @@
                         <h4 class="card-title">{{ __('Create Documentation') }}</h4>
                     </div>
                     <div class="col-4 text-right">
-                        <a href="javascript:void(0)" wire:click="cancel()" class="btn btn-sm btn-primary">{{ __('Back') }}</a>
+                        <a href="javascript:void(0)" wire:loading.attr="disabled" wire:click="cancel()" class="btn btn-sm btn-primary">{{ __('Back') }}</a>
                     </div>
                 </div>
             </div>
@@ -25,8 +25,7 @@
                     <textarea class="form-control @error('documentation') is-invalid @enderror" wire:keyup="validateField('documentation')" wire:model="documentation" placeholder="Enter documentation"></textarea>
                     @error('documentation') <span class="text-danger">{{ $message }}</span>@enderror
                 </div>
-                <button type="submit" class="btn btn-primary">{{__('Update')}}</button>
-                <button wire:click.prevent="cancel()" class="btn btn-danger">{{__('Cancel')}}</button>
+                <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">{{__('Update')}}</button>
             </form>
             </div>
         </div>

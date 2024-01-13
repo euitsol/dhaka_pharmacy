@@ -178,6 +178,9 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 	Route::get('/documentation', function () {
 		return view('admin.documentation.index');
 	})->name('admin.documentation');
+	Route::get('/test', function () {
+		return view('admin.test.index');
+	})->name('admin.test');
 
 });
 

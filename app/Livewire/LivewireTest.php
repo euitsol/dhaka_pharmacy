@@ -2,16 +2,15 @@
 
 namespace App\Livewire;
 
-use App\Http\Requests\DocumentationRequest;
-use App\Models\Documentation as ModelsDocumentation;
+use App\Http\Requests\LivewireTestRequest;
 use Livewire\Component;
-class Documentation extends Component
+use App\Models\LivewireTest as Test;
+
+class LivewireTest extends Component
 {
-
-
     protected $paginationTheme = 'bootstrap';
 
-    public $datas, $module_key, $documentation, $did, $created_user, $creation_date, $updated_user, $updated_date;
+    public $datas, $name, $roll, $id, $created_user, $creation_date, $updated_user, $updated_date;
     public $updateMode = false;
     public $createMode = false;
 
@@ -19,9 +18,9 @@ class Documentation extends Component
     protected function rules()
     {
         if ($this->createMode) {
-            return (new DocumentationRequest())->storeRules();
+            return (new LivewireTestRequest())->storeRules();
         } else {
-            return (new DocumentationRequest())->updateRules();
+            return (new LivewireTestRequest())->updateRules($this->id);
         }
     }
 
@@ -30,18 +29,21 @@ class Documentation extends Component
         $this->validateOnly($field);
     }
 
+
     public function render()
     {
-        $this->datas = ModelsDocumentation::all();
-        return view('livewire.documentation.main');
+        $this->datas = Test::all();
+        return view('livewire.test.main');
     }
     public function refresh()
     {
-        $this->datas = ModelsDocumentation::all();
+        $this->datas = Test::all();
     }
+
+
     private function resetInputFields(){
-        $this->module_key = '';
-        $this->documentation = '';
+        $this->name = '';
+        $this->roll = '';
     }
     public function create()
     {
@@ -52,9 +54,9 @@ class Documentation extends Component
 
         $validatedData = $this->validate();
   
-        ModelsDocumentation::create([
-            'module_key' => $validatedData['module_key'],
-            'documentation' => $validatedData['documentation'],
+        Test::create([
+            'name' => $validatedData['name'],
+            'roll' => $validatedData['roll'],
             'created_by' => admin()->id,
         ]);
 
@@ -63,14 +65,14 @@ class Documentation extends Component
         $this->resetInputFields();
     }
 
-    public function show(int $did)
+    public function show(int $id)
     {
-        $data = ModelsDocumentation::find($did);
+        $data = Test::find($id);
         if($data){
 
-            $this->did = $data->did;
-            $this->module_key = $data->module_key;
-            $this->documentation = $data->documentation;
+            $this->id = $data->id;
+            $this->name = $data->name;
+            $this->roll = $data->roll;
             $this->created_user = $data->created_user->name ?? 'System';
             $this->updated_user = $data->updated_user->name ?? 'N/A';
             $this->creation_date = $data->created_at;
@@ -88,10 +90,10 @@ class Documentation extends Component
 
     public function edit($id)
     {
-        $data = ModelsDocumentation::findOrFail($id);
-        $this->did = $id;
-        $this->module_key = $data->module_key;
-        $this->documentation = $data->documentation;
+        $data = Test::findOrFail($id);
+        $this->id = $data->id;
+        $this->name = $data->name;
+        $this->roll = $data->roll;
   
         $this->updateMode = true;
     }
@@ -106,21 +108,22 @@ class Documentation extends Component
     {
         $validatedData = $this->validate();
   
-        $data = ModelsDocumentation::find($this->did);
-        $data->update([
-            'module_key' => $validatedData['module_key'],
-            'documentation' => $validatedData['documentation'],
+
+        Test::find($this->id)->fill([
+            'name'=>$validatedData['name'],
+            'roll'=>$validatedData['roll'],
             'updated_by' => admin()->id,
-        ]);
+        ])->save();
 
         $this->updateMode = false;
   
-        session()->flash('message', 'Documentation Updated Successfully.');
+        session()->flash('message', 'Test Updated Successfully.');
         $this->resetInputFields();
     }
     public function delete($id)
     {
-        ModelsDocumentation::find($id)->delete();
-        session()->flash('message', 'Documentation Deleted Successfully.');
+        Test::find($id)->delete();
+        session()->flash('message', 'Test Deleted Successfully.');
     }
+    
 }

@@ -56,9 +56,9 @@
     <script src="{{ asset('white') }}/js/color_change.js"></script>
     <script src="{{ asset('backend/js/custom.js') }}"></script>
     @stack('js_link')
-    @stack('js');
-
     @livewireScripts <!-- Include Livewire scripts here -->
+    @stack('js');
+    
 </body>
 
 </html>

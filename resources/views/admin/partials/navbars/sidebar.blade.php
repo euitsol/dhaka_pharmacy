@@ -155,6 +155,16 @@
                     ],
                 ],
             ])
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'test',
+                        'routeName' => 'admin.test',
+                        'iconClass' => 'fa-solid fa-folder-open',
+                        'label' => 'Test',
+                    ],
+                ],
+            ])
         </ul>
     </div>
 </div>

@@ -2,10 +2,10 @@
     <div class="card-header">
         <div class="row">
             <div class="col-8">
-                <h4 class="card-title">{{__('Documentation List')}}</h4>
+                <h4 class="card-title">{{__('Test List')}}</h4>
             </div>
             <div class="col-4 text-right">
-                <a href="javascript:void(0)" wire:loading.attr="disabled" wire:click="create()" class="btn btn-sm btn-primary">{{ __('Add Documentation') }}</a>
+                <a href="javascript:void(0)" wire:loading.attr="disabled" wire:click="create()" class="btn btn-sm btn-primary">{{ __('Add Test') }}</a>
             </div>
         </div>
     </div>
@@ -15,8 +15,8 @@
             <thead>
                 <tr>
                     <th>{{__('SL')}}</th>
-                    <th>{{__('Module Key')}}</th>
-                    <th>{{__('Documentation')}}</th>
+                    <th>{{__('Name')}}</th>
+                    <th>{{__('Roll')}}</th>
                     <th>{{ __('Creation date') }}</th>
                     <th>{{ __('Created by') }}</th>
                     <th>{{__('Action')}}</th>
@@ -26,8 +26,8 @@
                 @foreach($datas as $data)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $data->module_key }}</td>
-                    <td>{{ $data->documentation }}</td>
+                    <td>{{ $data->name }}</td>
+                    <td>{{ $data->roll }}</td>
                     <td>{{ timeFormate($data->created_at) }}</td> 
                     <td>{{ $data->created_user->name ?? 'System' }}</td>
                     <td>
@@ -38,7 +38,7 @@
                                 <i class="fas fa-ellipsis-v"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStudentModal" wire:loading.attr="disabled" wire:click="show({{ $data->id }})" href="javascript:void(0)">{{ __('View Details') }}</a>
+                                    <a class="dropdown-item" data-bs-toggle="modal" wire:loading.attr="disabled" data-bs-target="#updateStudentModal" wire:click="show({{ $data->id }})" href="javascript:void(0)">{{ __('View Details') }}</a>
                                     <a class="dropdown-item" wire:loading.attr="disabled" wire:click="edit({{ $data->id }})" href="javascript:void(0)">{{ __('Update') }}</a>
                                     <a class="dropdown-item" wire:loading.attr="disabled" wire:click="delete({{ $data->id }})" href="javascript:void(0)">{{ __('Delete') }}</a>
                             </div>
@@ -70,14 +70,14 @@
                 <div class="modal-body">
                     <table class="table table-striped">
                         <tr>
-                            <th class="text-nowrap">{{__('Module Key')}}</th>
+                            <th class="text-nowrap">{{__('Name')}}</th>
                             <th>:</th>
-                            <td>{{ $module_key }}</td>
+                            <td>{{ $name }}</td>
                         </tr>
                         <tr>
-                            <th class="text-nowrap">{{__('Documentation')}}</th>
+                            <th class="text-nowrap">{{__('Roll')}}</th>
                             <th>:</th>
-                            <td>{{$documentation}}</td>
+                            <td>{{$roll}}</td>
                         </tr>
                         <tr>
                             <th class="text-nowrap">{{__('Created By')}}</th>

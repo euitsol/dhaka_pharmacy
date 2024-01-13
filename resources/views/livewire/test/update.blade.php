@@ -4,27 +4,29 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-8">
-                        <h4 class="card-title">{{ __('Create Documentation') }}</h4>
+                        <h4 class="card-title">{{ __('Create Test') }}</h4>
                     </div>
                     <div class="col-4 text-right">
-                        <a href="javascript:void(0)" wire:click="cancel()" class="btn btn-sm btn-primary" wire:loading.attr="disabled">{{ __('Back') }}</a>
+                        <a href="javascript:void(0)" wire:loading.attr="disabled" wire:click="cancel()" class="btn btn-sm btn-primary">{{ __('Back') }}</a>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <form wire:submit.prevent="store" method="POST" >
-                    <div class="form-group">
-                        <label for="module_key">{{__('Module Key')}}</label>
-                        <input type="text" wire:model="module_key" class="form-control @error('module_key') is-invalid @enderror" wire:keyup="validateField('module_key')" placeholder="Enter name" value="{{ old('module_key') }}">
-                        @error('module_key') <span class="text-danger">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="documentation">{{__('Documentation')}}</label>
-                        <textarea class="form-control @error('documentation') is-invalid @enderror" wire:keyup="validateField('documentation')" wire:model="documentation" placeholder="Enter Body">{{ old('documentation') }}</textarea>
-                        @error('documentation') <span class="text-danger">{{ $message }}</span>@enderror
-                    </div>
-                    <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">{{__('Create')}}</button>
-                </form>
+
+            <form wire:submit.prevent="update()">
+                <input type="hidden" wire:model="id">
+                <div class="form-group">
+                    <label>{{__('name')}}</label>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Enter name" wire:model="name" wire:keyup="validateField('name')">
+                    @error('name') <span class="text-danger">{{ $message }}</span>@enderror
+                </div>
+                <div class="form-group">
+                    <label>{{__('Roll')}}</label>
+                    <textarea class="form-control @error('roll') is-invalid @enderror" wire:keyup="validateField('roll')" wire:model="roll" placeholder="Enter roll"></textarea>
+                    @error('roll') <span class="text-danger">{{ $message }}</span>@enderror
+                </div>
+                <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">{{__('Update')}}</button>
+            </form>
             </div>
         </div>
     </div>
@@ -32,7 +34,7 @@
         <div class="card">
             <div class="card-body">
                 <p class="card-header">
-                    <b>{{__('Documentation')}}</b>
+                    <b>{{__('Test')}}</b>
                 </p>
                 <div class="card-body">
                     <p><b>User Name:</b> This field is required. It is a text field with character limit of 6-255 characters </p>
