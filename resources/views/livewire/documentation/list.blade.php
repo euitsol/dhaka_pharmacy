@@ -10,11 +10,7 @@
         </div>
     </div>
     <div class="card-body">
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
+        @include('alerts.success',['key'=>'message'])
         <table class="table table-striped datatable">
             <thead>
                 <tr>
