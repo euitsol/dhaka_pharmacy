@@ -13,19 +13,19 @@
             </div>
             <div class="card-body">
 
-            <form>
+            <form wire:submit.prevent="update()">
                 <input type="hidden" wire:model="did">
                 <div class="form-group">
                     <label>{{__('Module Key')}}</label>
-                    <input type="text" class="form-control" placeholder="Enter module key" wire:model="module_key">
+                    <input type="text" class="form-control @error('module_key') is-invalid @enderror" placeholder="Enter module key" wire:model="module_key" wire:keyup="validateField('module_key')">
                     @error('module_key') <span class="text-danger">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
                     <label>{{__('Documentation')}}</label>
-                    <textarea class="form-control" wire:model="documentation" placeholder="Enter documentation"></textarea>
-                    @error('body') <span class="text-danger">{{ $message }}</span>@enderror
+                    <textarea class="form-control @error('documentation') is-invalid @enderror" wire:keyup="validateField('documentation')" wire:model="documentation" placeholder="Enter documentation"></textarea>
+                    @error('documentation') <span class="text-danger">{{ $message }}</span>@enderror
                 </div>
-                <button wire:click.prevent="update()" class="btn btn-primary">{{__('Update')}}</button>
+                <button type="submit" class="btn btn-primary">{{__('Update')}}</button>
                 <button wire:click.prevent="cancel()" class="btn btn-danger">{{__('Cancel')}}</button>
             </form>
             </div>

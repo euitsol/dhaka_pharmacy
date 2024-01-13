@@ -12,18 +12,18 @@
                 </div>
             </div>
             <div class="card-body">
-                <form>
+                <form wire:submit.prevent="store">
                     <div class="form-group">
-                        <label>{{__('Module Key')}}</label>
-                        <input type="text" wire:model="module_key" class="form-control" placeholder="Enter name" value="{{ old('module_key') }}">
+                        <label for="module_key">{{__('Module Key')}}</label>
+                        <input type="text" wire:model="module_key" class="form-control @error('module_key') is-invalid @enderror" wire:keyup="validateField('module_key')" placeholder="Enter name" value="{{ old('module_key') }}">
                         @error('module_key') <span class="text-danger">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group">
-                        <label>{{__('Documentation')}}</label>
-                        <textarea class="form-control" wire:model="documentation" placeholder="Enter Body">{{ old('documentation') }}</textarea>
+                        <label for="documentation">{{__('Documentation')}}</label>
+                        <textarea class="form-control @error('documentation') is-invalid @enderror" wire:keyup="validateField('documentation')" wire:model="documentation" placeholder="Enter Body">{{ old('documentation') }}</textarea>
                         @error('documentation') <span class="text-danger">{{ $message }}</span>@enderror
                     </div>
-                    <button wire:click.prevent="store()" class="btn btn-primary">{{__('Create')}}</button>
+                    <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
                     <button wire:click.prevent="cancel()" class="btn btn-danger">{{__('Cancel')}}</button>
                 </form>
             </div>

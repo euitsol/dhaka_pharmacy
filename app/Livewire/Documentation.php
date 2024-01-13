@@ -4,12 +4,9 @@ namespace App\Livewire;
 
 use App\Models\Documentation as ModelsDocumentation;
 use Livewire\Component;
-use Livewire\WithPagination;
-
 class Documentation extends Component
 {
 
-    use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -18,13 +15,27 @@ class Documentation extends Component
     public $createMode = false;
 
 
+    protected $rules = [
+        'module_key' => 'required',
+        'documentation' => 'required',
+    ];
+
+    public function updated($field)
+    {
+        $this->validateOnly($field);
+    }
+
+    public function validateField($field)
+    {
+        $this->validateOnly($field);
+    }
+
 
     public function render()
     {
         $this->datas = ModelsDocumentation::all();
         return view('livewire.documentation.main');
     }
-
     private function resetInputFields(){
         $this->module_key = '';
         $this->documentation = '';
@@ -35,16 +46,14 @@ class Documentation extends Component
     }
     public function store()
     {
-        $validatedDate = $this->validate([
-            'module_key' => 'required',
-            'documentation' => 'required',
-        ]);
+
+        $validatedData = $this->validate();
   
         ModelsDocumentation::create([
-                'module_key' => $this->module_key,
-                'documentation' => $this->documentation,
-                'created_by' => admin()->id,
-            ]);
+            'module_key' => $validatedData['module_key'],
+            'documentation' => $validatedData['documentation'],
+            'created_by' => admin()->id,
+        ]);
 
         $this->createMode = false;
         session()->flash('message', 'Documentation Created Successfully.');
@@ -92,18 +101,15 @@ class Documentation extends Component
     }
     public function update()
     {
-        $validatedDate = $this->validate([
-            'module_key' => 'required',
-            'documentation' => 'required',
-        ]);
+        $validatedData = $this->validate();
   
         $data = ModelsDocumentation::find($this->did);
         $data->update([
-            'module_key' => $this->module_key,
-            'documentation' => $this->documentation,
+            'module_key' => $validatedData['module_key'],
+            'documentation' => $validatedData['documentation'],
             'updated_by' => admin()->id,
         ]);
-  
+
         $this->updateMode = false;
   
         session()->flash('message', 'Documentation Updated Successfully.');
