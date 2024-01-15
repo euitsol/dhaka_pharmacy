@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\AdminManagement;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
+use App\Models\Documentation;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -21,8 +22,8 @@ class AdminController extends Controller
 
     public function index(): View
     {
-        $s['admins'] = Admin::with(['role','created_user'])->latest()->get();
-        return view('admin.admin_management.admin.index',$s);
+        $data['admins'] = Admin::with(['role','created_user'])->latest()->get();
+        return view('admin.admin_management.admin.index',$data);
     }
     public function details($id): JsonResponse
     {
@@ -35,8 +36,9 @@ class AdminController extends Controller
     }
     public function create(): View
     {
-        $s['roles'] = Role::latest()->get();
-        return view('admin.admin_management.admin.create',$s);
+        $data['roles'] = Role::latest()->get();
+        $data['document'] = Documentation::where('module_key','admin')->first();
+        return view('admin.admin_management.admin.create',$data);
     }
     public function store(AdminRequest $req): RedirectResponse
     {
@@ -54,9 +56,10 @@ class AdminController extends Controller
     }
     public function edit($id): View
     {
-        $s['admin'] = Admin::findOrFail($id);
-        $s['roles'] = Role::latest()->get();
-        return view('admin.admin_management.admin.edit',$s);
+        $data['admin'] = Admin::findOrFail($id);
+        $data['roles'] = Role::latest()->get();
+        $data['document'] = Documentation::where('module_key','admin')->first();
+        return view('admin.admin_management.admin.edit',$data);
     }
     public function update(AdminRequest $req, $id): RedirectResponse
     {

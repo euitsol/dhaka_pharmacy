@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\UserManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Documentation;
 use App\Models\KycSetting;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
@@ -22,8 +23,9 @@ class UserKycSettingsController extends Controller
 
     public function kycSettings():View
     {
-        $s['kyc_setting'] = KycSetting::where('type','user')->first();
-        return view('admin.user_management.kyc_settings.create',$s);
+        $data['kyc_setting'] = KycSetting::where('type','user')->first();
+        $data['document'] = Documentation::where('module_key','user_kyc_settings')->first();
+        return view('admin.user_management.kyc_settings.create',$data);
     }
 
     public function kycSettingsUpdate(Request $request): RedirectResponse

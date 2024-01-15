@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\AdminManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleRequest;
+use App\Models\Documentation;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
@@ -19,13 +20,13 @@ class RoleController extends Controller
     }
     public function index(): View
     {
-        $s['roles'] = Role::with('permissions')->latest()->get()
+        $data['roles'] = Role::with('permissions')->latest()->get()
         ->map(function($role){
             $permissionNames = $role->permissions->pluck('name')->implode(' | ');
             $role->permissionNames = $permissionNames;
             return $role;
         });
-        return view('admin.admin_management.role.index', $s);
+        return view('admin.admin_management.role.index', $data);
     }
     public function details($id): JsonResponse
     {
@@ -40,10 +41,11 @@ class RoleController extends Controller
     public function create(): View
     {
         $permissions = Permission::orderBy('name')->get();
-        $s['groupedPermissions'] = $permissions->groupBy(function ($permission) {
+        $data['document'] = Documentation::where('module_key','roll')->first();
+        $data['groupedPermissions'] = $permissions->groupBy(function ($permission) {
             return $permission->prefix;
         });
-        return view('admin.admin_management.role.create',$s);
+        return view('admin.admin_management.role.create',$data);
     }
     public function store(RoleRequest $req): RedirectResponse
     {
@@ -60,12 +62,13 @@ class RoleController extends Controller
     }
     public function edit($id): View
     {
-        $s['role'] = Role::findOrFail($id);
-        $s['permissions'] = Permission::orderBy('name')->get();
-        $s['groupedPermissions'] = $s['permissions']->groupBy(function ($permission) {
+        $data['role'] = Role::findOrFail($id);
+        $data['permissions'] = Permission::orderBy('name')->get();
+        $data['document'] = Documentation::where('module_key','roll')->first();
+        $data['groupedPermissions'] = $data['permissions']->groupBy(function ($permission) {
             return $permission->prefix;
         });
-        return view('admin.admin_management.role.edit',$s);
+        return view('admin.admin_management.role.edit',$data);
     }
 
     public function update(RoleRequest $req, $id): RedirectResponse
