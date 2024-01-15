@@ -5,14 +5,94 @@ namespace App\Livewire;
 use App\Http\Requests\LivewireTestRequest;
 use Livewire\Component;
 use App\Models\LivewireTest as Test;
+use Livewire\WithPagination;
+use App\Exports\FileExports;
+use Barryvdh\DomPDF\PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 class LivewireTest extends Component
 {
+    use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $datas, $name, $roll, $id, $created_user, $creation_date, $updated_user, $updated_date;
+    public $name, $roll, $id, $created_user, $creation_date, $updated_user, $updated_date, $search, $size="10";
     public $updateMode = false;
     public $createMode = false;
+
+
+    // public function exportPdf()
+    // {
+    //     $data = Test::all(); // Replace YourModel with the actual model you are using
+
+    //     $pdf = PDF::loadView('path.to.pdf.view', compact('data'));
+
+    //     return $pdf->download('export.pdf');
+    // }
+    // public function export($format)
+    // {
+    //     $model = Test::class; // Replace with your actual model class
+
+    //     switch ($format) {
+    //         case 'excel':
+    //             return Excel::download(new FileExports($model), 'export.xlsx');
+    //         case 'csv':
+    //             return Excel::download(new FileExports($model), 'export.csv');
+    //         // Add more cases for other export formats if needed
+    //         default:
+    //             abort(404);
+    //     }
+    // }
+
+    // public function downloadFile($fileId, $format)
+    // {
+    //     $file = Test::findOrFail($fileId);
+
+    //     switch ($format) {
+    //         case 'csv':
+    //             return $this->downloadCsv($file);
+    //         case 'pdf':
+    //             return $this->downloadPdf($file);
+    //         case 'excel':
+    //             return $this->downloadExcel($file);
+    //         default:
+    //             // Handle unsupported format
+    //             break;
+    //     }
+    // }
+
+    // private function downloadCsv($file)
+    // {
+    //     $csvData = []; // Replace this with your CSV data array or logic
+    //     $csvFileName = 'file_' . $file->id . '.csv';
+
+    //     $csv = implode(',', array_keys($csvData[0])) . PHP_EOL;
+    //     foreach ($csvData as $data) {
+    //         $csv .= implode(',', $data) . PHP_EOL;
+    //     }
+
+    //     return response($csv)
+    //         ->header('Content-Type', 'text/csv')
+    //         ->header('Content-Disposition', 'attachment; filename="' . $csvFileName . '"');
+    // }
+
+    // private function downloadPdf($file)
+    // {
+    //     $pdf = PDF::loadView('livewire.file-pdf', compact('file'));
+
+    //     return $pdf->download('file_' . $file->id . '.pdf');
+    // }
+
+    // private function downloadExcel($file)
+    // {
+    //     return Excel::download(new FileExports('Test'), 'file_' . $file->id . '.xlsx');
+    // }
+
+
+
+
+
+
 
 
     protected function rules()
@@ -28,22 +108,38 @@ class LivewireTest extends Component
     {
         $this->validateOnly($field);
     }
-
-
     public function render()
     {
-        $this->datas = Test::all();
-        return view('livewire.test.main');
+        $data['datas'] = Test::latest()
+        ->where(function ($query) {
+            $query->where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('roll', 'like', '%' . $this->search . '%');
+        })
+        ->paginate($this->size);
+
+        $data['total_data'] = Test::count();
+
+        return view('livewire.test.main', $data);
     }
     public function refresh()
     {
-        $this->datas = Test::all();
+        $data['datas'] = Test::latest()
+        ->where(function ($query) {
+            $query->where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('roll', 'like', '%' . $this->search . '%');
+        })
+        ->paginate($this->size);
+
+        $data['total_data'] = Test::count();
+
+        return view('livewire.test.main', $data);
     }
 
 
     private function resetInputFields(){
         $this->name = '';
         $this->roll = '';
+        $this->reset(['search', 'size']);
     }
     public function create()
     {

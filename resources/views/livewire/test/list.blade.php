@@ -8,6 +8,37 @@
                 <a href="javascript:void(0)" wire:loading.attr="disabled" wire:click="create()" class="btn btn-sm btn-primary">{{ __('Add Test') }}</a>
             </div>
         </div>
+        <div class="row g-4 align-items-center">
+            <div class="col-sm">
+                <div class="col-xl-3">
+                    <div class="col-sm">
+                        <div class="d-flex">
+                            <div class="search-box">
+                                <input type="text" wire:model.live="search" class="form-control" autocomplete="off" placeholder="Search Users...">
+                                <i class="ri-search-line search-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-auto">
+                <div class="d-flex flex-wrap align-items-start gap-2">
+                    <div class="">
+                        <select class="form-select bg-light" wire:model.live="size" name="size">
+                            <option value="5">5</option>
+                            <option selected value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary" wire:click="exportPdf"><i class="ri-save-3-line align-bottom me-1"></i> Export PDF</button>
+                    {{-- <button type="button" class="btn btn-secondary" onclick="window.print()"><i class="ri-printer-line align-bottom me-1"></i> Print</button> --}}
+                    <button type="button" class="btn btn-secondary" wire:click="export('excel')"><i class="ri-save-3-line align-bottom me-1"></i> Export Excel</button>
+                    <button type="button" class="btn btn-secondary" wire:click="export('csv')"><i class="ri-save-3-line align-bottom me-1"></i> Export CSV</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="card-body">
         @include('alerts.success',['key'=>'message'])
@@ -23,7 +54,8 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($datas as $data)
+                
+                @forelse($datas as $data)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $data->name }}</td>
@@ -45,14 +77,28 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="9">
+                        <div class="text-center">
+                            <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px"></lord-icon>
+                            <h5 class="mt-2">Sorry! No users found for matching "{{ $search }}".</h5>
+                            <p class="text-muted mb-0">We've searched more than {{ $total_data }}+ users We did not find any users for you search.</p>
+                        </div>
+                    </td>
+                </tr>
+                @endforelse
 
             </tbody>
         </table>
     </div>
-    <div class="card-footer py-4">
-        <nav class="d-flex justify-content-end" aria-label="...">
-        </nav>
+    <div class="card-footer">
+        <div class="float-start">
+            <div class="dataTables_info">Showing 1 to {{ count($datas) }} of {{ $total_data }} entries</div>
+        </div>
+        <div class="float-end">
+            {{ $datas->links('vendor.livewire.bootstrap')}}
+        </div>
     </div>
 </div>
 
@@ -106,5 +152,7 @@
         </div>
     </div>
 </div>
+
+
 
 {{-- @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]]) --}}
