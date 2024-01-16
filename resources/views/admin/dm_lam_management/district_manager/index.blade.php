@@ -44,9 +44,9 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'dmlam.district_manager.status.district_manager_edit',   'params' => [$dm->id], 'label' => $dm->getBtnStatus()],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$dm->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $dm->id ],
                                                     ['routeName' => 'dmlam.district_manager.district_manager_edit',   'params' => [$dm->id], 'label' => 'Update'],
+                                                    ['routeName' => 'dmlam.district_manager.status.district_manager_edit',   'params' => [$dm->id], 'label' => $dm->getBtnStatus()],
                                                     ['routeName' => 'dmlam.district_manager.district_manager_delete', 'params' => [$dm->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])

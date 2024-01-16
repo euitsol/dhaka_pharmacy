@@ -48,9 +48,9 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'am.admin.status.admin_edit',   'params' => [$admin->id], 'label' => $admin->getBtnStatus()],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$admin->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $admin->id ],
                                                     ['routeName' => 'am.admin.admin_edit',   'params' => [$admin->id], 'label' => 'Update'],
+                                                    ['routeName' => 'am.admin.status.admin_edit',   'params' => [$admin->id], 'label' => $admin->getBtnStatus()],
                                                     ['routeName' => 'am.admin.admin_delete', 'params' => [$admin->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])

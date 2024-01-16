@@ -46,10 +46,10 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'pm.pharmacy.status.pharmacy_edit',   'params' => [$pharmacy->id], 'label' => $pharmacy->getBtnStatus()],
-
+                                                    
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$pharmacy->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $pharmacy->id ],
                                                     ['routeName' => 'pm.pharmacy.pharmacy_edit',   'params' => [$pharmacy->id], 'label' => 'Update'],
+                                                    ['routeName' => 'pm.pharmacy.status.pharmacy_edit',   'params' => [$pharmacy->id], 'label' => $pharmacy->getBtnStatus()],
                                                     ['routeName' => 'pm.pharmacy.pharmacy_delete', 'params' => [$pharmacy->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])
