@@ -17,7 +17,8 @@ return new class extends Migration
     {
         Schema::create('documentations', function (Blueprint $table) {
             $table->id();
-            $table->string('module_key');
+            $table->string('title')->unique();
+            $table->string('module_key')->unique();
             $table->longText('documentation');
             $table->timestamps();
             $table->softDeletes();

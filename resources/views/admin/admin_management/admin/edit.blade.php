@@ -64,10 +64,10 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="card-header">
-                            <b>{{ ucfirst($document->module_key)}}</b>
+                            <b>{{ ucfirst($document->title)}}</b>
                         </p>
                         <div class="card-body">
-                            {{$document->documentation}}
+                            {!! $document->documentation !!}
                         </div>
                     </div>
                 </div>
