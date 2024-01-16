@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\Auth\LoginContorller as LoginManagementController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DM_LAM_Management\DistrictManagerController;
 use App\Http\Controllers\Admin\UserManagement\UserKycSettingsController;
 use App\Http\Controllers\Admin\UserManagement\UserKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
@@ -177,6 +178,21 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 			Route::post('/settings', [PharmacyKycSettingsController::class, 'kycSettingsUpdate'])->name('pharmacy_kyc_settings');
 
 		});
+	});
+
+	// Admin Management Routes 
+	Route::group(['as' => 'dmlam.', 'prefix' => 'dm-lam-management'], function () {
+		Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
+			Route::get('index', 'index')->name('district_manager_list');
+			Route::get('details/{id}', 'details')->name('details.district_manager_list');
+			Route::get('create', 'create')->name('district_manager_create');
+			Route::post('create', 'store')->name('district_manager_create');
+			Route::get('edit/{id}', 'edit')->name('district_manager_edit');
+			Route::put('edit/{id}', 'update')->name('district_manager_edit');
+			Route::get('status/{id}', 'status')->name('status.district_manager_edit');
+			Route::get('delete/{id}', 'delete')->name('district_manager_delete');
+		});
+
 	});
 
 	// Site Settings

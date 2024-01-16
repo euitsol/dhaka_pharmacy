@@ -14,6 +14,7 @@
         "laravel/ui": "^4.2",
         "league/csv": "^9.13",
         "livewire/livewire": "^3.3",
+        "php-flasher/flasher-laravel": "^1.15",
         "spatie/laravel-backup": "^8.4",
         "spatie/laravel-permission": "^6.2",
         "yajra/laravel-datatables-oracle": "^10.3.1"
