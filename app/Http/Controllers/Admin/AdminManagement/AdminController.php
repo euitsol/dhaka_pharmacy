@@ -52,7 +52,9 @@ class AdminController extends Controller
 
         $admin->assignRole($admin->role->name);
 
-        return redirect()->route('am.admin.admin_list')->withStatus(__('Admin '.$admin->name.' created successfully.'));
+        // return redirect()->route('am.admin.admin_list')->withStatus(__('Admin '.$admin->name.' created successfully.'));
+        flash()->addError('Admin '.$admin->name.' created successfully.');
+        return redirect()->route('am.admin.admin_list');
     }
     public function edit($id): View
     {
