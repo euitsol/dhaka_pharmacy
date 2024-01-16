@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\UserManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\Documentation;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -23,8 +24,8 @@ class UserController extends Controller
 
     public function index(): View
     {
-        $s['users'] = User::with('created_user')->latest()->get();
-        return view('admin.user_management.user.index',$s);
+        $data['users'] = User::with('created_user')->latest()->get();
+        return view('admin.user_management.user.index',$data);
     }
     public function details($id): JsonResponse
     {
@@ -42,8 +43,9 @@ class UserController extends Controller
     }
     public function create(): View
     {
-        $s['roles'] = Role::latest()->get();
-        return view('admin.user_management.user.create',$s);
+        $data['roles'] = Role::latest()->get();
+        $data['document'] = Documentation::where('module_key','user')->first();
+        return view('admin.user_management.user.create',$data);
     }
     public function store(UserRequest $req): RedirectResponse
     {
@@ -58,9 +60,10 @@ class UserController extends Controller
     }
     public function edit($id): View
     {
-        $s['user'] = User::findOrFail($id);
-        $s['roles'] = Role::latest()->get();
-        return view('admin.user_management.user.edit',$s);
+        $data['user'] = User::findOrFail($id);
+        $data['document'] = Documentation::where('module_key','user')->first();
+        $data['roles'] = Role::latest()->get();
+        return view('admin.user_management.user.edit',$data);
     }
     public function update(UserRequest $req, $id): RedirectResponse
     {
