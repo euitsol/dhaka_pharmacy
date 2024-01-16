@@ -28,11 +28,23 @@ class AdminController extends Controller
     public function details($id): JsonResponse
     {
         $data = Admin::with('role')->findOrFail($id);
+        $ipsArray = json_decode($data->ip, true);
+        if(is_array($ipsArray)){
+            $ips = implode(' | ', $ipsArray);
+            $data->ips = $ips;
+        }else{
+            $data->ips = '';
+        }
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->created_by ? $data->created_user->name : 'System';
         $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
         return response()->json($data);
+    }
+    public function profile($id): View
+    {
+        $data['admin'] = Admin::with(['role','created_user','updated_user'])->findOrFail($id);
+        return view('admin.admin_management.admin.profile',$data);
     }
     public function create(): View
     {
@@ -44,6 +56,7 @@ class AdminController extends Controller
     {
         $admin = new Admin();
         $admin->name = $req->name;
+        $admin->ip = json_encode($req->ip);
         $admin->email = $req->email;
         $admin->role_id = $req->role;
         $admin->password = Hash::make($req->password);
@@ -67,6 +80,7 @@ class AdminController extends Controller
     {
         $admin = Admin::findOrFail($id);
         $admin->name = $req->name;
+        $admin->ip = json_encode($req->ip);
         $admin->email = $req->email;
         $admin->role_id = $req->role;
         if($req->password){

@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'user_kyc_list'])
+@extends('admin.layouts.master', ['pageSlug' => 'district_manager'])
 
 @section('content')
     <div class="row">
@@ -7,52 +7,50 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">User KYC List</h4>
+                            <h4 class="card-title">{{__('District Manager List')}}</h4>
                         </div>
-                        {{-- <div class="col-4 text-right">
+                        <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'um.user.user_kyc_create',
+                                'routeName' => 'dmlam.district_manager.district_manager_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add User',
+                                'label' => 'Add new district manager',
                             ])
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    @include('alerts.success')
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
-                                <th>{{ __('Type') }}</th>
+                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Active L.A.M') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th colspan="{{count($count)}}">{{ __('Submitted data') }}</th>
                                 <th>{{ __('Creation date') }}</th>
-                                <th>{{ __('Submitted by') }}</th>
+                                <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($datas as $data)
+                            @foreach ($dms as $dm)
                                 <tr>
-                                    <td> {{ $data->type }} </td>
+                                    <td> {{ $dm->name }} </td>
+                                    <td> {{ $dm->email }} </td>
+                                    <td class="text-center"> {{ $dm->lams->count() }} </td>
                                     <td>
-                                        <span
-                                            class="badge {{ $data->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $data->status == 1 ? 'Active' : 'Deactive' }}</span>
+                                        <span class="{{ $dm->getStatusBadgeClass() }}">{{ $dm->getStatus() }}</span>
                                     </td>
-                                    @foreach(json_decode($data->submitted_data,true) as $sd)
-                                        <td>data</td>
-                                    @endforeach
-                                    <td>{{ timeFormate($data->created_at) }}</td>
+                                    <td>{{ timeFormate($dm->created_at) }}</td>
 
-                                    <td> {{ $data->createdBy->name ?? 'system' }} </td>
+                                    <td> {{ $dn->created_user->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$user->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $user->id ],
-                                                    ['routeName' => 'um.user.user_edit',   'params' => [$user->id], 'label' => 'Update'],
-                                                    ['routeName' => 'um.user.status.user_edit',   'params' => [$user->id], 'label' => $user->getBtnStatus()],
-                                                    ['routeName' => 'um.user.user_delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'dmlam.district_manager.profile.district_manager_list',   'params' => [$dm->id], 'label' => 'Profile'],
+                                                    ['routeName' => 'javascript:void(0)',  'params' => [$dm->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $dm->id ],
+                                                    ['routeName' => 'dmlam.district_manager.district_manager_edit',   'params' => [$dm->id], 'label' => 'Update'],
+                                                    ['routeName' => 'dmlam.district_manager.status.district_manager_edit',   'params' => [$dm->id], 'label' => $dm->getBtnStatus()],
+                                                    ['routeName' => 'dmlam.district_manager.district_manager_delete', 'params' => [$dm->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])
                                     </td>
@@ -70,12 +68,12 @@
         </div>
     </div>
 
-    {{-- User Details Modal  --}}
+    {{-- District Manager Details Modal  --}}
     <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('User Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('District Manager Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -92,7 +90,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('um.user.details.user_list', ['id']) }}");
+                let url = ("{{ route('dmlam.district_manager.details.district_manager_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -113,6 +111,11 @@
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
                                         <td>${data.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Active Local Area Manager</th>
+                                        <th>:</th>
+                                        <td>${data.total_lams}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
@@ -145,7 +148,7 @@
                         $('.view_modal').modal('show');
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error fetching user data:', error);
+                        console.error('Error fetching district manager data:', error);
                     }
                 });
             });

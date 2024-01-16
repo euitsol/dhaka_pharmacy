@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminRequest extends FormRequest
+class LocalAreaManagerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,7 +18,7 @@ class AdminRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4',
-            'ip.*' => 'required',
+            'dm_id' => 'required|exists:district_managers,id',
 
         ]
         +

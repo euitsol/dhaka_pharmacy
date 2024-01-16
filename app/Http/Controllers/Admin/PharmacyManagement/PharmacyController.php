@@ -36,6 +36,11 @@ class PharmacyController extends Controller
         $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
         return response()->json($data);
     }
+    public function profile($id): View
+    {
+        $data['pharmacy'] = Pharmacy::with(['created_user','updated_user'])->findOrFail($id);
+        return view('admin.pharmacy_management.pharmacy.profile',$data);
+    }
     public function create(): View
     {
         $data['roles'] = Role::latest()->get();

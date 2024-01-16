@@ -2,10 +2,38 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BaseModel extends Model
+class DistrictManager extends Authenticatable
 {
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    public function lams()
+    {
+        return $this->hasMany(LocalAreaManager::class, 'dm_id');
+    }
+
     public function created_user()
     {
         return $this->belongsTo(Admin::class, 'created_by');
@@ -36,7 +64,6 @@ class BaseModel extends Model
         }
     }
 
-
     public function getStatusClass()
     {
         if ($this->status == 1) {
@@ -54,29 +81,4 @@ class BaseModel extends Model
         }
     }
 
-
-    public function getFeatured()
-    {
-        if ($this->is_featured == 1) {
-            return 'Remove from featured';
-        } else {
-            return 'Make featured';
-        }
-    }
-    public function getFeaturedStatus()
-    {
-        if ($this->is_featured == 1) {
-            return "Yes";
-        } else {
-            return "No";
-        }
-    }
-    public function getFeaturedStatusClass()
-    {
-        if ($this->is_featured == 1) {
-            return "badge badge-primary";
-        } else {
-            return "badge badge-secondary";
-        }
-    }
 }

@@ -55,6 +55,31 @@
                             <input type="password" name="password_confirmation" class="form-control"
                                 placeholder="Confirm password">
                         </div>
+
+
+
+
+                        {{-- Add IP  --}}
+                        <div class="form-check form-check-inline col-md-12 ps-0 mt-0 mb-3" >
+                            <label class="form-check-label mr-2">
+                              <input class="form-check-input" type="checkbox" id="checkbox">
+                              <span class="form-check-sign"><strong>{{_('Add IP')}}</strong></span>
+                            </label>
+                        </div>
+                        <div id="ip_inputs" class="mt-2" style="display: none;">
+                            <div class="form-group {{ $errors->has('ip.*') ? ' has-danger' : '' }}">
+                                <label>{{ _('IP Address-1') }}</label>
+                                <div class="input-group mb-3">
+                                    <input type="tel" name="ip[]" class="form-control {{ $errors->has('ip.*') ? ' is-invalid' : '' }} ip" placeholder="{{ _('Enter IP address') }}">
+                                    <span class="btn btn-sm btn-secondary m-0 px-3 add_ip" style="line-height:24px;" data-count="1"><i class="tim-icons icon-simple-add"></i></span>
+                                </div>
+                                @include('alerts.feedback', ['field' => 'ip.*'])
+                            </div>
+                        </div>
+
+                        {{-- Add IP  --}}
+
+
                         <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
                     </form>
                 </div>
@@ -76,3 +101,52 @@
         @endif
     </div>
 @endsection
+@push('js')
+    <script>
+        $(document).ready(function () {
+            var checkbox = $('#checkbox');
+            var targetDiv = $('#ip_inputs');
+
+            if (checkbox.is(':checked')) {
+                targetDiv.show();
+                
+            }else {
+                targetDiv.hide();
+            }
+
+            checkbox.on('change', function() {
+                if (checkbox.is(':checked')) {
+                    targetDiv.show();
+                    
+                } else {
+                    targetDiv.find('.ip').val('');
+                    targetDiv.find('.delete_ip').closest('.input-group').parent().remove();
+                    targetDiv.hide();
+                }
+            });
+        });
+    </script>
+    <script>
+
+        $(document).on('click', '.add_ip', function() {
+            let count = $(this).data('count') + 1;
+            $(this).data('count', count);
+            var data = `<div class="form-group {{ $errors->has('ip.*') ? ' has-danger' : '' }}">
+                                <label>{{ _('IP Address-${count}') }}</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" name="ip[]" class="form-control {{ $errors->has('ip.*') ? ' is-invalid' : '' }} ip" placeholder="{{ _('Enter IP address') }}">
+                                    <span class="btn btn-sm btn-danger m-0 px-3 delete_ip" style="line-height:24px;" data-count="${count}"><i class="tim-icons icon-trash-simple"></i></span>
+                                </div>
+                                @include('alerts.feedback', ['field' => 'ip.*'])
+                            </div>
+                        `;
+
+            // $('.addedField').append(form);
+            $(this).closest('#ip_inputs').append(data);
+        });
+
+        $(document).on('click', '.delete_ip', function() {
+            $(this).closest('.input-group').parent().remove();
+        });
+    </script>
+@endpush
