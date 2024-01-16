@@ -14,6 +14,11 @@
             <div class="card-body">
                 <form wire:submit.prevent="store" method="POST" >
                     <div class="form-group">
+                        <label for="title">{{__('Title')}}</label>
+                        <input type="text" wire:model="title" class="form-control @error('title') is-invalid @enderror" wire:keyup="validateField('title')" placeholder="Enter name" value="{{ old('title') }}">
+                        @error('title') <span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
                         <label for="module_key">{{__('Module Key')}}</label>
                         <input type="text" wire:model="module_key" class="form-control @error('module_key') is-invalid @enderror" wire:keyup="validateField('module_key')" placeholder="Enter name" value="{{ old('module_key') }}">
                         @error('module_key') <span class="text-danger">{{ $message }}</span>@enderror

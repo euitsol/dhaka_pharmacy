@@ -16,6 +16,11 @@
             <form wire:submit.prevent="update()">
                 <input type="hidden" wire:model="did">
                 <div class="form-group">
+                    <label>{{__('Title')}}</label>
+                    <input type="text" class="form-control @error('title') is-invalid @enderror" placeholder="Enter module key" wire:model="title" wire:keyup="validateField('title')">
+                    @error('title') <span class="text-danger">{{ $message }}</span>@enderror
+                </div>
+                <div class="form-group">
                     <label>{{__('Module Key')}}</label>
                     <input type="text" class="form-control @error('module_key') is-invalid @enderror" placeholder="Enter module key" wire:model="module_key" wire:keyup="validateField('module_key')">
                     @error('module_key') <span class="text-danger">{{ $message }}</span>@enderror

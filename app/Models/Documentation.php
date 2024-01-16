@@ -10,6 +10,7 @@ class Documentation extends BaseModel
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
+        'title', 
         'module_key', 
         'documentation',
         'created_by',

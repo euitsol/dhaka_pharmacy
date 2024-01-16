@@ -11,7 +11,7 @@ class Documentation extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $datas, $module_key, $documentation, $did, $created_user, $creation_date, $updated_user, $updated_date;
+    public $datas, $module_key, $title, $documentation, $did, $created_user, $creation_date, $updated_user, $updated_date;
     public $updateMode = false;
     public $createMode = false;
 
@@ -21,7 +21,7 @@ class Documentation extends Component
         if ($this->createMode) {
             return (new DocumentationRequest())->storeRules();
         } else {
-            return (new DocumentationRequest())->updateRules();
+            return (new DocumentationRequest())->updateRules($this->did);
         }
     }
 
@@ -40,6 +40,7 @@ class Documentation extends Component
         $this->datas = ModelsDocumentation::all();
     }
     private function resetInputFields(){
+        $this->title = '';
         $this->module_key = '';
         $this->documentation = '';
     }
@@ -53,6 +54,7 @@ class Documentation extends Component
         $validatedData = $this->validate();
   
         ModelsDocumentation::create([
+            'title' => $validatedData['title'],
             'module_key' => $validatedData['module_key'],
             'documentation' => $validatedData['documentation'],
             'created_by' => admin()->id,
@@ -69,6 +71,7 @@ class Documentation extends Component
         if($data){
 
             $this->did = $data->did;
+            $this->title = $data->title;
             $this->module_key = $data->module_key;
             $this->documentation = $data->documentation;
             $this->created_user = $data->created_user->name ?? 'System';
@@ -90,6 +93,7 @@ class Documentation extends Component
     {
         $data = ModelsDocumentation::findOrFail($id);
         $this->did = $id;
+        $this->title = $data->title;
         $this->module_key = $data->module_key;
         $this->documentation = $data->documentation;
   
@@ -108,6 +112,7 @@ class Documentation extends Component
   
         $data = ModelsDocumentation::find($this->did);
         $data->update([
+            'title' => $validatedData['title'],
             'module_key' => $validatedData['module_key'],
             'documentation' => $validatedData['documentation'],
             'updated_by' => admin()->id,

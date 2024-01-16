@@ -15,6 +15,7 @@
             <thead>
                 <tr>
                     <th>{{__('SL')}}</th>
+                    <th>{{__('Title')}}</th>
                     <th>{{__('Module Key')}}</th>
                     <th>{{__('Documentation')}}</th>
                     <th>{{ __('Creation date') }}</th>
@@ -26,6 +27,7 @@
                 @foreach($datas as $data)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
+                    <td>{{ $data->title }}</td>
                     <td>{{ $data->module_key }}</td>
                     <td>{{ $data->documentation }}</td>
                     <td>{{ timeFormate($data->created_at) }}</td> 
