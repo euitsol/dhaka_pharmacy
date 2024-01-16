@@ -24,6 +24,7 @@
                             <tr>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Email') }}</th>
+                                <th>{{ __('Active L.A.M') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -35,6 +36,7 @@
                                 <tr>
                                     <td> {{ $dm->name }} </td>
                                     <td> {{ $dm->email }} </td>
+                                    <td class="text-center"> {{ $dm->lams->count() }} </td>
                                     <td>
                                         <span class="{{ $dm->getStatusBadgeClass() }}">{{ $dm->getStatus() }}</span>
                                     </td>
@@ -44,6 +46,7 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
+                                                    ['routeName' => 'dmlam.district_manager.profile.district_manager_list',   'params' => [$dm->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$dm->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $dm->id ],
                                                     ['routeName' => 'dmlam.district_manager.district_manager_edit',   'params' => [$dm->id], 'label' => 'Update'],
                                                     ['routeName' => 'dmlam.district_manager.status.district_manager_edit',   'params' => [$dm->id], 'label' => $dm->getBtnStatus()],
@@ -108,6 +111,11 @@
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
                                         <td>${data.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Active Local Area Manager</th>
+                                        <th>:</th>
+                                        <td>${data.total_lams}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

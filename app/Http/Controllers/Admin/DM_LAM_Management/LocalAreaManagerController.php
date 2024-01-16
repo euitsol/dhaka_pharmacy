@@ -33,6 +33,14 @@ class LocalAreaManagerController extends Controller
         $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
         return response()->json($data);
     }
+
+    public function profile($id): View
+    {
+        $data['lam'] = LocalAreaManager::with(['created_user','updated_user'])->findOrFail($id);
+        return view('admin.dm_lam_management.local_area_manager.profile',$data);
+    }
+
+
     public function create(): View
     {
         $data['dms'] = DistrictManager::latest()->get();

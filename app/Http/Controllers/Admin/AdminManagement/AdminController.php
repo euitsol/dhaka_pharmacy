@@ -33,6 +33,11 @@ class AdminController extends Controller
         $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
         return response()->json($data);
     }
+    public function profile($id): View
+    {
+        $data['admin'] = Admin::with(['role','created_user','updated_user'])->findOrFail($id);
+        return view('admin.admin_management.admin.profile',$data);
+    }
     public function create(): View
     {
         $s['roles'] = Role::latest()->get();

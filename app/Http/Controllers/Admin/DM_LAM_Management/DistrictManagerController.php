@@ -21,17 +21,23 @@ class DistrictManagerController extends Controller
 
     public function index(): View
     {
-        $data['dms'] = DistrictManager::with('created_user')->latest()->get();
+        $data['dms'] = DistrictManager::with(['lams','created_user'])->latest()->get();
         return view('admin.dm_lam_management.district_manager.index',$data);
     }
     public function details($id): JsonResponse
     {
         $data = DistrictManager::findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
+        $data->total_lams = count($data->lams);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->created_by ? $data->created_user->name : 'System';
         $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
         return response()->json($data);
+    }
+    public function profile($id): View
+    {
+        $data['dm'] = DistrictManager::with(['lams','created_user','updated_user'])->findOrFail($id);
+        return view('admin.dm_lam_management.district_manager.profile',$data);
     }
     public function create(): View
     {

@@ -29,6 +29,11 @@ class DistrictManager extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function lams()
+    {
+        return $this->hasMany(LocalAreaManager::class, 'dm_id');
+    }
+
     public function created_user()
     {
         return $this->belongsTo(Admin::class, 'created_by');

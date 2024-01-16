@@ -35,6 +35,11 @@ class UserController extends Controller
         $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
         return response()->json($data);
     }
+    public function profile($id): View
+    {
+        $data['user'] = User::with(['role','created_user','updated_user'])->findOrFail($id);
+        return view('admin.user_management.user.profile',$data);
+    }
     public function create(): View
     {
         $s['roles'] = Role::latest()->get();
