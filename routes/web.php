@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleContro
 use App\Http\Controllers\Admin\Auth\LoginContorller as LoginManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DM_LAM_Management\DistrictManagerController;
+use App\Http\Controllers\Admin\DM_LAM_Management\LocalAreaManagerController;
 use App\Http\Controllers\Admin\UserManagement\UserKycSettingsController;
 use App\Http\Controllers\Admin\UserManagement\UserKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
@@ -191,6 +192,16 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 			Route::put('edit/{id}', 'update')->name('district_manager_edit');
 			Route::get('status/{id}', 'status')->name('status.district_manager_edit');
 			Route::get('delete/{id}', 'delete')->name('district_manager_delete');
+		});
+		Route::controller(LocalAreaManagerController::class, 'local-area-manager')->prefix('local-area-manager')->name('local_area_manager.')->group(function () {
+			Route::get('index', 'index')->name('local_area_manager_list');
+			Route::get('details/{id}', 'details')->name('details.local_area_manager_list');
+			Route::get('create', 'create')->name('local_area_manager_create');
+			Route::post('create', 'store')->name('local_area_manager_create');
+			Route::get('edit/{id}', 'edit')->name('local_area_manager_edit');
+			Route::put('edit/{id}', 'update')->name('local_area_manager_edit');
+			Route::get('status/{id}', 'status')->name('status.local_area_manager_edit');
+			Route::get('delete/{id}', 'delete')->name('local_area_manager_delete');
 		});
 
 	});

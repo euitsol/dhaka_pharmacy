@@ -45,7 +45,7 @@ class DistrictManagerController extends Controller
         $dm->password = Hash::make($req->password);
         $dm->created_by = admin()->id;
         $dm->save();
-        flash()->addSuccess('Admin '.$dm->name.' created successfully.');
+        flash()->addSuccess('District Manager '.$dm->name.' created successfully.');
         return redirect()->route('dmlam.district_manager.district_manager_list');
     }
     public function edit($id): View
@@ -63,21 +63,21 @@ class DistrictManagerController extends Controller
         }
         $dm->updated_by = admin()->id;
         $dm->update();
-        flash()->addSuccess('Admin '.$dm->name.' updated successfully.');
+        flash()->addSuccess('District Manager '.$dm->name.' updated successfully.');
         return redirect()->route('dmlam.district_manager.district_manager_list');
     }
     public function status($id): RedirectResponse
     {
         $dm = DistrictManager::findOrFail($id);
         $this->statusChange($dm);
-        flash()->addSuccess('Admin '.$dm->name.' status updated successfully.');
+        flash()->addSuccess('District Manager '.$dm->name.' status updated successfully.');
         return redirect()->route('dmlam.district_manager.district_manager_list');
     }
     public function delete($id): RedirectResponse
     {
         $dm = DistrictManager::findOrFail($id);
         $dm->delete();
-        flash()->addSuccess('Admin '.$dm->name.' deleted successfully.');
+        flash()->addSuccess('District Manager '.$dm->name.' deleted successfully.');
         return redirect()->route('dmlam.district_manager.district_manager_list');
 
     }
