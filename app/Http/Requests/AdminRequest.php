@@ -18,6 +18,7 @@ class AdminRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4',
+            'ip.*' => 'required',
 
         ]
         +

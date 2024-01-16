@@ -120,6 +120,11 @@
                                         <td>${data.role.name}</td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">IP Address</th>
+                                        <th>:</th>
+                                        <td>${data.ips}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
                                         <td><span class="badge ${statusClass}">${status}</span></td>
