@@ -57,8 +57,6 @@
             </div>
         </div>
     </div>
-@endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0,1,2]])
 
 {{-- Permission Details Modal  --}}
 <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -76,6 +74,9 @@ aria-hidden="true">
     </div>
 </div>
 </div>
+@endsection
+
+@include('admin.partials.datatable', ['columns_to_show' => [0,1,2]])
 @push('js')
 <script>
 $(document).ready(function() {

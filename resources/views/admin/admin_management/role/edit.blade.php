@@ -34,7 +34,7 @@
 
 @section('content')
     <div class="row px-3 pt-3">
-        <div class="col-md-8">
+        <div class=" {{ $document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -57,11 +57,12 @@
                         <div class="form-group {{ $errors->has('name') ? ' has-danger' : '' }}">
                             <label>{{ __('Name') }}</label>
                             <input type="text" name="name"
-                                class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ $role->name }}">
+                                class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                value="{{ $role->name }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="row">
-                            @foreach ($groupedPermissions->chunk(count($groupedPermissions) / 4) as $chunks)
+                            @foreach ($groupedPermissions->chunk(4) as $chunks)
                                 <div class="col-md-3">
                                     @foreach ($chunks as $prefix => $permissions)
                                         <div class="row">
@@ -98,32 +99,21 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-header">
-                        <b>{{__('User')}}</b>
-                    </p>
+
+        @if ($document)
+            <div class="col-md-4">
+                <div class="card">
                     <div class="card-body">
-                        <p><b>User Name:</b> This field is required. It is a text field with character limit of 6-255
-                            characters </p>
-
-                        <p><b>Email:</b> This field is required and unique. It is a email field with a maximum character
-                            limit of 255. The entered value must follow the standard email format (e.g., user@example.com).
+                        <p class="card-header">
+                            <b>{{ ucfirst($document->title) }}</b>
                         </p>
-
-                        <p><b>Password:</b> This field is required. It is a password field. Password strength should meet
-                            the specified criteria (e.g., include uppercase and lowercase letters, numbers, and special
-                            characters). The entered password should be a minimum of 6 characters.</p>
-
-                        <p><b>Confirm Password:</b> This field is required. It is a password field. It should match the
-                            entered password in the "Password" field.</p>
-
-                        <p><b>Role:</b> This field is required. This is an option field. It represents the user's role.</p>
+                        <div class="card-body">
+                            {!! $document->documentation !!}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 @endsection
 

@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\Auth\LoginContorller as LoginManagementController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DM_LAM_Management\DistrictManagerController;
+use App\Http\Controllers\Admin\DM_LAM_Management\LocalAreaManagerController;
 use App\Http\Controllers\Admin\UserManagement\UserKycSettingsController;
 use App\Http\Controllers\Admin\UserManagement\UserKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
@@ -85,6 +87,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		Route::controller(AdminController::class, 'admin')->prefix('admin')->name('admin.')->group(function () {
 			Route::get('index', 'index')->name('admin_list');
 			Route::get('details/{id}', 'details')->name('details.admin_list');
+			Route::get('profile/{id}', 'profile')->name('profile.admin_list');
 			Route::get('create', 'create')->name('admin_create');
 			Route::post('create', 'store')->name('admin_create');
 			Route::get('edit/{id}', 'edit')->name('admin_edit');
@@ -118,6 +121,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		Route::controller(AdminUserController::class, 'user')->prefix('user')->name('user.')->group(function () {
 			Route::get('index', 'index')->name('user_list');
 			Route::get('details/{id}', 'details')->name('details.user_list');
+			Route::get('profile/{id}', 'profile')->name('profile.user_list');
 			Route::get('create', 'create')->name('user_create');
 			Route::post('create', 'store')->name('user_create');
 			Route::get('edit/{id}', 'edit')->name('user_edit');
@@ -152,6 +156,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		Route::controller(AdminPharmacyController::class, 'pharmacy')->prefix('pharmacy')->name('pharmacy.')->group(function () {
 			Route::get('index', 'index')->name('pharmacy_list');
 			Route::get('details/{id}', 'details')->name('details.pharmacy_list');
+			Route::get('profile/{id}', 'profile')->name('profile.pharmacy_list');
 			Route::get('create', 'create')->name('pharmacy_create');
 			Route::post('create', 'store')->name('pharmacy_create');
 			Route::get('edit/{id}', 'edit')->name('pharmacy_edit');
@@ -177,6 +182,33 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 			Route::post('/settings', [PharmacyKycSettingsController::class, 'kycSettingsUpdate'])->name('pharmacy_kyc_settings');
 
 		});
+	});
+
+	// District Manager & Local Area Manager Management Routes 
+	Route::group(['as' => 'dmlam.', 'prefix' => 'dm-lam-management'], function () {
+		Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
+			Route::get('index', 'index')->name('district_manager_list');
+			Route::get('details/{id}', 'details')->name('details.district_manager_list');
+			Route::get('profile/{id}', 'profile')->name('profile.district_manager_list');
+			Route::get('create', 'create')->name('district_manager_create');
+			Route::post('create', 'store')->name('district_manager_create');
+			Route::get('edit/{id}', 'edit')->name('district_manager_edit');
+			Route::put('edit/{id}', 'update')->name('district_manager_edit');
+			Route::get('status/{id}', 'status')->name('status.district_manager_edit');
+			Route::get('delete/{id}', 'delete')->name('district_manager_delete');
+		});
+		Route::controller(LocalAreaManagerController::class, 'local-area-manager')->prefix('local-area-manager')->name('local_area_manager.')->group(function () {
+			Route::get('index', 'index')->name('local_area_manager_list');
+			Route::get('details/{id}', 'details')->name('details.local_area_manager_list');
+			Route::get('profile/{id}', 'profile')->name('profile.local_area_manager_list');
+			Route::get('create', 'create')->name('local_area_manager_create');
+			Route::post('create', 'store')->name('local_area_manager_create');
+			Route::get('edit/{id}', 'edit')->name('local_area_manager_edit');
+			Route::put('edit/{id}', 'update')->name('local_area_manager_edit');
+			Route::get('status/{id}', 'status')->name('status.local_area_manager_edit');
+			Route::get('delete/{id}', 'delete')->name('local_area_manager_delete');
+		});
+
 	});
 
 	// Site Settings

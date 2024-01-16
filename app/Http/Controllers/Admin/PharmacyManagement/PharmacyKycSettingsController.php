@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\PharmacyManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Documentation;
 use App\Models\KycSetting;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
@@ -22,19 +23,20 @@ class PharmacyKycSettingsController extends Controller
 
     public function kycSettings():View
     {
-        $s['kyc_setting'] = KycSetting::where('type','pharmacy')->first();
-        return view('admin.pharmacy_management.kyc_settings.create',$s);
+        $data['kyc_setting'] = KycSetting::where('type','pharmacy')->first();
+        $data['document'] = Documentation::where('module_key','pharmacy_kyc_settings')->first();
+        return view('admin.pharmacy_management.kyc_settings.create',$data);
     }
 
     public function kycSettingsUpdate(Request $request):RedirectResponse
     {
         $data = $this->prepareKycData($request);
 
-        // Find an existing record or create a new one based on the status field
+        $status = $request->status ?? 1;
         KycSetting::updateOrCreate(
             ['type' => 'pharmacy'],
             [
-                'status' => $request->status,
+                'status' => $status,
                 'form_data' => json_encode($data),
             ]
         );

@@ -15,27 +15,13 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- LTE CDN  --}}
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css"> --}}
-
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    @stack('css_link')
-
     {{-- White Dashboard --}}
     <link href="{{ asset('white') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
-    <script src="{{ asset('white') }}/js/core/jquery.min.js"></script>
-    <script src="{{ asset('white') }}/js/core/popper.min.js"></script>
-    <script src="{{ asset('white') }}/js/core/bootstrap.min.js"></script>
-    <script src="{{ asset('white') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-    <script src="{{ asset('white') }}/js/plugins/bootstrap-notify.js"></script>
-    <script src="{{ asset('white') }}/js/white-dashboard.min.js?v=1.0.0"></script>
-    <script src="{{ asset('white') }}/js/theme.js"></script>
-    <script src="{{ asset('white') }}/js/color_change.js"></script>
-
     <link href="{{ asset('backend/css/custom.css') }}" rel="stylesheet">
-
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @stack('css_link')
     @stack('css')
 
 </head>
@@ -57,10 +43,18 @@
         @csrf
     </form>
 
-    @stack('js_link')
-    <script src="{{ asset('backend/js/custom.js') }}"></script>
-    @stack('js');
 
+    <script src="{{ asset('white') }}/js/core/jquery.min.js"></script>
+    <script src="{{ asset('white') }}/js/core/popper.min.js"></script>
+    <script src="{{ asset('white') }}/js/core/bootstrap.min.js"></script>
+    <script src="{{ asset('white') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="{{ asset('white') }}/js/plugins/bootstrap-notify.js"></script>
+    <script src="{{ asset('white') }}/js/white-dashboard.min.js?v=1.0.0"></script>
+    <script src="{{ asset('white') }}/js/theme.js"></script>
+    <script src="{{ asset('white') }}/js/color_change.js"></script>
+    <script src="{{ asset('backend/js/custom.js') }}"></script>
+    @stack('js_link')
+    @stack('js')
 
 
 

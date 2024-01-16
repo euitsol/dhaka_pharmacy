@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\AdminManagement;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
+use App\Models\Documentation;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -21,27 +22,41 @@ class AdminController extends Controller
 
     public function index(): View
     {
-        $s['admins'] = Admin::with(['role','created_user'])->latest()->get();
-        return view('admin.admin_management.admin.index',$s);
+        $data['admins'] = Admin::with(['role','created_user'])->latest()->get();
+        return view('admin.admin_management.admin.index',$data);
     }
     public function details($id): JsonResponse
     {
         $data = Admin::with('role')->findOrFail($id);
+        $ipsArray = json_decode($data->ip, true);
+        if(is_array($ipsArray)){
+            $ips = implode(' | ', $ipsArray);
+            $data->ips = $ips;
+        }else{
+            $data->ips = '';
+        }
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->created_by ? $data->created_user->name : 'System';
         $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
         return response()->json($data);
     }
+    public function profile($id): View
+    {
+        $data['admin'] = Admin::with(['role','created_user','updated_user'])->findOrFail($id);
+        return view('admin.admin_management.admin.profile',$data);
+    }
     public function create(): View
     {
-        $s['roles'] = Role::latest()->get();
-        return view('admin.admin_management.admin.create',$s);
+        $data['roles'] = Role::latest()->get();
+        $data['document'] = Documentation::where('module_key','admin')->first();
+        return view('admin.admin_management.admin.create',$data);
     }
     public function store(AdminRequest $req): RedirectResponse
     {
         $admin = new Admin();
         $admin->name = $req->name;
+        $admin->ip = json_encode($req->ip);
         $admin->email = $req->email;
         $admin->role_id = $req->role;
         $admin->password = Hash::make($req->password);
@@ -50,18 +65,22 @@ class AdminController extends Controller
 
         $admin->assignRole($admin->role->name);
 
-        return redirect()->route('am.admin.admin_list')->withStatus(__('Admin '.$admin->name.' created successfully.'));
+        // return redirect()->route('am.admin.admin_list')->withStatus(__('Admin '.$admin->name.' created successfully.'));
+        flash()->addError('Admin '.$admin->name.' created successfully.');
+        return redirect()->route('am.admin.admin_list');
     }
     public function edit($id): View
     {
-        $s['admin'] = Admin::findOrFail($id);
-        $s['roles'] = Role::latest()->get();
-        return view('admin.admin_management.admin.edit',$s);
+        $data['admin'] = Admin::findOrFail($id);
+        $data['roles'] = Role::latest()->get();
+        $data['document'] = Documentation::where('module_key','admin')->first();
+        return view('admin.admin_management.admin.edit',$data);
     }
     public function update(AdminRequest $req, $id): RedirectResponse
     {
         $admin = Admin::findOrFail($id);
         $admin->name = $req->name;
+        $admin->ip = json_encode($req->ip);
         $admin->email = $req->email;
         $admin->role_id = $req->role;
         if($req->password){

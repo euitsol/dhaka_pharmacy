@@ -15,43 +15,47 @@
                     ],
                 ],
             ])
-            {{-- Admin Management --}}
-            <li>
-                <a class="@if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') @else collapsed @endif" data-toggle="collapse"
-                    href="#admin-management"
-                    @if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') aria-expanded="true" @else aria-expanded="false" @endif>
-                    <i class="fa-solid fa-users-gear"></i>
-                    <span class="nav-link-text">{{ __('Admin Management') }}</span>
-                    <b class="caret mt-1"></b>
-                </a>
 
-                <div class="collapse @if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') show @endif" id="admin-management">
-                    <ul class="nav pl-2">
-                        @include('admin.partials.menu_buttons', [
-                            'menuItems' => [
-                                [
-                                    'pageSlug' => 'admin',
-                                    'routeName' => 'am.admin.admin_list',
-                                    'iconClass' => 'fa-solid fa-minus',
-                                    'label' => 'Admins',
+            {{-- Admin Management --}}
+            @if(mainMenuCheck(['role','permission','admin']))
+                <li>
+                    <a class="@if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') @else collapsed @endif" data-toggle="collapse"
+                        href="#admin-management"
+                        @if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-users-gear"></i>
+                        <span class="nav-link-text">{{ __('Admin Management') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') show @endif" id="admin-management">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'admin',
+                                        'routeName' => 'am.admin.admin_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'label' => 'Admins',
+                                    ],
+                                    [
+                                        'pageSlug' => 'role',
+                                        'routeName' => 'am.role.role_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'label' => 'Roles',
+                                    ],
+                                    [
+                                        'pageSlug' => 'permission',
+                                        'routeName' => 'am.permission.permission_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'label' => 'Permission',
+                                    ],
                                 ],
-                                [
-                                    'pageSlug' => 'role',
-                                    'routeName' => 'am.role.role_list',
-                                    'iconClass' => 'fa-solid fa-minus',
-                                    'label' => 'Roles',
-                                ],
-                                [
-                                    'pageSlug' => 'permission',
-                                    'routeName' => 'am.permission.permission_list',
-                                    'iconClass' => 'fa-solid fa-minus',
-                                    'label' => 'Permission',
-                                ],
-                            ],
-                        ])
-                    </ul>
-                </div>
-            </li>
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
             {{-- User Management --}}
             @if(mainMenuCheck(['user','user_kyc_list','user_kyc_settings']))
                 <li>
@@ -135,6 +139,31 @@
                     </div>
                 </li>
             @endif
+
+            {{-- DM & LAM Management --}}
+            @if(mainMenuCheck(['district_manager','local_area_manager']))
+                <li>
+                    <a class="@if ($pageSlug == 'district_manager' || $pageSlug == 'local_area_manager') @else collapsed @endif" data-toggle="collapse"
+                        href="#district_manager"
+                        @if ($pageSlug == 'district_manager' || $pageSlug == 'local_area_manager') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-user-tie"></i>
+                        <span class="nav-link-text">{{ __('DM & LAM Management') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'district_manager' || $pageSlug == 'local_area_manager') show @endif" id="district_manager">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    ['pageSlug' => 'district_manager', 'routeName' => 'dmlam.district_manager.district_manager_list', 'label' => 'District Manager'],
+                                    ['pageSlug' => 'local_area_manager', 'routeName' => 'dmlam.local_area_manager.local_area_manager_list', 'label' => 'Local Area Manager'],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [
                     [
