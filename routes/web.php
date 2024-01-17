@@ -215,6 +215,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 	Route::controller(SiteSettingsController::class, 'site-settings')->prefix('site-settings')->name('settings.')->group(function () {
 		Route::get('index', 'index')->name('site_settings');
 		Route::post('index', 'store')->name('site_settings');
+		Route::post('index', 'notification')->name('notification.site_settings');
 	});
 
 });

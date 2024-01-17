@@ -27,6 +27,7 @@ class SiteSettingsController extends Controller
         try {
             $envPath = base_path('.env');
             $env = file($envPath);
+            dd($data);
 
             foreach ($data as $key => $value) {
                 if($key == 'site_logo' || $key == 'site_favicon'){
@@ -45,8 +46,8 @@ class SiteSettingsController extends Controller
                         $siteSetting = SiteSetting::updateOrCreate(['key' => $key], ['value' => $value]);
                     }
                 }
-
-                $siteSetting = SiteSetting::updateOrCreate(['key' => $key], ['value' => $value]);
+                    $siteSetting = SiteSetting::updateOrCreate(['key' => $key], ['value' => $value]);
+               
 
                 if (!empty($siteSetting->env_key)) {
                     $env = $this->set($siteSetting->env_key, '"'.$value.'"', $env);
@@ -74,5 +75,20 @@ class SiteSettingsController extends Controller
             }
         }
         return $env;
+    }
+
+    public function notification(Request $request): RedirectResponse
+    {
+        $keys = ['email_verification','sms_verification','user_registration','user_kyc'];
+        
+        foreach($keys as $key){
+            if(isset($request->$key)){
+                SiteSetting::updateOrCreate(['key' => $key], ['value' => $request->$key]);
+            }else{
+                SiteSetting::updateOrCreate(['key' => $key], ['value' => 0]);
+            }
+        }
+
+        return redirect()->back()->withStatus(__('Settings added successfully.'));
     }
 }
