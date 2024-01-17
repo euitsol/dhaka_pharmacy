@@ -55,8 +55,8 @@ class UserController extends Controller
         $user->password = Hash::make($req->password);
         $user->created_by = admin()->id;
         $user->save();
-
-        return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' created successfully.'));
+        flash()->addSuccess('User '.$user->name.' created successfully.');
+        return redirect()->route('um.user.user_list');
     }
     public function edit($id): View
     {
@@ -75,20 +75,22 @@ class UserController extends Controller
         }
         $user->updated_by = admin()->id;
         $user->update();
-
-        return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' updated successfully.'));
+        flash()->addSuccess('User '.$user->name.' updated successfully.');
+        return redirect()->route('um.user.user_list');
     }
     public function status($id): RedirectResponse
     {
         $user = user::findOrFail($id);
         $this->statusChange($user);
-        return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' status updated successfully.'));
+        flash()->addSuccess('User '.$user->name.' status updated successfully.');
+        return redirect()->route('um.user.user_list');
     }
     public function delete($id): RedirectResponse
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('um.user.user_list')->withStatus(__('User '.$user->name.' deleted successfully.'));
+        flash()->addSuccess('User '.$user->name.' deleted successfully.');
+        return redirect()->route('um.user.user_list');
 
     }
 }

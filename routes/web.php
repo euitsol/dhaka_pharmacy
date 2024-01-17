@@ -87,7 +87,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		Route::controller(AdminController::class, 'admin')->prefix('admin')->name('admin.')->group(function () {
 			Route::get('index', 'index')->name('admin_list');
 			Route::get('details/{id}', 'details')->name('details.admin_list');
-			Route::get('profile/{id}', 'profile')->name('profile.admin_list');
+			Route::get('profile/{id}', 'profile')->name('admin_profile');
 			Route::get('create', 'create')->name('admin_create');
 			Route::post('create', 'store')->name('admin_create');
 			Route::get('edit/{id}', 'edit')->name('admin_edit');
@@ -121,7 +121,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		Route::controller(AdminUserController::class, 'user')->prefix('user')->name('user.')->group(function () {
 			Route::get('index', 'index')->name('user_list');
 			Route::get('details/{id}', 'details')->name('details.user_list');
-			Route::get('profile/{id}', 'profile')->name('profile.user_list');
+			Route::get('profile/{id}', 'profile')->name('user_profile');
 			Route::get('create', 'create')->name('user_create');
 			Route::post('create', 'store')->name('user_create');
 			Route::get('edit/{id}', 'edit')->name('user_edit');
@@ -156,7 +156,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		Route::controller(AdminPharmacyController::class, 'pharmacy')->prefix('pharmacy')->name('pharmacy.')->group(function () {
 			Route::get('index', 'index')->name('pharmacy_list');
 			Route::get('details/{id}', 'details')->name('details.pharmacy_list');
-			Route::get('profile/{id}', 'profile')->name('profile.pharmacy_list');
+			Route::get('profile/{id}', 'profile')->name('pharmacy_profile');
 			Route::get('create', 'create')->name('pharmacy_create');
 			Route::post('create', 'store')->name('pharmacy_create');
 			Route::get('edit/{id}', 'edit')->name('pharmacy_edit');
@@ -189,7 +189,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
 			Route::get('index', 'index')->name('district_manager_list');
 			Route::get('details/{id}', 'details')->name('details.district_manager_list');
-			Route::get('profile/{id}', 'profile')->name('profile.district_manager_list');
+			Route::get('profile/{id}', 'profile')->name('district_manager_profile');
 			Route::get('create', 'create')->name('district_manager_create');
 			Route::post('create', 'store')->name('district_manager_create');
 			Route::get('edit/{id}', 'edit')->name('district_manager_edit');
@@ -200,7 +200,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 		Route::controller(LocalAreaManagerController::class, 'local-area-manager')->prefix('local-area-manager')->name('local_area_manager.')->group(function () {
 			Route::get('index', 'index')->name('local_area_manager_list');
 			Route::get('details/{id}', 'details')->name('details.local_area_manager_list');
-			Route::get('profile/{id}', 'profile')->name('profile.local_area_manager_list');
+			Route::get('profile/{id}', 'profile')->name('local_area_manager_profile');
 			Route::get('create', 'create')->name('local_area_manager_create');
 			Route::post('create', 'store')->name('local_area_manager_create');
 			Route::get('edit/{id}', 'edit')->name('local_area_manager_edit');
@@ -215,6 +215,7 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 	Route::controller(SiteSettingsController::class, 'site-settings')->prefix('site-settings')->name('settings.')->group(function () {
 		Route::get('index', 'index')->name('site_settings');
 		Route::post('index', 'store')->name('site_settings');
+		Route::post('index', 'notification')->name('notification.site_settings');
 	});
 
 });

@@ -47,7 +47,7 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'dmlam.local_area_manager.profile.local_area_manager_list',   'params' => [$lam->id], 'label' => 'Profile'],
+                                                    ['routeName' => 'dmlam.local_area_manager.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$lam->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $lam->id ],
                                                     ['routeName' => 'dmlam.local_area_manager.local_area_manager_edit',   'params' => [$lam->id], 'label' => 'Update'],
                                                     ['routeName' => 'dmlam.local_area_manager.status.local_area_manager_edit',   'params' => [$lam->id], 'label' => $lam->getBtnStatus()],

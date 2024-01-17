@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row px-3 pt-3">
-        <div class="{{$document ? 'col-md-8' : 'col-md-12'}}">
+        <div class="{{$document->title ? 'col-md-8' : 'col-md-12'}}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -77,7 +77,7 @@
                       <div class="form-group {{ $errors->has('ip.*') ? ' has-danger' : '' }}">
                           <label>{{ _('IP Address-1') }}</label>
                           <div class="input-group mb-3">
-                              <input type="tel" name="ip[]" class="form-control {{ $errors->has('ip.*') ? ' is-invalid' : '' }} ip" placeholder="{{ _('Enter IP address') }}">
+                              <input type="text" name="ip[]" class="form-control {{ $errors->has('ip.*') ? ' is-invalid' : '' }} ip" placeholder="{{ _('Enter IP address') }}">
                               <span class="btn btn-sm btn-secondary m-0 px-3 add_ip" style="line-height:24px;" data-count="1"><i class="tim-icons icon-simple-add"></i></span>
                           </div>
                           @include('alerts.feedback', ['field' => 'ip.*'])
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        @if($document)
+        @if($document->title)
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
@@ -116,17 +116,22 @@
             var targetDiv = $('#ip_inputs');
 
             if (checkbox.is(':checked')) {
+                targetDiv.find('.ip').prop('disabled',false);
                 targetDiv.show();
                 
+                
             }else {
+                targetDiv.find('.ip').prop('disabled',true);
                 targetDiv.hide();
             }
 
             checkbox.on('change', function() {
                 if (checkbox.is(':checked')) {
+                    targetDiv.find('.ip').prop('disabled',false);
                     targetDiv.show();
                     
                 } else {
+                    targetDiv.find('.ip').prop('disabled',true);
                     targetDiv.find('.ip').val('');
                     targetDiv.find('.delete_ip').closest('.input-group').parent().remove();
                     targetDiv.hide();

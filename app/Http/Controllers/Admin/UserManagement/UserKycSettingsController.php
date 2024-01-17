@@ -40,8 +40,8 @@ class UserKycSettingsController extends Controller
                 'form_data' => json_encode($data),
             ]
         );
-    
-        return redirect()->route('um.user_kyc.user_kyc_settings')->withStatus(__('KYC settings updated successfully.'));
+        flash()->addSuccess('KYC settings updated successfully.');
+        return redirect()->route('um.user_kyc.user_kyc_settings');
     }
     
     private function prepareKycData(Request $request): array

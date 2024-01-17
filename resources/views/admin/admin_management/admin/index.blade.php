@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @include('alerts.success')
+                    
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
@@ -48,7 +48,7 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'am.admin.profile.admin_list',   'params' => [$admin->id], 'label' => 'Profile'],
+                                                    ['routeName' => 'am.admin.admin_profile',   'params' => [$admin->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$admin->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $admin->id ],
                                                     ['routeName' => 'am.admin.admin_edit',   'params' => [$admin->id], 'label' => 'Update'],
                                                     ['routeName' => 'am.admin.status.admin_edit',   'params' => [$admin->id], 'label' => $admin->getBtnStatus()],

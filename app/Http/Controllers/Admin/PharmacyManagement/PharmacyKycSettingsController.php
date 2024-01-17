@@ -40,8 +40,8 @@ class PharmacyKycSettingsController extends Controller
                 'form_data' => json_encode($data),
             ]
         );
-    
-        return redirect()->route('pm.pharmacy_kyc.pharmacy_kyc_settings')->withStatus(__('KYC settings updated successfully.'));
+        flash()->addSuccess('KYC settings updated successfully.');
+        return redirect()->route('pm.pharmacy_kyc.pharmacy_kyc_settings');
     }
     
     private function prepareKycData(Request $request):array
