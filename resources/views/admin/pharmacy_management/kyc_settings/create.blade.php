@@ -17,7 +17,7 @@
                     @csrf
                     {{-- @foreach ($kyc_setting as $key => $setting) --}}
                     <div class="card-body">
-                        @include('alerts.success')
+                        
                         <div class="d-flex mb-3">
                             <div class="form-check form-check-radio me-3">
                                 <label class="form-check-label" for="exampleRadios1">

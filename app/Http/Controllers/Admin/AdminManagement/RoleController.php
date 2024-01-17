@@ -56,7 +56,8 @@ class RoleController extends Controller
 
         $permissions = Permission::whereIn('id', $req->permissions)->pluck('name')->toArray();
         $role->givePermissionTo($permissions);
-        return redirect()->route('am.role.role_list')->withStatus(__("$role->name role created successfully"));
+        flash()->addSuccess("$role->name role created successfully");
+        return redirect()->route('am.role.role_list');
 
 
     }
@@ -79,8 +80,8 @@ class RoleController extends Controller
         $role->save();
         $permissions = Permission::whereIn('id', $req->permissions)->pluck('name')->toArray();
         $role->syncPermissions($permissions);
-
-        return redirect()->route('am.role.role_list')->withStatus(__($role->name.' role updated successfully.'));
+        flash()->addSuccess($role->name.' role updated successfully.');
+        return redirect()->route('am.role.role_list');
     }
 
     public function delete($id): RedirectResponse
@@ -88,6 +89,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->delete();
 
-        return redirect()->route('am.role.role_list')->withStatus(__($role->name.' role deleted successfully.'));
+        flash()->addSuccess($role->name.' role deleted successfully.');
+        return redirect()->route('am.role.role_list');
     }
 }

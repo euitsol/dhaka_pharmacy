@@ -65,8 +65,7 @@ class AdminController extends Controller
 
         $admin->assignRole($admin->role->name);
 
-        // return redirect()->route('am.admin.admin_list')->withStatus(__('Admin '.$admin->name.' created successfully.'));
-        flash()->addError('Admin '.$admin->name.' created successfully.');
+        flash()->addSuccess('Admin '.$admin->name.' created successfully.');
         return redirect()->route('am.admin.admin_list');
     }
     public function edit($id): View
@@ -91,19 +90,22 @@ class AdminController extends Controller
 
         $admin->syncRoles($admin->role->name);
 
-        return redirect()->route('am.admin.admin_list')->withStatus(__('Admin '.$admin->name.' updated successfully.'));
+        flash()->addSuccess('Admin '.$admin->name.' updated successfully.');
+        return redirect()->route('am.admin.admin_list');
     }
     public function status($id): RedirectResponse
     {
         $admin = Admin::findOrFail($id);
         $this->statusChange($admin);
-        return redirect()->route('am.admin.admin_list')->withStatus(__('Admin '.$admin->name.' status updated successfully.'));
+        flash()->addSuccess('Admin '.$admin->name.' status updated successfully.');
+        return redirect()->route('am.admin.admin_list');
     }
     public function delete($id): RedirectResponse
     {
         $admin = Admin::findOrFail($id);
         $admin->delete();
-        return redirect()->route('am.admin.admin_list')->withStatus(__('Admin '.$admin->name.' deleted successfully.'));
+        flash()->addSuccess('Admin '.$admin->name.' deleted successfully.');
+        return redirect()->route('am.admin.admin_list');
 
     }
 

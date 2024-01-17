@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @include('alerts.success')
+                    
                     <div class="">
                         <table class="table table-striped datatable">
                             <thead class=" text-primary">

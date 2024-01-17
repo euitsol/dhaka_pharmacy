@@ -57,8 +57,8 @@ class SiteSettingsController extends Controller
             $fp = fopen($envPath, 'w');
             fwrite($fp, implode($env));
             fclose($fp);
-
-            return redirect()->back()->withStatus(__('Settings added successfully.'));
+            flash()->addSuccess('Settings added successfully.');
+            return redirect()->back();
         } catch (\Exception $e) {
             return redirect()->back()->withStatus($e->getMessage());
         }
@@ -88,7 +88,7 @@ class SiteSettingsController extends Controller
                 SiteSetting::updateOrCreate(['key' => $key], ['value' => 0]);
             }
         }
-
-        return redirect()->back()->withStatus(__('Settings added successfully.'));
+        flash()->addSuccess('Settings added successfully.');
+        return redirect()->back();
     }
 }

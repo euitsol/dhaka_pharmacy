@@ -45,7 +45,8 @@ class PermissionController extends Controller
         $permission->guard_name = 'admin';
         $permission->created_by = admin()->id;
         $permission->save();
-        return redirect()->route('am.permission.permission_list')->withStatus(__("$permission->name permission created successfully"));
+        flash()->addSuccess("$permission->name permission created successfully");
+        return redirect()->route('am.permission.permission_list');
     }
     public function edit($id): View
     {
@@ -61,6 +62,7 @@ class PermissionController extends Controller
         $permission->guard_name = 'admin';
         $permission->updated_by = admin()->id;
         $permission->update();
-        return redirect()->route('am.permission.permission_list')->withStatus(__("$permission->name permission updated successfully"));
+        flash()->addSuccess("$permission->name permission updated successfully");
+        return redirect()->route('am.permission.permission_list');
     }
 }
