@@ -30,7 +30,7 @@
 @endpush
 @section('content')
     <div class="row px-3 pt-3">
-        <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
+        <div class="{{ $document->title ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        @if ($document)
+        @if ($document->title)
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">

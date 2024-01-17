@@ -42,7 +42,7 @@
                                         <td>
                                             @include('admin.partials.action_buttons', [
                                                     'menuItems' => [
-                                                        ['routeName' => 'dmlam.local_area_manager.profile.local_area_manager_list',   'params' => [$lam->id], 'label' => 'Profile'],
+                                                        ['routeName' => 'dmlam.local_area_manager.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Profile'],
                                                     ]
                                                 ])
                                         </td>

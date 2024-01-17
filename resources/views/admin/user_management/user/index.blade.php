@@ -46,7 +46,7 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'um.user.profile.user_list',   'params' => [$user->id], 'label' => 'Profile'],
+                                                    ['routeName' => 'um.user.user_profile',   'params' => [$user->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$user->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $user->id ],
                                                     ['routeName' => 'um.user.user_edit',   'params' => [$user->id], 'label' => 'Update'],
                                                     ['routeName' => 'um.user.status.user_edit',   'params' => [$user->id], 'label' => $user->getBtnStatus()],

@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row">
-        <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
+        <div class="{{ $document->title ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">{{ __('User KYC Settings') }}</h5>
@@ -148,7 +148,7 @@
             </div>
         </div>
         
-@if ($document)
+@if ($document->title)
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">

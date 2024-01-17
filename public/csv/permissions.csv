@@ -38,3 +38,8 @@ local_area_manager_list,admin,"Local Area Manager"
 local_area_manager_create,admin,"Local Area Manager"
 local_area_manager_edit,admin,"Local Area Manager"
 local_area_manager_delete,admin,"Local Area Manager"
+user_profile,admin,User
+admin_profile,admin,Admin
+pharmacy_profile,admin,Pharmacy
+district_manager_profile,admin,"District Manager"
+local_area_manager_profile,admin,"Local Area Manager"

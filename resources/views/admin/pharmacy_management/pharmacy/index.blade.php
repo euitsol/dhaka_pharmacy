@@ -46,7 +46,7 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'pm.pharmacy.profile.pharmacy_list',   'params' => [$pharmacy->id], 'label' => 'Profile'],
+                                                    ['routeName' => 'pm.pharmacy.pharmacy_profile',   'params' => [$pharmacy->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$pharmacy->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $pharmacy->id ],
                                                     ['routeName' => 'pm.pharmacy.pharmacy_edit',   'params' => [$pharmacy->id], 'label' => 'Update'],
                                                     ['routeName' => 'pm.pharmacy.status.pharmacy_edit',   'params' => [$pharmacy->id], 'label' => $pharmacy->getBtnStatus()],
