@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RoleHasPermissionSeeder::class,
             PharmacySeeder::class,
             DocumentationSeeder::class,
+            SettingsSeeder::class,
         ]);
     }
 }
