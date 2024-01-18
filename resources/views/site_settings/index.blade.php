@@ -58,23 +58,22 @@
         <div class="col-md-10 p-0">
             {{-- Tab-1 --}}
             <div id="tab1" class="tabcontent py-3">
-                @include('site_settings.general_settings')
+                @include('site_settings.general_settings',['document'=>$general_settings])
             </div>
 
-
             <div id="tab2" class="tabcontent py-3" style="display: none">
-                @include('site_settings.email_settings')
+                @include('site_settings.email_settings',['document'=>$email_settings]);
             </div>
 
             <div id="tab3" class="tabcontent py-3" style="display: none">
-                @include('site_settings.database_settings')
+                @include('site_settings.database_settings',['document'=>$database_settings])
             </div>
 
             <div id="tab4" class="tabcontent py-3">
-                @include('site_settings.sms_settings')
+                @include('site_settings.sms_settings',['document'=>$sms_settings])
             </div>
             <div id="tab5" class="tabcontent py-3">
-                @include('site_settings.notification')
+                @include('site_settings.notification_settings',['document'=>$notification_settings])
             </div>
 
 

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Documentation;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,9 +16,20 @@ class SiteSettingsController extends Controller
 
     public function index(): View
     {
-        $s['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
-        $s['availableTimezones'] = availableTimezones();
-        return view('site_settings.index', $s);
+
+        $data = [];
+        $data['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
+        $documents = Documentation::where('module_key','general_settings')
+                                    ->orWhere('module_key','email_settings')
+                                    ->orWhere('module_key','database_settings')
+                                    ->orWhere('module_key','sms_settings')
+                                    ->orWhere('module_key','notification_settings')
+                                    ->get();
+        foreach($documents as $document){
+            $data[$document->module_key] = Documentation::where('module_key',$document->module_key)->first();
+        }
+        $data['availableTimezones'] = availableTimezones();
+        return view('site_settings.index', $data);
     }
 
     public function store(Request $request): RedirectResponse
