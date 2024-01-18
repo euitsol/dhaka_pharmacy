@@ -42,6 +42,6 @@
                 </div>
               </div>
         </div>
-        @include('admin.partials.documentation'['document'=>$document])
+        @include('admin.partials.documentation',['document'=>$document])
     </div>
 @endsection
