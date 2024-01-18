@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="{{ $document->title ? 'col-md-8' : 'col-md-12' }}">
         <div class="card">
             <div class="card-header">
                 <h5 class="title">{{ _('General Settings') }}</h5>
@@ -132,16 +132,5 @@
             </form>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card card-user">
-            <div class="card-body">
-                <p class="card-text">
-                    {{ _('General Settings') }}
-                </p>
-                <div class="card-description">
-                    {{ _('The role\'s manages user permissions by assigning different roles to users. Each role defines specific access levels and actions a user can perform. It helps ensure proper authorization and security in the system.') }}
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('admin.partials.documentation',['document'=>$document])
 </div>
