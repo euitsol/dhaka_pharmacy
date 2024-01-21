@@ -54,27 +54,45 @@
             <button class="tablinks p-3 " onclick="openTab(event, 'tab3')">Database Settings</button>
             <button class="tablinks p-3 " onclick="openTab(event, 'tab4')">SMS Settings</button>
             <button class="tablinks p-3 " onclick="openTab(event, 'tab5')">Notification Settings</button>
+            <button class="tablinks p-3 " onclick="openTab(event, 'tab6')">Email Templates</button>
         </div>
         <div class="col-md-10 p-0">
             {{-- Tab-1 --}}
             <div id="tab1" class="tabcontent py-3">
-                @include('site_settings.general_settings')
+                @php
+                    $document = $documents->where('module_key','general_settings')->first();
+                @endphp
+                @include('site_settings.general_settings',['document'=>$document])
             </div>
 
-
             <div id="tab2" class="tabcontent py-3" style="display: none">
-                @include('site_settings.email_settings')
+                @php
+                    $document = $documents->where('module_key','email_settings')->first();
+                @endphp
+                @include('site_settings.email_settings',['document'=>$document]);
             </div>
 
             <div id="tab3" class="tabcontent py-3" style="display: none">
-                @include('site_settings.database_settings')
+                @php
+                    $document = $documents->where('module_key','database_settings')->first();
+                @endphp
+                @include('site_settings.database_settings',['document'=>$document])
             </div>
 
             <div id="tab4" class="tabcontent py-3">
-                @include('site_settings.sms_settings')
+                @php
+                    $document = $documents->where('module_key','sms_settings')->first();
+                @endphp
+                @include('site_settings.sms_settings',['document'=>$document])
             </div>
             <div id="tab5" class="tabcontent py-3">
-                @include('site_settings.notification')
+                @php
+                    $document = $documents->where('module_key','notification_settings')->first();
+                @endphp
+                @include('site_settings.notification_settings',['document'=>$document])
+            </div>
+            <div id="tab6" class="tabcontent py-3">
+                @include('site_settings.email_templates')
             </div>
 
 

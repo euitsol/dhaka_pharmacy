@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\DM_LAM_Management;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LocalAreaManagerRequest;
 use App\Models\DistrictManager;
+use App\Models\Documentation;
 use App\Models\LocalAreaManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -44,6 +45,7 @@ class LocalAreaManagerController extends Controller
     public function create(): View
     {
         $data['dms'] = DistrictManager::latest()->get();
+        $data['document'] = Documentation::where('module_key','local_area_manager')->first();
         return view('admin.dm_lam_management.local_area_manager.create',$data);
     }
     public function store(LocalAreaManagerRequest $req): RedirectResponse
@@ -62,6 +64,7 @@ class LocalAreaManagerController extends Controller
     {
         $data['lam'] = LocalAreaManager::findOrFail($id);
         $data['dms'] = DistrictManager::latest()->get();
+        $data['document'] = Documentation::where('module_key','local_area_manager')->first();
         return view('admin.dm_lam_management.local_area_manager.edit',$data);
     }
     public function update(LocalAreaManagerRequest $req, $id): RedirectResponse

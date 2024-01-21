@@ -214,8 +214,10 @@ Route::group(['middleware' => ['admin', 'permission'],'prefix'=>'admin'], functi
 	// Site Settings
 	Route::controller(SiteSettingsController::class, 'site-settings')->prefix('site-settings')->name('settings.')->group(function () {
 		Route::get('index', 'index')->name('site_settings');
-		Route::post('index', 'store')->name('site_settings');
+		Route::post('update', 'store')->name('update.site_settings');
 		Route::post('index', 'notification')->name('notification.site_settings');
+		Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
+		Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
 	});
 
 });

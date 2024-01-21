@@ -1,4 +1,4 @@
-@if($document->title)
+@if(isset($document->title))
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">

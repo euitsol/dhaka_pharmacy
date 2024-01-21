@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\DM_LAM_Management;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DistrictManagerRequest;
 use App\Models\DistrictManager;
+use App\Models\Documentation;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -41,7 +42,8 @@ class DistrictManagerController extends Controller
     }
     public function create(): View
     {
-        return view('admin.dm_lam_management.district_manager.create');
+        $data['document'] = Documentation::where('module_key','district_manager')->first();
+        return view('admin.dm_lam_management.district_manager.create',$data);
     }
     public function store(DistrictManagerRequest $req): RedirectResponse
     {
@@ -57,6 +59,7 @@ class DistrictManagerController extends Controller
     public function edit($id): View
     {
         $data['dm'] = DistrictManager::findOrFail($id);
+        $data['document'] = Documentation::where('module_key','district_manager')->first();
         return view('admin.dm_lam_management.district_manager.edit',$data);
     }
     public function update(DistrictManagerRequest $req, $id): RedirectResponse

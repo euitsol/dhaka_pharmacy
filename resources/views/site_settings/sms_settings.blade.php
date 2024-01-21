@@ -1,10 +1,10 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="{{ isset($document->title) ? 'col-md-8' : 'col-md-12' }}">
         <div class="card">
             <div class="card-header">
                 <h5 class="title">{{ _('SMS Settings') }}</h5>
             </div>
-            <form method="POST" action="{{ route('settings.site_settings') }}" autocomplete="off"
+            <form method="POST" action="{{ route('settings.update.site_settings') }}" autocomplete="off"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
@@ -33,16 +33,5 @@
             </form>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card card-user">
-            <div class="card-body">
-                <p class="card-text">
-                    {{ _('General Settings') }}
-                </p>
-                <div class="card-description">
-                    {{ _('The role\'s manages user permissions by assigning different roles to users. Each role defines specific access levels and actions a user can perform. It helps ensure proper authorization and security in the system.') }}
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('admin.partials.documentation',['document'=>$document])
 </div>

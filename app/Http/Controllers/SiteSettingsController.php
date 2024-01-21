@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmailTemplateRequest;
+use App\Models\Documentation;
+use App\Models\EmailTemplate;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,9 +18,22 @@ class SiteSettingsController extends Controller
 
     public function index(): View
     {
-        $s['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
-        $s['availableTimezones'] = availableTimezones();
-        return view('site_settings.index', $s);
+
+        // $data = [];
+        $data['email_templates'] = EmailTemplate::where('deleted_at',null)->latest()->get();
+        $data['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
+        $data['documents'] = Documentation::where('module_key','general_settings')
+                                    ->orWhere('module_key','email_settings')
+                                    ->orWhere('module_key','database_settings')
+                                    ->orWhere('module_key','sms_settings')
+                                    ->orWhere('module_key','notification_settings')
+                                    ->orWhere('module_key','email_templates')
+                                    ->get();
+        // foreach($documents as $document){
+        //     $data[$document->module_key] = Documentation::where('module_key',$document->module_key)->first();
+        // }
+        $data['availableTimezones'] = availableTimezones();
+        return view('site_settings.index', $data);
     }
 
     public function store(Request $request): RedirectResponse
@@ -27,7 +43,6 @@ class SiteSettingsController extends Controller
         try {
             $envPath = base_path('.env');
             $env = file($envPath);
-            dd($data);
 
             foreach ($data as $key => $value) {
                 if($key == 'site_logo' || $key == 'site_favicon'){
@@ -58,9 +73,10 @@ class SiteSettingsController extends Controller
             fwrite($fp, implode($env));
             fclose($fp);
             flash()->addSuccess('Settings added successfully.');
-            return redirect()->back();
+            return redirect()->route('settings.site_settings');
         } catch (\Exception $e) {
-            return redirect()->back()->withStatus($e->getMessage());
+            flash()->addError('Something is wrong.');
+            return redirect()->route('settings.site_settings');
         }
     }
 
@@ -89,6 +105,25 @@ class SiteSettingsController extends Controller
             }
         }
         flash()->addSuccess('Settings added successfully.');
-        return redirect()->back();
+        return redirect()->route('settings.site_settings');
+    }
+
+    public function et_edit($id){
+        $data['email_template'] =  EmailTemplate::findOrFail($id);
+        return response()->json($data);
+    }
+
+    public function et_update(EmailTemplateRequest $req, $id) {
+        try {
+            $data = EmailTemplate::findOrFail($id);
+            $data->subject = $req->subject;
+            $data->template = $req->template;
+            $data->update();
+            flash()->addSuccess('Settings added successfully.');
+            return response()->json(['message' => 'Email template updated successfully']);
+        } catch (\Exception $e) {
+            flash()->addError('Somethings is wrong.');
+            return response()->json(['message' => 'An error occurred'], 500);
+        }
     }
 }

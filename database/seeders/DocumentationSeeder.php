@@ -14,7 +14,7 @@ class DocumentationSeeder extends Seeder
     public function run(): void
     {
 
-        $module_keys = ['admin','user','pharmacy','permission','roll','pharmacy_kyc_settings'];
+        $module_keys = ['admin','user','pharmacy','permission','roll','pharmacy_kyc_settings','district_manager','local_area_manager','general_settings','email_settings','database_settings','sms_settings','notification_settings','email_templates'];
 
         foreach($module_keys as $key){
             Documentation::create([
