@@ -1,10 +1,10 @@
 <div class="row">
-    <div class="{{ $document->title ? 'col-md-8' : 'col-md-12' }}">
+    <div class="{{ isset($document->title) ? 'col-md-8' : 'col-md-12' }}">
         <div class="card">
             <div class="card-header">
                 <h5 class="title">{{ _('Email Settings') }}</h5>
             </div>
-            <form method="POST" action="{{ route('settings.site_settings') }}" autocomplete="off"
+            <form method="POST" action="{{ route('settings.update.site_settings') }}" autocomplete="off"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">

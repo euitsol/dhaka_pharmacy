@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             PharmacySeeder::class,
             DocumentationSeeder::class,
             SettingsSeeder::class,
+            EmailTemplateSeeder::class,
         ]);
     }
 }
