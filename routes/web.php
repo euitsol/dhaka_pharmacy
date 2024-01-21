@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PharmacyManagement\PharmacyController as AdminPha
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycController;
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycSettingsController;
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
+use App\Http\Controllers\DM\DashboardController as DmDashboardController;
 use App\Http\Controllers\DM\DmProfileController;
 use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
 use App\Http\Controllers\Pharmacy\PharmacyProfileController;
@@ -244,6 +245,8 @@ Route::group(['middleware' => 'pharmacy','prefix'=>'pharmacy'], function () {
 
 // DM Routes 
 Route::group(['middleware' => 'dm','prefix'=>'district-manager'], function () {
+
+	Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dm.dashboard');
 	Route::get('/profile', [DmProfileController::class, 'profile'])->name('district_manager.profile');
 });
 

@@ -16,7 +16,7 @@ class LoginController extends Controller
     {
         if (Auth::guard('dm')->check()) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('district_manager.profile');
+            return redirect()->route('dm.dashboard');
         }
         return view('district_manager.login');
     }
@@ -27,7 +27,7 @@ class LoginController extends Controller
 
         if (Auth::guard('dm')->attempt($credentials)) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('district_manager.profile');
+            return redirect()->route('dm.dashboard');
         }
         flash()->addError('Invalid credentials');
         return redirect()->route('district_manager.login');

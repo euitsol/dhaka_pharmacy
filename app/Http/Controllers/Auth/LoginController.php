@@ -60,7 +60,7 @@ class LoginController extends Controller
             return redirect()->route('user.profile');
         }
         flash()->addError('Invalid credentials');
-        return redirect()->route('login');
+        return redirect()->route('.login');
     }
 
 
