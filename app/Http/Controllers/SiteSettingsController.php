@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmailTemplateRequest;
+use App\Models\Documentation;
+use App\Models\EmailTemplate;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,9 +18,22 @@ class SiteSettingsController extends Controller
 
     public function index(): View
     {
-        $s['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
-        $s['availableTimezones'] = availableTimezones();
-        return view('site_settings.index', $s);
+
+        // $data = [];
+        $data['email_templates'] = EmailTemplate::where('deleted_at',null)->latest()->get();
+        $data['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
+        $data['documents'] = Documentation::where('module_key','general_settings')
+                                    ->orWhere('module_key','email_settings')
+                                    ->orWhere('module_key','database_settings')
+                                    ->orWhere('module_key','sms_settings')
+                                    ->orWhere('module_key','notification_settings')
+                                    ->orWhere('module_key','email_templates')
+                                    ->get();
+        // foreach($documents as $document){
+        //     $data[$document->module_key] = Documentation::where('module_key',$document->module_key)->first();
+        // }
+        $data['availableTimezones'] = availableTimezones();
+        return view('site_settings.index', $data);
     }
 
     public function store(Request $request): RedirectResponse
@@ -45,8 +61,8 @@ class SiteSettingsController extends Controller
                         $siteSetting = SiteSetting::updateOrCreate(['key' => $key], ['value' => $value]);
                     }
                 }
-
-                $siteSetting = SiteSetting::updateOrCreate(['key' => $key], ['value' => $value]);
+                    $siteSetting = SiteSetting::updateOrCreate(['key' => $key], ['value' => $value]);
+               
 
                 if (!empty($siteSetting->env_key)) {
                     $env = $this->set($siteSetting->env_key, '"'.$value.'"', $env);
@@ -56,10 +72,11 @@ class SiteSettingsController extends Controller
             $fp = fopen($envPath, 'w');
             fwrite($fp, implode($env));
             fclose($fp);
-
-            return redirect()->back()->withStatus(__('Settings added successfully.'));
+            flash()->addSuccess('Settings added successfully.');
+            return redirect()->route('settings.site_settings');
         } catch (\Exception $e) {
-            return redirect()->back()->withStatus($e->getMessage());
+            flash()->addError('Something is wrong.');
+            return redirect()->route('settings.site_settings');
         }
     }
 
@@ -74,5 +91,39 @@ class SiteSettingsController extends Controller
             }
         }
         return $env;
+    }
+
+    public function notification(Request $request): RedirectResponse
+    {
+        $keys = ['email_verification','sms_verification','user_registration','user_kyc'];
+        
+        foreach($keys as $key){
+            if(isset($request->$key)){
+                SiteSetting::updateOrCreate(['key' => $key], ['value' => $request->$key]);
+            }else{
+                SiteSetting::updateOrCreate(['key' => $key], ['value' => 0]);
+            }
+        }
+        flash()->addSuccess('Settings added successfully.');
+        return redirect()->route('settings.site_settings');
+    }
+
+    public function et_edit($id){
+        $data['email_template'] =  EmailTemplate::findOrFail($id);
+        return response()->json($data);
+    }
+
+    public function et_update(EmailTemplateRequest $req, $id) {
+        try {
+            $data = EmailTemplate::findOrFail($id);
+            $data->subject = $req->subject;
+            $data->template = $req->template;
+            $data->update();
+            flash()->addSuccess('Settings added successfully.');
+            return response()->json(['message' => 'Email template updated successfully']);
+        } catch (\Exception $e) {
+            flash()->addError('Somethings is wrong.');
+            return response()->json(['message' => 'An error occurred'], 500);
+        }
     }
 }

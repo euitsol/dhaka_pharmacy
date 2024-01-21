@@ -41,19 +41,19 @@
                         @include('alerts.success', ['key' => 'password_status'])
 
                         <div class="form-group {{ $errors->has('old_password') ? ' has-danger' : '' }}">
-                            <label>{{ ___('Current Password') }}</label>
-                            <input type="password" name="old_password" class="form-control {{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ ___('Current Password') }}" value="" required>
+                            <label>{{ __('Current Password') }}</label>
+                            <input type="password" name="old_password" class="form-control {{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Current Password') }}" value="" required>
                             @include('alerts.feedback', ['field' => 'old_password'])
                         </div>
 
                         <div class="form-group {{ $errors->has('password') ? ' has-danger' : '' }}">
-                            <label>{{ ___('New Password') }}</label>
-                            <input type="password" name="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ ___('New Password') }}" value="" required>
+                            <label>{{ __('New Password') }}</label>
+                            <input type="password" name="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('New Password') }}" value="" required>
                             @include('alerts.feedback', ['field' => 'password'])
                         </div>
                         <div class="form-group">
-                            <label>{{ ___('Confirm New Password') }}</label>
-                            <input type="password" name="password_confirmation" class="form-control" placeholder="{{ ___('Confirm New Password') }}" value="" required>
+                            <label>{{ __('Confirm New Password') }}</label>
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('Confirm New Password') }}" value="" required>
                         </div>
                     </div>
                     <div class="card-footer">

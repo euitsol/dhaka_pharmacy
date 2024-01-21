@@ -170,7 +170,7 @@
                         'pageSlug' => 'site_settings',
                         'routeName' => 'settings.site_settings',
                         'iconClass' => 'fa-solid fa-gears',
-                        'label' => 'Site Settings',
+                        'label' => 'Application Settings',
                     ],
                 ],
             ])

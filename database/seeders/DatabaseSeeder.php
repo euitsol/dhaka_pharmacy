@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleHasPermissionSeeder::class,
             PharmacySeeder::class,
+            DocumentationSeeder::class,
+            SettingsSeeder::class,
+            EmailTemplateSeeder::class,
         ]);
     }
 }

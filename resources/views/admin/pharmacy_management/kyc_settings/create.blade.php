@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-8">
+        <div class="{{$document->title ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">{{ __('Pharmacy KYC Settings') }}</h5>
@@ -17,7 +17,7 @@
                     @csrf
                     {{-- @foreach ($kyc_setting as $key => $setting) --}}
                     <div class="card-body">
-                        @include('alerts.success')
+                        
                         <div class="d-flex mb-3">
                             <div class="form-check form-check-radio me-3">
                                 <label class="form-check-label" for="exampleRadios1">
@@ -147,18 +147,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card card-user">
-                <div class="card-body">
-                    <p class="card-text">
-                        {{ __('Blog') }}
-                    </p>
-                    <div class="card-description">
-                        {{ __('The role\'s manages user permissions by assigning different roles to users. Each role defines specific access levels and actions a user can perform. It helps ensure proper authorization and security in the system.') }}
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('admin.partials.documentation',['document'=>$document])
     </div>
 @endsection
 

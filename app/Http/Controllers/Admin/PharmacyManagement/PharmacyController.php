@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\PharmacyManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PharmacyRequest;
+use App\Models\Documentation;
 use App\Models\Pharmacy;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
@@ -23,8 +24,8 @@ class PharmacyController extends Controller
 
     public function index(): View
     {
-        $s['pharmacies'] = Pharmacy::with('created_user')->latest()->get();
-        return view('admin.pharmacy_management.pharmacy.index',$s);
+        $data['pharmacies'] = Pharmacy::with('created_user')->latest()->get();
+        return view('admin.pharmacy_management.pharmacy.index',$data);
     }
     public function details($id): JsonResponse
     {
@@ -42,8 +43,9 @@ class PharmacyController extends Controller
     }
     public function create(): View
     {
-        $s['roles'] = Role::latest()->get();
-        return view('admin.pharmacy_management.pharmacy.create',$s);
+        $data['roles'] = Role::latest()->get();
+        $data['document'] = Documentation::where('module_key','pharmacy')->first();
+        return view('admin.pharmacy_management.pharmacy.create',$data);
     }
     public function store(PharmacyRequest $req): RedirectResponse
     {
@@ -53,14 +55,15 @@ class PharmacyController extends Controller
         $pharmacy->password = Hash::make($req->password);
         $pharmacy->created_by = admin()->id;
         $pharmacy->save();
-
-        return redirect()->route('pm.pharmacy.pharmacy_list')->withStatus(__('Pharmacy '.$pharmacy->name.' created successfully.'));
+        flash()->addSuccess('Pharmacy '.$pharmacy->name.' created successfully.');
+        return redirect()->route('pm.pharmacy.pharmacy_list');
     }
     public function edit($id): View
     {
-        $s['pharmacy'] = Pharmacy::findOrFail($id);
-        $s['roles'] = Role::latest()->get();
-        return view('admin.pharmacy_management.pharmacy.edit',$s);
+        $data['pharmacy'] = Pharmacy::findOrFail($id);
+        $data['roles'] = Role::latest()->get();
+        $data['document'] = Documentation::where('module_key','pharmacy')->first();
+        return view('admin.pharmacy_management.pharmacy.edit',$data);
     }
     public function update(PharmacyRequest $req, $id): RedirectResponse
     {
@@ -72,20 +75,22 @@ class PharmacyController extends Controller
         }
         $pharmacy->updated_by = admin()->id;
         $pharmacy->update();
-
-        return redirect()->route('pm.pharmacy.pharmacy_list')->withStatus(__('Pharmacy '.$pharmacy->name.' updated successfully.'));
+        flash()->addSuccess('Pharmacy '.$pharmacy->name.' updated successfully.');
+        return redirect()->route('pm.pharmacy.pharmacy_list');
     }
     public function status($id): RedirectResponse
     {
         $pharmacy = Pharmacy::findOrFail($id);
         $this->statusChange($pharmacy);
-        return redirect()->route('pm.pharmacy.pharmacy_list')->withStatus(__('Pharmacy '.$pharmacy->name.' status updated successfully.'));
+        flash()->addSuccess('Pharmacy '.$pharmacy->name.' status updated successfully.');
+        return redirect()->route('pm.pharmacy.pharmacy_list');
     }
     public function delete($id): RedirectResponse
     {
         $pharmacy = Pharmacy::findOrFail($id);
         $pharmacy->delete();
-        return redirect()->route('pm.pharmacy.pharmacy_list')->withStatus(__('Pharmacy '.$pharmacy->name.' deleted successfully.'));
+        flash()->addSuccess('Pharmacy '.$pharmacy->name.' deleted successfully.');
+        return redirect()->route('pm.pharmacy.pharmacy_list');
 
     }
 }

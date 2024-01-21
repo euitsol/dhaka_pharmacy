@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\AdminManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PermissionRequest;
+use App\Models\Documentation;
 use App\Models\Permission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -19,8 +20,8 @@ class PermissionController extends Controller
 
     public function index(): View
      {
-        $s['permissions'] = Permission::orderBy('prefix')->get();
-        return view('admin.admin_management.permission.index',$s);
+        $data['permissions'] = Permission::orderBy('prefix')->get();
+        return view('admin.admin_management.permission.index',$data);
     }
     public function details($id): JsonResponse
     {
@@ -32,7 +33,8 @@ class PermissionController extends Controller
         return response()->json($data);
     }
     public function create(){
-        return view('admin.admin_management.permission.create');
+        $data['document'] = Documentation::where('module_key','permission')->first();
+        return view('admin.admin_management.permission.create',$data);
     }
 
     public function store(PermissionRequest $req): RedirectResponse
@@ -43,12 +45,14 @@ class PermissionController extends Controller
         $permission->guard_name = 'admin';
         $permission->created_by = admin()->id;
         $permission->save();
-        return redirect()->route('am.permission.permission_list')->withStatus(__("$permission->name permission created successfully"));
+        flash()->addSuccess("$permission->name permission created successfully");
+        return redirect()->route('am.permission.permission_list');
     }
     public function edit($id): View
     {
-        $s['permission'] = Permission::findOrFail($id);
-        return view('admin.admin_management.permission.edit',$s);
+        $data['permission'] = Permission::findOrFail($id);
+        $data['document'] = Documentation::where('module_key','permission')->first();
+        return view('admin.admin_management.permission.edit',$data);
     }
     public function update(PermissionRequest $req, $id): RedirectResponse
     {
@@ -58,6 +62,7 @@ class PermissionController extends Controller
         $permission->guard_name = 'admin';
         $permission->updated_by = admin()->id;
         $permission->update();
-        return redirect()->route('am.permission.permission_list')->withStatus(__("$permission->name permission updated successfully"));
+        flash()->addSuccess("$permission->name permission updated successfully");
+        return redirect()->route('am.permission.permission_list');
     }
 }
