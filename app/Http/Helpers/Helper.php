@@ -108,6 +108,9 @@ function admin(){
 function pharmacy(){
     return auth()->guard('pharmacy')->user();
 }
+function dm(){
+    return auth()->guard('dm')->user();
+}
 
 
 function mainMenuCheck($slugs){

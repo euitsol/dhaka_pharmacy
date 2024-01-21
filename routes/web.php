@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Admin\AdminManagement\AdminController;
 use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
-use App\Http\Controllers\Admin\Auth\LoginContorller as LoginManagementController;
+use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DM_LAM_Management\DistrictManagerController;
 use App\Http\Controllers\Admin\DM_LAM_Management\LocalAreaManagerController;
@@ -16,6 +16,9 @@ use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserControl
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyController as AdminPharmacyController;
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycController;
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycSettingsController;
+use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
+use App\Http\Controllers\DM\DmProfileController;
+use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
 use App\Http\Controllers\Pharmacy\PharmacyProfileController;
 use App\Http\Controllers\SiteSettingsController;
 use App\Http\Controllers\User\UserProfileController;
@@ -39,12 +42,17 @@ Route::get('/', function () {
 
 Auth::routes();
 // Admin Login Routes 
-Route::get('/admin/login', [LoginManagementController::class, 'adminLogin'])->name('admin.login');
-Route::post('/admin/login', [LoginManagementController::class, 'adminLoginCheck'])->name('admin.login');
+Route::get('/admin/login', [AdminLoginController::class, 'adminLogin'])->name('admin.login');
+Route::post('/admin/login', [AdminLoginController::class, 'adminLoginCheck'])->name('admin.login');
 
 // Pharmacy Login Routes 
-Route::get('/pharmacy/login', [LoginManagementController::class, 'pharmacyLogin'])->name('pharmacy.login');
-Route::post('/pharmacy/login', [LoginManagementController::class, 'pharmacyLoginCheck'])->name('pharmacy.login');
+Route::get('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLogin'])->name('pharmacy.login');
+Route::post('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLoginCheck'])->name('pharmacy.login');
+
+
+// DM Login Routes 
+Route::get('/district-manager/login', [DmLoginController::class, 'dmLogin'])->name('district_manager.login');
+Route::post('/district-manager/login', [DmLoginController::class, 'dmLoginCheck'])->name('district_manager.login');
 
 
 // Overwrite Default Authentication Routes
@@ -231,5 +239,11 @@ Route::group(['middleware' => 'auth','prefix'=>'user'], function () {
 // Pharmacy Routes 
 Route::group(['middleware' => 'pharmacy','prefix'=>'pharmacy'], function () {
 	Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('pharmacy.profile');
+});
+
+
+// DM Routes 
+Route::group(['middleware' => 'dm','prefix'=>'district-manager'], function () {
+	Route::get('/profile', [DmProfileController::class, 'profile'])->name('district_manager.profile');
 });
 

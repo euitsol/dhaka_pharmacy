@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'pharmacies',
         ],
+        'dm' => [
+            'driver' => 'session',
+            'provider' => 'district_managers',
+        ],
     ],
 
     /*
@@ -80,6 +84,10 @@ return [
         'pharmacies' => [
             'driver' => 'eloquent',
             'model' => App\Models\Pharmacy::class,
+        ],
+        'district_managers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\DistrictManager::class,
         ],
     ],
 
