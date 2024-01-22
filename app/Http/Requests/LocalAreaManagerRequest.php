@@ -28,7 +28,7 @@ class LocalAreaManagerRequest extends FormRequest
     protected function store(): array
     {
         return [
-            'email' => 'required|unique:admins,email',
+            'email' => 'required|unique:local_area_managers,email',
             'password' => 'required|min:6|confirmed',
         ];
     }
@@ -36,7 +36,7 @@ class LocalAreaManagerRequest extends FormRequest
     protected function update(): array
     {
         return [
-            'email' => 'required|unique:admins,email,' . $this->route('id'),
+            'email' => 'required|unique:local_area_managers,email,' . $this->route('id'),
             'password' => 'nullable|min:6|confirmed',
         ];
     }

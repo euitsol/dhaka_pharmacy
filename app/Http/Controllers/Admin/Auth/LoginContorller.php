@@ -13,13 +13,13 @@ use Illuminate\View\View;
 
 class LoginContorller extends Controller
 {
-    public function adminLogin():RedirectResponse
+    public function adminLogin()
     {
         if (Auth::guard('admin')->check()) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
             return redirect()->route('dashboard');
         }
-        return redirect()->route('admin.login');
+        return view('admin.login');
     }
 
     public function adminLoginCheck(Request $request):RedirectResponse
