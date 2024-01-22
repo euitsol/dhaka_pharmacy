@@ -60,7 +60,7 @@ class LoginController extends Controller
             return redirect()->route('user.profile');
         }
         flash()->addError('Invalid credentials');
-        return redirect()->route('.login');
+        return redirect()->route('login');
     }
 
 
@@ -75,17 +75,15 @@ class LoginController extends Controller
         if (Auth::guard('admin')->check()) {
             Auth::guard('admin')->logout();
             return redirect()->route('admin.login');
-        }
-        elseif (Auth::guard('pharmacy')->check()) {
+        } elseif (Auth::guard('pharmacy')->check()) {
             Auth::guard('pharmacy')->logout();
             return redirect()->route('pharmacy.login');
-        }
-        elseif (Auth::guard('dm')->check()) {
+        } elseif (Auth::guard('dm')->check()) {
             Auth::guard('dm')->logout();
             return redirect()->route('district_manager.login');
         } elseif (Auth::check()) {
             Auth::logout();
-            return redirect().route('login');
+            return redirect()->route('login');
         }
     }
 }
