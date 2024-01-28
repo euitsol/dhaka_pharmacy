@@ -52,13 +52,12 @@ class LamManagementController extends Controller
     {
         $lam = new LocalAreaManager();
         $lam->name = $req->name;
-        $lam->email = $req->email;
-        $lam->dm_id = $req->dm_id;
+        $lam->phone = $req->phone;
+        $lam->dm_id = dm()->id;
         $lam->password = Hash::make($req->password);
-        $lam->created_by = admin()->id;
         $lam->save();
         flash()->addSuccess('Local Area Manager ' . $lam->name . ' created successfully.');
-        return redirect()->route('district_manager.lam_management.list');
+        return redirect()->route('dm.lam.list');
     }
     public function edit($id): View
     {
@@ -71,16 +70,15 @@ class LamManagementController extends Controller
     {
         $lam = LocalAreaManager::findOrFail($id);
         $lam->name = $req->name;
-        $lam->email = $req->email;
-        $lam->dm_id = $req->dm_id;
+        $lam->phone = $req->phone;
+        $lam->dm_id = dm()->id;
         if ($req->password) {
             $lam->password = Hash::make($req->password);
         }
-        $lam->updated_by = admin()->id;
         $lam->update();
 
         flash()->addSuccess('Local Area Manager ' . $lam->name . ' updated successfully.');
-        return redirect()->route('district_manager.lam_management.list');
+        return redirect()->route('dm.lam.list');
     }
     public function status($id): RedirectResponse
     {
@@ -88,7 +86,7 @@ class LamManagementController extends Controller
         $this->statusChange($lam);
 
         flash()->addSuccess('Local Area Manager ' . $lam->name . ' status updated successfully.');
-        return redirect()->route('district_manager.lam_management.list');
+        return redirect()->route('dm.lam.list');
     }
     public function delete($id): RedirectResponse
     {
@@ -96,6 +94,6 @@ class LamManagementController extends Controller
         $lam->delete();
 
         flash()->addSuccess('Local Area Manager ' . $lam->name . ' deleted successfully.');
-        return redirect()->route('district_manager.lam_management.list');
+        return redirect()->route('dm.lam.list');
     }
 }

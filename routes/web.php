@@ -242,8 +242,16 @@ Route::group(['middleware' => 'pharmacy', 'prefix' => 'pharmacy'], function () {
 Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager'], function () {
 
     Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/profile', [DmProfileController::class, 'profile'])->name('district_manager.profile');
 
+
+	Route::controller(DmProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
+		Route::get('/', 'profile')->name('index');
+		Route::put('/update', 'update')->name('update');
+		Route::put('/update/password', 'updatePassword')->name('update.password');
+		Route::post('/update/image', 'updateImage')->name('update.image');
+
+
+	});
 
     //LAM Route
     Route::controller(LamManagementController::class, 'lam-management')->prefix('lam-management')->name('lam.')->group(function () {

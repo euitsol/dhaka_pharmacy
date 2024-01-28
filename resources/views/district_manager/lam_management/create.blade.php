@@ -28,14 +28,14 @@
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>{{ __('Email') }}</label>
-                            <input type="email" name="email" class="form-control" placeholder="Enter email"
-                                value="{{ old('email') }}">
-                            @include('alerts.feedback', ['field' => 'email'])
+                            <label>{{ __('Phone') }}</label>
+                            <input type="text" name="phone" class="form-control" placeholder="Enter phone"
+                                value="{{ old('phone') }}">
+                            @include('alerts.feedback', ['field' => 'phone'])
                         </div>
                         <div class="form-group {{ $errors->has('dm_id') ? ' has-danger' : '' }}">
                             <label>{{ __('District Manager') }}</label>
-                            <select style="cursor:not-allowed" name="dm_id" class="form-control {{ $errors->has('dm_id') ? ' is-invalid' : '' }}">
+                            <select name="dm_id" class="form-control {{ $errors->has('dm_id') ? ' is-invalid' : '' }}" disabled>
                                 <option value="{{ dm()->id }}" selected>{{ dm()->name }}</option>
                             </select>
                             @include('alerts.feedback', ['field' => 'dm_id'])

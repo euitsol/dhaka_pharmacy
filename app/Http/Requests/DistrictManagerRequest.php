@@ -27,15 +27,23 @@ class DistrictManagerRequest extends FormRequest
     protected function store(): array
     {
         return [
-            'email' => 'required|unique:district_managers,email',
+            'email' => 'nullable|unique:district_managers,email',
+            'phone' => 'required|numeric|digits:11|unique:district_managers,phone',
             'password' => 'required|min:6|confirmed',
+            'age'=>'nullable|numeric|digits:2',
+            'area'=>'nullable',
+            'identification_type' => 'nullable|in:NID,DOB,Passport',
+            'identification_no'=>'nullable|numeric',
+            'present_address'=>'nullbale',
+            'cv'=>'nullable|file|mimes:pdf'
         ];
     }
 
     protected function update(): array
     {
         return [
-            'email' => 'required|unique:district_managers,email,' . $this->route('id'),
+            'email' => 'nullable|unique:district_managers,email,' . $this->route('id'),
+            'phone' => 'required|numeric|digits:11|unique:district_managers,phone,' . $this->route('id'),
             'password' => 'nullable|min:6|confirmed',
         ];
     }

@@ -6,8 +6,14 @@
         </div>
         <ul class="nav">
 
+            <li @if ($pageSlug == 'dm_dashboard') class="active" @endif>
+                <a href="{{route('dm.dashboard')}}">
+                    <i class="fa-solid fa-minus @if ($pageSlug == 'dm_dashboard') fa-beat-fade @endif"></i>
+                    <p>{{ 'Dashboard' }}</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'district_manager_profile') class="active" @endif>
-                <a href="">
+                <a href="{{route('dm.profile.index')}}">
                     <i class="fa-solid fa-minus @if ($pageSlug == 'district_manager_profile') fa-beat-fade @endif"></i>
                     <p>{{ 'My Profile' }}</p>
                 </a>
@@ -18,7 +24,7 @@
                     <p>{{ 'Local Area Manager' }}</p>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a class="@if ($pageSlug == 'district_manager') @else collapsed @endif" data-toggle="collapse"
                     href="#district_manager"
                     @if ($pageSlug == 'district_manager') aria-expanded="true" @else aria-expanded="false" @endif>
@@ -37,7 +43,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
 
         </ul>
     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Storage;
 
 class Controller extends BaseController
 {
@@ -18,7 +19,13 @@ class Controller extends BaseController
         }else{
             $modelData->status = 1;
         }
-        $modelData->updated_by = admin()->id;
+        // $modelData->updated_by = admin()->id;
         $modelData->save();
+    }
+    public function fileDelete($image)
+    {
+        if ($image) {
+            Storage::delete('public/' . $image);
+        }
     }
 }

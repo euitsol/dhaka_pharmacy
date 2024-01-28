@@ -52,7 +52,7 @@ class LocalAreaManagerController extends Controller
     {
         $lam = new LocalAreaManager();
         $lam->name = $req->name;
-        $lam->email = $req->email;
+        $lam->phone = $req->phone;
         $lam->dm_id = $req->dm_id;
         $lam->password = Hash::make($req->password);
         $lam->created_by = admin()->id;
@@ -71,7 +71,7 @@ class LocalAreaManagerController extends Controller
     {
         $lam = LocalAreaManager::findOrFail($id);
         $lam->name = $req->name;
-        $lam->email = $req->email;
+        $lam->phone = $req->phone;
         $lam->dm_id = $req->dm_id;
         if($req->password){
             $lam->password = Hash::make($req->password);

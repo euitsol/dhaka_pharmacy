@@ -49,7 +49,7 @@ class DistrictManagerController extends Controller
     {
         $dm = new DistrictManager();
         $dm->name = $req->name;
-        $dm->email = $req->email;
+        $dm->phone = $req->phone;
         $dm->password = Hash::make($req->password);
         $dm->created_by = admin()->id;
         $dm->save();
@@ -66,7 +66,7 @@ class DistrictManagerController extends Controller
     {
         $dm = DistrictManager::findOrFail($id);
         $dm->name = $req->name;
-        $dm->email = $req->email;
+        $dm->phone = $req->phone;
         if($req->password){
             $dm->password = Hash::make($req->password);
         }

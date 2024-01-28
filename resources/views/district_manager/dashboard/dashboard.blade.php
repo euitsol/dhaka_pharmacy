@@ -6,7 +6,7 @@
     .dashboard_wrap{
         height: 83vh;
     }
-    .dashboard_wrap h2{
+    .dashboard_wrap h2, .dashboard_wrap h4{
         margin: 40px auto;
         font-family: 'Ubuntu', sans-serif;
         font-size: 90px;
@@ -41,6 +41,10 @@
             -25px 51px 1px #eaeaea,
             -26px 53px 1px #efefef;
         }
+        .dashboard_wrap h4{
+            font-size: 60px;
+            margin: 0;
+        }
 
 </style>
 @endpush
@@ -51,7 +55,8 @@
     <div class="row">
         <div class="col-12">
             <div class="dashboard_wrap d-flex flex-column justify-content-center align-items-center">
-                <h2>{{__('DASHBOARD')}}</h2>
+                <h2>{{__('DHAKA PHARMACY')}}</h2>
+                <h4>{{__('DISTRICT MANAGER')}}</h4>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\DM\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DistrictManagerRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class LoginController extends Controller
 
     public function dmLoginCheck(Request $request): RedirectResponse
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('phone', 'password');
 
         if (Auth::guard('dm')->attempt($credentials)) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');

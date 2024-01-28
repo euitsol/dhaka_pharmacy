@@ -24,9 +24,9 @@
                       @include('alerts.feedback', ['field' => 'name'])
                     </div>
                     <div class="form-group">
-                      <label>{{__('Email')}}</label>
-                      <input type="email" name="email" class="form-control" placeholder="Enter email" value="{{$lam->email}}">
-                      @include('alerts.feedback', ['field' => 'email'])
+                      <label>{{__('Phone')}}</label>
+                      <input type="phone" name="phone" class="form-control" placeholder="Enter phone" value="{{$lam->phone}}">
+                      @include('alerts.feedback', ['field' => 'phone'])
                     </div>
                     <div class="form-group {{ $errors->has('dm_id') ? ' has-danger' : '' }}">
                         <label>{{ _('District Manager') }}</label>

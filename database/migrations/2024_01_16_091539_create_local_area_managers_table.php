@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('bio')->nullable();
             $table->string('designation')->nullable();
             $table->boolean('status')->default(1);
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
