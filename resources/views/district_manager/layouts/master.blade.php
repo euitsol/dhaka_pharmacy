@@ -20,6 +20,7 @@
     <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
     <link href="{{ asset('backend/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('backend/css/dm/custom.css') }}" rel="stylesheet">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     @stack('css')

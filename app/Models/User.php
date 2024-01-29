@@ -9,12 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+class User extends AuthenticateBaseModel
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
-
+    use HasRoles;
     protected $fillable = [
         'name',
         'email',
@@ -31,43 +31,5 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');
-    }
-    public function created_user()
-    {
-        return $this->belongsTo(Admin::class, 'created_by');
-    }
-    public function updated_user()
-    {
-        return $this->belongsTo(Admin::class, 'updated_by');
-    }
-    public function deleted_user()
-    {
-        return $this->belongsTo(Admin::class, 'deleted_by');
-    }
-
-    public function getStatus()
-    {
-        if ($this->status == 1) {
-            return 'Active';
-        } else {
-            return 'Deactive';
-        }
-    }
-    public function getBtnStatus()
-    {
-        if ($this->status == 1) {
-            return 'Deactive';
-        } else {
-            return 'Active';
-        }
-    }
-
-    public function getStatusClass()
-    {
-        if ($this->status == 1) {
-            return 'btn-success';
-        } else {
-            return 'btn-danger';
-        }
     }
 }

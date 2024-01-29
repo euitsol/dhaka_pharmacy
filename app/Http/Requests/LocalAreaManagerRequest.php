@@ -40,4 +40,5 @@ class LocalAreaManagerRequest extends FormRequest
             'password' => 'nullable|min:6|confirmed',
         ];
     }
+    
 }
