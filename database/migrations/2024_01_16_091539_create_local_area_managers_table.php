@@ -48,7 +48,7 @@ return new class extends Migration
 
             $table->timestamps();
             $table->softDeletes();
-            $this->addAuditColumns($table);
+            $this->addMorphedAuditColumns($table);
 
             $table->foreign('dm_id')->references('id')->on('district_managers')->onDelete('cascade')->onUpdate('cascade');
         });

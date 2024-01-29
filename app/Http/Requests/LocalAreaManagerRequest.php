@@ -18,8 +18,6 @@ class LocalAreaManagerRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4',
-            'dm_id' => 'required|exists:district_managers,id',
-
         ]
         +
         ($this->isMethod('POST') ? $this->store() : $this->update());

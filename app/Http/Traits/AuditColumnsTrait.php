@@ -17,6 +17,17 @@ trait AuditColumnsTrait{
         $table->foreign('deleted_by')->references('id')->on('admins')->onDelete('cascade')->onUpdate('cascade');
     }
 
+
+    public function addMorphedAuditColumns(Blueprint $table): void
+    {
+        $table->unsignedBigInteger('creater_id')->nullable();
+        $table->string('creater_type')->nullable();
+        $table->unsignedBigInteger('updater_id')->nullable();
+        $table->string('updater_type')->nullable();
+        $table->unsignedBigInteger('deleter_id')->nullable();
+        $table->string('deleter_type')->nullable();
+    }
+
     public function dropAuditColumns(Blueprint $table): void
     {
 

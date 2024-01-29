@@ -43,7 +43,7 @@
                                     </td>
                                     <td>{{ timeFormate($lam->created_at) }}</td>
 
-                                    <td> {{ $lam->createdBy->name ?? 'system' }} </td>
+                                    <td> {{ $lam->creater->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [

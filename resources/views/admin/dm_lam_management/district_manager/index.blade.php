@@ -42,7 +42,7 @@
                                     </td>
                                     <td>{{ timeFormate($dm->created_at) }}</td>
 
-                                    <td> {{ $dn->created_user->name ?? 'system' }} </td>
+                                    <td> {{ $dn->creater->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
