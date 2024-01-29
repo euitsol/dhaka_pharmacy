@@ -249,7 +249,6 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 		Route::put('/update', 'update')->name('update');
 		Route::put('/update/password', 'updatePassword')->name('update.password');
 		Route::post('/update/image', 'updateImage')->name('update.image');
-		Route::get('/cv/download/{file_url}', 'cvDownload')->name('cv.download');
 
 
 	});

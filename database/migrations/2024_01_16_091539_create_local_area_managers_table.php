@@ -30,6 +30,22 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
 
+
+            $table->string('age')->nullable();
+            $table->string('area')->nullable();
+            $table->enum('identification_type',['NID','DOB','Passport'])->nullable();
+            $table->string('identification_no')->nullable();
+            $table->longText('present_address')->nullable();
+            $table->string('cv')->nullable();
+            
+            $table->enum('gender',['Male','Female','Others'])->nullable();
+            $table->date('dob')->nullable();
+            $table->string('father_name')->nullable();
+            $table->string('mother_name')->nullable();
+            $table->string('permanent_address')->nullable();
+            $table->string('parent_phone')->nullable();
+
+
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);

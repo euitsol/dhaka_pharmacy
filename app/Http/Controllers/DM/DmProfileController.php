@@ -37,7 +37,14 @@ class DmProfileController extends Controller
             'identification_type' => 'nullable|in:NID,DOB,Passport',
             'identification_no'=>'nullable|numeric',
             'present_address'=>'nullable',
-            'cv'=>'nullable|file|mimes:pdf'
+            'cv'=>'nullable|file|mimes:pdf',
+
+            'gender'=>'nullable|in:Male,Female,Others',
+            'dob'=>'nullable|date|before:today',
+            'father_name'=>'nullable|min:6',
+            'mother_name'=>'nullable|min:6',
+            'permanent_address'=>'nullable',
+            'parent_phone'=>'nullable|numeric|digits:11',
         ]);
         if ($request->hasFile('cv')) {
             $file = $request->file('cv');
@@ -89,75 +96,6 @@ class DmProfileController extends Controller
         }
         return redirect()->back();
     }
-
-    // public function updateImage(Request $request){
-
-    //     $validator = Validator::make($request->all(), [
-    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
-    //     ]);
-    
-    //     if ($validator->fails()) {
-    //         flash()->addSuccess('Something is wrong');
-    //         return response()->json(['errors' => $validator->errors()], 422);
-    //     }
-
-        
-    //     try {
-    //         $dm = DistrictManager::findOrFail(dm()->id);
-    //         if ($request->hasFile('image')) {
-    //             $image = $request->file('image');
-    //             $imageName = dm()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
-    //             $folderName = 'district_manager/' . dm()->id;
-    //             $path = $image->storeAs($folderName, $imageName, 'public');
-    //             $dm->image = $path;
-    //         }
-    //         $dm->update();
-    //         flash()->addSuccess('Profile image updated successfully.');
-    //         return response()->json(['message' => 'Image updated successfully']);
-    //     } catch (\Exception $e) {
-    //         flash()->addError('Somethings is wrong.');
-    //         return response()->json(['message' => 'An error occurred'], 500);
-    //     }
-
-        
-
-        
-
-        
-    // }
-
-
-
-
-
-
-    // public function updateImage(Request $request){
-    //     $validator = Validator::make($request->all(), [
-    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
-    //     ]);
-    
-    //     if ($validator->fails()) {
-    //         flash()->addSuccess('Something is wrong');
-    //         return response()->json(['errors' => $validator->errors()], 422);
-    //     }
-
-    //     $dm = DistrictManager::findOrFail(dm()->id);
-    //     if ($request->hasFile('image')) {
-    //         $image = $request->file('image');
-    //         $imageName = dm()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
-    //         $folderName = 'district_manager/' . dm()->id;
-    //         $path = $image->storeAs($folderName, $imageName, 'public');
-    //         $dm->image = $path;
-    //     }
-    //     $dm->update();
-
-    //     flash()->addSuccess('Profile image updated successfully.');
-    //     return response()->json(['message' => 'Image updated successfully']);
-    // }
-
-
-    
-
     public function updateImage(Request $request)
     {
 
@@ -182,10 +120,6 @@ class DmProfileController extends Controller
         }
 
         return response()->json(['error' => 'Image not uploaded'], 400);
-    }
-
-    public function cvDownload($file_url){
-        $this->view_or_download($file_url);
     }
     
 }

@@ -17,7 +17,7 @@ class DistrictManager extends Authenticatable
 
     protected $fillable = [
         'name',
-        'email',
+        'phone',
         'password',
     ];
     protected $hidden = [

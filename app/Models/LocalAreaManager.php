@@ -15,7 +15,7 @@ class LocalAreaManager extends Authenticatable
 
     protected $fillable = [
         'name',
-        'email',
+        'phone',
         'password',
         'dm_id',
     ];

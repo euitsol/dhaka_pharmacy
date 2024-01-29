@@ -35,7 +35,15 @@ class DistrictManagerRequest extends FormRequest
             'identification_type' => 'nullable|in:NID,DOB,Passport',
             'identification_no'=>'nullable|numeric',
             'present_address'=>'nullbale',
-            'cv'=>'nullable|file|mimes:pdf'
+            'cv'=>'nullable|file|mimes:pdf',
+
+
+            'gender'=>'nullable|in:Male,Female,Others',
+            'dob'=>'nullable|date|before:today',
+            'father_name'=>'nullable|min:6',
+            'mother_name'=>'nullable|min:6',
+            'permanent_address'=>'nullable',
+            'parent_phone'=>'nullable|numeric|digits:11',
         ];
     }
 
