@@ -22,7 +22,7 @@ class LocalAreaManagerController extends Controller
 
     public function index(): View
     {
-        $data['lams'] = LocalAreaManager::with(['dm','created_user'])->latest()->get();
+        $data['lams'] = LocalAreaManager::with(['dm','creater'])->latest()->get();
         return view('admin.dm_lam_management.local_area_manager.index',$data);
     }
     public function details($id): JsonResponse
@@ -30,14 +30,14 @@ class LocalAreaManagerController extends Controller
         $data = LocalAreaManager::with('dm')->findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->created_by ? $data->created_user->name : 'System';
-        $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
+        $data->created_by = $data->creater_id ? $data->creater->name : 'System';
+        $data->updated_by = $data->updater_id ? $data->updater->name : 'N/A';
         return response()->json($data);
     }
 
     public function profile($id): View
     {
-        $data['lam'] = LocalAreaManager::with(['created_user','updated_user'])->findOrFail($id);
+        $data['lam'] = LocalAreaManager::with(['creater','updater'])->findOrFail($id);
         return view('admin.dm_lam_management.local_area_manager.profile',$data);
     }
 
@@ -55,7 +55,7 @@ class LocalAreaManagerController extends Controller
         $lam->phone = $req->phone;
         $lam->dm_id = $req->dm_id;
         $lam->password = Hash::make($req->password);
-        $lam->created_by = admin()->id;
+        $lam->creater()->associate(admin());
         $lam->save();
         flash()->addSuccess('Local Area Manager '.$lam->name.' created successfully.');
         return redirect()->route('dmlam.local_area_manager.local_area_manager_list');
@@ -76,7 +76,7 @@ class LocalAreaManagerController extends Controller
         if($req->password){
             $lam->password = Hash::make($req->password);
         }
-        $lam->updated_by = admin()->id;
+        $lam->updater()->associate(admin());
         $lam->update();
 
         flash()->addSuccess('Local Area Manager '.$lam->name.' updated successfully.');
