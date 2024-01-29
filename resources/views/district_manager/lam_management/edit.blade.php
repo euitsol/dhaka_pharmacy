@@ -20,17 +20,17 @@
                         @method('PUT')
                         <div class="form-group">
                             <label>{{ __('Name') }}</label>
-                            <input type="text" name="name" class="form-control" placeholder="Enter name"
+                            <input type="text" name="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Enter name"
                                 value="{{ $lam->name }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
                             <label>{{ __('Phone') }}</label>
-                            <input type="text" name="phone" class="form-control" placeholder="Enter phone"
+                            <input type="text" name="phone" class="form-control {{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="Enter phone"
                                 value="{{ $lam->phone }}">
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
-                        <div class="form-group {{ $errors->has('dm_id') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label>{{ __('District Manager') }}</label>
                             <select name="dm_id" class="form-control {{ $errors->has('dm_id') ? ' is-invalid' : '' }}" disabled>
                                 <option value="{{ dm()->id }}" selected>{{ dm()->name }}</option>
@@ -39,13 +39,14 @@
                         </div>
                         <div class="form-group">
                             <label>{{ __('Password') }}</label>
-                            <input type="password" name="password" class="form-control" placeholder="Enter new password">
+                            <input type="password" name="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Enter new password">
                             @include('alerts.feedback', ['field' => 'password'])
                         </div>
                         <div class="form-group">
                             <label>{{ __('Confirm Password') }}</label>
-                            <input type="password" name="password_confirmation" class="form-control"
+                            <input type="password" name="password_confirmation" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
                                 placeholder="Confirm password">
+                            @include('alerts.feedback', ['field' => 'password'])
                         </div>
                         <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
                     </form>

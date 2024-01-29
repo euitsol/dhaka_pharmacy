@@ -24,17 +24,17 @@
                         <div class="form-group">
 
                             <label>{{__('Name')}}</label>
-                            <input type="text" name="name" class="form-control" placeholder="Enter name"
+                            <input type="text" name="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Enter name"
                                 value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
                             <label>{{__('Email')}}</label>
-                            <input type="email" name="email" class="form-control" placeholder="Enter email"
+                            <input type="email" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Enter email"
                                 value="{{ old('email') }}">
                             @include('alerts.feedback', ['field' => 'email'])
                         </div>
-                        <div class="form-group {{ $errors->has('role') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label>{{ __('Role') }}</label>
                             <select name="role" class="form-control {{ $errors->has('role') ? ' is-invalid' : '' }}">
                                 <option selected hidden>{{ __('Select Role') }}</option>
@@ -47,13 +47,14 @@
                         </div>
                         <div class="form-group">
                             <label>{{__('Password')}}</label>
-                            <input type="password" name="password" class="form-control" placeholder="Enter new password">
+                            <input type="password" name="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Enter new password">
                             @include('alerts.feedback', ['field' => 'password'])
                         </div>
                         <div class="form-group">
                             <label>{{__('Confirm Password')}}</label>
-                            <input type="password" name="password_confirmation" class="form-control"
+                            <input type="password" name="password_confirmation" class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
                                 placeholder="Confirm password">
+                            @include('alerts.feedback', ['field' => 'password_confirmation'])
                         </div>
 
 
@@ -67,7 +68,7 @@
                             </label>
                         </div>
                         <div id="ip_inputs" class="mt-2" style="display: none;">
-                            <div class="form-group {{ $errors->has('ip.*') ? ' has-danger' : '' }}">
+                            <div class="form-group">
                                 <label>{{ _('IP Address-1') }}</label>
                                 <div class="input-group mb-3">
                                     <input type="text" name="ip[]" class="form-control {{ $errors->has('ip.*') ? ' is-invalid' : '' }} ip" placeholder="{{ _('Enter IP address') }}">
@@ -122,7 +123,7 @@
         $(document).on('click', '.add_ip', function() {
             let count = $(this).data('count') + 1;
             $(this).data('count', count);
-            var data = `<div class="form-group {{ $errors->has('ip.*') ? ' has-danger' : '' }}">
+            var data = `<div class="form-group ">
                                 <label>{{ _('IP Address-${count}') }}</label>
                                 <div class="input-group mb-3">
                                     <input type="text" name="ip[]" class="form-control {{ $errors->has('ip.*') ? ' is-invalid' : '' }} ip" placeholder="{{ _('Enter IP address') }}">

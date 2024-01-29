@@ -131,27 +131,61 @@ class DmProfileController extends Controller
 
 
 
-    public function updateImage(Request $request){
+    // public function updateImage(Request $request){
+    //     $validator = Validator::make($request->all(), [
+    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
+    //     ]);
+    
+    //     if ($validator->fails()) {
+    //         flash()->addSuccess('Something is wrong');
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     $dm = DistrictManager::findOrFail(dm()->id);
+    //     if ($request->hasFile('image')) {
+    //         $image = $request->file('image');
+    //         $imageName = dm()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+    //         $folderName = 'district_manager/' . dm()->id;
+    //         $path = $image->storeAs($folderName, $imageName, 'public');
+    //         $dm->image = $path;
+    //     }
+    //     $dm->update();
+
+    //     flash()->addSuccess('Profile image updated successfully.');
+    //     return response()->json(['message' => 'Image updated successfully']);
+    // }
+
+
+    
+
+    public function updateImage(Request $request)
+    {
+
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
     
         if ($validator->fails()) {
-            flash()->addSuccess('Something is wrong');
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
         $dm = DistrictManager::findOrFail(dm()->id);
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = dm()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'district_manager/' . dm()->id;
             $path = $image->storeAs($folderName, $imageName, 'public');
             $dm->image = $path;
-        }
-        $dm->update();
+            $dm->save();
 
-        flash()->addSuccess('Profile image updated successfully.');
-        return response()->json(['message' => 'Image updated successfully']);
+            return response()->json(['message' => 'Image uploaded successfully'], 200);
+        }
+
+        return response()->json(['error' => 'Image not uploaded'], 400);
     }
+
+    public function cvDownload($file_url){
+        $this->view_or_download($file_url);
+    }
+    
 }
