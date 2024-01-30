@@ -115,11 +115,10 @@ class DmProfileController extends Controller
             $path = $image->storeAs($folderName, $imageName, 'public');
             $dm->image = $path;
             $dm->save();
-            // flash()->addSuccess("Image updated successfully");
             return response()->json(['message' => 'Image uploaded successfully'], 200);
         }
 
-        return response()->json(['error' => 'Image not uploaded'], 400);
+        return response()->json(['message' => 'Image not uploaded'], 400);
     }
     
 }

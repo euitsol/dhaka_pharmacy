@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PharmacyManagement\PharmacyController as AdminPha
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycController;
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycSettingsController;
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
+use App\Http\Controllers\LAM\Auth\LoginController as LamLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
 use App\Http\Controllers\DM\DmProfileController;
 use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Pharmacy\PharmacyProfileController;
 use App\Http\Controllers\SiteSettingsController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\DM\LAM_management\LamManagementController;
+use App\Http\Controllers\LAM\LamProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +56,9 @@ Route::post('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLoginCh
 // DM Login Routes
 Route::get('/district-manager/login', [DmLoginController::class, 'dmLogin'])->name('district_manager.login');
 Route::post('/district-manager/login', [DmLoginController::class, 'dmLoginCheck'])->name('district_manager.login');
+// DM Login Routes
+Route::get('/local_area-manager/login', [LamLoginController::class, 'lamLogin'])->name('local_area_manager.login');
+Route::post('/local_area-manager/login', [LamLoginController::class, 'lamLoginCheck'])->name('local_area_manager.login');
 
 
 // Overwrite Default Authentication Routes
@@ -238,7 +243,7 @@ Route::group(['middleware' => 'pharmacy', 'prefix' => 'pharmacy'], function () {
 });
 
 
-// DM Routes
+// DM Auth Routes
 Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager'], function () {
 
     Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dashboard');
@@ -265,4 +270,10 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::get('status/{id}', 'status')->name('status.edit');
         Route::get('delete/{id}', 'delete')->name('delete');
     });
+});
+
+
+// LAM Auth Routes
+Route::group(['middleware' => 'lam', 'prefix' => 'local-area-manager'], function () {
+    Route::get('/profile', [LamProfileController::class, 'profile'])->name('local_area_manager.profile');
 });

@@ -1,4 +1,7 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'district_manager_profile'])
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endpush
 @section('content')
     <div class="profile-section">
         <div class="row">
@@ -191,6 +194,9 @@
     @include('district_manager.partials.documentation', ['document' => $document])
     </div>
 @endsection
+@push('js_link')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@endpush
 @push('js')
     <script>
         $(document).ready(function() {
@@ -250,13 +256,14 @@
                             success: function(response) {
                                 console.log('Image uploaded successfully');
                             },
-                            complete: function() {
+                            complete: function(response) {
                                 // Remove animation classes after AJAX request is complete
                                 $('.profile_image .img').removeClass(
                                     'div_animation overly');
                                 $('.profile_image .img img.avatar').removeClass(
                                     'image_animation');
                                 $('.profile_image .camera-icon').css('display', 'block');
+                                toastr.success(response.responseJSON.message);
                             },
                             error: function(xhr) {
                                 if (xhr.status === 422) {
@@ -274,6 +281,7 @@
                                 } else {
                                     console.log('An error occurred.');
                                 }
+                                toastr.error(response.responseJSON.message);
                             }
                         });
                     }, 5000); // 5 seconds delay

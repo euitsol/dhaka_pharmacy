@@ -49,11 +49,15 @@ class Kernel extends HttpKernel
         ],
         'pharmacy' => [
             'web',
-            'auth:pharmacy', // Use the 'admin' guard for admin routes
+            'auth:pharmacy', // Use the 'pharmacy' guard for pharmacy routes
         ],
         'dm' => [
             'web',
-            'auth:dm', // Use the 'admin' guard for admin routes
+            'auth:dm', // Use the 'dm' guard for dm routes
+        ],
+        'lam' => [
+            'web',
+            'auth:lam', // Use the 'lam' guard for lam routes
         ],
     ];
 
@@ -80,5 +84,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'pharmacy' => \App\Http\Middleware\PharmacyMiddleware::class,
         'dm' => \App\Http\Middleware\DistrictManagerMiddleware::class,
+        'lam' => \App\Http\Middleware\LocalAreaManagerMiddleware::class,
     ];
 }

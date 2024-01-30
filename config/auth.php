@@ -52,6 +52,10 @@ return [
             'driver' => 'session',
             'provider' => 'district_managers',
         ],
+        'lam' => [
+            'driver' => 'session',
+            'provider' => 'local_area_managers',
+        ],
     ],
 
     /*
@@ -88,6 +92,10 @@ return [
         'district_managers' => [
             'driver' => 'eloquent',
             'model' => App\Models\DistrictManager::class,
+        ],
+        'local_area_managers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\LocalAreaManager::class,
         ],
     ],
 

@@ -111,6 +111,9 @@ function pharmacy(){
 function dm(){
     return auth()->guard('dm')->user();
 }
+function lam(){
+    return auth()->guard('lam')->user();
+}
 
 
 function mainMenuCheck($slugs){

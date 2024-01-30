@@ -81,6 +81,9 @@ class LoginController extends Controller
         } elseif (Auth::guard('dm')->check()) {
             Auth::guard('dm')->logout();
             return redirect()->route('district_manager.login');
+        } elseif (Auth::guard('lam')->check()) {
+            Auth::guard('lam')->logout();
+            return redirect()->route('local_area_manager.login');
         } elseif (Auth::check()) {
             Auth::logout();
             return redirect()->route('login');

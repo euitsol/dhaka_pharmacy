@@ -45,7 +45,7 @@
                         @if(Auth::guard('pharmacy')->check() || Auth::guard('admin')->check() || Auth::check())
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::check() ? Auth::user()->name : (Auth::guard('pharmacy')->check() ? pharmacy()->name : (Auth::guard('admin')->check() ? admin()->name : ''))  }}
+                                    {{ Auth::check() ? Auth::user()->name : (Auth::guard('pharmacy')->check() ? pharmacy()->name : (Auth::guard('admin')->check() ? admin()->name : (Auth::guard('dm')->check() ? dm()->name : (Auth::guard('lam')->check() ? lam()->name : ''))))  }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
