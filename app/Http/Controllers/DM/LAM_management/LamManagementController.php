@@ -28,7 +28,7 @@ class LamManagementController extends Controller
     }
     public function details($id): JsonResponse
     {
-        $data = LocalAreaManager::with('dm')->findOrFail($id);
+        $data = LocalAreaManager::with(['dm','creater','updater'])->findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->creater_id ? $data->creater->name : 'System';
