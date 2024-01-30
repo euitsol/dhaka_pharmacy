@@ -24,6 +24,12 @@
                     <p>{{ 'Local Area Manager' }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'user') class="active" @endif>
+                <a href="{{ route('dm.user.list') }}">
+                    <i class="fa-solid fa-minus @if ($pageSlug == 'user') fa-beat-fade @endif"></i>
+                    <p>{{ 'User Management' }}</p>
+                </a>
+            </li>
             {{-- <li>
                 <a class="@if ($pageSlug == 'district_manager') @else collapsed @endif" data-toggle="collapse"
                     href="#district_manager"

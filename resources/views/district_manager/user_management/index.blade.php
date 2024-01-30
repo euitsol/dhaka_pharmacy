@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'user'])
+@extends('district_manager.layouts.master', ['pageSlug' => 'user'])
 
 @section('content')
     <div class="row">
@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'um.user.user_create',
+                                'routeName' => 'dm.user.create',
                                 'className' => 'btn-primary',
                                 'label' => 'Add User',
                             ])
@@ -46,11 +46,11 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'um.user.user_profile',   'params' => [$user->id], 'label' => 'Profile'],
+                                                    ['routeName' => 'dm.user.profile',   'params' => [$user->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$user->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $user->id ],
-                                                    ['routeName' => 'um.user.user_edit',   'params' => [$user->id], 'label' => 'Update'],
-                                                    ['routeName' => 'um.user.status.user_edit',   'params' => [$user->id], 'label' => $user->getBtnStatus()],
-                                                    ['routeName' => 'um.user.user_delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'dm.user.edit',   'params' => [$user->id], 'label' => 'Update'],
+                                                    ['routeName' => 'dm.user.status.edit',   'params' => [$user->id], 'label' => $user->getBtnStatus()],
+                                                    ['routeName' => 'dm.user.delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])
                                     </td>
@@ -90,7 +90,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('um.user.details.user_list', ['id']) }}");
+                let url = ("{{ route('dm.user.details.list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,

@@ -25,6 +25,7 @@ use App\Http\Controllers\Pharmacy\PharmacyProfileController;
 use App\Http\Controllers\SiteSettingsController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\DM\LAM_management\LamManagementController;
+use App\Http\Controllers\DM\UserManagement\UserManagementController as DmUserController;
 use App\Http\Controllers\LAM\LamProfileController;
 
 /*
@@ -260,6 +261,19 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 
     //LAM Route
     Route::controller(LamManagementController::class, 'lam-management')->prefix('lam-management')->name('lam.')->group(function () {
+        Route::get('index', 'index')->name('list');
+        Route::get('details/{id}', 'details')->name('details.list');
+        Route::get('profile/{id}', 'profile')->name('profile');
+        Route::get('create', 'create')->name('create');
+        Route::post('create', 'store')->name('create');
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::put('edit/{id}', 'update')->name('edit');
+        Route::get('status/{id}', 'status')->name('status.edit');
+        Route::get('delete/{id}', 'delete')->name('delete');
+    });
+
+    //User Route
+    Route::controller(DmUserController::class, 'user-management')->prefix('user-management')->name('user.')->group(function () {
         Route::get('index', 'index')->name('list');
         Route::get('details/{id}', 'details')->name('details.list');
         Route::get('profile/{id}', 'profile')->name('profile');
