@@ -53,7 +53,7 @@ class LoginController extends Controller
 
     public function login(Request $request): RedirectResponse
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('phone', 'password');
 
         if (Auth::attempt($credentials)) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');

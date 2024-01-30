@@ -18,18 +18,7 @@ class DistrictManagerRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4',
-
-        ]
-        +
-        ($this->isMethod('POST') ? $this->store() : $this->update());
-    }
-
-    protected function store(): array
-    {
-        return [
-            'email' => 'nullable|unique:district_managers,email',
-            'phone' => 'required|numeric|digits:11|unique:district_managers,phone',
-            'password' => 'required|min:6|confirmed',
+            
             'age'=>'nullable|numeric|digits:2',
             'area'=>'nullable',
             'identification_type' => 'nullable|in:NID,DOB,Passport',
@@ -44,6 +33,18 @@ class DistrictManagerRequest extends FormRequest
             'mother_name'=>'nullable|min:6',
             'permanent_address'=>'nullable',
             'parent_phone'=>'nullable|numeric|digits:11',
+
+        ]
+        +
+        ($this->isMethod('POST') ? $this->store() : $this->update());
+    }
+
+    protected function store(): array
+    {
+        return [
+            'email' => 'nullable|unique:district_managers,email',
+            'phone' => 'required|numeric|digits:11|unique:district_managers,phone',
+            'password' => 'required|min:6|confirmed'
         ];
     }
 
