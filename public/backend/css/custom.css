@@ -9,7 +9,82 @@
 }
 
 /*=============================================================
-                Site Settings CSS
+                Start DM Profile CSS
+ =============================================================*/
+
+ .profile-section .profile_image .camera-icon {
+    position: absolute;
+    bottom: -10%;
+    font-size: 15px;
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid var(--primary-color);
+}
+
+.profile-section .profile_image .img,
+.profile-section .profile_image .overly {
+    height: 215px;
+    width: 215px;
+    border: 5px solid #2b3553;
+    border-bottom-color: transparent;
+    position: relative;
+
+}
+
+.profile-section .profile_image .overly::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #000;
+    display: block;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    opacity: .5;
+    transition: .4s;
+    z-index: 99;
+
+}
+
+.div_animation {
+    animation: round 5s linear infinite;
+}
+.image_animation {
+    animation: rounds 5s linear infinite reverse;
+}
+
+@keyframes round {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rounds {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*=============================================================
+                End DM Profile CSS
+ =============================================================*/
+
+/*=============================================================
+                Start Site Settings CSS
  =============================================================*/
  .site_settings .tab {
 
@@ -91,6 +166,6 @@ a:hover{
     background-image:var(--primary-bg-image) !important;
 }
 /*=============================================================
-                Site Settings CSS
+                End Site Settings CSS
  =============================================================*/
 
