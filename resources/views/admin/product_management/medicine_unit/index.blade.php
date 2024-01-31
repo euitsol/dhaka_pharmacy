@@ -31,7 +31,7 @@
                         <tbody>
                             @foreach ($medicine_units as $medicine_unit)
                                 <tr>
-                                    <td> {{ strtoupper($medicine_unit->name) }} </td>
+                                    <td> {{ $medicine_unit->name }} </td>
                                     <td>{{ timeFormate($medicine_unit->created_at) }}</td>
 
                                     <td> {{ $medicine_unit->created_user->name ?? 'system' }} </td>

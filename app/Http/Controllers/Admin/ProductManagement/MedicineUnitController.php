@@ -28,7 +28,6 @@ class MedicineUnitController extends Controller
     public function details($id): JsonResponse
     {
         $data = MedicineUnit::findOrFail($id);
-        $data->name = strtoupper($data->name);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->created_by ? $data->created_user->name : 'System';
