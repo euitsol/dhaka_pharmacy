@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductManagement\CompanyNameController;
 use App\Http\Controllers\admin\ProductManagement\GenericNameController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -233,6 +234,15 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('edit/{id}', 'edit')->name('generic_name_edit');
             Route::put('edit/{id}', 'update')->name('generic_name_edit');
             Route::get('delete/{id}', 'delete')->name('generic_name_delete');
+        });
+        Route::controller(CompanyNameController::class, 'company-name')->prefix('company-name')->name('company_name.')->group(function () {
+            Route::get('index', 'index')->name('company_name_list');
+            Route::get('details/{id}', 'details')->name('details.company_name_list');
+            Route::get('create', 'create')->name('company_name_create');
+            Route::post('create', 'store')->name('company_name_create');
+            Route::get('edit/{id}', 'edit')->name('company_name_edit');
+            Route::put('edit/{id}', 'update')->name('company_name_edit');
+            Route::get('delete/{id}', 'delete')->name('company_name_delete');
         });
     });
 

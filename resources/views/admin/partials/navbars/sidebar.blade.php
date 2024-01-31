@@ -164,7 +164,7 @@
                 </li>
             @endif
             {{-- Product Management --}}
-            @if(mainMenuCheck(['generic_name_list']))
+            @if(mainMenuCheck(['generic_name_list','company_name_list']))
                 <li>
                     <a class="@if ($pageSlug == 'medicin_generic_name' || $pageSlug == 'medicin_company_name' || $pageSlug == 'medicin_strength' || $pageSlug == 'medicin_category' || $pageSlug == 'medicin_unit') @else collapsed @endif" data-toggle="collapse"
                         href="#product_management"
@@ -179,6 +179,7 @@
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
                                     ['pageSlug' => 'medicin_generic_name', 'routeName' => 'product.generic_name.generic_name_list', 'label' => 'Generic Name'],
+                                    ['pageSlug' => 'medicin_company_name', 'routeName' => 'product.company_name.company_name_list', 'label' => 'Company Name'],
                                 ],
                             ])
                         </ul>
