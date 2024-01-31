@@ -45,7 +45,7 @@ class GenericNameController extends Controller
         $generic_name->name = $req->name;
         $generic_name->created_by = admin()->id;
         $generic_name->save();
-        flash()->addSuccess('Medici generic name '.$generic_name->name.' created successfully.');
+        flash()->addSuccess('Medicine generic name '.$generic_name->name.' created successfully.');
         return redirect()->route('product.generic_name.generic_name_list');
     }
     public function edit($id): View
@@ -60,14 +60,14 @@ class GenericNameController extends Controller
         $generic_name->name = $req->name;
         $generic_name->updated_by = admin()->id;
         $generic_name->update();
-        flash()->addSuccess('Medici generic name '.$generic_name->name.' updated successfully.');
+        flash()->addSuccess('Medicine generic name '.$generic_name->name.' updated successfully.');
         return redirect()->route('product.generic_name.generic_name_list');
     }
     public function delete($id): RedirectResponse
     {
         $generic_name = GenericName::findOrFail($id);
         $generic_name->delete();
-        flash()->addSuccess('Medici generic name '.$generic_name->name.' deleted successfully.');
+        flash()->addSuccess('Medicine generic name '.$generic_name->name.' deleted successfully.');
         return redirect()->route('product.generic_name.generic_name_list');
 
     }

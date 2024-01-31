@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'medicin_company_name'])
+@extends('admin.layouts.master', ['pageSlug' => 'medicine_company_name'])
 
 @section('content')
     <div class="row px-3 pt-3">

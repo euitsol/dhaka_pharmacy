@@ -164,22 +164,25 @@
                 </li>
             @endif
             {{-- Product Management --}}
-            @if(mainMenuCheck(['generic_name_list','company_name_list']))
+            @if(mainMenuCheck(['generic_name_list','company_name_list','medicine_strength_list','medicine_unit_list','medicine_category_list']))
                 <li>
-                    <a class="@if ($pageSlug == 'medicin_generic_name' || $pageSlug == 'medicin_company_name' || $pageSlug == 'medicin_strength' || $pageSlug == 'medicin_category' || $pageSlug == 'medicin_unit') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'medicine_generic_name' || $pageSlug == 'medicine_company_name' || $pageSlug == 'medicine_strength' || $pageSlug == 'medicine_category' || $pageSlug == 'medicine_unit') @else collapsed @endif" data-toggle="collapse"
                         href="#product_management"
-                        @if ($pageSlug == 'medicin_generic_name' || $pageSlug == 'medicin_company_name' || $pageSlug == 'medicin_strength' || $pageSlug == 'medicin_category' || $pageSlug == 'medicin_unit') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'medicine_generic_name' || $pageSlug == 'medicine_company_name' || $pageSlug == 'medicine_strength' || $pageSlug == 'medicine_category' || $pageSlug == 'medicine_unit') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-capsules"></i>
                         <span class="nav-link-text">{{ __('Product Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'medicin_generic_name' || $pageSlug == 'medicin_company_name' || $pageSlug == 'medicin_strength' || $pageSlug == 'medicin_category' || $pageSlug == 'medicin_unit') show @endif" id="product_management">
+                    <div class="collapse @if ($pageSlug == 'medicine_generic_name' || $pageSlug == 'medicine_company_name' || $pageSlug == 'medicine_strength' || $pageSlug == 'medicine_category' || $pageSlug == 'medicine_unit') show @endif" id="product_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
-                                    ['pageSlug' => 'medicin_generic_name', 'routeName' => 'product.generic_name.generic_name_list', 'label' => 'Generic Name'],
-                                    ['pageSlug' => 'medicin_company_name', 'routeName' => 'product.company_name.company_name_list', 'label' => 'Company Name'],
+                                    ['pageSlug' => 'medicine_generic_name', 'routeName' => 'product.generic_name.generic_name_list', 'label' => 'Generic Name'],
+                                    ['pageSlug' => 'medicine_company_name', 'routeName' => 'product.company_name.company_name_list', 'label' => 'Company Name'],
+                                    ['pageSlug' => 'medicine_category', 'routeName' => 'product.medicine_category.medicine_category_list', 'label' => 'Medicine Category'],
+                                    ['pageSlug' => 'medicine_strength', 'routeName' => 'product.medicine_strength.medicine_strength_list', 'label' => 'Medicine Strength'],
+                                    ['pageSlug' => 'medicine_unit', 'routeName' => 'product.medicine_unit.medicine_unit_list', 'label' => 'Medicine Unit'],
                                 ],
                             ])
                         </ul>

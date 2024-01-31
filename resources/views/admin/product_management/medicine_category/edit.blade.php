@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'medicine_generic_name'])
+@extends('admin.layouts.master', ['pageSlug' => 'medicine_category'])
 
 @section('content')
     <div class="row px-3 pt-3">
@@ -7,20 +7,20 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Update Generic Name')}}</h4>
+                            <h4 class="card-title">{{__('Update Medicine Category')}}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('admin.partials.button', ['routeName' => 'product.generic_name.generic_name_list', 'className' => 'btn-primary', 'label' => 'Back'])
+                            @include('admin.partials.button', ['routeName' => 'product.medicine_category.medicine_category_list', 'className' => 'btn-primary', 'label' => 'Back'])
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                  <form method="POST" action="{{route('product.generic_name.generic_name_edit',$generic_name->id)}}">
+                  <form method="POST" action="{{route('product.medicine_category.medicine_category_edit',$medicine_category->id)}}">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
                       <label>{{__('Name')}}</label>
-                      <input type="text" name="name" class="form-control" placeholder="Enter name" value="{{$generic_name->name}}">
+                      <input type="text" name="name" class="form-control" placeholder="Enter name" value="{{$medicine_category->name}}">
                       @include('alerts.feedback', ['field' => 'name'])
                     </div>
                     <button type="submit" class="btn btn-primary">{{__('Update')}}</button>

@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'medicine_generic_name'])
+@extends('admin.layouts.master', ['pageSlug' => 'medicine_category'])
 
 @section('content')
     <div class="row">
@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Generic Name List')}}</h4>
+                            <h4 class="card-title">{{__('Medicine Category List')}}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'product.generic_name.generic_name_create',
+                                'routeName' => 'product.medicine_category.medicine_category_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new generic name',
+                                'label' => 'Add new medicine category',
                             ])
                         </div>
                     </div>
@@ -29,18 +29,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($generic_names as $generic_name)
+                            @foreach ($medicine_categorys as $medicine_category)
                                 <tr>
-                                    <td> {{ strtoupper($generic_name->name) }} </td>
-                                    <td>{{ timeFormate($generic_name->created_at) }}</td>
+                                    <td> {{ strtoupper($medicine_category->name) }} </td>
+                                    <td>{{ timeFormate($medicine_category->created_at) }}</td>
 
-                                    <td> {{ $generic_name->created_user->name ?? 'system' }} </td>
+                                    <td> {{ $medicine_category->created_user->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$generic_name->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $generic_name->id ],
-                                                    ['routeName' => 'product.generic_name.generic_name_edit',   'params' => [$generic_name->id], 'label' => 'Update'],
-                                                    ['routeName' => 'product.generic_name.generic_name_delete', 'params' => [$generic_name->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'javascript:void(0)',  'params' => [$medicine_category->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $medicine_category->id ],
+                                                    ['routeName' => 'product.medicine_category.medicine_category_edit',   'params' => [$medicine_category->id], 'label' => 'Update'],
+                                                    ['routeName' => 'product.medicine_category.medicine_category_delete', 'params' => [$medicine_category->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])
                                     </td>
@@ -63,7 +63,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Generic Name Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Medicine Category Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -80,7 +80,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('product.generic_name.details.generic_name_list', ['id']) }}");
+                let url = ("{{ route('product.medicine_category.details.medicine_category_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
