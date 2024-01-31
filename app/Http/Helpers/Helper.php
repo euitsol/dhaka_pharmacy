@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-            'am.','um.','pm.','settings.','dmlam.'
+            'am.','um.','pm.','settings.','dmlam.','product.'
         ];
 }
 
@@ -119,10 +119,10 @@ function lam(){
 function mainMenuCheck($routes){
     $check = false;
     foreach($routes as $route){
-                $check = check_access_by_route_name($route);
-                if($check == true){
-                    break;
-                }
+            if (auth()->user()->can($route)) {
+                $check = true;
+                break;
+            }
                 
         }
     return $check;

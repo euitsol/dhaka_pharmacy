@@ -43,3 +43,7 @@ admin_profile,admin,Admin
 pharmacy_profile,admin,Pharmacy
 district_manager_profile,admin,"District Manager"
 local_area_manager_profile,admin,"Local Area Manager"
+generic_name_list,admin,"Generic Name"
+generic_name_create,admin,"Generic Name"
+generic_name_edit,admin,"Generic Name"
+generic_name_delete,admin,"Generic Name"
