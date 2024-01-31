@@ -17,7 +17,7 @@
             ])
 
             {{-- Admin Management --}}
-            @if(mainMenuCheck(['role','permission','admin']))
+            @if(mainMenuCheck(['role_list','permission_list','admin_list']))
                 <li>
                     <a class="@if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') @else collapsed @endif" data-toggle="collapse"
                         href="#admin-management"
@@ -57,7 +57,7 @@
             @endif
 
             {{-- User Management --}}
-            @if(mainMenuCheck(['user','user_kyc_list','user_kyc_settings']))
+            @if(mainMenuCheck(['user_list','user_kyc_list','user_kyc_settings']))
                 <li>
                     <a class="@if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'user_kyc_list' || $pageSlug == 'user_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#user-management"
@@ -99,7 +99,7 @@
             @endif
 
             {{-- Pharmacy Management --}}
-            @if(mainMenuCheck(['pharmacy','pharmacy_kyc_list','pharmacy_kyc_settings']))
+            @if(mainMenuCheck(['pharmacy_list','pharmacy_kyc_list','pharmacy_kyc_settings']))
                 <li>
                     <a class="@if ($pageSlug == 'pharmacy' || $pageSlug == 'kyc' || $pageSlug == 'pharmacy_kyc_list' || $pageSlug == 'pharmacy_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#pharmacy-management"
@@ -141,7 +141,7 @@
             @endif
 
             {{-- DM & LAM Management --}}
-            @if(mainMenuCheck(['district_manager','local_area_manager']))
+            @if(mainMenuCheck(['district_manager_list','local_area_manager_list']))
                 <li>
                     <a class="@if ($pageSlug == 'district_manager' || $pageSlug == 'local_area_manager') @else collapsed @endif" data-toggle="collapse"
                         href="#district_manager"
@@ -163,6 +163,31 @@
                     </div>
                 </li>
             @endif
+            {{-- Product Management --}}
+            @if(mainMenuCheck(['generic_name_list']))
+                <li>
+                    <a class="@if ($pageSlug == 'medicin_generic_name' || $pageSlug == 'medicin_company_name' || $pageSlug == 'medicin_strength' || $pageSlug == 'medicin_category' || $pageSlug == 'medicin_unit') @else collapsed @endif" data-toggle="collapse"
+                        href="#product_management"
+                        @if ($pageSlug == 'medicin_generic_name' || $pageSlug == 'medicin_company_name' || $pageSlug == 'medicin_strength' || $pageSlug == 'medicin_category' || $pageSlug == 'medicin_unit') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-capsules"></i>
+                        <span class="nav-link-text">{{ __('Product Management') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'medicin_generic_name' || $pageSlug == 'medicin_company_name' || $pageSlug == 'medicin_strength' || $pageSlug == 'medicin_category' || $pageSlug == 'medicin_unit') show @endif" id="product_management">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    ['pageSlug' => 'medicin_generic_name', 'routeName' => 'product.generic_name.generic_name_list', 'label' => 'Generic Name'],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
+
+
 
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [

@@ -116,10 +116,10 @@ function lam(){
 }
 
 
-function mainMenuCheck($slugs){
+function mainMenuCheck($routes){
     $check = false;
-    foreach($slugs as $slug){
-                $check = check_access_by_route_name($slug);
+    foreach($routes as $route){
+                $check = check_access_by_route_name($route);
                 if($check == true){
                     break;
                 }

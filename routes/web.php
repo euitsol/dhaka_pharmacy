@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\ProductManagement\GenericNameController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -219,6 +220,19 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('local_area_manager_edit');
             Route::get('status/{id}', 'status')->name('status.local_area_manager_edit');
             Route::get('delete/{id}', 'delete')->name('local_area_manager_delete');
+        });
+    });
+
+    // Product Management Routes
+    Route::group(['as' => 'product.', 'prefix' => 'product-management'], function () {
+        Route::controller(GenericNameController::class, 'generic-name')->prefix('generic-name')->name('generic_name.')->group(function () {
+            Route::get('index', 'index')->name('generic_name_list');
+            Route::get('details/{id}', 'details')->name('details.generic_name_list');
+            Route::get('create', 'create')->name('generic_name_create');
+            Route::post('create', 'store')->name('generic_name_create');
+            Route::get('edit/{id}', 'edit')->name('generic_name_edit');
+            Route::put('edit/{id}', 'update')->name('generic_name_edit');
+            Route::get('delete/{id}', 'delete')->name('generic_name_delete');
         });
     });
 
