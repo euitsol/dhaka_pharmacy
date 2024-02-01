@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserControl
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyController as AdminPharmacyController;
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycController;
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycSettingsController;
+use App\Http\Controllers\Admin\ProductManagement\ProductCategoryController;
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\LAM\Auth\LoginController as LamLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
@@ -279,6 +280,17 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('medicine_strength_edit');
             Route::get('status/{id}', 'status')->name('status.medicine_strength_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_strength_delete');
+        });
+
+        Route::controller(ProductCategoryController::class, 'product-category')->prefix('product-category')->name('product_category.')->group(function () {
+            Route::get('index', 'index')->name('product_category_list');
+            Route::get('details/{id}', 'details')->name('details.product_category_list');
+            Route::get('create', 'create')->name('product_category_create');
+            Route::post('create', 'store')->name('product_category_create');
+            Route::get('edit/{id}', 'edit')->name('product_category_edit');
+            Route::put('edit/{id}', 'update')->name('product_category_edit');
+            Route::get('status/{id}', 'status')->name('status.product_category_edit');
+            Route::get('delete/{id}', 'delete')->name('product_category_delete');
         });
     });
 
