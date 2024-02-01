@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    
+
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
@@ -38,21 +38,44 @@
                                     <td> {{ $pharmacy->email }} </td>
                                     <td>
                                         <span
-                                            class="badge {{ $pharmacy->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $pharmacy->status == 1 ? 'Active' : 'Disabled' }}</span>
+                                            class="{{ $pharmacy->getStatusBadgeClass() }}">{{ $pharmacy->getStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($pharmacy->created_at) }}</td>
 
                                     <td> {{ $pharmacy->creater->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'pm.pharmacy.pharmacy_profile',   'params' => [$pharmacy->id], 'label' => 'Profile'],
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$pharmacy->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $pharmacy->id ],
-                                                    ['routeName' => 'pm.pharmacy.pharmacy_edit',   'params' => [$pharmacy->id], 'label' => 'Update'],
-                                                    ['routeName' => 'pm.pharmacy.status.pharmacy_edit',   'params' => [$pharmacy->id], 'label' => $pharmacy->getBtnStatus()],
-                                                    ['routeName' => 'pm.pharmacy.pharmacy_delete', 'params' => [$pharmacy->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'pm.pharmacy.pharmacy_profile',
+                                                    'params' => [$pharmacy->id],
+                                                    'label' => 'Profile',
+                                                ],
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$pharmacy->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $pharmacy->id,
+                                                ],
+                                                [
+                                                    'routeName' => 'pm.pharmacy.pharmacy_edit',
+                                                    'params' => [$pharmacy->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'pm.pharmacy.status.pharmacy_edit',
+                                                    'params' => [$pharmacy->id],
+                                                    'label' => $pharmacy->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'pm.pharmacy.pharmacy_delete',
+                                                    'params' => [$pharmacy->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -69,7 +92,8 @@
     </div>
 
     {{-- Pharmacy Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">

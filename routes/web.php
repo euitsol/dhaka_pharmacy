@@ -236,6 +236,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::post('create', 'store')->name('generic_name_create');
             Route::get('edit/{id}', 'edit')->name('generic_name_edit');
             Route::put('edit/{id}', 'update')->name('generic_name_edit');
+            Route::get('status/{id}', 'status')->name('status.generic_name_edit');
             Route::get('delete/{id}', 'delete')->name('generic_name_delete');
         });
         Route::controller(CompanyNameController::class, 'company-name')->prefix('company-name')->name('company_name.')->group(function () {
@@ -245,6 +246,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::post('create', 'store')->name('company_name_create');
             Route::get('edit/{id}', 'edit')->name('company_name_edit');
             Route::put('edit/{id}', 'update')->name('company_name_edit');
+            Route::get('status/{id}', 'status')->name('status.company_name_edit');
             Route::get('delete/{id}', 'delete')->name('company_name_delete');
         });
         Route::controller(MedicineCategoryController::class, 'medicine-category')->prefix('medicine-category')->name('medicine_category.')->group(function () {
@@ -254,9 +256,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::post('create', 'store')->name('medicine_category_create');
             Route::get('edit/{id}', 'edit')->name('medicine_category_edit');
             Route::put('edit/{id}', 'update')->name('medicine_category_edit');
+            Route::get('status/{id}', 'status')->name('status.medicine_category_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_category_delete');
         });
-        
+
         Route::controller(MedicineUnitController::class, 'medicine-unit')->prefix('medicine-unit')->name('medicine_unit.')->group(function () {
             Route::get('index', 'index')->name('medicine_unit_list');
             Route::get('details/{id}', 'details')->name('details.medicine_unit_list');
@@ -264,6 +267,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::post('create', 'store')->name('medicine_unit_create');
             Route::get('edit/{id}', 'edit')->name('medicine_unit_edit');
             Route::put('edit/{id}', 'update')->name('medicine_unit_edit');
+            Route::get('status/{id}', 'status')->name('status.medicine_unit_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_unit_delete');
         });
         Route::controller(MedicineStrengthController::class, 'medicine-strength')->prefix('medicine-strength')->name('medicine_strength.')->group(function () {
@@ -273,6 +277,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::post('create', 'store')->name('medicine_strength_create');
             Route::get('edit/{id}', 'edit')->name('medicine_strength_edit');
             Route::put('edit/{id}', 'update')->name('medicine_strength_edit');
+            Route::get('status/{id}', 'status')->name('status.medicine_strength_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_strength_delete');
         });
     });
@@ -305,14 +310,12 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
     Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dashboard');
 
 
-	Route::controller(DmProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
-		Route::get('/', 'profile')->name('index');
-		Route::put('/update', 'update')->name('update');
-		Route::put('/update/password', 'updatePassword')->name('update.password');
-		Route::post('/update/image', 'updateImage')->name('update.image');
-
-
-	});
+    Route::controller(DmProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', 'profile')->name('index');
+        Route::put('/update', 'update')->name('update');
+        Route::put('/update/password', 'updatePassword')->name('update.password');
+        Route::post('/update/image', 'updateImage')->name('update.image');
+    });
 
     //LAM Route
     Route::controller(LamManagementController::class, 'lam-management')->prefix('lam-management')->name('lam.')->group(function () {

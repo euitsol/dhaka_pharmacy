@@ -19,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('quantity');
             $table->string('unit');
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);

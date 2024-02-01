@@ -16,14 +16,15 @@ class CompanyNameController extends Controller
 {
     //
 
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
 
     public function index(): View
     {
-        $data['company_names'] = CompanyName::with(['created_user','updated_user'])->orderBy('name')->get();
-        return view('admin.product_management.company_name.index',$data);
+        $data['company_names'] = CompanyName::with(['created_user', 'updated_user'])->orderBy('name')->get();
+        return view('admin.product_management.company_name.index', $data);
     }
     public function details($id): JsonResponse
     {
@@ -37,8 +38,8 @@ class CompanyNameController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key','company_name')->first();
-        return view('admin.product_management.company_name.create',$data);
+        $data['document'] = Documentation::where('module_key', 'company_name')->first();
+        return view('admin.product_management.company_name.create', $data);
     }
     public function store(CompanyNameRequest $req): RedirectResponse
     {
@@ -46,14 +47,14 @@ class CompanyNameController extends Controller
         $company_name->name = $req->name;
         $company_name->created_by = admin()->id;
         $company_name->save();
-        flash()->addSuccess('Company name '.$company_name->name.' created successfully.');
+        flash()->addSuccess('Company name ' . $company_name->name . ' created successfully.');
         return redirect()->route('product.company_name.company_name_list');
     }
     public function edit($id): View
     {
         $data['company_name'] = CompanyName::findOrFail($id);
-        $data['document'] = Documentation::where('module_key','company_name')->first();
-        return view('admin.product_management.company_name.edit',$data);
+        $data['document'] = Documentation::where('module_key', 'company_name')->first();
+        return view('admin.product_management.company_name.edit', $data);
     }
     public function update(CompanyNameRequest $req, $id): RedirectResponse
     {
@@ -61,16 +62,21 @@ class CompanyNameController extends Controller
         $company_name->name = $req->name;
         $company_name->updated_by = admin()->id;
         $company_name->update();
-        flash()->addSuccess('Company name '.$company_name->name.' updated successfully.');
+        flash()->addSuccess('Company name ' . $company_name->name . ' updated successfully.');
+        return redirect()->route('product.company_name.company_name_list');
+    }
+    public function status($id): RedirectResponse
+    {
+        $company_name = CompanyName::findOrFail($id);
+        $this->statusChange($company_name);
+        flash()->addSuccess('Company name ' . $company_name->name . ' status updated successfully.');
         return redirect()->route('product.company_name.company_name_list');
     }
     public function delete($id): RedirectResponse
     {
         $company_name = CompanyName::findOrFail($id);
         $company_name->delete();
-        flash()->addSuccess('Company name '.$company_name->name.' deleted successfully.');
+        flash()->addSuccess('Company name ' . $company_name->name . ' deleted successfully.');
         return redirect()->route('product.company_name.company_name_list');
-
     }
-
 }

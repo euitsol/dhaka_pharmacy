@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Medicine Strength List')}}</h4>
+                            <h4 class="card-title">{{ __('Medicine Strength List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -24,6 +24,7 @@
                             <tr>
                                 <th>{{ __('Quantity') }}</th>
                                 <th>{{ __('Unit') }}</th>
+                                <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -34,17 +35,44 @@
                                 <tr>
                                     <td> {{ $medicine_strength->quantity }} </td>
                                     <td> {{ strtoupper($medicine_strength->unit) }} </td>
+                                    <td>
+                                        <span
+                                            class="{{ $medicine_strength->getStatusBadgeClass() }}">{{ $medicine_strength->getStatus() }}</span>
+                                    </td>
                                     <td>{{ timeFormate($medicine_strength->created_at) }}</td>
 
                                     <td> {{ $medicine_strength->created_user->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$medicine_strength->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $medicine_strength->id ],
-                                                    ['routeName' => 'product.medicine_strength.medicine_strength_edit',   'params' => [$medicine_strength->id], 'label' => 'Update'],
-                                                    ['routeName' => 'product.medicine_strength.medicine_strength_delete', 'params' => [$medicine_strength->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$medicine_strength->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $medicine_strength->id,
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'product.medicine_strength.medicine_strength_edit',
+                                                    'params' => [$medicine_strength->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'product.medicine_strength.status.medicine_strength_edit',
+                                                    'params' => [$medicine_strength->id],
+                                                    'label' => $medicine_strength->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'product.medicine_strength.medicine_strength_delete',
+                                                    'params' => [$medicine_strength->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -61,7 +89,8 @@
     </div>
 
     {{-- District Manager Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -82,7 +111,8 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('product.medicine_strength.details.medicine_strength_list', ['id']) }}");
+                let url = (
+                    "{{ route('product.medicine_strength.details.medicine_strength_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -103,6 +133,11 @@
                                         <th class="text-nowrap">Unit</th>
                                         <th>:</th>
                                         <td>${data.unit}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Status</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created At</th>

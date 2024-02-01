@@ -16,14 +16,15 @@ class MedicineStrengthController extends Controller
 {
     //
 
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
 
     public function index(): View
     {
-        $data['medicine_strengths'] = MedicineStrength::with(['created_user','updated_user'])->orderBy('quantity')->get();
-        return view('admin.product_management.medicine_strength.index',$data);
+        $data['medicine_strengths'] = MedicineStrength::with(['created_user', 'updated_user'])->orderBy('quantity')->get();
+        return view('admin.product_management.medicine_strength.index', $data);
     }
     public function details($id): JsonResponse
     {
@@ -37,8 +38,8 @@ class MedicineStrengthController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key','medicine_strength')->first();
-        return view('admin.product_management.medicine_strength.create',$data);
+        $data['document'] = Documentation::where('module_key', 'medicine_strength')->first();
+        return view('admin.product_management.medicine_strength.create', $data);
     }
     public function store(MedicineStrengthRequest $req): RedirectResponse
     {
@@ -47,14 +48,14 @@ class MedicineStrengthController extends Controller
         $medicine_strength->unit = $req->unit;
         $medicine_strength->created_by = admin()->id;
         $medicine_strength->save();
-        flash()->addSuccess('Medicine strength '.$medicine_strength->quantity.' '.$medicine_strength->unit.' created successfully.');
+        flash()->addSuccess('Medicine strength ' . $medicine_strength->quantity . ' ' . $medicine_strength->unit . ' created successfully.');
         return redirect()->route('product.medicine_strength.medicine_strength_list');
     }
     public function edit($id): View
     {
         $data['medicine_strength'] = MedicineStrength::findOrFail($id);
-        $data['document'] = Documentation::where('module_key','medicine_strength')->first();
-        return view('admin.product_management.medicine_strength.edit',$data);
+        $data['document'] = Documentation::where('module_key', 'medicine_strength')->first();
+        return view('admin.product_management.medicine_strength.edit', $data);
     }
     public function update(MedicineStrengthRequest $req, $id): RedirectResponse
     {
@@ -63,15 +64,21 @@ class MedicineStrengthController extends Controller
         $medicine_strength->unit = $req->unit;
         $medicine_strength->updated_by = admin()->id;
         $medicine_strength->update();
-        flash()->addSuccess('Medicine strength '.$medicine_strength->quantity.' '.$medicine_strength->unit.' updated successfully.');
+        flash()->addSuccess('Medicine strength ' . $medicine_strength->quantity . ' ' . $medicine_strength->unit . ' updated successfully.');
+        return redirect()->route('product.medicine_strength.medicine_strength_list');
+    }
+    public function status($id): RedirectResponse
+    {
+        $medicine_strength = MedicineStrength::findOrFail($id);
+        $this->statusChange($medicine_strength);
+        flash()->addSuccess('Medicine strength ' . $medicine_strength->name . ' status updated successfully.');
         return redirect()->route('product.medicine_strength.medicine_strength_list');
     }
     public function delete($id): RedirectResponse
     {
         $medicine_strength = MedicineStrength::findOrFail($id);
         $medicine_strength->delete();
-        flash()->addSuccess('Medicine strength '.$medicine_strength->quantity.' '.$medicine_strength->unit.' deleted successfully.');
+        flash()->addSuccess('Medicine strength ' . $medicine_strength->quantity . ' ' . $medicine_strength->unit . ' deleted successfully.');
         return redirect()->route('product.medicine_strength.medicine_strength_list');
-
     }
 }

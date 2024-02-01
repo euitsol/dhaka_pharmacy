@@ -17,7 +17,8 @@ return new class extends Migration
     {
         Schema::create('medicine_units', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); 
+            $table->string('name');
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);

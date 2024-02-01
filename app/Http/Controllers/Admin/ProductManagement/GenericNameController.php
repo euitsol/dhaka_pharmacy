@@ -63,6 +63,14 @@ class GenericNameController extends Controller
         flash()->addSuccess('Medicine generic name '.$generic_name->name.' updated successfully.');
         return redirect()->route('product.generic_name.generic_name_list');
     }
+    public function status($id): RedirectResponse
+    {
+        $generic_name = GenericName::findOrFail($id);
+        $this->statusChange($generic_name);
+        flash()->addSuccess('Generic name ' . $generic_name->name . ' status updated successfully.');
+        return redirect()->route('product.generic_name.generic_name_list');
+    }
+
     public function delete($id): RedirectResponse
     {
         $generic_name = GenericName::findOrFail($id);

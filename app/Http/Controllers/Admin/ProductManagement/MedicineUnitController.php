@@ -16,14 +16,15 @@ class MedicineUnitController extends Controller
 {
     //
 
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
 
     public function index(): View
     {
-        $data['medicine_units'] = MedicineUnit::with(['created_user','updated_user'])->orderBy('name')->get();
-        return view('admin.product_management.medicine_unit.index',$data);
+        $data['medicine_units'] = MedicineUnit::with(['created_user', 'updated_user'])->orderBy('name')->get();
+        return view('admin.product_management.medicine_unit.index', $data);
     }
     public function details($id): JsonResponse
     {
@@ -36,8 +37,8 @@ class MedicineUnitController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key','medicine_unit')->first();
-        return view('admin.product_management.medicine_unit.create',$data);
+        $data['document'] = Documentation::where('module_key', 'medicine_unit')->first();
+        return view('admin.product_management.medicine_unit.create', $data);
     }
     public function store(MedicineUnitRequest $req): RedirectResponse
     {
@@ -45,14 +46,14 @@ class MedicineUnitController extends Controller
         $medicine_unit->name = $req->name;
         $medicine_unit->created_by = admin()->id;
         $medicine_unit->save();
-        flash()->addSuccess('Medici generic name '.$medicine_unit->name.' created successfully.');
+        flash()->addSuccess('Medici generic name ' . $medicine_unit->name . ' created successfully.');
         return redirect()->route('product.medicine_unit.medicine_unit_list');
     }
     public function edit($id): View
     {
         $data['medicine_unit'] = MedicineUnit::findOrFail($id);
-        $data['document'] = Documentation::where('module_key','medicine_unit')->first();
-        return view('admin.product_management.medicine_unit.edit',$data);
+        $data['document'] = Documentation::where('module_key', 'medicine_unit')->first();
+        return view('admin.product_management.medicine_unit.edit', $data);
     }
     public function update(MedicineUnitRequest $req, $id): RedirectResponse
     {
@@ -60,15 +61,21 @@ class MedicineUnitController extends Controller
         $medicine_unit->name = $req->name;
         $medicine_unit->updated_by = admin()->id;
         $medicine_unit->update();
-        flash()->addSuccess('Medici generic name '.$medicine_unit->name.' updated successfully.');
+        flash()->addSuccess('Medici generic name ' . $medicine_unit->name . ' updated successfully.');
+        return redirect()->route('product.medicine_unit.medicine_unit_list');
+    }
+    public function status($id): RedirectResponse
+    {
+        $medicine_unit = MedicineUnit::findOrFail($id);
+        $this->statusChange($medicine_unit);
+        flash()->addSuccess('Medicine unit ' . $medicine_unit->name . ' status updated successfully.');
         return redirect()->route('product.medicine_unit.medicine_unit_list');
     }
     public function delete($id): RedirectResponse
     {
         $medicine_unit = MedicineUnit::findOrFail($id);
         $medicine_unit->delete();
-        flash()->addSuccess('Medici generic name '.$medicine_unit->name.' deleted successfully.');
+        flash()->addSuccess('Medici generic name ' . $medicine_unit->name . ' deleted successfully.');
         return redirect()->route('product.medicine_unit.medicine_unit_list');
-
     }
 }

@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Company Name List')}}</h4>
+                            <h4 class="card-title">{{ __('Company Name List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -23,6 +23,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('Name') }}</th>
+                                <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -32,17 +33,41 @@
                             @foreach ($company_names as $company_name)
                                 <tr>
                                     <td> {{ strtoupper($company_name->name) }} </td>
+                                    <td>
+                                        <span
+                                            class="{{ $company_name->getStatusBadgeClass() }}">{{ $company_name->getStatus() }}</span>
+                                    </td>
                                     <td>{{ timeFormate($company_name->created_at) }}</td>
 
                                     <td> {{ $company_name->created_user->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$company_name->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $company_name->id ],
-                                                    ['routeName' => 'product.company_name.company_name_edit',   'params' => [$company_name->id], 'label' => 'Update'],
-                                                    ['routeName' => 'product.company_name.company_name_delete', 'params' => [$company_name->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$company_name->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $company_name->id,
+                                                ],
+                                                [
+                                                    'routeName' => 'product.company_name.company_name_edit',
+                                                    'params' => [$company_name->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'product.company_name.status.company_name_edit',
+                                                    'params' => [$company_name->id],
+                                                    'label' => $company_name->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'product.company_name.company_name_delete',
+                                                    'params' => [$company_name->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -59,7 +84,8 @@
     </div>
 
     {{-- District Manager Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -96,6 +122,11 @@
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
                                         <td>${data.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Status</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created At</th>

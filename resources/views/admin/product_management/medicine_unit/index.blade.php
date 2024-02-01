@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Medicine Unit List')}}</h4>
+                            <h4 class="card-title">{{ __('Medicine Unit List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -23,6 +23,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('Name') }}</th>
+                                <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -32,17 +33,42 @@
                             @foreach ($medicine_units as $medicine_unit)
                                 <tr>
                                     <td> {{ $medicine_unit->name }} </td>
+                                    <td>
+                                        <span
+                                            class="{{ $medicine_unit->getStatusBadgeClass() }}">{{ $medicine_unit->getStatus() }}</span>
+                                    </td>
                                     <td>{{ timeFormate($medicine_unit->created_at) }}</td>
 
                                     <td> {{ $medicine_unit->created_user->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$medicine_unit->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $medicine_unit->id ],
-                                                    ['routeName' => 'product.medicine_unit.medicine_unit_edit',   'params' => [$medicine_unit->id], 'label' => 'Update'],
-                                                    ['routeName' => 'product.medicine_unit.medicine_unit_delete', 'params' => [$medicine_unit->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$medicine_unit->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $medicine_unit->id,
+                                                ],
+                                                [
+                                                    'routeName' => 'product.medicine_unit.medicine_unit_edit',
+                                                    'params' => [$medicine_unit->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'product.medicine_unit.status.medicine_unit_edit',
+                                                    'params' => [$medicine_unit->id],
+                                                    'label' => $medicine_unit->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'product.medicine_unit.medicine_unit_delete',
+                                                    'params' => [$medicine_unit->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -59,7 +85,8 @@
     </div>
 
     {{-- District Manager Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -96,6 +123,11 @@
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
                                         <td>${data.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Status</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created At</th>

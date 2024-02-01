@@ -64,6 +64,14 @@ class MedicineCategoryController extends Controller
         flash()->addSuccess('Medicine category '.$medicine_category->name.' updated successfully.');
         return redirect()->route('product.medicine_category.medicine_category_list');
     }
+
+    public function status($id): RedirectResponse
+    {
+        $medicine_category = MedicineCategory::findOrFail($id);
+        $this->statusChange($medicine_category);
+        flash()->addSuccess('Medicine category ' . $medicine_category->name . ' status updated successfully.');
+        return redirect()->route('product.medicine_category.medicine_category_list');
+    }
     public function delete($id): RedirectResponse
     {
         $medicine_category = MedicineCategory::findOrFail($id);
