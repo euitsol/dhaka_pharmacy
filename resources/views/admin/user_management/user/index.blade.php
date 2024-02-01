@@ -1,4 +1,11 @@
 @extends('admin.layouts.master', ['pageSlug' => 'user'])
+@push('css')
+    <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-1.13.8/datatables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-1.13.8/datatables.min.js"></script>
+@endpush
+
+
+
 
 @section('content')
     <div class="row">
@@ -19,8 +26,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    
-                    <table class="table table-striped datatable">
+
+                    {{-- <table class="table table-striped datatable">
                         <thead>
                             <tr>
                                 <th>{{ __('Name') }}</th>
@@ -58,7 +65,8 @@
                             @endforeach
 
                         </tbody>
-                    </table>
+                    </table> --}}
+                    {{ $dataTable->table() }}
                 </div>
                 <div class="card-footer py-4">
                     <nav class="d-flex justify-content-end" aria-label="...">
@@ -69,7 +77,8 @@
     </div>
 
     {{-- User Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -84,8 +93,9 @@
         </div>
     </div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+{{-- @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]]) --}}
 @push('js')
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
     <script>
         $(document).ready(function() {
             $('.view').on('click', function() {
