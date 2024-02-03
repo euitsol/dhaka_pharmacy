@@ -71,6 +71,11 @@
                                         <span class="{{ $medicine->getStatusBadgeClass() }}">{{ $medicine->getStatus() }}</span> 
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>{{ __('Description') }}</th>
+                                    <th>{{ __(':') }}</th>
+                                    <td>{!! $medicine->description !!}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
