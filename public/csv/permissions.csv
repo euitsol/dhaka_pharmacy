@@ -67,3 +67,7 @@ product_category_list,admin,"Product Category"
 product_category_create,admin,"Product Category"
 product_category_edit,admin,"Product Category"
 product_category_delete,admin,"Product Category"
+medicine_list,admin,Medicine
+medicine_create,admin,Medicine
+medicine_edit,admin,Medicine
+medicine_delete,admin,Medicine

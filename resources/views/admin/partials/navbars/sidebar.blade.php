@@ -195,6 +195,7 @@
                     'medicine_unit_list',
                     'medicine_category_list',
                     'product_category_list',
+                    'medicine_list',
                 ]))
                 <li>
                     <a class="@if (
@@ -203,6 +204,7 @@
                             $pageSlug == 'medicine_strength' ||
                             $pageSlug == 'medicine_category' ||
                             $pageSlug == 'product_category' ||
+                            $pageSlug == 'medicine' ||
                             $pageSlug == 'medicine_unit') @else collapsed @endif" data-toggle="collapse"
                         href="#product_management"
                         @if (
@@ -211,6 +213,7 @@
                                 $pageSlug == 'medicine_strength' ||
                                 $pageSlug == 'medicine_category' ||
                                 $pageSlug == 'product_category' ||
+                                $pageSlug == 'medicine' ||
                                 $pageSlug == 'medicine_unit') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-capsules"></i>
                         <span class="nav-link-text">{{ __('Product Management') }}</span>
@@ -223,10 +226,16 @@
                             $pageSlug == 'medicine_strength' ||
                             $pageSlug == 'medicine_category' ||
                             $pageSlug == 'product_category' ||
+                            $pageSlug == 'medicine' ||
                             $pageSlug == 'medicine_unit') show @endif" id="product_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
+                                    [
+                                        'pageSlug' => 'medicine',
+                                        'routeName' => 'product.medicine.medicine_list',
+                                        'label' => 'Medicine',
+                                    ],
                                     [
                                         'pageSlug' => 'product_category',
                                         'routeName' => 'product.product_category.product_category_list',

@@ -23,6 +23,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('Name') }}</th>
+                                <th>{{ __('Quantity') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -33,6 +34,7 @@
                             @foreach ($medicine_units as $medicine_unit)
                                 <tr>
                                     <td> {{ $medicine_unit->name }} </td>
+                                    <td> {{ $medicine_unit->quantity }} </td>
                                     <td>
                                         <span
                                             class="{{ $medicine_unit->getStatusBadgeClass() }}">{{ $medicine_unit->getStatus() }}</span>
@@ -123,6 +125,11 @@
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
                                         <td>${data.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Quantity</th>
+                                        <th>:</th>
+                                        <td>${data.quantity}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

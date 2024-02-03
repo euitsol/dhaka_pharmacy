@@ -21,12 +21,21 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('product.medicine_unit.medicine_unit_create') }}">
                         @csrf
-                        <div class="form-group">
+                        <div class="row">
+                            <div class="form-group col-md-6">
 
-                            <label>{{__('Name')}}</label>
-                            <input type="text" name="name" class="form-control" placeholder="Enter name"
-                                value="{{ old('name') }}">
-                            @include('alerts.feedback', ['field' => 'name'])
+                                <label>{{__('Name')}}</label>
+                                <input type="text" name="name" class="form-control" placeholder="Enter name"
+                                    value="{{ old('name') }}">
+                                @include('alerts.feedback', ['field' => 'name'])
+                            </div>
+                            <div class="form-group col-md-6">
+    
+                                <label>{{__('Quantity')}}</label>
+                                <input type="text" name="quantity" class="form-control" placeholder="Enter quantity"
+                                    value="{{ old('quantity') }}">
+                                @include('alerts.feedback', ['field' => 'quantity'])
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
                     </form>

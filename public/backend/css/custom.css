@@ -1,3 +1,19 @@
+/*=============================================================
+                Start Overwrite CSS
+ =============================================================*/
+
+:root {
+    --primary-color: #0093E9;
+    --primary-bg-image: linear-gradient( 288deg,  rgba(0,85,255,1) 1.5%, rgba(4,56,115,1) 91.6% );
+
+    --btn-bg-color: #263148;
+    --btn-bg-image: linear-gradient(to bottom left, #344675, #263148, #344675) !important;
+    
+
+    
+
+}
+
 .brand-link .brand-image {
     float: none;
     margin-left: 0;
@@ -7,6 +23,37 @@
     width: 100%;
     object-fit: cover;
 }
+.sidebar {
+    background-color:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+
+.btn:not([data-action]):hover{
+    background-color:var(--btn-bg-color) !important;
+    background-image:var(--btn-bg-image) !important;
+}
+a:hover{
+    color:var(--primary-color) !important;
+}
+.main-panel {
+    border-top: 2px solid var(--primary-color) !important;
+    /* background-color:var(--primary-color) !important; */
+    /* background-image:var(--primary-bg-image) !important; */
+}
+
+.btn-primary {
+    background-color:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+.form-control:focus {
+    border-color: var(--primary-color) !important;
+}
+.form-group input[type=file] {
+    height: auto !important;
+}
+/*=============================================================
+                End Overwrite CSS
+ =============================================================*/
 
 /*=============================================================
                 Start DM Profile CSS
@@ -132,40 +179,45 @@
     }
 }
 
-:root {
-    --primary-color: #0093E9;
-    --primary-bg-image: linear-gradient( 288deg,  rgba(0,85,255,1) 1.5%, rgba(4,56,115,1) 91.6% );
 
-    --btn-bg-color: #263148;
-    --btn-bg-image: linear-gradient(to bottom left, #344675, #263148, #344675) !important;
-    
-
-    
-
-  }
-.sidebar {
-    background-color:var(--primary-color) !important;
-    background-image:var(--primary-bg-image) !important;
-}
-
-.btn:not([data-action]):hover{
-    background-color:var(--btn-bg-color) !important;
-    background-image:var(--btn-bg-image) !important;
-}
-a:hover{
-    color:var(--primary-color) !important;
-}
-.main-panel {
-    border-top: 2px solid var(--primary-color) !important;
-    /* background-color:var(--primary-color) !important; */
-    /* background-image:var(--primary-bg-image) !important; */
-}
-
-.btn-primary {
-    background-color:var(--primary-color) !important;
-    background-image:var(--primary-bg-image) !important;
-}
 /*=============================================================
                 End Site Settings CSS
+ =============================================================*/
+/*=============================================================
+                Start Select2 CSS
+ =============================================================*/
+
+ /* Select 2 */
+.select2 {
+    /* width: 100% !important; */
+}
+
+.select2-container .select2-selection--single,
+.select2-container .select2-selection--multiple {
+    height: calc(2.25rem + 2px) !important;
+}
+
+.select2-container--default .select2-selection--single ,
+.select2-container--default .select2-selection--multiple {
+    border-color: rgba(29, 37, 59, 0.5) !important;
+    border-radius: 0.4285rem !important;
+}
+
+.select2-container--default .select2-selection--single ,
+.select2-container--default .select2-selection--multiple {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow ,
+.select2-container--default .select2-selection--multiple .select2-selection__arrow {
+    top: 16% !important;
+}
+.select2-container .select2-selection--single .select2-selection__rendered ,
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+    margin: 0;
+}
+/*=============================================================
+                End Select2 CSS
  =============================================================*/
 

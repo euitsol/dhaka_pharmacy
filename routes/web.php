@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ProductManagement\CompanyNameController;
 use App\Http\Controllers\admin\ProductManagement\GenericNameController;
 use App\Http\Controllers\Admin\ProductManagement\MedicineCategoryController;
+use App\Http\Controllers\Admin\ProductManagement\MedicineController;
 use App\Http\Controllers\Admin\ProductManagement\MedicineStrengthController;
 use App\Http\Controllers\Admin\ProductManagement\MedicineUnitController;
 use Illuminate\Support\Facades\Route;
@@ -291,6 +292,16 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('product_category_edit');
             Route::get('status/{id}', 'status')->name('status.product_category_edit');
             Route::get('delete/{id}', 'delete')->name('product_category_delete');
+        });
+        Route::controller(MedicineController::class, 'medicine')->prefix('medicine')->name('medicine.')->group(function () {
+            Route::get('index', 'index')->name('medicine_list');
+            Route::get('details/{id}', 'details')->name('details.medicine_list');
+            Route::get('create', 'create')->name('medicine_create');
+            Route::post('create', 'store')->name('medicine_create');
+            Route::get('edit/{id}', 'edit')->name('medicine_edit');
+            Route::put('edit/{id}', 'update')->name('medicine_edit');
+            Route::get('status/{id}', 'status')->name('status.medicine_edit');
+            Route::get('delete/{id}', 'delete')->name('medicine_delete');
         });
     });
 

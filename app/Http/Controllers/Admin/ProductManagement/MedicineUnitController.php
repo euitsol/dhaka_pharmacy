@@ -44,6 +44,7 @@ class MedicineUnitController extends Controller
     {
         $medicine_unit = new MedicineUnit();
         $medicine_unit->name = $req->name;
+        $medicine_unit->quantity = $req->quantity;
         $medicine_unit->created_by = admin()->id;
         $medicine_unit->save();
         flash()->addSuccess('Medici generic name ' . $medicine_unit->name . ' created successfully.');
@@ -59,6 +60,7 @@ class MedicineUnitController extends Controller
     {
         $medicine_unit = MedicineUnit::findOrFail($id);
         $medicine_unit->name = $req->name;
+        $medicine_unit->quantity = $req->quantity;
         $medicine_unit->updated_by = admin()->id;
         $medicine_unit->update();
         flash()->addSuccess('Medici generic name ' . $medicine_unit->name . ' updated successfully.');
