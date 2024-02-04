@@ -28,7 +28,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-            $this->addAuditColumns($table);
+            $this->addMorphedAuditColumns($table);
         });
     }
 

@@ -23,7 +23,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('Name') }}</th>
-                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Phone') }}</th>
                                 <th>{{ __('Active L.A.M') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
@@ -35,14 +35,14 @@
                             @foreach ($dms as $dm)
                                 <tr>
                                     <td> {{ $dm->name }} </td>
-                                    <td> {{ $dm->email }} </td>
+                                    <td> {{ $dm->phone }} </td>
                                     <td class="text-center"> {{ $dm->lams->count() }} </td>
                                     <td>
                                         <span class="{{ $dm->getStatusBadgeClass() }}">{{ $dm->getStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($dm->created_at) }}</td>
 
-                                    <td> {{ $dn->created_user->name ?? 'system' }} </td>
+                                    <td> {{ $dn->creater->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
@@ -108,9 +108,14 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">Phone</th>
+                                        <th>:</th>
+                                        <td>${data.phone}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
-                                        <td>${data.email}</td>
+                                        <td>${data.email ?? 'N/A'}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Active Local Area Manager</th>

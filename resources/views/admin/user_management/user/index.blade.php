@@ -24,7 +24,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('Name') }}</th>
-                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Phone') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -35,14 +35,14 @@
                             @foreach ($users as $user)
                                 <tr>
                                     <td> {{ $user->name }} </td>
-                                    <td> {{ $user->email }} </td>
+                                    <td> {{ $user->phone }} </td>
                                     <td>
                                         <span
                                             class="badge {{ $user->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $user->status == 1 ? 'Active' : 'Disabled' }}</span>
                                     </td>
                                     <td>{{ timeFormate($user->created_at) }}</td>
 
-                                    <td> {{ $user->createdBy->name ?? 'system' }} </td>
+                                    <td> {{ $user->creater->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
@@ -106,6 +106,11 @@
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
                                         <td>${data.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Phone</th>
+                                        <th>:</th>
+                                        <td>${data.phone}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Email</th>

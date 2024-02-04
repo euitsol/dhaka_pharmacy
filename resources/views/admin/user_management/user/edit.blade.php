@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row px-3 pt-3">
-        <div class=" {{ $document->title ? 'col-md-8' : 'col-md-12' }}">
+        <div class=" {{ $document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -24,9 +24,9 @@
                       @include('alerts.feedback', ['field' => 'name'])
                     </div>
                     <div class="form-group">
-                      <label>Email</label>
-                      <input type="email" name="email" class="form-control" placeholder="Enter email" value="{{$user->email}}">
-                      @include('alerts.feedback', ['field' => 'email'])
+                      <label>Phone</label>
+                      <input type="text" name="phone" class="form-control" placeholder="Enter phone" value="{{$user->phone}}">
+                      @include('alerts.feedback', ['field' => 'phone'])
                     </div>
                     <div class="form-group">
                       <label>Password</label>

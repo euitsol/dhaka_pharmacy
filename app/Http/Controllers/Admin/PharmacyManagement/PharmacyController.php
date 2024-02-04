@@ -24,21 +24,21 @@ class PharmacyController extends Controller
 
     public function index(): View
     {
-        $data['pharmacies'] = Pharmacy::with('created_user')->latest()->get();
+        $data['pharmacies'] = Pharmacy::with('creater')->latest()->get();
         return view('admin.pharmacy_management.pharmacy.index',$data);
     }
     public function details($id): JsonResponse
     {
-        $data = Pharmacy::with('role')->findOrFail($id);
+        $data = Pharmacy::with(['role','creater','updater'])->findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->created_by ? $data->created_user->name : 'System';
-        $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
+        $data->created_by = $data->creater_id ? $data->creater->name : 'System';
+        $data->updated_by = $data->updater_id ? $data->updater->name : 'N/A';
         return response()->json($data);
     }
     public function profile($id): View
     {
-        $data['pharmacy'] = Pharmacy::with(['created_user','updated_user'])->findOrFail($id);
+        $data['pharmacy'] = Pharmacy::with(['creater','updater'])->findOrFail($id);
         return view('admin.pharmacy_management.pharmacy.profile',$data);
     }
     public function create(): View
@@ -53,7 +53,7 @@ class PharmacyController extends Controller
         $pharmacy->name = $req->name;
         $pharmacy->email = $req->email;
         $pharmacy->password = Hash::make($req->password);
-        $pharmacy->created_by = admin()->id;
+        $pharmacy->creater()->associate(admin());
         $pharmacy->save();
         flash()->addSuccess('Pharmacy '.$pharmacy->name.' created successfully.');
         return redirect()->route('pm.pharmacy.pharmacy_list');
@@ -73,7 +73,7 @@ class PharmacyController extends Controller
         if($req->password){
             $pharmacy->password = Hash::make($req->password);
         }
-        $pharmacy->updated_by = admin()->id;
+        $pharmacy->updater()->associate(admin());
         $pharmacy->update();
         flash()->addSuccess('Pharmacy '.$pharmacy->name.' updated successfully.');
         return redirect()->route('pm.pharmacy.pharmacy_list');

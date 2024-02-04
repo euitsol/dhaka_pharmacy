@@ -13,8 +13,10 @@ use Illuminate\View\View;
 
 class LoginContorller extends Controller
 {
-    public function adminLogin(){
+    public function adminLogin()
+    {
         if (Auth::guard('admin')->check()) {
+            flash()->addSuccess('Welcome to Dhaka Pharmacy');
             return redirect()->route('dashboard');
         }
         return view('admin.login');
@@ -25,26 +27,10 @@ class LoginContorller extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
+            flash()->addSuccess('Welcome to Dhaka Pharmacy');
             return redirect()->route('dashboard');
         }
-    }
-
-    public function pharmacyLogin(): View
-    {
-        if (Auth::guard('pharmacy')->check()) {
-            return redirect()->route('pharmacy.profile');
-        }
-        return view('pharmacy.login');
-    }
-
-    public function pharmacyLoginCheck(Request $request): RedirectResponse
-    {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::guard('pharmacy')->attempt($credentials)) {
-            return redirect()->route('pharmacy.profile');
-        }
-    }
-
-    
+        flash()->addError('Invalid credentials');
+        return redirect()->route('admin.login');
+    }  
 }

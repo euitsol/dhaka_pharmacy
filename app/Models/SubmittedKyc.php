@@ -9,5 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SubmittedKyc extends BaseModel
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'sumbitted_kycs';
+    protected $table = 'submitted_kycs';
 }

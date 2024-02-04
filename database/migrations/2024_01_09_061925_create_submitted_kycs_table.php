@@ -15,7 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sumbitted_kycs', function (Blueprint $table) {
+        Schema::create('submitted_kycs', function (Blueprint $table) {
             $table->id();
             $table->enum('type',['user','pharmacy','rider','doctor'])->unique();
             $table->boolean('status')->default(1);
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sumbitted_kycs');
+        Schema::dropIfExists('submitted_kycs');
     }
 };

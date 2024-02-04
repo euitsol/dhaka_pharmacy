@@ -23,6 +23,7 @@
                                     <tr>
                                         <th>{{ __('SL') }}</th>
                                         <th>{{ __('Name') }}</th>
+                                        <th>{{ __('Phone') }}</th>
                                         <th>{{ __('Email') }}</th>
                                         <th>{{ __('Status') }}</th>
                                         <th>{{ __('Creation date') }}</th>
@@ -34,7 +35,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td> {{ $lam->name }} </td>
-                                        <td> {{ $lam->email }} </td>
+                                        <td> {{ $lam->phone }} </td>
+                                        <td> {{ $lam->email ?? 'N/A' }} </td>
                                         <td>
                                             <span class="{{ $lam->getStatusBadgeClass() }}">{{ $lam->getStatus() }}</span>
                                         </td>
