@@ -19,10 +19,11 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    
+
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
                                 <th>{{ __('Status') }}</th>
@@ -34,25 +35,48 @@
                         <tbody>
                             @foreach ($users as $user)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td> {{ $user->name }} </td>
                                     <td> {{ $user->phone }} </td>
                                     <td>
-                                        <span
-                                            class="badge {{ $user->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $user->status == 1 ? 'Active' : 'Disabled' }}</span>
+                                        <span class="{{ $user->getStatusBadgeClass() }}">{{ $user->getStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($user->created_at) }}</td>
 
                                     <td> {{ $user->creater->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'um.user.user_profile',   'params' => [$user->id], 'label' => 'Profile'],
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$user->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $user->id ],
-                                                    ['routeName' => 'um.user.user_edit',   'params' => [$user->id], 'label' => 'Update'],
-                                                    ['routeName' => 'um.user.status.user_edit',   'params' => [$user->id], 'label' => $user->getBtnStatus()],
-                                                    ['routeName' => 'um.user.user_delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'um.user.user_profile',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Profile',
+                                                ],
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$user->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $user->id,
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.user_edit',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.status.user_edit',
+                                                    'params' => [$user->id],
+                                                    'label' => $user->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.user_delete',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -69,7 +93,8 @@
     </div>
 
     {{-- User Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">

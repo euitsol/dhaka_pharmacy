@@ -19,6 +19,7 @@
                     <table class="table table-striped datatable">
                         <thead class=" text-primary">
                             <tr>
+                                <th>{{__('SL')}}</th>
                                 <th>{{__('Name')}}</th>
                                 <th>{{__('Guard Name')}}</th>
                                 <th>{{__('Creation Date')}}</th>
@@ -29,6 +30,7 @@
                         <tbody>
                             @foreach ($roles as $role)
                             <tr>
+                                <td> {{ $loop->iteration }} </td>
                                 <td>{{$role->name}}</td>
                                 <td>{{$role->guard_name}}</td>
                                 <td>{{timeFormate($role->created_at)}}</td>

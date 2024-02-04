@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Admin List')}}</h4>
+                            <h4 class="card-title">{{ __('Admin List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -19,10 +19,11 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    
+
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Email') }}</th>
                                 <th>{{ __('Role') }}</th>
@@ -35,26 +36,49 @@
                         <tbody>
                             @foreach ($admins as $admin)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td> {{ $admin->name }} </td>
                                     <td> {{ $admin->email }} </td>
                                     <td> {{ $admin->role->name }} </td>
                                     <td>
-                                        <span
-                                            class="badge {{ $admin->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $admin->status == 1 ? 'Active' : 'Disabled' }}</span>
+                                        <span class="{{ $admin->getStatusBadgeClass() }}">{{ $admin->getStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($admin->created_at) }}</td>
 
                                     <td> {{ $admin->createdBy->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'am.admin.admin_profile',   'params' => [$admin->id], 'label' => 'Profile'],
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$admin->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $admin->id ],
-                                                    ['routeName' => 'am.admin.admin_edit',   'params' => [$admin->id], 'label' => 'Update'],
-                                                    ['routeName' => 'am.admin.status.admin_edit',   'params' => [$admin->id], 'label' => $admin->getBtnStatus()],
-                                                    ['routeName' => 'am.admin.admin_delete', 'params' => [$admin->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'am.admin.admin_profile',
+                                                    'params' => [$admin->id],
+                                                    'label' => 'Profile',
+                                                ],
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$admin->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $admin->id,
+                                                ],
+                                                [
+                                                    'routeName' => 'am.admin.admin_edit',
+                                                    'params' => [$admin->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'am.admin.status.admin_edit',
+                                                    'params' => [$admin->id],
+                                                    'label' => $admin->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'am.admin.admin_delete',
+                                                    'params' => [$admin->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -71,7 +95,8 @@
     </div>
 
     {{-- Admin Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">

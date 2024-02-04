@@ -74,4 +74,41 @@ class AuthenticateBaseModel extends Authenticatable
             return 'badge badge-warning';
         }
     }
+
+
+    public function getFeatured()
+    {
+        if ($this->is_featured == 1) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
+    }
+    public function getBtnFeatured()
+    {
+        if ($this->is_featured == 1) {
+            return 'Remove from featured';
+        } else {
+            return 'Make featured';
+        }
+    }
+
+    public function getFeaturedClass()
+    {
+        if ($this->is_featured == 1) {
+            return 'btn-primary';
+        } else {
+            return 'btn-secondary';
+        }
+    }
+    public function getFeaturedBadgeClass()
+    {
+        if ($this->is_featured == 1) {
+            return 'badge badge-primary';
+        } else {
+            return 'badge badge-secondary';
+        }
+    }
+
+
 }

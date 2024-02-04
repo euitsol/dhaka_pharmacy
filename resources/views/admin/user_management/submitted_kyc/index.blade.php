@@ -19,13 +19,14 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    
+
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th colspan="{{count($count)}}">{{ __('Submitted data') }}</th>
+                                <th colspan="{{ count($count) }}">{{ __('Submitted data') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Submitted by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -34,12 +35,12 @@
                         <tbody>
                             @foreach ($datas as $data)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td> {{ $data->type }} </td>
                                     <td>
-                                        <span
-                                            class="badge {{ $data->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $data->status == 1 ? 'Active' : 'Deactive' }}</span>
+                                        <span class="{{ $data->getStatusBadgeClass() }}">{{ $data->getStatus() }}</span>
                                     </td>
-                                    @foreach(json_decode($data->submitted_data,true) as $sd)
+                                    @foreach (json_decode($data->submitted_data, true) as $sd)
                                         <td>data</td>
                                     @endforeach
                                     <td>{{ timeFormate($data->created_at) }}</td>
@@ -47,14 +48,32 @@
                                     <td> {{ $data->createdBy->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$user->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $user->id ],
-                                                    ['routeName' => 'um.user.user_edit',   'params' => [$user->id], 'label' => 'Update'],
-                                                    ['routeName' => 'um.user.status.user_edit',   'params' => [$user->id], 'label' => $user->getBtnStatus()],
-                                                    ['routeName' => 'um.user.user_delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$user->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $user->id,
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.user_edit',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.status.user_edit',
+                                                    'params' => [$user->id],
+                                                    'label' => $user->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.user_delete',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -71,7 +90,8 @@
     </div>
 
     {{-- User Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">

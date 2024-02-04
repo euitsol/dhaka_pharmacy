@@ -14,12 +14,13 @@
     <link rel="icon" href="" type="image/png">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     {{-- White Dashboard --}}
     <link href="{{ asset('white') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
     <link href="{{ asset('backend/css/custom.css') }}" rel="stylesheet">
+    
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     @stack('css')
@@ -43,7 +44,6 @@
         @csrf
     </form>
 
-
     <script src="{{ asset('white') }}/js/core/jquery.min.js"></script>
     <script src="{{ asset('white') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('white') }}/js/core/bootstrap.min.js"></script>
@@ -52,8 +52,10 @@
     <script src="{{ asset('white') }}/js/white-dashboard.min.js?v=1.0.0"></script>
     <script src="{{ asset('white') }}/js/theme.js"></script>
     <script src="{{ asset('white') }}/js/color_change.js"></script>
-    <script src="{{ asset('backend/js/custom.js') }}"></script>
     @stack('js_link')
+    <script src="{{ asset('backend/js/custom.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+   
     @stack('js')
 
 

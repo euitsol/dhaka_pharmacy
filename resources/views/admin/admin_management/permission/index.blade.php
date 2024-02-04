@@ -21,6 +21,7 @@
                         <table class="table table-striped datatable">
                             <thead class=" text-primary">
                                 <tr>
+                                    <th>{{__('SL')}}</th>
                                     <th>{{__('Prefix')}}</th>
                                     <th>{{__('Permisson')}}</th>
                                     <th>{{__('Created at')}}</th>
@@ -31,6 +32,7 @@
                             <tbody>
                                 @foreach ($permissions as $key=>$permission)
                                 <tr>
+                                    <td>{{ $loop->iteration }} </td>
                                     <td>{{$permission->prefix}}</td>
                                     <td>{{$permission->name}}</td>
                                     <td>{{timeFormate($permission->created_at)}}</td>
