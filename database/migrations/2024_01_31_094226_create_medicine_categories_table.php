@@ -19,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(1);
+            $table->boolean('is_featured')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);

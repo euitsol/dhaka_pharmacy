@@ -22,11 +22,20 @@
                     <form method="POST" action="{{ route('product.company_name.company_name_create') }}">
                         @csrf
                         <div class="form-group">
-
                             <label>{{__('Name')}}</label>
                             <input type="text" name="name" class="form-control" placeholder="Enter name"
                                 value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
+                        </div>
+                        <div class="form-group">
+                            <label>{{__('Address')}}</label>
+                            <textarea name="address" class="form-control">{{old('address')}}</textarea>
+                            @include('alerts.feedback', ['field' => 'address'])
+                        </div>
+                        <div class="form-group">
+                            <label>{{__('Note')}}</label>
+                            <textarea name="note" class="form-control">{{old('note')}}</textarea>
+                            @include('alerts.feedback', ['field' => 'note'])
                         </div>
                         <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
                     </form>

@@ -22,6 +22,7 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Quantity') }}</th>
                                 <th>{{ __('Status') }}</th>
@@ -33,6 +34,7 @@
                         <tbody>
                             @foreach ($medicine_units as $medicine_unit)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td> {{ $medicine_unit->name }} </td>
                                     <td> {{ $medicine_unit->quantity }} </td>
                                     <td>

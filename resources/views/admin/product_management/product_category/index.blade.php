@@ -22,7 +22,9 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
+                                <th>{{ __('Featured') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -32,7 +34,12 @@
                         <tbody>
                             @foreach ($product_categories as $product_category)
                                 <tr>
-                                    <td> {{ strtoupper($product_category->name) }} </td>
+                                    <td> {{ $loop->iteration }} </td>
+                                    <td> {{ $product_category->name }} </td>
+                                    <td>
+                                        <span
+                                            class="{{ $product_category->getFeaturedBadgeClass() }}">{{ $product_category->getFeatured() }}</span>
+                                    </td>
                                     <td>
                                         <span
                                             class="{{ $product_category->getStatusBadgeClass() }}">{{ $product_category->getStatus() }}</span>
@@ -55,6 +62,12 @@
                                                         'product.product_category.product_category_edit',
                                                     'params' => [$product_category->id],
                                                     'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'product.product_category.featured.product_category_edit',
+                                                    'params' => [$product_category->id],
+                                                    'label' => $product_category->getBtnFeatured(),
                                                 ],
                                                 [
                                                     'routeName' =>

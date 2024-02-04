@@ -23,6 +23,7 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Email') }}</th>
                                 <th>{{ __('Status') }}</th>
@@ -34,6 +35,7 @@
                         <tbody>
                             @foreach ($pharmacies as $pharmacy)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td> {{ $pharmacy->name }} </td>
                                     <td> {{ $pharmacy->email }} </td>
                                     <td>

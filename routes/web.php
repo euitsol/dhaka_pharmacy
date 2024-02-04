@@ -259,6 +259,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('edit/{id}', 'edit')->name('medicine_category_edit');
             Route::put('edit/{id}', 'update')->name('medicine_category_edit');
             Route::get('status/{id}', 'status')->name('status.medicine_category_edit');
+            Route::get('featured/{id}', 'featured')->name('featured.medicine_category_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_category_delete');
         });
 
@@ -291,6 +292,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('edit/{id}', 'edit')->name('product_category_edit');
             Route::put('edit/{id}', 'update')->name('product_category_edit');
             Route::get('status/{id}', 'status')->name('status.product_category_edit');
+            Route::get('featured/{id}', 'featured')->name('featured.product_category_edit');
             Route::get('delete/{id}', 'delete')->name('product_category_delete');
         });
         Route::controller(MedicineController::class, 'medicine')->prefix('medicine')->name('medicine.')->group(function () {

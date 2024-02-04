@@ -22,6 +22,7 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Quantity') }}</th>
                                 <th>{{ __('Unit') }}</th>
                                 <th>{{ __('Status') }}</th>
@@ -33,8 +34,9 @@
                         <tbody>
                             @foreach ($medicine_strengths as $medicine_strength)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td> {{ $medicine_strength->quantity }} </td>
-                                    <td> {{ strtoupper($medicine_strength->unit) }} </td>
+                                    <td> {{ $medicine_strength->unit }} </td>
                                     <td>
                                         <span
                                             class="{{ $medicine_strength->getStatusBadgeClass() }}">{{ $medicine_strength->getStatus() }}</span>

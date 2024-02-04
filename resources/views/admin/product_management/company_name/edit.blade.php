@@ -23,6 +23,16 @@
                       <input type="text" name="name" class="form-control" placeholder="Enter name" value="{{$company_name->name}}">
                       @include('alerts.feedback', ['field' => 'name'])
                     </div>
+                    <div class="form-group">
+                      <label>{{__('Address')}}</label>
+                      <textarea name="address" class="form-control">{{$company_name->address}}</textarea>
+                      @include('alerts.feedback', ['field' => 'address'])
+                  </div>
+                  <div class="form-group">
+                      <label>{{__('Note')}}</label>
+                      <textarea name="note" class="form-control">{{$company_name->note}}</textarea>
+                      @include('alerts.feedback', ['field' => 'note'])
+                  </div>
                     <button type="submit" class="btn btn-primary">{{__('Update')}}</button>
                   </form>
                 </div>

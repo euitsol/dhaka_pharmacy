@@ -76,6 +76,8 @@ class MedicineController extends Controller
         $medicine->price = $req->price;
         $medicine->description = $req->description;
         $medicine->prescription_required = $req->prescription_required;
+        $medicine->kyc_required = $req->kyc_required;
+        $medicine->max_quantity = $req->max_quantity;
         $medicine->created_by = admin()->id;
         $medicine->save();
         flash()->addSuccess('Medicine '.$medicine->name.' created successfully.');
@@ -118,6 +120,8 @@ class MedicineController extends Controller
         $medicine->price = $req->price;
         $medicine->description = $req->description;
         $medicine->prescription_required = $req->prescription_required;
+        $medicine->kyc_required = $req->kyc_required;
+        $medicine->max_quantity = $req->max_quantity;
         $medicine->updated_by = admin()->id;
         $medicine->save();
         flash()->addSuccess('Medicine '.$medicine->name.' updated successfully.');

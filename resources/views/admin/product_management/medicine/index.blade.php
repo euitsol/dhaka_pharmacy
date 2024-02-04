@@ -41,8 +41,8 @@
                                     <td> {{ $medicine->name }} </td>
                                     <td> {{ $medicine->pro_cat->name }} </td>
                                     <td> {{ $medicine->medicine_cat->name }} </td>
-                                    <td> {{ $medicine->strength->quantity }} <small>{{strtoupper($medicine->strength->unit)}}</small> </td>
-                                    <td> {{ $medicine->price }} </td>
+                                    <td> {{ $medicine->strength->quantity }} <small>{{$medicine->strength->unit}}</small> </td>
+                                    <td> {{ $medicine->price }} {{__('Tk')}} </td>
                                     <td>
                                         <span
                                             class="{{ $medicine->getStatusBadgeClass() }}">{{ $medicine->getStatus() }}</span>

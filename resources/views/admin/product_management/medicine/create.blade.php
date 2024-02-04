@@ -92,7 +92,7 @@
                                     @foreach ($strengths as $strength)
                                         <option value="{{ $strength->id }}"
                                             {{ $strength->id == old('strength_id') ? 'selected' : '' }}>
-                                            <small>{{ $strength->quantity }} </small> {{ strtoupper($strength->unit) }}
+                                            <small>{{ $strength->quantity }} </small> {{ $strength->unit }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -117,15 +117,46 @@
                                     class="form-control {{ $errors->has('description') ? ' is-invalid' : '' }}">{{ old('description') }}</textarea>
                                 @include('alerts.feedback', ['field' => 'description'])
                             </div>
-                            <div class="col-md-12">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Medicine Requirements  --}}
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="card-title">{{ __('Medicine Requirements') }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label mr-2">
-                                      <input class="form-check-input" type="checkbox" name="prescription_required" value="{{old('prescription_required')}}" {{ old('prescription_required') ? 'checked' : '' }}>
+                                      <input class="form-check-input prescription_required" type="checkbox" name="prescription_required" value="1" {{ (old('prescription_required') == 1) ? 'checked' : '' }}>
                                       <span class="form-check-sign"><strong>{{__('Prescription Required')}}</strong></span>
                                     </label>
                                 </div>
                             </div>
-                            
+                            <div class="form-group col-md-6">
+
+                                <label>{{ __('Max Quantity') }}</label>
+                                <input type="text" name="max_quantity"
+                                    class="form-control max_quantity {{ $errors->has('max_quantity') ? ' is-invalid' : '' }}"
+                                    placeholder="Enter max-quantity" value="{{ old('max_quantity') }}" disabled>
+                                @include('alerts.feedback', ['field' => 'max_quantity'])
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label mr-2">
+                                      <input class="form-check-input" type="checkbox" name="kyc_required" value="1" {{ (old('kyc_required') == 1) ? 'checked' : '' }}>
+                                      <span class="form-check-sign"><strong>{{__('KYC Required')}}</strong></span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -183,3 +214,25 @@
         @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection
+@push('js')
+    <script>
+        $(document).ready(function(){
+            var checkbox = $('.prescription_required');
+            var max_quantity = $('.max_quantity');
+
+            if (checkbox.is(':checked')) {
+                max_quantity.prop('disabled',false);
+            }else{
+                max_quantity.prop('disabled',true);
+            }
+
+            checkbox.on('change', function() {
+                if (checkbox.is(':checked')) {
+                    max_quantity.prop('disabled',false);
+                } else {
+                    max_quantity.prop('disabled',true);
+                }
+            });
+        })
+    </script>
+@endpush

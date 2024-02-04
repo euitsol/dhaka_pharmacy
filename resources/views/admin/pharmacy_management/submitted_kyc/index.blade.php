@@ -23,6 +23,7 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th colspan="{{ count($count) }}">{{ __('Submitted data') }}</th>
@@ -34,6 +35,7 @@
                         <tbody>
                             @foreach ($datas as $data)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td> {{ $data->type }} </td>
                                     <td>
                                         <span class="{{ $data->getStatusBadgeClass() }}">{{ $data->getStatus() }}</span>

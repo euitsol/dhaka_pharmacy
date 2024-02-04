@@ -23,6 +23,7 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Email') }}</th>
                                 <th>{{ __('Role') }}</th>
@@ -35,6 +36,7 @@
                         <tbody>
                             @foreach ($admins as $admin)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td> {{ $admin->name }} </td>
                                     <td> {{ $admin->email }} </td>
                                     <td> {{ $admin->role->name }} </td>

@@ -32,9 +32,9 @@
     background-color:var(--btn-bg-color) !important;
     background-image:var(--btn-bg-image) !important;
 }
-a:hover{
+/* a:hover{
     color:var(--primary-color) !important;
-}
+} */
 .main-panel {
     border-top: 2px solid var(--primary-color) !important;
     /* background-color:var(--primary-color) !important; */
@@ -42,7 +42,7 @@ a:hover{
 }
 
 .btn-primary {
-    background-color:var(--primary-color) !important;
+    background:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
 }
 .form-control:focus {
@@ -50,6 +50,13 @@ a:hover{
 }
 .form-group input[type=file] {
     height: auto !important;
+}
+.form-check input[type="checkbox"]:checked+.form-check-sign::before, .form-check input[type="checkbox"]:checked+.form-check-sign::before {
+    background-color: var(--primary-color) !important;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:focus, .btn-primary.active:hover {
+    background:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
 }
 /*=============================================================
                 End Overwrite CSS

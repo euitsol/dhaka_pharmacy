@@ -22,6 +22,7 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
                                 <th>{{ __('District Manager') }}</th>
@@ -34,6 +35,7 @@
                         <tbody>
                             @foreach ($lams as $lam)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td> {{ $lam->name }} </td>
                                     <td> {{ $lam->phone }} </td>
                                     <td> {{ $lam->dm->name }} </td>

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(1);
+            $table->longText('address')->nullable();
+            $table->longText('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);

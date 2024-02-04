@@ -29,7 +29,6 @@ class ProductCategoryController extends Controller
     public function details($id): JsonResponse
     {
         $data = ProductCategory::findOrFail($id);
-        $data->name = strtoupper($data->name);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->created_by ? $data->created_user->name : 'System';
@@ -71,6 +70,13 @@ class ProductCategoryController extends Controller
         $product_category = ProductCategory::findOrFail($id);
         $this->statusChange($product_category);
         flash()->addSuccess('Medicine category ' . $product_category->name . ' status updated successfully.');
+        return redirect()->route('product.product_category.product_category_list');
+    }
+    public function featured($id): RedirectResponse
+    {
+        $product_category = ProductCategory::findOrFail($id);
+        $this->featuredChange($product_category);
+        flash()->addSuccess('Medicine category ' . $product_category->name . ' featured updated successfully.');
         return redirect()->route('product.product_category.product_category_list');
     }
     public function delete($id): RedirectResponse

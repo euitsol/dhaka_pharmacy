@@ -22,6 +22,7 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
@@ -32,7 +33,8 @@
                         <tbody>
                             @foreach ($generic_names as $generic_name)
                                 <tr>
-                                    <td> {{ strtoupper($generic_name->name) }} </td>
+                                    <td> {{ $loop->iteration }} </td>
+                                    <td> {{ $generic_name->name }} </td>
                                     <td>
                                         <span
                                             class="{{ $generic_name->getStatusBadgeClass() }}">{{ $generic_name->getStatus() }}</span>

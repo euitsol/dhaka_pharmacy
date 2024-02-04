@@ -28,7 +28,6 @@ class MedicineCategoryController extends Controller
     public function details($id): JsonResponse
     {
         $data = MedicineCategory::findOrFail($id);
-        $data->name = strtoupper($data->name);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->created_by ? $data->created_user->name : 'System';
@@ -70,6 +69,13 @@ class MedicineCategoryController extends Controller
         $medicine_category = MedicineCategory::findOrFail($id);
         $this->statusChange($medicine_category);
         flash()->addSuccess('Medicine category ' . $medicine_category->name . ' status updated successfully.');
+        return redirect()->route('product.medicine_category.medicine_category_list');
+    }
+    public function featured($id): RedirectResponse
+    {
+        $medicine_category = MedicineCategory::findOrFail($id);
+        $this->featuredChange($medicine_category);
+        flash()->addSuccess('Medicine category ' . $medicine_category->name . ' featured updated successfully.');
         return redirect()->route('product.medicine_category.medicine_category_list');
     }
     public function delete($id): RedirectResponse

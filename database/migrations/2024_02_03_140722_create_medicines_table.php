@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::create('medicines', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->unsignedBigInteger('pro_cat_id');
             $table->unsignedBigInteger('generic_id');
             $table->unsignedBigInteger('company_id');
@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->longText('description');
             $table->boolean('prescription_required')->nullable();
+            $table->string('max_quantity')->nullable();
+            $table->boolean('kyc_required')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();

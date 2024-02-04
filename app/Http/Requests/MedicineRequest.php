@@ -14,7 +14,6 @@ class MedicineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required',
             'price'=>'required|numeric',
             'pro_cat_id'=>'required|exists:product_categories,id',
             'generic_id'=>'required|exists:generic_names,id',
@@ -24,6 +23,8 @@ class MedicineRequest extends FormRequest
             'unit'=>'required',
             'description'=>'required|min:50',
             'prescription_required'=>'boolean|nullable',
+            'kyc_required'=>'boolean|nullable',
+            'max_quantity'=>'nullable|numeric',
         ]
         +
             ($this->isMethod('POST') ? $this->store() : $this->update());
@@ -32,12 +33,15 @@ class MedicineRequest extends FormRequest
         protected function store(): array
         {
             return [
+                'name' => 'required|unique:medicines,name',
+
             ];
         }
     
         protected function update(): array
         {
             return [
+                'name' => 'required|unique:medicines,name,' . $this->route('id'),
             ];
         }
 }

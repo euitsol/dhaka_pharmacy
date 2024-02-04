@@ -22,7 +22,9 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
+                                <th>{{ __('Featured') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -32,7 +34,12 @@
                         <tbody>
                             @foreach ($medicine_categorys as $medicine_category)
                                 <tr>
-                                    <td> {{ strtoupper($medicine_category->name) }} </td>
+                                    <td> {{ $loop->iteration }} </td>
+                                    <td> {{ $medicine_category->name }} </td>
+                                    <td>
+                                        <span
+                                            class="{{ $medicine_category->getFeaturedBadgeClass() }}">{{ $medicine_category->getFeatured() }}</span>
+                                    </td>
                                     <td>
                                         <span
                                             class="{{ $medicine_category->getStatusBadgeClass() }}">{{ $medicine_category->getStatus() }}</span>
@@ -55,6 +62,12 @@
                                                         'product.medicine_category.medicine_category_edit',
                                                     'params' => [$medicine_category->id],
                                                     'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'product.medicine_category.featured.medicine_category_edit',
+                                                    'params' => [$medicine_category->id],
+                                                    'label' => $medicine_category->getBtnFeatured(),
                                                 ],
                                                 [
                                                     'routeName' =>

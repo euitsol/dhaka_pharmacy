@@ -29,7 +29,8 @@ class CompanyNameController extends Controller
     public function details($id): JsonResponse
     {
         $data = CompanyName::findOrFail($id);
-        $data->name = strtoupper($data->name);
+        $data->address = html_entity_decode($data->address);
+        $data->note = html_entity_decode($data->note);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->created_by ? $data->created_user->name : 'System';
@@ -45,6 +46,8 @@ class CompanyNameController extends Controller
     {
         $company_name = new CompanyName();
         $company_name->name = $req->name;
+        $company_name->address = $req->address;
+        $company_name->note = $req->note;
         $company_name->created_by = admin()->id;
         $company_name->save();
         flash()->addSuccess('Company name ' . $company_name->name . ' created successfully.');
@@ -60,6 +63,8 @@ class CompanyNameController extends Controller
     {
         $company_name = CompanyName::findOrFail($id);
         $company_name->name = $req->name;
+        $company_name->address = $req->address;
+        $company_name->note = $req->note;
         $company_name->updated_by = admin()->id;
         $company_name->update();
         flash()->addSuccess('Company name ' . $company_name->name . ' updated successfully.');
