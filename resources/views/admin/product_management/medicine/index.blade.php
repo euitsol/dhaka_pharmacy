@@ -27,7 +27,7 @@
                                 <th>{{ __('Product Category') }}</th>
                                 <th>{{ __('Medicine Category') }}</th>
                                 <th>{{ __('Strength') }}</th>
-                                <th>{{ __('Price') }}</th>
+                                <th>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -42,7 +42,7 @@
                                     <td> {{ $medicine->pro_cat->name }} </td>
                                     <td> {{ $medicine->medicine_cat->name }} </td>
                                     <td> {{ $medicine->strength->quantity }} <small>{{$medicine->strength->unit}}</small> </td>
-                                    <td> {{ $medicine->price }} {{__('Tk')}} </td>
+                                    <td> {{ number_format($medicine->price) }} {{__('BDT')}} </td>
                                     <td>
                                         <span
                                             class="{{ $medicine->getStatusBadgeClass() }}">{{ $medicine->getStatus() }}</span>

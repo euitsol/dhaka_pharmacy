@@ -123,9 +123,9 @@
                         <table class="table table-striped">
                             <tbody>
                                 <tr>
-                                    <th>{{ __('Price') }}</th>
+                                    <th>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ number_format($medicine->price,2) }}{{__(' Tk')}} </td>
+                                    <td> {{ number_format($medicine->price) }}{{__(' BDT')}} </td>
                                 </tr>
                             </tbody>
                         </table>

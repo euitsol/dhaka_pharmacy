@@ -175,7 +175,7 @@
                         <div class="row">
                             <div class="form-group col-md-12">
 
-                                <label>{{ __('Price') }}</label>
+                                <label>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</small></label>
                                 <input type="text" name="price"
                                     class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
                                     placeholder="Enter price" value="{{ $medicine->price }}">

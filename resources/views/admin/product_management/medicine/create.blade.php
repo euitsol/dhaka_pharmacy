@@ -174,10 +174,13 @@
                         <div class="row">
                             <div class="form-group col-md-12">
 
-                                <label>{{ __('Price') }}</label>
-                                <input type="text" name="price"
+                                <label>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</small></label>
+                                <div class="input-group" role="group">
+                                    <input type="text" name="price"
                                     class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
                                     placeholder="Enter price" value="{{ old('price') }}">
+                                    <span class="btn btn-secondary disabled">BDT</span>
+                                </div>
                                 @include('alerts.feedback', ['field' => 'price'])
                             </div>
                         </div>
