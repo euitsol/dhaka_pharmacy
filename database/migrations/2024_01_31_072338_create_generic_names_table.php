@@ -15,13 +15,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sumbitted_kycs', function (Blueprint $table) {
+        Schema::create('generic_names', function (Blueprint $table) {
             $table->id();
-            $table->enum('type',['user','pharmacy','rider','doctor'])->unique();
+            $table->string('name');
             $table->boolean('status')->default(1);
-            $table->json('submitted_data');
-            $table->longText('note')->nullable();
-            $table->unsignedBigInteger('submitted_by');
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sumbitted_kycs');
+        Schema::dropIfExists('generic_names');
     }
 };

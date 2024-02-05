@@ -18,8 +18,20 @@ class LocalAreaManagerRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4',
-            'dm_id' => 'required|exists:district_managers,id',
+            'age'=>'nullable|numeric|digits:2',
+            'area'=>'nullable',
+            'identification_type' => 'nullable|in:NID,DOB,Passport',
+            'identification_no'=>'nullable|numeric',
+            'present_address'=>'nullbale',
+            'cv'=>'nullable|file|mimes:pdf',
 
+
+            'gender'=>'nullable|in:Male,Female,Others',
+            'dob'=>'nullable|date|before:today',
+            'father_name'=>'nullable|min:6',
+            'mother_name'=>'nullable|min:6',
+            'permanent_address'=>'nullable',
+            'parent_phone'=>'nullable|numeric|digits:11',
         ]
         +
         ($this->isMethod('POST') ? $this->store() : $this->update());
@@ -28,7 +40,8 @@ class LocalAreaManagerRequest extends FormRequest
     protected function store(): array
     {
         return [
-            'email' => 'required|unique:admins,email',
+            'email' => 'nullable|unique:local_area_managers,email',
+            'phone' => 'required|numeric|digits:11|unique:local_area_managers,phone',
             'password' => 'required|min:6|confirmed',
         ];
     }
@@ -36,8 +49,10 @@ class LocalAreaManagerRequest extends FormRequest
     protected function update(): array
     {
         return [
-            'email' => 'required|unique:admins,email,' . $this->route('id'),
+            'email' => 'nullable|unique:local_area_managers,email,' . $this->route('id'),
+            'phone' => 'required|numeric|digits:11|unique:local_area_managers,phone,' . $this->route('id'),
             'password' => 'nullable|min:6|confirmed',
         ];
     }
+    
 }

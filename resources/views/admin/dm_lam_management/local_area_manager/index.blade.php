@@ -22,8 +22,9 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
-                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Phone') }}</th>
                                 <th>{{ __('District Manager') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
@@ -34,8 +35,9 @@
                         <tbody>
                             @foreach ($lams as $lam)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td> {{ $lam->name }} </td>
-                                    <td> {{ $lam->email }} </td>
+                                    <td> {{ $lam->phone }} </td>
                                     <td> {{ $lam->dm->name }} </td>
                                     <td>
                                         <span
@@ -43,7 +45,7 @@
                                     </td>
                                     <td>{{ timeFormate($lam->created_at) }}</td>
 
-                                    <td> {{ $lam->createdBy->name ?? 'system' }} </td>
+                                    <td> {{ $lam->creater->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
@@ -109,9 +111,14 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">Phone</th>
+                                        <th>:</th>
+                                        <td>${data.phone}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
-                                        <td>${data.email}</td>
+                                        <td>${data.email ?? 'N/A'}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Role</th>

@@ -48,6 +48,14 @@ return [
             'driver' => 'session',
             'provider' => 'pharmacies',
         ],
+        'dm' => [
+            'driver' => 'session',
+            'provider' => 'district_managers',
+        ],
+        'lam' => [
+            'driver' => 'session',
+            'provider' => 'local_area_managers',
+        ],
     ],
 
     /*
@@ -80,6 +88,14 @@ return [
         'pharmacies' => [
             'driver' => 'eloquent',
             'model' => App\Models\Pharmacy::class,
+        ],
+        'district_managers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\DistrictManager::class,
+        ],
+        'local_area_managers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\LocalAreaManager::class,
         ],
     ],
 

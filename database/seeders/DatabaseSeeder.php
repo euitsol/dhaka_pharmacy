@@ -21,6 +21,14 @@ class DatabaseSeeder extends Seeder
             DocumentationSeeder::class,
             SettingsSeeder::class,
             EmailTemplateSeeder::class,
+            DistrictManagerSeeder::class,
+            LocalAreaManagerSeeder::class,
+            MedicineCategorySeeder::class,
+            MedicineCompanySeeder::class,
+            MedicineGenericSeeder::class,
+            MedicineStrengthSeeder::class,
+            MedicineUnitSeeder::class,
+            ProductCategorySeeder::class,
         ]);
     }
 }

@@ -1,3 +1,19 @@
+/*=============================================================
+                Start Overwrite CSS
+ =============================================================*/
+
+:root {
+    --primary-color: #0093E9;
+    --primary-bg-image: linear-gradient( 288deg,  rgba(0,85,255,1) 1.5%, rgba(4,56,115,1) 91.6% );
+
+    --btn-bg-color: #263148;
+    --btn-bg-image: linear-gradient(to bottom left, #344675, #263148, #344675) !important;
+    
+
+    
+
+}
+
 .brand-link .brand-image {
     float: none;
     margin-left: 0;
@@ -7,9 +23,122 @@
     width: 100%;
     object-fit: cover;
 }
+.sidebar {
+    background-color:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+
+.btn:not([data-action]):hover{
+    background-color:var(--btn-bg-color) !important;
+    background-image:var(--btn-bg-image) !important;
+}
+/* a:hover{
+    color:var(--primary-color) !important;
+} */
+.main-panel {
+    border-top: 2px solid var(--primary-color) !important;
+    /* background-color:var(--primary-color) !important; */
+    /* background-image:var(--primary-bg-image) !important; */
+}
+
+.btn-primary {
+    background:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+.form-control:focus {
+    border-color: var(--primary-color) !important;
+}
+.form-group input[type=file] {
+    height: auto !important;
+}
+.form-check input[type="checkbox"]:checked+.form-check-sign::before, .form-check input[type="checkbox"]:checked+.form-check-sign::before {
+    background-color: var(--primary-color) !important;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:focus, .btn-primary.active:hover {
+    background:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+/*=============================================================
+                End Overwrite CSS
+ =============================================================*/
 
 /*=============================================================
-                Site Settings CSS
+                Start DM Profile CSS
+ =============================================================*/
+
+ .profile-section .profile_image .camera-icon {
+    position: absolute;
+    bottom: -10%;
+    font-size: 15px;
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid var(--primary-color);
+}
+
+.profile-section .profile_image .img,
+.profile-section .profile_image .overly {
+    height: 215px;
+    width: 215px;
+    border: 5px solid #2b3553;
+    border-bottom-color: transparent;
+    position: relative;
+
+}
+
+.profile-section .profile_image .overly::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #000;
+    display: block;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    opacity: .5;
+    transition: .4s;
+    z-index: 99;
+
+}
+
+.div_animation {
+    animation: round 5s linear infinite;
+}
+.image_animation {
+    animation: rounds 5s linear infinite reverse;
+}
+
+@keyframes round {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rounds {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*=============================================================
+                End DM Profile CSS
+ =============================================================*/
+
+/*=============================================================
+                Start Site Settings CSS
  =============================================================*/
  .site_settings .tab {
 
@@ -56,7 +185,46 @@
         min-height: auto !important;
     }
 }
+
+
 /*=============================================================
-                Site Settings CSS
+                End Site Settings CSS
+ =============================================================*/
+/*=============================================================
+                Start Select2 CSS
+ =============================================================*/
+
+ /* Select 2 */
+.select2 {
+    /* width: 100% !important; */
+}
+
+.select2-container .select2-selection--single,
+.select2-container .select2-selection--multiple {
+    height: calc(2.25rem + 2px) !important;
+}
+
+.select2-container--default .select2-selection--single ,
+.select2-container--default .select2-selection--multiple {
+    border-color: rgba(29, 37, 59, 0.5) !important;
+    border-radius: 0.4285rem !important;
+}
+
+.select2-container--default .select2-selection--single ,
+.select2-container--default .select2-selection--multiple {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow ,
+.select2-container--default .select2-selection--multiple .select2-selection__arrow {
+    top: 16% !important;
+}
+.select2-container .select2-selection--single .select2-selection__rendered ,
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+    margin: 0;
+}
+/*=============================================================
+                End Select2 CSS
  =============================================================*/
 

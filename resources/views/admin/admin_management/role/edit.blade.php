@@ -34,7 +34,7 @@
 
 @section('content')
     <div class="row px-3 pt-3">
-        <div class=" {{ $document->title ? 'col-md-8' : 'col-md-12' }}">
+        <div class=" {{ $document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -62,7 +62,7 @@
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="row">
-                            @foreach ($groupedPermissions->chunk(4) as $chunks)
+                            @foreach ($groupedPermissions->chunk(1) as $chunks)
                                 <div class="col-md-3">
                                     @foreach ($chunks as $prefix => $permissions)
                                         <div class="row">

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-            'am.','um.','pm.','settings.','dmlam.'
+            'am.','um.','pm.','settings.','dmlam.','product.','product.product_category.'
         ];
 }
 
@@ -108,15 +108,21 @@ function admin(){
 function pharmacy(){
     return auth()->guard('pharmacy')->user();
 }
+function dm(){
+    return auth()->guard('dm')->user();
+}
+function lam(){
+    return auth()->guard('lam')->user();
+}
 
 
-function mainMenuCheck($slugs){
+function mainMenuCheck($routes){
     $check = false;
-    foreach($slugs as $slug){
-                $check = check_access_by_route_name($slug);
-                if($check == true){
-                    break;
-                }
+    foreach($routes as $route){
+            if (auth()->user()->can($route)) {
+                $check = true;
+                break;
+            }
                 
         }
     return $check;

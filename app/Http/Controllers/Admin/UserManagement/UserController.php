@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\UserManagement;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Documentation;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -33,31 +32,30 @@ class UserController extends Controller
     }
     public function details($id): JsonResponse
     {
-        $data = User::with('role')->findOrFail($id);
+        $data = User::with(['creater','updater'])->findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->created_by ? $data->created_user->name : 'System';
-        $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
+        $data->created_by = $data->creater_id ? $data->creater->name : 'System';
+        $data->updated_by = $data->updater_id ? $data->updater->name : 'N/A';
         return response()->json($data);
     }
     public function profile($id): View
     {
-        $data['user'] = User::with(['role', 'created_user', 'updated_user'])->findOrFail($id);
-        return view('admin.user_management.user.profile', $data);
+        $data['user'] = User::with(['creater','updater'])->findOrFail($id);
+        return view('admin.user_management.user.profile',$data);
     }
     public function create(): View
     {
-        $data['roles'] = Role::latest()->get();
-        $data['document'] = Documentation::where('module_key', 'user')->first();
-        return view('admin.user_management.user.create', $data);
+        $data['document'] = Documentation::where('module_key','user')->first();
+        return view('admin.user_management.user.create',$data);
     }
     public function store(UserRequest $req): RedirectResponse
     {
         $user = new User();
         $user->name = $req->name;
-        $user->email = $req->email;
+        $user->phone = $req->phone;
         $user->password = Hash::make($req->password);
-        $user->created_by = admin()->id;
+        $user->creater()->associate(admin());
         $user->save();
         flash()->addSuccess('User ' . $user->name . ' created successfully.');
         return redirect()->route('um.user.user_list');
@@ -65,26 +63,25 @@ class UserController extends Controller
     public function edit($id): View
     {
         $data['user'] = User::findOrFail($id);
-        $data['document'] = Documentation::where('module_key', 'user')->first();
-        $data['roles'] = Role::latest()->get();
-        return view('admin.user_management.user.edit', $data);
+        $data['document'] = Documentation::where('module_key','user')->first();
+        return view('admin.user_management.user.edit',$data);
     }
     public function update(UserRequest $req, $id): RedirectResponse
     {
         $user = User::findOrFail($id);
         $user->name = $req->name;
-        $user->email = $req->email;
-        if ($req->password) {
+        $user->phone = $req->phone;
+        if($req->password){
             $user->password = Hash::make($req->password);
         }
-        $user->updated_by = admin()->id;
+        $user->updater()->associate(admin());
         $user->update();
         flash()->addSuccess('User ' . $user->name . ' updated successfully.');
         return redirect()->route('um.user.user_list');
     }
     public function status($id): RedirectResponse
     {
-        $user = user::findOrFail($id);
+        $user = User::findOrFail($id);
         $this->statusChange($user);
         flash()->addSuccess('User ' . $user->name . ' status updated successfully.');
         return redirect()->route('um.user.user_list');

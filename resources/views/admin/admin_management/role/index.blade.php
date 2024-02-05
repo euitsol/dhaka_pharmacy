@@ -19,18 +19,22 @@
                     <table class="table table-striped datatable">
                         <thead class=" text-primary">
                             <tr>
+                                <th>{{__('SL')}}</th>
                                 <th>{{__('Name')}}</th>
-                                <th>{{__('Permission')}}</th>
+                                <th>{{__('Guard Name')}}</th>
                                 <th>{{__('Creation Date')}}</th>
+                                <th>{{__('Update Date')}}</th>
                                 <th class="text-center">{{__('Action')}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($roles as $role)
                             <tr>
+                                <td> {{ $loop->iteration }} </td>
                                 <td>{{$role->name}}</td>
-                                <td>{{$role->permissionNames}}</td>
+                                <td>{{$role->guard_name}}</td>
                                 <td>{{timeFormate($role->created_at)}}</td>
+                                <td>{{timeFormate($role->updated_at)}}</td>
                                 <td>
                                     @include('admin.partials.action_buttons', [
                                         'menuItems' => [
