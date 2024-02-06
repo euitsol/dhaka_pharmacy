@@ -21,10 +21,9 @@ return new class extends Migration
             $table->boolean('status')->default(1);
             $table->json('submitted_data');
             $table->longText('note')->nullable();
-            $table->unsignedBigInteger('submitted_by');
             $table->timestamps();
             $table->softDeletes();
-            $this->addAuditColumns($table);
+            $this->addMorphedAuditColumns($table);
         });
     }
 
