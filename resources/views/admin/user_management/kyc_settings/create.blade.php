@@ -1,9 +1,8 @@
 @extends('admin.layouts.master', ['pageSlug' => 'user_kyc_settings'])
 
 @section('title', 'KYC Settings')
-@push('css')
-    <style>
-    </style>
+@push('css_link')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -15,24 +14,10 @@
                 </div>
                 <form method="POST" action="{{ route('um.user_kyc.user_kyc_settings') }}" autocomplete="off">
                     @csrf
-                    {{-- @foreach ($kyc_setting as $key => $setting) --}}
                     <div class="card-body">
                         
-                        <div class="d-flex mb-3">
-                            <div class="form-check form-check-radio me-3">
-                                <label class="form-check-label" for="exampleRadios1">
-                                    <input class="form-check-input" type="radio" name="status" id="exampleRadios1"
-                                        value="1" {{ optional($kyc_setting)->status == 1 ? 'checked' : '' }}> ON
-                                    <span class="form-check-sign"></span>
-                                </label>
-                            </div>
-                            <div class="form-check form-check-radio">
-                                <label class="form-check-label" for="exampleRadios2">
-                                    <input class="form-check-input" type="radio" name="status" id="exampleRadios2"
-                                        value="2" {{ optional($kyc_setting)->status == 2 ? 'checked' : '' }}> OFF
-                                    <span class="form-check-sign"></span>
-                                </label>
-                            </div>
+                        <div class="form-group mb-3">
+                            <input type="checkbox" value="1" {{ optional($kyc_setting)->status == 1 ? 'checked' : '' }} class="valueToggle" name='email_verification' data-toggle="toggle" data-onlabel="ON" data-offlabel="OFF" data-onstyle="success" data-offstyle="danger" data-style="ios">
                             @include('alerts.feedback', ['field' => 'status'])
                         </div>
                     </div>
@@ -150,8 +135,10 @@
         @include('admin.partials.documentation',['document'=>$document])
     </div>
 @endsection
-
 @push('js_link')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/js/bootstrap5-toggle.ecmas.min.js"></script>
+@endpush
+@push('js')
     <script>
         'use script'
         $(document).on('click', '.generate_atf', function() {

@@ -15,6 +15,10 @@ use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleContro
 use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DM_Management\DistrictManagerController;
+use App\Http\Controllers\Admin\DM_Management\DmKycController;
+use App\Http\Controllers\Admin\DM_Management\DmKycSettingsController;
+use App\Http\Controllers\Admin\LAM_Management\LamKycController;
+use App\Http\Controllers\Admin\LAM_Management\LamKycSettingsController;
 use App\Http\Controllers\Admin\LAM_Management\LocalAreaManagerController;
 use App\Http\Controllers\Admin\UserManagement\UserKycSettingsController;
 use App\Http\Controllers\Admin\UserManagement\UserKycController;
@@ -203,6 +207,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
     });
 
+
     // District Manager Management Routes
     Route::group(['as' => 'dm_management.', 'prefix' => 'dm-management'], function () {
         Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
@@ -215,6 +220,24 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('district_manager_edit');
             Route::get('status/{id}', 'status')->name('status.district_manager_edit');
             Route::get('delete/{id}', 'delete')->name('district_manager_delete');
+        });
+
+
+        // KYC ROUTES
+        Route::group(['as' => 'dm_kyc.', 'prefix' => 'district-manager-kyc'], function () {
+            Route::controller(DmKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
+                Route::get('index', 'index')->name('district_manager_kyc_list');
+                Route::get('details/{id}', 'details')->name('detailsdm_kyc_list');
+                Route::get('create', 'create')->name('district_manager_kyc_create');
+                Route::post('create', 'store')->name('district_manager_kyc_create');
+                Route::get('edit/{id}', 'edit')->name('district_manager_kyc_edit');
+                Route::put('edit/{id}', 'update')->name('district_manager_kyc_edit');
+                Route::get('status/{id}', 'status')->name('statusdm_kyc_edit');
+                Route::get('delete/{id}', 'delete')->name('district_manager_kyc_delete');
+            });
+
+            Route::get('/settings', [DmKycSettingsController::class, 'kycSettings'])->name('district_manager_kyc_settings');
+            Route::post('/settings', [DmKycSettingsController::class, 'kycSettingsUpdate'])->name('district_manager_kyc_settings');
         });
     });
 
@@ -230,6 +253,23 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('local_area_manager_edit');
             Route::get('status/{id}', 'status')->name('status.local_area_manager_edit');
             Route::get('delete/{id}', 'delete')->name('local_area_manager_delete');
+        });
+
+        // KYC ROUTES
+        Route::group(['as' => 'lam_kyc.', 'prefix' => 'local-area-manager-kyc'], function () {
+            Route::controller(LamKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
+                Route::get('index', 'index')->name('local_area_manager_kyc_list');
+                Route::get('details/{id}', 'details')->name('details.local_area_manager_kyc_list');
+                Route::get('create', 'create')->name('local_area_manager_kyc_create');
+                Route::post('create', 'store')->name('local_area_manager_kyc_create');
+                Route::get('edit/{id}', 'edit')->name('local_area_manager_kyc_edit');
+                Route::put('edit/{id}', 'update')->name('local_area_manager_kyc_edit');
+                Route::get('status/{id}', 'status')->name('status.local_area_manager_kyc_edit');
+                Route::get('delete/{id}', 'delete')->name('local_area_manager_kyc_delete');
+            });
+
+            Route::get('/settings', [LamKycSettingsController::class, 'kycSettings'])->name('local_area_manager_kyc_settings');
+            Route::post('/settings', [LamKycSettingsController::class, 'kycSettingsUpdate'])->name('local_area_manager_kyc_settings');
         });
     });
 

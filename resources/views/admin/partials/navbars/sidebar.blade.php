@@ -159,15 +159,15 @@
             {{-- DM Management --}}
             @if (mainMenuCheck(['district_manager_list']))
                 <li>
-                    <a class="@if ($pageSlug == 'district_manager') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'district_manager' || $pageSlug == 'dm_kyc_list' || $pageSlug == 'dm_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#district_manager"
-                        @if ($pageSlug == 'district_manager') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'district_manager' || $pageSlug == 'dm_kyc_list' || $pageSlug == 'dm_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-map-location-dot"></i>
                         <span class="nav-link-text">{{ __('DM Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'district_manager') show @endif" id="district_manager">
+                    <div class="collapse @if ($pageSlug == 'district_manager' || $pageSlug == 'dm_kyc_list' || $pageSlug == 'dm_kyc_settings') show @endif" id="district_manager">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -175,6 +175,24 @@
                                         'pageSlug' => 'district_manager',
                                         'routeName' => 'dm_management.district_manager.district_manager_list',
                                         'label' => 'District Manager',
+                                    ],
+                                    [
+                                        'pageSlug' => ['dm_kyc_list', 'dm_kyc_settings'],
+                                        'routeName' => 'submenu',
+                                        'label' => 'KYC Verification Center',
+                                        'id' => 'district_manager_kyc',
+                                        'subMenu' => [
+                                            [
+                                                'subLabel' => 'KYC List',
+                                                'subRouteName' => 'dm_management.dm_kyc.kyc_list.district_manager_kyc_list',
+                                                'subPageSlug' => 'dm_kyc_list',
+                                            ],
+                                            [
+                                                'subLabel' => 'KYC Settings',
+                                                'subRouteName' => 'dm_management.dm_kyc.district_manager_kyc_settings',
+                                                'subPageSlug' => 'dm_kyc_settings',
+                                            ],
+                                        ],
                                     ],
                                 ],
                             ])
@@ -186,15 +204,15 @@
              {{-- LAM Management --}}
              @if (mainMenuCheck(['local_area_manager_list']))
                 <li>
-                    <a class="@if ($pageSlug == 'local_area_manager') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'local_area_manager' || $pageSlug == 'lam_kyc_list' || $pageSlug == 'lam_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#local_area_manager"
-                        @if ($pageSlug == 'local_area_manager') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'local_area_manager' || $pageSlug == 'lam_kyc_list' || $pageSlug == 'lam_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-map"></i>
                         <span class="nav-link-text">{{ __('LAM Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'local_area_manager') show @endif" id="local_area_manager">
+                    <div class="collapse @if ($pageSlug == 'local_area_manager' || $pageSlug == 'lam_kyc_list' || $pageSlug == 'lam_kyc_settings') show @endif" id="local_area_manager">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -202,6 +220,24 @@
                                         'pageSlug' => 'local_area_manager',
                                         'routeName' => 'lam_management.local_area_manager.local_area_manager_list',
                                         'label' => 'Local Area Manager',
+                                    ],
+                                    [
+                                        'pageSlug' => ['lam_kyc_list', 'lam_kyc_settings'],
+                                        'routeName' => 'submenu',
+                                        'label' => 'KYC Verification Center',
+                                        'id' => 'local_area_manager_kyc',
+                                        'subMenu' => [
+                                            [
+                                                'subLabel' => 'KYC List',
+                                                'subRouteName' => 'lam_management.lam_kyc.kyc_list.local_area_manager_kyc_list',
+                                                'subPageSlug' => 'lam_kyc_list',
+                                            ],
+                                            [
+                                                'subLabel' => 'KYC Settings',
+                                                'subRouteName' => 'lam_management.lam_kyc.local_area_manager_kyc_settings',
+                                                'subPageSlug' => 'lam_kyc_settings',
+                                            ],
+                                        ],
                                     ],
                                 ],
                             ])

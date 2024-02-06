@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::create('kyc_settings', function (Blueprint $table) {
             $table->id();
-            $table->enum('type',['user','pharmacy','rider','doctor'])->unique();
+            $table->enum('type',['user','pharmacy','rider','doctor','dm','lam'])->unique();
             $table->boolean('status')->default(1);
             $table->json('form_data');
             $table->timestamps();

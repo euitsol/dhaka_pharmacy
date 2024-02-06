@@ -3,41 +3,6 @@
 @push('css_link')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
 @endpush
-@push('css')
-    <style>
-
-    .white-content .btn:not([data-action]):hover {
-        box-shadow: none !important;
-    }
-    .btn:not([data-action]):hover, .navbar .navbar-nav>a.btn:not([data-action]):hover {
-        box-shadow: none !important;
-        transform: none !important;
-        -webkit-transform: none !important;
-    }
-
-
-
-
-    /* Circle  */
-    .toggle.ios,
-    .toggle-on.ios,
-    .toggle-off.ios {
-        border-radius: 20rem;
-    }
-    .toggle.ios .toggle-handle {
-        border-radius: 20rem;
-    }
-
-
-    /* Squer */
-    .toggle.android {
-        border-radius: 0px;
-    }
-    .toggle.android .toggle-handle {
-        border-radius: 0px;
-    }
-    </style>
-@endpush
 
 @section('content')
     @php
