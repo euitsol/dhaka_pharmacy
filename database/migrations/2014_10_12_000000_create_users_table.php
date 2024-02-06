@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('bio')->nullable();
             $table->string('designation')->nullable();
             $table->boolean('status')->default(1);
-            $table->string('email')->unique()->nullable();
-            $table->string('phone')->unique();
+            $table->string('email')->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
 
             $table->string('age')->nullable();
@@ -35,6 +35,20 @@ return new class extends Migration
             $table->string('father_name')->nullable();
             $table->string('mother_name')->nullable();
             $table->string('permanent_address')->nullable();
+
+
+            $table->string('google_id')->nullable();
+            $table->string('github_id')->nullable();
+            $table->string('facebook_id')->nullable();
+
+
+            $table->string('token')->nullable();
+            $table->string('refresh_token')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('avatar_original')->nullable();
+
+
+            
 
             $table->softDeletes();
             $table->timestamps();

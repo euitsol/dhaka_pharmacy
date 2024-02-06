@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\lam\Auth;
+namespace App\Http\Controllers\LAM\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DistrictManagerRequest;

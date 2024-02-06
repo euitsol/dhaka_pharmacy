@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ProductManagement\CompanyNameController;
-use App\Http\Controllers\admin\ProductManagement\GenericNameController;
+use App\Http\Controllers\Admin\ProductManagement\GenericNameController;
 use App\Http\Controllers\Admin\ProductManagement\MedicineCategoryController;
 use App\Http\Controllers\Admin\ProductManagement\MedicineController;
 use App\Http\Controllers\Admin\ProductManagement\MedicineStrengthController;
@@ -70,6 +70,17 @@ Route::post('/local_area-manager/login', [LamLoginController::class, 'lamLoginCh
 
 
 // Overwrite Default Authentication Routes
+// Google Login 
+Route::get('/google-redirect', [App\Http\Controllers\Auth\LoginController::class, 'googleRedirect'])->name('login_with_google');
+Route::get('/auth/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'googleCallback']);
+
+// Github Login 
+Route::get('/github-redirect', [App\Http\Controllers\Auth\LoginController::class, 'githubRedirect'])->name('login_with_github');
+Route::get('/auth/github/callback', [App\Http\Controllers\Auth\LoginController::class, 'githubCallback']);
+
+// Facebook Login 
+Route::get('/facebook-redirect', [App\Http\Controllers\Auth\LoginController::class, 'facebookRedirect'])->name('login_with_facebook');
+Route::get('/auth/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'facebookCallback']);
 
 Route::prefix('user')->group(function () {
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
