@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'local_area_manager'])
+@extends('admin.layouts.master', ['pageSlug' => 'district_manager'])
 
 @section('content')
     <div class="row">
@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Local Area Manager List')}}</h4>
+                            <h4 class="card-title">{{__('District Manager List')}}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'dmlam.local_area_manager.local_area_manager_create',
+                                'routeName' => 'dm_management.district_manager.district_manager_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new local area manager',
+                                'label' => 'Add new district manager',
                             ])
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
-                                <th>{{ __('District Manager') }}</th>
+                                <th>{{ __('Active L.A.M') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -33,27 +33,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($lams as $lam)
+                            @foreach ($dms as $dm)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $lam->name }} </td>
-                                    <td> {{ $lam->phone }} </td>
-                                    <td> {{ $lam->dm->name }} </td>
+                                    <td> {{ $dm->name }} </td>
+                                    <td> {{ $dm->phone }} </td>
+                                    <td class="text-center"> {{ $dm->lams->count() }} </td>
                                     <td>
-                                        <span
-                                            class="{{ $lam->getStatusBadgeClass() }}">{{ $lam->getStatus() }}</span>
+                                        <span class="{{ $dm->getStatusBadgeClass() }}">{{ $dm->getStatus() }}</span>
                                     </td>
-                                    <td>{{ timeFormate($lam->created_at) }}</td>
+                                    <td>{{ timeFormate($dm->created_at) }}</td>
 
-                                    <td> {{ $lam->creater->name ?? 'system' }} </td>
+                                    <td> {{ $dn->creater->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'dmlam.local_area_manager.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Profile'],
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$lam->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $lam->id ],
-                                                    ['routeName' => 'dmlam.local_area_manager.local_area_manager_edit',   'params' => [$lam->id], 'label' => 'Update'],
-                                                    ['routeName' => 'dmlam.local_area_manager.status.local_area_manager_edit',   'params' => [$lam->id], 'label' => $lam->getBtnStatus()],
-                                                    ['routeName' => 'dmlam.local_area_manager.local_area_manager_delete', 'params' => [$lam->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'dm_management.district_manager.district_manager_profile',   'params' => [$dm->id], 'label' => 'Profile'],
+                                                    ['routeName' => 'javascript:void(0)',  'params' => [$dm->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $dm->id ],
+                                                    ['routeName' => 'dm_management.district_manager.district_manager_edit',   'params' => [$dm->id], 'label' => 'Update'],
+                                                    ['routeName' => 'dm_management.district_manager.status.district_manager_edit',   'params' => [$dm->id], 'label' => $dm->getBtnStatus()],
+                                                    ['routeName' => 'dm_management.district_manager.district_manager_delete', 'params' => [$dm->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])
                                     </td>
@@ -71,12 +70,12 @@
         </div>
     </div>
 
-    {{-- Local Area Manager Details Modal  --}}
+    {{-- District Manager Details Modal  --}}
     <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Local Area Manager Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('District Manager Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -93,7 +92,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('dmlam.local_area_manager.details.local_area_manager_list', ['id']) }}");
+                let url = ("{{ route('dm_management.district_manager.details.district_manager_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -121,9 +120,9 @@
                                         <td>${data.email ?? 'N/A'}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Role</th>
+                                        <th class="text-nowrap">Active Local Area Manager</th>
                                         <th>:</th>
-                                        <td>${data.dm.name}</td>
+                                        <td>${data.total_lams}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
@@ -156,7 +155,7 @@
                         $('.view_modal').modal('show');
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error fetching local area manager data:', error);
+                        console.error('Error fetching district manager data:', error);
                     }
                 });
             });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\DM_LAM_Management;
+namespace App\Http\Controllers\Admin\LAM_Management;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LocalAreaManagerRequest;
@@ -23,7 +23,7 @@ class LocalAreaManagerController extends Controller
     public function index(): View
     {
         $data['lams'] = LocalAreaManager::with(['dm','creater'])->latest()->get();
-        return view('admin.dm_lam_management.local_area_manager.index',$data);
+        return view('admin.lam_management.local_area_manager.index',$data);
     }
     public function details($id): JsonResponse
     {
@@ -38,7 +38,7 @@ class LocalAreaManagerController extends Controller
     public function profile($id): View
     {
         $data['lam'] = LocalAreaManager::with(['creater','updater'])->findOrFail($id);
-        return view('admin.dm_lam_management.local_area_manager.profile',$data);
+        return view('admin.lam_management.local_area_manager.profile',$data);
     }
 
 
@@ -46,7 +46,7 @@ class LocalAreaManagerController extends Controller
     {
         $data['dms'] = DistrictManager::latest()->get();
         $data['document'] = Documentation::where('module_key','local_area_manager')->first();
-        return view('admin.dm_lam_management.local_area_manager.create',$data);
+        return view('admin.lam_management.local_area_manager.create',$data);
     }
     public function store(LocalAreaManagerRequest $req): RedirectResponse
     {
@@ -58,14 +58,14 @@ class LocalAreaManagerController extends Controller
         $lam->creater()->associate(admin());
         $lam->save();
         flash()->addSuccess('Local Area Manager '.$lam->name.' created successfully.');
-        return redirect()->route('dmlam.local_area_manager.local_area_manager_list');
+        return redirect()->route('lam_management.local_area_manager.local_area_manager_list');
     }
     public function edit($id): View
     {
         $data['lam'] = LocalAreaManager::findOrFail($id);
         $data['dms'] = DistrictManager::latest()->get();
         $data['document'] = Documentation::where('module_key','local_area_manager')->first();
-        return view('admin.dm_lam_management.local_area_manager.edit',$data);
+        return view('admin.lam_management.local_area_manager.edit',$data);
     }
     public function update(LocalAreaManagerRequest $req, $id): RedirectResponse
     {
@@ -80,7 +80,7 @@ class LocalAreaManagerController extends Controller
         $lam->update();
 
         flash()->addSuccess('Local Area Manager '.$lam->name.' updated successfully.');
-        return redirect()->route('dmlam.local_area_manager.local_area_manager_list');
+        return redirect()->route('lam_management.local_area_manager.local_area_manager_list');
     }
     public function status($id): RedirectResponse
     {
@@ -88,7 +88,7 @@ class LocalAreaManagerController extends Controller
         $this->statusChange($lam);
 
         flash()->addSuccess('Local Area Manager '.$lam->name.' status updated successfully.');
-        return redirect()->route('dmlam.local_area_manager.local_area_manager_list');
+        return redirect()->route('lam_management.local_area_manager.local_area_manager_list');
     }
     public function delete($id): RedirectResponse
     {
@@ -96,7 +96,7 @@ class LocalAreaManagerController extends Controller
         $lam->delete();
 
         flash()->addSuccess('Local Area Manager '.$lam->name.' deleted successfully.');
-        return redirect()->route('dmlam.local_area_manager.local_area_manager_list');
+        return redirect()->route('lam_management.local_area_manager.local_area_manager_list');
 
     }
 

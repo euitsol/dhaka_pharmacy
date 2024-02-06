@@ -14,8 +14,8 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\DM_LAM_Management\DistrictManagerController;
-use App\Http\Controllers\Admin\DM_LAM_Management\LocalAreaManagerController;
+use App\Http\Controllers\Admin\DM_Management\DistrictManagerController;
+use App\Http\Controllers\Admin\LAM_Management\LocalAreaManagerController;
 use App\Http\Controllers\Admin\UserManagement\UserKycSettingsController;
 use App\Http\Controllers\Admin\UserManagement\UserKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
@@ -203,8 +203,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
     });
 
-    // District Manager & Local Area Manager Management Routes
-    Route::group(['as' => 'dmlam.', 'prefix' => 'dm-lam-management'], function () {
+    // District Manager Management Routes
+    Route::group(['as' => 'dm_management.', 'prefix' => 'dm-management'], function () {
         Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
             Route::get('index', 'index')->name('district_manager_list');
             Route::get('details/{id}', 'details')->name('details.district_manager_list');
@@ -216,6 +216,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('status/{id}', 'status')->name('status.district_manager_edit');
             Route::get('delete/{id}', 'delete')->name('district_manager_delete');
         });
+    });
+
+    // Local Area Manager Management Routes 
+    Route::group(['as' => 'lam_management.', 'prefix' => 'lam-management'], function () {
         Route::controller(LocalAreaManagerController::class, 'local-area-manager')->prefix('local-area-manager')->name('local_area_manager.')->group(function () {
             Route::get('index', 'index')->name('local_area_manager_list');
             Route::get('details/{id}', 'details')->name('details.local_area_manager_list');
