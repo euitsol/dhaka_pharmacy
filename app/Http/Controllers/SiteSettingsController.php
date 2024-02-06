@@ -18,8 +18,6 @@ class SiteSettingsController extends Controller
 
     public function index(): View
     {
-
-        // $data = [];
         $data['email_templates'] = EmailTemplate::where('deleted_at',null)->latest()->get();
         $data['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
         $data['documents'] = Documentation::where('module_key','general_settings')
@@ -29,9 +27,6 @@ class SiteSettingsController extends Controller
                                     ->orWhere('module_key','notification_settings')
                                     ->orWhere('module_key','email_templates')
                                     ->get();
-        // foreach($documents as $document){
-        //     $data[$document->module_key] = Documentation::where('module_key',$document->module_key)->first();
-        // }
         $data['availableTimezones'] = availableTimezones();
         return view('site_settings.index', $data);
     }
