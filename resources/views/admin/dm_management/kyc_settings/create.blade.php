@@ -18,7 +18,7 @@
                     <div class="card-body">
                         
                         <div class="form-group mb-3">
-                            <input type="checkbox" value="1" {{ optional($kyc_setting)->status == 1 ? 'checked' : '' }} class="valueToggle" name='email_verification' data-toggle="toggle" data-onlabel="ON" data-offlabel="OFF" data-onstyle="success" data-offstyle="danger" data-style="ios">
+                            <input type="checkbox" value="1" {{ optional($kyc_setting)->status == 1 ? 'checked' : '' }} class="valueToggle" name='status' data-toggle="toggle" data-onlabel="ON" data-offlabel="OFF" data-onstyle="success" data-offstyle="danger" data-style="ios">
                             @include('alerts.feedback', ['field' => 'status'])
                         </div>
                     </div>
