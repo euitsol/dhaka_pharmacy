@@ -214,6 +214,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('index', 'index')->name('district_manager_list');
             Route::get('details/{id}', 'details')->name('details.district_manager_list');
             Route::get('profile/{id}', 'profile')->name('district_manager_profile');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.district_manager_profile');
             Route::get('create', 'create')->name('district_manager_create');
             Route::post('create', 'store')->name('district_manager_create');
             Route::get('edit/{id}', 'edit')->name('district_manager_edit');
@@ -247,6 +248,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('index', 'index')->name('local_area_manager_list');
             Route::get('details/{id}', 'details')->name('details.local_area_manager_list');
             Route::get('profile/{id}', 'profile')->name('local_area_manager_profile');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.local_area_manager_profile');
             Route::get('create', 'create')->name('local_area_manager_create');
             Route::post('create', 'store')->name('local_area_manager_create');
             Route::get('edit/{id}', 'edit')->name('local_area_manager_edit');
@@ -416,5 +418,7 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 
 // LAM Auth Routes
 Route::group(['middleware' => 'lam', 'prefix' => 'local-area-manager'], function () {
+    
+    Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [LamProfileController::class, 'profile'])->name('local_area_manager.profile');
 });

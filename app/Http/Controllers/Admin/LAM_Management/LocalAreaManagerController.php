@@ -10,6 +10,7 @@ use App\Models\LocalAreaManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
@@ -33,6 +34,18 @@ class LocalAreaManagerController extends Controller
         $data->created_by = $data->creater_id ? $data->creater->name : 'System';
         $data->updated_by = $data->updater_id ? $data->updater->name : 'N/A';
         return response()->json($data);
+    }
+
+    public function loginAs($id)
+    {
+        $user = LocalAreaManager::findOrFail($id);
+        if ($user) {
+            Auth::guard('lam')->login($user);
+            return redirect()->route('lam.dashboard');
+        } else {
+            flash()->addError('User not found');
+            return redirect()->back();
+        }
     }
 
     public function profile($id): View

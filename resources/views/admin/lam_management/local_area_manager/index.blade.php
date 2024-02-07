@@ -49,6 +49,7 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
+                                                    ['routeName' => 'lam_management.local_area_manager.login_as.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Login As'],
                                                     ['routeName' => 'lam_management.local_area_manager.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$lam->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $lam->id ],
                                                     ['routeName' => 'lam_management.local_area_manager.local_area_manager_edit',   'params' => [$lam->id], 'label' => 'Update'],

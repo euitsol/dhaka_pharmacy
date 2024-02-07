@@ -64,6 +64,7 @@
                                                     <input type="file" id="imageInput" name="image" accept="image/*"
                                                         class="d-none">
                                                 </label>
+                                                @include('alerts.feedback', ['field' => 'image'])
                                             </div>
                                         </div>
                                     </form>
