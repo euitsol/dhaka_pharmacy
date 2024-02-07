@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
+use App\Models\Admin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,9 +16,9 @@ class LoginContorller extends Controller
 {
     public function adminLogin()
     {
-        if (Auth::guard('admin')->check()) {
+        if (Auth::guard('admin')->check() && admin()->status == 1) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('dashboard');
+            return redirect()->route('admin.dashboard');
         }
         return view('admin.login');
     }
@@ -25,12 +26,20 @@ class LoginContorller extends Controller
     public function adminLoginCheck(Request $request):RedirectResponse
     {
         $credentials = $request->only('email', 'password');
-
-        if (Auth::guard('admin')->attempt($credentials)) {
-            flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('dashboard');
+        $check = Admin::where('email', $request->email)->first();
+        if(isset($check)){
+            if($check->status == 1){
+                if (Auth::guard('admin')->attempt($credentials)) {
+                    flash()->addSuccess('Welcome to Dhaka Pharmacy');
+                    return redirect()->route('admin.dashboard');
+                }
+                flash()->addError('Invalid credentials');
+            }else{
+                flash()->addError('Your account has been disabled. Please contact support.');
+            }
+        }else{
+            flash()->addError('Admin Not Found');
         }
-        flash()->addError('Invalid credentials');
         return redirect()->route('admin.login');
     }  
 }

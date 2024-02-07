@@ -38,6 +38,7 @@ use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\DM\LAM_management\LamManagementController;
 use App\Http\Controllers\DM\UserManagement\UserManagementController as DmUserController;
 use App\Http\Controllers\LAM\LamProfileController;
+use App\Http\Controllers\DM\KYC\KycVerificationController as DmKycVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,7 +101,7 @@ Route::prefix('user')->group(function () {
 
 
 Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::get('/export-permissions', function () {
         $filename = 'permissions.csv';
@@ -380,6 +381,14 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 
     Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dashboard');
 
+    Route::controller(DmKycVerificationController::class, 'kyc')->prefix('kyc')->name('kyc.')->group(function () {
+        Route::post('/store', 'kyc_verification')->name('store');
+        Route::get('/verification', 'kyc_verification')->name('verification');
+        Route::get('/kyc/file/upload', 'file_upload')->name('file.upload');
+        Route::get('/kyc/file/delete', 'delete')->name('file.delete');
+    });
+    
+
 
     Route::controller(DmProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
         Route::get('/', 'profile')->name('index');
@@ -417,8 +426,8 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 
 
 // LAM Auth Routes
-Route::group(['middleware' => 'lam', 'prefix' => 'local-area-manager'], function () {
+Route::group(['middleware' => 'lam','as' => 'lam.', 'prefix' => 'local-area-manager'], function () {
     
-    Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('dm/dashboard', [LamProfileController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [LamProfileController::class, 'profile'])->name('local_area_manager.profile');
 });

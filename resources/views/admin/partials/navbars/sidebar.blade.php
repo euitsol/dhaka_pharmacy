@@ -1,15 +1,15 @@
 <div class="sidebar">
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="{{ route('dashboard') }}" class="simple-text logo-mini">{{ __('DP') }}</a>
-            <a href="{{ route('dashboard') }}" class="simple-text logo-normal">{{ __('Dhaka Pharmacy') }}</a>
+            <a href="{{ route('admin.dashboard') }}" class="simple-text logo-mini">{{ __('DP') }}</a>
+            <a href="{{ route('admin.dashboard') }}" class="simple-text logo-normal">{{ __('Dhaka Pharmacy') }}</a>
         </div>
         <ul class="nav">
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [
                     [
                         'pageSlug' => 'dashboard',
-                        'routeName' => 'dashboard',
+                        'routeName' => 'admin.dashboard',
                         'iconClass' => 'fa-solid fa-chart-line',
                         'label' => 'Dashboard',
                     ],

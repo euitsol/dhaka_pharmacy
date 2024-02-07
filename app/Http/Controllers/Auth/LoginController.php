@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
@@ -55,11 +56,21 @@ class LoginController extends Controller
     {
         $credentials = $request->only('phone', 'password');
 
-        if (Auth::attempt($credentials)) {
-            flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('user.profile');
+
+        $check = User::where('phone', $request->phone)->first();
+        if(isset($check)){
+            if($check->status == 1){
+                if (Auth::attempt($credentials)) {
+                    flash()->addSuccess('Welcome to Dhaka Pharmacy');
+                    return redirect()->route('user.profile');
+                }
+                flash()->addError('Invalid credentials');
+            }else{
+                flash()->addError('Your account has been disabled. Please contact support.');
+            }
+        }else{
+            flash()->addError('User Not Found');
         }
-        flash()->addError('Invalid credentials');
         return redirect()->route('login');
     }
 
