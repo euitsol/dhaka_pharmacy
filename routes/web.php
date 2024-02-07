@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\ProductManagement\ProductCategoryController;
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\LAM\Auth\LoginController as LamLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
+use App\Http\Controllers\LAM\DashboardController as LamDashboardController;
 use App\Http\Controllers\DM\DmProfileController;
 use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
 use App\Http\Controllers\Pharmacy\PharmacyProfileController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\SiteSettingsController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\DM\LAM_management\LamManagementController;
 use App\Http\Controllers\DM\UserManagement\UserManagementController as DmUserController;
+use App\Http\Controllers\LAM\UserManagement\UserManagementController as LamUserController;
 use App\Http\Controllers\LAM\LamProfileController;
 
 /*
@@ -65,8 +67,8 @@ Route::post('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLoginCh
 Route::get('/district-manager/login', [DmLoginController::class, 'dmLogin'])->name('district_manager.login');
 Route::post('/district-manager/login', [DmLoginController::class, 'dmLoginCheck'])->name('district_manager.login');
 // DM Login Routes
-Route::get('/local_area-manager/login', [LamLoginController::class, 'lamLogin'])->name('local_area_manager.login');
-Route::post('/local_area-manager/login', [LamLoginController::class, 'lamLoginCheck'])->name('local_area_manager.login');
+Route::get('/local-area-manager/login', [LamLoginController::class, 'lamLogin'])->name('local_area_manager.login');
+Route::post('/local-area-manager/login', [LamLoginController::class, 'lamLoginCheck'])->name('local_area_manager.login');
 
 
 // Overwrite Default Authentication Routes
@@ -371,6 +373,31 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 
 
 // LAM Auth Routes
-Route::group(['middleware' => 'lam', 'prefix' => 'local-area-manager'], function () {
-    Route::get('/profile', [LamProfileController::class, 'profile'])->name('local_area_manager.profile');
-});
+Route::group(
+    ['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-manager'],
+    function () {
+        // Route::get('/profile', [LamProfileController::class, 'profile'])->name('local_area_manager.profile');
+        Route::get('/dashboard', [LamDashboardController::class, 'dashboard'])->name('dashboard');
+
+
+        Route::controller(LamProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
+            Route::get('/', 'profile')->name('index');
+            Route::put('/update', 'update')->name('update');
+            Route::put('/update/password', 'updatePassword')->name('update.password');
+            Route::post('/update/image', 'updateImage')->name('update.image');
+        });
+
+
+
+        Route::controller(LamUserController::class, 'user-management')->prefix('user-management')->name('user.')->group(function () {
+            Route::get('index', 'index')->name('list');
+            Route::get('details/{id}', 'details')->name('details.list');
+            Route::get('profile/{id}', 'profile')->name('profile');
+            Route::get('create', 'create')->name('create');
+            Route::post('create', 'store')->name('create');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::put('edit/{id}', 'update')->name('edit');
+            Route::get('status/{id}', 'status')->name('status.edit');
+            Route::get('delete/{id}', 'delete')->name('delete');
+        });
+    });
