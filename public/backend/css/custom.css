@@ -261,4 +261,33 @@
 /*=============================================================
                 End Select2 CSS
  =============================================================*/
+/*=============================================================
+                Start Image Upload CSS
+ =============================================================*/
+.imagePreviewMainDiv {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.imagePreviewDiv {
+    position: relative;
+    margin: .3rem;
+}
+
+.imagePreview {
+    object-fit: cover;
+    width: auto;
+    height: 6rem;
+}
+
+.removeImage {
+    position: absolute;
+    left: 88%;
+    top: 10%;
+    cursor: pointer;
+}
+/*=============================================================
+                End Image Upload CSS
+ =============================================================*/
 
