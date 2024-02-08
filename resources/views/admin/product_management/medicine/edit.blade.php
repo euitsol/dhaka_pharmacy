@@ -125,7 +125,7 @@
 
                 {{-- Medicine Requirements  --}}
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header">pan
                         <div class="row">
                             <div class="col-12">
                                 <h4 class="card-title">{{ __('Medicine Requirements') }}</h4>
@@ -163,7 +163,7 @@
                 </div>
 
                 {{-- Medicine Pricing Card  --}}
-                <div class="card">
+                <div class="card medicine_price_card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12">
@@ -176,9 +176,12 @@
                             <div class="form-group col-md-12">
 
                                 <label>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</small></label>
-                                <input type="text" name="price"
+                                <div class="input-group" role="group">
+                                    <input type="text" name="price"
                                     class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
                                     placeholder="Enter price" value="{{ $medicine->price }}">
+                                    <span class="bdt_button">BDT</span>
+                                </div>
                                 @include('alerts.feedback', ['field' => 'price'])
                             </div>
                         </div>

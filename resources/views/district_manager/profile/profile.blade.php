@@ -45,9 +45,9 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Parents Phone') }}</label>
-                                            <input type="text" name="parents_phone" class="form-control"
-                                                placeholder="Enter Parents Phone" value="{{ dm()->parents_phone }}">
-                                            @include('alerts.feedback', ['field' => 'parents_phone'])
+                                            <input type="text" name="parent_phone" class="form-control"
+                                                placeholder="Enter Parents Phone" value="{{ dm()->parent_phone }}">
+                                            @include('alerts.feedback', ['field' => 'parent_phone'])
                                         </div>
                                     </div>
                                 </div>
