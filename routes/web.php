@@ -229,12 +229,9 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::group(['as' => 'dm_kyc.', 'prefix' => 'district-manager-kyc'], function () {
             Route::controller(DmKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
                 Route::get('index', 'index')->name('district_manager_kyc_list');
-                Route::get('details/{id}', 'details')->name('detailsdm_kyc_list');
-                Route::get('create', 'create')->name('district_manager_kyc_create');
-                Route::post('create', 'store')->name('district_manager_kyc_create');
-                Route::get('edit/{id}', 'edit')->name('district_manager_kyc_edit');
-                Route::put('edit/{id}', 'update')->name('district_manager_kyc_edit');
-                Route::get('status/{id}', 'status')->name('statusdm_kyc_edit');
+                Route::get('details/{id}', 'details')->name('district_manager_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.district_manager_kyc_details');
+                Route::get('status/{id}', 'status')->name('district_manager_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('district_manager_kyc_delete');
             });
 

@@ -39,11 +39,9 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'javascript:void(0)',
+                                                    'routeName' => 'dm_management.dm_kyc.kyc_list.district_manager_kyc_details',
                                                     'params' => [$data->id],
                                                     'label' => 'View Details',
-                                                    'className' => 'view',
-                                                    'data-id' => $data->id,
                                                 ],
                                             ],
                                         ])

@@ -168,4 +168,8 @@ function file_title_from_url($url = null){
         return $fileTitle;
     }
 }
+function removeHttpProtocol($url)
+{
+    return str_replace(['http://', 'https://'], '', $url);
+}
 
