@@ -36,6 +36,20 @@ class DmKycController extends Controller
         return view('admin.dm_management.submitted_kyc.details',$data);
 
     }
+    public function status($id, $status = NULL)
+    {
+        $data = SubmittedKyc::findOrFail($id);
+        $data->status = $status;
+        $data->update();
+        if($data->status === 1){
+            flash()->addSuccess('KYC accepted succesfully');
+        }
+        if($data->status === NULL){
+            flash()->addSuccess('KYC declined succesfully');
+        }
+        return redirect()->back();
+
+    }
 
     public function view_or_download($file_url){
         $file_url = base64_decode($file_url);

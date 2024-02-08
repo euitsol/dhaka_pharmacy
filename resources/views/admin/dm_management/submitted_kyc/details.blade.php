@@ -21,7 +21,6 @@
                     @php
                         $save_datas = json_decode($data->submitted_data, true);
                         $form_datas = json_decode($kyc_setting->form_data, true);
-                        // dd($form_datas);
                     @endphp
                     <div class="card-body">
                         <table class="table table-striped">
@@ -72,7 +71,9 @@
                                             <th>{{$form_data['field_name']}}</th>
                                             <th>:</th>
                                             <td>
-                                                @if(isset($save_datas[$form_data['field_key']])){{$save_datas[$form_data['field_key']] == 1 ? 'True' : 'False'}}@endif
+                                                @if(isset($save_datas[$form_data['field_key']]))
+                                                    <span class="badge {{$save_datas[$form_data['field_key']] == 1 ? 'badge-success' : 'badge-info'}}">{{$save_datas[$form_data['field_key']] == 1 ? 'True' : 'False'}}</span>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endif
@@ -139,6 +140,24 @@
                                         </tr>
                                     @endif
                                 @endforeach
+                                <tr>
+                                    <th>{{__('Verification Status')}}</th>
+                                    <th>:</th>
+                                    <td class="d-flex justify-content-between align-items-center">
+                                        <div class="status">
+                                            <span class="badge {{($data->status === 1) ? 'badge-success' : (($data->status === 0) ? 'badge-info' : 'badge-warning') }}">{{($data->status === 1) ? 'Accepted' : (($data->status === 0) ? 'Pending' : 'Declined') }}</span>
+                                        </div>
+                                        <div class="status_button">
+                                            @if($data->status === 0)
+                                                <a href="{{route('dm_management.dm_kyc.kyc_list.district_manager_kyc_status',['id'=>$data->id, 'status'=>1])}}" class="btn btn-sm btn-success">{{__('Accept')}}</a>
+                                                <a href="{{route('dm_management.dm_kyc.kyc_list.district_manager_kyc_status',$data->id)}}" class="btn btn-sm btn-warning">{{__('Declined')}}</a>
+                                            @elseif($data->status === 1)
+                                                <a href="{{route('dm_management.dm_kyc.kyc_list.district_manager_kyc_status',$data->id)}}" class="btn btn-sm btn-warning">{{__('Declined')}}</a>
+                                            @endif
+                                            
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

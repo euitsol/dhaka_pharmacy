@@ -231,7 +231,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
                 Route::get('index', 'index')->name('district_manager_kyc_list');
                 Route::get('details/{id}', 'details')->name('district_manager_kyc_details');
                 Route::get('file-download/{url}', 'view_or_download')->name('download.district_manager_kyc_details');
-                Route::get('status/{id}', 'status')->name('district_manager_kyc_status');
+                Route::get('status/{id}/{status?}', 'status')->name('district_manager_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('district_manager_kyc_delete');
             });
 
