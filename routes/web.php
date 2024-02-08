@@ -382,7 +382,7 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
     Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::controller(DmKycVerificationController::class, 'kyc')->prefix('kyc')->name('kyc.')->group(function () {
-        Route::post('/store', 'kyc_verification')->name('store');
+        Route::post('/store', 'kyc_store')->name('store');
         Route::get('/verification', 'kyc_verification')->name('verification');
         Route::get('/kyc/file/upload', 'file_upload')->name('file.upload');
         Route::get('/kyc/file/delete', 'delete')->name('file.delete');

@@ -52,7 +52,7 @@
                                         @if (isset($fd->required) && $fd->required == 'required')
                                             <span class="text-danger">*</span>
                                         @endif
-                                        <input type="text" name="{{$fd->field_key}}" id="{{$fd->field_key}}" class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}" value="{{ json_decode($details->saved_data)->$a ?? old($fd->field_key) }}">
+                                        <input type="text" name="{{$fd->field_key}}" id="{{$fd->field_key}}" class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}" value="{{ json_decode($datas->submitted_data)->$a ?? old($fd->field_key) }}">
                                         @include('alerts.feedback', ['field' => $fd->field_key])
                                     </div>
                                 @elseif($fd->type == "number")
@@ -61,7 +61,7 @@
                                         @if (isset($fd->required) && $fd->required == 'required')
                                             <span class="text-danger">*</span>
                                         @endif
-                                        <input type="number" name="{{$fd->field_key}}" id="{{$fd->field_key}}" class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}" value="{{ json_decode($details->saved_data)->$a ?? old($fd->field_key) }}">
+                                        <input type="number" name="{{$fd->field_key}}" id="{{$fd->field_key}}" class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}" value="{{ json_decode($datas->submitted_data)->$a ?? old($fd->field_key) }}">
                                         @include('alerts.feedback', ['field' => $fd->field_key])
                                     </div>
                                 @elseif($fd->type == "url")
@@ -70,7 +70,7 @@
                                         @if (isset($fd->required) && $fd->required == 'required')
                                             <span class="text-danger">*</span>
                                         @endif
-                                        <input type="url" name="{{$fd->field_key}}" id="{{$fd->field_key}}" class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}" value="{{ json_decode($details->saved_data)->$a ?? old($fd->field_key) }}">
+                                        <input type="url" name="{{$fd->field_key}}" id="{{$fd->field_key}}" class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}" value="{{ json_decode($datas->submitted_data)->$a ?? old($fd->field_key) }}">
                                         @include('alerts.feedback', ['field' => $fd->field_key])
                                     </div>
                                 @elseif($fd->type == "textarea")
@@ -80,7 +80,7 @@
                                             <span class="text-danger">*</span>
                                         @endif
                                         <textarea name="{{$fd->field_key}}" id="{{$fd->field_key}}" class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}">
-                                            {{ json_decode($details->saved_data)->$a ?? old($fd->field_key) }}
+                                            {{ json_decode($datas->submitted_data)->$a ?? old($fd->field_key) }}
                                         </textarea>
                                         @include('alerts.feedback', ['field' => $fd->field_key])
                                     </div>
@@ -92,17 +92,17 @@
                                         @endif
                                         <input type="file" accept="image/*" name="{{$fd->field_key}}" id="{{$fd->field_key}}"
                                         class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }} image-upload"
-                                        @if(!empty(json_decode($details->saved_data)) && isset(json_decode($details->saved_data)->$a))
-                                        data-existing-files="{{ storage_url(json_decode($details->saved_data)->$a) }}"
+                                        @if(!empty(json_decode($datas->submitted_data)) && isset(json_decode($datas->submitted_data)->$a))
+                                        data-existing-files="{{ storage_url(json_decode($datas->submitted_data)->$a) }}"
                                         data-delete-url="{{route('dm.kyc.file.delete', [$details->id, $a])}}"
                                         @endif
                                         >
                                         @include('alerts.feedback', ['field' => $fd->field_key])
                                     </div>
                                 @elseif($fd->type == "image_multiple")
-                                    @if(isset(json_decode($details->saved_data)->$a) && !empty(json_decode($details->saved_data)))
+                                    @if(isset(json_decode($datas->submitted_data)->$a) && !empty(json_decode($datas->submitted_data)))
                                     @php
-                                        $data = collect(json_decode($details->saved_data, true)[$a]);
+                                        $data = collect(json_decode($datas->submitted_data, true)[$a]);
                                         $result = '';
                                         $itemCount = count($data);
                                         foreach ($data as $index => $url) {
@@ -123,7 +123,7 @@
                                         <input type="file" accept="image/*" name="{{$fd->field_key}}[]" id="{{$fd->field_key}}"
                                         class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }} image-upload"
                                         multiple
-                                            @if(!empty(json_decode($details->saved_data)) && isset(json_decode($details->saved_data)->$a))
+                                            @if(!empty(json_decode($datas->submitted_data)) && isset(json_decode($datas->submitted_data)->$a))
                                                 data-existing-files="{{ storage_url($data) }}"
                                                 data-delete-url="{{ $result }}"
 
@@ -156,12 +156,12 @@
                                         </div>
 
                                         <div class="show_file">
-                                            @if(!empty(json_decode($details->saved_data)) && isset(json_decode($details->saved_data)->$a))
+                                            @if(!empty(json_decode($datas->submitted_data)) && isset(json_decode($datas->submitted_data)->$a))
                                             <div class="form-group">
                                                 <label>{{ _('Uploded file') }}</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" value="{{file_title_from_url(json_decode($details->saved_data)->$a)}}" disabled>
-                                                    <input type="text" class="form-control" value="{{file_name_from_url(json_decode($details->saved_data)->$a)}}" disabled>
+                                                    <input type="text" class="form-control" value="{{file_title_from_url(json_decode($datas->submitted_data)->$a)}}" disabled>
+                                                    <input type="text" class="form-control" value="{{file_name_from_url(json_decode($datas->submitted_data)->$a)}}" disabled>
                                                     <a href="{{route('dm.kyc.file.delete', [$details->id, $a])}}">
                                                         <span class="input-group-text text-danger h-100"><i class="tim-icons icon-trash-simple"></i></span>
                                                     </a>
@@ -183,7 +183,7 @@
 
                                         <div class="input-group mb-3">
                                             <input type="text" name="" class="form-control file_title" placeholder="{{ _('Enter file name') }}" >
-                                            <input type="file" name="" id="{{$fd->field_key}}" class="form-control fileInput {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}" multiple @if(isset(json_decode($details->saved_data)->$a) && !empty(json_decode($details->saved_data)) ) data-count="{{collect(json_decode($details->saved_data)->$a)->count()}}" @else data-count="1" @endif>
+                                            <input type="file" name="" id="{{$fd->field_key}}" class="form-control fileInput {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}" multiple @if(isset(json_decode($datas->submitted_data)->$a) && !empty(json_decode($datas->submitted_data)) ) data-count="{{collect(json_decode($datas->submitted_data)->$a)->count()}}" @else data-count="1" @endif>
                                         </div>
 
 
@@ -193,8 +193,8 @@
                                         </div>
 
                                         <div class="show_file">
-                                            @if(isset(json_decode($details->saved_data)->$a) && !empty(json_decode($details->saved_data)))
-                                            @foreach(json_decode($details->saved_data)->$a as $url)
+                                            @if(isset(json_decode($datas->submitted_data)->$a) && !empty(json_decode($datas->submitted_data)))
+                                            @foreach(json_decode($datas->submitted_data)->$a as $url)
                                                 @php
                                                     $count += 1
                                                 @endphp
@@ -221,7 +221,7 @@
                                         @if (isset($fd->required) && $fd->required == 'required')
                                             <span class="text-danger">*</span>
                                         @endif
-                                        <input type="email" name="{{$fd->field_key}}" id="{{$fd->field_key}}" class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}" value="{{ json_decode($details->saved_data)->$a ?? old($fd->field_key) }}" >
+                                        <input type="email" name="{{$fd->field_key}}" id="{{$fd->field_key}}" class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}" value="{{ json_decode($datas->submitted_data)->$a ?? old($fd->field_key) }}" >
                                         @include('alerts.feedback', ['field' => $fd->field_key])
                                     </div>
 
@@ -234,7 +234,7 @@
                                         <select  name="{{$fd->field_key}}" id="{{$fd->field_key}}" class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}" >
                                             @foreach ($fd->option_data as $value=>$label)
 
-                                                <option value="{{$value}}" @if(isset(json_decode($details->saved_data)->$a) && (json_decode($details->saved_data)->$a == $value || old($fd->field_key) == $value)) selected @endif >{{ $label }}</option>
+                                                <option value="{{$value}}" @if(isset(json_decode($datas->submitted_data)->$a) && (json_decode($datas->submitted_data)->$a == $value || old($fd->field_key) == $value)) selected @endif >{{ $label }}</option>
                                             @endforeach
                                         </select>
                                         @include('alerts.feedback', ['field' => $fd->field_key])
