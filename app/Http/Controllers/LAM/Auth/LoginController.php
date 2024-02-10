@@ -18,7 +18,7 @@ class LoginController extends Controller
     {
         if (Auth::guard('lam')->check() && lam()->status == 1) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('local_area_manager.profile');
+            return redirect()->route('lam.dashboard');
         }
         return view('local_area_manager.login');
     }
@@ -32,7 +32,7 @@ class LoginController extends Controller
             if($check->status == 1){
                 if (Auth::guard('lam')->attempt($credentials)) {
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');
-                    return redirect()->route('local_area_manager.profile');
+                    return redirect()->route('lam.dashboard');
                 }
                 flash()->addError('Invalid credentials');
             }else{
