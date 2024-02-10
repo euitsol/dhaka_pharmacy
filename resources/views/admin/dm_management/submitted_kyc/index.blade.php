@@ -18,6 +18,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
+                                <th>{{ __('Name') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
@@ -29,7 +30,8 @@
                             @foreach ($groupDatas as $data)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $data->type }} </td>
+                                    <td> {{ $data->creater->name ?? '' }} </td>
+                                    <td> {{ strtoupper($data->type) }} </td>
                                     <td>
                                         <span class="badge {{ ($data->status === 1) ? 'badge-success' : (($data->status === 0) ? 'badge-info' : 'badge-warning') }}">{{ ($data->status === 1) ? 'Active' : (($data->status === 0) ? 'Pending' : 'Declined') }}</span>
                                     </td>
