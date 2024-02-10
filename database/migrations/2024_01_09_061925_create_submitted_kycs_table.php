@@ -17,14 +17,13 @@ return new class extends Migration
     {
         Schema::create('submitted_kycs', function (Blueprint $table) {
             $table->id();
-            $table->enum('type',['user','pharmacy','rider','doctor'])->unique();
-            $table->boolean('status')->default(1);
+            $table->enum('type',['user','pharmacy','rider','doctor','dm','lam']);
+            $table->boolean('status')->nullable();
             $table->json('submitted_data');
             $table->longText('note')->nullable();
-            $table->unsignedBigInteger('submitted_by');
             $table->timestamps();
             $table->softDeletes();
-            $this->addAuditColumns($table);
+            $this->addMorphedAuditColumns($table);
         });
     }
 

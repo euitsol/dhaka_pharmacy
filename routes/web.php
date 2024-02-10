@@ -14,8 +14,12 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\DM_LAM_Management\DistrictManagerController;
-use App\Http\Controllers\Admin\DM_LAM_Management\LocalAreaManagerController;
+use App\Http\Controllers\Admin\DM_Management\DistrictManagerController;
+use App\Http\Controllers\Admin\DM_Management\DmKycController;
+use App\Http\Controllers\Admin\DM_Management\DmKycSettingsController;
+use App\Http\Controllers\Admin\LAM_Management\LamKycController;
+use App\Http\Controllers\Admin\LAM_Management\LamKycSettingsController;
+use App\Http\Controllers\Admin\LAM_Management\LocalAreaManagerController;
 use App\Http\Controllers\Admin\UserManagement\UserKycSettingsController;
 use App\Http\Controllers\Admin\UserManagement\UserKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
@@ -36,6 +40,8 @@ use App\Http\Controllers\DM\LAM_management\LamManagementController;
 use App\Http\Controllers\DM\UserManagement\UserManagementController as DmUserController;
 use App\Http\Controllers\LAM\UserManagement\UserManagementController as LamUserController;
 use App\Http\Controllers\LAM\LamProfileController;
+use App\Http\Controllers\DM\KYC\KycVerificationController as DmKycVerificationController;
+use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,7 +104,7 @@ Route::prefix('user')->group(function () {
 
 
 Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::get('/export-permissions', function () {
         $filename = 'permissions.csv';
@@ -205,12 +211,14 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
     });
 
-    // District Manager & Local Area Manager Management Routes
-    Route::group(['as' => 'dmlam.', 'prefix' => 'dm-lam-management'], function () {
+
+    // District Manager Management Routes
+    Route::group(['as' => 'dm_management.', 'prefix' => 'dm-management'], function () {
         Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
             Route::get('index', 'index')->name('district_manager_list');
             Route::get('details/{id}', 'details')->name('details.district_manager_list');
             Route::get('profile/{id}', 'profile')->name('district_manager_profile');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.district_manager_profile');
             Route::get('create', 'create')->name('district_manager_create');
             Route::post('create', 'store')->name('district_manager_create');
             Route::get('edit/{id}', 'edit')->name('district_manager_edit');
@@ -218,16 +226,52 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('status/{id}', 'status')->name('status.district_manager_edit');
             Route::get('delete/{id}', 'delete')->name('district_manager_delete');
         });
+
+
+        // KYC ROUTES
+        Route::group(['as' => 'dm_kyc.', 'prefix' => 'district-manager-kyc'], function () {
+            Route::controller(DmKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
+                Route::get('index', 'index')->name('district_manager_kyc_list');
+                Route::get('details/{id}', 'details')->name('district_manager_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.district_manager_kyc_details');
+                Route::get('accept/{id}', 'accept')->name('accept.district_manager_kyc_status');
+                Route::put('declained/{id}', 'declained')->name('declined.district_manager_kyc_status');
+                Route::get('delete/{id}', 'delete')->name('district_manager_kyc_delete');
+            });
+
+            Route::get('/settings', [DmKycSettingsController::class, 'kycSettings'])->name('district_manager_kyc_settings');
+            Route::post('/settings', [DmKycSettingsController::class, 'kycSettingsUpdate'])->name('district_manager_kyc_settings');
+        });
+    });
+
+    // Local Area Manager Management Routes 
+    Route::group(['as' => 'lam_management.', 'prefix' => 'lam-management'], function () {
         Route::controller(LocalAreaManagerController::class, 'local-area-manager')->prefix('local-area-manager')->name('local_area_manager.')->group(function () {
             Route::get('index', 'index')->name('local_area_manager_list');
             Route::get('details/{id}', 'details')->name('details.local_area_manager_list');
             Route::get('profile/{id}', 'profile')->name('local_area_manager_profile');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.local_area_manager_profile');
             Route::get('create', 'create')->name('local_area_manager_create');
             Route::post('create', 'store')->name('local_area_manager_create');
             Route::get('edit/{id}', 'edit')->name('local_area_manager_edit');
             Route::put('edit/{id}', 'update')->name('local_area_manager_edit');
             Route::get('status/{id}', 'status')->name('status.local_area_manager_edit');
             Route::get('delete/{id}', 'delete')->name('local_area_manager_delete');
+        });
+
+        // KYC ROUTES
+        Route::group(['as' => 'lam_kyc.', 'prefix' => 'local-area-manager-kyc'], function () {
+            Route::controller(LamKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
+                Route::get('index', 'index')->name('local_area_manager_kyc_list');
+                Route::get('details/{id}', 'details')->name('local_area_manager_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.local_area_manager_kyc_details');
+                Route::get('accept/{id}', 'accept')->name('accept.local_area_manager_kyc_status');
+                Route::put('declained/{id}', 'declained')->name('declined.local_area_manager_kyc_status');
+                Route::get('delete/{id}', 'delete')->name('local_area_manager_kyc_delete');
+            });
+
+            Route::get('/settings', [LamKycSettingsController::class, 'kycSettings'])->name('local_area_manager_kyc_settings');
+            Route::post('/settings', [LamKycSettingsController::class, 'kycSettingsUpdate'])->name('local_area_manager_kyc_settings');
         });
     });
 
@@ -336,6 +380,14 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 
     Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dashboard');
 
+    Route::controller(DmKycVerificationController::class, 'kyc')->prefix('kyc')->name('kyc.')->group(function () {
+        Route::post('/store', 'kyc_store')->name('store');
+        Route::get('/verification', 'kyc_verification')->name('verification');
+        Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
+        Route::get('/kyc/file/delete', 'delete')->name('file.delete');
+    });
+    
+
 
     Route::controller(DmProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
         Route::get('/', 'profile')->name('index');
@@ -376,9 +428,14 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 Route::group(
     ['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-manager'],
     function () {
-        // Route::get('/profile', [LamProfileController::class, 'profile'])->name('local_area_manager.profile');
         Route::get('/dashboard', [LamDashboardController::class, 'dashboard'])->name('dashboard');
 
+        Route::controller(LamKycVerificationController::class, 'kyc')->prefix('kyc')->name('kyc.')->group(function () {
+            Route::post('/store', 'kyc_store')->name('store');
+            Route::get('/verification', 'kyc_verification')->name('verification');
+            Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
+            Route::get('/kyc/file/delete', 'delete')->name('file.delete');
+        });
 
         Route::controller(LamProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
             Route::get('/', 'profile')->name('index');

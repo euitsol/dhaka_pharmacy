@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'dmlam.district_manager.district_manager_create',
+                                'routeName' => 'dm_management.district_manager.district_manager_create',
                                 'className' => 'btn-primary',
                                 'label' => 'Add new district manager',
                             ])
@@ -48,11 +48,12 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'dmlam.district_manager.district_manager_profile',   'params' => [$dm->id], 'label' => 'Profile'],
+                                                    ['routeName' => 'dm_management.district_manager.login_as.district_manager_profile',   'params' => [$dm->id], 'label' => 'Login As', 'target'=>'_blank'],
+                                                    ['routeName' => 'dm_management.district_manager.district_manager_profile',   'params' => [$dm->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$dm->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $dm->id ],
-                                                    ['routeName' => 'dmlam.district_manager.district_manager_edit',   'params' => [$dm->id], 'label' => 'Update'],
-                                                    ['routeName' => 'dmlam.district_manager.status.district_manager_edit',   'params' => [$dm->id], 'label' => $dm->getBtnStatus()],
-                                                    ['routeName' => 'dmlam.district_manager.district_manager_delete', 'params' => [$dm->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'dm_management.district_manager.district_manager_edit',   'params' => [$dm->id], 'label' => 'Update'],
+                                                    ['routeName' => 'dm_management.district_manager.status.district_manager_edit',   'params' => [$dm->id], 'label' => $dm->getBtnStatus()],
+                                                    ['routeName' => 'dm_management.district_manager.district_manager_delete', 'params' => [$dm->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])
                                     </td>
@@ -92,7 +93,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('dmlam.district_manager.details.district_manager_list', ['id']) }}");
+                let url = ("{{ route('dm_management.district_manager.details.district_manager_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,

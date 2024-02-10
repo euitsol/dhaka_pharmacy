@@ -1,21 +1,15 @@
-@extends('admin.layouts.master', ['pageSlug' => 'user_kyc_list'])
+@extends('admin.layouts.master', ['pageSlug' => 'lam_kyc_list'])
 
 @section('content')
     <div class="row">
+        @foreach ($datas as $groupDatas)
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">User KYC List</h4>
+                            <h4 class="card-title">{{__("Local Area Manager ". (($groupDatas[0]['status'] === 1) ? 'Accepted' : (($groupDatas[0]['status'] === 0) ? 'Pending' : 'Declined')) ." KYC")}}</h4>
                         </div>
-                        {{-- <div class="col-4 text-right">
-                            @include('admin.partials.button', [
-                                'routeName' => 'um.user.user_kyc_create',
-                                'className' => 'btn-primary',
-                                'label' => 'Add User',
-                            ])
-                        </div> --}}
                     </div>
                 </div>
                 <div class="card-body">
@@ -24,6 +18,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
+                                <th>{{ __('Name') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
@@ -32,10 +27,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($datas as $data)
+                            @foreach ($groupDatas as $data)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $data->type }} </td>
+                                    <td> {{ $data->creater->name ?? '' }} </td>
+                                    <td> {{ strtoupper($data->type) }} </td>
                                     <td>
                                         <span class="{{ $data->getStatusBadgeClass() }}">{{ $data->getStatus() }}</span>
                                     </td>
@@ -46,11 +42,9 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'javascript:void(0)',
+                                                    'routeName' => 'lam_management.lam_kyc.kyc_list.local_area_manager_kyc_details',
                                                     'params' => [$data->id],
                                                     'label' => 'View Details',
-                                                    'className' => 'view',
-                                                    'data-id' => $data->id,
                                                 ],
                                             ],
                                         ])
@@ -67,6 +61,7 @@
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])

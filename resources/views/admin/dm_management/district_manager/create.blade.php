@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'local_area_manager'])
+@extends('admin.layouts.master', ['pageSlug' => 'district_manager'])
 
 @section('content')
     <div class="row px-3 pt-3">
@@ -7,11 +7,11 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Create Local Area Manager') }}</h4>
+                            <h4 class="card-title">{{ __('Create District Manager') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'dmlam.local_area_manager.local_area_manager_list',
+                                'routeName' => 'dm_management.district_manager.district_manager_list',
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
                             ])
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('dmlam.local_area_manager.local_area_manager_create') }}">
+                    <form method="POST" action="{{ route('dm_management.district_manager.district_manager_create') }}">
                         @csrf
                         <div class="form-group">
 
@@ -33,17 +33,6 @@
                             <input type="text" name="phone" class="form-control" placeholder="Enter phone"
                                 value="{{ old('phone') }}">
                             @include('alerts.feedback', ['field' => 'phone'])
-                        </div>
-                        <div class="form-group {{ $errors->has('dm_id') ? ' has-danger' : '' }}">
-                            <label>{{ __('District Manager') }}</label>
-                            <select name="dm_id" class="form-control {{ $errors->has('dm_id') ? ' is-invalid' : '' }}">
-                                <option selected hidden>{{ __('Select District Manager') }}</option>
-                                @foreach ($dms as $dm)
-                                    <option {{ old('dm_id') == $dm->id ? 'selected' : '' }} value="{{ $dm->id }}">
-                                        {{ $dm->name }}</option>
-                                @endforeach
-                            </select>
-                            @include('alerts.feedback', ['field' => 'dm_id'])
                         </div>
                         <div class="form-group">
                             <label>{{__('Password')}}</label>

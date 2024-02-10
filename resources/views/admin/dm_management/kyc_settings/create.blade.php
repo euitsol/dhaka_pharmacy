@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'user_kyc_settings'])
+@extends('admin.layouts.master', ['pageSlug' => 'dm_kyc_settings'])
 
 @section('title', 'KYC Settings')
 @push('css_link')
@@ -7,13 +7,14 @@
 
 @section('content')
     <div class="row">
-        <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
+        <div class="{{$document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{ __('User KYC Settings') }}</h5>
+                    <h5 class="title">{{ __('District Manager KYC Settings') }}</h5>
                 </div>
-                <form method="POST" action="{{ route('um.user_kyc.user_kyc_settings') }}" autocomplete="off">
+                <form method="POST" action="{{ route('dm_management.dm_kyc.district_manager_kyc_settings') }}" autocomplete="off">
                     @csrf
+                    {{-- @foreach ($kyc_setting as $key => $setting) --}}
                     <div class="card-body">
                         
                         <div class="form-group mb-3">
@@ -140,7 +141,6 @@
 @endpush
 @push('js')
     <script>
-        'use script'
         $(document).on('click', '.generate_atf', function() {
             let count = $(this).data('count') + 1;
             $(this).data('count', count);

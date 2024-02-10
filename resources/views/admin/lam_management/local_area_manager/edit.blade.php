@@ -10,12 +10,12 @@
                             <h4 class="card-title">{{__('Update Local Area Manager')}}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('admin.partials.button', ['routeName' => 'dmlam.local_area_manager.local_area_manager_list', 'className' => 'btn-primary', 'label' => 'Back'])
+                            @include('admin.partials.button', ['routeName' => 'lam_management.local_area_manager.local_area_manager_list', 'className' => 'btn-primary', 'label' => 'Back'])
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                  <form method="POST" action="{{route('dmlam.local_area_manager.local_area_manager_edit',$lam->id)}}">
+                  <form method="POST" action="{{route('lam_management.local_area_manager.local_area_manager_edit',$lam->id)}}">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

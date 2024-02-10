@@ -24,7 +24,7 @@ pharmacy_list,admin,Pharmacy
 pharmacy_create,admin,Pharmacy
 pharmacy_edit,admin,Pharmacy
 pharmacy_delete,admin,Pharmacy
-pharmacy_kyc_settings,admin,"User KYC Settings"
+pharmacy_kyc_settings,admin,"Pharmacy KYC Settings"
 pharmacy_kyc_list,admin,"Pharmacy KYC"
 pharmacy_kyc_create,admin,"Pharmacy KYC"
 pharmacy_kyc_edit,admin,"Pharmacy KYC"
@@ -71,3 +71,13 @@ medicine_list,admin,Medicine
 medicine_create,admin,Medicine
 medicine_edit,admin,Medicine
 medicine_delete,admin,Medicine
+district_manager_kyc_settings,admin,"DM KYC Settings"
+local_area_manager_kyc_settings,admin,"LAM KYC Settings"
+local_area_manager_kyc_list,admin,"LAM KYC"
+local_area_manager_kyc_details,admin,"LAM KYC"
+local_area_manager_kyc_status,admin,"LAM KYC"
+local_area_manager_kyc_delete,admin,"LAM KYC"
+district_manager_kyc_list,admin,"DM KYC"
+district_manager_kyc_details,admin,"DM KYC"
+district_manager_kyc_status,admin,"DM KYC"
+district_manager_kyc_delete,admin,"DM KYC"

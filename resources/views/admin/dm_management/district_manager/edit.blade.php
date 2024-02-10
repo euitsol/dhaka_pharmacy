@@ -10,12 +10,12 @@
                             <h4 class="card-title">{{__('Update District Manager')}}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('admin.partials.button', ['routeName' => 'dmlam.district_manager.district_manager_list', 'className' => 'btn-primary', 'label' => 'Back'])
+                            @include('admin.partials.button', ['routeName' => 'dm_management.district_manager.district_manager_list', 'className' => 'btn-primary', 'label' => 'Back'])
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                  <form method="POST" action="{{route('dmlam.district_manager.district_manager_edit',$dm->id)}}">
+                  <form method="POST" action="{{route('dm_management.district_manager.district_manager_edit',$dm->id)}}">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

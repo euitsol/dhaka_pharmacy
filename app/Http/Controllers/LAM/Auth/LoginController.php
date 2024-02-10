@@ -4,6 +4,7 @@ namespace App\Http\Controllers\lam\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DistrictManagerRequest;
+use App\Models\LocalAreaManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class LoginController extends Controller
 {
     public function lamLogin()
     {
-        if (Auth::guard('lam')->check()) {
+        if (Auth::guard('lam')->check() && lam()->status == 1) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
             return redirect()->route('lam.dashboard');
         }
@@ -26,11 +27,20 @@ class LoginController extends Controller
     {
         $credentials = $request->only('phone', 'password');
 
-        if (Auth::guard('lam')->attempt($credentials)) {
-            flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('lam.dashboard');
+        $check = LocalAreaManager::where('phone', $request->phone)->first();
+        if(isset($check)){
+            if($check->status == 1){
+                if (Auth::guard('lam')->attempt($credentials)) {
+                    flash()->addSuccess('Welcome to Dhaka Pharmacy');
+                    return redirect()->route('lam.dashboard');
+                }
+                flash()->addError('Invalid credentials');
+            }else{
+                flash()->addError('Your account has been disabled. Please contact support.');
+            }
+        }else{
+            flash()->addError('Local Area Manager Not Found');
         }
-        flash()->addError('Invalid credentials');
         return redirect()->route('local_area_manager.login');
     }
 }

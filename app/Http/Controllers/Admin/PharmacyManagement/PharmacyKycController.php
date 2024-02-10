@@ -19,7 +19,7 @@ class PharmacyKycController extends Controller
 
     public function index(): View
     {
-        $s['datas'] = SubmittedKyc::where('type','pharmacy')->latest()->get();
+        $s['datas'] = SubmittedKyc::with('creater')->where('type','pharmacy')->latest()->get();
         $s['count']= $s['datas']->map(function($data){
             return count(json_decode($data->submitted_data,true));
         });

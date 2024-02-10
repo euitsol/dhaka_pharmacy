@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'user_kyc_settings'])
+@extends('admin.layouts.master', ['pageSlug' => 'lam_kyc_settings'])
 
 @section('title', 'KYC Settings')
 @push('css_link')
@@ -7,12 +7,12 @@
 
 @section('content')
     <div class="row">
-        <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
+        <div class="{{$document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{ __('User KYC Settings') }}</h5>
+                    <h5 class="title">{{ __('Pharmacy KYC Settings') }}</h5>
                 </div>
-                <form method="POST" action="{{ route('um.user_kyc.user_kyc_settings') }}" autocomplete="off">
+                <form method="POST" action="{{ route('lam_management.lam_kyc.local_area_manager_kyc_settings') }}" autocomplete="off">
                     @csrf
                     <div class="card-body">
                         

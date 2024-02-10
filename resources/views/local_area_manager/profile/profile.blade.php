@@ -271,15 +271,22 @@
                             },
                             error: function(xhr) {
                                 if (xhr.status === 422) {
+                                    $('.profile_image .img').removeClass(
+                                    'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display', 'block');
+                                    $('#previewImage').attr('src', "{{ lam()->image ? storage_url(lam()->image) : asset('no_img/no_img.jpg') }}");
+                                    toastr.error('Something is wrong!');
                                     var errors = xhr.responseJSON.errors;
                                     $.each(errors, function(field, messages) {
                                         var errorHtml = '';
                                         $.each(messages, function(index, message) {
                                             errorHtml +=
-                                                '<span class="invalid-feedback d-block" role="alert">' +
+                                                '<span class="invalid-feedback mt-4 d-block" role="alert">' +
                                                 message + '</span>';
                                         });
-                                        $('[name="' + field + '"]').after(
+                                        $('.profile_image img').after(
                                             errorHtml);
                                     });
                                 } else {

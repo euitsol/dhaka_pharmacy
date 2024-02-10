@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'dmlam.local_area_manager.local_area_manager_create',
+                                'routeName' => 'lam_management.local_area_manager.local_area_manager_create',
                                 'className' => 'btn-primary',
                                 'label' => 'Add new local area manager',
                             ])
@@ -49,11 +49,12 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'dmlam.local_area_manager.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Profile'],
+                                                    ['routeName' => 'lam_management.local_area_manager.login_as.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Login As'],
+                                                    ['routeName' => 'lam_management.local_area_manager.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$lam->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $lam->id ],
-                                                    ['routeName' => 'dmlam.local_area_manager.local_area_manager_edit',   'params' => [$lam->id], 'label' => 'Update'],
-                                                    ['routeName' => 'dmlam.local_area_manager.status.local_area_manager_edit',   'params' => [$lam->id], 'label' => $lam->getBtnStatus()],
-                                                    ['routeName' => 'dmlam.local_area_manager.local_area_manager_delete', 'params' => [$lam->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'lam_management.local_area_manager.local_area_manager_edit',   'params' => [$lam->id], 'label' => 'Update'],
+                                                    ['routeName' => 'lam_management.local_area_manager.status.local_area_manager_edit',   'params' => [$lam->id], 'label' => $lam->getBtnStatus()],
+                                                    ['routeName' => 'lam_management.local_area_manager.local_area_manager_delete', 'params' => [$lam->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])
                                     </td>
@@ -93,7 +94,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('dmlam.local_area_manager.details.local_area_manager_list', ['id']) }}");
+                let url = ("{{ route('lam_management.local_area_manager.details.local_area_manager_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
