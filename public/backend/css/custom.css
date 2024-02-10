@@ -4,7 +4,9 @@
 
 :root {
     --primary-color: #0093E9;
-    --primary-bg-image: linear-gradient( 288deg,  rgba(0,85,255,1) 1.5%, rgba(4,56,115,1) 91.6% );
+    --primary-bg-image: linear-gradient( 288deg,  rgba(0,85,255,1) 1.5%, rgb(4, 56, 115) 91.6% );
+    --secondary-color: #043873;
+    --secondary-bg-image: linear-gradient( 288deg, rgba(4,56,115,1) 1.5%, rgba(0,85,255,1) 91.6% );
 
     --btn-bg-color: #263148;
     --btn-bg-image: linear-gradient(to bottom left, #344675, #263148, #344675) !important;
@@ -29,12 +31,15 @@
 }
 
 .btn:not([data-action]):hover{
-    background-color:var(--btn-bg-color) !important;
-    background-image:var(--btn-bg-image) !important;
+    background-color:var(--secondary-color) !important;
+    background-image:var(--secondary-bg-image) !important;
 }
-/* a:hover{
+.white-content .footer .copyright a{
     color:var(--primary-color) !important;
-} */
+}
+.white-content .footer .copyright a:hover{
+    color:var(--secondary-color) !important;
+}
 .main-panel {
     border-top: 2px solid var(--primary-color) !important;
     /* background-color:var(--primary-color) !important; */
@@ -229,9 +234,9 @@
  =============================================================*/
 
  /* Select 2 */
-.select2 {
-    /* width: 100% !important; */
-}
+/* .select2 {
+    width: 100% !important;
+} */
 
 .select2-container .select2-selection--single,
 .select2-container .select2-selection--multiple {
@@ -289,5 +294,19 @@
 }
 /*=============================================================
                 End Image Upload CSS
+
+                Start Product Management CSS
+ =============================================================*/
+
+ .medicine_price_card .bdt_button{
+        background: var( --primary-color );
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        color: #fff;
+ }
+
+/*=============================================================
+                End Product Management CSS
  =============================================================*/
 

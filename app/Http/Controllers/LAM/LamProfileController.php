@@ -67,6 +67,12 @@ class LamProfileController extends Controller
         $lam->identification_type = $request->identification_type;
         $lam->identification_no = $request->identification_no;
         $lam->present_address = $request->present_address;
+        $lam->gender = $request->gender;
+        $lam->dob = $request->dob;
+        $lam->father_name = $request->father_name;
+        $lam->mother_name = $request->mother_name;
+        $lam->permanent_address = $request->permanent_address;
+        $lam->parent_phone = $request->parent_phone;
         $lam->update();
 
         if ($validator) {
