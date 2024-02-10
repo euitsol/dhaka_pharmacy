@@ -48,6 +48,11 @@
                                 <span class="badge badge-warning">{{__('Empty')}}</span>
                             @endif
                         </div>
+                        @if(!empty($datas) && $datas->status === NULL)
+                            <div class="col-12">
+                                <strong class="text-danger">{{__('Declined Reason: ')}}</strong>{!! $datas->note !!}
+                            </div>
+                        @endif
                     </div>
                 </div>
                 @php

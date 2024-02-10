@@ -153,6 +153,8 @@
                                                 <a href="javascript:void(0)" data-id="{{$data->id}}" class="btn btn-sm btn-warning declined">{{__('Declined')}}</a>
                                             @elseif($data->status === 1)
                                                 <a href="javascript:void(0)" data-id="{{$data->id}}" class="btn btn-sm btn-warning declined">{{__('Declined')}}</a>
+                                            @else
+                                                <a href="{{route('lam_management.lam_kyc.kyc_list.accept.local_area_manager_kyc_status',$data->id)}}" class="btn btn-sm btn-success">{{__('Accept')}}</a>
                                             @endif
                                             
                                         </div>
@@ -170,7 +172,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">{{__('Add Declined Resoune')}}</h5>
+            <h5 class="modal-title" id="exampleModalLabel">{{__('Add Declined Reason')}}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
