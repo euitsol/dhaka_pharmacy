@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\DM\KYC;
+namespace App\Http\Controllers\LAM\KYC;
 
 use App\Http\Controllers\Controller;
-use App\Models\KycSetting;
-use App\Models\SubmittedKyc;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\KycSetting;
+use App\Models\SubmittedKyc;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,18 +18,18 @@ class KycVerificationController extends Controller
     //
 
     public function __construct() {
-        return $this->middleware('dm');
+        return $this->middleware('lam');
     }
 
     public function kyc_verification(){
-        $data['details'] = KycSetting::where('type', 'dm')->where('status',1)->first();
-        $data['datas'] = SubmittedKyc::where('type', 'dm')->where('creater_id', dm()->id)->where('creater_type', get_class(dm()))->first();
-        return view('district_manager.kyc_verification_center.index', $data);
+        $data['details'] = KycSetting::where('type', 'lam')->where('status',1)->first();
+        $data['datas'] = SubmittedKyc::where('type', 'lam')->where('creater_id', lam()->id)->where('creater_type', get_class(lam()))->first();
+        return view('local_area_manager.kyc_verification_center.index', $data);
     }
 
     public function kyc_store(Request $request){
-        $kyc_setting = KycSetting::where('type', 'dm')->where('status',1)->first();
-        $submitted_kyc = SubmittedKyc::where('type', 'dm')->where('creater_id', dm()->id)->where('creater_type', get_class(dm()))->first();
+        $kyc_setting = KycSetting::where('type', 'lam')->where('status',1)->first();
+        $submitted_kyc = SubmittedKyc::where('type', 'lam')->where('creater_id', lam()->id)->where('creater_type', get_class(lam()))->first();
         if($submitted_kyc && ($submitted_kyc->status === 1 || $submitted_kyc->status === 0)){
             flash()->addWarning('Data already submitted.');
             return redirect()->back();
@@ -73,7 +73,7 @@ class KycVerificationController extends Controller
                             $file = $request->file($input_name);
 
                             $customFileName = time().'.' . $file->getClientOriginalExtension();
-                            $path = $file->storeAs('district-manager/kyc/'.dm()->id.'/'.'image-single/'.$input_name, $customFileName,'public');
+                            $path = $file->storeAs('local_area_manager/kyc/'.lam()->id.'/'.'image-single/'.$input_name, $customFileName,'public');
                             $data[$fd->field_key]=$path;
                         }else{
                             if(isset($saved_data->$input_name) && !empty($saved_data->$input_name)){
@@ -96,7 +96,7 @@ class KycVerificationController extends Controller
                             foreach($request->$input_name as $key=>$file){
                                 if ($file->isFile()) {
                                     $customFileName = time().rand(100000, 999999).'.' . $file->getClientOriginalExtension();
-                                    $image_path = $file->storeAs('district-manager/kyc/'.dm()->id.'/'.'image-multiple/'.$input_name, $customFileName,'public');
+                                    $image_path = $file->storeAs('local_area_manager/kyc/'.lam()->id.'/'.'image-multiple/'.$input_name, $customFileName,'public');
                                     $image_paths = json_decode(json_encode($image_paths), true);
                                     $image_paths = array_values($image_paths);
                                     array_push($image_paths, $image_path);
@@ -118,7 +118,7 @@ class KycVerificationController extends Controller
                         }
 
                         $file_path = $request->$input_name['url'];
-                        $directoryPath = 'public/district-manager/kyc/'.dm()->id.'/'.'single-uploads';
+                        $directoryPath = 'public/local_area_manager/kyc/'.lam()->id.'/'.'single-uploads';
                         if (!Storage::exists($directoryPath)) {
                             Storage::makeDirectory($directoryPath, 0755, true);
                         }
@@ -129,7 +129,7 @@ class KycVerificationController extends Controller
 
                         $sourceFilePath = $file_path;
                         $destinationFilePath = $directoryPath . '/' . $new_filename;
-                        $databasePath = 'district-manager/kyc/'.dm()->id.'/'.'single-uploads/' . $new_filename;
+                        $databasePath = 'local_area_manager/kyc/'.lam()->id.'/'.'single-uploads/' . $new_filename;
                         $moveSuccessful = Storage::move($sourceFilePath, $destinationFilePath);
 
                         $data[$fd->field_key]=$databasePath;
@@ -152,7 +152,7 @@ class KycVerificationController extends Controller
 
                         foreach ($request->$input_name as $key => $input_data) {
                             $file_path = $input_data['url'];
-                            $directoryPath = 'public/district-manager/kyc/'.dm()->id.'/'.'multiple-uploads';
+                            $directoryPath = 'public/local_area_manager/kyc/'.lam()->id.'/'.'multiple-uploads';
 
                             if (!Storage::exists($directoryPath)) {
                                 $path = Storage::makeDirectory($directoryPath, 0755, true);
@@ -164,7 +164,7 @@ class KycVerificationController extends Controller
 
                             $sourceFilePath = $file_path;
                             $destinationFilePath = $directoryPath . '/' . $new_filename;
-                            $databasePath = 'district-manager/kyc/'.dm()->id.'/'.'multiple-uploads/' . $new_filename;
+                            $databasePath = 'local_area_manager/kyc/'.lam()->id.'/'.'multiple-uploads/' . $new_filename;
 
                             $moveSuccessful = Storage::move($sourceFilePath, $destinationFilePath);
                             if ($moveSuccessful) {
@@ -194,13 +194,13 @@ class KycVerificationController extends Controller
 		}
 		$this->validate($request, $rules);
         if($submitted_kyc){
-            $submitted_kyc->type = 'dm';
-            $submitted_kyc->creater()->associate(dm());
+            $submitted_kyc->type = 'lam';
+            $submitted_kyc->creater()->associate(lam());
             $submitted_kyc->submitted_data = json_encode($data);
         }else{
             $submitted_kyc = new SubmittedKyc();
-            $submitted_kyc->type = 'dm';
-            $submitted_kyc->creater()->associate(dm());
+            $submitted_kyc->type = 'lam';
+            $submitted_kyc->creater()->associate(lam());
             $submitted_kyc->submitted_data = json_encode($data);
         }
         $submitted_kyc->status = 0;
@@ -215,7 +215,7 @@ class KycVerificationController extends Controller
             $file = $request->file('file');
             $originalFileName = $file->getClientOriginalName();
 
-            $filePath = $file->store('public/district_manager/kyc/'.dm()->id.'/'.'uploads');
+            $filePath = $file->store('public/local_area_manager/kyc/'.lam()->id.'/'.'uploads');
             $ext = pathinfo($filePath, PATHINFO_EXTENSION);
             $title = pathinfo($originalFileName, PATHINFO_FILENAME);
             return response()->json(['success' => true, 'file_path' => $filePath, 'title' => $title, 'extension' => $ext, 'url' => base64_encode($filePath)]);

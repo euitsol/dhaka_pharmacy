@@ -1,4 +1,4 @@
-@extends('district_manager.layouts.master', ['pageSlug' => 'kyc_verification'])
+@extends('local_area_manager.layouts.master', ['pageSlug' => 'kyc_verification'])
 @push('css')
 <style>
     .form-group .form-control, .input .input-group .form-control {
@@ -57,7 +57,7 @@
                         $disabled = false;
                     }
                 @endphp 
-                <form method="POST" action="{{route('dm.kyc.store')}}" autocomplete="off" enctype="multipart/form-data" disabled>
+                <form method="POST" action="{{route('lam.kyc.store')}}" autocomplete="off" enctype="multipart/form-data" disabled>
 
                     
                     @csrf
@@ -115,7 +115,7 @@
                                         class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }} image-upload"
                                         @if(isset($datas->submitted_data) && isset(json_decode($datas->submitted_data)->$a) && !empty(json_decode($datas->submitted_data)))
                                         data-existing-files="{{ storage_url(json_decode($datas->submitted_data)->$a) }}"
-                                        data-delete-url="{{route('dm.kyc.file.delete', [$details->id, $a])}}"
+                                        data-delete-url="{{route('lam.kyc.file.delete', [$details->id, $a])}}"
                                         @endif
                                         >
                                         @include('alerts.feedback', ['field' => $fd->field_key])
@@ -127,7 +127,7 @@
                                         $result = '';
                                         $itemCount = count($data);
                                         foreach ($data as $index => $url) {
-                                            $result .= route('dm.kyc.file.delete', [$details->id, $a, base64_encode($url)]);
+                                            $result .= route('lam.kyc.file.delete', [$details->id, $a, base64_encode($url)]);
                                             if($index === $itemCount - 1) {
                                                 $result .= '';
                                             }else{
@@ -184,7 +184,7 @@
                                                     <input {{$disabled ? 'disabled' : ''}} type="text" class="form-control" value="{{file_title_from_url(json_decode($datas->submitted_data)->$a)}}" disabled>
                                                     <input {{$disabled ? 'disabled' : ''}} type="text" class="form-control" value="{{file_name_from_url(json_decode($datas->submitted_data)->$a)}}" disabled>
                                                     @if(!$disabled)
-                                                    <a href="{{route('dm.kyc.file.delete', [$details->id, $a])}}">
+                                                    <a href="{{route('lam.kyc.file.delete', [$details->id, $a])}}">
                                                         <span class="input-group-text text-danger h-100"><i class="tim-icons icon-trash-simple"></i></span>
                                                     </a>
                                                     @endif
@@ -229,7 +229,7 @@
                                                         <input {{$disabled ? 'disabled' : ''}} type="hidden" class="d-none" name="{{$fd->field_key}}[{{$count}}][url]" value="{{ file_name_from_url($url) }}">
                                                         <input {{$disabled ? 'disabled' : ''}} type="hidden" class="d-none" name="{{$fd->field_key}}[{{$count}}][title]" value="{{ file_title_from_url($url) }}">
                                                         @if(!$disabled)
-                                                        <a href="{{route('dm.kyc.file.delete', [$details->id, $a, base64_encode($url)])}}">
+                                                        <a href="{{route('lam.kyc.file.delete', [$details->id, $a, base64_encode($url)])}}">
                                                             <span class="input-group-text text-danger h-100"><i class="tim-icons icon-trash-simple"></i></span>
                                                         </a>
                                                         @endif
@@ -267,6 +267,7 @@
                                 @endif
 
 							@endforeach
+						
                         <div id="message"></div>
                     </div>
                     <div class="card-footer">
@@ -314,7 +315,7 @@
                 formData.append('file', this.files[0]);
 
                 xhr = $.ajax({
-                    url: "{{ route('dm.kyc.file.upload') }}",
+                    url: "{{ route('lam.kyc.file.upload') }}",
                     type: "POST",
                     data: formData,
                     dataType: "json",
@@ -340,7 +341,7 @@
 
                             alert("File uploaded successfully.");
 
-                            let url = ("{{ route('dm.kyc.file.delete', ['url']) }}");
+                            let url = ("{{ route('lam.kyc.file.delete', ['url']) }}");
                             let _url = url.replace('url', response.url);
                             if(isMultiple){
                                 var file = `<div class="form-group">

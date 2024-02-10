@@ -1,8 +1,8 @@
 <div class="sidebar">
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="{{ route('dashboard') }}" class="simple-text logo-mini">{{ __('DP') }}</a>
-            <a href="{{ route('dashboard') }}" class="simple-text logo-normal">{{ __('Dhaka Pharmacy') }}</a>
+            <a href="{{ route('lam.dashboard') }}" class="simple-text logo-mini">{{ __('DP') }}</a>
+            <a href="{{ route('lam.dashboard') }}" class="simple-text logo-normal">{{ __('Dhaka Pharmacy') }}</a>
         </div>
         <ul class="nav">
 
@@ -19,7 +19,12 @@
                 </a>
             </li>
 
-
+            <li @if ($pageSlug == 'kyc_verification') class="active" @endif>
+                <a href="{{route('lam.kyc.verification')}}">
+                    <i class="fa-solid fa-minus @if ($pageSlug == 'kyc_verification') fa-beat-fade @endif"></i>
+                    <p>{{ 'KYC Verification Center' }}</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'user') class="active" @endif>
                 <a href="{{ route('lam.user.list') }}">
                     <i class="fa-solid fa-minus @if ($pageSlug == 'user') fa-beat-fade @endif"></i>

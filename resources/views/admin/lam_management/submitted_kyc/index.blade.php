@@ -39,11 +39,9 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'javascript:void(0)',
+                                                    'routeName' => 'lam_management.lam_kyc.kyc_list.local_area_manager_kyc_details',
                                                     'params' => [$data->id],
                                                     'label' => 'View Details',
-                                                    'className' => 'view',
-                                                    'data-id' => $data->id,
                                                 ],
                                             ],
                                         ])
