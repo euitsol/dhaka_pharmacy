@@ -8,7 +8,7 @@
 
             <li @if ($pageSlug == 'lam_dashboard') class="active" @endif>
                 <a href="{{ route('lam.dashboard') }}">
-                    <i class="fa-solid fa-minus @if ($pageSlug == 'dm_dashboard') fa-beat-fade @endif"></i>
+                    <i class="fa-solid fa-minus @if ($pageSlug == 'lam_dashboard') fa-beat-fade @endif"></i>
                     <p>{{ 'Dashboard' }}</p>
                 </a>
             </li>

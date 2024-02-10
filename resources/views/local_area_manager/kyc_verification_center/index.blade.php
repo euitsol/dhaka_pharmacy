@@ -62,11 +62,11 @@
                         $disabled = false;
                     }
                 @endphp 
+                    @if(isset($details->form_data))
                 <form method="POST" action="{{route('lam.kyc.store')}}" autocomplete="off" enctype="multipart/form-data" disabled>
 
                     
                     @csrf
-                    @if(isset($details->form_data))
                     <div class="card-body">
 							@foreach(json_decode($details->form_data) as $k => $fd)
                             @php
@@ -278,8 +278,8 @@
                     <div class="card-footer">
                         <button {{$disabled ? 'disabled' : ''}} type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
                     </div>
-                    @endif
                 </form>
+                @endif
             </div>
         </div>
         <div class="col-md-4">

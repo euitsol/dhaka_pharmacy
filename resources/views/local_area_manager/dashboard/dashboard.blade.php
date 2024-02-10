@@ -1,4 +1,4 @@
-@extends('local_area_manager.layouts.master', ['pageSlug' => 'dm_dashboard'])
+@extends('local_area_manager.layouts.master', ['pageSlug' => 'lam_dashboard'])
 
 @section('title', 'Dashboard')
 @push('css')
