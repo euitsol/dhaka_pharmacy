@@ -41,6 +41,7 @@ use App\Http\Controllers\DM\UserManagement\UserManagementController as DmUserCon
 use App\Http\Controllers\LAM\UserManagement\UserManagementController as LamUserController;
 use App\Http\Controllers\LAM\LamProfileController;
 use App\Http\Controllers\DM\KYC\KycVerificationController as DmKycVerificationController;
+use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 
 /*
@@ -54,9 +55,9 @@ use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerification
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('admin.login');
-});
+// Route::get('/', function () {
+//     return redirect()->route('admin.login');
+// });
 
 
 Auth::routes();
@@ -458,3 +459,8 @@ Route::group(
             Route::get('delete/{id}', 'delete')->name('delete');
         });
     });
+
+
+
+    // Frontend Routes 
+    Route::get('/', [HomePageController::class, 'home'])->name('home');
