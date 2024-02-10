@@ -149,10 +149,10 @@
                                         </div>
                                         <div class="status_button">
                                             @if($data->status === 0)
-                                                <a href="{{route('dm_management.dm_kyc.kyc_list.district_manager_kyc_status',['id'=>$data->id, 'status'=>1])}}" class="btn btn-sm btn-success">{{__('Accept')}}</a>
-                                                <a href="{{route('dm_management.dm_kyc.kyc_list.district_manager_kyc_status',$data->id)}}" class="btn btn-sm btn-warning">{{__('Declined')}}</a>
+                                                <a href="{{route('dm_management.dm_kyc.kyc_list.accept.district_manager_kyc_status',$data->id)}}" class="btn btn-sm btn-success">{{__('Accept')}}</a>
+                                                <a href="javascript:void(0)" data-id="{{$data->id}}" class="btn btn-sm btn-warning declined">{{__('Declined')}}</a>
                                             @elseif($data->status === 1)
-                                                <a href="{{route('dm_management.dm_kyc.kyc_list.district_manager_kyc_status',$data->id)}}" class="btn btn-sm btn-warning">{{__('Declined')}}</a>
+                                                <a href="javascript:void(0)" data-id="{{$data->id}}" class="btn btn-sm btn-warning declined">{{__('Declined')}}</a>
                                             @endif
                                             
                                         </div>
@@ -164,6 +164,33 @@
                 </div>
         </div>
     </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{__('Add Declined Resoune')}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card m-0">
+                    <div class="card-body">
+                        <form id="declined_form">
+                            @csrf
+                            <div class="form-group">
+                                <label>{{ __('Note') }} <span class="text-danger">{{__('*')}}</span></label>
+                                <textarea name="note" id="note" class="form-control"></textarea>
+                                @include('alerts.feedback', ['field' => 'note'])
+                            </div>
+                            <span type="submit" id="updateDeclinedNote"  class="btn btn-primary btn-sm">{{ __('Update') }}</span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('js')
 <script>
@@ -174,5 +201,58 @@
         $('.content').find('tr th:nth-child(2)').css('width',main_th_width2+'px');
     });
 </script>
+
+@push('js')
+    <script>
+        // Declined On Click
+        $(document).ready(function() {
+            $('.declined').on('click', function() {
+                let id = $(this).data('id');
+                $('#updateDeclinedNote').attr('data-id',id)
+                $('#exampleModal').modal('show');
+            });
+        });
+
+        // Declined Update
+        $(document).ready(function () {
+            $('#updateDeclinedNote').click(function () {
+                var form = $('#declined_form');
+                let id = $(this).data('id');
+                let _url = ("{{ route('dm_management.dm_kyc.kyc_list.declined.district_manager_kyc_status', ['id']) }}");
+                let __url = _url.replace('id', id);
+                $.ajax({
+                    type: 'PUT',
+                    url: __url,
+                    data: form.serialize(),
+                    success: function (response) {
+                        $('#exampleModal').modal('hide');
+                        console.log(response.message);
+                        window.location.reload();
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 422) {
+                            // Handle validation errors
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function (field, messages) {
+                                // Display validation errors
+                                var errorHtml = '';
+                                $.each(messages, function (index, message) {
+                                    errorHtml += '<span class="invalid-feedback d-block" role="alert">' + message + '</span>';
+                                });
+                                $('[name="' + field + '"]').after(errorHtml);
+                            });
+                        } else {
+                            // Handle other errors
+                            console.log('An error occurred.');
+                        }
+                    }
+                });
+            });
+        });
+</script>
+@endpush
+
+
+
     
 @endpush

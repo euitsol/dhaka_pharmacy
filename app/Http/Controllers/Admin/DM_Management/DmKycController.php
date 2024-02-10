@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\DM_Management;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SubmittedKycRequest;
 use App\Models\KycSetting;
 use App\Models\SubmittedKyc;
 use Illuminate\Http\JsonResponse;
@@ -36,19 +37,28 @@ class DmKycController extends Controller
         return view('admin.dm_management.submitted_kyc.details',$data);
 
     }
-    public function status($id, $status = NULL)
+    public function accept($id)
     {
         $data = SubmittedKyc::findOrFail($id);
-        $data->status = $status;
+        $data->status = 1;
         $data->update();
-        if($data->status === 1){
-            flash()->addSuccess('KYC accepted succesfully');
-        }
-        if($data->status === NULL){
-            flash()->addSuccess('KYC declined succesfully');
-        }
+        flash()->addSuccess('KYC accepted succesfully');
         return redirect()->back();
 
+    }
+
+    public function declained(SubmittedKycRequest $req, $id) {
+        try {
+            $data = SubmittedKyc::findOrFail($id);
+            $data->status = NULL;
+            $data->note = $req->note;
+            $data->update();
+            flash()->addSuccess('KYC declained succesfully');
+            return response()->json(['message' => 'Email template updated successfully']);
+        } catch (\Exception $e) {
+            flash()->addError('Somethings is wrong.');
+            return response()->json(['message' => 'An error occurred'], 500);
+        }
     }
 
     public function view_or_download($file_url){
