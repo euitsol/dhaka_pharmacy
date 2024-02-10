@@ -2,12 +2,13 @@
 
 @section('content')
     <div class="row">
+        @foreach ($datas as $groupDatas)
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Local Area Manager KYC List')}}</h4>
+                            <h4 class="card-title">{{__("Local Area Manager ". (($groupDatas[0]['status'] === 1) ? 'Accepted' : (($groupDatas[0]['status'] === 0) ? 'Pending' : 'Declined')) ." KYC")}}</h4>
                         </div>
                     </div>
                 </div>
@@ -25,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($datas as $data)
+                            @foreach ($groupDatas as $data)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $data->type }} </td>
@@ -58,6 +59,7 @@
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])

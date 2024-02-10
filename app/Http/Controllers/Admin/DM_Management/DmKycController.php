@@ -23,10 +23,7 @@ class DmKycController extends Controller
 
     public function index():View
     {
-        $data['datas'] = SubmittedKyc::with('creater')->where('type','dm')->latest()->get();
-        $data['count']= $data['datas']->map(function($data){
-            return count(json_decode($data->submitted_data,true));
-        });
+        $data['datas'] = SubmittedKyc::with('creater')->where('type','dm')->orderBy('status','desc')->get()->groupBy('status');
         return view('admin.dm_management.submitted_kyc.index',$data);
 
     }

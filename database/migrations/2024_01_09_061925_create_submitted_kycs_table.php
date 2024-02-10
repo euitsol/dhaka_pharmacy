@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::create('submitted_kycs', function (Blueprint $table) {
             $table->id();
-            $table->enum('type',['user','pharmacy','rider','doctor','dm','lam'])->unique();
+            $table->enum('type',['user','pharmacy','rider','doctor','dm','lam']);
             $table->boolean('status')->nullable();
             $table->json('submitted_data');
             $table->longText('note')->nullable();

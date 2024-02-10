@@ -23,11 +23,8 @@ class LamKycController extends Controller
 
     public function index():View
     {
-        $s['datas'] = SubmittedKyc::with('creater')->where('type','lam')->latest()->get();
-        $s['count']= $s['datas']->map(function($data){
-            return count(json_decode($data->submitted_data,true));
-        });
-        return view('admin.lam_management.submitted_kyc.index',$s);
+        $data['datas'] = SubmittedKyc::with('creater')->where('type','lam')->orderBy('status','desc')->get()->groupBy('status');
+        return view('admin.lam_management.submitted_kyc.index',$data);
 
     }
     public function details($id):View
