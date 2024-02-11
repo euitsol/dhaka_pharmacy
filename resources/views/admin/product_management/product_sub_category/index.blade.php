@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'product_category'])
+@extends('admin.layouts.master', ['pageSlug' => 'product_sub_category'])
 
 @section('content')
     <div class="row">
@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Product Category List') }}</h4>
+                            <h4 class="card-title">{{ __('Product Sub Category List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'product.product_category.product_category_create',
+                                'routeName' => 'product.product_sub_category.product_sub_category_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new product category',
+                                'label' => 'Add new product sub category',
                             ])
                         </div>
                     </div>
@@ -24,8 +24,7 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
-                                <th>{{ __('Menu') }}</th>
-                                <th>{{ __('Featured') }}</th>
+                                <th>{{ __('Product Category') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -33,63 +32,44 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($product_categories as $product_category)
+                            @foreach ($product_categories as $product_sub_category)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $product_category->name }} </td>
+                                    <td> {{ $product_sub_category->name }} </td>
+                                    <td> {{ $product_sub_category->pro_cat->name }} </td>
                                     <td>
                                         <span
-                                            class="{{ $product_category->getMenuBadgeClass() }}">{{ $product_category->getMenu() }}</span>
+                                            class="{{ $product_sub_category->getStatusBadgeClass() }}">{{ $product_sub_category->getStatus() }}</span>
                                     </td>
-                                    <td>
-                                        <span
-                                            class="{{ $product_category->getFeaturedBadgeClass() }}">{{ $product_category->getFeatured() }}</span>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="{{ $product_category->getStatusBadgeClass() }}">{{ $product_category->getStatus() }}</span>
-                                    </td>
-                                    <td>{{ timeFormate($product_category->created_at) }}</td>
+                                    <td>{{ timeFormate($product_sub_category->created_at) }}</td>
 
-                                    <td> {{ $product_category->created_user->name ?? 'system' }} </td>
+                                    <td> {{ $product_sub_category->created_user->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
                                                     'routeName' => 'javascript:void(0)',
-                                                    'params' => [$product_category->id],
+                                                    'params' => [$product_sub_category->id],
                                                     'label' => 'View Details',
                                                     'className' => 'view',
-                                                    'data-id' => $product_category->id,
+                                                    'data-id' => $product_sub_category->id,
                                                 ],
                                                 [
                                                     'routeName' =>
-                                                        'product.product_category.product_category_edit',
-                                                    'params' => [$product_category->id],
+                                                        'product.product_sub_category.product_sub_category_edit',
+                                                    'params' => [$product_sub_category->id],
                                                     'label' => 'Update',
                                                 ],
                                                 [
                                                     'routeName' =>
-                                                        'product.product_category.menu.product_category_edit',
-                                                    'params' => [$product_category->id],
-                                                    'label' => $product_category->getBtnMenu(),
+                                                        'product.product_sub_category.status.product_sub_category_edit',
+                                                    'params' => [$product_sub_category->id],
+                                                    'label' => $product_sub_category->getBtnStatus(),
                                                 ],
                                                 [
                                                     'routeName' =>
-                                                        'product.product_category.featured.product_category_edit',
-                                                    'params' => [$product_category->id],
-                                                    'label' => $product_category->getBtnFeatured(),
-                                                ],
-                                                [
-                                                    'routeName' =>
-                                                        'product.product_category.status.product_category_edit',
-                                                    'params' => [$product_category->id],
-                                                    'label' => $product_category->getBtnStatus(),
-                                                ],
-                                                [
-                                                    'routeName' =>
-                                                        'product.product_category.product_category_delete',
-                                                    'params' => [$product_category->id],
+                                                        'product.product_sub_category.product_sub_category_delete',
+                                                    'params' => [$product_sub_category->id],
                                                     'label' => 'Delete',
                                                     'delete' => true,
                                                 ],
@@ -134,7 +114,7 @@
             $('.view').on('click', function() {
                 let id = $(this).data('id');
                 let url = (
-                    "{{ route('product.product_category.details.product_category_list', ['id']) }}");
+                    "{{ route('product.product_sub_category.details.product_sub_category_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -143,12 +123,6 @@
                     success: function(data) {
                         let status = data.status === 1 ? 'Active' : 'Deactive';
                         let statusClass = data.status === 1 ? 'badge-success' :
-                            'badge-warning';
-                        let menu = data.is_menu === 1 ? 'Yes' : 'No';
-                        let menuClass = data.is_menu === 1 ? 'badge-info' :
-                            'badge-warning';
-                        let featured = data.is_featured === 1 ? 'Yes' : 'No';
-                        let featuredClass = data.is_featured === 1 ? 'badge-info' :
                             'badge-warning';
                         var result = `
                                 <table class="table table-striped">
@@ -163,15 +137,11 @@
                                         <td><img height='100px' width='100px' class='border-1 p-2' src="${data.image}"></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Menu</th>
+                                        <th class="text-nowrap">Category Name</th>
                                         <th>:</th>
-                                        <td><span class="badge ${menuClass}">${menu}</span></td>
+                                        <td>${data.pro_cat.name}</td>
                                     </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Featured</th>
-                                        <th>:</th>
-                                        <td><span class="badge ${featuredClass}">${featured}</span></td>
-                                    </tr>
+                                    
                                     <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>

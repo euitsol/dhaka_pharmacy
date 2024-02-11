@@ -12,6 +12,7 @@ use App\Models\MedicineCategory;
 use App\Models\MedicineStrength;
 use App\Models\MedicineUnit;
 use App\Models\ProductCategory;
+use App\Models\ProductSubCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -67,7 +68,7 @@ class MedicineController extends Controller
         }
         $medicine->name = $req->name;
         $medicine->pro_cat_id = $req->pro_cat_id;
-        $medicine->pro_cat_id = $req->pro_cat_id;
+        $medicine->pro_sub_cat_id = $req->pro_sub_cat_id;
         $medicine->generic_id = $req->generic_id;
         $medicine->company_id = $req->company_id;
         $medicine->medicine_cat_id = $req->medicine_cat_id;
@@ -87,6 +88,7 @@ class MedicineController extends Controller
     {
         $data['medicine'] = Medicine::findOrFail($id);
         $data['pro_cats'] = ProductCategory::where('status',1)->where('deleted_at',null)->orderBy('name')->get();
+        $data['pro_sub_cats'] = ProductSubCategory::where('status',1)->where('deleted_at',null)->orderBy('name')->get();
         $data['generics'] = GenericName::where('status',1)->where('deleted_at',null)->orderBy('name')->get();
         $data['companies'] = CompanyName::where('status',1)->where('deleted_at',null)->orderBy('name')->get();
         $data['medicine_cats'] = MedicineCategory::where('status',1)->where('deleted_at',null)->orderBy('name')->get();
@@ -111,7 +113,7 @@ class MedicineController extends Controller
         }
         $medicine->name = $req->name;
         $medicine->pro_cat_id = $req->pro_cat_id;
-        $medicine->pro_cat_id = $req->pro_cat_id;
+        $medicine->pro_sub_cat_id = $req->pro_sub_cat_id;
         $medicine->generic_id = $req->generic_id;
         $medicine->company_id = $req->company_id;
         $medicine->medicine_cat_id = $req->medicine_cat_id;
@@ -135,6 +137,15 @@ class MedicineController extends Controller
         flash()->addSuccess('Medicine '.$medicine->name.' status updated successfully.');
         return redirect()->route('product.medicine.medicine_list');
     }
+    public function best_selling($id): RedirectResponse
+    {
+        $medicine = Medicine::findOrFail($id);
+        $this->bestSellingChange($medicine);
+
+        flash()->addSuccess('Medicine '.$medicine->name.' best selling updated successfully.');
+        return redirect()->route('product.medicine.medicine_list');
+    }
+    
     public function delete($id): RedirectResponse
     {
         $medicine = Medicine::findOrFail($id);
@@ -142,6 +153,12 @@ class MedicineController extends Controller
 
         flash()->addSuccess('Medicine '.$medicine->name.' deleted successfully.');
         return redirect()->route('product.medicine.medicine_list');
+
+    }
+    public function get_sub_cat($id): JsonResponse
+    {
+        $data['pro_sub_cats'] = ProductSubCategory::where('pro_cat_id',$id)->where('status',1)->where('deleted_at',null)->orderBy('name')->get();
+        return response()->json($data);
 
     }
 }

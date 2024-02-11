@@ -8,23 +8,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
-    use AuditColumnsTrait, SoftDeletes;
+    use AuditColumnsTrait,SoftDeletes;
 
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('product_categories', function (Blueprint $table) {
+        Schema::create('product_sub_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('image')->nullable();
             $table->boolean('status')->default(1);
-            $table->boolean('is_featured')->default(0);
-            $table->boolean('is_menu')->default(0);
+            $table->unsignedBigInteger('pro_cat_id');
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);
+
+
+            $table->foreign('pro_cat_id')->references('id')->on('product_categories')->onDelete('cascade')->onUpdate('cascade'); 
         });
     }
 
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_categories');
+        Schema::dropIfExists('product_sub_categories');
     }
 };

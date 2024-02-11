@@ -101,4 +101,6 @@ class BaseModel extends Model
             return 'badge badge-info';
         }
     }
+
+    
 }

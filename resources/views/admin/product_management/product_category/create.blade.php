@@ -19,14 +19,19 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('product.product_category.product_category_create') }}">
+                    <form method="POST" action="{{ route('product.product_category.product_category_create') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-
                             <label>{{ __('Name') }}</label>
                             <input type="text" name="name" class="form-control" placeholder="Enter name"
                                 value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
+                        </div>
+                        <div class="form-group">
+                            <label>{{ __('Image') }}</label>
+                            <input type="file" accept="image/*" name="image" class="form-control image-upload"
+                                value="{{ old('image') }}">
+                            @include('alerts.feedback', ['field' => 'image'])
                         </div>
                         <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
                     </form>
