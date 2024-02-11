@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        @foreach ($datas as $groupDatas)
+        @forelse ($datas as $groupDatas)
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
@@ -61,7 +61,39 @@
                 </div>
             </div>
         </div>
-        @endforeach
+        @empty
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4 class="card-title">{{__("District Manager KYC List")}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <table class="table table-striped datatable">
+                        <thead>
+                            <tr>
+                                <th>{{ __('SL') }}</th>
+                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Type') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Submitted by') }}</th>
+                                <th>{{ __('Action') }}</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="card-footer py-4">
+                    <nav class="d-flex justify-content-end" aria-label="...">
+                    </nav>
+                </div>
+            </div>
+        </div>
+        @endforelse
     </div>
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
