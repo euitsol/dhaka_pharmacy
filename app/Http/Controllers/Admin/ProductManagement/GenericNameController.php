@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin\ProductManagement;
+namespace App\Http\Controllers\Admin\ProductManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GenericNameRequest;

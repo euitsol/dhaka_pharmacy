@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -41,6 +43,107 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+
+
+    // Google Login 
+    public function googleRedirect()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googleCallback()
+    {
+        try {
+            $user = Socialite::driver('google')->user();
+        } catch (Exception $e) {
+            return redirect('/login');
+        }
+        $existing = User::where('email', $user->email)->first();
+        if ($existing) {
+            auth()->login($existing);
+        } else {
+            $newUser                  = new User;
+            $newUser->name            = $user->name;
+            $newUser->email           = $user->email;
+            $newUser->google_id       = $user->id;
+            $newUser->avatar          = $user->avatar;
+            $newUser->avatar_original = $user->avatar_original;
+            $newUser->token           = $user->token;
+            $newUser->refresh_token   = $user->refreshToken;
+            $newUser->save();
+            auth()->login($newUser);
+        }
+        return redirect()->route('user.profile');
+    }
+
+
+    // Github Login 
+    public function githubRedirect()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function githubCallback()
+    {
+        try {
+            $githubUser = Socialite::driver('github')->user();
+        } catch (Exception $e) {
+            return redirect('/login');
+        }
+        $existing = User::where('email', $githubUser->email)->first();
+        if ($existing) {
+            auth()->login($existing);
+        } else {
+            $newUser                  = new User;
+            $newUser->name            = $githubUser->name;
+            $newUser->email           = $githubUser->email;
+            $newUser->github_id       = $githubUser->id;
+            $newUser->avatar          = $githubUser->avatar;
+            $newUser->token           = $githubUser->token;
+            $newUser->refresh_token   = $githubUser->refreshToken;
+            $newUser->save();
+            auth()->login($newUser);
+        }
+        return redirect()->route('user.profile');
+    }
+
+
+    // Facebook Login 
+    public function facebookRedirect()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function facebookCallback()
+    {
+        try {
+            $facebookUser = Socialite::driver('facebook')->user();
+        } catch (Exception $e) {
+            return redirect('/login');
+        }
+
+        dd($facebookUser);
+        $existing = User::where('email', $facebookUser->email)->first();
+        if ($existing) {
+            auth()->login($existing);
+        } else {
+            $newUser                  = new User;
+            $newUser->name            = $facebookUser->name;
+            $newUser->email           = $facebookUser->email;
+            $newUser->facebook_id       = $facebookUser->id;
+            $newUser->avatar          = $facebookUser->avatar;
+            $newUser->token           = $facebookUser->token;
+            $newUser->refresh_token   = $facebookUser->refreshToken;
+            $newUser->save();
+            auth()->login($newUser);
+        }
+        return redirect()->route('user.profile');
+    }
+
+
+
+
 
 
     public function showLoginForm()

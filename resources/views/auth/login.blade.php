@@ -7,6 +7,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header"><a href="{{route('login_with_google')}}">{{ __('Login With Google') }}</a></div>
+                <div class="card-header"><a href="{{route('login_with_github')}}">{{ __('Login With Github') }}</a></div>
+                <div class="card-header"><a href="{{route('login_with_facebook')}}">{{ __('Login With Facebook') }}</a></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
