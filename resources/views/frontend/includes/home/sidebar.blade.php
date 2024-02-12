@@ -1,15 +1,18 @@
+
 <section class="col-md-3 col-lg-2 sidebar-cat-section">
     <div class="col sticky-col pb-4">
-        <h2 class="text-center cat-title">Categories</h2>
+        <h2 class="text-center cat-title">{{__('Categories')}}</h2>
         <div class="row mt-4 px-4">
-            <a href="#" class="col-6 text-center single-cat text-decoration-none">
-                <div class="icon m-auto">
-                    <img class="w-100" src="{{ asset('frontend/asset/img/medicin.png') }}"
-                        alt="category icon">
-                </div>
-                <h2 class="mt-2">Medicine</h2>
-            </a>
-            <a href="#" class="col-6 text-center single-cat text-decoration-none">
+            @foreach ($menuItems as $item)
+                <a href="#" class="col-6 text-center single-cat text-decoration-none">
+                    <div class="icon m-auto">
+                        <img class="w-100" src="{{($item->image) ? storage_url($item->image) : asset('frontend/default/cat_img.png') }}"
+                            alt="category icon">
+                    </div>
+                    <h2 class="mt-2">{{__($item->name)}}</h2>
+                </a>
+            @endforeach
+            {{-- <a href="#" class="col-6 text-center single-cat text-decoration-none">
                 <div class="icon  m-auto">
                     <img class="w-100" src="{{ asset('frontend/asset/img/Diagnostic-Center.png') }}"
                         alt="category icon">
@@ -71,7 +74,7 @@
                         alt="category icon">
                 </div>
                 <h2 class="mt-2">Surgical Product</h2>
-            </a>
+            </a> --}}
         </div>
     </div>
 </section>

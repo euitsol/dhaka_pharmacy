@@ -3,13 +3,15 @@
 
 @section('content')
     <div class="row pt-4">
+        @if($menuItems->isNotEmpty())
         <!--===========  Sidebar-Category-Section-Include ==============-->
-        @include('frontend.includes.home.sidebar')
+        @include('frontend.includes.home.sidebar',['menuItems'=>$menuItems])
         <!--=========== Sidebar-Category-Section-Include  ==============-->
+        @endif
 
 
         <!--=========== Main Content Section Start ==============-->
-        <div class="col-md-9 col-lg-10 content-col">
+        <div class="{{($menuItems->isNotEmpty() ? 'col-md-9 col-lg-10' : 'col-12')}} content-col">
             <!--========= Slider-Section-Include ========-->
             @include('frontend.includes.home.slider')
             <!--========= Slider-Section-Include ========-->
@@ -18,7 +20,7 @@
             <section class="product-section pb-4 mb-5">
                 <div class="row">
                     <div class="col-3 best-selling-col">
-                        <h2 class="title mb-4">Best Selling</h2>
+                        <h2 class="title mb-4">{{__('Best Selling')}}</h2>
                         <div class="all-product">
                             <div class="col-12 single-item">
                                 <div class="row">
@@ -145,12 +147,15 @@
                                                 <li class="text-right" style="text-align: right;">
                                                     <a href="">All</a>
                                                 </li>
-                                                <li><a href="#">Medicine</a></li>
-                                                <li><a href="#">Diagnostic Center</a></li>
+                                                @foreach ($featuredItems as $item)
+                                                    <li><a href="#">{{__($item->name)}}</a></li>
+                                                @endforeach
+                                                
+                                                {{-- <li><a href="#">Diagnostic Center</a></li>
                                                 <li><a href="#">Medical Equipment</a></li>
                                                 <li><a href="#">Medical Equipment</a></li>
                                                 <li><a href="#">Medical Equipment</a></li>
-                                                <li><a href="#">Medical Equipment</a></li>
+                                                <li><a href="#">Medical Equipment</a></li> --}}
                                             </ul>
                                         </div>
 
