@@ -320,8 +320,23 @@ body{
   color: #000;
   transition: 0.4s;
 }
+.product-section .cat-filter-row .cat-list li.active a{  
+  position: relative;
+  color: var(--asent-color);
+}
+.product-section .cat-filter-row .cat-list li.active a::after{  
+  position: absolute;
+  content: "";
+  background: var(--secundary-color);
+  width: calc(100% + 5px);
+  height: 2px;
+  bottom: -15%;
+  left: 50%;
+  transform: translatex(-50%);
+}
 .product-section .cat-filter-row .cat-list .uk-slide-active a{  
   position: relative;
+  color: var(--asent-color);
 }
 .product-section .cat-filter-row .cat-list .uk-slide-active a::after{  
   position: absolute;

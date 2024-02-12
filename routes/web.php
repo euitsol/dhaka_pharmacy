@@ -490,3 +490,4 @@ Route::group(
 
 // Frontend Routes 
 Route::get('/', [HomePageController::class, 'home'])->name('home');
+Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeaturedProducts'])->name('home.featured_products');

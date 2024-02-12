@@ -136,7 +136,7 @@
                     <div class="col-9">
                         <div class="row cat-filter-row gx-4">
                             <div class="col-3">
-                                <h2 class="title">Featured Products</h2>
+                                <h2 class="title">{{__('Featured Products')}}</h2>
                             </div>
                             <div class="col-8">
                                 <div class="slider-col" uk-slider="finite: true">
@@ -144,173 +144,58 @@
                                         <div class="uk-slider-container uk-light">
                                             <ul
                                                 class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
-                                                <li class="text-right" style="text-align: right;">
-                                                    <a href="">All</a>
+                                                <li class="text-right active" style="text-align: right;">
+                                                    <a href="javascript:void(0)" class="featured_item" data-id="all">{{_('All')}}</a>
                                                 </li>
                                                 @foreach ($featuredItems as $item)
-                                                    <li><a href="#">{{__($item->name)}}</a></li>
+                                                    <li><a href="javascript:void(0)" class="featured_item" data-id="{{$item->id}}">{{__($item->name)}}</a></li>
                                                 @endforeach
-                                                
-                                                {{-- <li><a href="#">Diagnostic Center</a></li>
-                                                <li><a href="#">Medical Equipment</a></li>
-                                                <li><a href="#">Medical Equipment</a></li>
-                                                <li><a href="#">Medical Equipment</a></li>
-                                                <li><a href="#">Medical Equipment</a></li> --}}
                                             </ul>
                                         </div>
-
+                
                                         <div class="uk-hidden@s uk-light btn-arrow">
                                             <a class="uk-position-center-left uk-position-small" href
                                                 uk-slidenav-previous uk-slider-item="previous"></a>
                                             <a class="uk-position-center-right uk-position-small" href
                                                 uk-slidenav-next uk-slider-item="next"></a>
                                         </div>
-
+                
                                         <div class="uk-visible@s btn-arrow">
                                             <a class="uk-position-center-left-out uk-position-small" href
                                                 uk-slidenav-previous uk-slider-item="previous"></a>
                                             <a class="uk-position-center-right-out uk-position-small" href
                                                 uk-slidenav-next uk-slider-item="next"></a>
                                         </div>
-
+                
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row all-products mt-3">
-                            <div class="col-3">
-                                <div class="single-pdct">
-                                    <div class="pdct-img">
-                                        <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="pdct-info">
-                                        <h3>glipita m 50/500</h3>
-                                        <h3>Metformin Hydrochloride</h3>
-                                        <h4><span>&#2547;</span>14</h4>
-                                        <a class="cart-btn" href="#"><img
-                                                src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                alt="">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="single-pdct">
-                                    <div class="pdct-img">
-                                        <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="pdct-info">
-                                        <h3>glipita m 50/500</h3>
-                                        <h3>Metformin Hydrochloride</h3>
-                                        <h4><span>&#2547;</span>14</h4>
-                                        <a class="cart-btn" href="#"><img
-                                                src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                alt="">Add to Cart</a>
+                            @foreach ($products as $product)
+                                <div class="col-3">
+                                    <div class="single-pdct">
+                                        <div class="pdct-img">
+                                            <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
+                                                alt="Product Image">
+                                        </div>
+                                        <div class="pdct-info">
+                                            <h3>glipita m 50/500</h3>
+                                            <h3>Metformin Hydrochloride</h3>
+                                            <h4><span>&#2547;</span>14</h4>
+                                            <a class="cart-btn" href="#"><img
+                                                    src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
+                                                    alt="">Add to Cart</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="single-pdct">
-                                    <div class="pdct-img">
-                                        <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="pdct-info">
-                                        <h3>glipita m 50/500</h3>
-                                        <h3>Metformin Hydrochloride</h3>
-                                        <h4><span>&#2547;</span>14</h4>
-                                        <a class="cart-btn" href="#"><img
-                                                src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                alt="">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="single-pdct">
-                                    <div class="pdct-img">
-                                        <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="pdct-info">
-                                        <h3>glipita m 50/500</h3>
-                                        <h3>Metformin Hydrochloride</h3>
-                                        <h4><span>&#2547;</span>14</h4>
-                                        <a class="cart-btn" href="#"><img
-                                                src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                alt="">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="single-pdct">
-                                    <div class="pdct-img">
-                                        <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="pdct-info">
-                                        <h3>glipita m 50/500</h3>
-                                        <h3>Metformin Hydrochloride</h3>
-                                        <h4><span>&#2547;</span>14</h4>
-                                        <a class="cart-btn" href="#"><img
-                                                src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                alt="">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="single-pdct">
-                                    <div class="pdct-img">
-                                        <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="pdct-info">
-                                        <h3>glipita m 50/500</h3>
-                                        <h3>Metformin Hydrochloride</h3>
-                                        <h4><span>&#2547;</span>14</h4>
-                                        <a class="cart-btn" href="#"><img
-                                                src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                alt="">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="single-pdct">
-                                    <div class="pdct-img">
-                                        <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="pdct-info">
-                                        <h3>glipita m 50/500</h3>
-                                        <h3>Metformin Hydrochloride</h3>
-                                        <h4><span>&#2547;</span>14</h4>
-                                        <a class="cart-btn" href="#"><img
-                                                src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                alt="">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="single-pdct">
-                                    <div class="pdct-img">
-                                        <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="pdct-info">
-                                        <h3>glipita m 50/500</h3>
-                                        <h3>Metformin Hydrochloride</h3>
-                                        <h4><span>&#2547;</span>14</h4>
-                                        <a class="cart-btn" href="#"><img
-                                                src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                alt="">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-
+                            @endforeach 
                         </div>
+                        @if(count($products) >=8)
                         <div class="row show-more mt-5">
-                            <a class="all-pdct-btn text-center" href="#">All Products</a>
+                            <a class="all-pdct-btn text-center" href="#">{{__('All Products')}}</a>
                         </div>
+                        @endif
                     </div>
                 </div>
             </section>
@@ -364,3 +249,59 @@
         <!--=========== Main Content Section End ==============-->
     </div>
 @endsection
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $('.cat-filter-row .uk-slidenav-next, .cat-filter-row .uk-slidenav-previous').on('click',function(){
+                $('.cat-list li').removeClass('active');
+            })
+
+            $('.featured_item').on('click', function() {
+                $('.cat-list li').removeClass('active');
+                $('.cat-list li').removeClass('uk-slide-active');
+                $(this).parent('li').addClass('active');
+                let id = $(this).data('id');
+                let url = ("{{ route('home.featured_products', ['id']) }}");
+                let _url = url.replace('id', id);
+
+                $.ajax({
+                    url: _url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var result = '';
+                        data.products.forEach(function(product) {
+                            result += `
+                                <div class="col-3">
+                                    <div class="single-pdct">
+                                        <div class="pdct-img">
+                                            <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
+                                                alt="Product Image">
+                                        </div>
+                                        <div class="pdct-info">
+                                            <h3>glipita m 50/500</h3>
+                                            <h3>Metformin Hydrochloride</h3>
+                                            <h4><span>&#2547;</span>14</h4>
+                                            <a class="cart-btn" href="#"><img
+                                                    src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
+                                                    alt="">Add to Cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        $('.all-products').html(result);
+                        if(data.products.length >=8){
+                            $('.show-more').show();
+                        }else{
+                            $('.show-more').hide();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching local area manager data:', error);
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
