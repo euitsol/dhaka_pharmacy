@@ -3,6 +3,9 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
+            <div class="alert alert-danger {{($menuItemsCount%2 == 0) ? 'd-none' : ''}}">
+                <span>{{__("Please add an even number of sub-categories to the menu for design purposes. Now you have a total of $menuItemsCount sub-categories in your menu.")}}</span>
+            </div>
             <div class="card ">
                 <div class="card-header">
                     <div class="row">
@@ -25,6 +28,7 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Product Category') }}</th>
+                                <th>{{ __('Menu') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -37,6 +41,10 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $product_sub_category->name }} </td>
                                     <td> {{ $product_sub_category->pro_cat->name }} </td>
+                                    <td>
+                                        <span
+                                            class="{{ $product_sub_category->getMenuBadgeClass() }}">{{ $product_sub_category->getMenu() }}</span>
+                                    </td>
                                     <td>
                                         <span
                                             class="{{ $product_sub_category->getStatusBadgeClass() }}">{{ $product_sub_category->getStatus() }}</span>
@@ -59,6 +67,12 @@
                                                         'product.product_sub_category.product_sub_category_edit',
                                                     'params' => [$product_sub_category->id],
                                                     'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'product.product_sub_category.menu.product_sub_category_edit',
+                                                    'params' => [$product_sub_category->id],
+                                                    'label' => $product_sub_category->getBtnMenu(),
                                                 ],
                                                 [
                                                     'routeName' =>
@@ -124,6 +138,9 @@
                         let status = data.status === 1 ? 'Active' : 'Deactive';
                         let statusClass = data.status === 1 ? 'badge-success' :
                             'badge-warning';
+                        let menu = data.is_menu === 1 ? 'Yes' : 'No';
+                        let menuClass = data.is_menu === 1 ? 'badge-primary' :
+                            'badge-info';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -140,6 +157,12 @@
                                         <th class="text-nowrap">Category Name</th>
                                         <th>:</th>
                                         <td>${data.pro_cat.name}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="text-nowrap">Menu</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${menuClass}">${menu}</span></td>
                                     </tr>
                                     
                                     <tr>

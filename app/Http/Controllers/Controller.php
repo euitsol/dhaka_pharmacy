@@ -39,7 +39,6 @@ class Controller extends BaseController
         }else{
             $modelData->is_menu = 1;
         }
-        // $modelData->updated_by = admin()->id;
         $modelData->save();
     }
     public function bestSellingChange($modelData)

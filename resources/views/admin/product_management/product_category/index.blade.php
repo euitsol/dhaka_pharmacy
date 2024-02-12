@@ -3,6 +3,9 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
+            <div class="alert alert-danger {{($menuItemsCount%2 == 0) ? 'd-none' : ''}}">
+                <span>{{__("Please add an even number of categories to the menu for design purposes. Now you have a total of $menuItemsCount categories in your menu.")}}</span>
+            </div>
             <div class="card ">
                 <div class="card-header">
                     <div class="row">
@@ -145,11 +148,11 @@
                         let statusClass = data.status === 1 ? 'badge-success' :
                             'badge-warning';
                         let menu = data.is_menu === 1 ? 'Yes' : 'No';
-                        let menuClass = data.is_menu === 1 ? 'badge-info' :
-                            'badge-warning';
+                        let menuClass = data.is_menu === 1 ? 'badge-primary' :
+                            'badge-info';
                         let featured = data.is_featured === 1 ? 'Yes' : 'No';
-                        let featuredClass = data.is_featured === 1 ? 'badge-info' :
-                            'badge-warning';
+                        let featuredClass = data.is_featured === 1 ? 'badge-primary' :
+                            'badge-info';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>

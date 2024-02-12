@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->boolean('status')->default(1);
             $table->unsignedBigInteger('pro_cat_id');
+            $table->boolean('is_menu')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);

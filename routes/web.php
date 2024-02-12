@@ -363,6 +363,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('edit/{id}', 'edit')->name('product_sub_category_edit');
             Route::put('edit/{id}', 'update')->name('product_sub_category_edit');
             Route::get('status/{id}', 'status')->name('status.product_sub_category_edit');
+            Route::get('menu/{id}', 'menu')->name('menu.product_sub_category_edit');
             Route::get('delete/{id}', 'delete')->name('product_sub_category_delete');
         });
         Route::controller(MedicineController::class, 'medicine')->prefix('medicine')->name('medicine.')->group(function () {

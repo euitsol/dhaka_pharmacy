@@ -23,6 +23,7 @@ class ProductSubCategoryController extends Controller
     public function index(): View
     {
         $data['product_categories'] = ProductSubCategory::with(['created_user', 'updated_user'])->orderBy('name')->get();
+        $data['menuItemsCount'] = ProductSubCategory::where('is_menu',1)->where('status',1)->where('deleted_at',NULL)->count();
         return view('admin.product_management.product_sub_category.index', $data);
     }
     public function details($id): JsonResponse
@@ -71,7 +72,7 @@ class ProductSubCategoryController extends Controller
         if ($req->hasFile('image')) {
             $image = $req->file('image');
             $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'product_category/';
+            $folderName = 'product_sub_category/';
             $path = $image->storeAs($folderName, $imageName, 'public');
             if(!empty($product_sub_category->image)){
                 $this->fileDelete($product_sub_category->image);
@@ -91,6 +92,24 @@ class ProductSubCategoryController extends Controller
         $product_sub_category = ProductSubCategory::findOrFail($id);
         $this->statusChange($product_sub_category);
         flash()->addSuccess('Product Sub category ' . $product_sub_category->name . ' status updated successfully.');
+        return redirect()->route('product.product_sub_category.product_sub_category_list');
+    }
+    public function menu($id): RedirectResponse
+    {
+        $product_sub_category = ProductSubCategory::findOrFail($id);
+        $activeCount = ProductSubCategory::where('is_menu',1)->where('status',1)->where('deleted_at',NULL)->count();
+        if($product_sub_category->is_menu == 1){
+            $product_sub_category->is_menu = 0;
+        }else{
+            if($activeCount >= 10){
+                flash()->addWarning('You have already added 10 categories to the menu.');
+                return redirect()->route('product.product_sub_category.product_sub_category_list');
+            }else{
+                $product_sub_category->is_menu = 1;
+            }
+        }
+        $product_sub_category->save();
+        flash()->addSuccess('Product sub category ' . $product_sub_category->name . ' menu updated successfully.');
         return redirect()->route('product.product_sub_category.product_sub_category_list');
     }
     public function delete($id): RedirectResponse
