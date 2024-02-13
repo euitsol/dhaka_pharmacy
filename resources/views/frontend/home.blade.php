@@ -3,11 +3,11 @@
 
 @section('content')
     <div class="row pt-4">
-        @if($menuItems->isNotEmpty())
         <!--===========  Sidebar-Category-Section-Include ==============-->
-        @include('frontend.includes.home.sidebar',['menuItems'=>$menuItems])
-        <!--=========== Sidebar-Category-Section-Include  ==============-->
+        @if($menuItems->isNotEmpty())
+            @include('frontend.includes.home.sidebar',['menuItems'=>$menuItems])
         @endif
+        <!--=========== Sidebar-Category-Section-Include  ==============-->
 
 
         <!--=========== Main Content Section Start ==============-->
@@ -28,7 +28,7 @@
                                         <div class="row">
                                             <div class="col-4 img">
                                                 <img class="w-100 border border-1 rounded-1"
-                                                    src="{{ ($item->image) ? storage_url($item->image) : asset('no_img/no_img.jpg') }}"
+                                                    src="{{ ($item->image) ? storage_url($item->image) : asset('no_img/no_img.png') }}"
                                                     alt="{{$item->name}}">
                                             </div>
                                             <div class="col-8">
@@ -83,14 +83,18 @@
                             @foreach ($products as $product)
                                 <div class="col-3">
                                     <div class="single-pdct">
-                                        <div class="pdct-img">
-                                            <img class="w-100" src="{{ ($product->image) ? storage_url($product->image) : asset('no_img/no_img.png') }}"
-                                                alt="Product Image">
-                                        </div>
-                                        <div class="pdct-info">
-                                            <h3 class="fw-bold">{{$product->name}}</h3>
-                                            <p>{{$product->generic->name}}</p>
-                                            <h4><span>&#2547;</span>{{$product->price}}</h4>
+                                        <a href="{{route('product.single_product',$product->id)}}">
+                                            <div class="pdct-img">
+                                                <img class="w-100" src="{{ ($product->image) ? storage_url($product->image) : asset('no_img/no_img.png') }}"
+                                                    alt="Product Image">
+                                            </div>
+                                            <div class="pdct-info">
+                                                <h3 class="fw-bold">{{$product->name}}</h3>
+                                                <p>{{$product->generic->name}}</p>
+                                                <h4><span>&#2547;</span>{{$product->price}}</h4>
+                                            </div>
+                                        </a>
+                                        <div class="add_to_card">
                                             <a class="cart-btn" href="#"><img
                                                     src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
                                                     alt="">Add to Cart</a>

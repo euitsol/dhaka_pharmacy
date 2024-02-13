@@ -43,6 +43,7 @@ use App\Http\Controllers\LAM\UserManagement\UserManagementController as LamUserC
 use App\Http\Controllers\LAM\LamProfileController;
 use App\Http\Controllers\DM\KYC\KycVerificationController as DmKycVerificationController;
 use App\Http\Controllers\Frontend\HomePageController;
+use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 
 /*
@@ -492,3 +493,7 @@ Route::group(
 // Frontend Routes 
 Route::get('/', [HomePageController::class, 'home'])->name('home');
 Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeaturedProducts'])->name('home.featured_products');
+
+Route::controller(SingleProductController::class, 'product')->prefix('product')->name('product.')->group(function () {
+    Route::get('single-product/{slug}', 'singleProduct')->name('single_product');
+});
