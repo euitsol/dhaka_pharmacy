@@ -3,53 +3,53 @@
 @push('css')
 <style>
     
-    .entry-section {
+    .lam-login-section {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     }    
-    .entry-section .left_column .tabs_wrap .tab{
+    .lam-login-section .left_column .tabs_wrap .tab{
         cursor: pointer;
         font-size: 24px;
         transition: .4s all;
     }
-    .entry-section .left_column .tabs_wrap .tab span{
+    .lam-login-section .left_column .tabs_wrap .tab span{
         font-size: 18px;
         font-weight: 600;
 
     }
-    .entry-section .left_column .tabs_wrap .tab i{
+    .lam-login-section .left_column .tabs_wrap .tab i{
         transition: .4s all;
     }
-    .entry-section .left_column .tabs_wrap .tab:hover i{
+    .lam-login-section .left_column .tabs_wrap .tab:hover i{
         transform: scale(1.5);
     }
-    .entry-section .right_column{
+    .lam-login-section .right_column{
         color: #333;
     }
-    .entry-section .right_column .form-group{
+    .lam-login-section .right_column .form-group{
         background-color: #eee;
     }
-    .entry-section .right_column .form-group input{
+    .lam-login-section .right_column .form-group input{
         background-color: transparent;
         border-radius: 0 !important;
     }
-    .entry-section .right_column .form-group input:focus{
+    .lam-login-section .right_column .form-group input:focus{
         border: none;
         outline: none;
         box-shadow: none;
     }
-    .entry-section .right_column .form-group .submit_button{
+    .lam-login-section .right_column .form-group .submit_button{
         background-color: #225F91;
         font-weight: 600;
         color: #fff;
         transition: .4s;
     }
-    .entry-section .right_column .form-group .submit_button:hover{
+    .lam-login-section .right_column .form-group .submit_button:hover{
         opacity: .8;
     }
-    .entry-section .right_column .login_form .forget span{
+    .lam-login-section .right_column .login_form .forget span{
         cursor: pointer;
     }
-    .entry-section .left_column .tabs_wrap .tab.active{
+    .lam-login-section .left_column .tabs_wrap .tab.active{
         background-color: #225F91;
         color: #fff;
     }
@@ -128,7 +128,7 @@
         </div>
     </div> --}}
 
-    <section class="entry-section bg-gray py-5 my-5">
+    <section class="lam-login-section bg-gray py-5 my-5">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-10 mx-auto">
@@ -138,7 +138,7 @@
                                 <div class="row">
                                     <div class="col-md-7 pe-md-0">
                                         <div class="image_wrap h-100">
-                                            <img src="{{asset('frontend\asset\img\entry_image.jpg')}}" class="h-100 w-100" alt="">
+                                            <img src="{{asset('no_img/no_img2.png')}}" class="h-100 w-100" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-5 ps-md-0">
@@ -166,55 +166,94 @@
 
                                 <!-- Login Form  -->
                                 <div class="login_form form px-4 py-lg-5 py-4">
-                                    <form action="" method="" autocomplete="on">
-                                        <h3 class="text-center mb-5 mb-lg-5">Login Here</h3>
+                                    <form action="{{ route('local_area_manager.login') }}" method="POST" autocomplete="on">
+                                        @csrf
+                                        <h3 class="text-center mb-5 mb-lg-5">{{__('Login Here')}}</h3>
                                         <div class="form-group mb-3 mb-lg-4">
                                             <div class="input-group" role="group">
                                                 <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa fa-phone"></i></span>
-                                                <input type="text" placeholder="Phone" class="border-0 form-control">
+                                                <input type="text" placeholder="Phone" name="phone" value="{{ old('phone') }}" class="border-0 form-control @error('phone') is-invalid @enderror" autofocus required>
+                                                @error('phone')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 mb-lg-4">
                                             <div class="input-group" role="group">
                                                 <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa fa-key"></i></span>
-                                                <input type="password" placeholder="Password" class="border-0 form-control">
+                                                <input type="password" placeholder="Password" class="border-0 form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" required>
+                                                @error('password')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
+                                        <div class="mb-3 mb-lg-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                                    {{ old('remember') ? 'checked' : '' }}>
+        
+                                                <label class="form-check-label" for="remember">
+                                                    {{ __('Remember Me') }}
+                                                </label>
+                                            </div>
+                                        </div>
+
+
                                         <div class="form-group mb-3 mb-lg-4">
-                                                <input type="submit" value="Login" class="border-0 form-control py-2 py-lg-3 submit_button">
+                                            <input type="submit" value="Login" class="border-0 form-control py-2 py-lg-3 submit_button">
                                         </div>
                                         <div class="forget text-center py-3 py-lg-4">
-                                            <span>Forget Password?</span>
+                                            <span>{{__('Forget Password?')}}</span>
                                         </div>
                                     </form>
                                 </div>
 
                                 <!-- Register Form  -->
                                 <div class="register_form form d-none px-4 pt-lg-5 pb-lg-3 py-4">
-                                    <form action="" method="" autocomplete="on">
-                                        <h3 class="text-center mb-3 mb-lg-3">Register Here</h3>
+                                    <form action="{{ route('local_area_manager.register') }}" method="POST" autocomplete="on">
+                                        @csrf
+                                        <h3 class="text-center mb-3 mb-lg-3">{{__('Register Here')}}</h3>
                                         <div class="form-group mb-3 mb-lg-4">
                                             <div class="input-group" role="group">
                                                 <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa fa-user"></i></span>
-                                                <input type="text" placeholder="Name" class="border-0 form-control">
+                                                <input type="text" name="name" value="{{old('name')}}" placeholder="Name" class="border-0 form-control  @error('name') is-invalid @enderror" required autocomplete="name">
+                                                @error('name')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 mb-lg-4">
                                             <div class="input-group" role="group">
                                                 <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa fa-phone"></i></span>
-                                                <input type="text" placeholder="Phone" class="border-0 form-control">
+                                                <input type="text" name="phone" value="{{old('phone')}}" placeholder="Phone" class="border-0 form-control  @error('phone') is-invalid @enderror" required autocomplete="phone">
+                                                @error('phone')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 mb-lg-4">
                                             <div class="input-group" role="group">
                                                 <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa fa-key"></i></span>
-                                                <input type="password" placeholder="Password" class="border-0 form-control">
+                                                <input type="password" name="password" placeholder="Password" class="border-0 form-control  @error('password') is-invalid @enderror" required autocomplete="new-password">
+                                                @error('password')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 mb-lg-4">
                                             <div class="input-group" role="group">
                                                 <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa fa-key"></i></span>
-                                                <input type="password" placeholder="Confirm Password" class="border-0 form-control">
+                                                <input type="password" placeholder="Confirm Password" class="border-0 form-control @error('password') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 mb-lg-2">
@@ -224,7 +263,7 @@
                                 </div>
 
 
-                                <!-- Login Form  -->
+                                <!-- Reset Form  -->
                                 <div class="reset_form form d-none px-4 py-lg-5 py-4">
                                     <form action="" method="" autocomplete="on">
                                         <h3 class="text-center mb-5 mb-lg-5">Reset Password</h3>

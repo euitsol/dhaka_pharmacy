@@ -74,9 +74,10 @@ Route::post('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLoginCh
 // DM Login Routes
 Route::get('/district-manager/login', [DmLoginController::class, 'dmLogin'])->name('district_manager.login');
 Route::post('/district-manager/login', [DmLoginController::class, 'dmLoginCheck'])->name('district_manager.login');
-// DM Login Routes
+// LAM Login Routes
 Route::get('/local-area-manager/login', [LamLoginController::class, 'lamLogin'])->name('local_area_manager.login');
 Route::post('/local-area-manager/login', [LamLoginController::class, 'lamLoginCheck'])->name('local_area_manager.login');
+Route::post('local-area-manager/register', [LamLoginController::class, 'lamRegister'])->name('local_area_manager.register');
 
 
 // Overwrite Default Authentication Routes
