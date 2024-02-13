@@ -15,6 +15,10 @@ class Medicine extends BaseModel
     {
         return $this->belongsTo(ProductCategory::class, 'pro_cat_id');
     }
+    public function pro_sub_cat()
+    {
+        return $this->belongsTo(ProductSubCategory::class, 'pro_sub_cat_id');
+    }
     public function generic()
     {
         return $this->belongsTo(GenericName::class, 'generic_id');
@@ -30,5 +34,39 @@ class Medicine extends BaseModel
     public function strength()
     {
         return $this->belongsTo(MedicineStrength::class, 'strength_id');
+    }
+
+    public function getBestSelling()
+    {
+        if ($this->is_best_selling == 1) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
+    }
+    public function getBtnBestSelling()
+    {
+        if ($this->is_best_selling == 1) {
+            return 'Remove from best selling';
+        } else {
+            return 'Make best selling';
+        }
+    }
+
+    public function getBestSellingClass()
+    {
+        if ($this->is_best_selling == 1) {
+            return 'btn-primary';
+        } else {
+            return 'btn-secondary';
+        }
+    }
+    public function getBestSellingBadgeClass()
+    {
+        if ($this->is_best_selling == 1) {
+            return 'badge badge-primary';
+        } else {
+            return 'badge badge-info';
+        }
     }
 }

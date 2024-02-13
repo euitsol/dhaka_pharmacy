@@ -2,12 +2,12 @@
 @section('content')
     <div class="row px-3 pt-3">
         <div class="col-md-12">
-                {{-- Medicine Details Card  --}}
+                {{-- Product Details Card  --}}
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-8">
-                                <h4 class="card-title">{{ __('Medicine Details') }}</h4>
+                                <h4 class="card-title">{{ __('Product Details') }}</h4>
                             </div>
                             <div class="col-4 text-right">
                                 @include('admin.partials.button', [
@@ -30,6 +30,11 @@
                                     <th>{{ __('Product Category') }}</th>
                                     <th>{{ __(':') }}</th>
                                     <td>{{ __($medicine->pro_cat->name) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ __('Product Sub Category') }}</th>
+                                    <th>{{ __(':') }}</th>
+                                    <td>{{ __($medicine->pro_sub_cat->name) }}</td>
                                 </tr>
                                 <tr>
                                     <th>{{ __('Generic Name') }}</th>
@@ -57,6 +62,13 @@
                                     <td> {{ $medicine->units }} </td>
                                 </tr>
                                 <tr>
+                                    <th>{{ __('Best Selling') }}</th>
+                                    <th>{{ __(':') }}</th>
+                                    <td> 
+                                        <span class="{{ $medicine->getBestSellingBadgeClass() }}">{{ $medicine->getBestSelling() }}</span> 
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>{{ __('Status') }}</th>
                                     <th>{{ __(':') }}</th>
                                     <td> 
@@ -73,12 +85,12 @@
                     </div>
                 </div>
 
-                {{-- Medicine Requirements  --}}
+                {{-- Product Requirements  --}}
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="card-title">{{ __('Medicine Requirements') }}</h4>
+                                <h4 class="card-title">{{ __('Product Requirements') }}</h4>
                             </div>
                         </div>
                     </div>
@@ -110,12 +122,12 @@
                 </div>
 
 
-                {{-- Medicine Pricing Card  --}}
+                {{-- Product Pricing Card  --}}
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="card-title">{{ __('Medicine Pricing') }}</h4>
+                                <h4 class="card-title">{{ __('Product Pricing') }}</h4>
                             </div>
                         </div>
                     </div>
@@ -132,12 +144,12 @@
                     </div>
                 </div>
 
-                {{-- Medicine Image  --}}
+                {{-- Product Image  --}}
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="card-title">{{ __('Medicine Image') }}</h4>
+                                <h4 class="card-title">{{ __('Product Image') }}</h4>
                             </div>
                         </div>
                     </div>

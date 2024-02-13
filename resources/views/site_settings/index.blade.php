@@ -3,41 +3,6 @@
 @push('css_link')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
 @endpush
-@push('css')
-    <style>
-
-    .white-content .btn:not([data-action]):hover {
-        box-shadow: none !important;
-    }
-    .btn:not([data-action]):hover, .navbar .navbar-nav>a.btn:not([data-action]):hover {
-        box-shadow: none !important;
-        transform: none !important;
-        -webkit-transform: none !important;
-    }
-
-
-
-
-    /* Circle  */
-    .toggle.ios,
-    .toggle-on.ios,
-    .toggle-off.ios {
-        border-radius: 20rem;
-    }
-    .toggle.ios .toggle-handle {
-        border-radius: 20rem;
-    }
-
-
-    /* Squer */
-    .toggle.android {
-        border-radius: 0px;
-    }
-    .toggle.android .toggle-handle {
-        border-radius: 0px;
-    }
-    </style>
-@endpush
 
 @section('content')
     @php
@@ -48,13 +13,13 @@
             
         </div>
         <div class="tab col-md-2 p-md-3 pl-sm-3">
-            <button id="defaultOpen" class="tablinks p-3 btn-success text-white" onclick="openTab(event, 'tab1')">General
+            <button id="tab1Btn" class="tablinks p-3 btn-success text-white" onclick="openTab(event, 'tab1')">General
                 Settings</button>
-            <button class="tablinks p-3 " onclick="openTab(event, 'tab2')">Email Settings</button>
-            <button class="tablinks p-3 " onclick="openTab(event, 'tab3')">Database Settings</button>
-            <button class="tablinks p-3 " onclick="openTab(event, 'tab4')">SMS Settings</button>
-            <button class="tablinks p-3 " onclick="openTab(event, 'tab5')">Notification Settings</button>
-            <button class="tablinks p-3 " onclick="openTab(event, 'tab6')">Email Templates</button>
+            <button id="tab2Btn" class="tablinks p-3" onclick="openTab(event, 'tab2')">Email Settings</button>
+            <button id="tab3Btn" class="tablinks p-3" onclick="openTab(event, 'tab3')">Database Settings</button>
+            <button id="tab4Btn" class="tablinks p-3" onclick="openTab(event, 'tab4')">SMS Settings</button>
+            <button id="tab5Btn" class="tablinks p-3" onclick="openTab(event, 'tab5')">Notification Settings</button>
+            <button id="tab6Btn" class="tablinks p-3" onclick="openTab(event, 'tab6')">Email Templates</button>
         </div>
         <div class="col-md-10 p-0">
             {{-- Tab-1 --}}

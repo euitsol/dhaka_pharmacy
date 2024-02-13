@@ -6,12 +6,12 @@
             <form method="POST" action="{{ route('product.medicine.medicine_create') }}" enctype="multipart/form-data">
                 @csrf
 
-                {{-- Medicine Details Card  --}}
+                {{-- Product Details Card  --}}
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-8">
-                                <h4 class="card-title">{{ __('Medicine Details') }}</h4>
+                                <h4 class="card-title">{{ __('Product Details') }}</h4>
                             </div>
                             <div class="col-4 text-right">
                                 @include('admin.partials.button', [
@@ -33,19 +33,6 @@
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ __('Product Category') }}</label>
-                                <select name="pro_cat_id"
-                                    class="form-control {{ $errors->has('pro_cat_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select product category') }}</option>
-                                    @foreach ($pro_cats as $cat)
-                                        <option value="{{ $cat->id }}"
-                                            {{ $cat->id == old('pro_cat_id') ? 'selected' : '' }}>{{ $cat->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @include('alerts.feedback', ['field' => 'generic_id'])
-                            </div>
-                            <div class="form-group col-md-6">
                                 <label>{{ __('Generic Name') }}</label>
                                 <select name="generic_id"
                                     class="form-control {{ $errors->has('generic_id') ? ' is-invalid' : '' }}">
@@ -58,6 +45,28 @@
                                 </select>
                                 @include('alerts.feedback', ['field' => 'generic_id'])
                             </div>
+                            <div class="form-group col-md-6">
+                                <label>{{ __('Product Category') }}</label>
+                                <select name="pro_cat_id"
+                                    class="form-control {{ $errors->has('pro_cat_id') ? ' is-invalid' : '' }} pro_cat">
+                                    <option selected hidden>{{ __('Select product category') }}</option>
+                                    @foreach ($pro_cats as $cat)
+                                        <option value="{{ $cat->id }}"
+                                            {{ $cat->id == old('pro_cat_id') ? 'selected' : '' }}>{{ $cat->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @include('alerts.feedback', ['field' => 'pro_cat_id'])
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>{{ __('Product Sub Category') }}</label>
+                                <select name="pro_sub_cat_id"
+                                    class="form-control {{ $errors->has('pro_sub_cat_id') ? ' is-invalid' : '' }} pro_sub_cat" disabled>
+                                    <option selected hidden>{{ __('Select product sub category') }}</option>
+                                </select>
+                                @include('alerts.feedback', ['field' => 'pro_sub_cat_id'])
+                            </div>
+                           
                             <div class="form-group col-md-6">
                                 <label>{{ __('Company Name') }}</label>
                                 <select name="company_id"
@@ -98,7 +107,7 @@
                                 </select>
                                 @include('alerts.feedback', ['field' => 'strength_id'])
                             </div>
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Unit') }}</label>
                                 <select name="unit[]" class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }}"
                                     multiple="multiple">
@@ -122,12 +131,12 @@
                     </div>
                 </div>
 
-                {{-- Medicine Requirements  --}}
+                {{-- Product Requirements  --}}
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="card-title">{{ __('Medicine Requirements') }}</h4>
+                                <h4 class="card-title">{{ __('Product Requirements') }}</h4>
                             </div>
                         </div>
                     </div>
@@ -161,12 +170,12 @@
                     </div>
                 </div>
 
-                {{-- Medicine Pricing Card  --}}
-                <div class="card">
+                {{-- Product Pricing Card  --}}
+                <div class="card medicine_price_card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="card-title">{{ __('Medicine Pricing') }}</h4>
+                                <h4 class="card-title">{{ __('Product Pricing') }}</h4>
                             </div>
                         </div>
                     </div>
@@ -179,7 +188,7 @@
                                     <input type="text" name="price"
                                     class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
                                     placeholder="Enter price" value="{{ old('price') }}">
-                                    <span class="btn btn-secondary disabled">BDT</span>
+                                    <span class="bdt_button">BDT</span>
                                 </div>
                                 @include('alerts.feedback', ['field' => 'price'])
                             </div>
@@ -187,12 +196,12 @@
                     </div>
                 </div>
 
-                {{-- Medicine Image  --}}
+                {{-- Product Image  --}}
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="card-title">{{ __('Medicine Image') }}</h4>
+                                <h4 class="card-title">{{ __('Product Image') }}</h4>
                             </div>
                         </div>
                     </div>
@@ -218,6 +227,34 @@
     </div>
 @endsection
 @push('js')
+<script>
+    $(document).ready(function() {
+        $('.pro_cat').on('change', function() {
+            let pro_sub_cat = $('.pro_sub_cat');
+            let id = $(this).val();
+            let url = ("{{ route('product.medicine.sub_cat.medicine_list', ['id']) }}");
+            let _url = url.replace('id', id);
+
+            pro_sub_cat.prop('disabled',false);
+
+            $.ajax({
+                url: _url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    var result = '';
+                    data.pro_sub_cats.forEach(function(cat) {
+                        result += `<option value="${cat.id}">${cat.name}</option>`;
+                    });
+                    pro_sub_cat.html(result);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching local area manager data:', error);
+                }
+            });
+        });
+    });
+</script>
     <script>
         $(document).ready(function(){
             var checkbox = $('.prescription_required');
@@ -238,4 +275,6 @@
             });
         })
     </script>
+
+    
 @endpush

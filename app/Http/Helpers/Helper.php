@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-            'am.','um.','pm.','settings.','dmlam.','product.','product.product_category.'
+            'am.','um.','pm.','settings.','dm_management.','lam_management','product.','product.product_category.'
         ];
 }
 
@@ -151,5 +151,25 @@ function settings($key){
     if($setting){
         return $setting->value;
     }
+}
+
+
+function file_name_from_url($url = null){
+    if($url){
+        $fileNameWithExtension = basename($url);
+        return $fileNameWithExtension;
+    }
+}
+
+
+function file_title_from_url($url = null){
+    if($url){
+        $fileTitle = pathinfo($url, PATHINFO_FILENAME);
+        return $fileTitle;
+    }
+}
+function removeHttpProtocol($url)
+{
+    return str_replace(['http://', 'https://'], '', $url);
 }
 

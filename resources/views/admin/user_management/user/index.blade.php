@@ -14,7 +14,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">User List</h4>
+                            <h4 class="card-title">{{__('User List')}}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [

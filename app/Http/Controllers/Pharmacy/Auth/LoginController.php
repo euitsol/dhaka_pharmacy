@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pharmacy\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pharmacy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class LoginController extends Controller
 {
     public function pharmacyLogin()
     {
-        if (Auth::guard('pharmacy')->check()) {
+        if (Auth::guard('pharmacy')->check() && pharmacy()->status == 1) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
             return redirect()->route('pharmacy.profile');
         }
@@ -25,11 +26,20 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('pharmacy')->attempt($credentials)) {
-            flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('pharmacy.profile');
+        $check = Pharmacy::where('email', $request->email)->first();
+        if(isset($check)){
+            if($check->status == 1){
+                if (Auth::guard('pharmacy')->attempt($credentials)) {
+                    flash()->addSuccess('Welcome to Dhaka Pharmacy');
+                    return redirect()->route('pharmacy.profile');
+                }
+                flash()->addError('Invalid credentials');
+            }else{
+                flash()->addError('Your account has been disabled. Please contact support.');
+            }
+        }else{
+            flash()->addError('Pharmacy User Not Found');
         }
-        flash()->addError('Invalid credentials');
-        return redirect()->route('pharmacy.login');
+        return redirect()->route('local_area_manager.login');
     }
 }

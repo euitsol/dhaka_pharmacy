@@ -1,11 +1,15 @@
-@extends('layouts.app')
+@extends('frontend.layouts.master')
+@section('title','User Login')
 
 @section('content')
-<div class="container">
+<div class="container py-5 my-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header"><a href="{{route('login_with_google')}}">{{ __('Login With Google') }}</a></div>
+                <div class="card-header"><a href="{{route('login_with_github')}}">{{ __('Login With Github') }}</a></div>
+                <div class="card-header"><a href="{{route('login_with_facebook')}}">{{ __('Login With Facebook') }}</a></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">

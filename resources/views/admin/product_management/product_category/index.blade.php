@@ -3,6 +3,9 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
+            <div class="alert alert-danger {{($menuItemsCount%2 == 0) ? 'd-none' : ''}}">
+                <span>{{__("Please add an even number of categories to the menu for design purposes. Now you have a total of $menuItemsCount categories in your menu.")}}</span>
+            </div>
             <div class="card ">
                 <div class="card-header">
                     <div class="row">
@@ -24,6 +27,7 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
+                                <th>{{ __('Menu') }}</th>
                                 <th>{{ __('Featured') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
@@ -36,6 +40,10 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $product_category->name }} </td>
+                                    <td>
+                                        <span
+                                            class="{{ $product_category->getMenuBadgeClass() }}">{{ $product_category->getMenu() }}</span>
+                                    </td>
                                     <td>
                                         <span
                                             class="{{ $product_category->getFeaturedBadgeClass() }}">{{ $product_category->getFeatured() }}</span>
@@ -62,6 +70,12 @@
                                                         'product.product_category.product_category_edit',
                                                     'params' => [$product_category->id],
                                                     'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'product.product_category.menu.product_category_edit',
+                                                    'params' => [$product_category->id],
+                                                    'label' => $product_category->getBtnMenu(),
                                                 ],
                                                 [
                                                     'routeName' =>
@@ -130,15 +144,36 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
+                        let status = data.status === 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status === 1 ? 'badge-success' :
                             'badge-warning';
+                        let menu = data.is_menu === 1 ? 'Yes' : 'No';
+                        let menuClass = data.is_menu === 1 ? 'badge-primary' :
+                            'badge-info';
+                        let featured = data.is_featured === 1 ? 'Yes' : 'No';
+                        let featuredClass = data.is_featured === 1 ? 'badge-primary' :
+                            'badge-info';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
                                         <td>${data.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Image</th>
+                                        <th>:</th>
+                                        <td><img height='100px' width='100px' class='border-1 p-2' src="${data.image}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Menu</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${menuClass}">${menu}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Featured</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${featuredClass}">${featured}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

@@ -65,6 +65,12 @@ class DmProfileController extends Controller
         $dm->identification_type = $request->identification_type;
         $dm->identification_no = $request->identification_no;
         $dm->present_address = $request->present_address;
+        $dm->gender = $request->gender;
+        $dm->dob = $request->dob;
+        $dm->father_name = $request->father_name;
+        $dm->mother_name = $request->mother_name;
+        $dm->permanent_address = $request->permanent_address;
+        $dm->parent_phone = $request->parent_phone;
         $dm->update();
 
         if ($validator) {

@@ -1,23 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\lam\Auth;
+namespace App\Http\Controllers\LAM\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DistrictManagerRequest;
+use App\Models\LocalAreaManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Validator;
 
 
 class LoginController extends Controller
 {
     public function lamLogin()
     {
-        if (Auth::guard('lam')->check()) {
+
+        if (Auth::guard('lam')->check() && lam()->status == 1) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('local_area_manager.profile');
+            return redirect()->route('lam.dashboard');
         }
         return view('local_area_manager.login');
     }
@@ -26,11 +30,39 @@ class LoginController extends Controller
     {
         $credentials = $request->only('phone', 'password');
 
-        if (Auth::guard('lam')->attempt($credentials)) {
-            flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('local_area_manager.profile');
+        $check = LocalAreaManager::where('phone', $request->phone)->first();
+        if(isset($check)){
+            if($check->status == 1){
+                if (Auth::guard('lam')->attempt($credentials)) {
+                    flash()->addSuccess('Welcome to Dhaka Pharmacy');
+                    return redirect()->route('lam.dashboard');
+                }
+                flash()->addError('Invalid credentials');
+            }else{
+                flash()->addError('Your account has been disabled. Please contact support.');
+            }
+        }else{
+            flash()->addError('Local Area Manager Not Found');
         }
-        flash()->addError('Invalid credentials');
+        return redirect()->route('local_area_manager.login');
+    }
+
+
+    function lamRegister(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:4',
+            'phone' => 'required|numeric|digits:11|unique:local_area_managers,phone',
+            'password' => 'required|min:6|confirmed',
+        ]);
+        LocalAreaManager::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+            'dm_id' => 1,
+        ]);
+        $credentials = $request->only('phone', 'password');
+        Auth::guard('lam')->attempt($credentials);
         return redirect()->route('local_area_manager.login');
     }
 }

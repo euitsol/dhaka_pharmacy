@@ -45,9 +45,9 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Parents Phone') }}</label>
-                                            <input type="text" name="parents_phone" class="form-control"
-                                                placeholder="Enter Parents Phone" value="{{ dm()->parents_phone }}">
-                                            @include('alerts.feedback', ['field' => 'parents_phone'])
+                                            <input type="text" name="parent_phone" class="form-control"
+                                                placeholder="Enter Parents Phone" value="{{ dm()->parent_phone }}">
+                                            @include('alerts.feedback', ['field' => 'parent_phone'])
                                         </div>
                                     </div>
                                 </div>
@@ -64,6 +64,7 @@
                                                     <input type="file" id="imageInput" name="image" accept="image/*"
                                                         class="d-none">
                                                 </label>
+                                                @include('alerts.feedback', ['field' => 'image'])
                                             </div>
                                         </div>
                                     </form>
@@ -267,15 +268,23 @@
                             },
                             error: function(xhr) {
                                 if (xhr.status === 422) {
+                                    $('.profile_image .img').removeClass(
+                                    'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display', 'block');
+                                    $('#previewImage').attr('src', "{{ dm()->image ? storage_url(dm()->image) : asset('no_img/no_img.jpg') }}");
+                                    toastr.error('Something is wrong!');
+
                                     var errors = xhr.responseJSON.errors;
                                     $.each(errors, function(field, messages) {
                                         var errorHtml = '';
                                         $.each(messages, function(index, message) {
                                             errorHtml +=
-                                                '<span class="invalid-feedback d-block" role="alert">' +
+                                                '<span class="invalid-feedback mt-4 d-block" role="alert">' +
                                                 message + '</span>';
                                         });
-                                        $('[name="' + field + '"]').after(
+                                        $('.profile_image img').after(
                                             errorHtml);
                                     });
                                 } else {

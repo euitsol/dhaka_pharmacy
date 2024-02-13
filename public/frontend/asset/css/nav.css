@@ -1,0 +1,109 @@
+/*=========== Header Nav css ==========*/
+.header-section {
+    padding: 15px 0;
+    background: var(--nav-primary-bg);
+    animation: fadeIndown 1.5s ease-in-out;
+    /* position: sticky;
+    top: 0; */
+    z-index: 99;
+    width: 100%;
+  }
+  .header-section .search-filter input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 7px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    border-radius: 10px 0 0 10px;
+  }
+  .header-section .search-filter input[type=text]::placeholder{
+    color: rgba(255, 255, 255, 70%);
+    font-weight: 500;
+  }
+  .header-section .search-filter select {
+    border: none;
+    outline: none;
+    color: var(--nav-text-color);
+    background: transparent;
+    border: 2px solid #fff;
+    border-left: 0;
+    padding: 6px 12px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+  }
+  .header-section .search-filter select option {
+    background: var(--nav-primary-bg);
+    margin-bottom: 2px;
+  }
+  .header-section .search-filter .sub-btn {
+    border: none;
+    outline: none;
+    color: var(--nav-text-color);
+    background: transparent;
+    padding: 6px;
+    border-radius: 0px 10px 11px 0;
+  }
+  .header-section .right-col .item{
+    width: inherit;
+  }
+  .header-section .right-col button {
+    background: transparent;
+    border: none;
+    color: var(--nav-text-color);
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: 600;
+    transition: 0.4s;
+  }
+  .header-section .right-col button:hover {
+    color: var(--nav-asent-color);
+  }
+  .header-section .right-col .login-btn {
+    color: var(--nav-text-color);
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .header-section .right-col .login-btn:hover {
+    color: var(--nav-asent-color);
+  }
+  .header-section .right-col select {
+    background: transparent;
+    border: none;
+    color: var(--nav-text-color);
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: 600;
+  }
+  .header-section .right-col select option {
+    background: var(--nav-primary-bg);
+  }
+  .header-section .search-filter{
+    position: relative;
+  }
+  .header-section .search-filter .suggestion-box{
+    background: var(--nav-text-color);
+    position: absolute;
+    width: 100%;
+    border: 1px solid #000;
+    padding: 10px;
+    display: none;
+  }
+  .header-section .search-filter .suggestion-box .suggestion{
+    color: var(--nav-primary-color);
+  }
+  .header-section .search-filter .suggestion-box .suggestion:hover{
+    color: red;
+  }

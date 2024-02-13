@@ -18,6 +18,19 @@ class BaseModel extends Model
     {
         return $this->belongsTo(Admin::class, 'deleted_by');
     }
+    public function creater()
+    {
+        return $this->morphTo();
+    }
+    public function updater()
+    {
+        return $this->morphTo();
+    }
+    public function deleter()
+    {
+        return $this->morphTo();
+    }
+
 
     public function getStatus()
     {
@@ -88,4 +101,40 @@ class BaseModel extends Model
             return 'badge badge-info';
         }
     }
+
+    public function getMenu()
+    {
+        if ($this->is_menu == 1) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
+    }
+    public function getBtnMenu()
+    {
+        if ($this->is_menu == 1) {
+            return 'Remove from menu';
+        } else {
+            return 'Added on menu';
+        }
+    }
+
+    public function getMenuClass()
+    {
+        if ($this->is_menu == 1) {
+            return 'btn-primary';
+        } else {
+            return 'btn-secondary';
+        }
+    }
+    public function getMenuBadgeClass()
+    {
+        if ($this->is_menu == 1) {
+            return 'badge badge-primary';
+        } else {
+            return 'badge badge-info';
+        }
+    }
+
+    
 }
