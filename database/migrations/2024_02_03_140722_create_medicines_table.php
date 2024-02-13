@@ -19,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->unsignedBigInteger('pro_cat_id');
+            $table->unsignedBigInteger('pro_sub_cat_id');
             $table->unsignedBigInteger('generic_id');
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('medicine_cat_id');
@@ -31,12 +32,14 @@ return new class extends Migration
             $table->string('max_quantity')->nullable();
             $table->boolean('kyc_required')->nullable();
             $table->boolean('status')->default(1);
+            $table->boolean('is_best_selling')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);
 
             
             $table->foreign('pro_cat_id')->references('id')->on('product_categories')->onDelete('cascade')->onUpdate('cascade');      
+            $table->foreign('pro_sub_cat_id')->references('id')->on('product_sub_categories')->onDelete('cascade')->onUpdate('cascade');      
             $table->foreign('generic_id')->references('id')->on('generic_names')->onDelete('cascade')->onUpdate('cascade');      
             $table->foreign('company_id')->references('id')->on('company_names')->onDelete('cascade')->onUpdate('cascade');      
             $table->foreign('medicine_cat_id')->references('id')->on('medicine_categories')->onDelete('cascade')->onUpdate('cascade');      

@@ -256,14 +256,16 @@
                     'medicine_category_list',
                     'product_category_list',
                     'medicine_list',
+                    'product_sub_category_list'
                 ]))
                 <li>
                     <a class="@if (
-                        $pageSlug == 'medicine_generic_name' ||
+                            $pageSlug == 'medicine_generic_name' ||
                             $pageSlug == 'medicine_company_name' ||
                             $pageSlug == 'medicine_strength' ||
                             $pageSlug == 'medicine_category' ||
                             $pageSlug == 'product_category' ||
+                            $pageSlug == 'product_sub_category' ||
                             $pageSlug == 'medicine' ||
                             $pageSlug == 'medicine_unit') @else collapsed @endif" data-toggle="collapse"
                         href="#product_management"
@@ -273,6 +275,7 @@
                                 $pageSlug == 'medicine_strength' ||
                                 $pageSlug == 'medicine_category' ||
                                 $pageSlug == 'product_category' ||
+                                $pageSlug == 'product_sub_category' ||
                                 $pageSlug == 'medicine' ||
                                 $pageSlug == 'medicine_unit') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-capsules"></i>
@@ -286,6 +289,7 @@
                             $pageSlug == 'medicine_strength' ||
                             $pageSlug == 'medicine_category' ||
                             $pageSlug == 'product_category' ||
+                            $pageSlug == 'product_sub_category' ||
                             $pageSlug == 'medicine' ||
                             $pageSlug == 'medicine_unit') show @endif" id="product_management">
                         <ul class="nav pl-2">
@@ -294,12 +298,17 @@
                                     [
                                         'pageSlug' => 'medicine',
                                         'routeName' => 'product.medicine.medicine_list',
-                                        'label' => 'Medicine',
+                                        'label' => 'Product',
                                     ],
                                     [
                                         'pageSlug' => 'product_category',
                                         'routeName' => 'product.product_category.product_category_list',
                                         'label' => 'Product Category',
+                                    ],
+                                    [
+                                        'pageSlug' => 'product_sub_category',
+                                        'routeName' => 'product.product_sub_category.product_sub_category_list',
+                                        'label' => 'Product Sub Category',
                                     ],
                                     [
                                         'pageSlug' => 'medicine_generic_name',

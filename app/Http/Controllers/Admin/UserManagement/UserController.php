@@ -50,7 +50,6 @@ class UserController extends Controller
         $user = new User();
         $user->name = $req->name;
         $user->phone = $req->phone;
-        $user->password = Hash::make($req->password);
         $user->creater()->associate(admin());
         $user->save();
         flash()->addSuccess('User '.$user->name.' created successfully.');
@@ -67,9 +66,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->name = $req->name;
         $user->phone = $req->phone;
-        if($req->password){
-            $user->password = Hash::make($req->password);
-        }
         $user->updater()->associate(admin());
         $user->update();
         flash()->addSuccess('User '.$user->name.' updated successfully.');

@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\PharmacyManagement\PharmacyController as AdminPha
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycController;
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycSettingsController;
 use App\Http\Controllers\Admin\ProductManagement\ProductCategoryController;
+use App\Http\Controllers\Admin\ProductManagement\ProductSubCategoryController;
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\LAM\Auth\LoginController as LamLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
@@ -42,6 +43,7 @@ use App\Http\Controllers\LAM\UserManagement\UserManagementController as LamUserC
 use App\Http\Controllers\LAM\LamProfileController;
 use App\Http\Controllers\DM\KYC\KycVerificationController as DmKycVerificationController;
 use App\Http\Controllers\Frontend\HomePageController;
+use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 
 /*
@@ -73,9 +75,10 @@ Route::post('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLoginCh
 // DM Login Routes
 Route::get('/district-manager/login', [DmLoginController::class, 'dmLogin'])->name('district_manager.login');
 Route::post('/district-manager/login', [DmLoginController::class, 'dmLoginCheck'])->name('district_manager.login');
-// DM Login Routes
+// LAM Login Routes
 Route::get('/local-area-manager/login', [LamLoginController::class, 'lamLogin'])->name('local_area_manager.login');
 Route::post('/local-area-manager/login', [LamLoginController::class, 'lamLoginCheck'])->name('local_area_manager.login');
+Route::post('local-area-manager/register', [LamLoginController::class, 'lamRegister'])->name('local_area_manager.register');
 
 
 // Overwrite Default Authentication Routes
@@ -351,16 +354,30 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('product_category_edit');
             Route::get('status/{id}', 'status')->name('status.product_category_edit');
             Route::get('featured/{id}', 'featured')->name('featured.product_category_edit');
+            Route::get('menu/{id}', 'menu')->name('menu.product_category_edit');
             Route::get('delete/{id}', 'delete')->name('product_category_delete');
+        });
+        Route::controller(ProductSubCategoryController::class, 'product-sub-category')->prefix('product-sub-category')->name('product_sub_category.')->group(function () {
+            Route::get('index', 'index')->name('product_sub_category_list');
+            Route::get('details/{id}', 'details')->name('details.product_sub_category_list');
+            Route::get('create', 'create')->name('product_sub_category_create');
+            Route::post('create', 'store')->name('product_sub_category_create');
+            Route::get('edit/{id}', 'edit')->name('product_sub_category_edit');
+            Route::put('edit/{id}', 'update')->name('product_sub_category_edit');
+            Route::get('status/{id}', 'status')->name('status.product_sub_category_edit');
+            Route::get('menu/{id}', 'menu')->name('menu.product_sub_category_edit');
+            Route::get('delete/{id}', 'delete')->name('product_sub_category_delete');
         });
         Route::controller(MedicineController::class, 'medicine')->prefix('medicine')->name('medicine.')->group(function () {
             Route::get('index', 'index')->name('medicine_list');
+            Route::get('get-sub-category/{id}', 'get_sub_cat')->name('sub_cat.medicine_list');
             Route::get('details/{id}', 'details')->name('details.medicine_list');
             Route::get('create', 'create')->name('medicine_create');
             Route::post('create', 'store')->name('medicine_create');
             Route::get('edit/{id}', 'edit')->name('medicine_edit');
             Route::put('edit/{id}', 'update')->name('medicine_edit');
             Route::get('status/{id}', 'status')->name('status.medicine_edit');
+            Route::get('best-selling/{id}', 'best_selling')->name('best_selling.medicine_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_delete');
         });
     });
@@ -469,9 +486,14 @@ Route::group(
             Route::get('status/{id}', 'status')->name('status.edit');
             Route::get('delete/{id}', 'delete')->name('delete');
         });
-    });
+});
 
 
 
-    // Frontend Routes 
-    Route::get('/', [HomePageController::class, 'home'])->name('home');
+// Frontend Routes 
+Route::get('/', [HomePageController::class, 'home'])->name('home');
+Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeaturedProducts'])->name('home.featured_products');
+
+Route::controller(SingleProductController::class, 'product')->prefix('product')->name('product.')->group(function () {
+    Route::get('single-product/{slug}', 'singleProduct')->name('single_product');
+});

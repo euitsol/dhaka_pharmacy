@@ -23,28 +23,18 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>{{__('Name')}}</label>
                             <input type="text" name="name" class="form-control" placeholder="Enter name"
                                 value="{{ $user->name }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>Phone</label>
+                            <label>{{__('Phone')}}</label>
                             <input type="text" name="phone" class="form-control" placeholder="Enter phone"
                                 value="{{ $user->phone }}">
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Enter new password">
-                            @include('alerts.feedback', ['field' => 'password'])
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm Password</label>
-                            <input type="password" name="password_confirmation" class="form-control"
-                                placeholder="Confirm password">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary">{{__('Update')}}</button>
                     </form>
                 </div>
             </div>

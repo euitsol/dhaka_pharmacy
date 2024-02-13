@@ -32,6 +32,25 @@ class Controller extends BaseController
         // $modelData->updated_by = admin()->id;
         $modelData->save();
     }
+    public function menuChange($modelData)
+    {
+        if($modelData->is_menu == 1){
+            $modelData->is_menu = 0;
+        }else{
+            $modelData->is_menu = 1;
+        }
+        $modelData->save();
+    }
+    public function bestSellingChange($modelData)
+    {
+        if($modelData->is_best_selling == 1){
+            $modelData->is_best_selling = 0;
+        }else{
+            $modelData->is_best_selling = 1;
+        }
+        // $modelData->updated_by = admin()->id;
+        $modelData->save();
+    }
     public function fileDelete($image)
     {
         if ($image) {
