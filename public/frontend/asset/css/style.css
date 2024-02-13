@@ -270,12 +270,14 @@ body{
   object-fit: contain;
   padding: 10px;
 }
-.product-section .best-selling-col .all-product{
-  row-gap: 15px;
+.product-section .best-selling-col .best-selling-products{
+  background: var(--text-color-white);
   box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
   border-radius: 15px;
+}
+.product-section .best-selling-col .all-product{
+  row-gap: 15px;
   padding: 30px 15px;
-  background: var(--text-color-white);
   display: flex;
   flex-wrap: wrap;
 }
@@ -325,20 +327,6 @@ body{
   color: var(--asent-color);
 }
 .product-section .cat-filter-row .cat-list li.active a::after{  
-  position: absolute;
-  content: "";
-  background: var(--secundary-color);
-  width: calc(100% + 5px);
-  height: 2px;
-  bottom: -15%;
-  left: 50%;
-  transform: translatex(-50%);
-}
-.product-section .cat-filter-row .cat-list .uk-slide-active a{  
-  position: relative;
-  color: var(--asent-color);
-}
-.product-section .cat-filter-row .cat-list .uk-slide-active a::after{  
   position: absolute;
   content: "";
   background: var(--secundary-color);

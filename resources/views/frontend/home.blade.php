@@ -21,115 +21,23 @@
                 <div class="row">
                     <div class="col-3 best-selling-col">
                         <h2 class="title mb-4">{{__('Best Selling')}}</h2>
-                        <div class="all-product">
-                            <div class="col-12 single-item">
-                                <div class="row">
-                                    <div class="col-4 img">
-                                        <img class="w-100 border border-1 rounded-1"
-                                            src="{{ asset('frontend/asset/img/jumper-jpd-500d-oled-version.png') }}"
-                                            alt="">
+                        <div class="best-selling-products">
+                            <div class="all-product">
+                                @foreach ($bsItems as $item)
+                                    <div class="col-12 single-item">
+                                        <div class="row">
+                                            <div class="col-4 img">
+                                                <img class="w-100 border border-1 rounded-1"
+                                                    src="{{ ($item->image) ? storage_url($item->image) : asset('no_img/no_img.jpg') }}"
+                                                    alt="{{$item->name}}">
+                                            </div>
+                                            <div class="col-8">
+                                                <h3 class="pdct-title"><a href="#">{{$item->name}}</a></h3>
+                                                <h4 class="pdct-price"><span>&#2547;</span>{{$item->price}}</h4>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-8">
-                                        <h3 class="pdct-title"><a href="#">Jumper Pulse Oximeter JPD-500
-                                                D Device</a></h3>
-                                        <h4 class="pdct-price"><span>&#2547;</span>1500</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 single-item">
-                                <div class="row">
-                                    <div class="col-4 img">
-                                        <img class="w-100 border border-1 rounded-1"
-                                            src="{{ asset('frontend/asset/img/product01.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="col-8">
-                                        <h3 class="pdct-title"><a href="#">glipita m 50/500</a></h3>
-                                        <h4 class="pdct-price"><span>&#2547;</span>14</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 single-item">
-                                <div class="row">
-                                    <div class="col-4 img">
-                                        <img class="w-100 border border-1 rounded-1"
-                                            src="{{ asset('frontend/asset/img/product02.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="col-8">
-                                        <h3 class="pdct-title"><a href="#">ORAL-C 125ML Mouth Wash</a>
-                                        </h3>
-                                        <h4 class="pdct-price"><span>&#2547;</span>75</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 single-item">
-                                <div class="row">
-                                    <div class="col-4 img">
-                                        <img class="w-100 border border-1 rounded-1"
-                                            src="{{ asset('frontend/asset/img/product03.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="col-8">
-                                        <h3 class="pdct-title"><a href="#">SENSODYNE FRESH MINT 150 GM
-                                                Toiletries</a></h3>
-                                        <h4 class="pdct-price"><span>&#2547;</span>185</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 single-item">
-                                <div class="row">
-                                    <div class="col-4 img">
-                                        <img class="w-100 border border-1 rounded-1"
-                                            src="{{ asset('frontend/asset/img/product04.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="col-8">
-                                        <h3 class="pdct-title"><a href="#">Savlon Baby Wipes</a></h3>
-                                        <h4 class="pdct-price"><span>&#2547;</span>14</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 single-item">
-                                <div class="row">
-                                    <div class="col-4 img">
-                                        <img class="w-100 border border-1 rounded-1"
-                                            src="{{ asset('frontend/asset/img/product03.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="col-8">
-                                        <h3 class="pdct-title"><a href="#">SENSODYNE FRESH MINT 150 GM
-                                                Toiletries</a></h3>
-                                        <h4 class="pdct-price"><span>&#2547;</span>185</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 single-item">
-                                <div class="row">
-                                    <div class="col-4 img">
-                                        <img class="w-100 border border-1 rounded-1"
-                                            src="{{ asset('frontend/asset/img/product04.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="col-8">
-                                        <h3 class="pdct-title"><a href="#">Savlon Baby Wipes</a></h3>
-                                        <h4 class="pdct-price"><span>&#2547;</span>14</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 single-item">
-                                <div class="row">
-                                    <div class="col-4 img">
-                                        <img class="w-100 border border-1 rounded-1"
-                                            src="{{ asset('frontend/asset/img/product03.png') }}"
-                                            alt="Product Image">
-                                    </div>
-                                    <div class="col-8">
-                                        <h3 class="pdct-title"><a href="#">SENSODYNE FRESH MINT 150 GM
-                                                Toiletries</a></h3>
-                                        <h4 class="pdct-price"><span>&#2547;</span>185</h4>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -176,13 +84,13 @@
                                 <div class="col-3">
                                     <div class="single-pdct">
                                         <div class="pdct-img">
-                                            <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
+                                            <img class="w-100" src="{{ ($product->image) ? storage_url($product->image) : asset('no_img/no_img.jpg') }}"
                                                 alt="Product Image">
                                         </div>
                                         <div class="pdct-info">
-                                            <h3>glipita m 50/500</h3>
-                                            <h3>Metformin Hydrochloride</h3>
-                                            <h4><span>&#2547;</span>14</h4>
+                                            <h3 class="fw-bold">{{$product->name}}</h3>
+                                            <p>{{$product->generic->name}}</p>
+                                            <h4><span>&#2547;</span>{{$product->price}}</h4>
                                             <a class="cart-btn" href="#"><img
                                                     src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
                                                     alt="">Add to Cart</a>
@@ -252,10 +160,6 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('.cat-filter-row .uk-slidenav-next, .cat-filter-row .uk-slidenav-previous').on('click',function(){
-                $('.cat-list li').removeClass('active');
-            })
-
             $('.featured_item').on('click', function() {
                 $('.cat-list li').removeClass('active');
                 $('.cat-list li').removeClass('uk-slide-active');
@@ -271,17 +175,18 @@
                     success: function(data) {
                         var result = '';
                         data.products.forEach(function(product) {
+                            var image = product.image ? "{{storage_url("+product.image+")}}" : "{{asset('no_img/no_img.jpg')}}";
                             result += `
                                 <div class="col-3">
                                     <div class="single-pdct">
                                         <div class="pdct-img">
-                                            <img class="w-100" src="{{ asset('frontend/asset/img/pdct01.png') }}"
-                                                alt="Product Image">
+                                            <img class="w-100" src="${image}"
+                                                alt="${product.name}">
                                         </div>
                                         <div class="pdct-info">
-                                            <h3>glipita m 50/500</h3>
-                                            <h3>Metformin Hydrochloride</h3>
-                                            <h4><span>&#2547;</span>14</h4>
+                                            <h3 class="fw-bold">${product.name}</h3>
+                                            <p>${product.generic.name}</p>
+                                            <h4><span>&#2547;</span>${product.price}</h4>
                                             <a class="cart-btn" href="#"><img
                                                     src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
                                                     alt="">Add to Cart</a>
@@ -302,6 +207,9 @@
                     }
                 });
             });
+
+            var featured_pro_height = $('.all-products').height();
+            $('.best-selling-products').height(featured_pro_height + "px")
         });
     </script>
 @endpush
