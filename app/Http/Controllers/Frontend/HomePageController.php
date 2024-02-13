@@ -36,6 +36,10 @@ class HomePageController extends BaseController
         if($id != 'all'){
             $datas = $products->where('pro_cat_id',$id)->get();
         }
+        $datas = $datas->map(function($data){
+                $data->image = ($data->image ? storage_url($data->image) : '');
+                return $data;
+        });
         $data['products'] = $datas->shuffle()->take(8);
         return response()->json($data);
     }

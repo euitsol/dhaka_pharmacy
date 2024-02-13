@@ -84,7 +84,7 @@
                                 <div class="col-3">
                                     <div class="single-pdct">
                                         <div class="pdct-img">
-                                            <img class="w-100" src="{{ ($product->image) ? storage_url($product->image) : asset('no_img/no_img.jpg') }}"
+                                            <img class="w-100" src="{{ ($product->image) ? storage_url($product->image) : asset('no_img/no_img.png') }}"
                                                 alt="Product Image">
                                         </div>
                                         <div class="pdct-info">
@@ -175,7 +175,8 @@
                     success: function(data) {
                         var result = '';
                         data.products.forEach(function(product) {
-                            var image = product.image ? "{{storage_url("+product.image+")}}" : "{{asset('no_img/no_img.jpg')}}";
+                            var noImage = "{{asset('no_img/no_img.png')}}";
+                            var image = product.image ? product.image : noImage;
                             result += `
                                 <div class="col-3">
                                     <div class="single-pdct">
