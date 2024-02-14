@@ -59,8 +59,19 @@
         .single_product_section .single_product .product_content .product_price a{
 
         }
+
+
         .single_product_section .single_product .product_details{
 
+        }
+        .single_product_section .single_product .product_details table th{
+            max-width: 100px;
+        }
+        .single_product_section .single_product .product_details .nav-tabs .nav-link{
+            color: var(--text-color-black);
+        }
+        .single_product_section .single_product .product_details .nav-tabs .nav-link.active{
+            color: var(--text-primary-color);
         }
 
 
@@ -172,17 +183,54 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-12">
-                                            <div class="product_details">
-                                                <div class="taps">
-                                                    <ul>
-                                                        <li>Description</li>
-                                                        <li>Information</li>
-                                                        <li>Review</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="tab_content">
-                                                    This is tab content
-                                                </div>
+                                            <div class="product_details py-4">
+                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{{__('Description')}}</button>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">{{__('Information')}}</button>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">{{__('Reviews')}}</button>
+                                                    </li>
+                                                  </ul>
+                                                  <div class="tab-content" id="myTabContent">
+                                                    <div class="tab-pane pt-3 fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">{{__($single_product->description)}}</div>
+                                                    <div class="tab-pane pt-3 fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                        <table class="table table-responsive table-bordered table-striped">
+                                                            <tr>
+                                                                <th>{{__('Product Category')}}</th>
+                                                                <td>{{__($single_product->pro_cat->name)}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>{{__('Product Sub Category')}}</th>
+                                                                <td>{{__($single_product->pro_sub_cat->name)}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>{{__('Medicine Name')}}</th>
+                                                                <td>{{__($single_product->name)}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>{{__('Generic Name')}}</th>
+                                                                <td>{{__($single_product->generic->name)}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>{{__('Medicine Dosage')}}</th>
+                                                                <td>{{__($single_product->medicine_cat->name)}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>{{__('Company Name')}}</th>
+                                                                <td>{{__($single_product->company->name)}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>{{__('Product Strength')}}</th>
+                                                                <td>{{__($single_product->strength->quantity.' '.$single_product->strength->unit)}}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="tab-pane pt-3 fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                                                  </div>
                                             </div>
                                         </div>
                                     </div>
