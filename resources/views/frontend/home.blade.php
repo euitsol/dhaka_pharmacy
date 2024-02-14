@@ -19,6 +19,7 @@
             <!--========= Product-Section-Start ========-->
             <section class="product-section pb-4 mb-5">
                 <div class="row">
+                    @if($bsItems->isNotEmpty())
                     <div class="col-3 best-selling-col">
                         <h2 class="title mb-4">{{__('Best Selling')}}</h2>
                         <div class="best-selling-products">
@@ -41,11 +42,14 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+                    @if($featuredItems->isNotEmpty())
                     <div class="col-9">
                         <div class="row cat-filter-row gx-4">
                             <div class="col-3">
                                 <h2 class="title">{{__('Featured Products')}}</h2>
                             </div>
+                            
                             <div class="col-8">
                                 <div class="slider-col" uk-slider="finite: true">
                                     <div class="uk-position-relative">
@@ -78,6 +82,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="row all-products mt-3">
                             @foreach ($products as $product)
@@ -109,6 +114,7 @@
                         </div>
                         @endif
                     </div>
+                    @endif
                 </div>
             </section>
             <!--====== Delivery Slider Section ======-->
