@@ -149,7 +149,7 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="product_image">
-                                                        <img src="{{ asset('no_img/no_img.png') }}" alt="Product Image">
+                                                        <img src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}" alt="Product Image">
                                                     </div>
                                                 </div>
                                             </div>
@@ -240,32 +240,35 @@
                         
                     </div>
                     <div class="col-3">
-                        <div class="card">
+                        <div class="card" style="min-height:100%">
                             <div class="card-body">
                                 <div class="related_products">
                                     <h2 class="mb-4">{{__('Related Products')}}</h2>
                                     <div class="products">
                                         <div class="row">
                                             @foreach ($related_products as $product)
-                                            <div class="col-12 mb-3">
-                                                <div class="single-item">
-                                                    <a href="{{route('product.single_product',$product->id)}}">
-                                                        <div class="row">
-                                                        
-                                                            <div class="col-4 img">
-                                                                <img class="w-100 border border-1 rounded-1"
-                                                                    src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
-                                                                    alt="{{__($product->name)}}">
+                                                @for ($i=1; $i<=8; $i++)
+                                                <div class="col-12 mb-3">
+                                                    <div class="single-item">
+                                                        <a href="{{route('product.single_product',$product->id)}}">
+                                                            <div class="row">
+                                                            
+                                                                <div class="col-4 img">
+                                                                    <img class="w-100 border border-1 rounded-1"
+                                                                        src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
+                                                                        alt="{{__($product->name)}}">
+                                                                </div>
+                                                                <div class="col-8 content">
+                                                                    <h3 class="pdct-title">{{__($product->name)}}</h3>
+                                                                    <h4 class="pdct-price"><span>&#2547;</span>{{__(number_format($product->price,2))}}</h4>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-8 content">
-                                                                <h3 class="pdct-title">{{__($product->name)}}</h3>
-                                                                <h4 class="pdct-price"><span>&#2547;</span>{{__(number_format($product->price,2))}}</h4>
-                                                            </div>
-                                                        </div>
-                                                    </a>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                                @endfor
+                                                
+                                            @endforeach
                                         </div>
                                         
                                     </div>
@@ -293,13 +296,6 @@
                 var formattedNumber = numberFormat($(this).val(), 2);
                 $('.total_price').html(formattedNumber);
             });
-
-
-
-
-
-            var single_product = $('.sidebar-cat-section').height();
-            $('.related_products').css('min-height',single_product + "px")
         });
     </script>
 @endpush
