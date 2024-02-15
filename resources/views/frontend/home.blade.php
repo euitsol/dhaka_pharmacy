@@ -90,7 +90,7 @@
                         <div class="row all-products mt-3">
                             @foreach ($products as $product)
                             @for ($i=1; $i<=6; $i++)
-                                <div class="col-3 col-md-4">
+                                <div class="col-3 px-2">
                                     <div class="single-pdct">
                                         <a href="{{route('product.single_product',$product->id)}}">
                                             <div class="pdct-img">
@@ -106,7 +106,7 @@
                                         <div class="add_to_card">
                                             <a class="cart-btn" href="#"><img
                                                     src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                    alt="">Add to Cart</a>
+                                                    alt="">{{__('Add to Cart')}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -203,9 +203,11 @@
                                             <h3 class="fw-bold">${product.name}</h3>
                                             <p>${product.generic.name}</p>
                                             <h4><span>&#2547;</span>${product.price}</h4>
-                                            <a class="cart-btn" href="#"><img
-                                                    src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                    alt="">Add to Cart</a>
+                                            <div class="add_to_card">
+                                                <a class="cart-btn" href="#"><img
+                                                        src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
+                                                        alt="">{{__('Add to Cart')}}</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -27,7 +27,7 @@ class SingleProductController extends Controller
             $data =  MedicineUnit::findOrFail($u);
             return $data;
         }, (array) json_decode($data['single_product']->unit, true));
-        $data['related_products'] = $products->where('generic_id',$data['single_product']->generic_id)->latest()->get()->shuffle();
+        $data['resembling_products'] = $products->where('generic_id',$data['single_product']->generic_id)->latest()->get()->shuffle();
         // $data['products'] = $products->get()->shuffle()->take(8);
         // $data['bsItems'] = $products->where('is_best_selling', 1)->get()->shuffle()->take(8);
 
