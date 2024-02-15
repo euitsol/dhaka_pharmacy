@@ -52,6 +52,36 @@
         .single_product_section .single_product .product_content .product_price select{
             text-align: center;
             color: var(--text-color-black);
+            
+        }
+        .single_product_section .single_product .product_content .product_price select:focus {
+            border-color: var(--text-color-black);
+            box-shadow: none;
+        }
+        .single_product_section .product_details #review .form-group input:focus {
+            border-color: var(--text-color-black);
+            box-shadow: none;
+        }
+        .single_product_section .product_details #review .form-group textarea:focus {
+            border-color: var(--text-color-black);
+            box-shadow: none;
+        }
+        .single_product_section .product_details #review .form-group .submit_button {
+            border: var(--bs-border-width) solid var(--bs-border-color);
+            border-radius: 5px;
+            padding: 8px 15px;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            line-height: 21px;
+            font-weight: 400;
+            color: var(--bs-body-color);
+            width: 100%;
+            display: inline-block;
+            display: flex;
+            justify-content: center;
+            column-gap: 10px;
+            transition: 0.4s;
         }
         .single_product_section .single_product .product_content .product_price p{
 
@@ -118,6 +148,32 @@
             color: var(--secundary-color);
             margin: 0;
         }
+        .related_products_card{
+            overflow-y: auto;
+        }
+        .related_products_card::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
+            border-radius: 10px;
+            background-color: var(--primary-bg);
+        }
+
+        .related_products_card::-webkit-scrollbar
+        {
+            width: 6px;
+            background-color: #F5F5F5;
+        }
+
+        .related_products_card::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            background-color: var(--secundary-color);
+            background-image: -webkit-linear-gradient(90deg,
+                                                    transparent,
+                                                    var(--secundary-color) 50%,
+                                                    transparent,
+                                                    transparent)
+        }
 
         
     </style>
@@ -136,7 +192,7 @@
             <section class="single_product_section pb-4">
                 <div class="row">
                     <div class="col-9">
-                        <div class="card">
+                        <div class="card single_product_card">
                             <div class="card-body">
                                 <div class="single_product">
                                     <h2 class="breadcrumb mb-4">
@@ -186,18 +242,18 @@
                                             <div class="product_details py-4">
                                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                     <li class="nav-item" role="presentation">
-                                                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{{__('Description')}}</button>
+                                                      <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">{{__('Description')}}</button>
                                                     </li>
                                                     <li class="nav-item" role="presentation">
-                                                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">{{__('Information')}}</button>
+                                                      <button class="nav-link" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="false">{{__('Information')}}</button>
                                                     </li>
                                                     <li class="nav-item" role="presentation">
-                                                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">{{__('Reviews')}}</button>
+                                                      <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">{{__('Reviews')}}</button>
                                                     </li>
                                                   </ul>
                                                   <div class="tab-content" id="myTabContent">
-                                                    <div class="tab-pane pt-3 fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">{{__($single_product->description)}}</div>
-                                                    <div class="tab-pane pt-3 fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                    <div class="tab-pane pt-3 fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">{{__($single_product->description)}}</div>
+                                                    <div class="tab-pane pt-3 fade" id="info" role="tabpanel" aria-labelledby="info-tab">
                                                         <table class="table table-responsive table-bordered table-striped">
                                                             <tr>
                                                                 <th>{{__('Product Category')}}</th>
@@ -229,7 +285,21 @@
                                                             </tr>
                                                         </table>
                                                     </div>
-                                                    <div class="tab-pane pt-3 fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                                                    <div class="tab-pane pt-3 fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+                                                        <form action="" method="">
+                                                            <div class="form-group mb-3">
+                                                                <label for="email">{{__('Email')}}</label>
+                                                                <input type="email" class="form-control" placeholder="Email" name="email" autocomplete="off">
+                                                            </div>
+                                                            <div class="form-group mb-3">
+                                                                <label for="message">{{__('Message')}}</label>
+                                                                <textarea name="message" class="form-control" placeholder="Write a revew"></textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" class="form-control submit_button" placeholder="Email" name="email" autocomplete="off">
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                   </div>
                                             </div>
                                         </div>
@@ -240,14 +310,14 @@
                         
                     </div>
                     <div class="col-3">
-                        <div class="card" style="min-height:100%">
+                        <div class="card related_products_card" style="height:100%">
                             <div class="card-body">
                                 <div class="related_products">
                                     <h2 class="mb-4">{{__('Related Products')}}</h2>
                                     <div class="products">
                                         <div class="row">
                                             @foreach ($related_products as $product)
-                                                @for ($i=1; $i<=8; $i++)
+                                            {{-- @for($i=1; $i<=10; $i++) --}}
                                                 <div class="col-12 mb-3">
                                                     <div class="single-item">
                                                         <a href="{{route('product.single_product',$product->id)}}">
@@ -266,8 +336,7 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                @endfor
-                                                
+                                            {{-- @endfor --}}
                                             @endforeach
                                         </div>
                                         
@@ -296,6 +365,18 @@
                 var formattedNumber = numberFormat($(this).val(), 2);
                 $('.total_price').html(formattedNumber);
             });
+
+            var single_product_height = $('.single_product_card').height();
+            $('.related_products_card').css('max-height', single_product_height + 'px')
+
+            $('.product_details .nav-item').on('click', function() {
+                var single_product_height = $('.single_product_card').height();
+                $('.related_products_card').css('max-height', single_product_height + 'px')
+            });
         });
+
+        
+
+
     </script>
 @endpush

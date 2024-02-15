@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-6">
                         <div class="logo">
-                            <a href="#"><img class="w-100" src="{{asset('frontend/asset/img/logo.png')}}" alt="Header-logo"></a>
+                            <a href="{{route('home')}}"><img class="w-100" src="{{asset('frontend/asset/img/logo.png')}}" alt="Header-logo"></a>
                         </div>
                     </div>
                 </div>

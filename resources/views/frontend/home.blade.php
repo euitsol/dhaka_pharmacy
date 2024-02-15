@@ -86,7 +86,7 @@
                         </div>
                         <div class="row all-products mt-3">
                             @foreach ($products as $product)
-                                <div class="col-3">
+                                <div class="col-3 col-md-4">
                                     <div class="single-pdct">
                                         <a href="{{route('product.single_product',$product->id)}}">
                                             <div class="pdct-img">
