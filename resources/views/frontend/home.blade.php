@@ -25,19 +25,22 @@
                         <div class="best-selling-products">
                             <div class="all-product">
                                 @foreach ($bsItems as $item)
-                                    <div class="col-12 single-item">
-                                        <div class="row">
-                                            <div class="col-4 img">
-                                                <img class="w-100 border border-1 rounded-1"
-                                                    src="{{ ($item->image) ? storage_url($item->image) : asset('no_img/no_img.png') }}"
-                                                    alt="{{$item->name}}">
-                                            </div>
-                                            <div class="col-8">
-                                                <h3 class="pdct-title"><a href="#">{{$item->name}}</a></h3>
-                                                <h4 class="pdct-price"><span>&#2547;</span>{{$item->price}}</h4>
-                                            </div>
+                                @for ($i=1; $i<=10; $i++)
+                                <div class="col-12 single-item">
+                                    <div class="row">
+                                        <div class="col-4 img">
+                                            <img class="w-100 border border-1 rounded-1"
+                                                src="{{ ($item->image) ? storage_url($item->image) : asset('no_img/no_img.png') }}"
+                                                alt="{{$item->name}}">
+                                        </div>
+                                        <div class="col-8">
+                                            <h3 class="pdct-title"><a href="#">{{$item->name}}</a></h3>
+                                            <h4 class="pdct-price"><span>&#2547;</span>{{$item->price}}</h4>
                                         </div>
                                     </div>
+                                </div>
+                                @endfor
+                                    
                                 @endforeach
                             </div>
                         </div>
@@ -86,6 +89,7 @@
                         </div>
                         <div class="row all-products mt-3">
                             @foreach ($products as $product)
+                            @for ($i=1; $i<=6; $i++)
                                 <div class="col-3 col-md-4">
                                     <div class="single-pdct">
                                         <a href="{{route('product.single_product',$product->id)}}">
@@ -106,6 +110,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            @endfor
                             @endforeach 
                         </div>
                         @if(count($products) >=8)

@@ -317,7 +317,7 @@
                                     <div class="products">
                                         <div class="row">
                                             @foreach ($related_products as $product)
-                                            {{-- @for($i=1; $i<=10; $i++) --}}
+                                            @for($i=1; $i<=20; $i++)
                                                 <div class="col-12 mb-3">
                                                     <div class="single-item">
                                                         <a href="{{route('product.single_product',$product->id)}}">
@@ -336,7 +336,7 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                            {{-- @endfor --}}
+                                            @endfor
                                             @endforeach
                                         </div>
                                         
