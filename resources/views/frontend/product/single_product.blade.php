@@ -3,6 +3,25 @@
 @push('css_link')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
 @endpush
+@push('css')
+    <style>
+        .boxed label {
+            display: inline-block;
+            width: 100px;
+            padding: 10px;
+            border: solid 2px #ccc;
+            transition: all 0.3s;
+        }
+
+        .boxed input[type="radio"] {
+            display: none;
+        }
+
+        .boxed input[type="radio"]:checked + label {
+            border: solid 2px green;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
@@ -60,18 +79,13 @@
                                                         <p><strong>{{ __('MRP: Tk') }} <span
                                                                     class="total_price">{{ __(number_format($single_product->price, 2)) }}
                                                                 </span></strong> {{ __('/piece') }}</p>
-                                                        <div class="form-group my-4">
-                                                            <select name="price"
-                                                                class="form-select form-select-lg price_select_box"
-                                                                aria-label=".form-select-lg example">
-                                                                <option value="{{ $single_product->price }}">
-                                                                    {{ __('Price') }}</option>
-                                                                @foreach ($units as $unit)
-                                                                    <option
-                                                                        value="{{ $single_product->price * $unit->quantity }}">
-                                                                        {{ __($unit->name) }}</option>
-                                                                @endforeach
-                                                            </select>
+                                                        <div class="form-group my-4 boxed">
+                                                            @foreach ($units as $key=>$unit)
+                                                                <input type="radio" class="item_quantity" id="android-{{$key}}" name="data" value="{{ $single_product->price * $unit->quantity }}">
+                                                                <label for="android-{{$key}}">
+                                                                    <img src="http://via.placeholder.com/150x150">
+                                                                </label>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                     <div class="add_to_card">
@@ -456,7 +470,7 @@
         $(document).ready(function() {
 
 
-            $('.price_select_box').on('change', function() {
+            $('.item_quantity').on('change', function() {
                 console.log($(this).val());
                 var formattedNumber = numberFormat($(this).val(), 2);
                 $('.total_price').html(formattedNumber);
