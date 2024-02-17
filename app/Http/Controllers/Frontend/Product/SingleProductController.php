@@ -15,14 +15,14 @@ use Illuminate\View\View;
 class SingleProductController extends Controller
 {
 
-    public function singleProduct($id): View
+    public function singleProduct($slug): View
     {
         
         
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','medicine_cat','strength'])
                             ->where('status',1)
                             ->where('deleted_at',NULL);
-        $data['single_product'] = Medicine::findOrFail($id);
+        $data['single_product'] = Medicine::with(['pro_cat','pro_sub_cat','generic','company','medicine_cat','strength'])->where('slug',$slug)->where('status',1)->where('deleted_at',null)->first();
         $data['units'] = array_map(function ($u) {
             $data =  MedicineUnit::findOrFail($u);
             return $data;

@@ -17,7 +17,8 @@ return new class extends Migration
     {
         Schema::create('product_sub_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->boolean('status')->default(1);
             $table->unsignedBigInteger('pro_cat_id');

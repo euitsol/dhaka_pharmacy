@@ -124,11 +124,7 @@
                                                         <table class="table table-responsive table-bordered table-striped">
                                                             <tr>
                                                                 <td>{{ __(strtoupper('Product Category')) }}</td>
-                                                                <td>{{ __($single_product->pro_cat->name) }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>{{ __(strtoupper('Product Sub Category')) }}</td>
-                                                                <td>{{ __($single_product->pro_sub_cat->name) }}</td>
+                                                                <td>{{ __($single_product->pro_cat->name.' - ') }}<small>{{ __($single_product->pro_sub_cat->name) }}</small></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>{{ __(strtoupper('Medicine Name')) }}</td>
@@ -471,10 +467,6 @@
             var single_product_height = $('.single_product_card').height();
             $('.similar_products_card').css('max-height', single_product_height + 'px')
 
-            $('.product_details .nav-item').on('click', function() {
-                var single_product_height = $('.single_product_card').height();
-                $('.similar_products_card').css('max-height', single_product_height + 'px')
-            });
 
 
 
@@ -490,7 +482,10 @@
 
 
             //Product Description Jquery
-            $(".single_product_section .product_details .nav-tabs a").click(function() {
+            $(".single_product_section .product_details .nav-tabs a").on('click',function() {
+                var single_product_height = $('.single_product_card').height();
+                $('.similar_products_card').css('max-height', single_product_height + 'px');
+
                 var position = $(this).parent().position();
                 var width = $(this).parent().width();
                 $(".single_product_section .product_details .slider").css({

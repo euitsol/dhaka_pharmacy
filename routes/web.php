@@ -314,10 +314,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
         Route::controller(MedicineCategoryController::class, 'medicine-category')->prefix('medicine-category')->name('medicine_category.')->group(function () {
             Route::get('index', 'index')->name('medicine_category_list');
-            Route::get('details/{id}', 'details')->name('details.medicine_category_list');
+            Route::get('details/{slug}', 'details')->name('details.medicine_category_list');
             Route::get('create', 'create')->name('medicine_category_create');
             Route::post('create', 'store')->name('medicine_category_create');
-            Route::get('edit/{id}', 'edit')->name('medicine_category_edit');
+            Route::get('edit/{slug}', 'edit')->name('medicine_category_edit');
             Route::put('edit/{id}', 'update')->name('medicine_category_edit');
             Route::get('status/{id}', 'status')->name('status.medicine_category_edit');
             Route::get('featured/{id}', 'featured')->name('featured.medicine_category_edit');

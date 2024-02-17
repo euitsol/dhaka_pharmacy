@@ -32,9 +32,9 @@ class MedicineController extends Controller
         $data['medicines'] = Medicine::with(['pro_cat','generic','company','medicine_cat','strength','created_user'])->orderBy('name')->get();
         return view('admin.product_management.medicine.index',$data);
     }
-    public function details($id): View
+    public function details($slug): View
     {
-        $data['medicine'] = Medicine::with(['pro_cat','generic','company','medicine_cat','strength','created_user','updated_user'])->where('id', $id)->first();
+        $data['medicine'] = Medicine::with(['pro_cat','generic','company','medicine_cat','strength','created_user','updated_user'])->where('slug', $slug)->first();
 
         $data['medicine']->units = collect(json_decode($data['medicine']->unit, true))->map(function ($unit) {
             $medicineUnit = MedicineUnit::findOrFail($unit);
@@ -67,6 +67,7 @@ class MedicineController extends Controller
             $medicine->image = $path;
         }
         $medicine->name = $req->name;
+        $medicine->name = $req->slug;
         $medicine->pro_cat_id = $req->pro_cat_id;
         $medicine->pro_sub_cat_id = $req->pro_sub_cat_id;
         $medicine->generic_id = $req->generic_id;
@@ -84,9 +85,9 @@ class MedicineController extends Controller
         flash()->addSuccess('Medicine '.$medicine->name.' created successfully.');
         return redirect()->route('product.medicine.medicine_list');
     }
-    public function edit($id): View
+    public function edit($slug): View
     {
-        $data['medicine'] = Medicine::findOrFail($id);
+        $data['medicine'] = Medicine::where('slug',$slug)->first();
         $data['pro_cats'] = ProductCategory::where('status',1)->where('deleted_at',null)->orderBy('name')->get();
         $data['pro_sub_cats'] = ProductSubCategory::where('status',1)->where('deleted_at',null)->orderBy('name')->get();
         $data['generics'] = GenericName::where('status',1)->where('deleted_at',null)->orderBy('name')->get();
@@ -112,6 +113,7 @@ class MedicineController extends Controller
             $medicine->image = $path;
         }
         $medicine->name = $req->name;
+        $medicine->name = $req->slug;
         $medicine->pro_cat_id = $req->pro_cat_id;
         $medicine->pro_sub_cat_id = $req->pro_sub_cat_id;
         $medicine->generic_id = $req->generic_id;

@@ -38,7 +38,12 @@ class HomePageController extends BaseController
                 $data->image = ($data->image ? storage_url($data->image) : '');
                 return $data;
         });
-        $data['products'] = $datas->shuffle()->take(8);
+        $data['products'] = $datas->shuffle()->take(8)->map(function($product){
+            $product->name = str_limit($product->name, 15, '..');
+            $product->generic->name = str_limit($product->generic->name, 25, '..');
+            $product->company->name = str_limit($product->company->name, 25, '..');
+            return $product;
+        });
         return response()->json($data);
     }
 }

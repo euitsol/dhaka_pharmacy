@@ -28,10 +28,15 @@
                             <div class="form-group col-md-6">
 
                                 <label>{{ __('Name') }}</label>
-                                <input type="text" name="name"
+                                <input type="text" name="name" id="title"
                                     class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                     placeholder="Enter name" value="{{ $medicine->name }}">
                                 @include('alerts.feedback', ['field' => 'name'])
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>{{ _('Slug') }}</label>
+                                <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}" value="{{ $medicine->slug }}">
+                                @include('alerts.feedback', ['field' => 'slug'])
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __('Generic Name') }}</label>
@@ -111,7 +116,7 @@
                                 </select>
                                 @include('alerts.feedback', ['field' => 'strength_id'])
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 <label>{{ __('Medicine Unit') }}</label>
                                 <select name="unit[]" class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }}"
                                     multiple="multiple">
@@ -277,5 +282,22 @@
                 }
             });
         })
+    </script>
+    <script>
+        function generateSlug(str) {
+            return str
+                .toLowerCase()
+                .replace(/\s+/g, "-")
+                .replace(/[^\w\u0980-\u09FF-]+/g, "") // Allow Bangla characters (\u0980-\u09FF)
+                .replace(/--+/g, "-")
+                .replace(/^-+|-+$/g, "");
+        }
+        $(document).ready(function () {
+            $("#title").on("keyup", function () {
+                const titleValue = $(this).val().trim();
+                const slugValue = generateSlug(titleValue);
+                $("#slug").val(slugValue);
+            });
+        });
     </script>
 @endpush

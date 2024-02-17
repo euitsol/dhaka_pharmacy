@@ -21,11 +21,10 @@
                 <div class="row">
                     @if($bsItems->isNotEmpty())
                     <div class="col-3 best-selling-col">
-                        <h2 class="title mb-4">{{__('Best Selling')}}</h2>
+                        <h2 class="title mb-3">{{__('Best Selling')}}</h2>
                         <div class="best-selling-products">
                             <div class="all-product">
                                 @foreach ($bsItems as $item)
-                                @for ($i=1; $i<=10; $i++)
                                 <div class="col-12 single-item">
                                     <div class="row align-items-center">
                                         <div class="col-4 img">
@@ -42,8 +41,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endfor
-                                    
                                 @endforeach
                             </div>
                         </div>
@@ -92,21 +89,23 @@
                         </div>
                         <div class="row all-products mt-3">
                             @foreach ($products as $product)
-                            @for ($i=1; $i<=6; $i++)
                                 <div class="col-3 px-2">
                                     <div class="single-pdct">
-                                        <a href="{{route('product.single_product',$product->id)}}">
+                                        <a href="{{route('product.single_product',$product->slug)}}">
                                             <div class="pdct-img">
                                                 <img class="w-100" src="{{ ($product->image) ? storage_url($product->image) : asset('no_img/no_img.png') }}"
                                                     alt="Product Image">
                                             </div>
+                                        </a>
                                             <div class="pdct-info">
-                                                <h3 class="fw-bold">{{$product->name}} <small>({{$product->medicine_cat->name}})</small></h3>
+                                                <a href="{{route('product.single_product',$product->slug)}}">
+                                                    <h3 class="fw-bold">{{$product->name}} <small>({{$product->medicine_cat->name}})</small></h3>
+                                                </a>
                                                 <p><a href="">{{str_limit($product->generic->name, 25, '..')}}</a></p>
                                                 <p><a href="">{{str_limit($product->company->name, 25, '..')}}</a></p>
                                                 <h4><span>&#2547;</span>{{$product->price}}</h4>
                                             </div>
-                                        </a>
+                                        
                                         <div class="add_to_card">
                                             <a class="cart-btn" href="#"><img
                                                     src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
@@ -114,7 +113,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endfor
                             @endforeach 
                         </div>
                         @if(count($products) >=8)
@@ -196,22 +194,30 @@
                         data.products.forEach(function(product) {
                             var noImage = "{{asset('no_img/no_img.png')}}";
                             var image = product.image ? product.image : noImage;
+                            let route = ("{{route('product.single_product',['id'])}}");
+                            let _route = route.replace('id', product.id);
                             result += `
-                                <div class="col-3">
+                                <div class="col-3 px-2">
                                     <div class="single-pdct">
-                                        <div class="pdct-img">
-                                            <img class="w-100" src="${image}"
-                                                alt="${product.name}">
-                                        </div>
-                                        <div class="pdct-info">
-                                            <h3 class="fw-bold">${product.name}</h3>
-                                            <p>${product.generic.name}</p>
-                                            <h4><span>&#2547;</span>${product.price}</h4>
-                                            <div class="add_to_card">
-                                                <a class="cart-btn" href="#"><img
-                                                        src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                        alt="">{{__('Add to Cart')}}</a>
+                                        <a href="${route}">
+                                            <div class="pdct-img">
+                                                <img class="w-100" src="${image}"
+                                                    alt="${product.name}">
                                             </div>
+                                        </a>
+                                            <div class="pdct-info">
+                                                <a href="${route}">
+                                                    <h3 class="fw-bold">${product.name} <small>(${product.medicine_cat.name})</small></h3>
+                                                </a>
+                                                <p><a href="">${product.generic.name}</a></p>
+                                                <p><a href="">${product.company.name}</a></p>
+                                                <h4><span>&#2547;</span>${product.price}</h4>
+                                            </div>
+                                        
+                                        <div class="add_to_card">
+                                            <a class="cart-btn" href="#"><img
+                                                    src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
+                                                    alt="">{{__('Add to Cart')}}</a>
                                         </div>
                                     </div>
                                 </div>

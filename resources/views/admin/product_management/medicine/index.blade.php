@@ -58,13 +58,13 @@
                                             'menuItems' => [
                                                 [
                                                     'routeName' => 'product.medicine.details.medicine_list',
-                                                    'params' => [$medicine->id],
+                                                    'params' => [$medicine->slug],
                                                     'label' => 'View Details',
                                                 ],
                                                 [
                                                     'routeName' =>
                                                         'product.medicine.medicine_edit',
-                                                    'params' => [$medicine->id],
+                                                    'params' => [$medicine->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [
