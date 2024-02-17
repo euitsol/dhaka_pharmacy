@@ -3,411 +3,6 @@
 @push('css_link')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
 @endpush
-@push('css')
-    <style>
-        .breadcrumb_wrap {
-            position: relative;
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard {
-            padding: 0px;
-
-            list-style: none;
-            overflow: hidden;
-            font-size: 15px;
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard>li+li:before {
-            padding: 0;
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li {
-            float: left;
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li.active a {
-            /* background: var(--primary-bg);                   fallback color */
-            background: var(--primary-bg);
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li.completed a {
-            background: var(--primary-bg);
-            /* fallback color */
-            background: var(--secundary-color);
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li.active a:after {
-            border-left: 30px solid var(--primary-bg);
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li.completed a:after {
-            border-left: 30px solid var(--secundary-color);
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li a {
-            color: var(--text-color-white);
-            background: var(--primary-bg);
-            text-decoration: none;
-            padding: 10px 0 10px 45px;
-            position: relative;
-            display: block;
-            float: left;
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li a:after {
-            content: " ";
-            display: block;
-            width: 0;
-            height: 0;
-            border-top: 50px solid transparent;
-            /* Go big on the size, and let overflow hide */
-            border-bottom: 50px solid transparent;
-            border-left: 30px solid var(--nav-primary-bg);
-            position: absolute;
-            top: 50%;
-            margin-top: -50px;
-            left: 100%;
-            z-index: 2;
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li a:before {
-            content: " ";
-            display: block;
-            width: 0;
-            height: 0;
-            border-top: 50px solid transparent;
-            /* Go big on the size, and let overflow hide */
-            border-bottom: 50px solid transparent;
-            border-left: 30px solid var(--text-color-white);
-            position: absolute;
-            top: 50%;
-            margin-top: -50px;
-            margin-left: 1px;
-            left: 100%;
-            z-index: 1;
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li:first-child a {
-            padding-left: 15px;
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li a:hover {
-            background: var(--secondary-bg);
-        }
-
-        .breadcrumb_wrap .breadcrumb.wizard li a:hover:after {
-            border-left-color: var(--secondary-bg) !important;
-        }
-
-        .breadcrumb_wrap .favorite {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .breadcrumb_wrap .favorite i.fa-solid {
-            color: red;
-        }
-
-        .single_product_section .single_product .product_content h1,
-        .single_product_section .resembling_products h2 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            line-height: 35px;
-            font-weight: 500;
-            color: var(--text-color-black);
-            transition: .4s;
-            cursor: pointer;
-        }
-
-        .single_product_section .single_product .product_content h1:hover,
-        .single_product_section .resembling_products h2:hover {
-            color: var(--text-primary-color);
-        }
-        .single_product_section .single_product .product_content h1 small{
-            font-size: 13px;
-        }
-        .single_product_section .single_product .product_image {}
-
-        .single_product_section .single_product .product_image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .single_product_section .single_product .product_content {}
-
-        .single_product_section .single_product .product_content p {
-            margin-bottom: 5px;
-            font-size: 18px;
-            color: var(--text-color-black);
-        }
-
-        .single_product_section .single_product .product_content .product_price {}
-
-        .single_product_section .single_product .product_content .product_price select {
-            text-align: center;
-            color: var(--text-color-black);
-
-        }
-
-        .single_product_section .single_product .product_content .product_price select:focus {
-            border-color: var(--text-color-black);
-            box-shadow: none;
-        }
-
-        .single_product_section .single_product .product_content .product_price p {}
-
-        .single_product_section .single_product .product_content .product_price a {}
-
-
-
-
-
-
-        /* Product Details CSS  */
-
-        .single_product_section .single_product .product_details {}
-
-        .single_product_section .single_product .product_details .tab-pane {
-            padding: 15px;
-
-        }
-
-        .single_product_section .single_product .product_details .nav-tabs {
-            position: relative;
-            border: none !important;
-            background-color: var(--text-color-white);
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-            border-radius: 6px;
-            padding: 0;
-        }
-
-        .single_product_section .single_product .product_details .nav-tabs li {
-            margin: 0px !important;
-        }
-
-        .single_product_section .single_product .product_details .nav-tabs li a {
-            position: relative;
-            margin-right: 0px !important;
-            padding: 20px 40px !important;
-            font-size: 16px;
-            border: none !important;
-            color: #333;
-        }
-
-        .single_product_section .single_product .product_details .nav-tabs a:hover {
-            background-color: var(--text-color-white) !important;
-            border: none;
-        }
-
-        .single_product_section .single_product .product_details .slider {
-            display: inline-block;
-            width: 30px;
-            height: 4px;
-            border-radius: 3px;
-            background-color: var(--secondary-bg);
-            position: absolute;
-            z-index: 1200;
-            bottom: 0;
-            transition: all .4s linear;
-
-        }
-
-        .single_product_section .single_product .product_details .nav-tabs .active {
-            background-color: transparent !important;
-            border: none !important;
-            color: var(--secundary-color) !important;
-        }
-
-
-
-
-
-        /* resembling Product CSS  */
-
-        .single_product_section .resembling_products .single-item .img img {
-            height: 100%;
-            object-fit: cover;
-            padding: 15px 5px;
-        }
-
-        .single_product_section .resembling_products .single-item img {
-            border-color: var(--text-color-black) !important;
-        }
-
-        .single_product_section .resembling_products .single-item .content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .single_product_section .resembling_products .single-item .pdct-title {
-            margin: 0;
-            padding: 0;
-        }
-
-        .single_product_section .resembling_products .single-item .pdct-title {
-            font-family: "Open Sans", sans-serif;
-            font-size: 15px;
-            line-height: 23px;
-            font-weight: 500;
-            display: block;
-            text-decoration: none;
-            color: var(--text-color-black);
-            transition: 0.4s;
-        }
-
-        .single_product_section .resembling_products .single-item .pdct-title:hover {
-            color: var(--asent-color);
-        }
-
-        .single_product_section .resembling_products .single-item .pdct-price {
-            font-family: "Open Sans", sans-serif;
-            font-size: 17px;
-            line-height: 25px;
-            font-weight: 500;
-            color: var(--secundary-color);
-            margin: 0;
-        }
-
-        .resembling_products_card {
-            overflow-y: auto;
-        }
-
-        .resembling_products_card::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
-            border-radius: 10px;
-            background-color: var(--primary-bg);
-        }
-
-        .resembling_products_card::-webkit-scrollbar {
-            width: 6px;
-            background-color: #F5F5F5;
-        }
-
-        .resembling_products_card::-webkit-scrollbar-thumb {
-            border-radius: 10px;
-            background-color: var(--secundary-color);
-            background-image: -webkit-linear-gradient(90deg,
-                    transparent,
-                    var(--secundary-color) 50%,
-                    transparent,
-                    transparent)
-        }
-
-
-
-
-
-
-
-
-
-        /* Review CSS */
-        .single_product_section .product_details .what-say {
-            background: #F5F5F5 !important;
-            padding-top: 100px !important;
-        }
-
-        .single_product_section .product_details .what-say .testimonial {
-            margin: 0 20px 40px;
-        }
-
-        .single_product_section .product_details .what-say .testimonial .testimonial-content {
-            padding: 35px 25px 35px 50px;
-            margin-bottom: 35px;
-            background: var(--text-color-white);
-            position: relative;
-        }
-
-        .single_product_section .product_details .what-say .testimonial .testimonial-content:before {
-            content: "";
-            position: absolute;
-            bottom: -30px;
-            left: 0;
-            border-top: 15px solid var(--primary-color);
-            border-left: 15px solid transparent;
-            border-bottom: 15px solid transparent;
-        }
-
-        .single_product_section .product_details .what-say .testimonial .testimonial-content:after {
-            content: "";
-            position: absolute;
-            bottom: -30px;
-            right: 0;
-            border-top: 15px solid var(--primary-color);
-            border-right: 15px solid transparent;
-            border-bottom: 15px solid transparent;
-        }
-
-        .single_product_section .product_details .what-say .testimonial-content .testimonial-icon {
-            width: 50px;
-            height: 45px;
-            background: var(--secundary-color);
-            text-align: center;
-            font-size: 22px;
-            color: var(--text-color-white);
-            line-height: 42px;
-            position: absolute;
-            top: 37px;
-            left: -19px;
-        }
-
-        .single_product_section .product_details .what-say .testimonial-content .testimonial-icon:before {
-            content: "";
-            border-bottom: 16px solid var(--secundary-color);
-            border-left: 18px solid transparent;
-            position: absolute;
-            top: -16px;
-            left: 1px;
-        }
-
-        .single_product_section .product_details .what-say .testimonial .description {
-            font-size: 15px;
-            font-style: italic;
-            color: var(--text-color-black);
-            line-height: 23px;
-            margin: 0;
-        }
-
-        .single_product_section .product_details .what-say .testimonial .title {
-            display: block;
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--text-color-black);
-            text-transform: capitalize;
-            letter-spacing: 1px;
-            margin: 0 0 5px 0;
-        }
-
-        .single_product_section .product_details .what-say .testimonial .post {
-            display: block;
-            font-size: 14px;
-            color: var(--secundary-color);
-        }
-
-        .single_product_section .product_details .what-say .owl-theme .owl-controls {
-            margin-top: 20px;
-        }
-
-        .single_product_section .product_details .what-say .owl-theme .owl-controls .owl-page span {
-            background: var(--primary-color);
-            opacity: 1;
-            transition: all 0.4s ease 0s;
-        }
-
-        .single_product_section .product_details .what-say .owl-theme .owl-controls .owl-page.active span,
-        .single_product_section .product_details .what-say .owl-theme .owl-controls.clickable .owl-page:hover span {
-            background: var(--secundary-color);
-        }
-
-        /* Related Product CSS */
-    </style>
-@endpush
 @section('content')
     <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
@@ -499,19 +94,20 @@
                                                 <ul class="nav nav-tabs nav-justified" role="tablist">
                                                     <div class="slider"></div>
                                                     <li class="nav-item" role="presentation">
-                                                        <a class="nav-link active" id="description-tab" data-bs-toggle="tab"
-                                                            data-bs-target="#description" type="button" role="tab"
-                                                            aria-controls="description" aria-selected="false"><i
-                                                                class="fa-regular fa-file-lines"></i>
-                                                            {{ __('Description') }}</a>
-                                                    </li>
-                                                    <li class="nav-item" role="presentation">
-                                                        <a class="nav-link" id="info-tab" data-bs-toggle="tab"
+                                                        <a class="nav-link active" id="info-tab" data-bs-toggle="tab"
                                                             data-bs-target="#info" type="button" role="tab"
                                                             aria-controls="info" aria-selected="false"><i
                                                                 class="fa-solid fa-circle-info"></i>
                                                             {{ __('Information') }}</a>
                                                     </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link" id="description-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#description" type="button" role="tab"
+                                                            aria-controls="description" aria-selected="false"><i
+                                                                class="fa-regular fa-file-lines"></i>
+                                                            {{ __('Description') }}</a>
+                                                    </li>
+                                                   
                                                     <li class="nav-item" role="presentation">
                                                         <a class="nav-link" id="review-tab" data-bs-toggle="tab"
                                                             data-bs-target="#review" type="button" role="tab"
@@ -523,10 +119,7 @@
 
                                                 <!-- Tab panes -->
                                                 <div class="tab-content">
-                                                    <div class="tab-pane fade show active" id="description" role="tabpanel"
-                                                        aria-labelledby="description-tab">{!! $single_product->description !!}
-                                                    </div>
-                                                    <div class="tab-pane fade" id="info" role="tabpanel"
+                                                    <div class="tab-pane fade show active" id="info" role="tabpanel"
                                                         aria-labelledby="info-tab">
                                                         <table class="table table-responsive table-bordered table-striped">
                                                             <tr>
@@ -560,6 +153,10 @@
                                                             </tr>
                                                         </table>
                                                     </div>
+                                                    <div class="tab-pane fade" id="description" role="tabpanel"
+                                                        aria-labelledby="description-tab">{!! $single_product->description !!}
+                                                    </div>
+                                                    
                                                     <div class="tab-pane fade" id="review" role="tabpanel"
                                                         aria-labelledby="review-tab">
                                                         <!--Start What-Customer-Say Section-->
@@ -736,30 +333,31 @@
                                 <div class="resembling_products">
                                     <h2 class="mb-4">{{ __('Resembling Products') }}</h2>
                                     <div class="products">
-                                        <div class="row">
+                                        <div class="row px-3">
                                             @foreach ($resembling_products as $product)
                                                 @for ($i = 1; $i <= 2; $i++)
-                                                    <div class="col-12">
-                                                        <div class="single-item">
-                                                            <a href="{{ route('product.single_product', $product->id) }}">
-                                                                <div class="row">
-
+                                                    <div class="col-12 single-item">
+                                                                <div class="row align-items-center">
                                                                     <div class="col-4 img">
-                                                                        <img class="w-100 border border-1 rounded-1"
+                                                                        <a href="{{ route('product.single_product', $product->id) }}"> 
+                                                                        <img height="" class="w-100 border border-1 rounded-1"
                                                                             src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
                                                                             alt="{{ __($product->name) }}">
+                                                                        </a>
                                                                     </div>
                                                                     <div class="col-8 content">
                                                                         <h3 class="pdct-title">{{ __($product->name) }}
                                                                         </h3>
+                                                                        <p><a href="">{{$product->pro_cat->name}}</a></p>
+                                                                        <p><a href="">{{$product->generic->name}}</a></p>
+                                                                        <p><a href="">{{$product->medicine_cat->name}}</a></p>
                                                                         <h4 class="pdct-price">
                                                                             <span>&#2547;</span>{{ __(number_format($product->price, 2)) }}
                                                                         </h4>
                                                                     </div>
                                                                 </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
+                                                            </div>
+                                                        
                                                 @endfor
                                             @endforeach
                                         </div>

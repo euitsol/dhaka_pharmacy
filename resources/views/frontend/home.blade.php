@@ -27,14 +27,17 @@
                                 @foreach ($bsItems as $item)
                                 @for ($i=1; $i<=10; $i++)
                                 <div class="col-12 single-item">
-                                    <div class="row">
+                                    <div class="row align-items-center">
                                         <div class="col-4 img">
-                                            <img class="w-100 border border-1 rounded-1"
+                                            <img height="90" class="w-100 border border-1 rounded-1"
                                                 src="{{ ($item->image) ? storage_url($item->image) : asset('no_img/no_img.png') }}"
                                                 alt="{{$item->name}}">
                                         </div>
                                         <div class="col-8">
                                             <h3 class="pdct-title"><a href="#">{{$item->name}}</a></h3>
+                                            <p><a href="">{{$item->pro_cat->name}}</a></p>
+                                            <p><a href="">{{$item->generic->name}}</a></p>
+                                            <p><a href="">{{$item->medicine_cat->name}}</a></p>
                                             <h4 class="pdct-price"><span>&#2547;</span>{{$item->price}}</h4>
                                         </div>
                                     </div>
