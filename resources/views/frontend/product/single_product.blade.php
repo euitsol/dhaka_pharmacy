@@ -484,6 +484,9 @@
                                                                 src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
                                                                 alt="">{{ __('Add to Cart') }}</a>
                                                     </div>
+                                                    <div class="order_button mt-4">
+                                                        <a class="order-btn" type="submit" href="#">{{ __('Order Now') }}</a>
+                                                    </div>
                                                 </form>
 
                                             </div>
@@ -736,7 +739,7 @@
                                         <div class="row">
                                             @foreach ($resembling_products as $product)
                                                 @for ($i = 1; $i <= 2; $i++)
-                                                    <div class="col-12 mb-3">
+                                                    <div class="col-12">
                                                         <div class="single-item">
                                                             <a href="{{ route('product.single_product', $product->id) }}">
                                                                 <div class="row">

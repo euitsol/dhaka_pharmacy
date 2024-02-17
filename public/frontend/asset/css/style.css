@@ -56,7 +56,7 @@ h2.title {
   font-weight: 500;
   color: var(--text-color-black);
 }
-.single-pdct .add_to_card .cart-btn {
+.single-pdct .order_button .order-btn {
   border: 2px solid var(--secundary-color);
   border-radius: 10px;
   padding: 8px 15px;  
@@ -78,6 +78,17 @@ h2.title {
   font-size: 14px;
   line-height: 22px;
   color: var(--text-color-black);
+}
+
+.single-item{
+  padding: 10px 0 !important;
+  border-bottom: 1px solid var(--text-color-black);
+}
+.single-item:first-child{
+  padding-top: 0;
+}
+.single-item:last-child{
+  padding-bottom: 0;
 }
 /*============== varriable color for nav css ================*/
 :root {
@@ -101,8 +112,6 @@ h2.title {
   --text-color-white: #fff;
 
 }
-
-
 .container-fluid {
   padding: 0 30px !important;
 }
@@ -354,6 +363,31 @@ body{
   border-radius: 15px;
   overflow-y: auto;
 }
+
+
+.product-section .best-selling-products::-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
+  border-radius: 10px;
+  background-color: var(--primary-bg);
+}
+
+.product-section .best-selling-products::-scrollbar {
+  width: 6px;
+  background-color: #F5F5F5;
+}
+
+.product-section .best-selling-products::-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: var(--secundary-color);
+  background-image: linear-gradient(90deg,
+                                  transparent,
+                                  var(--secundary-color) 50%,
+                                  transparent,
+                                  transparent);
+}
+
+
+
 .product-section .best-selling-products::-webkit-scrollbar-track
 {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
@@ -378,11 +412,12 @@ body{
                                             transparent)
 }
 .product-section .best-selling-col .all-product{
-  row-gap: 15px;
   padding: 30px 15px;
   display: flex;
   flex-wrap: wrap;
 }
+
+
 
 
 .product-section .best-selling-col .single-item img{
@@ -491,8 +526,32 @@ body{
   transition: 0.4s;
 }
 .add_to_card .cart-btn:hover{
-  color: var(--text-color-black);
+  color: var(--text-color-white);
   border-color: var(--text-color-black);
+  background-color: var(--text-color-black);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+}
+.order_button .order-btn {
+  border: 2px solid var(--secundary-color);
+  border-radius: 10px;
+  padding: 8px 15px;  
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 400;
+  color: var(--secundary-color);
+  width: 100%;
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  transition: 0.4s;
+}
+.order_button .order-btn:hover{
+  color: var(--text-color-white);
+  border-color: var(--text-color-black);
+  background-color: var(--text-color-black);
   box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 .product-section .show-more .all-pdct-btn{
