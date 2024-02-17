@@ -19,11 +19,30 @@ class ProductSubCategoryRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
     public function rules(): array
     {
         return [
-            'name' => 'required',
             'pro_cat_id'=>'required|exists:product_categories,id',
+        ]
+        +
+            ($this->isMethod('POST') ? $this->store() : $this->update());
+    }
+
+    protected function store(): array
+    {
+        return [
+            'name' => 'required|unique:medicine_sub_categories,name',
+            'slug' => 'required|unique:medicine_sub_categories,slug',
+
+        ];
+    }
+
+    protected function update(): array
+    {
+        return [
+            'name' => 'required|unique:medicine_sub_categories,name,' . $this->route('id'),
+            'slug' => 'required|unique:medicine_sub_categories,slug,' . $this->route('id'),
         ];
     }
 }

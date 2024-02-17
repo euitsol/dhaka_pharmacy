@@ -68,7 +68,7 @@
                                                 [
                                                     'routeName' =>
                                                         'product.product_category.product_category_edit',
-                                                    'params' => [$product_category->id],
+                                                    'params' => [$product_category->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [

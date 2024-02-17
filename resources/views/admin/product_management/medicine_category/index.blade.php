@@ -60,7 +60,7 @@
                                                 [
                                                     'routeName' =>
                                                         'product.medicine_category.medicine_category_edit',
-                                                    'params' => [$medicine_category->id],
+                                                    'params' => [$medicine_category->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [

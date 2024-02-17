@@ -54,7 +54,7 @@
                                                 ],
                                                 [
                                                     'routeName' => 'product.company_name.company_name_edit',
-                                                    'params' => [$company_name->id],
+                                                    'params' => [$company_name->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [
