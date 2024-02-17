@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Update Medicine Category')}}</h4>
+                            <h4 class="card-title">{{__('Update Medicine Dosage')}}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', ['routeName' => 'product.medicine_category.medicine_category_list', 'className' => 'btn-primary', 'label' => 'Back'])

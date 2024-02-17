@@ -328,13 +328,13 @@
 
                     </div>
                     <div class="col-3">
-                        <div class="card resembling_products_card" style="height:100%">
+                        <div class="card similar_products_card" style="height:100%">
                             <div class="card-body">
-                                <div class="resembling_products">
-                                    <h2 class="mb-4">{{ __('Resembling Products') }}</h2>
+                                <div class="similar_products">
+                                    <h2 class="mb-4">{{ __('Similar Products') }}</h2>
                                     <div class="products">
                                         <div class="row px-3">
-                                            @foreach ($resembling_products as $product)
+                                            @foreach ($similar_products as $product)
                                                 @for ($i = 1; $i <= 2; $i++)
                                                     <div class="col-12 single-item">
                                                                 <div class="row align-items-center">
@@ -346,11 +346,11 @@
                                                                         </a>
                                                                     </div>
                                                                     <div class="col-8 content">
-                                                                        <h3 class="pdct-title">{{ __($product->name) }}
+                                                                        <h3 class="pdct-title">{{ __(str_limit($product->name,25)) }}
                                                                         </h3>
-                                                                        <p><a href="">{{$product->pro_cat->name}}</a></p>
-                                                                        <p><a href="">{{$product->generic->name}}</a></p>
-                                                                        <p><a href="">{{$product->medicine_cat->name}}</a></p>
+                                                                        <p><a href="">{{str_limit($product->generic->name,25)}}</a></p>
+                                                                        <p><a href="">{{str_limit($product->company->name,25)}}</a></p>
+                                                                        <p><a href="">{{str_limit($product->medicine_cat->name,25)}}</a></p>
                                                                         <h4 class="pdct-price">
                                                                             <span>&#2547;</span>{{ __(number_format($product->price, 2)) }}
                                                                         </h4>
@@ -380,7 +380,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div id="related-product-slider" class="owl-carousel">
-                                        @foreach ($resembling_products as $product)
+                                        @foreach ($similar_products as $product)
                                             @for ($i=1; $i<=20; $i++)
                                             <div class="px-2">
                                                 <div class="single-pdct">
@@ -390,8 +390,9 @@
                                                                 alt="Product Image">
                                                         </div>
                                                         <div class="pdct-info">
-                                                            <h3 class="fw-bold">{{$product->name}}</h3>
-                                                            <p>{{$product->generic->name}}</p>
+                                                            <h3 class="fw-bold">{{$product->name}} <small>({{$product->medicine_cat->name}})</small></h3>
+                                                            <p><a href="">{{str_limit($product->generic->name,25)}}</a></p>
+                                                            <p><a href="">{{str_limit($product->company->name,25)}}</a></p>
                                                             <h4><span>&#2547;</span>{{$product->price}}</h4>
                                                         </div>
                                                     </a>
@@ -468,11 +469,11 @@
 
             //Height Control Jquery
             var single_product_height = $('.single_product_card').height();
-            $('.resembling_products_card').css('max-height', single_product_height + 'px')
+            $('.similar_products_card').css('max-height', single_product_height + 'px')
 
             $('.product_details .nav-item').on('click', function() {
                 var single_product_height = $('.single_product_card').height();
-                $('.resembling_products_card').css('max-height', single_product_height + 'px')
+                $('.similar_products_card').css('max-height', single_product_height + 'px')
             });
 
 

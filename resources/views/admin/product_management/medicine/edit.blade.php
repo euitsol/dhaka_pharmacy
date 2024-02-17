@@ -85,10 +85,10 @@
                                 @include('alerts.feedback', ['field' => 'company_id'])
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ __('Medicine Category') }}</label>
+                                <label>{{ __('Medicine Dosage') }}</label>
                                 <select name="medicine_cat_id"
                                     class="form-control {{ $errors->has('medicine_cat_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select medicine category') }}</option>
+                                    <option selected hidden>{{ __('Select medicine dosage') }}</option>
                                     @foreach ($medicine_cats as $medicine_cat)
                                         <option value="{{ $medicine_cat->id }}"
                                             {{ ($medicine_cat->id == $medicine->medicine_cat_id) ? 'selected' : '' }}>

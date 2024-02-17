@@ -45,7 +45,7 @@ class MedicineCategoryController extends Controller
         $medicine_category->name = $req->name;
         $medicine_category->created_by = admin()->id;
         $medicine_category->save();
-        flash()->addSuccess('Medicine category '.$medicine_category->name.' created successfully.');
+        flash()->addSuccess('Medicine Dosage '.$medicine_category->name.' created successfully.');
         return redirect()->route('product.medicine_category.medicine_category_list');
     }
     public function edit($id): View
@@ -60,7 +60,7 @@ class MedicineCategoryController extends Controller
         $medicine_category->name = $req->name;
         $medicine_category->updated_by = admin()->id;
         $medicine_category->update();
-        flash()->addSuccess('Medicine category '.$medicine_category->name.' updated successfully.');
+        flash()->addSuccess('Medicine Dosage '.$medicine_category->name.' updated successfully.');
         return redirect()->route('product.medicine_category.medicine_category_list');
     }
 
@@ -68,21 +68,21 @@ class MedicineCategoryController extends Controller
     {
         $medicine_category = MedicineCategory::findOrFail($id);
         $this->statusChange($medicine_category);
-        flash()->addSuccess('Medicine category ' . $medicine_category->name . ' status updated successfully.');
+        flash()->addSuccess('Medicine Dosage ' . $medicine_category->name . ' status updated successfully.');
         return redirect()->route('product.medicine_category.medicine_category_list');
     }
     public function featured($id): RedirectResponse
     {
         $medicine_category = MedicineCategory::findOrFail($id);
         $this->featuredChange($medicine_category);
-        flash()->addSuccess('Medicine category ' . $medicine_category->name . ' featured updated successfully.');
+        flash()->addSuccess('Medicine Dosage ' . $medicine_category->name . ' featured updated successfully.');
         return redirect()->route('product.medicine_category.medicine_category_list');
     }
     public function delete($id): RedirectResponse
     {
         $medicine_category = MedicineCategory::findOrFail($id);
         $medicine_category->delete();
-        flash()->addSuccess('Medicine category '.$medicine_category->name.' deleted successfully.');
+        flash()->addSuccess('Medicine Dosage '.$medicine_category->name.' deleted successfully.');
         return redirect()->route('product.medicine_category.medicine_category_list');
 
     }

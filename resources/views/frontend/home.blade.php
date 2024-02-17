@@ -34,10 +34,10 @@
                                                 alt="{{$item->name}}">
                                         </div>
                                         <div class="col-8">
-                                            <h3 class="pdct-title"><a href="#">{{$item->name}}</a></h3>
-                                            <p><a href="">{{$item->pro_cat->name}}</a></p>
-                                            <p><a href="">{{$item->generic->name}}</a></p>
-                                            <p><a href="">{{$item->medicine_cat->name}}</a></p>
+                                            <h3 class="pdct-title"><a href="#">{{str_limit($item->name,25)}}</a></h3>
+                                            <p><a href="">{{str_limit($item->generic->name,25)}}</a></p>
+                                            <p><a href="">{{str_limit($item->company->name,25)}}</a></p>
+                                            <p><a href="">{{str_limit($item->medicine_cat->name,25)}}</a></p>
                                             <h4 class="pdct-price"><span>&#2547;</span>{{$item->price}}</h4>
                                         </div>
                                     </div>
@@ -101,8 +101,9 @@
                                                     alt="Product Image">
                                             </div>
                                             <div class="pdct-info">
-                                                <h3 class="fw-bold">{{$product->name}}</h3>
-                                                <p>{{$product->generic->name}}</p>
+                                                <h3 class="fw-bold">{{$product->name}} <small>({{$product->medicine_cat->name}})</small></h3>
+                                                <p><a href="">{{str_limit($product->generic->name, 25, '..')}}</a></p>
+                                                <p><a href="">{{str_limit($product->company->name, 25, '..')}}</a></p>
                                                 <h4><span>&#2547;</span>{{$product->price}}</h4>
                                             </div>
                                         </a>
