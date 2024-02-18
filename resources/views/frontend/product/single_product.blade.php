@@ -2,6 +2,7 @@
 @section('title', 'Home')
 @push('css_link')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('frontend/plugin/xzoom/xzoom.min.css')}}" media="all" /> 
 @endpush
 @push('css')
     <style>
@@ -61,9 +62,19 @@
                                         <div class="col-md-6">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <div class="product_image">
-                                                        <img src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}"
-                                                            alt="Product Image">
+                                                    <div class="product_image xzoom-container">
+                                                        <img class="xzoom" id="xzoom-default" src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}" xoriginal="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+
+                                                        <!-- Thumbnails -->
+                                                        <div class="xzoom-thumbs">
+                                                            <a href="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                                <img class="xzoom-gallery xactive" width="80" src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}" xpreview="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                                </a>
+                                                                
+                                                                <a href="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}">
+                                                                <img class="xzoom-gallery" width="80" src="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}" xpreview="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}">
+                                                                </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -429,9 +440,22 @@
 @push('js_link')
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js">
     </script>
+    <script type="text/javascript" src="{{asset('frontend/plugin/xzoom/xzoom.min.js')}}"></script>
 @endpush
 @push('js')
     <script>
+        // XZoom 
+        $(document).ready(function(){
+            $('.xzoom, .xzoom-gallery').xzoom({zoomWidth: 400, title: true, tint: '#333', Xoffset: 15});
+        });
+
+
+
+
+
+
+
+        // Xzoom 
 
         //testimonial-slider
         $(document).ready(function() {

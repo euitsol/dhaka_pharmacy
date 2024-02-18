@@ -801,10 +801,20 @@ body{
   font-size: 13px;
 }
 
-.single_product_section .single_product .product_image img {
+.single_product_section .single_product .product_image .xzoom {
   width: 100%;
-  height: 100%;
+  height: 21vw;
   object-fit: cover;
+}
+.single_product_section .single_product .product_image .xzoom-thumbs {
+    margin: 10px 0 0 0 !important;
+    text-align: left;
+}
+.single_product_section .single_product .product_image .xzoom-thumbs .xzoom-gallery {
+    width: 85px;
+    height: 4vw;
+    object-fit: cover;
+    margin: 0;
 }
 
 
