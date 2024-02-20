@@ -27,10 +27,15 @@
                             <div class="form-group col-md-6">
 
                                 <label>{{ __('Name') }}</label>
-                                <input type="text" name="name"
+                                <input type="text" name="name" id="title"
                                     class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                     placeholder="Enter name" value="{{ old('name') }}">
                                 @include('alerts.feedback', ['field' => 'name'])
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>{{ _('Slug') }}</label>
+                                <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                                @include('alerts.feedback', ['field' => 'slug'])
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __('Generic Name') }}</label>
@@ -81,10 +86,10 @@
                                 @include('alerts.feedback', ['field' => 'company_id'])
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ __('Medicine Category') }}</label>
+                                <label>{{ __('Medicine Dosage') }}</label>
                                 <select name="medicine_cat_id"
                                     class="form-control {{ $errors->has('medicine_cat_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select medicine category') }}</option>
+                                    <option selected hidden>{{ __('Select medicine dosage') }}</option>
                                     @foreach ($medicine_cats as $medicine_cat)
                                         <option value="{{ $medicine_cat->id }}"
                                             {{ $medicine_cat->id == old('medicine_cat_id') ? 'selected' : '' }}>
@@ -107,7 +112,7 @@
                                 </select>
                                 @include('alerts.feedback', ['field' => 'strength_id'])
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 <label>{{ __('Medicine Unit') }}</label>
                                 <select name="unit[]" class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }}"
                                     multiple="multiple">
@@ -275,6 +280,4 @@
             });
         })
     </script>
-
-    
 @endpush

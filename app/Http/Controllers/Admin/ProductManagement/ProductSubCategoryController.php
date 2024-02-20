@@ -53,15 +53,16 @@ class ProductSubCategoryController extends Controller
             $product_sub_category->image = $path;
         }
         $product_sub_category->name = $req->name;
+        $product_sub_category->slug = $req->slug;
         $product_sub_category->pro_cat_id = $req->pro_cat_id;
         $product_sub_category->created_by = admin()->id;
         $product_sub_category->save();
         flash()->addSuccess('Product Sub category ' . $product_sub_category->name . ' created successfully.');
         return redirect()->route('product.product_sub_category.product_sub_category_list');
     }
-    public function edit($id): View
+    public function edit($slug): View
     {
-        $data['product_sub_category'] = ProductSubCategory::findOrFail($id);
+        $data['product_sub_category'] = ProductSubCategory::where('slug',$slug)->first();
         $data['pro_cats'] = ProductCategory::where('status', 1)->latest()->get();
         $data['document'] = Documentation::where('module_key', 'product_sub_category')->first();
         return view('admin.product_management.product_sub_category.edit', $data);
@@ -80,6 +81,7 @@ class ProductSubCategoryController extends Controller
             $product_sub_category->image = $path;
         }
         $product_sub_category->name = $req->name;
+        $product_sub_category->slug = $req->slug;
         $product_sub_category->pro_cat_id = $req->pro_cat_id;
         $product_sub_category->updated_by = admin()->id;
         $product_sub_category->update();

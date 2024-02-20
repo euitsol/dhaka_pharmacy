@@ -55,14 +55,15 @@ class ProductCategoryController extends Controller
         }
 
         $product_category->name = $req->name;
+        $product_category->slug = $req->slug;
         $product_category->created_by = admin()->id;
         $product_category->save();
         flash()->addSuccess('Product category ' . $product_category->name . ' created successfully.');
         return redirect()->route('product.product_category.product_category_list');
     }
-    public function edit($id): View
+    public function edit($slug): View
     {
-        $data['product_category'] = ProductCategory::findOrFail($id);
+        $data['product_category'] = ProductCategory::where('slug',$slug)->first();
         $data['document'] = Documentation::where('module_key', 'product_category')->first();
         return view('admin.product_management.product_category.edit', $data);
     }
@@ -80,6 +81,7 @@ class ProductCategoryController extends Controller
             $product_category->image = $path;
         }
         $product_category->name = $req->name;
+        $product_category->slug = $req->slug;
         $product_category->updated_by = admin()->id;
         $product_category->update();
         flash()->addSuccess('Product category ' . $product_category->name . ' updated successfully.');

@@ -297,7 +297,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('details/{id}', 'details')->name('details.generic_name_list');
             Route::get('create', 'create')->name('generic_name_create');
             Route::post('create', 'store')->name('generic_name_create');
-            Route::get('edit/{id}', 'edit')->name('generic_name_edit');
+            Route::get('edit/{slug}', 'edit')->name('generic_name_edit');
             Route::put('edit/{id}', 'update')->name('generic_name_edit');
             Route::get('status/{id}', 'status')->name('status.generic_name_edit');
             Route::get('delete/{id}', 'delete')->name('generic_name_delete');
@@ -307,17 +307,17 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('details/{id}', 'details')->name('details.company_name_list');
             Route::get('create', 'create')->name('company_name_create');
             Route::post('create', 'store')->name('company_name_create');
-            Route::get('edit/{id}', 'edit')->name('company_name_edit');
+            Route::get('edit/{slug}', 'edit')->name('company_name_edit');
             Route::put('edit/{id}', 'update')->name('company_name_edit');
             Route::get('status/{id}', 'status')->name('status.company_name_edit');
             Route::get('delete/{id}', 'delete')->name('company_name_delete');
         });
         Route::controller(MedicineCategoryController::class, 'medicine-category')->prefix('medicine-category')->name('medicine_category.')->group(function () {
             Route::get('index', 'index')->name('medicine_category_list');
-            Route::get('details/{id}', 'details')->name('details.medicine_category_list');
+            Route::get('details/{slug}', 'details')->name('details.medicine_category_list');
             Route::get('create', 'create')->name('medicine_category_create');
             Route::post('create', 'store')->name('medicine_category_create');
-            Route::get('edit/{id}', 'edit')->name('medicine_category_edit');
+            Route::get('edit/{slug}', 'edit')->name('medicine_category_edit');
             Route::put('edit/{id}', 'update')->name('medicine_category_edit');
             Route::get('status/{id}', 'status')->name('status.medicine_category_edit');
             Route::get('featured/{id}', 'featured')->name('featured.medicine_category_edit');
@@ -350,7 +350,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('details/{id}', 'details')->name('details.product_category_list');
             Route::get('create', 'create')->name('product_category_create');
             Route::post('create', 'store')->name('product_category_create');
-            Route::get('edit/{id}', 'edit')->name('product_category_edit');
+            Route::get('edit/{slug}', 'edit')->name('product_category_edit');
             Route::put('edit/{id}', 'update')->name('product_category_edit');
             Route::get('status/{id}', 'status')->name('status.product_category_edit');
             Route::get('featured/{id}', 'featured')->name('featured.product_category_edit');
@@ -362,7 +362,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('details/{id}', 'details')->name('details.product_sub_category_list');
             Route::get('create', 'create')->name('product_sub_category_create');
             Route::post('create', 'store')->name('product_sub_category_create');
-            Route::get('edit/{id}', 'edit')->name('product_sub_category_edit');
+            Route::get('edit/{slug}', 'edit')->name('product_sub_category_edit');
             Route::put('edit/{id}', 'update')->name('product_sub_category_edit');
             Route::get('status/{id}', 'status')->name('status.product_sub_category_edit');
             Route::get('menu/{id}', 'menu')->name('menu.product_sub_category_edit');
@@ -371,10 +371,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::controller(MedicineController::class, 'medicine')->prefix('medicine')->name('medicine.')->group(function () {
             Route::get('index', 'index')->name('medicine_list');
             Route::get('get-sub-category/{id}', 'get_sub_cat')->name('sub_cat.medicine_list');
-            Route::get('details/{id}', 'details')->name('details.medicine_list');
+            Route::get('details/{slug}', 'details')->name('details.medicine_list');
             Route::get('create', 'create')->name('medicine_create');
             Route::post('create', 'store')->name('medicine_create');
-            Route::get('edit/{id}', 'edit')->name('medicine_edit');
+            Route::get('edit/{slug}', 'edit')->name('medicine_edit');
             Route::put('edit/{id}', 'update')->name('medicine_edit');
             Route::get('status/{id}', 'status')->name('status.medicine_edit');
             Route::get('best-selling/{id}', 'best_selling')->name('best_selling.medicine_edit');

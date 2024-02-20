@@ -15,19 +15,19 @@ use Illuminate\View\View;
 class SingleProductController extends Controller
 {
 
-    public function singleProduct($id): View
+    public function singleProduct($slug): View
     {
         
         
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','medicine_cat','strength'])
                             ->where('status',1)
                             ->where('deleted_at',NULL);
-        $data['single_product'] = Medicine::findOrFail($id);
+        $data['single_product'] = Medicine::with(['pro_cat','pro_sub_cat','generic','company','medicine_cat','strength'])->where('slug',$slug)->where('status',1)->where('deleted_at',null)->first();
         $data['units'] = array_map(function ($u) {
             $data =  MedicineUnit::findOrFail($u);
             return $data;
         }, (array) json_decode($data['single_product']->unit, true));
-        $data['related_products'] = $products->where('generic_id',$data['single_product']->generic_id)->latest()->get()->shuffle();
+        $data['similar_products'] = $products->where('generic_id',$data['single_product']->generic_id)->latest()->get()->shuffle();
         // $data['products'] = $products->get()->shuffle()->take(8);
         // $data['bsItems'] = $products->where('is_best_selling', 1)->get()->shuffle()->take(8);
 

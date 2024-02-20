@@ -23,9 +23,14 @@
                         @csrf
                         <div class="form-group">
                             <label>{{__('Name')}}</label>
-                            <input type="text" name="name" class="form-control" placeholder="Enter name"
+                            <input type="text" id="title" name="name" class="form-control" placeholder="Enter name"
                                 value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
+                        </div>
+                        <div class="form-group">
+                            <label>{{ _('Slug') }}</label>
+                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                            @include('alerts.feedback', ['field' => 'slug'])
                         </div>
                         <div class="form-group">
                             <label>{{__('Address')}}</label>

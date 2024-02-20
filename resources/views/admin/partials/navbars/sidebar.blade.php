@@ -323,7 +323,7 @@
                                     [
                                         'pageSlug' => 'medicine_category',
                                         'routeName' => 'product.medicine_category.medicine_category_list',
-                                        'label' => 'Medicine Category',
+                                        'label' => 'Medicine Dosage',
                                     ],
                                     [
                                         'pageSlug' => 'medicine_strength',

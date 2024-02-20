@@ -47,7 +47,7 @@
                                     <td>{{ __($medicine->company->name) }}</td>
                                 </tr>
                                 <tr>
-                                    <th>{{ __('Medicine Category') }}</th>
+                                    <th>{{ __('Medicine Dosage') }}</th>
                                     <th>{{ __(':') }}</th>
                                     <td> {{ $medicine->medicine_cat->name }} </td>
                                 </tr>

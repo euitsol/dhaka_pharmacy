@@ -18,6 +18,7 @@ return new class extends Migration
         Schema::create('medicines', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->unsignedBigInteger('pro_cat_id');
             $table->unsignedBigInteger('pro_sub_cat_id');
             $table->unsignedBigInteger('generic_id');

@@ -173,3 +173,7 @@ function removeHttpProtocol($url)
     return str_replace(['http://', 'https://'], '', $url);
 }
 
+function str_limit($data, $limit = 20, $end = '...'){
+    return Str::limit($data, $limit, $end);
+}
+

@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
             MedicineStrengthSeeder::class,
             MedicineUnitSeeder::class,
             ProductCategorySeeder::class,
+            ProductSubCategorySeeder::class,
+            MedicineSeeder::class,
         ]);
     }
 }

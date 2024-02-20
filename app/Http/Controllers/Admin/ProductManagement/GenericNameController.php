@@ -42,14 +42,15 @@ class GenericNameController extends Controller
     {
         $generic_name = new GenericName();
         $generic_name->name = $req->name;
+        $generic_name->slug = $req->slug;
         $generic_name->created_by = admin()->id;
         $generic_name->save();
         flash()->addSuccess('Medicine generic name '.$generic_name->name.' created successfully.');
         return redirect()->route('product.generic_name.generic_name_list');
     }
-    public function edit($id): View
+    public function edit($slug): View
     {
-        $data['generic_name'] = GenericName::findOrFail($id);
+        $data['generic_name'] = GenericName::where('slug',$slug)->first();
         $data['document'] = Documentation::where('module_key','generic_name')->first();
         return view('admin.product_management.generic_name.edit',$data);
     }
@@ -57,6 +58,7 @@ class GenericNameController extends Controller
     {
         $generic_name = GenericName::findOrFail($id);
         $generic_name->name = $req->name;
+        $generic_name->slug = $req->slug;
         $generic_name->updated_by = admin()->id;
         $generic_name->update();
         flash()->addSuccess('Medicine generic name '.$generic_name->name.' updated successfully.');

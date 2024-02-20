@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Medicine Category List') }}</h4>
+                            <h4 class="card-title">{{ __('Medicine Dosage List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
                                 'routeName' => 'product.medicine_category.medicine_category_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new medicine category',
+                                'label' => 'Add new medicine dosage',
                             ])
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                                                 [
                                                     'routeName' =>
                                                         'product.medicine_category.medicine_category_edit',
-                                                    'params' => [$medicine_category->id],
+                                                    'params' => [$medicine_category->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [
@@ -105,7 +105,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Medicine Category Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Medicine Dosage Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

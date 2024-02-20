@@ -17,7 +17,26 @@ class CompanyNameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|min:4',
+
+        ]
+        +
+            ($this->isMethod('POST') ? $this->store() : $this->update());
+    }
+
+    protected function store(): array
+    {
+        return [
+            'name' => 'required|unique:company_names,name',
+            'slug' => 'required|unique:company_names,slug',
+
+        ];
+    }
+
+    protected function update(): array
+    {
+        return [
+            'name' => 'required|unique:company_names,name,' . $this->route('id'),
+            'slug' => 'required|unique:company_names,slug,' . $this->route('id'),
         ];
     }
 }

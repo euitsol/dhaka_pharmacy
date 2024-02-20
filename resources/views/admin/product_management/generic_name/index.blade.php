@@ -54,7 +54,7 @@
                                                 ],
                                                 [
                                                     'routeName' => 'product.generic_name.generic_name_edit',
-                                                    'params' => [$generic_name->id],
+                                                    'params' => [$generic_name->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [

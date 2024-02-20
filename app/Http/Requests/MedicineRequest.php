@@ -35,6 +35,7 @@ class MedicineRequest extends FormRequest
         {
             return [
                 'name' => 'required|unique:medicines,name',
+                'slug' => 'required|unique:medicines,slug',
 
             ];
         }
@@ -43,6 +44,7 @@ class MedicineRequest extends FormRequest
         {
             return [
                 'name' => 'required|unique:medicines,name,' . $this->route('id'),
+                'slug' => 'required|unique:medicines,slug,' . $this->route('id'),
             ];
         }
 }
