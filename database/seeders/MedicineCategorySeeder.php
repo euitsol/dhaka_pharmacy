@@ -11,25 +11,25 @@ class MedicineCategorySeeder extends Seeder
 
     public function run(): void
     {
-        MedicineCategory::create([
-            'name' => 'Tablet',
-            'slug' => 'tablet',
-            ]);
-        MedicineCategory::create([
-            'name' => 'Capsule',
-            'slug' => 'capsule',
-            ]);
-        MedicineCategory::create([
-            'name' => 'Syrup',
-            'slug' => 'syrup',
-            ]);
-        MedicineCategory::create([
-            'name' => 'Injection',
-            'slug' => 'injection',
-            ]);
-        MedicineCategory::create([
-            'name' => 'Ointment',
-            'slug' => 'ointment',
-            ]);
+        // MedicineCategory::create([
+        //     'name' => 'Tablet',
+        //     'slug' => 'tablet',
+        //     ]);
+        // MedicineCategory::create([
+        //     'name' => 'Capsule',
+        //     'slug' => 'capsule',
+        //     ]);
+        // MedicineCategory::create([
+        //     'name' => 'Syrup',
+        //     'slug' => 'syrup',
+        //     ]);
+        // MedicineCategory::create([
+        //     'name' => 'Injection',
+        //     'slug' => 'injection',
+        //     ]);
+        // MedicineCategory::create([
+        //     'name' => 'Ointment',
+        //     'slug' => 'ointment',
+        //     ]);
     }
 }

@@ -89,7 +89,7 @@
                                 </select>
                                 @include('alerts.feedback', ['field' => 'company_id'])
                             </div>
-                            <div class="form-group col-md-6">
+                            {{-- <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Dosage') }}</label>
                                 <select name="medicine_cat_id"
                                     class="form-control {{ $errors->has('medicine_cat_id') ? ' is-invalid' : '' }}">
@@ -101,7 +101,7 @@
                                     @endforeach
                                 </select>
                                 @include('alerts.feedback', ['field' => 'medicine_cat_id'])
-                            </div>
+                            </div> --}}
                             <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Strength') }}</label>
                                 <select name="strength_id"
@@ -116,7 +116,7 @@
                                 </select>
                                 @include('alerts.feedback', ['field' => 'strength_id'])
                             </div>
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Unit') }}</label>
                                 <select name="unit[]" class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }}"
                                     multiple="multiple">

@@ -42,7 +42,7 @@
                                 <div class="single_product">
                                     <div class="breadcrumb_wrap">
                                         <ul class="breadcrumb wizard">
-                                            <li class="completed"><a href="javascript:void(0);">{{ __('Home') }}</a></li>
+                                            <li class="completed"><a href="{{route('home')}}">{{ __('Home') }}</a></li>
                                             <li class="completed"><a
                                                     href="javascript:void(0);">{{ __($single_product->pro_cat->name) }}</a>
                                             </li>
@@ -92,7 +92,7 @@
                                                                 </span></strong> {{ __('/piece') }}</p>
                                                         <div class="form-group my-4 boxed">
                                                             @foreach ($units as $key=>$unit)
-                                                                <input type="radio" class="item_quantity" id="android-{{$key}}" name="data" value="{{ $single_product->price * $unit->quantity }}">
+                                                                <input type="radio" @if($key==0) checked @endif class="item_quantity" id="android-{{$key}}" name="data" value="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{$key}}">
                                                                     <img src="http://via.placeholder.com/150x150">
                                                                 </label>
@@ -360,15 +360,17 @@
                                                     <div class="col-12 single-item">
                                                                 <div class="row align-items-center">
                                                                     <div class="col-4 img">
-                                                                        <a href="{{ route('product.single_product', $product->id) }}"> 
+                                                                        <a href="{{ route('product.single_product', $product->slug) }}"> 
                                                                         <img height="" class="w-100 border border-1 rounded-1"
                                                                             src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
                                                                             alt="{{ __($product->name) }}">
                                                                         </a>
                                                                     </div>
                                                                     <div class="col-8 content">
-                                                                        <h3 class="pdct-title">{{ __(str_limit($product->name,25)) }}
-                                                                        </h3>
+                                                                        
+                                                                            <h3 class="pdct-title"><a href="{{ route('product.single_product', $product->slug) }}">{{ __(str_limit($product->name,25)) }}
+                                                                            </a></h3>
+                                                                        
                                                                         <p><a href="">{{str_limit($product->generic->name,25)}}</a></p>
                                                                         <p><a href="">{{str_limit($product->company->name,25)}}</a></p>
                                                                         <p><a href="">{{str_limit($product->medicine_cat->name,25)}}</a></p>
@@ -405,18 +407,21 @@
                                             @for ($i=1; $i<=20; $i++)
                                             <div class="px-2">
                                                 <div class="single-pdct">
-                                                    <a href="{{route('product.single_product',$product->id)}}">
+                                                    <a href="{{route('product.single_product',$product->slug)}}">
                                                         <div class="pdct-img">
                                                             <img class="w-100" src="{{ ($product->image) ? storage_url($product->image) : asset('no_img/no_img.png') }}"
                                                                 alt="Product Image">
                                                         </div>
+                                                    </a>
                                                         <div class="pdct-info">
+                                                            <a href="{{route('product.single_product',$product->slug)}}">
                                                             <h3 class="fw-bold">{{$product->name}} <small>({{$product->medicine_cat->name}})</small></h3>
+                                                            </a>
                                                             <p><a href="">{{str_limit($product->generic->name,25)}}</a></p>
                                                             <p><a href="">{{str_limit($product->company->name,25)}}</a></p>
                                                             <h4><span>&#2547;</span>{{$product->price}}</h4>
                                                         </div>
-                                                    </a>
+                                                    
                                                     <div class="add_to_card">
                                                         <a class="cart-btn" href="#"><img
                                                                 src="{{ asset('frontend/asset/img/cart-icon.svg') }}"

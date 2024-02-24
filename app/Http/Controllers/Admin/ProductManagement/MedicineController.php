@@ -29,12 +29,12 @@ class MedicineController extends Controller
 
     public function index(): View
     {
-        $data['medicines'] = Medicine::with(['pro_cat','generic','company','medicine_cat','strength','created_user'])->orderBy('name')->get();
+        $data['medicines'] = Medicine::with(['pro_cat','generic','company','strength','created_user'])->orderBy('name')->get();
         return view('admin.product_management.medicine.index',$data);
     }
     public function details($slug): View
     {
-        $data['medicine'] = Medicine::with(['pro_cat','generic','company','medicine_cat','strength','created_user','updated_user'])->where('slug', $slug)->first();
+        $data['medicine'] = Medicine::with(['pro_cat','generic','company','strength','created_user','updated_user'])->where('slug', $slug)->first();
 
         $data['medicine']->units = collect(json_decode($data['medicine']->unit, true))->map(function ($unit) {
             $medicineUnit = MedicineUnit::findOrFail($unit);
@@ -72,7 +72,7 @@ class MedicineController extends Controller
         $medicine->pro_sub_cat_id = $req->pro_sub_cat_id;
         $medicine->generic_id = $req->generic_id;
         $medicine->company_id = $req->company_id;
-        $medicine->medicine_cat_id = $req->medicine_cat_id;
+        // $medicine->medicine_cat_id = $req->medicine_cat_id;
         $medicine->strength_id = $req->strength_id;
         $medicine->unit = json_encode($req->unit);
         $medicine->price = $req->price;
@@ -118,7 +118,7 @@ class MedicineController extends Controller
         $medicine->pro_sub_cat_id = $req->pro_sub_cat_id;
         $medicine->generic_id = $req->generic_id;
         $medicine->company_id = $req->company_id;
-        $medicine->medicine_cat_id = $req->medicine_cat_id;
+        // $medicine->medicine_cat_id = $req->medicine_cat_id;
         $medicine->strength_id = $req->strength_id;
         $medicine->unit = json_encode($req->unit);
         $medicine->price = $req->price;

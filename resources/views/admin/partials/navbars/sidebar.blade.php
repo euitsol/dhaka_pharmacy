@@ -320,11 +320,11 @@
                                         'routeName' => 'product.company_name.company_name_list',
                                         'label' => 'Company Name',
                                     ],
-                                    [
-                                        'pageSlug' => 'medicine_category',
-                                        'routeName' => 'product.medicine_category.medicine_category_list',
-                                        'label' => 'Medicine Dosage',
-                                    ],
+                                    // [
+                                    //     'pageSlug' => 'medicine_category',
+                                    //     'routeName' => 'product.medicine_category.medicine_category_list',
+                                    //     'label' => 'Medicine Dosage',
+                                    // ],
                                     [
                                         'pageSlug' => 'medicine_strength',
                                         'routeName' => 'product.medicine_strength.medicine_strength_list',

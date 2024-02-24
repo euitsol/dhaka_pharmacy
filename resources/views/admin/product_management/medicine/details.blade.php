@@ -46,11 +46,11 @@
                                     <th>{{ __(':') }}</th>
                                     <td>{{ __($medicine->company->name) }}</td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <th>{{ __('Medicine Dosage') }}</th>
                                     <th>{{ __(':') }}</th>
                                     <td> {{ $medicine->medicine_cat->name }} </td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <th>{{ __('Medicine Strength') }}</th>
                                     <th>{{ __(':') }}</th>

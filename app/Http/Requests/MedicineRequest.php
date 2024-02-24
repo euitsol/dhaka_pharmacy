@@ -19,7 +19,7 @@ class MedicineRequest extends FormRequest
             'pro_sub_cat_id'=>'required|exists:product_sub_categories,id',
             'generic_id'=>'required|exists:generic_names,id',
             'company_id'=>'required|exists:company_names,id',
-            'medicine_cat_id'=>'required|exists:medicine_categories,id',
+            'medicine_cat_id'=>'nullable|exists:medicine_categories,id',
             'strength_id'=>'required|exists:medicine_strengths,id',
             'unit'=>'required',
             'description'=>'required|min:50',

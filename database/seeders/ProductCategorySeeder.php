@@ -46,5 +46,17 @@ class ProductCategorySeeder extends Seeder
             'is_featured' => 1,
             'is_menu' => 1,
             ]);
+        ProductCategory::create([
+            'name' => "Devices",
+            'slug' => "devices",
+            'is_featured' => 1,
+            'is_menu' => 1,
+            ]);
+        ProductCategory::create([
+            'name' => "Prescription Medicine",
+            'slug' => "prescription-medicine",
+            'is_featured' => 1,
+            'is_menu' => 1,
+            ]);
     }
 }
