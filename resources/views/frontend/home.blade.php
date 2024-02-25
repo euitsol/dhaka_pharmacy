@@ -211,7 +211,7 @@
                                         </a>
                                             <div class="pdct-info">
                                                 <a href="${_route}">
-                                                    <h3 class="fw-bold">${product.name} <small>(${product.pro_sub_cat.name})</small></h3>
+                                                    <h3 class="fw-bold">${product.name}</h3>
                                                 </a>
                                                 <p><a href="">${product.generic.name}</a></p>
                                                 <p><a href="">${product.company.name}</a></p>
