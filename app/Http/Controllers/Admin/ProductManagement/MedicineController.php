@@ -67,7 +67,7 @@ class MedicineController extends Controller
             $medicine->image = $path;
         }
         $medicine->name = $req->name;
-        $medicine->name = $req->slug;
+        $medicine->slug = $req->slug;
         $medicine->pro_cat_id = $req->pro_cat_id;
         $medicine->pro_sub_cat_id = $req->pro_sub_cat_id;
         $medicine->generic_id = $req->generic_id;
@@ -113,7 +113,7 @@ class MedicineController extends Controller
             $medicine->image = $path;
         }
         $medicine->name = $req->name;
-        $medicine->name = $req->slug;
+        $medicine->slug = $req->slug;
         $medicine->pro_cat_id = $req->pro_cat_id;
         $medicine->pro_sub_cat_id = $req->pro_sub_cat_id;
         $medicine->generic_id = $req->generic_id;
