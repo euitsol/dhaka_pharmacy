@@ -34,7 +34,7 @@ class ProductSubCategoryRequest extends FormRequest
     {
         return [
             
-            'slug' => 'required|unique:medicine_sub_categories,slug',
+            'slug' => 'required|unique:product_sub_categories,slug',
 
         ];
     }
@@ -42,7 +42,7 @@ class ProductSubCategoryRequest extends FormRequest
     protected function update(): array
     {
         return [
-            'slug' => 'required|unique:medicine_sub_categories,slug,' . $this->route('id'),
+            'slug' => 'required|unique:product_sub_categories,slug,' . $this->route('id'),
         ];
     }
 }
