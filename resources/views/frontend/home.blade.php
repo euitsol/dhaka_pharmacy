@@ -101,7 +101,9 @@
                                         </a>
                                             <div class="pdct-info">
                                                 <a href="{{route('product.single_product',$product->slug)}}">
-                                                    <h3 class="fw-bold">{{$product->name}} <small>({{$product->pro_sub_cat->name}})</small></h3>
+                                                    <h3 class="fw-bold">{{str_limit($product->name.' ('.$product->pro_sub_cat->name.')', 25 , '..')}} 
+                                                        {{-- <small>({{$product->pro_sub_cat->name}})</small> --}}
+                                                    </h3>
                                                 </a>
                                                 <p><a href="">{{str_limit($product->generic->name, 25, '..')}}</a></p>
                                                 <p><a href="">{{str_limit($product->company->name, 25, '..')}}</a></p>
