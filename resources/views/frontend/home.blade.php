@@ -38,7 +38,7 @@
                                             <h3 class="pdct-title"><a href="{{route('product.single_product',$item->slug)}}">{{str_limit($item->name,25)}}</a></h3>
                                             <p><a href="">{{str_limit($item->generic->name,25)}}</a></p>
                                             <p><a href="">{{str_limit($item->company->name,25)}}</a></p>
-                                            <p><a href="">{{str_limit($item->medicine_cat->name,25)}}</a></p>
+                                            <p><a href="">{{str_limit($item->pro_sub_cat->name,25)}}</a></p>
                                             <h4 class="pdct-price"><span>&#2547;</span>{{$item->price}}</h4>
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                                         </a>
                                             <div class="pdct-info">
                                                 <a href="{{route('product.single_product',$product->slug)}}">
-                                                    <h3 class="fw-bold">{{$product->name}} <small>({{$product->medicine_cat->name}})</small></h3>
+                                                    <h3 class="fw-bold">{{$product->name}} <small>({{$product->pro_sub_cat->name}})</small></h3>
                                                 </a>
                                                 <p><a href="">{{str_limit($product->generic->name, 25, '..')}}</a></p>
                                                 <p><a href="">{{str_limit($product->company->name, 25, '..')}}</a></p>
@@ -209,7 +209,7 @@
                                         </a>
                                             <div class="pdct-info">
                                                 <a href="${route}">
-                                                    <h3 class="fw-bold">${product.name} <small>(${product.medicine_cat.name})</small></h3>
+                                                    <h3 class="fw-bold">${product.name} <small>(${product.pro_sub_cat.name})</small></h3>
                                                 </a>
                                                 <p><a href="">${product.generic.name}</a></p>
                                                 <p><a href="">${product.company.name}</a></p>

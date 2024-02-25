@@ -12,6 +12,10 @@ class MedicineCompanySeeder extends Seeder
     public function run(): void
     {
         CompanyName::create([
+            'name' => 'Beximco Pharmaceuticals Ltd',
+            'slug' => 'beximco-pharmaceuticals-ltd',
+            ]);
+        CompanyName::create([
             'name' => 'SUN PHARMACEUTICAL BANGLADESH LIMITED',
             'slug' => 'sun-pharmaceutical-bangladesh-limited',
             ]);

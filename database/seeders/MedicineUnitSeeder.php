@@ -11,8 +11,16 @@ class MedicineUnitSeeder extends Seeder
     public function run(): void
     {
         MedicineUnit::create([
+            'name' => "Price",
+            'quantity' => 1,
+            ]);
+        MedicineUnit::create([
             'name' => "10's Strip",
             'quantity' => 10,
+            ]);
+        MedicineUnit::create([
+            'name' => "510's Pack",
+            'quantity' => 510,
             ]);
         MedicineUnit::create([
             'name' => "100's Pack",

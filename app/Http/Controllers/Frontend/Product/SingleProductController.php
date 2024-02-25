@@ -19,10 +19,10 @@ class SingleProductController extends Controller
     {
         
         
-        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','medicine_cat','strength'])
+        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])
                             ->where('status',1)
                             ->where('deleted_at',NULL);
-        $data['single_product'] = Medicine::with(['pro_cat','pro_sub_cat','generic','company','medicine_cat','strength'])->where('slug',$slug)->where('status',1)->where('deleted_at',null)->first();
+        $data['single_product'] = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->where('slug',$slug)->where('status',1)->where('deleted_at',null)->first();
         $data['units'] = array_map(function ($u) {
             $data =  MedicineUnit::findOrFail($u);
             return $data;

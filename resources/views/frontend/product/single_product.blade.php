@@ -46,11 +46,8 @@
                                             <li class="completed"><a
                                                     href="javascript:void(0);">{{ __($single_product->pro_cat->name) }}</a>
                                             </li>
-                                            <li class="completed"><a
-                                                    href="javascript:void(0);">{{ __($single_product->pro_sub_cat->name) }}</a>
-                                            </li>
                                             <li><a
-                                                    href="javascript:void(0);">{{ __($single_product->medicine_cat->name) }}</a>
+                                                    href="javascript:void(0);">{{ __($single_product->pro_sub_cat->name) }}</a>
                                             </li>
                                         </ul>
                                         <div class="favorite">
@@ -71,9 +68,9 @@
                                                                 <img class="xzoom-gallery xactive" width="80" src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}" xpreview="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
                                                                 </a>
                                                                 
-                                                                <a href="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}">
+                                                                {{-- <a href="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}">
                                                                 <img class="xzoom-gallery" width="80" src="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}" xpreview="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}">
-                                                                </a>
+                                                                </a> --}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -81,8 +78,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="product_content">
-                                                <h1>{{ __($single_product->name) }} <small>{{__($single_product->strength->quantity.' '. strtoupper($single_product->strength->unit))}}</small></h1>
-                                                <p>{{ __($single_product->medicine_cat->name) }}</p>
+                                                <h1>{{ __($single_product->name) }} </h1>
+                                                <p>{{ __($single_product->pro_sub_cat->name) }}</p>
                                                 <p>{{ __($single_product->generic->name) }}</p>
                                                 <p>{{ __($single_product->company->name) }}</p>
                                                 <form action="">
@@ -149,7 +146,7 @@
                                                         <table class="table table-responsive table-bordered table-striped">
                                                             <tr>
                                                                 <td>{{ __(strtoupper('Product Category')) }}</td>
-                                                                <td>{{ __($single_product->pro_cat->name.' - ') }}<small>{{ __($single_product->pro_sub_cat->name) }}</small></td>
+                                                                <td>{{ __($single_product->pro_cat->name) }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>{{ __(strtoupper('Medicine Name')) }}</td>
@@ -161,7 +158,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>{{ __(strtoupper('Medicine Dosage')) }}</td>
-                                                                <td>{{ __($single_product->medicine_cat->name) }}</td>
+                                                                <td>{{ __($single_product->pro_sub_cat->name) }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>{{ __(strtoupper('Company Name')) }}</td>
@@ -373,7 +370,7 @@
                                                                         
                                                                         <p><a href="">{{str_limit($product->generic->name,25)}}</a></p>
                                                                         <p><a href="">{{str_limit($product->company->name,25)}}</a></p>
-                                                                        <p><a href="">{{str_limit($product->medicine_cat->name,25)}}</a></p>
+                                                                        <p><a href="">{{str_limit($product->pro_sub_cat->name,25)}}</a></p>
                                                                         <h4 class="pdct-price">
                                                                             <span>&#2547;</span>{{ __(number_format($product->price, 2)) }}
                                                                         </h4>
@@ -415,7 +412,7 @@
                                                     </a>
                                                         <div class="pdct-info">
                                                             <a href="{{route('product.single_product',$product->slug)}}">
-                                                            <h3 class="fw-bold">{{$product->name}} <small>({{$product->medicine_cat->name}})</small></h3>
+                                                            <h3 class="fw-bold">{{$product->name}} <small>({{$product->pro_sub_cat->name}})</small></h3>
                                                             </a>
                                                             <p><a href="">{{str_limit($product->generic->name,25)}}</a></p>
                                                             <p><a href="">{{str_limit($product->company->name,25)}}</a></p>
