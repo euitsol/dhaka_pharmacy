@@ -102,7 +102,7 @@
                                 <label>{{ __('Medicine Strength') }}</label>
                                 <select name="strength_id"
                                     class="form-control {{ $errors->has('strength_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select medicine strength') }}</option>
+                                    <option selected hidden value="">{{ __('Select medicine strength') }}</option>
                                     @foreach ($strengths as $strength)
                                         <option value="{{ $strength->id }}"
                                             {{ $strength->id == old('strength_id') ? 'selected' : '' }}>

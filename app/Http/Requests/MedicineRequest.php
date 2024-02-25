@@ -20,7 +20,7 @@ class MedicineRequest extends FormRequest
             'generic_id'=>'required|exists:generic_names,id',
             'company_id'=>'required|exists:company_names,id',
             'medicine_cat_id'=>'nullable|exists:medicine_categories,id',
-            'strength_id'=>'nullable|exists:medicine_strengths,id',
+            'strength_id'=>'nullable',
             'unit'=>'required',
             'description'=>'required|min:50',
             'prescription_required'=>'boolean|nullable',
