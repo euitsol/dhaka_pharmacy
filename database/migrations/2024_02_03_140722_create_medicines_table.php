@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('pro_sub_cat_id');
             $table->unsignedBigInteger('generic_id');
             $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('medicine_cat_id');
+            // $table->unsignedBigInteger('medicine_cat_id')->nullable();
             $table->unsignedBigInteger('strength_id');
             $table->json('unit');
             $table->string('price');
@@ -43,7 +43,7 @@ return new class extends Migration
             $table->foreign('pro_sub_cat_id')->references('id')->on('product_sub_categories')->onDelete('cascade')->onUpdate('cascade');      
             $table->foreign('generic_id')->references('id')->on('generic_names')->onDelete('cascade')->onUpdate('cascade');      
             $table->foreign('company_id')->references('id')->on('company_names')->onDelete('cascade')->onUpdate('cascade');      
-            $table->foreign('medicine_cat_id')->references('id')->on('medicine_categories')->onDelete('cascade')->onUpdate('cascade');      
+            // $table->foreign('medicine_cat_id')->references('id')->on('medicine_categories')->onDelete('cascade')->onUpdate('cascade');      
             $table->foreign('strength_id')->references('id')->on('medicine_strengths')->onDelete('cascade')->onUpdate('cascade');            
         });
     }

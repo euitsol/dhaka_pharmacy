@@ -13,7 +13,7 @@ use Illuminate\View\View;
 class HomePageController extends BaseController
 {
     public function home(){
-        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','medicine_cat','strength'])
+        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])
                             ->where('status',1)
                             ->where('deleted_at',NULL);
         $data['products'] = $products->latest()->get()->shuffle()->take(8);
@@ -27,7 +27,7 @@ class HomePageController extends BaseController
     }
 
     public function updateFeaturedProducts($id){
-        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','medicine_cat','strength'])
+        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])
                             ->where('status',1)
                             ->where('deleted_at',NULL);
         $datas = $products->latest()->get();

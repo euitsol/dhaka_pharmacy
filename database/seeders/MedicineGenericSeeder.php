@@ -11,6 +11,10 @@ class MedicineGenericSeeder extends Seeder
     public function run(): void
     {
         GenericName::create([
+            'name' => 'Paracetamol',
+            'slug' => 'paracetamol',
+            ]);
+        GenericName::create([
             'name' => 'FLUOXETINE',
             'slug' => 'FLUOXETINE',
             ]);

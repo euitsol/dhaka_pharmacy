@@ -27,10 +27,10 @@ class Medicine extends BaseModel
     {
         return $this->belongsTo(CompanyName::class, 'company_id');
     }
-    public function medicine_cat()
-    {
-        return $this->belongsTo(MedicineCategory::class, 'medicine_cat_id');
-    }
+    // public function medicine_cat()
+    // {
+    //     return $this->belongsTo(MedicineCategory::class, 'medicine_cat_id');
+    // }
     public function strength()
     {
         return $this->belongsTo(MedicineStrength::class, 'strength_id');
