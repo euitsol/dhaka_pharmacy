@@ -36,7 +36,7 @@
         <div class="{{ $menuItems->isNotEmpty() ? 'col-md-9 col-lg-10' : 'col-12' }} content-col">
             <section class="single_product_section pb-4">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="{{ $similar_products->isNotEmpty() ? 'col-md-9' : 'col-md-12' }}">
                         <div class="card single_product_card">
                             <div class="card-body">
                                 <div class="single_product">
@@ -345,6 +345,7 @@
                         </div>
 
                     </div>
+                    @if($similar_products->isNotEmpty())
                     <div class="col-3">
                         <div class="card similar_products_card" style="height:100%">
                             <div class="card-body">
@@ -388,8 +389,10 @@
                         </div>
 
                     </div>
+                    @endif
                 </div>
             </section>
+            @if($similar_products->isNotEmpty())
             <section class="related_product_section pb-4">
                 <div class="row">
                     <div class="col-12">
@@ -437,6 +440,7 @@
                     </div>
                 </div>
             </section>
+            @endif
         </div>
         <!--=========== Main Content Section End ==============-->
     </div>
