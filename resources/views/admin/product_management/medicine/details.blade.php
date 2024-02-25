@@ -137,7 +137,7 @@
                                 <tr>
                                     <th>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ number_format($medicine->price) }}{{__(' BDT')}} </td>
+                                    <td> {{ number_format($medicine->price,2) }}{{__(' BDT')}} </td>
                                 </tr>
                             </tbody>
                         </table>
