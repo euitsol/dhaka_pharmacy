@@ -23,10 +23,13 @@ class SingleProductController extends Controller
                             ->where('status',1)
                             ->where('deleted_at',NULL);
         $data['single_product'] = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->where('slug',$slug)->where('status',1)->where('deleted_at',null)->first();
-        $data['units'] = array_map(function ($u) {
-            $data =  MedicineUnit::findOrFail($u);
-            return $data;
+        $units = array_map(function ($u) {
+            return MedicineUnit::findOrFail($u);
         }, (array) json_decode($data['single_product']->unit, true));
+        usort($units, function ($a, $b) {
+            return $a->quantity - $b->quantity;
+        });
+        $data['units'] = $units;
         $data['similar_products'] = $products->where('generic_id',$data['single_product']->generic_id)->latest()->get()
         ->reject(function ($product) use ($data) {
             return $product->id == $data['single_product']->id;
