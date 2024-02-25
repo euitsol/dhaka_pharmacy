@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('generic_id');
             $table->unsignedBigInteger('company_id');
             // $table->unsignedBigInteger('medicine_cat_id')->nullable();
-            $table->unsignedBigInteger('strength_id');
+            $table->unsignedBigInteger('strength_id')->nullable();
             $table->json('unit');
             $table->string('price');
             $table->string('image')->nullable();
