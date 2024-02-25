@@ -422,7 +422,6 @@
                                     <div class="col-md-12">
                                         <div id="related-product-slider" class="owl-carousel">
                                             @foreach ($similar_products as $product)
-                                                @for ($i = 1; $i <= 20; $i++)
                                                     <div class="px-2">
                                                         <div class="single-pdct">
                                                             <a
@@ -455,7 +454,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                @endfor
                                             @endforeach
                                         </div>
                                     </div>
