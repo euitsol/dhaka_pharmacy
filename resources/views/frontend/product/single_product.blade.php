@@ -2,7 +2,7 @@
 @section('title', 'Home')
 @push('css_link')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('frontend/plugin/xzoom/xzoom.min.css')}}" media="all" /> 
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/plugin/xzoom/xzoom.min.css') }}" media="all" />
 @endpush
 @push('css')
     <style>
@@ -18,7 +18,7 @@
             display: none;
         }
 
-        .boxed input[type="radio"]:checked + label {
+        .boxed input[type="radio"]:checked+label {
             border: solid 2px green;
         }
     </style>
@@ -42,7 +42,7 @@
                                 <div class="single_product">
                                     <div class="breadcrumb_wrap">
                                         <ul class="breadcrumb wizard">
-                                            <li class="completed"><a href="{{route('home')}}">{{ __('Home') }}</a></li>
+                                            <li class="completed"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
                                             <li class="completed"><a
                                                     href="javascript:void(0);">{{ __($single_product->pro_cat->name) }}</a>
                                             </li>
@@ -60,15 +60,20 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="product_image xzoom-container">
-                                                        <img class="xzoom" id="xzoom-default" src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}" xoriginal="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                        <img class="xzoom" id="xzoom-default"
+                                                            src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}"
+                                                            xoriginal="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
 
                                                         <!-- Thumbnails -->
                                                         <div class="xzoom-thumbs">
-                                                            <a href="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
-                                                                <img class="xzoom-gallery xactive" width="80" src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}" xpreview="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
-                                                                </a>
-                                                                
-                                                                {{-- <a href="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}">
+                                                            <a
+                                                                href="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                                <img class="xzoom-gallery xactive" width="80"
+                                                                    src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}"
+                                                                    xpreview="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                            </a>
+
+                                                            {{-- <a href="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}">
                                                                 <img class="xzoom-gallery" width="80" src="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}" xpreview="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}">
                                                                 </a> --}}
                                                         </div>
@@ -88,9 +93,13 @@
                                                                     class="total_price">{{ __(number_format($single_product->price, 2)) }}
                                                                 </span></strong> {{ __('/piece') }}</p>
                                                         <div class="form-group my-4 boxed">
-                                                            @foreach ($units as $key=>$unit)
-                                                                <input type="radio" @if($key==0) checked @endif class="item_quantity" id="android-{{$key}}" name="data" value="{{ $single_product->price * $unit->quantity }}">
-                                                                <label for="android-{{$key}}">
+                                                            @foreach ($units as $key => $unit)
+                                                                <input type="radio"
+                                                                    @if ($key == 0) checked @endif
+                                                                    class="item_quantity" id="android-{{ $key }}"
+                                                                    name="data"
+                                                                    value="{{ $single_product->price * $unit->quantity }}">
+                                                                <label for="android-{{ $key }}">
                                                                     <img src="http://via.placeholder.com/150x150">
                                                                 </label>
                                                             @endforeach
@@ -102,7 +111,8 @@
                                                                 alt="">{{ __('Add to Cart') }}</a>
                                                     </div>
                                                     <div class="order_button mt-4">
-                                                        <a class="order-btn" type="submit" href="#">{{ __('Order Now') }}</a>
+                                                        <a class="order-btn" type="submit"
+                                                            href="#">{{ __('Order Now') }}</a>
                                                     </div>
                                                 </form>
 
@@ -129,7 +139,7 @@
                                                                 class="fa-regular fa-file-lines"></i>
                                                             {{ __('Description') }}</a>
                                                     </li>
-                                                   
+
                                                     <li class="nav-item" role="presentation">
                                                         <a class="nav-link" id="review-tab" data-bs-toggle="tab"
                                                             data-bs-target="#review" type="button" role="tab"
@@ -174,7 +184,7 @@
                                                     <div class="tab-pane fade" id="description" role="tabpanel"
                                                         aria-labelledby="description-tab">{!! $single_product->description !!}
                                                     </div>
-                                                    
+
                                                     <div class="tab-pane fade" id="review" role="tabpanel"
                                                         aria-labelledby="review-tab">
                                                         <!--Start What-Customer-Say Section-->
@@ -345,101 +355,114 @@
                         </div>
 
                     </div>
-                    @if($similar_products->isNotEmpty())
-                    <div class="col-3">
-                        <div class="card similar_products_card" style="height:100%">
-                            <div class="card-body">
-                                <div class="similar_products">
-                                    <h2 class="mb-4">{{ __('Similar Products') }}</h2>
-                                    <div class="products">
-                                        <div class="row px-3">
-                                            @foreach ($similar_products as $product)
-                                                @for ($i = 1; $i <= 2; $i++)
+                    @if ($similar_products->isNotEmpty())
+                        <div class="col-3">
+                            <div class="card similar_products_card" style="height:100%">
+                                <div class="card-body">
+                                    <div class="similar_products">
+                                        <h2 class="mb-4">{{ __('Similar Products') }}</h2>
+                                        <div class="products">
+                                            <div class="row px-3">
+                                                @foreach ($similar_products as $product)
                                                     <div class="col-12 single-item">
-                                                                <div class="row align-items-center">
-                                                                    <div class="col-4 img">
-                                                                        <a href="{{ route('product.single_product', $product->slug) }}"> 
-                                                                        <img height="" class="w-100 border border-1 rounded-1"
-                                                                            src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
-                                                                            alt="{{ __($product->name) }}">
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="col-8 content">
-                                                                        
-                                                                            <h3 class="pdct-title"><a href="{{ route('product.single_product', $product->slug) }}">{{ __(str_limit($product->name,25)) }}
-                                                                            </a></h3>
-                                                                        
-                                                                        <p><a href="">{{str_limit($product->generic->name,25)}}</a></p>
-                                                                        <p><a href="">{{str_limit($product->company->name,25)}}</a></p>
-                                                                        <p><a href="">{{str_limit($product->pro_sub_cat->name,25)}}</a></p>
-                                                                        <h4 class="pdct-price">
-                                                                            <span>&#2547;</span>{{ __(number_format($product->price, 2)) }}
-                                                                        </h4>
-                                                                    </div>
-                                                                </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-4 img">
+                                                                <a
+                                                                    href="{{ route('product.single_product', $product->slug) }}">
+                                                                    <img height=""
+                                                                        class="w-100 border border-1 rounded-1"
+                                                                        src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
+                                                                        alt="{{ __($product->name) }}">
+                                                                </a>
                                                             </div>
-                                                        
+                                                            <div class="col-8 content">
+
+                                                                <h3 class="pdct-title"><a
+                                                                        href="{{ route('product.single_product', $product->slug) }}">{{ __(str_limit($product->name, 25)) }}
+                                                                    </a></h3>
+
+                                                                <p><a
+                                                                        href="">{{ str_limit($product->generic->name, 25) }}</a>
+                                                                </p>
+                                                                <p><a
+                                                                        href="">{{ str_limit($product->company->name, 25) }}</a>
+                                                                </p>
+                                                                <p><a
+                                                                        href="">{{ str_limit($product->pro_sub_cat->name, 25) }}</a>
+                                                                </p>
+                                                                <h4 class="pdct-price">
+                                                                    <span>&#2547;</span>{{ __(number_format($product->price, 2)) }}
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    @endif
+                </div>
+            </section>
+            @if ($similar_products->isNotEmpty())
+                <section class="related_product_section pb-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="related_product">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2 class="title mb-4">{{ __('Related Products') }}</h2>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div id="related-product-slider" class="owl-carousel">
+                                            @foreach ($similar_products as $product)
+                                                @for ($i = 1; $i <= 20; $i++)
+                                                    <div class="px-2">
+                                                        <div class="single-pdct">
+                                                            <a
+                                                                href="{{ route('product.single_product', $product->slug) }}">
+                                                                <div class="pdct-img">
+                                                                    <img class="w-100"
+                                                                        src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
+                                                                        alt="Product Image">
+                                                                </div>
+                                                            </a>
+                                                            <div class="pdct-info">
+                                                                <a
+                                                                    href="{{ route('product.single_product', $product->slug) }}">
+                                                                    <h3 class="fw-bold">{{ $product->name }}
+                                                                        {{-- <small>({{$product->pro_sub_cat->name}})</small> --}}
+                                                                    </h3>
+                                                                </a>
+                                                                <p><a
+                                                                        href="">{{ str_limit($product->generic->name, 25) }}</a>
+                                                                </p>
+                                                                <p><a
+                                                                        href="">{{ str_limit($product->company->name, 25) }}</a>
+                                                                </p>
+                                                                <h4><span>&#2547;</span>{{ $product->price }}</h4>
+                                                            </div>
+
+                                                            <div class="add_to_card">
+                                                                <a class="cart-btn" href="#"><img
+                                                                        src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
+                                                                        alt="">{{ __('Add to Cart') }}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 @endfor
                                             @endforeach
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    @endif
-                </div>
-            </section>
-            @if($similar_products->isNotEmpty())
-            <section class="related_product_section pb-4">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="related_product">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h2 class="title mb-4">{{__('Related Products')}}</h2>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div id="related-product-slider" class="owl-carousel">
-                                        @foreach ($similar_products as $product)
-                                            @for ($i=1; $i<=20; $i++)
-                                            <div class="px-2">
-                                                <div class="single-pdct">
-                                                    <a href="{{route('product.single_product',$product->slug)}}">
-                                                        <div class="pdct-img">
-                                                            <img class="w-100" src="{{ ($product->image) ? storage_url($product->image) : asset('no_img/no_img.png') }}"
-                                                                alt="Product Image">
-                                                        </div>
-                                                    </a>
-                                                        <div class="pdct-info">
-                                                            <a href="{{route('product.single_product',$product->slug)}}">
-                                                            <h3 class="fw-bold">{{$product->name}} 
-                                                                {{-- <small>({{$product->pro_sub_cat->name}})</small> --}}
-                                                            </h3>
-                                                            </a>
-                                                            <p><a href="">{{str_limit($product->generic->name,25)}}</a></p>
-                                                            <p><a href="">{{str_limit($product->company->name,25)}}</a></p>
-                                                            <h4><span>&#2547;</span>{{$product->price}}</h4>
-                                                        </div>
-                                                    
-                                                    <div class="add_to_card">
-                                                        <a class="cart-btn" href="#"><img
-                                                                src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                                alt="">{{__('Add to Cart')}}</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endfor
-                                        @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                </section>
             @endif
         </div>
         <!--=========== Main Content Section End ==============-->
@@ -448,13 +471,18 @@
 @push('js_link')
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js">
     </script>
-    <script type="text/javascript" src="{{asset('frontend/plugin/xzoom/xzoom.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('frontend/plugin/xzoom/xzoom.min.js') }}"></script>
 @endpush
 @push('js')
     <script>
         // XZoom 
-        $(document).ready(function(){
-            $('.xzoom, .xzoom-gallery').xzoom({zoomWidth: 400, title: true, tint: '#333', Xoffset: 15});
+        $(document).ready(function() {
+            $('.xzoom, .xzoom-gallery').xzoom({
+                zoomWidth: 400,
+                title: true,
+                tint: '#333',
+                Xoffset: 15
+            });
         });
 
 
@@ -528,7 +556,7 @@
 
 
             //Product Description Jquery
-            $(".single_product_section .product_details .nav-tabs a").on('click',function() {
+            $(".single_product_section .product_details .nav-tabs a").on('click', function() {
                 var single_product_height = $('.single_product_card').height();
                 $('.similar_products_card').css('max-height', single_product_height + 'px');
 
