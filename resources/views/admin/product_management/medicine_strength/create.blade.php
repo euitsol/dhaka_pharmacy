@@ -35,6 +35,8 @@
                                         <option selected hidden>{{__('Select unit')}}</option>
                                         <option value="mg" {{(old('unit') == 'mg') ? 'selected' : ''}}>{{__('MG')}}</option>
                                         <option value="ml" {{(old('unit') == 'ml') ? 'selected' : ''}}>{{__('ML')}}</option>
+                                        <option value="kg" {{(old('unit') == 'kg') ? 'selected' : ''}}>{{__('KG')}}</option>
+                                        <option value="gm" {{(old('unit') == 'gm') ? 'selected' : ''}}>{{__('GM')}}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'unit'])
                                 </div>
