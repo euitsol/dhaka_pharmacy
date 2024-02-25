@@ -201,14 +201,14 @@
                             result += `
                                 <div class="col-3 px-2">
                                     <div class="single-pdct">
-                                        <a href="${route}">
+                                        <a href="${_route}">
                                             <div class="pdct-img">
                                                 <img class="w-100" src="${image}"
                                                     alt="${product.name}">
                                             </div>
                                         </a>
                                             <div class="pdct-info">
-                                                <a href="${route}">
+                                                <a href="${_route}">
                                                     <h3 class="fw-bold">${product.name} <small>(${product.pro_sub_cat.name})</small></h3>
                                                 </a>
                                                 <p><a href="">${product.generic.name}</a></p>

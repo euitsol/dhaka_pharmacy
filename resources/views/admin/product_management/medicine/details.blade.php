@@ -51,11 +51,13 @@
                                     <th>{{ __(':') }}</th>
                                     <td> {{ $medicine->medicine_cat->name }} </td>
                                 </tr> --}}
+                                @if($medicine->strength_id)
                                 <tr>
                                     <th>{{ __('Medicine Strength') }}</th>
                                     <th>{{ __(':') }}</th>
                                     <td> {{ $medicine->strength->quantity }} <small>{{$medicine->strength->unit}}</small> </td>
                                 </tr>
+                                @endif
                                 <tr>
                                     <th>{{ __('Medicine Units') }}</th>
                                     <th>{{ __(':') }}</th>
