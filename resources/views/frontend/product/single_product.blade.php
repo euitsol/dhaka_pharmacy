@@ -174,11 +174,13 @@
                                                                 <td>{{ __(strtoupper('Company Name')) }}</td>
                                                                 <td>{{ __($single_product->company->name) }}</td>
                                                             </tr>
+                                                            @if($single_product->strength_id)
                                                             <tr>
                                                                 <td>{{ __(strtoupper('Product Strength')) }}</td>
                                                                 <td>{{ __($single_product->strength->quantity . ' ' . $single_product->strength->unit) }}
                                                                 </td>
                                                             </tr>
+                                                            @endif
                                                         </table>
                                                     </div>
                                                     <div class="tab-pane fade" id="description" role="tabpanel"
