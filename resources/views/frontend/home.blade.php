@@ -192,6 +192,8 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
+                        var featured_pro_height = $('.all-products').height();
+                        $('.best-selling-products').height(featured_pro_height + "px")
                         var result = '';
                         data.products.forEach(function(product) {
                             var noImage = "{{asset('no_img/no_img.png')}}";
