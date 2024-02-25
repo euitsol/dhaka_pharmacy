@@ -91,10 +91,10 @@
                                                     <div class="product_price mt-4">
                                                         <p><strong>{{ __('MRP: Tk') }} <span
                                                                     class="total_price">{{ __(number_format($single_product->price, 2)) }}
-                                                                </span></strong> {{ __('/piece') }}</p>
+                                                                </span></strong> /<span class="unit_name">{{ __('piece') }}</span> </p>
                                                         <div class="form-group my-4 boxed">
                                                             @foreach ($units as $key => $unit)
-                                                                <input type="radio"
+                                                                <input type="radio" data-name="{{$unit->name}}"
                                                                     @if ($key == 0) checked @endif
                                                                     class="item_quantity" id="android-{{ $key }}"
                                                                     name="data"
@@ -483,13 +483,6 @@
                 Xoffset: 15
             });
         });
-
-
-
-
-
-
-
         // Xzoom 
 
         //testimonial-slider
@@ -530,9 +523,10 @@
 
 
             $('.item_quantity').on('change', function() {
-                console.log($(this).val());
+                var name = $(this).data('name');
                 var formattedNumber = numberFormat($(this).val(), 2);
                 $('.total_price').html(formattedNumber);
+                $('.unit_name').html(name);
             });
 
 
