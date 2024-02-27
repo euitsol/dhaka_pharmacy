@@ -25,7 +25,7 @@
     .lam-login-section .right_column{
         color: #333;
     }
-    .lam-login-section .right_column .form-group{
+    .lam-login-section .right_column .form-group .input-group{
         background-color: #eee;
     }
     .lam-login-section .right_column .form-group input{
@@ -52,6 +52,22 @@
     .lam-login-section .left_column .tabs_wrap .tab.active{
         background-color: #225F91;
         color: #fff;
+    }
+    .reference{
+        position: relative;
+    }
+    .reference .loading{
+        position: absolute;
+        height: 40px;
+        width: 40px;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .reference .loading img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
     }
 
 </style>
@@ -240,22 +256,39 @@
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 mb-lg-4">
-                                            <div class="input-group" role="group">
-                                                <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa fa-key"></i></span>
-                                                <input type="password" name="password" placeholder="Password" class="border-0 form-control  @error('password') is-invalid @enderror" required autocomplete="new-password">
-                                                @error('password')
+                                            <div class="input-group reference" role="group">
+                                                <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa-solid fa-hashtag"></i></span>
+                                                <input type="text" id="reference" name="dm_id" value="{{old('dm_id')}}" placeholder="Reference ID" class="border-0 form-control  @error('dm_id') is-invalid @enderror" required autocomplete="dm_id">
+                                                @error('dm_id')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
+                                                <div class="loading" style="display: none">
+                                                    
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="form-group mb-3 mb-lg-4">
-                                            <div class="input-group" role="group">
-                                                <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa fa-key"></i></span>
-                                                <input type="password" placeholder="Confirm Password" class="border-0 form-control @error('password') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
+                                        <div class="d-md-flex">
+                                            <div class="form-group mb-3 mb-lg-4 col-md-6 pe-md-2">
+                                                <div class="input-group" role="group">
+                                                    <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa fa-key"></i></span>
+                                                    <input type="password" name="password" placeholder="Password" class="border-0 form-control  @error('password') is-invalid @enderror" required autocomplete="new-password">
+                                                    @error('password')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3 mb-lg-4 col-md-6 ps-md-2">
+                                                <div class="input-group" role="group">
+                                                    <span class="pe-3 ps-4 py-2 py-lg-3"><i class="fa fa-key"></i></span>
+                                                    <input type="password" placeholder="Confirm Password" class="border-0 form-control @error('password') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
+                                                </div>
                                             </div>
                                         </div>
+                                        
                                         <div class="form-group mb-3 mb-lg-2">
                                                 <input type="submit" value="Register" class="border-0 form-control py-2 py-lg-3 submit_button">
                                         </div>
@@ -331,6 +364,43 @@
             $('.tab-3').addClass("active");
             form.addClass('d-none')
             reset_form.removeClass('d-none');
+        });
+    });
+
+
+
+    //Reference ID Check
+    $(document).ready(function() {
+        $('#reference').on('input keyup', function() {
+            var loadign = `<img src="{{asset('frontend/default/loading.gif')}}">`;
+            var check = `<img src="{{asset('frontend/default/check.jpg')}}">`;
+            var cross = `<img src="{{asset('frontend/default/cross.jpg')}}">`;
+            var imageDiv = $('.loading');
+            imageDiv.show();
+            imageDiv.html(loadign);
+            let id = $(this).val();
+            console.log(id);
+            let url = ("{{ route('local_area_manager.reference', ['id']) }}");
+            let _url = url.replace('id', id);
+            $.ajax({
+                url: _url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if(data.status == true){
+                        imageDiv.html(check);
+                    }else{
+                        imageDiv.html(cross);
+                    }
+                        
+                },
+
+                error: function(xhr, status, error) {
+                    imageDiv.html(cross);
+                    console.error('Error fetching user data:', error);
+                    
+                }
+            });
         });
     });
 </script>

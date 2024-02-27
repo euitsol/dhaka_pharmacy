@@ -4,6 +4,7 @@ namespace App\Http\Controllers\LAM\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DistrictManagerRequest;
+use App\Models\DistrictManager;
 use App\Models\LocalAreaManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -54,15 +55,25 @@ class LoginController extends Controller
             'name' => 'required|min:4',
             'phone' => 'required|numeric|digits:11|unique:local_area_managers,phone',
             'password' => 'required|min:6|confirmed',
+            'dm_id' => 'required|exists:district_managers,id',
         ]);
         LocalAreaManager::create([
             'name' => $request->name,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
-            'dm_id' => 1,
+            'dm_id' => $request->dm_id,
         ]);
         $credentials = $request->only('phone', 'password');
         Auth::guard('lam')->attempt($credentials);
         return redirect()->route('local_area_manager.login');
+    }
+
+    function reference($id){
+        $data = DistrictManager::where('id',$id)->first();
+        if(!$data){
+            return response()->json(['status'=>false]);
+        }
+        return response()->json(['status'=>true]);
+        
     }
 }
