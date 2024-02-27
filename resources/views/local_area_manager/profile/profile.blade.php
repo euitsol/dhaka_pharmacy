@@ -73,44 +73,7 @@
                             </div>
                             <div class="row">
 
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Area') }}</label>
-                                    <select name="area" class="form-control">
-                                        <option selected hidden>{{ __('Select Area') }}</option>
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'area'])
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Gender') }}</label>
-                                    <select name="gender" class="form-control">
-                                        <option selected hidden>{{ __('Select Genger') }}</option>
-                                        <option value="Male" {{ lam()->gender == 'Male' ? 'selected' : '' }}>
-                                            {{ __('Male') }}</option>
-                                        <option value="Female" {{ lam()->gender == 'Female' ? 'selected' : '' }}>
-                                            {{ __('Female') }}</option>
-                                        <option value="Others" {{ lam()->gender == 'Others' ? 'selected' : '' }}>
-                                            {{ __('Others') }}</option>
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'gender'])
-                                </div>
-
-
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Age') }}</label>
-                                    <input type="text" name="age" value="{{ lam()->age ? lam()->age : old('age') }}"
-                                        class="form-control" placeholder="Enter age">
-                                    @include('alerts.feedback', ['field' => 'age'])
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Date of Birth') }}</label>
-                                    <input type="date" name="dob" value="{{ lam()->dob ? lam()->dob : old('dob') }}"
-                                        class="form-control">
-                                    @include('alerts.feedback', ['field' => 'dob'])
-                                </div>
-
-
+                                
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification Type') }}</label>
                                     <select name="identification_type" id="identification_type" class="form-control">
@@ -134,14 +97,61 @@
                                         class="form-control" placeholder="Enter identification number">
                                     @include('alerts.feedback', ['field' => 'identification_no'])
                                 </div>
-                                <div class="col-md-12">
+
+                                <div class="form-group col-md-4">
+                                    <label>{{ __('Assigned District Manager') }}</label>
+                                    <input type="text" value="{{ lam()->dm->name }}"
+                                        class="form-control" disabled>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>{{ __('Area') }}</label>
+                                    <select name="area" class="form-control">
+                                        <option selected hidden>{{ __('Select Area') }}</option>
+                                    </select>
+                                    @include('alerts.feedback', ['field' => 'area'])
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>{{ __('Gender') }}</label>
+                                    <select name="gender" class="form-control">
+                                        <option selected hidden>{{ __('Select Genger') }}</option>
+                                        <option value="Male" {{ lam()->gender == 'Male' ? 'selected' : '' }}>
+                                            {{ __('Male') }}</option>
+                                        <option value="Female" {{ lam()->gender == 'Female' ? 'selected' : '' }}>
+                                            {{ __('Female') }}</option>
+                                        <option value="Others" {{ lam()->gender == 'Others' ? 'selected' : '' }}>
+                                            {{ __('Others') }}</option>
+                                    </select>
+                                    @include('alerts.feedback', ['field' => 'gender'])
+                                </div>
+
+                                
+
+
+                                
+                                <div class="form-group col-md-4">
+                                    <label>{{ __('Date of Birth') }}</label>
+                                    <input type="date" name="dob" value="{{ lam()->dob ? lam()->dob : old('dob') }}"
+                                        class="form-control">
+                                    @include('alerts.feedback', ['field' => 'dob'])
+                                </div>
+                                
+                                
+                                <div class="col-md-8">
                                     <div class="form-group">
                                         <label>{{ __('Upload CV') }}</label>
                                         <input type="file" accept=".pdf" class="form-control" name="cv">
                                         @include('alerts.feedback', ['field' => 'cv'])
                                     </div>
                                 </div>
-
+                                
+                                <div class="form-group col-md-4">
+                                    <label>{{ __('Age') }}</label>
+                                    <input type="text" name="age" value="{{ lam()->age ? lam()->age : old('age') }}"
+                                        class="form-control" placeholder="Enter age">
+                                    @include('alerts.feedback', ['field' => 'age'])
+                                </div>
 
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Present Address') }}</label>
