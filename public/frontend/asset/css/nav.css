@@ -89,6 +89,7 @@
   }
   .header-section .right-col select option {
     background: var(--nav-primary-bg);
+    
   }
   .header-section .search-filter{
     position: relative;
@@ -97,13 +98,35 @@
     background: var(--nav-text-color);
     position: absolute;
     width: 100%;
-    border: 1px solid #000;
-    padding: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
     display: none;
+    z-index: 999;
   }
-  .header-section .search-filter .suggestion-box .suggestion{
-    color: var(--nav-primary-color);
+
+  /* New CSS  */
+  .header-section .suggestion-box .search_item{
+    transition: .4s;
   }
-  .header-section .search-filter .suggestion-box .suggestion:hover{
-    color: red;
+  .header-section .suggestion-box .search_item .image img{
+    height: 75px;
+    object-fit: cover;
   }
+  .header-section .suggestion-box .search_item .details .product_title {
+    font-size: 17px;
+    color: var(--text-color-black);
+  }
+  .header-section .suggestion-box .search_item .details p {
+    color: var(--text-color-black);
+    font-size: .8rem;
+    line-height: 1.25rem;
+  }
+  .header-section .suggestion-box .search_item .details .product_sub_cat {
+    font-size: 1rem;
+    color: #959595;
+  }
+ 
+  .header-section .suggestion-box .search_item:hover{
+      --tw-bg-opacity: 1;
+      background-color: rgb(243 246 249/var(--tw-bg-opacity));
+  }
+  
