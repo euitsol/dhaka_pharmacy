@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('product.medicine_unit.medicine_unit_create') }}">
+                    <form method="POST" action="{{ route('product.medicine_unit.medicine_unit_create') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -36,6 +36,26 @@
                                     value="{{ old('quantity') }}">
                                 @include('alerts.feedback', ['field' => 'quantity'])
                             </div>
+                            <div class="form-group col-md-6">
+                                <label>{{ __('Image') }}</label>
+                                <input type="file" accept="image/*" name="image" class="form-control image-upload"
+                                    value="{{ old('image') }}">
+                                @include('alerts.feedback', ['field' => 'image'])
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>{{__('Type')}}</label>
+                                <select name="type" class="form-control">
+                                    <option selected hidden value="">{{__('Select type')}}</option>
+                                    <option value="tablet" {{(old('type') == 'tablet') ? 'selected' : ''}}>{{__('Tablet')}}</option>
+                                    <option value="capsul" {{(old('type') == 'capsul') ? 'selected' : ''}}>{{__('Capsul')}}</option>
+                                    <option value="cream" {{(old('type') == 'cream') ? 'selected' : ''}}>{{__('Cream')}}</option>
+                                    <option value="pad" {{(old('type') == 'pad') ? 'selected' : ''}}>{{__('Pad')}}</option>
+                                    <option value="bottle" {{(old('type') == 'bottle') ? 'selected' : ''}}>{{__('Bottle')}}</option>
+                                    <option value="syringe" {{(old('type') == 'syringe') ? 'selected' : ''}}>{{__('Syringe')}}</option>
+                                </select>
+                                @include('alerts.feedback', ['field' => 'type'])
+                            </div>
+                            
                         </div>
                         <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
                     </form>

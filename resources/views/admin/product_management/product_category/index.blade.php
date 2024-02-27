@@ -163,7 +163,7 @@
                                     <tr>
                                         <th class="text-nowrap">Image</th>
                                         <th>:</th>
-                                        <td><img height='100px' width='100px' class='border-1 p-2' src="${data.image}"></td>
+                                        <td><img height='100px' width='100px' class='border p-2' src="${data.image}"></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Menu</th>

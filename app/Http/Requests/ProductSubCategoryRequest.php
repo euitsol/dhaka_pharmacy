@@ -25,6 +25,7 @@ class ProductSubCategoryRequest extends FormRequest
         return [
             'name' => 'required',
             'pro_cat_id'=>'required|exists:product_categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,gif,jpg,webp|max:2048',
         ]
         +
             ($this->isMethod('POST') ? $this->store() : $this->update());

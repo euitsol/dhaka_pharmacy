@@ -29,6 +29,7 @@ class MedicineUnitController extends Controller
     public function details($id): JsonResponse
     {
         $data = MedicineUnit::findOrFail($id);
+        $data->image = $data->image ? storage_url($data->image) : asset('no_img/no_img.png');
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->created_by ? $data->created_user->name : 'System';
@@ -43,6 +44,14 @@ class MedicineUnitController extends Controller
     public function store(MedicineUnitRequest $req): RedirectResponse
     {
         $medicine_unit = new MedicineUnit();
+        if ($req->hasFile('image')) {
+            $image = $req->file('image');
+            $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $folderName = 'medicine_units/images';
+            $path = $image->storeAs($folderName, $imageName, 'public');
+            $medicine_unit->image = $path;
+        }
+        $medicine_unit->type = $req->type;
         $medicine_unit->name = $req->name;
         $medicine_unit->quantity = $req->quantity;
         $medicine_unit->created_by = admin()->id;
@@ -59,6 +68,18 @@ class MedicineUnitController extends Controller
     public function update(MedicineUnitRequest $req, $id): RedirectResponse
     {
         $medicine_unit = MedicineUnit::findOrFail($id);
+        if ($req->hasFile('image')) {
+            $image = $req->file('image');
+            $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $folderName = 'products/images';
+            $path = $image->storeAs($folderName, $imageName, 'public');
+            if(!empty($medicine_unit->image)){
+                $this->fileDelete($medicine_unit->image);
+            }
+            $medicine_unit->image = $path;
+        }
+
+        $medicine_unit->type = $req->type;
         $medicine_unit->name = $req->name;
         $medicine_unit->quantity = $req->quantity;
         $medicine_unit->updated_by = admin()->id;

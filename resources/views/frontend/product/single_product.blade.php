@@ -21,6 +21,11 @@
         .boxed input[type="radio"]:checked+label {
             border: solid 2px green;
         }
+        .boxed img {
+            height: 70px;
+            width: 100%;
+            object-fit: cover;
+        }
     </style>
 @endpush
 @section('content')
@@ -100,7 +105,7 @@
                                                                     name="data"
                                                                     value="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
-                                                                    <img src="http://via.placeholder.com/150x150">
+                                                                    <img src="{{$unit->image ? storage_url($unit->image) : asset('no_img/no_img.png')}}">
                                                                 </label>
                                                             @endforeach
                                                         </div>
