@@ -7,11 +7,11 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Create Generic Name') }}</h4>
+                            <h4 class="card-title">{{ __('Create Operation Area') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'product.operation_area.operation_area_list',
+                                'routeName' => 'dm_management.operation_area.operation_area_list',
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
                             ])
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('product.operation_area.operation_area_create') }}">
+                    <form method="POST" action="{{ route('dm_management.operation_area.operation_area_create') }}">
                         @csrf
                         <div class="form-group">
 
@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group">
                             <label>{{ _('Slug') }}</label>
-                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" placeholder="{{ __('Enter Slug (must be use - on white speace)') }}">
                             @include('alerts.feedback', ['field' => 'slug'])
                         </div>
                         <button type="submit" class="btn btn-primary">{{__('Create')}}</button>

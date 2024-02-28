@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('operation_area Name List') }}</h4>
+                            <h4 class="card-title">{{ __('Operation Area List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'product.operation_area.operation_area_create',
+                                'routeName' => 'dm_management.operation_area.operation_area_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new operation_area name',
+                                'label' => 'Add new operation area',
                             ])
                         </div>
                     </div>
@@ -53,18 +53,18 @@
                                                     'data-id' => $operation_area->id,
                                                 ],
                                                 [
-                                                    'routeName' => 'product.operation_area.operation_area_edit',
+                                                    'routeName' => 'dm_management.operation_area.operation_area_edit',
                                                     'params' => [$operation_area->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [
                                                     'routeName' =>
-                                                        'product.operation_area.status.operation_area_edit',
+                                                        'dm_management.operation_area.status.operation_area_edit',
                                                     'params' => [$operation_area->id],
                                                     'label' => $operation_area->getBtnStatus(),
                                                 ],
                                                 [
-                                                    'routeName' => 'product.operation_area.operation_area_delete',
+                                                    'routeName' => 'dm_management.operation_area.operation_area_delete',
                                                     'params' => [$operation_area->id],
                                                     'label' => 'Delete',
                                                     'delete' => true,
@@ -92,7 +92,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('operation_area Name Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Operation Area Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -109,7 +109,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('product.operation_area.details.operation_area_list', ['id']) }}");
+                let url = ("{{ route('dm_management.operation_area.details.operation_area_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -125,6 +125,11 @@
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
                                         <td>${data.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Slug</th>
+                                        <th>:</th>
+                                        <td>${data.slug}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

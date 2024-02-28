@@ -25,6 +25,7 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
+                                <th>{{ __('Area') }}</th>
                                 <th>{{ __('Active L.A.M') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
@@ -38,6 +39,7 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $dm->name }} </td>
                                     <td> {{ $dm->phone }} </td>
+                                    <td> {{ $dm->operation_area->name ?? '-' }} </td>
                                     <td class="text-center"> {{ $dm->lams->count() }} </td>
                                     <td>
                                         <span class="{{ $dm->getStatusBadgeClass() }}">{{ $dm->getStatus() }}</span>
@@ -119,6 +121,11 @@
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
                                         <td>${data.email ?? 'N/A'}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Operation Area</th>
+                                        <th>:</th>
+                                        <td>${data.operation_area.name ?? 'N/A'}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Active Local Area Manager</th>

@@ -73,11 +73,8 @@
                             <div class="row">
 
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Area') }}</label>
-                                    <select name="area" class="form-control">
-                                        <option selected hidden>{{ __('Select Area') }}</option>
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'area'])
+                                    <label>{{__('Operation Area')}}</label>
+                                    <input type="text" class="form-control" value="{{dm()->operation_area->name}}" disabled>
                                 </div>
 
                                 <div class="form-group col-md-4">

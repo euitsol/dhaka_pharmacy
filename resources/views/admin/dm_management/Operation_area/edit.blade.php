@@ -7,15 +7,15 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Update Generic Name')}}</h4>
+                            <h4 class="card-title">{{__('Update Operation Area')}}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('admin.partials.button', ['routeName' => 'product.operation_area.operation_area_list', 'className' => 'btn-primary', 'label' => 'Back'])
+                            @include('admin.partials.button', ['routeName' => 'dm_management.operation_area.operation_area_list', 'className' => 'btn-primary', 'label' => 'Back'])
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                  <form method="POST" action="{{route('product.operation_area.operation_area_edit',$operation_area->id)}}">
+                  <form method="POST" action="{{route('dm_management.operation_area.operation_area_edit',$operation_area->id)}}">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
