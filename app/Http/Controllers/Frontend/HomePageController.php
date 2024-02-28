@@ -47,31 +47,5 @@ class HomePageController extends BaseController
         return response()->json($data);
     }
 
-    public function productSearch($search_value, $category = false){
-        $filter = Medicine::whereHas('generic', function ($query) use ($search_value) {
-            $query->where('name', 'like', '%' . $search_value . '%')
-                ->where('status',1);
-        })
-        ->orwhereHas('company', function ($query) use ($search_value) {
-            $query->where('name', 'like', '%' . $search_value . '%')
-                ->where('status',1);
-        })
-        ->orwhereHas('pro_sub_cat', function ($query) use ($search_value) {
-            $query->where('name', 'like', '%' . $search_value . '%')
-                ->where('status',1);
-        })
-        ->orWhere('name', 'like', '%' . $search_value . '%')
-        ->with(['pro_cat','pro_sub_cat','generic','company','strength']);
-
-        if($category !== 'all'){
-            $data['products'] = $filter
-            ->where('pro_cat_id',$category)
-            ->get();
-        }else{
-            $data['products'] = $filter->get();
-        }
-
-        
-        return response()->json($data);
-    }
+    
 }

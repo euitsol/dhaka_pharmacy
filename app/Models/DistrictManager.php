@@ -26,6 +26,10 @@ class DistrictManager extends AuthenticateBaseModel
     {
         return $this->hasMany(LocalAreaManager::class, 'dm_id');
     }
+    public function operation_area()
+    {
+        return $this->belongsTo(OperationArea::class, 'oa_id');
+    }
 
     
 

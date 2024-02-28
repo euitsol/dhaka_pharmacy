@@ -46,46 +46,47 @@
 
 
 // New JS Code 
-var searchInput = $('#searchInput');
-var categorySelect = $('#categorySelect');
-var suggestionBox = $('#suggestionBox');
-$(document).ready(function() {
-    searchInput.on('input', function() {
-      
-      searchFunction()
-      
-    });
-    categorySelect.on('change', function(){
-      searchFunction()
-    });
-    function searchFunction(){
-      var search_value = searchInput.val();
-      var category = categorySelect.val();
-      if (search_value === 'all') {
-        suggestionBox.hide();
-      }else{
-        suggestionBox.show();
-      
-        let url = ("{{ route('home.product.search',['search_value','category']) }}");
-        let _url = url.replace('search_value', search_value);
-        let __url = _url.replace('category', category);
 
-        $.ajax({
-          url:__url,
-          method: 'GET',
-          dataType: 'json',
-          success: function(data) {
-            console.log(data.products);
-          },
-          error: function(xhr, status, error) {
-              console.error('Error fetching search data:', error);
-          }
-        });
+// $(document).ready(function() {
+//     var searchInput = $('#searchInput');
+//     var categorySelect = $('#categorySelect');
+//     var suggestionBox = $('#suggestionBox');
+
+//     $(document).on('input',searchInput, function() {
+      
+//       searchFunction()
+      
+//     });
+//     $(document).on('change',categorySelect, function(){
+//       searchFunction()
+//     });
+//     function searchFunction(){
+//       var search_value = searchInput.val();
+//       var category = categorySelect.val();
+//       if (search_value === 'all') {
+//         suggestionBox.hide();
+//       }else{
+//         suggestionBox.show();
+      
+//         var url = "{{ route('home.product.search', ['search_value' => ':search', 'category' => ':category']) }}";
+//         var _url = url.replace(':search', search_value).replace(':category', category);
+
+//         $.ajax({
+//           url:_url,
+//           method: 'GET',
+//           dataType: 'json',
+//           success: function(data) {
+//             console.log(data.products);
+//           },
+//           error: function(xhr, status, error) {
+//               console.error('Error fetching search data:', error);
+//           }
+//         });
 
 
-      }
-}
-});
+//       }
+// }
+// });
 
 
 

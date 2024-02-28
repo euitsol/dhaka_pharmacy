@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'district_manager'])
+@extends('admin.layouts.master', ['pageSlug' => 'operation_area'])
 
 @section('content')
     <div class="row">
@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('District Manager List')}}</h4>
+                            <h4 class="card-title">{{ __('Operation Area List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'dm_management.district_manager.district_manager_create',
+                                'routeName' => 'dm_management.operation_area.operation_area_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new district manager',
+                                'label' => 'Add new operation area',
                             ])
                         </div>
                     </div>
@@ -24,9 +24,6 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
-                                <th>{{ __('Phone') }}</th>
-                                <th>{{ __('Area') }}</th>
-                                <th>{{ __('Active L.A.M') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -34,30 +31,46 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($dms as $dm)
+                            @foreach ($operation_areas as $operation_area)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $dm->name }} </td>
-                                    <td> {{ $dm->phone }} </td>
-                                    <td> {{ $dm->operation_area->name ?? '-' }} </td>
-                                    <td class="text-center"> {{ $dm->lams->count() }} </td>
+                                    <td> {{ $operation_area->name }} </td>
                                     <td>
-                                        <span class="{{ $dm->getStatusBadgeClass() }}">{{ $dm->getStatus() }}</span>
+                                        <span
+                                            class="{{ $operation_area->getStatusBadgeClass() }}">{{ $operation_area->getStatus() }}</span>
                                     </td>
-                                    <td>{{ timeFormate($dm->created_at) }}</td>
+                                    <td>{{ timeFormate($operation_area->created_at) }}</td>
 
-                                    <td> {{ $dn->creater->name ?? 'system' }} </td>
+                                    <td> {{ $operation_area->created_user->name ?? 'system' }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'dm_management.district_manager.login_as.district_manager_profile',   'params' => [$dm->id], 'label' => 'Login As', 'target'=>'_blank'],
-                                                    ['routeName' => 'dm_management.district_manager.district_manager_profile',   'params' => [$dm->id], 'label' => 'Profile'],
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$dm->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $dm->id ],
-                                                    ['routeName' => 'dm_management.district_manager.district_manager_edit',   'params' => [$dm->id], 'label' => 'Update'],
-                                                    ['routeName' => 'dm_management.district_manager.status.district_manager_edit',   'params' => [$dm->id], 'label' => $dm->getBtnStatus()],
-                                                    ['routeName' => 'dm_management.district_manager.district_manager_delete', 'params' => [$dm->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$operation_area->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $operation_area->id,
+                                                ],
+                                                [
+                                                    'routeName' => 'dm_management.operation_area.operation_area_edit',
+                                                    'params' => [$operation_area->slug],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'dm_management.operation_area.status.operation_area_edit',
+                                                    'params' => [$operation_area->id],
+                                                    'label' => $operation_area->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'dm_management.operation_area.operation_area_delete',
+                                                    'params' => [$operation_area->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -74,11 +87,12 @@
     </div>
 
     {{-- District Manager Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('District Manager Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Operation Area Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -95,7 +109,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('dm_management.district_manager.details.district_manager_list', ['id']) }}");
+                let url = ("{{ route('dm_management.operation_area.details.operation_area_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -113,24 +127,9 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Phone</th>
+                                        <th class="text-nowrap">Slug</th>
                                         <th>:</th>
-                                        <td>${data.phone}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Email</th>
-                                        <th>:</th>
-                                        <td>${data.email ?? 'N/A'}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Operation Area</th>
-                                        <th>:</th>
-                                        <td>${data.operation_area.name ?? 'N/A'}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Active Local Area Manager</th>
-                                        <th>:</th>
-                                        <td>${data.total_lams}</td>
+                                        <td>${data.slug}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

@@ -23,13 +23,13 @@ class OperationAreaController extends Controller
     }
     public function index(): view
     {
-        $data['operation_area'] = OperationArea::with(['created_used', 'updated_user'])->orderBy('name')->get();
+        $data['operation_areas'] = OperationArea::with(['created_user', 'updated_user'])->orderBy('name')->get();
         return view('admin.dm_management.operation_area.index', $data);
     }
 
     public function details($id): JsonResponse
     {
-        $data = OperationArea::with('role')->findOrFail($id);
+        $data = OperationArea::findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->created_by ? $data->created_user->name : 'System';
@@ -38,48 +38,48 @@ class OperationAreaController extends Controller
     }
     public function create(): view
     {
-        $data['document'] = Documentation::where('module_key', 'operation_area')->first();
+        $data['document'] = Documentation::where('module_key', 'operation-area')->first();
         return view('admin.dm_management.operation_area.create', $data);
     }
-    public function store(OperationArea $req): RedirectResponse
+    public function store(OperationAreaRequest $req): RedirectResponse
     {
-        $operation_area_name = new OperationArea();
-        $operation_area_name->name = $req->name;
-        $operation_area_name->slug = $req->slug;
-        $operation_area_name->created_by = admin()->id;
-        $operation_area_name->save();
-        flash()->addSuccess('Opeation area ' . $operation_area_name->name . ' created successfully. ');
-        return redirect()->route('product. operation_area_name.operation_area_list');
+        $operation_area = new OperationArea();
+        $operation_area->name = $req->name;
+        $operation_area->slug = $req->slug;
+        $operation_area->created_by = admin()->id;
+        $operation_area->save();
+        flash()->addSuccess('Opeation area ' . $operation_area->name . ' created successfully. ');
+        return redirect()->route('dm_management.operation_area.operation_area_list');
     }
     public function edit($slug): view
     {
-        $data['operation_area_name'] = OperationArea::where('slug', $slug)->first();
-        $data['document'] = Documentation::where('operation-area', 'operation_area_name_edit', $data);
+        $data['operation_area'] = OperationArea::where('slug', $slug)->first();
+        $data['document'] = Documentation::where('module_key', 'operation-area')->first();
         return view('admin.dm_management.operation_area.edit', $data);
     }
     public function update(OperationAreaRequest $req, $id): RedirectResponse
     {
-        $operation_area_name = OperationArea::findorFail($id);
-        $operation_area_name->name = $req->name;
-        $operation_area_name->slug = $req->slug;
-        $operation_area_name->updated_by = admin()->id;
-        $operation_area_name->update();
-        flash()->addSuccess('operation area name ' . $operation_area_name->name . ' Updated Successfully ');
-        return redirect()->route('product.operation_area_name.operation_area_list');
+        $operation_area = OperationArea::findorFail($id);
+        $operation_area->name = $req->name;
+        $operation_area->slug = $req->slug;
+        $operation_area->updated_by = admin()->id;
+        $operation_area->update();
+        flash()->addSuccess('operation area ' . $operation_area->name . ' Updated Successfully ');
+        return redirect()->route('dm_management.operation_area.operation_area_list');
     }
     public function status($id): RedirectResponse
     {
-        $operation_area_name = OperationArea::findOrFail($id);
-        $this->statusChange($operation_area_name);
-        flash()->addSuccess('Operation Area ' . $operation_area_name->name . ' status updated successfully.');
-        return redirect()->route('product.$operation_area_name.$operation_area_list');
+        $operation_area = OperationArea::findOrFail($id);
+        $this->statusChange($operation_area);
+        flash()->addSuccess('Operation area ' . $operation_area->name . ' status updated successfully.');
+        return redirect()->route('dm_management.operation_area.operation_area_list');
     }
 
     public function delete($id): RedirectResponse
     {
-        $operation_area_name = OperationArea::findOrFail($id);
-        $operation_area_name->delete();
-        flash()->addSuccess('Opearation area name ' . $operation_area_name->name . ' deleted successfully.');
-        return redirect()->route('product.$operation_area_name.$operation_area_name_list');
+        $operation_area = OperationArea::findOrFail($id);
+        $operation_area->delete();
+        flash()->addSuccess('Opearation area ' . $operation_area->name . ' deleted successfully.');
+        return redirect()->route('dm_management.operation_area.operation_area_list');
     }
 }
