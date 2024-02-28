@@ -122,7 +122,7 @@ btn-arrow">
                                                     <h3 class="fw-bold">
                                                         {{ str_limit(Str::ucfirst(Str::lower($product->name)), 25, '..') }}
                                                         <span class="strength">
-                                                            ({{ $product->strength->quantity ?? '' . ' ' . $product->strength->unit }})
+                                                            ({{ $product->strength->quantity . ' ' . $product->strength->unit }})
                                                         </span>
                                                     </h3>
                                                 </a>
