@@ -491,7 +491,7 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
 
 // Frontend Routes 
 Route::get('/', [HomePageController::class, 'home'])->name('home');
-Route::get('/product-search/{search_value}/{category?}', [HomePageController::class, 'productSearch'])->name('home.product.search');
+Route::get('/product-search/{search_value}/{category}', [HomePageController::class, 'productSearch'])->name('home.product.search');
 Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeaturedProducts'])->name('home.featured_products');
 
 Route::controller(SingleProductController::class, 'product')->prefix('product')->name('product.')->group(function () {

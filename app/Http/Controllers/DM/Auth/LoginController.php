@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\DM\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\BaseController;
 use App\Http\Requests\DistrictManagerRequest;
 use App\Models\DistrictManager;
 use Illuminate\Http\JsonResponse;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 
-class LoginController extends Controller
+class LoginController extends BaseController
 {
     public function dmLogin()
     {

@@ -43,44 +43,7 @@
                                 class="fa-solid fa-magnifying-glass text-dark"></i></button>
                     </form>
                     <div id="suggestionBox" class="suggestion-box p-2 pb-0">
-                        <a href="">
-                            <div class="card search_item mb-2">
-                                <div class="card-body py-2">
-                                    <div class="row align-items-center">
-                                        <div class="image col-2">
-                                            <img class="w-100 border border-1 rounded-1"
-                                                src="{{ asset('no_img/no_img.png') }}"
-                                                alt="{{__('Name')}}">
-                                        </div>
-                                        <div class="col-10 details">
-                                            <h4 class="product_title">{{str_limit(Str::ucfirst(Str::lower('Product Name')), 25 , '..')}}</h4>
-                                            <p class="product_sub_cat">{{str_limit('Product Sub Category',25)}}</p>
-                                            <p>{{str_limit('Product Generic Name',25)}}</p>
-                                            <p>{{str_limit('Product Company Name',25)}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="">
-                            <div class="card search_item mb-2">
-                                <div class="card-body py-2">
-                                    <div class="row align-items-center">
-                                        <div class="image col-2">
-                                            <img class="w-100 border border-1 rounded-1"
-                                                src="{{ asset('no_img/no_img.png') }}"
-                                                alt="{{__('Name')}}">
-                                        </div>
-                                        <div class="col-10 details">
-                                            <h4 class="product_title">{{str_limit(Str::ucfirst(Str::lower('Product Name')), 25 , '..')}}</h4>
-                                            <p class="product_sub_cat">{{str_limit('Product Sub Category',25)}}</p>
-                                            <p>{{str_limit('Product Generic Name',25)}}</p>
-                                            <p>{{str_limit('Product Company Name',25)}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                        
                     </div>
 
                 </div>
