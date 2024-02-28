@@ -79,6 +79,7 @@ Route::post('/district-manager/login', [DmLoginController::class, 'dmLoginCheck'
 Route::get('/local-area-manager/login', [LamLoginController::class, 'lamLogin'])->name('local_area_manager.login');
 Route::post('/local-area-manager/login', [LamLoginController::class, 'lamLoginCheck'])->name('local_area_manager.login');
 Route::post('local-area-manager/register', [LamLoginController::class, 'lamRegister'])->name('local_area_manager.register');
+Route::get('local-area-manager/reference/{id}', [LamLoginController::class, 'reference'])->name('local_area_manager.reference');
 
 
 // Overwrite Default Authentication Routes
@@ -454,9 +455,7 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 
 
 // LAM Auth Routes
-Route::group(
-    ['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-manager'],
-    function () {
+Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-manager'],function () {
         Route::get('/dashboard', [LamDashboardController::class, 'dashboard'])->name('dashboard');
 
         Route::controller(LamKycVerificationController::class, 'kyc')->prefix('kyc')->name('kyc.')->group(function () {
@@ -492,6 +491,7 @@ Route::group(
 
 // Frontend Routes 
 Route::get('/', [HomePageController::class, 'home'])->name('home');
+Route::get('/product-search/{search_value}/{category?}', [HomePageController::class, 'productSearch'])->name('home.product.search');
 Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeaturedProducts'])->name('home.featured_products');
 
 Route::controller(SingleProductController::class, 'product')->prefix('product')->name('product.')->group(function () {

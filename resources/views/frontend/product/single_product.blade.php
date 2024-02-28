@@ -21,6 +21,11 @@
         .boxed input[type="radio"]:checked+label {
             border: solid 2px green;
         }
+        .boxed img {
+            height: 70px;
+            width: 100%;
+            object-fit: cover;
+        }
     </style>
 @endpush
 @section('content')
@@ -72,10 +77,6 @@
                                                                     src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}"
                                                                     xpreview="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
                                                             </a>
-
-                                                            {{-- <a href="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}">
-                                                                <img class="xzoom-gallery" width="80" src="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}" xpreview="{{asset('frontend/asset/img/medicalpharmacy-theme-background.png')}}">
-                                                                </a> --}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -100,7 +101,7 @@
                                                                     name="data"
                                                                     value="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
-                                                                    <img src="http://via.placeholder.com/150x150">
+                                                                    <img src="{{$unit->image ? storage_url($unit->image) : asset('no_img/no_img.png')}}">
                                                                 </label>
                                                             @endforeach
                                                         </div>
@@ -380,7 +381,7 @@
                                                             <div class="col-8 content">
 
                                                                 <h3 class="pdct-title"><a
-                                                                        href="{{ route('product.single_product', $product->slug) }}">{{ __(str_limit($product->name, 25)) }}
+                                                                        href="{{ route('product.single_product', $product->slug) }}">{{str_limit(Str::ucfirst(Str::lower($product->name)), 25 , '..')}}
                                                                     </a></h3>
                                                                 <p><a
                                                                         href="">{{ str_limit($product->pro_sub_cat->name, 25) }}</a>
@@ -422,7 +423,7 @@
                                     <div class="col-md-12">
                                         <div id="related-product-slider" class="owl-carousel">
                                             @foreach ($similar_products as $product)
-                                                    <div class="px-2">
+                                                    <div class="px-2 py-1">
                                                         <div class="single-pdct">
                                                             <a
                                                                 href="{{ route('product.single_product', $product->slug) }}">
@@ -437,10 +438,13 @@
                                                                     href="{{ route('product.single_product', $product->slug) }}">
                                                                     {{-- <h3 class="fw-bold">{{ $product->name }} <small>({{$product->pro_sub_cat->name}})</small>
                                                                     </h3> --}}
-                                                                    <h3 class="fw-bold">{{str_limit($product->name.' ('.$product->pro_sub_cat->name.')', 25 , '..')}} 
+                                                                    <h3 class="fw-bold">{{str_limit(Str::ucfirst(Str::lower($product->name)), 25 , '..')}} 
                                                                         {{-- <small>({{$product->pro_sub_cat->name}})</small> --}}
                                                                     </h3>
                                                                 </a>
+                                                                <p><a
+                                                                        href="">{{ str_limit($product->pro_sub_cat->name, 25) }}</a>
+                                                                </p>
                                                                 <p><a
                                                                         href="">{{ str_limit($product->generic->name, 25) }}</a>
                                                                 </p>

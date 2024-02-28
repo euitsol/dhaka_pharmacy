@@ -13,84 +13,84 @@ class MedicineStrengthSeeder extends Seeder
     {
         MedicineStrength::create([
             'quantity' => '500',
-            'unit' => 'MG',
+            'unit' => 'mg',
             ]);
         MedicineStrength::create([
             'quantity' => '10',
-            'unit' => 'MG',
+            'unit' => 'mg',
             ]);
         MedicineStrength::create([
             'quantity' => '10',
-            'unit' => 'ML',
+            'unit' => 'ml',
             ]);
         MedicineStrength::create([
             'quantity' => '20',
-            'unit' => 'MG',
+            'unit' => 'mg',
             ]);
         MedicineStrength::create([
             'quantity' => '20',
-            'unit' => 'ML',
+            'unit' => 'ml',
             ]);
         MedicineStrength::create([
             'quantity' => '30',
-            'unit' => 'MG',
+            'unit' => 'mg',
             ]);
         MedicineStrength::create([
             'quantity' => '30',
-            'unit' => 'ML',
+            'unit' => 'ml',
             ]);
         MedicineStrength::create([
             'quantity' => '40',
-            'unit' => 'MG',
+            'unit' => 'mg',
             ]);
         MedicineStrength::create([
             'quantity' => '40',
-            'unit' => 'ML',
+            'unit' => 'ml',
             ]);
         MedicineStrength::create([
             'quantity' => '50',
-            'unit' => 'MG',
+            'unit' => 'mg',
             ]);
         MedicineStrength::create([
             'quantity' => '50',
-            'unit' => 'ML',
+            'unit' => 'ml',
             ]);
         MedicineStrength::create([
             'quantity' => '100',
-            'unit' => 'MG',
+            'unit' => 'mg',
             ]);
         MedicineStrength::create([
             'quantity' => '100',
-            'unit' => 'ML',
+            'unit' => 'ml',
             ]);
         MedicineStrength::create([
             'quantity' => '200',
-            'unit' => 'MG',
+            'unit' => 'mg',
             ]);
         MedicineStrength::create([
             'quantity' => '200',
-            'unit' => 'ML',
+            'unit' => 'ml',
             ]);
         MedicineStrength::create([
             'quantity' => '300',
-            'unit' => 'MG',
+            'unit' => 'mg',
             ]);
         MedicineStrength::create([
             'quantity' => '300',
-            'unit' => 'ML',
+            'unit' => 'ml',
             ]);
         MedicineStrength::create([
             'quantity' => '400',
-            'unit' => 'MG',
+            'unit' => 'mg',
             ]);
         MedicineStrength::create([
             'quantity' => '400',
-            'unit' => 'ML',
+            'unit' => 'ml',
             ]);
         
         MedicineStrength::create([
             'quantity' => '500',
-            'unit' => 'ML',
+            'unit' => 'ml',
             ]);
     }
 }

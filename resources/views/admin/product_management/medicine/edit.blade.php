@@ -38,19 +38,7 @@
                                 <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}" value="{{ $medicine->slug }}">
                                 @include('alerts.feedback', ['field' => 'slug'])
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>{{ __('Generic Name') }}</label>
-                                <select name="generic_id"
-                                    class="form-control {{ $errors->has('generic_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select generic name') }}</option>
-                                    @foreach ($generics as $generic)
-                                        <option value="{{ $generic->id }}"
-                                            {{ ($generic->id == $medicine->generic_id) ? 'selected' : '' }}>
-                                            {{ $generic->name }}</option>
-                                    @endforeach
-                                </select>
-                                @include('alerts.feedback', ['field' => 'generic_id'])
-                            </div>
+                            
                             <div class="form-group col-md-6">
                                 <label>{{ __('Product Category') }}</label>
                                 <select name="pro_cat_id"
@@ -75,6 +63,19 @@
                                     @endforeach
                                 </select>
                                 @include('alerts.feedback', ['field' => 'pro_sub_cat_id'])
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>{{ __('Generic Name') }}</label>
+                                <select name="generic_id"
+                                    class="form-control {{ $errors->has('generic_id') ? ' is-invalid' : '' }}">
+                                    <option selected hidden>{{ __('Select generic name') }}</option>
+                                    @foreach ($generics as $generic)
+                                        <option value="{{ $generic->id }}"
+                                            {{ ($generic->id == $medicine->generic_id) ? 'selected' : '' }}>
+                                            {{ $generic->name }}</option>
+                                    @endforeach
+                                </select>
+                                @include('alerts.feedback', ['field' => 'generic_id'])
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __('Company Name') }}</label>
@@ -123,7 +124,7 @@
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}"
                                             {{  (in_array($unit->id, (array)json_decode($medicine->unit, true)))  ? 'selected' : '' }}>{{ $unit->name }}
-                                            <small>({{ $unit->quantity }})</small></option>
+                                            <small>({{ $unit->quantity }})</small><small>{{ $unit->type ? '-'.$unit->type :'' }}</small></option>
                                     @endforeach
                                 </select>
                                 @include('alerts.feedback', ['field' => 'unit'])

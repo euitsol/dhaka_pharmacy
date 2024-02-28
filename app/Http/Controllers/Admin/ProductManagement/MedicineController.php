@@ -62,7 +62,7 @@ class MedicineController extends Controller
         if ($req->hasFile('image')) {
             $image = $req->file('image');
             $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'district_manager/' . $req->name;
+            $folderName = 'products/' . $req->name;
             $path = $image->storeAs($folderName, $imageName, 'public');
             $medicine->image = $path;
         }
@@ -105,7 +105,7 @@ class MedicineController extends Controller
         if ($req->hasFile('image')) {
             $image = $req->file('image');
             $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'district_manager/' . $req->name;
+            $folderName = 'products/' . $req->name;
             $path = $image->storeAs($folderName, $imageName, 'public');
             if(!empty($medicine->image)){
                 $this->fileDelete($medicine->image);

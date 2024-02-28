@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\BaseController;
 use App\Models\Medicine;
 use App\Models\MedicineUnit;
 use App\Models\ProductCategory;
@@ -12,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class SingleProductController extends Controller
+class SingleProductController extends BaseController
 {
 
     public function singleProduct($slug): View

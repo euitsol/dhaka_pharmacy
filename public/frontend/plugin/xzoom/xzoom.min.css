@@ -13,6 +13,7 @@
 /* xZoom Styles below */
 .xzoom-container { 
   display: inline-block;
+  width: 100%;
 }
 
 .xzoom-thumbs {
