@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DistrictManagerRequest;
 use App\Models\DistrictManager;
 use App\Models\Documentation;
+use App\Models\OperationArea;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -23,7 +24,7 @@ class DistrictManagerController extends Controller
 
     public function index(): View
     {
-        $data['dms'] = DistrictManager::with(['lams','created_user'])->latest()->get();
+        $data['dms'] = DistrictManager::with(['lams','operation_area','created_user'])->latest()->get();
         return view('admin.dm_management.district_manager.index',$data);
     }
     public function details($id): JsonResponse
@@ -54,11 +55,12 @@ class DistrictManagerController extends Controller
     
     public function profile($id): View
     {
-        $data['dm'] = DistrictManager::with(['lams','created_user','updated_user'])->findOrFail($id);
+        $data['dm'] = DistrictManager::with(['lams','operation_area','created_user','updated_user'])->findOrFail($id);
         return view('admin.dm_management.district_manager.profile',$data);
     }
     public function create(): View
     {
+        $data['operation_areas'] = OperationArea::where('deleted_at',null)->where('status',1)->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key','district_manager')->first();
         return view('admin.dm_management.district_manager.create',$data);
     }
@@ -67,6 +69,7 @@ class DistrictManagerController extends Controller
         $dm = new DistrictManager();
         $dm->name = $req->name;
         $dm->phone = $req->phone;
+        $dm->oa_id = $req->oa_id;
         $dm->password = Hash::make($req->password);
         $dm->created_by = admin()->id;
         $dm->save();
@@ -76,6 +79,7 @@ class DistrictManagerController extends Controller
     public function edit($id): View
     {
         $data['dm'] = DistrictManager::findOrFail($id);
+        $data['operation_areas'] = OperationArea::where('deleted_at',null)->where('status',1)->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key','district_manager')->first();
         return view('admin.dm_management.district_manager.edit',$data);
     }
@@ -84,6 +88,7 @@ class DistrictManagerController extends Controller
         $dm = DistrictManager::findOrFail($id);
         $dm->name = $req->name;
         $dm->phone = $req->phone;
+        $dm->oa_id = $req->oa_id;
         if($req->password){
             $dm->password = Hash::make($req->password);
         }

@@ -45,6 +45,7 @@ use App\Http\Controllers\DM\KYC\KycVerificationController as DmKycVerificationCo
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
+use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,15 +84,15 @@ Route::get('local-area-manager/reference/{id}', [LamLoginController::class, 'ref
 
 
 // Overwrite Default Authentication Routes
-// Google Login 
+// Google Login
 Route::get('/google-redirect', [App\Http\Controllers\Auth\LoginController::class, 'googleRedirect'])->name('login_with_google');
 Route::get('/auth/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'googleCallback']);
 
-// Github Login 
+// Github Login
 Route::get('/github-redirect', [App\Http\Controllers\Auth\LoginController::class, 'githubRedirect'])->name('login_with_github');
 Route::get('/auth/github/callback', [App\Http\Controllers\Auth\LoginController::class, 'githubCallback']);
 
-// Facebook Login 
+// Facebook Login
 Route::get('/facebook-redirect', [App\Http\Controllers\Auth\LoginController::class, 'facebookRedirect'])->name('login_with_facebook');
 Route::get('/auth/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'facebookCallback']);
 
@@ -243,6 +244,19 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('delete/{id}', 'delete')->name('district_manager_delete');
         });
 
+        //Oparetaion Area Route
+        Route::controller(OperationAreaController::class, 'operation-area')->prefix('operation-area')->name('operation_area.')->group(function () {
+            Route::get('index', 'index')->name('operation_area_list');
+            Route::get('details/{id}', 'details')->name('details.operation_area_list');
+            Route::get('create', 'create')->name('operation_area_create');
+            Route::post('create', 'store')->name('operation_area_create');
+            Route::get('edit/{slug}', 'edit')->name('operation_area_edit');
+            Route::put('edit/{id}', 'update')->name('operation_area_edit');
+            Route::get('status/{id}', 'status')->name('status.operation_area_edit');
+            Route::get('delete/{id}', 'delete')->name('operation_area_delete');
+        });
+
+
 
         // KYC ROUTES
         Route::group(['as' => 'dm_kyc.', 'prefix' => 'district-manager-kyc'], function () {
@@ -260,7 +274,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
     });
 
-    // Local Area Manager Management Routes 
+    // Local Area Manager Management Routes
     Route::group(['as' => 'lam_management.', 'prefix' => 'lam-management'], function () {
         Route::controller(LocalAreaManagerController::class, 'local-area-manager')->prefix('local-area-manager')->name('local_area_manager.')->group(function () {
             Route::get('index', 'index')->name('local_area_manager_list');
@@ -416,7 +430,7 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
         Route::get('/kyc/file/delete', 'delete')->name('file.delete');
     });
-    
+
 
 
     Route::controller(DmProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
@@ -455,43 +469,43 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 
 
 // LAM Auth Routes
-Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-manager'],function () {
-        Route::get('/dashboard', [LamDashboardController::class, 'dashboard'])->name('dashboard');
+Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-manager'], function () {
+    Route::get('/dashboard', [LamDashboardController::class, 'dashboard'])->name('dashboard');
 
-        Route::controller(LamKycVerificationController::class, 'kyc')->prefix('kyc')->name('kyc.')->group(function () {
-            Route::post('/store', 'kyc_store')->name('store');
-            Route::get('/verification', 'kyc_verification')->name('verification');
-            Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
-            Route::get('/kyc/file/delete', 'delete')->name('file.delete');
-        });
+    Route::controller(LamKycVerificationController::class, 'kyc')->prefix('kyc')->name('kyc.')->group(function () {
+        Route::post('/store', 'kyc_store')->name('store');
+        Route::get('/verification', 'kyc_verification')->name('verification');
+        Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
+        Route::get('/kyc/file/delete', 'delete')->name('file.delete');
+    });
 
-        Route::controller(LamProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
-            Route::get('/', 'profile')->name('index');
-            Route::put('/update', 'update')->name('update');
-            Route::put('/update/password', 'updatePassword')->name('update.password');
-            Route::post('/update/image', 'updateImage')->name('update.image');
-        });
+    Route::controller(LamProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', 'profile')->name('index');
+        Route::put('/update', 'update')->name('update');
+        Route::put('/update/password', 'updatePassword')->name('update.password');
+        Route::post('/update/image', 'updateImage')->name('update.image');
+    });
 
 
 
-        Route::controller(LamUserController::class, 'user-management')->prefix('user-management')->name('user.')->group(function () {
-            Route::get('index', 'index')->name('list');
-            Route::get('details/{id}', 'details')->name('details.list');
-            Route::get('profile/{id}', 'profile')->name('profile');
-            Route::get('create', 'create')->name('create');
-            Route::post('create', 'store')->name('create');
-            Route::get('edit/{id}', 'edit')->name('edit');
-            Route::put('edit/{id}', 'update')->name('edit');
-            Route::get('status/{id}', 'status')->name('status.edit');
-            Route::get('delete/{id}', 'delete')->name('delete');
-        });
+    Route::controller(LamUserController::class, 'user-management')->prefix('user-management')->name('user.')->group(function () {
+        Route::get('index', 'index')->name('list');
+        Route::get('details/{id}', 'details')->name('details.list');
+        Route::get('profile/{id}', 'profile')->name('profile');
+        Route::get('create', 'create')->name('create');
+        Route::post('create', 'store')->name('create');
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::put('edit/{id}', 'update')->name('edit');
+        Route::get('status/{id}', 'status')->name('status.edit');
+        Route::get('delete/{id}', 'delete')->name('delete');
+    });
 });
 
 
 
-// Frontend Routes 
+// Frontend Routes
 Route::get('/', [HomePageController::class, 'home'])->name('home');
-Route::get('/product-search/{search_value}/{category?}', [HomePageController::class, 'productSearch'])->name('home.product.search');
+Route::get('/product-search/{search_value}/{category}', [HomePageController::class, 'productSearch'])->name('home.product.search');
 Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeaturedProducts'])->name('home.featured_products');
 
 Route::controller(SingleProductController::class, 'product')->prefix('product')->name('product.')->group(function () {

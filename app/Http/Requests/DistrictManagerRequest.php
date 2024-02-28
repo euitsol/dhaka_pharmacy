@@ -34,6 +34,8 @@ class DistrictManagerRequest extends FormRequest
             'permanent_address'=>'nullable',
             'parent_phone'=>'nullable|numeric|digits:11',
 
+            'oa_id'=>'required|exists:operation_areas,id',
+
         ]
         +
         ($this->isMethod('POST') ? $this->store() : $this->update());
