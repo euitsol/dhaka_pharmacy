@@ -24,23 +24,23 @@ class LoginContorller extends BaseController
         return view('admin.login');
     }
 
-    public function adminLoginCheck(Request $request):RedirectResponse
+    public function adminLoginCheck(Request $request): RedirectResponse
     {
         $credentials = $request->only('email', 'password');
         $check = Admin::where('email', $request->email)->first();
-        if(isset($check)){
-            if($check->status == 1){
+        if (isset($check)) {
+            if ($check->status == 1) {
                 if (Auth::guard('admin')->attempt($credentials)) {
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');
                     return redirect()->route('admin.dashboard');
                 }
                 flash()->addError('Invalid credentials');
-            }else{
+            } else {
                 flash()->addError('Your account has been disabled. Please contact support.');
             }
-        }else{
+        } else {
             flash()->addError('Admin Not Found');
         }
         return redirect()->route('admin.login');
-    }  
+    }
 }
