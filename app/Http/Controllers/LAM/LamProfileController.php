@@ -47,6 +47,7 @@ class LamProfileController extends Controller
             'mother_name' => 'nullable|min:6',
             'permanent_address' => 'nullable',
             'parent_phone' => 'nullable|numeric|digits:11',
+            'osa_id' => 'nullable|exists:operation_sub_areas,id',
         ]);
         if ($request->hasFile('cv')) {
             $file = $request->file('cv');
@@ -59,7 +60,9 @@ class LamProfileController extends Controller
             $lam->cv = $path;
         }
 
-
+        if(empty($lam->osa_id)){
+            $lam->osa_id = $request->osa_id;
+        }
         $lam->name = $request->name;
         $lam->phone = $request->phone;
         $lam->age = $request->age;

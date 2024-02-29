@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'operation_sub_area'])
+@extends('district_manager.layouts.master', ['pageSlug' => 'lam_area'])
 
 @section('content')
     <div class="row">
@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Operation Sub Area List') }}</h4>
+                            <h4 class="card-title">{{ __('LAM Area List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'dm_management.operation_sub_area.operation_sub_area_create',
+                                'routeName' => 'dm.lam_area.create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new operation sub area',
+                                'label' => 'Add new lam area',
                             ])
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
-                                <th>{{ __('Operation Area') }}</th>
+                                <th>{{ __('DM Area') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -32,22 +32,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($op_sub_areas as $op_sub_area)
+                            @foreach ($lam_areas as $lam_area)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $op_sub_area->name }} </td>
-                                    <td> {{ $op_sub_area->operation_area->name }} </td>
+                                    <td> {{ $lam_area->name }} </td>
+                                    <td> {{ $lam_area->operation_area->name }} </td>
                                     <td>
-                                        <span class="{{$op_sub_area->getMultiStatusClass()}}">{{$op_sub_area->getMultiStatus()}}</span>
+                                        <span
+                                            class="{{ $lam_area->getMultiStatusClass() }}">{{ $lam_area->getMultiStatus() }}</span>
                                     </td>
-                                    <td>{{ timeFormate($op_sub_area->created_at) }}</td>
+                                    <td>{{ timeFormate($lam_area->created_at) }}</td>
 
-                                    <td> {{ $op_sub_area->creater->name ?? 'system' }} </td>
+                                    <td> {{ $lam_area->creater->name ?? 'system' }} </td>
                                     <td>
-                                        {{-- {{dd($op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug))}} --}}
-                                        @include('admin.partials.action_buttons', 
-                                            $op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug)
-                                        )
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)"
+                                                role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item view" href="javascript:void(0)"
+                                                    data-id="{{ $lam_area->id }}">{{ __('View Details') }}</a>
+                                                @if($lam_area->status != 1)
+                                                    <a class="dropdown-item"
+                                                    href="{{ route('dm.lam_area.edit', $lam_area->slug) }}">{{ __('Update') }}</a>
+                                                @endif
+
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -69,7 +82,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Operation Sub Area Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('LAM Area Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -87,7 +100,7 @@
             $('.view').on('click', function() {
                 let id = $(this).data('id');
                 let url = (
-                    "{{ route('dm_management.operation_sub_area.details.operation_sub_area_list', ['id']) }}");
+                    "{{ route('dm.lam_area.details.list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -105,7 +118,7 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Category Name</th>
+                                        <th class="text-nowrap">District Manager Area</th>
                                         <th>:</th>
                                         <td>${data.operation_area.name}</td>
                                     </tr>                                
