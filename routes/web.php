@@ -47,6 +47,7 @@ use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
 use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
+use App\Http\Controllers\DM\LAM_management\LamAreaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -479,6 +480,14 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::get('status/{id}', 'status')->name('status.edit');
         Route::get('delete/{id}', 'delete')->name('delete');
     });
+    Route::controller(LamAreaController::class, 'local-area-manager-area')->prefix('local-area-manager-area')->name('lam_area.')->group(function () {
+        Route::get('index', 'index')->name('list');
+        Route::get('details/{id}', 'details')->name('details.list');
+        Route::get('create', 'create')->name('create');
+        Route::post('create', 'store')->name('create');
+        Route::get('edit/{slug}', 'edit')->name('edit');
+        Route::put('edit/{id}', 'update')->name('edit');
+    });
 });
 
 
@@ -513,6 +522,8 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::get('status/{id}', 'status')->name('status.edit');
         Route::get('delete/{id}', 'delete')->name('delete');
     });
+
+   
 });
 
 
