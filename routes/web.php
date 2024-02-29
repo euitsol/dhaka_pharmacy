@@ -46,6 +46,7 @@ use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
+use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -255,6 +256,17 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('status/{id}', 'status')->name('status.operation_area_edit');
             Route::get('delete/{id}', 'delete')->name('operation_area_delete');
         });
+        //Oparetaion Sub Area Route
+        Route::controller(OperationSubAreaController::class, 'operation-sub-area')->prefix('operation-sub-area')->name('operation_sub_area.')->group(function () {
+            Route::get('index', 'index')->name('operation_sub_area_list');
+            Route::get('details/{id}', 'details')->name('details.operation_sub_area_list');
+            Route::get('create', 'create')->name('operation_sub_area_create');
+            Route::post('create', 'store')->name('operation_sub_area_create');
+            Route::get('edit/{slug}', 'edit')->name('operation_sub_area_edit');
+            Route::put('edit/{id}', 'update')->name('operation_sub_area_edit');
+            Route::get('status/{id}/{status}', 'status')->name('status.operation_sub_area_edit');
+            Route::get('delete/{id}', 'delete')->name('operation_sub_area_delete');
+        });
 
 
 
@@ -287,6 +299,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('local_area_manager_edit');
             Route::get('status/{id}', 'status')->name('status.local_area_manager_edit');
             Route::get('delete/{id}', 'delete')->name('local_area_manager_delete');
+
+            Route::get('get-operation-area/{dm_id}', 'get_operation_area')->name('operation_area.local_area_manager_list');
         });
 
         // KYC ROUTES

@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('dm_id') ? ' has-danger' : '' }}">
                             <label>{{ __('District Manager') }}</label>
-                            <select name="dm_id" class="form-control {{ $errors->has('dm_id') ? ' is-invalid' : '' }}">
+                            <select name="dm_id" class="form-control dm {{ $errors->has('dm_id') ? ' is-invalid' : '' }}">
                                 <option selected hidden>{{ __('Select District Manager') }}</option>
                                 @foreach ($dms as $dm)
                                     <option {{ old('dm_id') == $dm->id ? 'selected' : '' }} value="{{ $dm->id }}">
@@ -44,6 +44,17 @@
                                 @endforeach
                             </select>
                             @include('alerts.feedback', ['field' => 'dm_id'])
+                        </div>
+                        <div class="form-group">
+                            <label>{{__('District Manager Area')}}</label>
+                            <input type="text" class="form-control dm_area" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ __('Local Area Manager Area') }}</label>
+                            <select name="osa_id" class="form-control lam_area {{ $errors->has('osa_id') ? ' is-invalid' : '' }}" disabled>
+                                <option selected hidden>{{ __('Select Local Area Manager Area') }}</option>
+                            </select>
+                            @include('alerts.feedback', ['field' => 'osa_id'])
                         </div>
                         <div class="form-group">
                             <label>{{__('Password')}}</label>
@@ -63,3 +74,37 @@
         @include('admin.partials.documentation',['document'=>$document])
     </div>
 @endsection
+@push('js')
+<script>
+    $(document).ready(function() {
+        $('.dm').on('change', function() {
+            let dm_area = $('.dm_area');
+            let lam_area = $('.lam_area');
+            let dm_id = $(this).val();
+
+            dm_area.prop('disabled',true);
+
+            let url = ("{{ route('lam_management.local_area_manager.operation_area.local_area_manager_list', ['dm_id']) }}");
+            let _url = url.replace('dm_id', dm_id);
+            
+            $.ajax({
+                url: _url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    lam_area.prop('disabled',false);
+                    dm_area.val(data.dm.operation_area.name);
+                    var result = '';
+                    data.dm.operation_area.operation_sub_areas.forEach(function(area) {
+                        result += `<option value="${area.id}">${area.name}</option>`;
+                    });
+                    lam_area.html(result);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching local area manager data:', error);
+                }
+            });
+        });
+    });
+</script>
+@endpush

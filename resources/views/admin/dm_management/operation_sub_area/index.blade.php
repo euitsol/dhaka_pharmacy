@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'local_area_manager'])
+@extends('admin.layouts.master', ['pageSlug' => 'operation_sub_area'])
 
 @section('content')
     <div class="row">
@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Local Area Manager List')}}</h4>
+                            <h4 class="card-title">{{ __('Operation Sub Area List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'lam_management.local_area_manager.local_area_manager_create',
+                                'routeName' => 'dm_management.operation_sub_area.operation_sub_area_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new local area manager',
+                                'label' => 'Add new operation sub area',
                             ])
                         </div>
                     </div>
@@ -24,8 +24,7 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
-                                <th>{{ __('Phone') }}</th>
-                                <th>{{ __('District Manager') }}</th>
+                                <th>{{ __('Operation Area') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -33,30 +32,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($lams as $lam)
+                            @foreach ($op_sub_areas as $op_sub_area)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $lam->name }} </td>
-                                    <td> {{ $lam->phone }} </td>
-                                    <td> {{ $lam->dm->name }} </td>
+                                    <td> {{ $op_sub_area->name }} </td>
+                                    <td> {{ $op_sub_area->operation_area->name }} </td>
                                     <td>
-                                        <span
-                                            class="{{ $lam->getStatusBadgeClass() }}">{{ $lam->getStatus() }}</span>
+                                        <span class="{{$op_sub_area->getMultiStatusClass()}}">{{$op_sub_area->getMultiStatus()}}</span>
                                     </td>
-                                    <td>{{ timeFormate($lam->created_at) }}</td>
+                                    <td>{{ timeFormate($op_sub_area->created_at) }}</td>
 
-                                    <td> {{ $lam->creater->name ?? 'system' }} </td>
+                                    <td> {{ $op_sub_area->creater->name ?? 'system' }} </td>
                                     <td>
-                                        @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'lam_management.local_area_manager.login_as.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Login As','target'=>'_blank'],
-                                                    ['routeName' => 'lam_management.local_area_manager.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Profile'],
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$lam->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $lam->id ],
-                                                    ['routeName' => 'lam_management.local_area_manager.local_area_manager_edit',   'params' => [$lam->id], 'label' => 'Update'],
-                                                    ['routeName' => 'lam_management.local_area_manager.status.local_area_manager_edit',   'params' => [$lam->id], 'label' => $lam->getBtnStatus()],
-                                                    ['routeName' => 'lam_management.local_area_manager.local_area_manager_delete', 'params' => [$lam->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                        {{-- {{dd($op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug))}} --}}
+                                        @include('admin.partials.action_buttons', 
+                                            $op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug)
+                                        )
                                     </td>
                                 </tr>
                             @endforeach
@@ -72,12 +63,13 @@
         </div>
     </div>
 
-    {{-- Local Area Manager Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- District Manager Details Modal  --}}
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Local Area Manager Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Medicine Dosage Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -94,15 +86,16 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('lam_management.local_area_manager.details.local_area_manager_list', ['id']) }}");
+                let url = (
+                    "{{ route('dm_management.operation_sub_area.details.operation_sub_area_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
+                        let status = data.status === 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status === 1 ? 'badge-success' :
                             'badge-warning';
                         var result = `
                                 <table class="table table-striped">
@@ -112,31 +105,10 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Phone</th>
+                                        <th class="text-nowrap">Category Name</th>
                                         <th>:</th>
-                                        <td>${data.phone}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Email</th>
-                                        <th>:</th>
-                                        <td>${data.email ?? 'N/A'}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">District Manager</th>
-                                        <th>:</th>
-                                        <td>${data.dm.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">District Manager Area</th>
-                                        <th>:</th>
-                                        <td>${data.dm.operation_area.name}</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <th class="text-nowrap">Local Area Manager Area</th>
-                                        <th>:</th>
-                                        <td>${data.operation_sub_area.name}</td>
-                                    </tr>
+                                        <td>${data.operation_area.name}</td>
+                                    </tr>                                
                                     <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
@@ -168,7 +140,7 @@
                         $('.view_modal').modal('show');
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error fetching local area manager data:', error);
+                        console.error('Error fetching district manager data:', error);
                     }
                 });
             });

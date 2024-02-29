@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ProductCategory extends BaseModel
 {
     use HasFactory, SoftDeletes;
+
+    public function pro_sub_cats()
+    {
+        return $this->hasMany(ProductSubCategory::class, 'pro_cat_id')->orderBy('name');
+    }
 }

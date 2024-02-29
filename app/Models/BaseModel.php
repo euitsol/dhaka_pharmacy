@@ -136,5 +136,42 @@ class BaseModel extends Model
         }
     }
 
+    public function getPermission()
+    {
+        if($this->permission == 1){
+            return 'Accepted';
+        }elseif($this->permission == 0){
+            return 'Pending';
+        }else{
+            return 'Declined';
+        }
+    }
+    public function getPermissionClass()
+    {
+        if($this->permission == 1){
+            return 'btn-success';
+        }elseif($this->permission == 0){
+            return 'btn-info';
+        }else{
+            return 'btn-danger';
+        }
+    }
+    public function getPermissionAcceptTogleClassName()
+    {
+        if($this->permission == 1){
+            return'd-none';
+        }else{
+            return 'd-block';
+        }
+    }
+    public function getPermissionDeclineTogleClassName()
+    {
+        if($this->permission == 1){
+            return'd-none';
+        }else{
+            return 'd-block';
+        }
+    }
+
     
 }

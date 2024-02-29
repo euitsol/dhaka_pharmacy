@@ -157,19 +157,21 @@
             @endif
 
             {{-- DM Management --}}
-            @if (mainMenuCheck(['district_manager_list', 'dm_kyc_list', 'dm_kyc_settings', 'operation_area_list']))
+            @if (mainMenuCheck(['district_manager_list', 'dm_kyc_list', 'dm_kyc_settings', 'operation_area_list','operation_sub_area_list']))
                 <li>
                     <a class="@if (
                         $pageSlug == 'district_manager' ||
                             $pageSlug == 'dm_kyc_list' ||
                             $pageSlug == 'dm_kyc_settings' ||
-                            $pageSlug == 'operation_area') @else collapsed @endif" data-toggle="collapse"
+                            $pageSlug == 'operation_area' ||
+                            $pageSlug == 'operation_sub_area') @else collapsed @endif" data-toggle="collapse"
                         href="#district_manager"
                         @if (
                             $pageSlug == 'district_manager' ||
                                 $pageSlug == 'dm_kyc_list' ||
                                 $pageSlug == 'dm_kyc_settings' ||
-                                $pageSlug == 'operation_area') aria-expanded="true" @else aria-expanded="false" @endif>
+                                $pageSlug == 'operation_area' ||
+                                $pageSlug == 'operation_sub_area') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-map-location-dot"></i>
                         <span class="nav-link-text">{{ __('DM Management') }}</span>
                         <b class="caret mt-1"></b>
@@ -179,7 +181,8 @@
                         $pageSlug == 'district_manager' ||
                             $pageSlug == 'dm_kyc_list' ||
                             $pageSlug == 'dm_kyc_settings' ||
-                            $pageSlug == 'operation_area') show @endif" id="district_manager">
+                            $pageSlug == 'operation_area' ||
+                            $pageSlug == 'operation_sub_area') show @endif" id="district_manager">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -212,6 +215,11 @@
                                         'pageSlug' => 'operation_area',
                                         'routeName' => 'dm_management.operation_area.operation_area_list',
                                         'label' => 'Operation Area',
+                                    ],
+                                    [
+                                        'pageSlug' => 'operation_sub_area',
+                                        'routeName' => 'dm_management.operation_sub_area.operation_sub_area_list',
+                                        'label' => 'Operation Sub Area',
                                     ],
                                 ],
                             ])
