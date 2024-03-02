@@ -38,7 +38,7 @@ class HomePageController extends BaseController
             $datas = $products->where('pro_cat_id',$id)->latest()->get();
         }
         $datas = $datas->map(function($data){
-                $data->image = ($data->image ? storage_url($data->image) : '');
+                $data->image = storage_url($data->image);
                 return $data;
         });
         $data['products'] = $datas->shuffle()->take(8)->map(function($product){

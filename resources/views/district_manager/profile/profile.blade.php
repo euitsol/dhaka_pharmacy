@@ -57,7 +57,7 @@
                                         <div class="profile_image">
                                             <div class="img mx-auto mt-4 rounded-circle">
                                                 <img class="avatar mb-0 rounded-circle w-100 h-100" id="previewImage"
-                                                    src="{{ dm()->image ? storage_url(dm()->image) : asset('no_img/no_img.jpg') }}"
+                                                    src="{{ storage_url(dm()->image) }}"
                                                     alt="">
                                                 <label for="imageInput" class="camera-icon text-center rounded-circle">
                                                     <i class="fa-solid fa-camera-retro" style="cursor: pointer;"></i>
@@ -270,7 +270,7 @@
                                     $('.profile_image .img img.avatar').removeClass(
                                         'image_animation');
                                     $('.profile_image .camera-icon').css('display', 'block');
-                                    $('#previewImage').attr('src', "{{ dm()->image ? storage_url(dm()->image) : asset('no_img/no_img.jpg') }}");
+                                    $('#previewImage').attr('src', "{{ storage_url(dm()->image)}}");
                                     toastr.error('Something is wrong!');
 
                                     var errors = xhr.responseJSON.errors;

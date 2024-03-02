@@ -66,16 +66,16 @@
                                                 <div class="card-body">
                                                     <div class="product_image xzoom-container">
                                                         <img class="xzoom" id="xzoom-default"
-                                                            src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}"
-                                                            xoriginal="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                            src="{{  storage_url($single_product->image) }}"
+                                                            xoriginal="{{  storage_url($single_product->image) }}">
 
                                                         <!-- Thumbnails -->
                                                         <div class="xzoom-thumbs">
                                                             <a
-                                                                href="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                                href="{{  storage_url($single_product->image) }}">
                                                                 <img class="xzoom-gallery xactive" width="80"
-                                                                    src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}"
-                                                                    xpreview="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                                    src="{{  storage_url($single_product->image) }}"
+                                                                    xpreview="{{  storage_url($single_product->image) }}">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -101,7 +101,7 @@
                                                                     name="data"
                                                                     value="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
-                                                                    <img src="{{$unit->image ? storage_url($unit->image) : asset('no_img/no_img.png')}}">
+                                                                    <img src="{{storage_url($unit->image)}}">
                                                                 </label>
                                                             @endforeach
                                                         </div>
@@ -374,7 +374,7 @@
                                                                     href="{{ route('product.single_product', $product->slug) }}">
                                                                     <img height=""
                                                                         class="w-100 border border-1 rounded-1"
-                                                                        src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
+                                                                        src="{{ storage_url($product->image) }}"
                                                                         alt="{{ __($product->name) }}">
                                                                 </a>
                                                             </div>
@@ -430,7 +430,7 @@
                                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                                 <div class="pdct-img">
                                                                     <img class="w-100"
-                                                                        src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
+                                                                        src="{{ storage_url($product->image) }}"
                                                                         alt="Product Image">
                                                                 </div>
                                                             </a>
