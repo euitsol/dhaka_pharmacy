@@ -154,7 +154,6 @@ h2.title {
 .single-pdct .pdct-info h3 {
     font-family: "Rubik", sans-serif;
     font-size: 14px;
-    line-height: 20px;
     color: var(--text-color-black);
     transition: .4s;
 }
