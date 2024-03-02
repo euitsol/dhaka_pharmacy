@@ -1,3 +1,45 @@
+/*====================================
+      NAV COLOR VERIABLE START
+======================================*/
+:root {
+  --nav-primary-bg: #00204B;
+  --nav-primary-color: #00204B;
+  --nav-text-color: #ffffff;
+  --input-border-color: #ffffff;
+  --nav-asent-color: #28A349;
+}
+
+
+
+/*====================================
+      Global color varriable Start
+======================================*/
+:root {
+  --primary-bg: #00204B;
+  --secondary-bg: #2D98DA;
+  --info-bg: #072365;
+  --primary-color: #00204B;
+  --secundary-color: #28A349;
+  --asent-color: #28A349;
+  --text-color-black: #373f50;
+  --text-color-white: #fff;
+  --text-color-gray: #7d879c;
+}
+
+
+
+
+/*====================================
+      Global CSS Start
+======================================*/
+.container-fluid {
+  padding: 0 30px !important;
+}
+
+body{
+  background: #F5F5F5;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -17,7 +59,10 @@ a:hover{
   text-decoration: none;
 }
 
-/*============== Common CSS ================*/
+
+/*====================================
+      Start Product Common CSS
+======================================*/
 h2.title {
   font-family: 'Poppins', sans-serif;
   font-size: 24px;
@@ -29,7 +74,12 @@ h2.title {
 .single-pdct{
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
   border-radius: 15px;
+  backdrop-filter: blur(23px) saturate(169%);
+  -webkit-backdrop-filter: blur(23px) saturate(169%);
+  background-color: rgba(255, 255, 255, 0.1);
+
 }
+
 
  .single-pdct .pdct-img{
   background: #E9E9E9;
@@ -46,29 +96,60 @@ h2.title {
 
 .single-pdct .pdct-info{
   padding: 20px;
-  background: var(--text-color-white);
+  background: unset;
+  position: relative;
 }
 
 .single-pdct .add_to_card{
-  padding: 0 20px 20px 20px;
-  background: var(--text-color-white);
-  border-radius: 0 0 12px 12px;
+    position: absolute;
+    bottom: 11%;
+    right: 2%;
+    background: unset;
+    padding: unset;
+    display: none;
+    transition: .4s;
 }
+.single-pdct:hover .add_to_card{
+  display: block;
+}
+
+.single-pdct .add_to_card .cart-btn {
+  border: 2px solid var(--secundary-color);
+  border-radius: 10px;
+  padding: .5rem .7rem;
+  text-decoration: none;
+  font-family: "Rubik", sans-serif;
+  font-size: 25px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--secundary-color);
+  width: 25%;
+  transition: 0.4s;
+  display: unset;
+}
+
 
 .single-pdct .pdct-info h4{
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-  line-height: 31px;
-  font-weight: 600;
-  color: var(--secundary-color)
+    font-family: "Rubik", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 20px;
+    color: var(--text-color-gray);
+    display: block;
+    padding: 0px;
+    margin: .5rem 0rem;
 }
 
+
 .single-pdct .pdct-info h3 {
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-  line-height: 25px;
-  font-weight: 500;
-  color: var(--text-color-black);
+    font-family: "Rubik", sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--text-color-black);
+    transition: .4s;
+}
+.single-pdct .pdct-info h3:hover {
+    color: var(--asent-color);
 }
 
 .single-pdct .order_button .order-btn {
@@ -89,11 +170,16 @@ h2.title {
   transition: 0.4s;
 }
 
-.single-pdct .pdct-info p a{
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
-  line-height: 22px;
-  color: var(--text-color-black);
+
+.single-pdct .pdct-info a{
+    font-family: "Rubik", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    color: var(--text-color-gray);
+    display: block;
+    padding: 0px;
+    margin: 0px;
 }
 
 .single-item{
@@ -121,71 +207,98 @@ h2.title {
   line-height: 0;
 }
 
+
 .single-item .pdct-title a{
-  font-family: "Open Sans", sans-serif;
-  font-size: 15px;
-  line-height: 23px;
-  font-weight: 500;
-  display: inline-block;
-  text-decoration: none;
-  color: var(--text-color-black);
-  transition: 0.4s;
+    font-family: "Rubik", sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--text-color-black);
 }
 
+
 .single-item p, .single-item p a {
-  font-family: "Open Sans", sans-serif;
-  font-size: 11px;
-  line-height: 16px;
-  font-weight: 400;
-  text-decoration: none;
-  color: var(--text-color-black);
-  transition: 0.4s;
+    font-family: "Rubik", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    color: var(--text-color-gray);
+    display: block;
+    padding: 0px;
+    margin: 0px;
+    transition: .4s;
 }
 
 .single-item .pdct-title a:hover{
   color: var(--asent-color);
 }
 
+
 .single-item .pdct-price{
-  font-family: "Open Sans", sans-serif;
-  font-size: 17px;
-  line-height: 25px;
-  font-weight: 500;
+    font-family: "Rubik", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 20px;
+    color: var(--secundary-color);
+    display: block;
+    padding: 0px;
+    margin: .5rem 0rem;
+}
+
+.add_to_card .cart-btn {
+  border: 2px solid var(--secundary-color);
+  border-radius: 10px;
+  padding: 8px 15px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 400;
   color: var(--secundary-color);
-  margin: 0;
+  width: 100%;
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  transition: 0.4s;
 }
 
-/*============== varriable color for nav css ================*/
-:root {
-  --nav-primary-bg: #00204B;
-  --nav-primary-color: #00204B;
-  --nav-text-color: #ffffff;
-  --input-border-color: #ffffff;
-  --nav-asent-color: #28A349;
+.add_to_card .cart-btn:hover{
+color: var(--text-color-white);
+background-color: var(--text-color-black);
+box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 
-/*========== Global color varriable ============*/
-:root {
-  --primary-bg: #00204B;
-  --secondary-bg: #2D98DA;
-  --info-bg: #072365;
-  --primary-color: #00204B;
-  --secundary-color: #28A349;
-  --asent-color: #28A349;
-  --text-color-black: #373f50;
-  --text-color-white: #fff;
-  --text-color-gray: #7d879c;
+.order_button .order-btn {
+border: 2px solid var(--secundary-color);
+border-radius: 10px;
+padding: 8px 15px;
+text-decoration: none;
+font-family: 'Poppins', sans-serif;
+font-size: 15px;
+line-height: 21px;
+font-weight: 400;
+color: var(--secundary-color);
+width: 100%;
+display: inline-block;
+display: flex;
+justify-content: center;
+column-gap: 10px;
+transition: 0.4s;
 }
 
-.container-fluid {
-  padding: 0 30px !important;
+.order_button .order-btn:hover{
+color: var(--text-color-white);
+border-color: var(--text-color-black);
+background-color: var(--text-color-black);
+box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 
-body{
-  background: #F5F5F5;
-}
 
-/*============== Slider-section-style ==================*/
+
+
+/*====================================
+      Start Sidebar-section-style
+======================================*/
 .sidebar-cat-section {
   z-index: 9;
   padding-bottom: 20px;
@@ -269,7 +382,10 @@ body{
   color: var(--text-color-white);
 }
 
-/*============== slider-css ==============*/
+
+/*====================================
+      Start Slider-section-style
+======================================*/
  .content-col{
   position: relative;
   z-index: 9 !important;
@@ -423,7 +539,11 @@ body{
   background: var(--text-color-black);
 }
 
-/*================== Home Product Section ==============*/
+
+
+/*====================================
+      Start Home Product Section CSS
+======================================*/
 .product-section h2.title{
   font-family: 'Poppins', sans-serif;
   font-size: 24px;
@@ -547,144 +667,13 @@ body{
     row-gap: 30px;
 }
 
-.product-section .all-products .single-pdct{
-  backdrop-filter: blur(23px) saturate(169%);
-  -webkit-backdrop-filter: blur(23px) saturate(169%);
-  background-color: rgba(255, 255, 255, 0.1);
-  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
-}
 
-.product-section .all-products .single-pdct .pdct-info {
-    background: unset;
-}
+
 
 .product-section .all-products .single-pdct .pdct-img img {
     border-bottom: unset;
 }
 
-.product-section .all-products .single-pdct-wrapper .pdct-info{
-    position: relative;
-}
-
-.product-section .all-products .single-pdct-wrapper .pdct-info h3{
-  font-family: "Rubik", sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 500;
-  color: var(--text-color-black);
-}
-
-/* .product-section .all-products .pdct-info p a{
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
-  line-height: 22px;
-  color: var(--text-color-black);
-} */
-
-.product-section .all-products .single-pdct-wrapper .pdct-info .generic-name,
-.product-section .all-products .single-pdct-wrapper .pdct-info .company-name{
-    font-family: "Rubik", sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 18px;
-    color: var(--text-color-gray);
-    display: block;
-    padding: 0px;
-    margin: 0px;
-}
-
-.product-section .all-products .single-pdct-wrapper .pdct-info h4{
-    font-family: "Rubik", sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 20px;
-    color: var(--text-color-gray);
-    display: block;
-    padding: 0px;
-    margin: .5rem 0rem;
-}
-
-.product-section .all-products .single-pdct-wrapper .add_to_card{
-    position: absolute;
-    bottom: 11%;
-    right: 2%;
-    background: unset;
-    padding: unset;
-    display: none;
-}
-
-.product-section .all-products .single-pdct-wrapper:hover .add_to_card{
-    display: block;
-}
-
-.product-section .all-products .add_to_card .cart-btn {
-  border: 2px solid var(--secundary-color);
-  border-radius: 10px;
-  padding: .5rem .7rem;
-  text-decoration: none;
-  font-family: "Rubik", sans-serif;
-  font-size: 25px;
-  line-height: 20px;
-  font-weight: 400;
-  color: var(--secundary-color);
-  width: 25%;
-  transition: 0.4s;
-  display: unset;
-}
-
-.product-section .all-products .add_to_card .cart-btn:hover{
-  color: var(--text-color-white);
-}
-
-.add_to_card .cart-btn {
-    border: 2px solid var(--secundary-color);
-    border-radius: 10px;
-    padding: 8px 15px;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    line-height: 21px;
-    font-weight: 400;
-    color: var(--secundary-color);
-    width: 100%;
-    display: inline-block;
-    display: flex;
-    justify-content: center;
-    column-gap: 10px;
-    transition: 0.4s;
-  }
-
-.add_to_card .cart-btn:hover{
-  color: var(--text-color-white);
-  border-color: var(--text-color-black);
-  background-color: var(--text-color-black);
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
-}
-
-.order_button .order-btn {
-  border: 2px solid var(--secundary-color);
-  border-radius: 10px;
-  padding: 8px 15px;
-  text-decoration: none;
-  font-family: 'Poppins', sans-serif;
-  font-size: 15px;
-  line-height: 21px;
-  font-weight: 400;
-  color: var(--secundary-color);
-  width: 100%;
-  display: inline-block;
-  display: flex;
-  justify-content: center;
-  column-gap: 10px;
-  transition: 0.4s;
-}
-
-.order_button .order-btn:hover{
-  color: var(--text-color-white);
-  border-color: var(--text-color-black);
-  background-color: var(--text-color-black);
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
-}
 
 .product-section .show-more .all-pdct-btn{
   width: 140px;
@@ -708,7 +697,11 @@ body{
   background: transparent;
 }
 
-/*============ Home Delivery Section ================*/
+
+
+/*====================================
+      Start Home Delivery Section CSS
+======================================*/
 .delivery-slider-section .uk-slideshow{
   position: relative;
 }
@@ -796,7 +789,13 @@ body{
   background: var(--text-color-white);
 }
 
-/*=============== Single Product section style Start =================**/
+
+
+
+/*====================================
+    Single Product section style Start
+======================================*/
+
 .breadcrumb_wrap {
   position: relative;
 }
@@ -818,13 +817,11 @@ body{
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li.active a {
-  /* background: var(--primary-bg);                   fallback color */
   background: var(--primary-bg);
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li.completed a {
   background: var(--primary-bg);
-  /* fallback color */
   background: var(--secundary-color);
 }
 
@@ -852,7 +849,6 @@ body{
   width: 0;
   height: 0;
   border-top: 50px solid transparent;
-  /* Go big on the size, and let overflow hide */
   border-bottom: 50px solid transparent;
   border-left: 30px solid var(--nav-primary-bg);
   position: absolute;
@@ -868,7 +864,6 @@ body{
   width: 0;
   height: 0;
   border-top: 50px solid transparent;
-  /* Go big on the size, and let overflow hide */
   border-bottom: 50px solid transparent;
   border-left: 30px solid var(--text-color-white);
   position: absolute;
@@ -958,8 +953,12 @@ body{
   box-shadow: none;
 }
 
-/* Product Details CSS  */
 
+
+
+/*====================================
+    Product Details CSS Start
+======================================*/
 .single_product_section .single_product .product_details .tab-pane {
   padding: 15px;
 }
@@ -1009,7 +1008,10 @@ body{
   color: var(--secundary-color) !important;
 }
 
-/* resembling Product CSS  */
+
+/*====================================
+    resembling Product CSS Start
+======================================*/
 .single_product_section .similar_products .single-item .content {
   display: flex;
   flex-direction: column;
@@ -1070,7 +1072,12 @@ body{
           transparent)
 }
 
-/* Review CSS */
+
+
+
+/*====================================
+    resembling Review CSS Start
+======================================*/
 .single_product_section .product_details .what-say {
   background: #F5F5F5 !important;
   padding-top: 100px !important;
@@ -1168,8 +1175,12 @@ body{
   background: var(--secundary-color);
 }
 
-/*=============== Single Product section style End =================**/
-/*=============== Footer section style =================**/
+
+
+/*====================================
+  Footer section style Start
+======================================*/
+
 .footer-section .container {
   max-width: 90%;
 }
@@ -1409,7 +1420,11 @@ body{
   color: var(--text-color-white);
 }
 
-/*============ Keyframe Animation ===============*/
+
+
+/*====================================
+    FKeyframe Animation
+======================================*/
 @keyframes fadeInup {
   from {
     opacity: 0;
@@ -1469,3 +1484,7 @@ body{
     transform: scale(1);
   }
 }
+
+/*====================================
+    FKeyframe Animation
+======================================*/

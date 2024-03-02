@@ -39,9 +39,9 @@ class HomePageController extends BaseController
                 return $data;
         });
         $data['products'] = $datas->shuffle()->take(8)->map(function($product){
-            $product->name = str_limit($product->name. '('.$product->pro_sub_cat->name.')', 25, '..');
-            $product->generic->name = str_limit($product->generic->name, 25, '..');
-            $product->company->name = str_limit($product->company->name, 25, '..');
+            $product->name = str_limit($product->name, 30, '..').'('.$product->pro_sub_cat->name.')';
+            $product->generic->name = str_limit($product->generic->name, 30, '..');
+            $product->company->name = str_limit($product->company->name, 30, '..');
             return $product;
         });
         return response()->json($data);

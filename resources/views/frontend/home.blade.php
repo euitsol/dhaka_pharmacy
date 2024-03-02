@@ -112,17 +112,17 @@ btn-arrow">
                                                         href="">{{ str_limit($product->pro_sub_cat->name, 25, '..') }}</a>
                                                 </p> --}}
                                                 <a href="generic-name" class="generic-name">
-                                                    {{ str_limit($product->generic->name, 25, '..') }}
+                                                    {{ str_limit($product->generic->name, 30, '..') }}
                                                 </a>
                                                 <a href="" class="company-name">
-                                                    {{ str_limit($product->company->name, 25, '..') }}
+                                                    {{ str_limit($product->company->name, 30, '..') }}
                                                 </a>
 
                                                 <a href="{{ route('product.single_product', $product->slug) }}">
                                                     <h3 class="fw-bold">
-                                                        {{ str_limit(Str::ucfirst(Str::lower($product->name)), 25, '..') }}
+                                                        {{ str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..') }}
                                                         <span class="strength">
-                                                            ({{ optional($product->strength)->quantity . ' ' . optional($product->strength)->unit }})
+                                                            ({{ $product->pro_sub_cat->name }})
                                                         </span>
                                                     </h3>
                                                 </a>
@@ -220,27 +220,36 @@ btn-arrow">
                             result += `
                                 <div class="col-3 px-2">
                                     <div class="single-pdct">
-                                        <a href="${_route}">
-                                            <div class="pdct-img">
-                                                <img class="w-100" src="${image}"
-                                                    alt="${product.name}">
-                                            </div>
-                                        </a>
+                                            <a href="${_route}">
+                                                <div class="pdct-img">
+                                                    <img class="w-100"
+                                                        src="${image}"
+                                                        alt="Product Image">
+                                                </div>
+                                            </a>
                                             <div class="pdct-info">
-                                                <a href="${_route}">
-                                                    <h3 class="fw-bold">${product.name}</h3>
+                                                <a href="generic-name" class="generic-name">
+                                                    ${product.generic.name}
                                                 </a>
-                                                <p><a href="">${product.generic.name}</a></p>
-                                                <p><a href="">${product.company.name}</a></p>
-                                                <h4><span>&#2547;</span>${product.price}</h4>
+                                                <a href="" class="company-name">
+                                                    ${product.company.name}
+                                                </a>
+
+                                                <a href="${_route}">
+                                                    <h3 class="fw-bold">
+                                                        ${product.name}
+                                                        
+                                                    </h3>
+                                                </a>
+                                                <h4> <span> &#2547; </span> ${product.price}</h4>
+                                                <div class="add_to_card">
+                                                    <a class="cart-btn" href="#">
+                                                        <i class="fa-solid fa-cart-plus"></i>
+                                                    </a>
+                                                </div>
                                             </div>
 
-                                        <div class="add_to_card">
-                                            <a class="cart-btn" href="#"><img
-                                                    src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                    alt="">{{ __('Add to Cart') }}</a>
                                         </div>
-                                    </div>
                                 </div>
                             `;
                         });
