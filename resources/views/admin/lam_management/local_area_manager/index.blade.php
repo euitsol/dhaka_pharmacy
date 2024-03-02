@@ -102,8 +102,8 @@
                     dataType: 'json',
                     success: function(data) {
                         let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
-                            'badge-warning';
+                        let statusClass = data.status = 1 ? 'badge-success' : 'badge-warning';
+                        let lam_area = data.operation_sub_area ? data.operation_sub_area.name : '-';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -135,7 +135,7 @@
                                     <tr>
                                         <th class="text-nowrap">Local Area Manager Area</th>
                                         <th>:</th>
-                                        <td>${data.operation_sub_area.name}</td>
+                                        <td>${lam_area}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

@@ -34,6 +34,7 @@ class LocalAreaManagerRequest extends FormRequest
             'parent_phone'=>'nullable|numeric|digits:11',
 
             'osa_id'=>'nullable|exists:operation_sub_areas,id',
+            'dm_id'=>'required|exists:district_managers,id',
         ]
         +
         ($this->isMethod('POST') ? $this->store() : $this->update());
