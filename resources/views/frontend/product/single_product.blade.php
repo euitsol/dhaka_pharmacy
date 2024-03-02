@@ -424,9 +424,10 @@
                                         <div id="related-product-slider" class="owl-carousel">
                                             @foreach ($similar_products as $product)
                                                     <div class="px-2 py-1">
+                                                        
+
                                                         <div class="single-pdct">
-                                                            <a
-                                                                href="{{ route('product.single_product', $product->slug) }}">
+                                                            <a href="{{ route('product.single_product', $product->slug) }}">
                                                                 <div class="pdct-img">
                                                                     <img class="w-100"
                                                                         src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
@@ -434,31 +435,32 @@
                                                                 </div>
                                                             </a>
                                                             <div class="pdct-info">
-                                                                <a
-                                                                    href="{{ route('product.single_product', $product->slug) }}">
-                                                                    {{-- <h3 class="fw-bold">{{ $product->name }} <small>({{$product->pro_sub_cat->name}})</small>
-                                                                    </h3> --}}
-                                                                    <h3 class="fw-bold">{{str_limit(Str::ucfirst(Str::lower($product->name)), 25 , '..')}} 
-                                                                        {{-- <small>({{$product->pro_sub_cat->name}})</small> --}}
+                                                                {{-- <p><a
+                                                                        href="">{{ str_limit($product->pro_sub_cat->name, 25, '..') }}</a>
+                                                                </p> --}}
+                                                                <a href="#" class="generic-name">
+                                                                    {{ str_limit($product->generic->name, 25, '..') }}
+                                                                </a>
+                                                                <a href="#" class="company-name">
+                                                                    {{ str_limit($product->company->name, 25, '..') }}
+                                                                </a>
+                
+                                                                <a href="{{ route('product.single_product', $product->slug) }}">
+                                                                    <h3 class="fw-bold">
+                                                                        {{ str_limit(Str::ucfirst(Str::lower($product->name)), 25, '..') }}
+                                                                        {{-- <span class="strength">
+                                                                            ({{ optional($product->strength)->quantity . ' ' . optional($product->strength)->unit }})
+                                                                        </span> --}}
                                                                     </h3>
                                                                 </a>
-                                                                <p><a
-                                                                        href="">{{ str_limit($product->pro_sub_cat->name, 25) }}</a>
-                                                                </p>
-                                                                <p><a
-                                                                        href="">{{ str_limit($product->generic->name, 25) }}</a>
-                                                                </p>
-                                                                <p><a
-                                                                        href="">{{ str_limit($product->company->name, 25) }}</a>
-                                                                </p>
-                                                                <h4><span>&#2547;</span>{{ $product->price }}</h4>
+                                                                <h4> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
+                                                                <div class="add_to_card">
+                                                                    <a class="cart-btn" href="#">
+                                                                        <i class="fa-solid fa-cart-plus"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-
-                                                            <div class="add_to_card">
-                                                                <a class="cart-btn" href="#"><img
-                                                                        src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                                        alt="">{{ __('Add to Cart') }}</a>
-                                                            </div>
+                
                                                         </div>
                                                     </div>
                                             @endforeach
