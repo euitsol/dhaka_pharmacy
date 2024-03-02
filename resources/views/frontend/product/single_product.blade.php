@@ -444,15 +444,16 @@
                                                                 <a href="#" class="company-name">
                                                                     {{ str_limit($product->company->name, 25, '..') }}
                                                                 </a>
-                
-                                                                <a href="{{ route('product.single_product', $product->slug) }}">
-                                                                    <h3 class="fw-bold">
-                                                                        {{ str_limit(Str::ucfirst(Str::lower($product->name)), 25, '..') }}
-                                                                        {{-- <span class="strength">
-                                                                            ({{ optional($product->strength)->quantity . ' ' . optional($product->strength)->unit }})
-                                                                        </span> --}}
-                                                                    </h3>
-                                                                </a>
+                                                                <div class="product_title">
+                                                                    <a href="{{ route('product.single_product', $product->slug) }}">
+                                                                        <h3 class="fw-bold">
+                                                                            {{ str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..') }}
+                                                                            <span class="strength">
+                                                                                ({{ $product->pro_sub_cat->name }})
+                                                                            </span>
+                                                                        </h3>
+                                                                    </a>
+                                                                </div>
                                                                 <h4> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
                                                                 <div class="add_to_card">
                                                                     <a class="cart-btn" href="#">
