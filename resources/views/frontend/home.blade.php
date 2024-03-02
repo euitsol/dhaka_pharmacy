@@ -118,14 +118,16 @@ btn-arrow">
                                                     {{ str_limit($product->company->name, 30, '..') }}
                                                 </a>
 
-                                                <a href="{{ route('product.single_product', $product->slug) }}">
-                                                    <h3 class="fw-bold">
-                                                        {{ str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..') }}
-                                                        <span class="strength">
-                                                            ({{ $product->pro_sub_cat->name }})
-                                                        </span>
-                                                    </h3>
-                                                </a>
+                                                <div class="product_title">
+                                                    <a href="{{ route('product.single_product', $product->slug) }}">
+                                                        <h3 class="fw-bold">
+                                                            {{ str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..') }}
+                                                            <span class="strength">
+                                                                ({{ $product->pro_sub_cat->name }})
+                                                            </span>
+                                                        </h3>
+                                                    </a>
+                                                </div>
                                                 <h4> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
                                                 <div class="add_to_card">
                                                     <a class="cart-btn" href="#">
@@ -235,12 +237,14 @@ btn-arrow">
                                                     ${product.company.name}
                                                 </a>
 
-                                                <a href="${_route}">
+                                                <div class="product_title">
+                                                    <a href="${_route}">
                                                     <h3 class="fw-bold">
                                                         ${product.name}
                                                         
                                                     </h3>
                                                 </a>
+                                                </div>
                                                 <h4> <span> &#2547; </span> ${product.price}</h4>
                                                 <div class="add_to_card">
                                                     <a class="cart-btn" href="#">

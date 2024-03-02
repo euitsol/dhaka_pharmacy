@@ -139,7 +139,11 @@ h2.title {
     padding: 0px;
     margin: .5rem 0rem;
 }
-
+.single-pdct .pdct-info .product_title {
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+}
 
 .single-pdct .pdct-info h3 {
     font-family: "Rubik", sans-serif;
