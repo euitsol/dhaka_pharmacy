@@ -28,7 +28,7 @@ class LamManagementController extends Controller
     }
     public function details($id): JsonResponse
     {
-        $data = LocalAreaManager::with(['dm','creater','updater'])->findOrFail($id);
+        $data = LocalAreaManager::with(['dm.operation_area','operation_sub_area','creater','updater'])->findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->creater_id ? $data->creater->name : 'System';
@@ -54,6 +54,7 @@ class LamManagementController extends Controller
         $lam->name = $req->name;
         $lam->phone = $req->phone;
         $lam->dm_id = dm()->id;
+        $lam->osa_id = $req->osa_id;
         $lam->password = Hash::make($req->password);
         $lam->creater()->associate(dm());
         $lam->save();
@@ -73,6 +74,7 @@ class LamManagementController extends Controller
         $lam->name = $req->name;
         $lam->phone = $req->phone;
         $lam->dm_id = dm()->id;
+        $lam->osa_id = $req->osa_id;
         if ($req->password) {
             $lam->password = Hash::make($req->password);
         }
