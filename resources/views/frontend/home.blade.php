@@ -111,10 +111,10 @@ btn-arrow">
                                                 {{-- <p><a
                                                         href="">{{ str_limit($product->pro_sub_cat->name, 25, '..') }}</a>
                                                 </p> --}}
-                                                <a href="generic-name" class="generic-name">
+                                                <a href="#" class="generic-name">
                                                     {{ str_limit($product->generic->name, 30, '..') }}
                                                 </a>
-                                                <a href="" class="company-name">
+                                                <a href="#" class="company-name">
                                                     {{ str_limit($product->company->name, 30, '..') }}
                                                 </a>
 
@@ -228,10 +228,10 @@ btn-arrow">
                                                 </div>
                                             </a>
                                             <div class="pdct-info">
-                                                <a href="generic-name" class="generic-name">
+                                                <a href="#" class="generic-name">
                                                     ${product.generic.name}
                                                 </a>
-                                                <a href="" class="company-name">
+                                                <a href="#" class="company-name">
                                                     ${product.company.name}
                                                 </a>
 

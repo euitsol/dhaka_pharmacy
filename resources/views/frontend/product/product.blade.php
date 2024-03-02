@@ -1,65 +1,6 @@
 @extends('frontend.layouts.master')
 @section('title', 'Home')
-@push('css')
-    <style>
-        .product-section .sub_categories .cat-list{
-            left: -10px;
-        }
-        .product-section .sub_categories .uk-position-center-left-out {
-            right: 95.5%;
-        }
-        .product-section .sub_categories .uk-position-center-right-out {
-            left: 95.5%;
-        }
-        .product-section .sub_categories svg {
-            background: var(--secondary-bg);
-            color: var(--text-color-white);
-            border: 1px solid var(--text-color-white);
-            height: 40px;
-            width: 40px;
-            border-radius: 50%;
-            padding: 3px;
-        }
-        .product-section .sub_categories .sub_cat_item{
-            padding: 0 10px;
-            overflow: hidden;
-            transition: .4s;
-        }
-        
-        .product-section .sub_categories .sub_cat_link {
-            display: inline-block;
-        }
-        .product-section .sub_categories .sub_cat_link .sub_cat_img {
-            height: 100px;
-            width: 140px;
-            object-fit: contain;
-            transition: .4s;
-        }
-        .product-section .sub_categories .sub_cat_link .card-title {
-            transition: .4s;
-        }
-        .product-section .sub_categories .sub_cat_item:hover .card{
-            border-color: var(--asent-color);
-        }
-        .product-section .sub_categories .sub_cat_item:hover .card-title{
-            transform: scale(1.1);
-            font-weight: bold;
-            
-        }
-        .product-section .sub_categories .sub_cat_item .card.active{
-            border-color: var(--asent-color);
-        }
-        .product-section .sub_categories .sub_cat_item .card.active .card-title{
-            transform: scale(1.1);
-            font-weight: bold;
-            
-        }
-        .product-section .sub_categories .card{
-            transition: .4s;
-        }
-        
-    </style>
-@endpush
+
 @section('content')
     <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
