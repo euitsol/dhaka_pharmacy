@@ -16,6 +16,7 @@ class BaseController extends Controller
 {
     public function __construct() {
         $data['categories'] = ProductCategory::where('status',1)->where('deleted_at', null)->orderBy('name')->get();
+        $data['menuItems'] = $data['categories']->where('is_menu',1);
         view()->share($data);
     }
 

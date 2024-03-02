@@ -39,7 +39,7 @@ class SingleProductController extends BaseController
         // $data['bsItems'] = $products->where('is_best_selling', 1)->get()->shuffle()->take(8);
 
         $data['categories'] = ProductCategory::where('status',1)->where('deleted_at',NULL)->orderBy('name')->get();
-        $data['menuItems'] = $data['categories']->where('is_menu',1);
+        // $data['menuItems'] = $data['categories']->where('is_menu',1);
         // $data['featuredItems'] = $data['categories']->where('is_featured',1);
 
 

@@ -48,6 +48,7 @@ use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerification
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
 use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
 use App\Http\Controllers\DM\LAM_management\LamAreaController;
+use App\Http\Controllers\Frontend\Product\ProductPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -533,6 +534,6 @@ Route::get('/', [HomePageController::class, 'home'])->name('home');
 Route::get('/product-search/{search_value}/{category}', [HomePageController::class, 'productSearch'])->name('home.product.search');
 Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeaturedProducts'])->name('home.featured_products');
 
-Route::controller(SingleProductController::class, 'product')->prefix('product')->name('product.')->group(function () {
-    Route::get('single-product/{slug}', 'singleProduct')->name('single_product');
-});
+Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
+
+Route::get('/category/{cat_slug}/{sub_cat_slug?}', [ProductPageController::class, 'products'])->name('category.products');
