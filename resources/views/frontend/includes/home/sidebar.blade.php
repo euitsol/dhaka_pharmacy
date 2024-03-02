@@ -4,7 +4,7 @@
         <h2 class="text-center cat-title">{{__('Categories')}}</h2>
         <div class="row mt-4 px-4">
             @foreach ($menuItems as $item)
-                <a href="#" class="col-6 text-center single-cat text-decoration-none">
+                <a href="{{route('category.products',$item->slug)}}" class="col-6 text-center single-cat text-decoration-none">
                     <div class="icon m-auto">
                         <img class="w-100" src="{{storage_url($item->image) }}"
                             alt="category icon">

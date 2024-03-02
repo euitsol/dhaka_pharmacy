@@ -49,10 +49,10 @@
                                         <ul class="breadcrumb wizard">
                                             <li class="completed"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
                                             <li class="completed"><a
-                                                    href="javascript:void(0);">{{ __($single_product->pro_cat->name) }}</a>
+                                                    href="{{route('category.products',$single_product->pro_cat->slug)}}">{{ __($single_product->pro_cat->name) }}</a>
                                             </li>
                                             <li><a
-                                                    href="javascript:void(0);">{{ __($single_product->pro_sub_cat->name) }}</a>
+                                                    href="{{route('category.products',[$single_product->pro_cat->slug,$single_product->pro_sub_cat->slug])}}">{{ __($single_product->pro_sub_cat->name) }}</a>
                                             </li>
                                         </ul>
                                         <div class="favorite">

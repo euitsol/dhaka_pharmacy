@@ -14,4 +14,8 @@ class ProductCategory extends BaseModel
     {
         return $this->hasMany(ProductSubCategory::class, 'pro_cat_id')->orderBy('name');
     }
+    public function medicines()
+    {
+        return $this->hasMany(Medicine::class, 'pro_cat_id')->orderBy('name');
+    }
 }
