@@ -38,7 +38,7 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $medicine_unit->name }} </td>
-                                    <td> <img height="60px" width="60px" style="object-fit: cover" src="{{$medicine_unit->image ? storage_url($medicine_unit->image) : asset('no_img/no_img.png')}}" alt=""> </td>
+                                    <td> <img height="60px" width="60px" style="object-fit: cover" src="{{storage_url($medicine_unit->image)}}" alt=""> </td>
                                     <td> {{ $medicine_unit->quantity }} </td>
                                     <td> {{ $medicine_unit->type ? $medicine_unit->type : '-' }} </td>
                                     <td>

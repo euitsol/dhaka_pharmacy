@@ -30,7 +30,7 @@
                                                 <div class="col-4 img">
                                                     <a href="{{ route('product.single_product', $item->slug) }}"></a>
                                                     <img height="90" class="w-100 border border-1 rounded-1"
-                                                        src="{{ $item->image ? storage_url($item->image) : asset('no_img/no_img.png') }}"
+                                                        src="{{ storage_url($item->image)}}"
                                                         alt="{{ $item->name }}">
                                                     </a>
                                                 </div>
@@ -103,7 +103,7 @@ btn-arrow">
                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                 <div class="pdct-img">
                                                     <img class="w-100"
-                                                        src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
+                                                        src="{{ storage_url($product->image)}}"
                                                         alt="Product Image">
                                                 </div>
                                             </a>
@@ -214,8 +214,6 @@ btn-arrow">
                     success: function(data) {
                         var result = '';
                         data.products.forEach(function(product) {
-                            var noImage = "{{ asset('no_img/no_img.png') }}";
-                            var image = product.image ? product.image : noImage;
                             let route = (
                                 "{{ route('product.single_product', ['slug']) }}");
                             let _route = route.replace('slug', product.slug);
@@ -225,7 +223,7 @@ btn-arrow">
                                             <a href="${_route}">
                                                 <div class="pdct-img">
                                                     <img class="w-100"
-                                                        src="${image}"
+                                                        src="${product.image}"
                                                         alt="Product Image">
                                                 </div>
                                             </a>

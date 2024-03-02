@@ -43,7 +43,7 @@ class BaseController extends Controller
                 ->orWhere('name', 'like', '%' . $search_value . '%');
         })
         ->get()->map(function ($product) {
-            $product->image =($product->image ? storage_url($product->image) : asset('no_img/no_img.png'));
+            $product->image = storage_url($product->image);
             $product->name =(Str::ucfirst(Str::lower($product->name)));
             $product->generic->name =(Str::ucfirst(Str::lower($product->generic->name)));
             $product->company->name =(Str::ucfirst(Str::lower($product->company->name)));

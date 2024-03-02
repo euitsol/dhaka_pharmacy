@@ -29,7 +29,7 @@ class ProductSubCategoryController extends Controller
     public function details($id): JsonResponse
     {
         $data = ProductSubCategory::with('pro_cat')->findOrFail($id);
-        $data->image = $data->image ? storage_url($data->image) : asset('no_img/no_img.png');
+        $data->image = storage_url($data->image);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
         $data->created_by = $data->created_by ? $data->created_user->name : 'System';
