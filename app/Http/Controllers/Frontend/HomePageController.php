@@ -8,11 +8,13 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 
 class HomePageController extends BaseController
 {
-    public function home(){
+    public function home():View
+    {
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])
                             ->where('status',1)
                             ->where('deleted_at',NULL);
@@ -26,7 +28,8 @@ class HomePageController extends BaseController
         return view('frontend.home',$data);
     }
 
-    public function updateFeaturedProducts($id){
+    public function updateFeaturedProducts($id):JsonResponse
+    {
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])
                             ->where('status',1)
                             ->where('deleted_at',NULL);
@@ -39,7 +42,7 @@ class HomePageController extends BaseController
                 return $data;
         });
         $data['products'] = $datas->shuffle()->take(8)->map(function($product){
-            $product->name = str_limit($product->name, 30, '..').'('.$product->pro_sub_cat->name.')';
+            $product->name = str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..').'('.$product->pro_sub_cat->name.')';
             $product->generic->name = str_limit($product->generic->name, 30, '..');
             $product->company->name = str_limit($product->company->name, 30, '..');
             return $product;
