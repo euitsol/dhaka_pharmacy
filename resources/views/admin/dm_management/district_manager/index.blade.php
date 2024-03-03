@@ -125,7 +125,7 @@
                                     <tr>
                                         <th class="text-nowrap">Operation Area</th>
                                         <th>:</th>
-                                        <td>${data.operation_area.name ?? 'N/A'}</td>
+                                        <td>${data.operation_area ? data.operation_area.name : 'Area not allocated'}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Active Local Area Manager</th>
