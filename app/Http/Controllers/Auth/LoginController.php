@@ -188,19 +188,10 @@ class LoginController extends BaseController
 
     public function logout()
     {
-        if (Auth::guard('admin')->check()) {
-            Auth::guard('admin')->logout();
-            return redirect()->route('admin.login');
-        } elseif (Auth::guard('pharmacy')->check()) {
+        if (Auth::guard('pharmacy')->check()) {
             Auth::guard('pharmacy')->logout();
             return redirect()->route('pharmacy.login');
-        } elseif (Auth::guard('dm')->check()) {
-            Auth::guard('dm')->logout();
-            return redirect()->route('district_manager.login');
-        } elseif (Auth::guard('lam')->check()) {
-            Auth::guard('lam')->logout();
-            return redirect()->route('local_area_manager.login');
-        } elseif (Auth::check()) {
+        }elseif (Auth::check()) {
             Auth::logout();
             return redirect()->route('login');
         }

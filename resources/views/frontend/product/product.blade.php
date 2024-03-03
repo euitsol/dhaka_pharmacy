@@ -29,7 +29,7 @@
                                                     <ul class="uk-slider-items cat-list">
                                                         @foreach ($sub_categories as $key=>$sub_cat)
                                                             <li class="sub_cat_item {{($key == 0) ? 'uk-slide-active active' : ''}}">
-                                                                <a href="{{route('category.products',[$category->slug,$sub_cat->slug])}}" class="sub_cat_link" data-id="{{$sub_cat->id}}">
+                                                                <a href="javascript:void(0)" class="sub_cat_link" data-cat_slug="{{$category->slug}}" data-sub_cat_slug="{{$sub_cat->slug}}">
                                                                     <div class="card {{ (isset($sub_category) && ($sub_category->id == $sub_cat->id)) ? ' active' : ''}}">
                                                                         <img class="sub_cat_img" src="{{storage_url($sub_cat->image)}}" alt="{{$sub_cat->name}}">
                                                                         <div class="card-title">
@@ -123,16 +123,17 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('.featured_item').on('click', function() {
-                $('.cat-list li').removeClass('active');
-                $('.cat-list li').removeClass('uk-slide-active');
-                $(this).parent('li').addClass('active');
-                let id = $(this).data('id');
-                let url = ("{{ route('home.featured_products', ['id']) }}");
-                let _url = url.replace('id', id);
+            $('.sub_cat_link').on('click', function() {
+                $('.sub_cat_link .card').removeClass('active');
+                $(this).find('.card').addClass('active');
+                let cat_slug = $(this).data('cat_slug');
+                let sub_cat_slug = $(this).data('sub_cat_slug');
+                let url = ("{{ route('sub_category.products', ['cat_slug','sub_cat_slug']) }}");
+                let _url = url.replace('cat_slug', cat_slug);
+                let __url = _url.replace('sub_cat_slug', sub_cat_slug);
 
                 $.ajax({
-                    url: _url,
+                    url: __url,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -142,8 +143,8 @@
                                 "{{ route('product.single_product', ['slug']) }}");
                             let _route = route.replace('slug', product.slug);
                             result += `
-                                <div class="col-3 px-2">
-                                    <div class="single-pdct">
+                            <div class="col-2 px-2 single-pdct-wrapper">
+                                        <div class="single-pdct">
                                             <a href="${_route}">
                                                 <div class="pdct-img">
                                                     <img class="w-100"
@@ -152,20 +153,22 @@
                                                 </div>
                                             </a>
                                             <div class="pdct-info">
-                                                <a href="generic-name" class="generic-name">
+                                                <a href="#" class="generic-name">
                                                     ${product.generic.name}
                                                 </a>
-                                                <a href="" class="company-name">
+                                                <a href="#" class="company-name">
                                                     ${product.company.name}
                                                 </a>
 
                                                 <div class="product_title">
                                                     <a href="${_route}">
-                                                    <h3 class="fw-bold">
-                                                        ${product.name}
-                                                        
-                                                    </h3>
-                                                </a>
+                                                        <h3 class="fw-bold">
+                                                            ${product.name}
+                                                            <span class="strength">
+                                                                (${product.pro_sub_cat.name })
+                                                            </span>
+                                                        </h3>
+                                                    </a>
                                                 </div>
                                                 <h4> <span> &#2547; </span> ${product.price}</h4>
                                                 <div class="add_to_card">
@@ -176,11 +179,11 @@
                                             </div>
 
                                         </div>
-                                </div>
+                                    </div>
                             `;
                         });
                         $('.all-products').html(result);
-                        if (data.products.length >= 8) {
+                        if (data.products.length >= 18) {
                             $('.show-more').show();
                         } else {
                             $('.show-more').hide();
@@ -191,9 +194,6 @@
                     }
                 });
             });
-
-            var featured_pro_height = $('.all-products').height();
-            $('.best-selling-products').height(featured_pro_height + "px")
         });
     </script>
 @endpush

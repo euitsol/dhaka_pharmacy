@@ -26,6 +26,8 @@
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
                                 <th>{{ __('District Manager') }}</th>
+                                <th>{{ __('Operational Area') }}</th>
+                                <th>{{ __('Operational Sub Area') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -39,6 +41,15 @@
                                     <td> {{ $lam->name }} </td>
                                     <td> {{ $lam->phone }} </td>
                                     <td> {{ $lam->dm->name }} </td>
+                                    <td> {{ $lam->dm->operation_area->name }} </td>
+                                    <td> 
+                                        @if($lam->operation_sub_area)
+                                            {{ $lam->operation_sub_area->name }}
+                                        @else
+                                            <span class="badge badge-warning">{{ __('Area not allocated') }}</span>
+                                        @endif
+
+                                    </td>
                                     <td>
                                         <span class="{{ $lam->getStatusBadgeClass() }}">{{ $lam->getStatus() }}</span>
                                     </td>

@@ -23,8 +23,8 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Name') }}</th>
                                 <th>{{ __('Operation Area') }}</th>
+                                <th>{{ __('Operation Sub Area') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -35,8 +35,8 @@
                             @foreach ($op_sub_areas as $op_sub_area)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $op_sub_area->name }} </td>
                                     <td> {{ $op_sub_area->operation_area->name }} </td>
+                                    <td> {{ $op_sub_area->name }} </td>
                                     <td>
                                         <span class="{{$op_sub_area->getMultiStatusClass()}}">{{$op_sub_area->getMultiStatus()}}</span>
                                     </td>
