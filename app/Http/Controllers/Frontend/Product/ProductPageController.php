@@ -22,11 +22,24 @@ class ProductPageController extends BaseController
             $data['sub_category'] = ProductSubCategory::where('slug',$sub_cat_slug)->where('status',1)->where('deleted_at',null)->first();
             $data['products'] = $data['products']->where('pro_sub_cat_id',$data['sub_category']->id );
         }
-        // $data['products'] = $data['products']->shuffle()->take(18);
-        // $data['sub_categories'] = $data['category']->pro_sub_cats;
+        $data['products'] = $data['products']->shuffle()->take(18);
+        $data['sub_categories'] = $data['category']->pro_sub_cats;
         
-        $data['sub_categories'] = ProductSubCategory::all();
-        $data['products'] = Medicine::all()->shuffle()->take(18);
+        // $data['sub_categories'] = ProductSubCategory::all();
+        // $data['products'] = Medicine::all()->shuffle()->take(18);
         return view('frontend.product.product',$data);
+    }
+    public function sub_cat_products($cat_slug, $sub_cat_slug){
+        $category = ProductCategory::where('slug',$cat_slug)->where('status',1)->where('deleted_at',null)->first();
+        $sub_category = ProductSubCategory::where('slug',$sub_cat_slug)->where('status',1)->where('deleted_at',null)->first();
+
+        $data['products'] = Medicine::with(['company','generic','pro_cat','pro_sub_cat'])->where('pro_cat_id',$category->id)->where('pro_sub_cat_id',$sub_category->id)->where('status',1)->where('deleted_at',null)->get()->shuffle()->take(18)
+        ->map(function($product){
+            $product->image = storage_url($product->image);
+            return $product;
+        });
+        // $data['sub_categories'] = ProductSubCategory::all();
+        // $data['products'] = Medicine::all()->shuffle()->take(18);
+        return response()->json($data);
     }
 }

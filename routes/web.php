@@ -546,3 +546,4 @@ Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeatur
 Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
 
 Route::get('/category/{cat_slug}/{sub_cat_slug?}', [ProductPageController::class, 'products'])->name('category.products');
+Route::get('/sub-category/{cat_slug}/{sub_cat_slug?}', [ProductPageController::class, 'sub_cat_products'])->name('sub_category.products');
