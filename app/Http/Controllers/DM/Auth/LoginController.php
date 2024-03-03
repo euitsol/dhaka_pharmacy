@@ -45,4 +45,10 @@ class LoginController extends BaseController
         
         
     }
+
+    public function logout()
+    {
+        Auth::guard('dm')->logout();
+        return redirect()->route('district_manager.login');
+    }
 }

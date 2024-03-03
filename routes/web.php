@@ -47,8 +47,9 @@ use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
 use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
-use App\Http\Controllers\DM\LAM_management\LamAreaController;
+use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
+use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,18 +71,22 @@ Auth::routes();
 // Admin Login Routes
 Route::get('/admin/login', [AdminLoginController::class, 'adminLogin'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'adminLoginCheck'])->name('admin.login');
+Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 // Pharmacy Login Routes
 Route::get('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLogin'])->name('pharmacy.login');
 Route::post('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLoginCheck'])->name('pharmacy.login');
+Route::post('/pharmacy/logout', [PharmacyLoginController::class, 'logout'])->name('pharmacy.logout');
 
 
 // DM Login Routes
 Route::get('/district-manager/login', [DmLoginController::class, 'dmLogin'])->name('district_manager.login');
 Route::post('/district-manager/login', [DmLoginController::class, 'dmLoginCheck'])->name('district_manager.login');
+Route::post('/district-manager/logout', [DmLoginController::class, 'logout'])->name('district_manager.logout');
 // LAM Login Routes
 Route::get('/local-area-manager/login', [LamLoginController::class, 'lamLogin'])->name('local_area_manager.login');
 Route::post('/local-area-manager/login', [LamLoginController::class, 'lamLoginCheck'])->name('local_area_manager.login');
+Route::post('/local-area-manager/logout', [LamLoginController::class, 'logout'])->name('local_area_manager.logout');
 Route::post('local-area-manager/register', [LamLoginController::class, 'lamRegister'])->name('local_area_manager.register');
 Route::get('local-area-manager/reference/{id}', [LamLoginController::class, 'reference'])->name('local_area_manager.reference');
 
@@ -481,7 +486,7 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::get('status/{id}', 'status')->name('status.edit');
         Route::get('delete/{id}', 'delete')->name('delete');
     });
-    Route::controller(LamAreaController::class, 'local-area-manager-area')->prefix('local-area-manager-area')->name('lam_area.')->group(function () {
+    Route::controller(DmOparetionalAreaController::class, 'operational-area')->prefix('operational-area')->name('lam_area.')->group(function () {
         Route::get('index', 'index')->name('list');
         Route::get('details/{id}', 'details')->name('details.list');
         Route::get('create', 'create')->name('create');
@@ -508,6 +513,10 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
+    });
+
+    Route::controller(LamOperationalAreaController::class, 'operational-area')->prefix('operational-area')->name('operational_area.')->group(function () {
+        Route::get('index', 'index')->name('list');
     });
 
 

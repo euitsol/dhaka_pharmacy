@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('LAM Area List') }}</h4>
+                            <h4 class="card-title">{{ __('Operational Area List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -19,52 +19,60 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped datatable">
+                    <table class="table bordered datatable">
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Name') }}</th>
-                                <th>{{ __('DM Area') }}</th>
+                                <th>{{ __('Operational Area') }}</th>
+                                <th>{{ __('Operational Sub Area') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($lam_areas as $lam_area)
-                                <tr>
-                                    <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $lam_area->name }} </td>
-                                    <td> {{ $lam_area->operation_area->name }} </td>
-                                    <td>
-                                        <span
-                                            class="{{ $lam_area->getMultiStatusClass() }}">{{ $lam_area->getMultiStatus() }}</span>
-                                    </td>
-                                    <td>{{ timeFormate($lam_area->created_at) }}</td>
-
-                                    <td> {{ $lam_area->creater->name ?? 'system' }} </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)"
-                                                role="button" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                <a class="dropdown-item view" href="javascript:void(0)"
-                                                    data-id="{{ $lam_area->id }}">{{ __('View Details') }}</a>
-                                                @if($lam_area->status != 1)
-                                                    <a class="dropdown-item"
-                                                    href="{{ route('dm.lam_area.edit', $lam_area->slug) }}">{{ __('Update') }}</a>
-                                                @endif
-
+                            @foreach ($operational_areas as $key=>$area)
+                                @forelse ($area->operation_sub_areas as $sub_area)
+                                    <tr>
+                                        @if ($loop->first)
+                                            <td rowspan="{{ count($area->operation_sub_areas) }}">{{ ++$key }}</td>
+                                            <td rowspan="{{ count($area->operation_sub_areas) }}">{{ $area->name }}</td>
+                                        @endif
+                                        <td>{{$sub_area->name }}</td>
+                                        <td>
+                                                <span class="{{ $sub_area->getMultiStatusClass() }}">
+                                                    {{ $sub_area->status == 1 ? 'Operational' : ($sub_area->status == 0 ? 'Pending' : 'Not Operational') }}
+                                                </span>
+                                        </td>
+                                        <td>{{($sub_area->creater->name ?? 'system') }}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)" role="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                    <a class="dropdown-item view" href="javascript:void(0)"
+                                                        data-id="{{ $sub_area->id }}">{{ __('View Details') }}</a>
+                                                    @if ($sub_area->status != 1 && $sub_area->creater(lam()))
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('dm.lam_area.edit', $sub_area->slug) }}">{{ __('Update') }}</a>
+                                                    @endif
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td >{{ ++$key }}</td>
+                                        <td >{{ $area->name }}</td>
+                                        <td>{{'empty' }}</td>
+                                        <td>{{'empty' }}</td>
+                                        <td>{{'empty' }}</td>
+                                        <td>{{'empty' }}</td>
+                                    </tr>
+                                @endforelse
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
@@ -93,7 +101,7 @@
         </div>
     </div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+{{-- @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]]) --}}
 @push('js')
     <script>
         $(document).ready(function() {

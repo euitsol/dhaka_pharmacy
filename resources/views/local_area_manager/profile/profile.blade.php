@@ -104,13 +104,13 @@
                                         class="form-control" disabled>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('District Manager Area') }}</label>
+                                    <label>{{ __('Operational Area') }}</label>
                                     <input type="text" value="{{ lam()->dm->operation_area->name }}"
                                         class="form-control" disabled>
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('My Area') }}</label>
+                                    <label>{{ __('Operational Sub Area') }}</label>
                                     @if(empty(lam()->osa_id))
                                         <select name="osa_id" class="form-control">
                                             <option selected hidden>{{ __('Select Your Area') }}</option>

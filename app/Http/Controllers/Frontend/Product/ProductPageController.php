@@ -22,11 +22,11 @@ class ProductPageController extends BaseController
             $data['sub_category'] = ProductSubCategory::where('slug',$sub_cat_slug)->where('status',1)->where('deleted_at',null)->first();
             $data['products'] = $data['products']->where('pro_sub_cat_id',$data['sub_category']->id );
         }
-        $data['products'] = $data['products']->shuffle()->take(18);
-        $data['sub_categories'] = $data['category']->pro_sub_cats;
+        // $data['products'] = $data['products']->shuffle()->take(18);
+        // $data['sub_categories'] = $data['category']->pro_sub_cats;
         
-        // $data['sub_categories'] = ProductSubCategory::all();
-        // $data['products'] = Medicine::all()->shuffle()->take(18);
+        $data['sub_categories'] = ProductSubCategory::all();
+        $data['products'] = Medicine::all()->shuffle()->take(18);
         return view('frontend.product.product',$data);
     }
 }
