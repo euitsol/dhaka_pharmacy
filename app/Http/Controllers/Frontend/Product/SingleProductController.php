@@ -18,12 +18,8 @@ class SingleProductController extends BaseController
 
     public function singleProduct($slug): View
     {
-        
-        
-        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])
-                            ->where('status',1)
-                            ->where('deleted_at',NULL);
-        $data['single_product'] = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->where('slug',$slug)->where('status',1)->where('deleted_at',null)->first();
+        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activeted();
+        $data['single_product'] = $products->where('slug',$slug)->first();
         $units = array_map(function ($u) {
             return MedicineUnit::findOrFail($u);
         }, (array) json_decode($data['single_product']->unit, true));
@@ -35,14 +31,6 @@ class SingleProductController extends BaseController
         ->reject(function ($product) use ($data) {
             return $product->id == $data['single_product']->id;
         })->shuffle();
-        // $data['products'] = $products->get()->shuffle()->take(8);
-        // $data['bsItems'] = $products->where('is_best_selling', 1)->get()->shuffle()->take(8);
-
-        $data['categories'] = ProductCategory::where('status',1)->where('deleted_at',NULL)->orderBy('name')->get();
-        // $data['menuItems'] = $data['categories']->where('is_menu',1);
-        // $data['featuredItems'] = $data['categories']->where('is_featured',1);
-
-
         return view('frontend.product.single_product',$data);
     }
 }

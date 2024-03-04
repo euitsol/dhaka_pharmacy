@@ -31,7 +31,7 @@
                                                         <li
                                                             class="sub_cat_item {{ $key == 0 ? 'uk-slide-active active' : '' }}">
                                                             <a href="javascript:void(0)" class="sub_cat_link"
-                                                                data-cat_slug="{{ $category->slug }}"
+                                                                data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
                                                                 data-sub_cat_slug="{{ $sub_cat->slug }}">
                                                                 <div
                                                                     class="card {{ isset($sub_category) && $sub_category->id == $sub_cat->id ? ' active' : '' }}">
@@ -140,7 +140,7 @@
                             <div class="single-pdct">
                                 <a href="${_route}">
                                     <div class="pdct-img">
-                                        <img class="w-100" src="${product.image}" alt="Product Image">
+                                        <img class="w-100" src="${product.ajax_image}" alt="Product Image">
                                     </div>
                                 </a>
                                 <div class="pdct-info">
@@ -188,7 +188,7 @@
                 $('.more').attr('data-offset', 1);
                 $('.more').attr('data-sub_cat_slug', sub_cat_slug);
 
-                let url = `{{ route('sub_category.products', ['category' => 'cat_slug', 'sub-category' => 'sub_cat_slug']) }}`;
+                let url = `{{ route('category.products', ['category' => 'cat_slug', 'sub-category' => 'sub_cat_slug']) }}`;
                 let dynamicUrl = url.replace('cat_slug', cat_slug).replace('sub_cat_slug', sub_cat_slug);
                 dynamicUrl = dynamicUrl;
                 dynamicUrl = dynamicUrl.replace(/&amp;/g, '&');
@@ -209,7 +209,7 @@
                 let offset = parseInt($(this).attr('data-offset'));
                 let cat_slug = $(this).attr('data-cat_slug');
                 let sub_cat_slug = $(this).attr('data-sub_cat_slug');
-                let url = `{{ route('see_more.products', ['category' => 'cat_slug','offset'=>'_offset', 'sub-category' => 'sub_cat_slug']) }}`;
+                let url = `{{ route('category.products', ['category' => 'cat_slug','offset'=>'_offset', 'sub-category' => 'sub_cat_slug']) }}`;
                 let dynamicUrl = url.replace('cat_slug', cat_slug).replace('_offset', offset).replace('sub_cat_slug', sub_cat_slug);
                 dynamicUrl = dynamicUrl.replace(/&amp;/g, '&');
     

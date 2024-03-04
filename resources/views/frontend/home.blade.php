@@ -212,9 +212,8 @@ btn-arrow">
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let slug = data.product_cat ? data.product_cat : 'all';
-                        let all_product_route = ("{{ route('category.products', ['slug']) }}");
-                        let _all_product_route = all_product_route.replace('slug',slug );
+                        let slug = data.product_cat ? data.product_cat.slug : 'all';
+                        let all_product_route = ("{{ route('category.products', ['category'=>'slug']) }}");
                         $('.all-pdct-btn').attr('href',_all_product_route);
                         var result = '';
                         data.products.forEach(function(product) {

@@ -548,5 +548,5 @@ Route::get('/product-details/{slug}', [SingleProductController::class, 'singlePr
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
 
 
-Route::get('/products/filter', [ProductPageController::class, 'sub_cat_products'])->name('sub_category.products');
-Route::get('/products/see-more', [ProductPageController::class, 'see_more'])->name('see_more.products');
+// Route::get('/products/filter', [ProductPageController::class, 'sub_cat_products'])->name('sub_category.products');
+// Route::get('/products/see-more', [ProductPageController::class, 'see_more'])->name('see_more.products');
