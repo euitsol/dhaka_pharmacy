@@ -547,3 +547,4 @@ Route::get('/product-details/{slug}', [SingleProductController::class, 'singlePr
 
 Route::get('/category/{cat_slug}/{sub_cat_slug?}', [ProductPageController::class, 'products'])->name('category.products');
 Route::get('/sub-category/{cat_slug}/{sub_cat_slug?}', [ProductPageController::class, 'sub_cat_products'])->name('sub_category.products');
+Route::get('/see-more/{cat_slug}/{offset}/{sub_cat_slug?}', [ProductPageController::class, 'see_more'])->name('see_more.products');

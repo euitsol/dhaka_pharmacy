@@ -142,7 +142,7 @@ btn-arrow">
                             </div>
                             @if (count($products) >= 8)
                                 <div class="row show-more mt-5">
-                                    <a class="all-pdct-btn text-center" href="#">{{ __('All Products') }}</a>
+                                    <a class="all-pdct-btn text-center" href="{{route('category.products','all')}}">{{ __('All Products') }}</a>
                                 </div>
                             @endif
                         </div>
@@ -212,10 +212,13 @@ btn-arrow">
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
+                        let slug = data.product_cat ? data.product_cat : 'all';
+                        let all_product_route = ("{{ route('category.products', ['slug']) }}");
+                        let _all_product_route = all_product_route.replace('slug',slug );
+                        $('.all-pdct-btn').attr('href',_all_product_route);
                         var result = '';
                         data.products.forEach(function(product) {
-                            let route = (
-                                "{{ route('product.single_product', ['slug']) }}");
+                            let route = ("{{ route('product.single_product', ['slug']) }}");
                             let _route = route.replace('slug', product.slug);
                             result += `
                                 <div class="col-3 px-2">

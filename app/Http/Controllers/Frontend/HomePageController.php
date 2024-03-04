@@ -30,11 +30,13 @@ class HomePageController extends BaseController
 
     public function updateFeaturedProducts($id):JsonResponse
     {
+        
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])
                             ->where('status',1)
                             ->where('deleted_at',NULL);
         $datas = $products->latest()->get();
         if($id != 'all'){
+            $data['product_cat'] = ProductCategory::findOrFail($id);
             $datas = $products->where('pro_cat_id',$id)->latest()->get();
         }
         $datas = $datas->map(function($data){
