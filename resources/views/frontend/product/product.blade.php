@@ -19,7 +19,7 @@
                     <div class="col-12">
                         <div class="row cat-filter-row gx-4">
                             <div class="col-12">
-                                <h2 class="title">{{ __(isset($category) ? $category->name : 'All') }}</h2>
+                                <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
                             </div>
                             @if (isset($sub_categories) && $sub_categories->isNotEmpty())
                                 <div class="col-12">
@@ -114,7 +114,7 @@
                         @if (count($products) >= 1)
                             <div class="row show-more mt-5">
                                 <a class="all-pdct-btn text-center more" data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
-                                    data-sub_cat_slug="{{ isset($sub_category) ? $sub_category->slug : false }}" data-offset="1"
+                                    data-sub_cat_slug="{{ isset($sub_category) ? $sub_category->slug : '' }}" data-offset="1"
                                     href="javascript:void(0)">{{ __('SEE MORE') }}</a>
                             </div>
                         @endif
@@ -187,10 +187,14 @@
                 let sub_cat_slug = $(this).data('sub_cat_slug');
                 $('.more').attr('data-offset', 1);
                 $('.more').attr('data-sub_cat_slug', sub_cat_slug);
-                let url = `{{ route('sub_category.products', ['cat_slug', 'sub_cat_slug']) }}`;
+
+                let url = `{{ route('sub_category.products', ['category' => 'cat_slug', 'sub-category' => 'sub_cat_slug']) }}`;
                 let dynamicUrl = url.replace('cat_slug', cat_slug).replace('sub_cat_slug', sub_cat_slug);
+                dynamicUrl = dynamicUrl;
+                dynamicUrl = dynamicUrl.replace(/&amp;/g, '&');
     
                 fetchData(dynamicUrl, function(data) {
+                    window.history.pushState({path: data.url}, '', data.url);
                     
                     let result = renderProducts(data.products);
                     $('.all-products').html(result);
@@ -205,8 +209,9 @@
                 let offset = parseInt($(this).attr('data-offset'));
                 let cat_slug = $(this).attr('data-cat_slug');
                 let sub_cat_slug = $(this).attr('data-sub_cat_slug');
-                let url = `{{ route('see_more.products', ['cat_slug', 'offset', 'sub_cat_slug']) }}`;
-                let dynamicUrl = url.replace('cat_slug', cat_slug).replace('offset', offset).replace('sub_cat_slug', sub_cat_slug);
+                let url = `{{ route('see_more.products', ['category' => 'cat_slug','offset'=>'_offset', 'sub-category' => 'sub_cat_slug']) }}`;
+                let dynamicUrl = url.replace('cat_slug', cat_slug).replace('_offset', offset).replace('sub_cat_slug', sub_cat_slug);
+                dynamicUrl = dynamicUrl.replace(/&amp;/g, '&');
     
                 fetchData(dynamicUrl, function(data) {
                     $('.more').attr('data-offset', offset + limit);

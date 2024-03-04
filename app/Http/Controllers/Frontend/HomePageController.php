@@ -18,7 +18,12 @@ class HomePageController extends BaseController
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])
                             ->where('status',1)
                             ->where('deleted_at',NULL);
-        $data['products'] = $products->latest()->get()->shuffle()->take(8);
+        $data['products'] = $products->latest()->get()->shuffle()->take(8)->map(function($product){
+            $product->name = str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..').'('.$product->pro_sub_cat->name.')';
+            $product->generic->name = str_limit($product->generic->name, 30, '..');
+            $product->company->name = str_limit($product->company->name, 30, '..');
+            return $product;
+        });
         $data['bsItems'] = $products->where('is_best_selling', 1)->latest()->get()->shuffle()->take(8);
 
         $data['categories'] = ProductCategory::where('status',1)->where('deleted_at',NULL)->orderBy('name')->get();

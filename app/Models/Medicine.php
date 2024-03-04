@@ -69,4 +69,5 @@ class Medicine extends BaseModel
             return 'badge badge-info';
         }
     }
+
 }

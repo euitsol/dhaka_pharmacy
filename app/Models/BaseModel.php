@@ -173,5 +173,9 @@ class BaseModel extends Model
         }
     }
 
+    public function scopeActiveted($query){
+        return $query->where('status',1);
+    }
+
     
 }
