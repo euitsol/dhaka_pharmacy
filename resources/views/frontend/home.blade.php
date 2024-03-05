@@ -35,13 +35,13 @@
                                                     </a>
                                                 </div>
                                                 <div class="col-8">
-                                                    <h3 class="pdct-title"><a
-                                                            href="{{ route('product.single_product', $item->slug) }}">{{ str_limit(Str::ucfirst(Str::lower($item->name)), 25, '..') }}</a>
+                                                    <h3 class="pdct-title" title="{{$item->attr_title}}"><a
+                                                            href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
                                                     </h3>
-                                                    <p><a href="">{{ str_limit($item->pro_sub_cat->name, 25) }}</a>
+                                                    <p><a href="">{{ $item->pro_sub_cat->name }}</a>
                                                     </p>
-                                                    <p><a href="">{{ str_limit($item->generic->name, 25) }}</a></p>
-                                                    <p><a href="">{{ str_limit($item->company->name, 25) }}</a></p>
+                                                    <p><a href="">{{ $item->generic->name }}</a></p>
+                                                    <p><a href="">{{ $item->company->name }}</a></p>
                                                     <h4 class="pdct-price"><span>&#2547;</span>{{ $item->price }}</h4>
                                                 </div>
                                             </div>
@@ -108,23 +108,16 @@ btn-arrow">
                                                 </div>
                                             </a>
                                             <div class="pdct-info">
-                                                {{-- <p><a
-                                                        href="">{{ str_limit($product->pro_sub_cat->name, 25, '..') }}</a>
-                                                </p> --}}
                                                 <a href="#" class="generic-name">
-                                                    {{ str_limit($product->generic->name, 30, '..') }}
+                                                    {{ $product->generic->name }}
                                                 </a>
                                                 <a href="#" class="company-name">
-                                                    {{ str_limit($product->company->name, 30, '..') }}
+                                                    {{ $product->company->name }}
                                                 </a>
 
                                                 <div class="product_title">
                                                     <a href="{{ route('product.single_product', $product->slug) }}">
-                                                        <h3 class="fw-bold">
-                                                            {{ str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..') }}
-                                                            <span class="strength">
-                                                                ({{ $product->pro_sub_cat->name }})
-                                                            </span>
+                                                        <h3 class="fw-bold"  title="{{$product->attr_title}}">{{ $product->name}}
                                                         </h3>
                                                     </a>
                                                 </div>
@@ -214,6 +207,7 @@ btn-arrow">
                     success: function(data) {
                         let slug = data.product_cat ? data.product_cat.slug : 'all';
                         let all_product_route = ("{{ route('category.products', ['category'=>'slug']) }}");
+                        let _all_product_route = all_product_route.replace('slug', slug);
                         $('.all-pdct-btn').attr('href',_all_product_route);
                         var result = '';
                         data.products.forEach(function(product) {
@@ -241,7 +235,6 @@ btn-arrow">
                                                     <a href="${_route}">
                                                     <h3 class="fw-bold">
                                                         ${product.name}
-                                                        
                                                     </h3>
                                                 </a>
                                                 </div>

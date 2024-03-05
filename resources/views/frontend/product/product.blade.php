@@ -79,23 +79,17 @@
                                             </div>
                                         </a>
                                         <div class="pdct-info">
-                                            {{-- <p><a
-                                                        href="">{{ str_limit($product->pro_sub_cat->name, 25, '..') }}</a>
-                                                </p> --}}
                                             <a href="generic-name" class="generic-name">
-                                                {{ str_limit($product->generic->name, 30, '..') }}
+                                                {{ $product->generic->name }}
                                             </a>
                                             <a href="" class="company-name">
-                                                {{ str_limit($product->company->name, 30, '..') }}
+                                                {{ $product->company->name }}
                                             </a>
 
                                             <div class="product_title">
                                                 <a href="{{ route('product.single_product', $product->slug) }}">
-                                                    <h3 class="fw-bold">
-                                                        {{ str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..') }}
-                                                        <span class="strength">
-                                                            ({{ $product->pro_sub_cat->name }})
-                                                        </span>
+                                                    <h3 class="fw-bold" title="{{$product->attr_title}}">
+                                                        {{ $product->name }}
                                                     </h3>
                                                 </a>
                                             </div>
@@ -150,9 +144,6 @@
                                         <a href="${_route}">
                                             <h3 class="fw-bold">
                                                 ${product.name}
-                                                <span class="strength">
-                                                    (${product.pro_sub_cat.name})
-                                                </span>
                                             </h3>
                                         </a>
                                     </div>

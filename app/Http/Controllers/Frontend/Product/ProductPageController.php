@@ -39,7 +39,9 @@ class ProductPageController extends BaseController
 
         $data['products'] = $query->limit(1)->get()->shuffle()->map(function($product){
             $product->ajax_image = storage_url($product->image);
-            $product->name = str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..').'('.$product->pro_sub_cat->name.')';
+            $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
+            $product->attr_title = Str::ucfirst(Str::lower($product->name . $strength ));
+            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
             $product->generic->name = str_limit($product->generic->name, 30, '..');
             $product->company->name = str_limit($product->company->name, 30, '..');
             return $product;
@@ -56,45 +58,4 @@ class ProductPageController extends BaseController
         }
         
     }
-    // public function sub_cat_products(){
-    //     $currentUrl = URL::current();
-    //     $category_slug = request('category');
-    //     $sub_category_slug = request('sub-category');
-    //     $data['url'] = $currentUrl . "&sub-category=$sub_category_slug";
-         
-
-        
-    //     $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat'])->activeted();
-    //     $query->when($category_slug !== 'all', fn ($q) => $q->whereHas('pro_cat', fn ($qs) => $qs->where('slug', $category_slug)));
-    //     $query->whereHas('pro_sub_cat', fn ($qs) => $qs->where('slug', $sub_category_slug));
-    //     $data['products'] = $query->limit(1)->get()->shuffle()
-    //                         ->map(function($product){
-    //                             $product->image = storage_url($product->image);
-    //                             $product->name = str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..').'('.$product->pro_sub_cat->name.')';
-    //                             $product->generic->name = str_limit($product->generic->name, 30, '..');
-    //                             $product->company->name = str_limit($product->company->name, 30, '..');
-    //                             return $product;
-    //                         });
-    //     return response()->json($data);
-    // }
-    // public function see_more(){
-
-    //     $category_slug = request('category');
-    //     $sub_category_slug = request('sub-category');
-    //     $offset = request('offset');
-
-    //     $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat'])->activeted();
-    //     $query->when($category_slug !== 'all', fn ($q) => $q->whereHas('pro_cat', fn ($qs) => $qs->where('slug', $category_slug)));
-    //     $query->when(($sub_category_slug !== null), fn ($q) => $q->whereHas('pro_sub_cat', fn ($qs) => $qs->where('slug', $sub_category_slug)));
-    //     $data['products'] = $query->offset($offset)->limit(1)->get()->shuffle()
-    //                         ->map(function($product){
-    //                             $product->image = storage_url($product->image);
-    //                             $product->name = str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..').'('.$product->pro_sub_cat->name.')';
-    //                             $product->generic->name = str_limit($product->generic->name, 30, '..');
-    //                             $product->company->name = str_limit($product->company->name, 30, '..');
-    //                             return $product;
-    //                         });
-    //     return response()->json($data);
-    // }
-
 }

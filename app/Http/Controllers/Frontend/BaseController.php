@@ -45,7 +45,8 @@ class BaseController extends Controller
         })
         ->get()->map(function ($product) {
             $product->image = storage_url($product->image);
-            $product->name =(Str::ucfirst(Str::lower($product->name)));
+            $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
+            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )));
             $product->generic->name =(Str::ucfirst(Str::lower($product->generic->name)));
             $product->company->name =(Str::ucfirst(Str::lower($product->company->name)));
             $product->pro_sub_cat->name =(Str::ucfirst(Str::lower($product->pro_sub_cat->name)));

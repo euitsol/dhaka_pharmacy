@@ -380,18 +380,18 @@
                                                             </div>
                                                             <div class="col-8 content">
 
-                                                                <h3 class="pdct-title"><a
-                                                                        href="{{ route('product.single_product', $product->slug) }}">{{str_limit(Str::ucfirst(Str::lower($product->name)), 25 , '..')}}
+                                                                <h3 class="pdct-title" title="{{$product->attr_title}}"><a
+                                                                        href="{{ route('product.single_product', $product->slug) }}">{{$product->name}}
                                                                     </a></h3>
                                                                 <p><a
-                                                                        href="">{{ str_limit($product->pro_sub_cat->name, 25) }}</a>
+                                                                        href="">{{ $product->pro_sub_cat->name }}</a>
                                                                 </p>
 
                                                                 <p><a
-                                                                        href="">{{ str_limit($product->generic->name, 25) }}</a>
+                                                                        href="">{{ $product->generic->name }}</a>
                                                                 </p>
                                                                 <p><a
-                                                                        href="">{{ str_limit($product->company->name, 25) }}</a>
+                                                                        href="">{{ $product->company->name }}</a>
                                                                 </p>
                                                                 <h4 class="pdct-price">
                                                                     <span>&#2547;</span>{{ __(number_format($product->price, 2)) }}
@@ -435,22 +435,16 @@
                                                                 </div>
                                                             </a>
                                                             <div class="pdct-info">
-                                                                {{-- <p><a
-                                                                        href="">{{ str_limit($product->pro_sub_cat->name, 25, '..') }}</a>
-                                                                </p> --}}
                                                                 <a href="#" class="generic-name">
-                                                                    {{ str_limit($product->generic->name, 25, '..') }}
+                                                                    {{ $product->generic->name}}
                                                                 </a>
                                                                 <a href="#" class="company-name">
-                                                                    {{ str_limit($product->company->name, 25, '..') }}
+                                                                    {{ $product->company->name}}
                                                                 </a>
                                                                 <div class="product_title">
                                                                     <a href="{{ route('product.single_product', $product->slug) }}">
-                                                                        <h3 class="fw-bold">
-                                                                            {{ str_limit(Str::ucfirst(Str::lower($product->name)), 30, '..') }}
-                                                                            <span class="strength">
-                                                                                ({{ $product->pro_sub_cat->name }})
-                                                                            </span>
+                                                                        <h3 class="fw-bold" title="{{$product->attr_title}}">
+                                                                            {{ $product->name }}
                                                                         </h3>
                                                                     </a>
                                                                 </div>
