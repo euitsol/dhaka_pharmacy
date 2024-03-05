@@ -31,6 +31,12 @@
                     <p>{{ 'User Management' }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'operational_area') class="active" @endif>
+                <a href="{{ route('lam.operational_area.list') }}">
+                    <i class="fa-solid fa-minus @if ($pageSlug == 'operational_area') fa-beat-fade @endif"></i>
+                    <p>{{ 'Operational Areas' }}</p>
+                </a>
+            </li>
             {{--
             <li @if ($pageSlug == 'lam') class="active" @endif>
                 <a href="{{ route('dm.lam.list') }}">

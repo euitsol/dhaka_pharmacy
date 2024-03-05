@@ -33,11 +33,24 @@
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
                         <div class="form-group">
-                            <label>{{ __('District Manager') }}</label>
-                            <select name="dm_id" class="form-control {{ $errors->has('dm_id') ? ' is-invalid' : '' }}" disabled>
-                                <option value="{{ dm()->id }}" selected>{{ dm()->name }}</option>
-                            </select>
+                            <label>{{__('District Manager')}}</label>
+                            <input type="text" class="form-control {{ $errors->has('dm_id') ? ' is-invalid' : '' }}" value="{{ dm()->name }}" disabled>
+                            <input type="hidden" name="dm_id" class="form-control" value="{{ dm()->id }}">
                             @include('alerts.feedback', ['field' => 'dm_id'])
+                        </div>
+                        <div class="form-group">
+                            <label>{{__('District Manager Area')}}</label>
+                            <input type="text" class="form-control" value="{{dm()->operation_area->name}}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ __('Local Area Manager Area') }}</label>
+                            <select name="osa_id" class="form-control {{ $errors->has('osa_id') ? ' is-invalid' : '' }}">
+                                <option selected hidden value="">{{ __('Select Local Area Manager Area') }}</option>
+                                @foreach (dm()->operation_area->operation_sub_areas as $area)
+                                    <option value="{{$area->id}}" {{($area->id==old('osa_id'))? 'selected' : ''}}>{{ $area->name }}</option>
+                                @endforeach
+                            </select>
+                            @include('alerts.feedback', ['field' => 'osa_id'])
                         </div>
                         <div class="form-group">
                             <label>{{ __('Password') }}</label>

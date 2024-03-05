@@ -24,6 +24,7 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
+                                <th>{{ __('Image') }}</th>
                                 <th>{{ __('Quantity') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
@@ -37,15 +38,16 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $medicine_unit->name }} </td>
+                                    <td> <img height="60px" width="60px" style="object-fit: cover" src="{{storage_url($medicine_unit->image)}}" alt=""> </td>
                                     <td> {{ $medicine_unit->quantity }} </td>
                                     <td> {{ $medicine_unit->type ? $medicine_unit->type : '-' }} </td>
                                     <td>
                                         <span
                                             class="{{ $medicine_unit->getStatusBadgeClass() }}">{{ $medicine_unit->getStatus() }}</span>
                                     </td>
-                                    <td>{{ timeFormate($medicine_unit->created_at) }}</td>
+                                    <td>{{ $medicine_unit->created_date() }}</td>
 
-                                    <td> {{ $medicine_unit->created_user->name ?? 'system' }} </td>
+                                    <td> {{ $medicine_unit->created_user_name() }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

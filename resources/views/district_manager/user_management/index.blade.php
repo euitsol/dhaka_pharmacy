@@ -42,9 +42,9 @@
                                         <span
                                             class="badge {{ $user->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $user->status == 1 ? 'Active' : 'Disabled' }}</span>
                                     </td>
-                                    <td>{{ timeFormate($user->created_at) }}</td>
+                                    <td>{{ $user->created_date() }}</td>
 
-                                    <td> {{ $user->creater->name ?? 'system' }} </td>
+                                    <td> {{ $user->creater_name() }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [

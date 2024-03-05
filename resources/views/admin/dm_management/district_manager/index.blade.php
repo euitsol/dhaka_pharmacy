@@ -44,9 +44,9 @@
                                     <td>
                                         <span class="{{ $dm->getStatusBadgeClass() }}">{{ $dm->getStatus() }}</span>
                                     </td>
-                                    <td>{{ timeFormate($dm->created_at) }}</td>
+                                    <td>{{ $dm->created_date() }}</td>
 
-                                    <td> {{ $dn->creater->name ?? 'system' }} </td>
+                                    <td> {{ $dm->creater_name() }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
@@ -125,7 +125,7 @@
                                     <tr>
                                         <th class="text-nowrap">Operation Area</th>
                                         <th>:</th>
-                                        <td>${data.operation_area.name ?? 'N/A'}</td>
+                                        <td>${data.operation_area ? data.operation_area.name : 'Area not allocated'}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Active Local Area Manager</th>

@@ -77,7 +77,7 @@
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification Type') }}</label>
                                     <select name="identification_type" id="identification_type" class="form-control">
-                                        <option selected hidden>{{ __('Select Identification Type') }}</option>
+                                        <option selected hidden value="">{{ __('Select Identification Type') }}</option>
                                         <option value="NID" {{ lam()->identification_type == 'NID' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
                                         <option value="DOB" {{ lam()->identification_type == 'DOB' ? 'selected' : '' }}>
@@ -103,19 +103,32 @@
                                     <input type="text" value="{{ lam()->dm->name }}"
                                         class="form-control" disabled>
                                 </div>
+                                <div class="form-group col-md-4">
+                                    <label>{{ __('Operational Area') }}</label>
+                                    <input type="text" value="{{ lam()->dm->operation_area->name }}"
+                                        class="form-control" disabled>
+                                </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Area') }}</label>
-                                    <select name="area" class="form-control">
-                                        <option selected hidden>{{ __('Select Area') }}</option>
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'area'])
+                                    <label>{{ __('Operational Sub Area') }}</label>
+                                    @if(empty(lam()->osa_id))
+                                        <select name="osa_id" class="form-control">
+                                            <option selected hidden>{{ __('Select Your Area') }}</option>
+                                            @foreach (lam()->dm->operation_area->operation_sub_areas as $area)
+                                                <option value="{{$area->id}}">{{ $area->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @include('alerts.feedback', ['field' => 'osa_id'])
+                                    @else
+                                        <input type="text" value="{{ lam()->operation_sub_area->name }}"
+                                        class="form-control" disabled>
+                                    @endif
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
-                                        <option selected hidden>{{ __('Select Genger') }}</option>
+                                        <option selected hidden value="">{{ __('Select Genger') }}</option>
                                         <option value="Male" {{ lam()->gender == 'Male' ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
                                         <option value="Female" {{ lam()->gender == 'Female' ? 'selected' : '' }}>

@@ -29,11 +29,11 @@ class MedicineUnitController extends Controller
     public function details($id): JsonResponse
     {
         $data = MedicineUnit::findOrFail($id);
-        $data->image = $data->image ? storage_url($data->image) : asset('no_img/no_img.png');
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->created_by ? $data->created_user->name : 'System';
-        $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
+        $data->image = storage_url($data->image);
+        $data->creating_time = $data->created_date();
+        $data->updating_time = $data->updated_date();
+        $data->created_by = $data->created_user_name();
+        $data->updated_by = $data->updated_user_name();
         return response()->json($data);
     }
     public function create(): View

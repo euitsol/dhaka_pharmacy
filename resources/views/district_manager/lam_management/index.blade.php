@@ -26,6 +26,8 @@
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
                                 <th>{{ __('District Manager') }}</th>
+                                <th>{{ __('Operational Area') }}</th>
+                                <th>{{ __('Operational Sub Area') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -39,12 +41,21 @@
                                     <td> {{ $lam->name }} </td>
                                     <td> {{ $lam->phone }} </td>
                                     <td> {{ $lam->dm->name }} </td>
+                                    <td> {{ $lam->dm->operation_area->name }} </td>
+                                    <td> 
+                                        @if($lam->operation_sub_area)
+                                            {{ $lam->operation_sub_area->name }}
+                                        @else
+                                            <span class="badge badge-warning">{{ __('Area not allocated') }}</span>
+                                        @endif
+
+                                    </td>
                                     <td>
                                         <span class="{{ $lam->getStatusBadgeClass() }}">{{ $lam->getStatus() }}</span>
                                     </td>
-                                    <td>{{ timeFormate($lam->created_at) }}</td>
+                                    <td>{{ $lam->created_date() }}</td>
 
-                                    <td> {{ $lam->creater->name ?? 'system' }} </td>
+                                    <td> {{ $lam->creater_name() }} </td>
                                     <td>
                                         <div class="dropdown">
                                             <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -109,8 +120,8 @@
                     dataType: 'json',
                     success: function(data) {
                         let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
-                            'badge-warning';
+                        let statusClass = data.status = 1 ? 'badge-success' : 'badge-warning';
+                        let lam_area = data.operation_sub_area ? data.operation_sub_area.name : '-';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -132,6 +143,18 @@
                                         <th class="text-nowrap">District Manager</th>
                                         <th>:</th>
                                         <td>${data.dm.name}</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th class="text-nowrap">District Manager Area</th>
+                                        <th>:</th>
+                                        <td>${data.dm.operation_area.name}</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th class="text-nowrap">Local Area Manager Area</th>
+                                        <th>:</th>
+                                        <td>${lam_area}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

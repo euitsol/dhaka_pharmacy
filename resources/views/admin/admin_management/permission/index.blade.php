@@ -35,8 +35,8 @@
                                     <td>{{ $loop->iteration }} </td>
                                     <td>{{$permission->prefix}}</td>
                                     <td>{{$permission->name}}</td>
-                                    <td>{{timeFormate($permission->created_at)}}</td>
-                                    <td>{{$permission->createdBy->name ?? "System Generated"}}</td>
+                                    <td>{{$permission->created_date()}}</td>
+                                    <td>{{$permission->created_user_name()}}</td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

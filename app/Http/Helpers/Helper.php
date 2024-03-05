@@ -75,6 +75,13 @@ function createCSV($filename = 'permissions.csv'): string
 }
 
 function storage_url($urlOrArray){
+
+    if(((is_array($urlOrArray) || is_object($urlOrArray)) && !$urlOrArray->isNotEmpty()) || empty($urlOrArray)){
+        return asset('frontend\default\cat_img.png');
+    }
+
+
+
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
         $result = '';
         $count = 0;
@@ -176,4 +183,5 @@ function removeHttpProtocol($url)
 function str_limit($data, $limit = 20, $end = '...'){
     return Str::limit($data, $limit, $end);
 }
+
 

@@ -43,4 +43,10 @@ class LoginContorller extends BaseController
         }
         return redirect()->route('admin.login');
     }
+
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
+    }
 }

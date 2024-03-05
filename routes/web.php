@@ -46,6 +46,10 @@ use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
+use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
+use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
+use App\Http\Controllers\Frontend\Product\ProductPageController;
+use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,18 +71,22 @@ Auth::routes();
 // Admin Login Routes
 Route::get('/admin/login', [AdminLoginController::class, 'adminLogin'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'adminLoginCheck'])->name('admin.login');
+Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 // Pharmacy Login Routes
 Route::get('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLogin'])->name('pharmacy.login');
 Route::post('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLoginCheck'])->name('pharmacy.login');
+Route::post('/pharmacy/logout', [PharmacyLoginController::class, 'logout'])->name('pharmacy.logout');
 
 
 // DM Login Routes
 Route::get('/district-manager/login', [DmLoginController::class, 'dmLogin'])->name('district_manager.login');
 Route::post('/district-manager/login', [DmLoginController::class, 'dmLoginCheck'])->name('district_manager.login');
+Route::post('/district-manager/logout', [DmLoginController::class, 'logout'])->name('district_manager.logout');
 // LAM Login Routes
 Route::get('/local-area-manager/login', [LamLoginController::class, 'lamLogin'])->name('local_area_manager.login');
 Route::post('/local-area-manager/login', [LamLoginController::class, 'lamLoginCheck'])->name('local_area_manager.login');
+Route::post('/local-area-manager/logout', [LamLoginController::class, 'logout'])->name('local_area_manager.logout');
 Route::post('local-area-manager/register', [LamLoginController::class, 'lamRegister'])->name('local_area_manager.register');
 Route::get('local-area-manager/reference/{id}', [LamLoginController::class, 'reference'])->name('local_area_manager.reference');
 
@@ -255,6 +263,17 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('status/{id}', 'status')->name('status.operation_area_edit');
             Route::get('delete/{id}', 'delete')->name('operation_area_delete');
         });
+        //Oparetaion Sub Area Route
+        Route::controller(OperationSubAreaController::class, 'operation-sub-area')->prefix('operation-sub-area')->name('operation_sub_area.')->group(function () {
+            Route::get('index', 'index')->name('operation_sub_area_list');
+            Route::get('details/{id}', 'details')->name('details.operation_sub_area_list');
+            Route::get('create', 'create')->name('operation_sub_area_create');
+            Route::post('create', 'store')->name('operation_sub_area_create');
+            Route::get('edit/{slug}', 'edit')->name('operation_sub_area_edit');
+            Route::put('edit/{id}', 'update')->name('operation_sub_area_edit');
+            Route::get('status/{id}/{status}', 'status')->name('status.operation_sub_area_edit');
+            Route::get('delete/{id}', 'delete')->name('operation_sub_area_delete');
+        });
 
 
 
@@ -287,6 +306,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('local_area_manager_edit');
             Route::get('status/{id}', 'status')->name('status.local_area_manager_edit');
             Route::get('delete/{id}', 'delete')->name('local_area_manager_delete');
+
+            Route::get('get-operation-area/{dm_id}', 'get_operation_area')->name('operation_area.local_area_manager_list');
         });
 
         // KYC ROUTES
@@ -465,6 +486,14 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::get('status/{id}', 'status')->name('status.edit');
         Route::get('delete/{id}', 'delete')->name('delete');
     });
+    Route::controller(DmOparetionalAreaController::class, 'operational-area')->prefix('operational-area')->name('lam_area.')->group(function () {
+        Route::get('index', 'index')->name('list');
+        Route::get('details/{id}', 'details')->name('details.list');
+        Route::get('create', 'create')->name('create');
+        Route::post('create', 'store')->name('create');
+        Route::get('edit/{slug}', 'edit')->name('edit');
+        Route::put('edit/{id}', 'update')->name('edit');
+    });
 });
 
 
@@ -486,6 +515,10 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::post('/update/image', 'updateImage')->name('update.image');
     });
 
+    Route::controller(LamOperationalAreaController::class, 'operational-area')->prefix('operational-area')->name('operational_area.')->group(function () {
+        Route::get('index', 'index')->name('list');
+    });
+
 
 
     Route::controller(LamUserController::class, 'user-management')->prefix('user-management')->name('user.')->group(function () {
@@ -499,6 +532,8 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::get('status/{id}', 'status')->name('status.edit');
         Route::get('delete/{id}', 'delete')->name('delete');
     });
+
+   
 });
 
 
@@ -508,6 +543,6 @@ Route::get('/', [HomePageController::class, 'home'])->name('home');
 Route::get('/product-search/{search_value}/{category}', [HomePageController::class, 'productSearch'])->name('home.product.search');
 Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeaturedProducts'])->name('home.featured_products');
 
-Route::controller(SingleProductController::class, 'product')->prefix('product')->name('product.')->group(function () {
-    Route::get('single-product/{slug}', 'singleProduct')->name('single_product');
-});
+Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
+
+Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');

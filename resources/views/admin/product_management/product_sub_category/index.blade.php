@@ -49,9 +49,9 @@
                                         <span
                                             class="{{ $product_sub_category->getStatusBadgeClass() }}">{{ $product_sub_category->getStatus() }}</span>
                                     </td>
-                                    <td>{{ timeFormate($product_sub_category->created_at) }}</td>
+                                    <td>{{ $product_sub_category->created_date() }}</td>
 
-                                    <td> {{ $product_sub_category->created_user->name ?? 'system' }} </td>
+                                    <td> {{ $product_sub_category->created_user_name() }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

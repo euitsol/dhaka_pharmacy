@@ -26,6 +26,8 @@
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
                                 <th>{{ __('District Manager') }}</th>
+                                <th>{{ __('Operational Area') }}</th>
+                                <th>{{ __('Operational Sub Area') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -39,17 +41,26 @@
                                     <td> {{ $lam->name }} </td>
                                     <td> {{ $lam->phone }} </td>
                                     <td> {{ $lam->dm->name }} </td>
+                                    <td> {{ $lam->dm->operation_area->name }} </td>
+                                    <td> 
+                                        @if($lam->operation_sub_area)
+                                            {{ $lam->operation_sub_area->name }}
+                                        @else
+                                            <span class="badge badge-warning">{{ __('Area not allocated') }}</span>
+                                        @endif
+
+                                    </td>
                                     <td>
                                         <span
                                             class="{{ $lam->getStatusBadgeClass() }}">{{ $lam->getStatus() }}</span>
                                     </td>
-                                    <td>{{ timeFormate($lam->created_at) }}</td>
+                                    <td>{{ $lam->created_date() }}</td>
 
-                                    <td> {{ $lam->creater->name ?? 'system' }} </td>
+                                    <td> {{ $lam->creater_name() }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'lam_management.local_area_manager.login_as.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Login As'],
+                                                    ['routeName' => 'lam_management.local_area_manager.login_as.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Login As','target'=>'_blank'],
                                                     ['routeName' => 'lam_management.local_area_manager.local_area_manager_profile',   'params' => [$lam->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$lam->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $lam->id ],
                                                     ['routeName' => 'lam_management.local_area_manager.local_area_manager_edit',   'params' => [$lam->id], 'label' => 'Update'],
@@ -102,8 +113,8 @@
                     dataType: 'json',
                     success: function(data) {
                         let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
-                            'badge-warning';
+                        let statusClass = data.status = 1 ? 'badge-success' : 'badge-warning';
+                        let lam_area = data.operation_sub_area ? data.operation_sub_area.name : '<span class="badge badge-warning">{{ __("Area not allocated") }}</span>';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -122,9 +133,20 @@
                                         <td>${data.email ?? 'N/A'}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Role</th>
+                                        <th class="text-nowrap">District Manager</th>
                                         <th>:</th>
                                         <td>${data.dm.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Operational Area</th>
+                                        <th>:</th>
+                                        <td>${data.dm.operation_area.name}</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th class="text-nowrap">Operational Sub Area</th>
+                                        <th>:</th>
+                                        <td>${lam_area}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

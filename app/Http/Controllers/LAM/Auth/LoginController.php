@@ -77,4 +77,9 @@ class LoginController extends BaseController
         return response()->json(['status'=>true]);
         
     }
+    public function logout()
+    {
+        Auth::guard('lam')->logout();
+        return redirect()->route('local_area_manager.login');
+    }
 }

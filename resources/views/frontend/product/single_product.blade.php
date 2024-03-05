@@ -49,10 +49,10 @@
                                         <ul class="breadcrumb wizard">
                                             <li class="completed"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
                                             <li class="completed"><a
-                                                    href="javascript:void(0);">{{ __($single_product->pro_cat->name) }}</a>
+                                                    href="{{route('category.products',['category'=>$single_product->pro_cat->slug])}}">{{ __($single_product->pro_cat->name) }}</a>
                                             </li>
                                             <li><a
-                                                    href="javascript:void(0);">{{ __($single_product->pro_sub_cat->name) }}</a>
+                                                    href="{{route('category.products',['category'=>$single_product->pro_cat->slug,'sub-category'=>$single_product->pro_sub_cat->slug])}}">{{ __($single_product->pro_sub_cat->name) }}</a>
                                             </li>
                                         </ul>
                                         <div class="favorite">
@@ -66,16 +66,16 @@
                                                 <div class="card-body">
                                                     <div class="product_image xzoom-container">
                                                         <img class="xzoom" id="xzoom-default"
-                                                            src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}"
-                                                            xoriginal="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                            src="{{  storage_url($single_product->image) }}"
+                                                            xoriginal="{{  storage_url($single_product->image) }}">
 
                                                         <!-- Thumbnails -->
                                                         <div class="xzoom-thumbs">
                                                             <a
-                                                                href="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                                href="{{  storage_url($single_product->image) }}">
                                                                 <img class="xzoom-gallery xactive" width="80"
-                                                                    src="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}"
-                                                                    xpreview="{{ $single_product->image ? storage_url($single_product->image) : asset('no_img/no_img.png') }}">
+                                                                    src="{{  storage_url($single_product->image) }}"
+                                                                    xpreview="{{  storage_url($single_product->image) }}">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -101,7 +101,7 @@
                                                                     name="data"
                                                                     value="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
-                                                                    <img src="{{$unit->image ? storage_url($unit->image) : asset('no_img/no_img.png')}}">
+                                                                    <img src="{{storage_url($unit->image)}}">
                                                                 </label>
                                                             @endforeach
                                                         </div>
@@ -374,24 +374,24 @@
                                                                     href="{{ route('product.single_product', $product->slug) }}">
                                                                     <img height=""
                                                                         class="w-100 border border-1 rounded-1"
-                                                                        src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
+                                                                        src="{{ storage_url($product->image) }}"
                                                                         alt="{{ __($product->name) }}">
                                                                 </a>
                                                             </div>
                                                             <div class="col-8 content">
 
-                                                                <h3 class="pdct-title"><a
-                                                                        href="{{ route('product.single_product', $product->slug) }}">{{str_limit(Str::ucfirst(Str::lower($product->name)), 25 , '..')}}
+                                                                <h3 class="pdct-title" title="{{$product->attr_title}}"><a
+                                                                        href="{{ route('product.single_product', $product->slug) }}">{{$product->name}}
                                                                     </a></h3>
                                                                 <p><a
-                                                                        href="">{{ str_limit($product->pro_sub_cat->name, 25) }}</a>
+                                                                        href="">{{ $product->pro_sub_cat->name }}</a>
                                                                 </p>
 
                                                                 <p><a
-                                                                        href="">{{ str_limit($product->generic->name, 25) }}</a>
+                                                                        href="">{{ $product->generic->name }}</a>
                                                                 </p>
                                                                 <p><a
-                                                                        href="">{{ str_limit($product->company->name, 25) }}</a>
+                                                                        href="">{{ $product->company->name }}</a>
                                                                 </p>
                                                                 <h4 class="pdct-price">
                                                                     <span>&#2547;</span>{{ __(number_format($product->price, 2)) }}
@@ -424,41 +424,38 @@
                                         <div id="related-product-slider" class="owl-carousel">
                                             @foreach ($similar_products as $product)
                                                     <div class="px-2 py-1">
+                                                        
+
                                                         <div class="single-pdct">
-                                                            <a
-                                                                href="{{ route('product.single_product', $product->slug) }}">
+                                                            <a href="{{ route('product.single_product', $product->slug) }}">
                                                                 <div class="pdct-img">
                                                                     <img class="w-100"
-                                                                        src="{{ $product->image ? storage_url($product->image) : asset('no_img/no_img.png') }}"
+                                                                        src="{{ storage_url($product->image) }}"
                                                                         alt="Product Image">
                                                                 </div>
                                                             </a>
                                                             <div class="pdct-info">
-                                                                <a
-                                                                    href="{{ route('product.single_product', $product->slug) }}">
-                                                                    {{-- <h3 class="fw-bold">{{ $product->name }} <small>({{$product->pro_sub_cat->name}})</small>
-                                                                    </h3> --}}
-                                                                    <h3 class="fw-bold">{{str_limit(Str::ucfirst(Str::lower($product->name)), 25 , '..')}} 
-                                                                        {{-- <small>({{$product->pro_sub_cat->name}})</small> --}}
-                                                                    </h3>
+                                                                <a href="#" class="generic-name">
+                                                                    {{ $product->generic->name}}
                                                                 </a>
-                                                                <p><a
-                                                                        href="">{{ str_limit($product->pro_sub_cat->name, 25) }}</a>
-                                                                </p>
-                                                                <p><a
-                                                                        href="">{{ str_limit($product->generic->name, 25) }}</a>
-                                                                </p>
-                                                                <p><a
-                                                                        href="">{{ str_limit($product->company->name, 25) }}</a>
-                                                                </p>
-                                                                <h4><span>&#2547;</span>{{ $product->price }}</h4>
+                                                                <a href="#" class="company-name">
+                                                                    {{ $product->company->name}}
+                                                                </a>
+                                                                <div class="product_title">
+                                                                    <a href="{{ route('product.single_product', $product->slug) }}">
+                                                                        <h3 class="fw-bold" title="{{$product->attr_title}}">
+                                                                            {{ $product->name }}
+                                                                        </h3>
+                                                                    </a>
+                                                                </div>
+                                                                <h4> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
+                                                                <div class="add_to_card">
+                                                                    <a class="cart-btn" href="#">
+                                                                        <i class="fa-solid fa-cart-plus"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-
-                                                            <div class="add_to_card">
-                                                                <a class="cart-btn" href="#"><img
-                                                                        src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                                        alt="">{{ __('Add to Cart') }}</a>
-                                                            </div>
+                
                                                         </div>
                                                     </div>
                                             @endforeach

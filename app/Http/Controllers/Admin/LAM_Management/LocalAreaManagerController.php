@@ -7,6 +7,7 @@ use App\Http\Requests\LocalAreaManagerRequest;
 use App\Models\DistrictManager;
 use App\Models\Documentation;
 use App\Models\LocalAreaManager;
+use App\Models\OperationSubArea;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,16 +24,16 @@ class LocalAreaManagerController extends Controller
 
     public function index(): View
     {
-        $data['lams'] = LocalAreaManager::with(['dm','creater'])->latest()->get();
+        $data['lams'] = LocalAreaManager::with(['dm.operation_area','operation_sub_area','creater'])->latest()->get();
         return view('admin.lam_management.local_area_manager.index',$data);
     }
     public function details($id): JsonResponse
     {
-        $data = LocalAreaManager::with(['dm','creater','updater'])->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->creater_id ? $data->creater->name : 'System';
-        $data->updated_by = $data->updater_id ? $data->updater->name : 'N/A';
+        $data = LocalAreaManager::with(['dm.operation_area','creater','operation_sub_area','updater'])->findOrFail($id);
+        $data->creating_time = $data->created_date();
+        $data->updating_time = $data->updated_date();
+        $data->created_by = $data->creater_name();
+        $data->updated_by = $data->updater_name();
         return response()->json($data);
     }
 
@@ -50,7 +51,7 @@ class LocalAreaManagerController extends Controller
 
     public function profile($id): View
     {
-        $data['lam'] = LocalAreaManager::with(['creater','updater'])->findOrFail($id);
+        $data['lam'] = LocalAreaManager::with(['creater','operation_sub_area','updater'])->findOrFail($id);
         return view('admin.lam_management.local_area_manager.profile',$data);
     }
 
@@ -67,6 +68,7 @@ class LocalAreaManagerController extends Controller
         $lam->name = $req->name;
         $lam->phone = $req->phone;
         $lam->dm_id = $req->dm_id;
+        $lam->osa_id = $req->osa_id;
         $lam->password = Hash::make($req->password);
         $lam->creater()->associate(admin());
         $lam->save();
@@ -86,6 +88,7 @@ class LocalAreaManagerController extends Controller
         $lam->name = $req->name;
         $lam->phone = $req->phone;
         $lam->dm_id = $req->dm_id;
+        $lam->osa_id = $req->osa_id;
         if($req->password){
             $lam->password = Hash::make($req->password);
         }
@@ -113,5 +116,13 @@ class LocalAreaManagerController extends Controller
 
     }
 
+
+    
+    public function get_operation_area($dm_id): JsonResponse
+    {
+        $data['dm'] = DistrictManager::with('operation_area.operation_sub_areas')->findOrFail($dm_id);
+        return response()->json($data);
+
+    }
 
 }

@@ -12,6 +12,7 @@ class LocalAreaManager extends AuthenticateBaseModel
         'phone',
         'password',
         'dm_id',
+        'osa_id',
     ];
     protected $hidden = [
         'password',
@@ -25,5 +26,9 @@ class LocalAreaManager extends AuthenticateBaseModel
     public function dm()
     {
         return $this->belongsTo(DistrictManager::class, 'dm_id');
+    }
+    public function operation_sub_area()
+    {
+        return $this->belongsTo(OperationSubArea::class, 'osa_id');
     }
 }

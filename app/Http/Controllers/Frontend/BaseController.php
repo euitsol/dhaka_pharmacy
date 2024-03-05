@@ -15,7 +15,8 @@ use Illuminate\Support\Str;
 class BaseController extends Controller
 {
     public function __construct() {
-        $data['categories'] = ProductCategory::where('status',1)->where('deleted_at', null)->orderBy('name')->get();
+        $data['categories'] = ProductCategory::activeted()->where('deleted_at', null)->orderBy('name')->get();
+        $data['menuItems'] = $data['categories']->where('is_menu',1);
         view()->share($data);
     }
 
@@ -30,21 +31,22 @@ class BaseController extends Controller
         $data['products'] = $filter->where(function ($query) use ($search_value) {
             $query->whereHas('generic', function ($query) use ($search_value) {
                     $query->where('name', 'like', '%' . $search_value . '%')
-                        ->where('status', 1);
+                        ->activeted();
                 })
                 ->orWhereHas('company', function ($query) use ($search_value) {
                     $query->where('name', 'like', '%' . $search_value . '%')
-                        ->where('status', 1);
+                        ->activeted();
                 })
                 ->orWhereHas('pro_sub_cat', function ($query) use ($search_value) {
                     $query->where('name', 'like', '%' . $search_value . '%')
-                        ->where('status', 1);
+                        ->activeted();
                 })
                 ->orWhere('name', 'like', '%' . $search_value . '%');
         })
         ->get()->map(function ($product) {
-            $product->image =($product->image ? storage_url($product->image) : asset('no_img/no_img.png'));
-            $product->name =(Str::ucfirst(Str::lower($product->name)));
+            $product->image = storage_url($product->image);
+            $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
+            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )));
             $product->generic->name =(Str::ucfirst(Str::lower($product->generic->name)));
             $product->company->name =(Str::ucfirst(Str::lower($product->company->name)));
             $product->pro_sub_cat->name =(Str::ucfirst(Str::lower($product->pro_sub_cat->name)));

@@ -30,6 +30,12 @@
                     <p>{{ 'Local Area Manager' }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'lam_area') class="active" @endif>
+                <a href="{{ route('dm.lam_area.list') }}">
+                    <i class="fa-solid fa-minus @if ($pageSlug == 'lam_area') fa-beat-fade @endif"></i>
+                    <p>{{ 'Operational Areas' }}</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'user') class="active" @endif>
                 <a href="{{ route('dm.user.list') }}">
                     <i class="fa-solid fa-minus @if ($pageSlug == 'user') fa-beat-fade @endif"></i>
