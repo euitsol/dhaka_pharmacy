@@ -21,32 +21,32 @@
                                         <div class="form-group col-md-12">
                                             <label>{{ __('Name') }}</label>
                                             <input type="text" name="name" class="form-control"
-                                                placeholder="Enter Name" value="{{ dm()->name }}">
+                                                placeholder="Enter Name" value="{{ $dm->name }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Father Name') }}</label>
                                             <input type="text" name="father_name" class="form-control"
-                                                placeholder="Enter Father Name" value="{{ dm()->father_name }}">
+                                                placeholder="Enter Father Name" value="{{ $dm->father_name }}">
                                             @include('alerts.feedback', ['field' => 'father_name'])
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Nother Name') }}</label>
                                             <input type="text" name="mother_name" class="form-control"
-                                                placeholder="Enter Mother Name" value="{{ dm()->mother_name }}">
+                                                placeholder="Enter Mother Name" value="{{ $dm->mother_name }}">
                                             @include('alerts.feedback', ['field' => 'mother_name'])
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Phone') }}</label>
                                             <input type="text" name="phone" class="form-control"
-                                                placeholder="Enter Phone" value="{{ dm()->phone }}">
+                                                placeholder="Enter Phone" value="{{ $dm->phone }}">
                                             @include('alerts.feedback', ['field' => 'phone'])
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Parents Phone') }}</label>
                                             <input type="text" name="parent_phone" class="form-control"
-                                                placeholder="Enter Parents Phone" value="{{ dm()->parent_phone }}">
+                                                placeholder="Enter Parents Phone" value="{{ $dm->parent_phone }}">
                                             @include('alerts.feedback', ['field' => 'parent_phone'])
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                         <div class="profile_image">
                                             <div class="img mx-auto mt-4 rounded-circle">
                                                 <img class="avatar mb-0 rounded-circle w-100 h-100" id="previewImage"
-                                                    src="{{ storage_url(dm()->image) }}"
+                                                    src="{{ storage_url($dm->image) }}"
                                                     alt="">
                                                 <label for="imageInput" class="camera-icon text-center rounded-circle">
                                                     <i class="fa-solid fa-camera-retro" style="cursor: pointer;"></i>
@@ -74,18 +74,18 @@
 
                                 <div class="form-group col-md-4">
                                     <label>{{__('Operational Area')}}</label>
-                                    <input type="text" class="form-control" value="{{dm()->operation_area->name}}" disabled>
+                                    <input type="text" class="form-control" value="{{$dm->operation_area->name}}" disabled>
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
                                         <option selected hidden>{{ __('Select Genger') }}</option>
-                                        <option value="Male" {{ dm()->gender == 'Male' ? 'selected' : '' }}>
+                                        <option value="Male" {{ $dm->gender == 'Male' ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
-                                        <option value="Female" {{ dm()->gender == 'Female' ? 'selected' : '' }}>
+                                        <option value="Female" {{ $dm->gender == 'Female' ? 'selected' : '' }}>
                                             {{ __('Female') }}</option>
-                                        <option value="Others" {{ dm()->gender == 'Others' ? 'selected' : '' }}>
+                                        <option value="Others" {{ $dm->gender == 'Others' ? 'selected' : '' }}>
                                             {{ __('Others') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'gender'])
@@ -94,14 +94,14 @@
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Age') }}</label>
-                                    <input type="text" name="age" value="{{ dm()->age ? dm()->age : old('age') }}"
+                                    <input type="text" name="age" value="{{ $dm->age ? $dm->age : old('age') }}"
                                         class="form-control" placeholder="Enter age">
                                     @include('alerts.feedback', ['field' => 'age'])
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Date of Birth') }}</label>
-                                    <input type="date" name="dob" value="{{ dm()->dob ? dm()->dob : old('dob') }}"
+                                    <input type="date" name="dob" value="{{ $dm->dob ? $dm->dob : old('dob') }}"
                                         class="form-control">
                                     @include('alerts.feedback', ['field' => 'dob'])
                                 </div>
@@ -111,12 +111,12 @@
                                     <label>{{ __('Identification Type') }}</label>
                                     <select name="identification_type" id="identification_type" class="form-control">
                                         <option selected hidden>{{ __('Select Identification Type') }}</option>
-                                        <option value="NID" {{ dm()->identification_type == 'NID' ? 'selected' : '' }}>
+                                        <option value="NID" {{ $dm->identification_type == 'NID' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
-                                        <option value="DOB" {{ dm()->identification_type == 'DOB' ? 'selected' : '' }}>
+                                        <option value="DOB" {{ $dm->identification_type == 'DOB' ? 'selected' : '' }}>
                                             {{ __('Date of Birth') }}</option>
                                         <option value="Passport"
-                                            {{ dm()->identification_type == 'Passport' ? 'selected' : '' }}>
+                                            {{ $dm->identification_type == 'Passport' ? 'selected' : '' }}>
                                             {{ __('Passport NO') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'identification_type'])
@@ -126,7 +126,7 @@
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification NO') }}</label>
                                     <input type="text" name="identification_no" id="identification_no"
-                                        value="{{ dm()->identification_no ? dm()->identification_no : old('identification_no') }}"
+                                        value="{{ $dm->identification_no ? $dm->identification_no : old('identification_no') }}"
                                         class="form-control" placeholder="Enter identification number">
                                     @include('alerts.feedback', ['field' => 'identification_no'])
                                 </div>
@@ -141,12 +141,12 @@
 
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Present Address') }}</label>
-                                    <textarea name="present_address" class="form-control" placeholder="Enter present address">{{ dm()->present_address ? dm()->present_address : old('present_address') }}</textarea>
+                                    <textarea name="present_address" class="form-control" placeholder="Enter present address">{{ $dm->present_address ? $dm->present_address : old('present_address') }}</textarea>
                                     @include('alerts.feedback', ['field' => 'present_address'])
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Permanent Address') }}</label>
-                                    <textarea name="permanent_address" class="form-control" placeholder="Enter permanent address">{{ dm()->permanent_address ? dm()->permanent_address : old('permanent_address') }}</textarea>
+                                    <textarea name="permanent_address" class="form-control" placeholder="Enter permanent address">{{ $dm->permanent_address ? $dm->permanent_address : old('permanent_address') }}</textarea>
                                     @include('alerts.feedback', ['field' => 'permanent_address'])
                                 </div>
                                 <div class="col-md-12">
@@ -270,7 +270,7 @@
                                     $('.profile_image .img img.avatar').removeClass(
                                         'image_animation');
                                     $('.profile_image .camera-icon').css('display', 'block');
-                                    $('#previewImage').attr('src', "{{ storage_url(dm()->image)}}");
+                                    $('#previewImage').attr('src', "{{ storage_url($dm->image)}}");
                                     toastr.error('Something is wrong!');
 
                                     var errors = xhr.responseJSON.errors;

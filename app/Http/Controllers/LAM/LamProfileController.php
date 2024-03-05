@@ -24,6 +24,7 @@ class LamProfileController extends Controller
     public function profile(): View
     {
         $data['document'] = Documentation::where('module_key', 'lam_profile_documentation')->first();
+        $data['lam'] = LocalAreaManager::findOrFail(lam()->id);
         return view('local_area_manager.profile.profile', $data);
     }
 

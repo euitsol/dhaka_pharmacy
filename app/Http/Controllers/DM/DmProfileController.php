@@ -23,6 +23,7 @@ class DmProfileController extends Controller
     public function profile():View
     {
         $data['document'] = Documentation::where('module_key', 'dm_profile_documentation')->first();
+        $data['dm'] = DistrictManager::findOrFail(dm()->id);
         return view('district_manager.profile.profile',$data);
     }
 
