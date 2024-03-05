@@ -28,7 +28,7 @@ class ProductPageController extends BaseController
 
 
 
-
+        $data['sub_category'] =  ProductSubCategory::where('slug',$sub_category_slug)->activeted()->first();
         $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat'])->activeted();
         $sub_cat_query = ProductSubCategory::with(['pro_cat'])->activeted();
         $query->when($category_slug !== 'all', fn ($q) => $q->whereHas('pro_cat', fn ($qs) => $qs->where('slug', $category_slug)));
