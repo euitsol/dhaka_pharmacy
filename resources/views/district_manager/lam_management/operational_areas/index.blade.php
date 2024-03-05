@@ -44,7 +44,7 @@
                                                     {{ $sub_area->status == 1 ? 'Operational' : ($sub_area->status == 0 ? 'Pending' : 'Not Operational') }}
                                                 </span>
                                         </td>
-                                        <td>{{($sub_area->creater->name ?? 'system') }}</td>
+                                        <td>{{($sub_area->creater_name()) }}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)" role="button"

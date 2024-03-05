@@ -23,22 +23,22 @@ class ProductSubCategoryController extends Controller
     public function index(): View
     {
         $data['product_categories'] = ProductSubCategory::with(['created_user', 'updated_user'])->orderBy('name')->get();
-        $data['menuItemsCount'] = ProductSubCategory::where('is_menu',1)->where('status',1)->where('deleted_at',NULL)->count();
+        $data['menuItemsCount'] = ProductSubCategory::where('is_menu',1)->activeted()->count();
         return view('admin.product_management.product_sub_category.index', $data);
     }
     public function details($id): JsonResponse
     {
         $data = ProductSubCategory::with('pro_cat')->findOrFail($id);
         $data->image = storage_url($data->image);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->created_by ? $data->created_user->name : 'System';
-        $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
+        $data->creating_time = $data->created_date();
+        $data->updating_time = $data->updated_date();
+        $data->created_by = $data->created_user_name();
+        $data->updated_by = $data->updated_user_name();
         return response()->json($data);
     }
     public function create(): View
     {
-        $data['pro_cats'] = ProductCategory::where('status', 1)->latest()->get();
+        $data['pro_cats'] = ProductCategory::activeted()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'product_sub_category')->first();
         return view('admin.product_management.product_sub_category.create', $data);
     }
@@ -63,7 +63,7 @@ class ProductSubCategoryController extends Controller
     public function edit($slug): View
     {
         $data['product_sub_category'] = ProductSubCategory::where('slug',$slug)->first();
-        $data['pro_cats'] = ProductCategory::where('status', 1)->latest()->get();
+        $data['pro_cats'] = ProductCategory::activeted()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'product_sub_category')->first();
         return view('admin.product_management.product_sub_category.edit', $data);
     }
@@ -99,7 +99,7 @@ class ProductSubCategoryController extends Controller
     public function menu($id): RedirectResponse
     {
         $product_sub_category = ProductSubCategory::findOrFail($id);
-        $activeCount = ProductSubCategory::where('is_menu',1)->where('status',1)->where('deleted_at',NULL)->count();
+        $activeCount = ProductSubCategory::where('is_menu',1)->activeted()->count();
         if($product_sub_category->is_menu == 1){
             $product_sub_category->is_menu = 0;
         }else{

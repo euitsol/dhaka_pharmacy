@@ -44,9 +44,9 @@
                                         <span
                                             class="{{ $medicine_category->getStatusBadgeClass() }}">{{ $medicine_category->getStatus() }}</span>
                                     </td>
-                                    <td>{{ timeFormate($medicine_category->created_at) }}</td>
+                                    <td>{{ $medicine_category->created_date() }}</td>
 
-                                    <td> {{ $medicine_category->created_user->name ?? 'system' }} </td>
+                                    <td> {{ $medicine_category->created_user_name() }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

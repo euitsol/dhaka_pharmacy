@@ -24,7 +24,7 @@ class HomePageController extends BaseController
         });
         $data['bsItems'] = $products->where('is_best_selling', 1)->latest()->get()->shuffle()->take(8);
 
-        $data['categories'] = ProductCategory::where('status',1)->where('deleted_at',NULL)->orderBy('name')->get();
+        $data['categories'] = ProductCategory::activeted()->orderBy('name')->get();
         $data['featuredItems'] = $data['categories']->where('is_featured',1);
 
         return view('frontend.home',$data);

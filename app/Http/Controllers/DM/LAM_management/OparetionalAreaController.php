@@ -22,16 +22,16 @@ class OparetionalAreaController extends Controller
 
     public function index(): View
     {
-        $data['operational_areas'] = OperationArea::with(['operation_sub_areas', 'creater'])->where('status',1)->orderBy('name')->get();
+        $data['operational_areas'] = OperationArea::with(['operation_sub_areas', 'creater'])->activeted()->orderBy('name')->get();
         return view('district_manager.lam_management.operational_areas.index', $data);
     }
     public function details($id): JsonResponse
     {
         $data = OperationSubArea::with('operation_area')->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->created_by ? $data->creater->name : 'System';
-        $data->updated_by = $data->updated_by ? $data->updater->name : 'N/A';
+        $data->creating_time = $data->created_date();
+        $data->updating_time = $data->updated_date();
+        $data->created_by = $data->creater_name();
+        $data->updated_by = $data->updater_name();
         return response()->json($data);
     }
     public function create(): View

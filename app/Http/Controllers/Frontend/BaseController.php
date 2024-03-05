@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 class BaseController extends Controller
 {
     public function __construct() {
-        $data['categories'] = ProductCategory::where('status',1)->where('deleted_at', null)->orderBy('name')->get();
+        $data['categories'] = ProductCategory::activeted()->where('deleted_at', null)->orderBy('name')->get();
         $data['menuItems'] = $data['categories']->where('is_menu',1);
         view()->share($data);
     }
@@ -31,15 +31,15 @@ class BaseController extends Controller
         $data['products'] = $filter->where(function ($query) use ($search_value) {
             $query->whereHas('generic', function ($query) use ($search_value) {
                     $query->where('name', 'like', '%' . $search_value . '%')
-                        ->where('status', 1);
+                        ->activeted();
                 })
                 ->orWhereHas('company', function ($query) use ($search_value) {
                     $query->where('name', 'like', '%' . $search_value . '%')
-                        ->where('status', 1);
+                        ->activeted();
                 })
                 ->orWhereHas('pro_sub_cat', function ($query) use ($search_value) {
                     $query->where('name', 'like', '%' . $search_value . '%')
-                        ->where('status', 1);
+                        ->activeted();
                 })
                 ->orWhere('name', 'like', '%' . $search_value . '%');
         })

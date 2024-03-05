@@ -22,13 +22,13 @@ class KycVerificationController extends Controller
     }
 
     public function kyc_verification(){
-        $data['details'] = KycSetting::where('type', 'dm')->where('status',1)->first();
+        $data['details'] = KycSetting::where('type', 'dm')->activeted()->first();
         $data['datas'] = SubmittedKyc::where('type', 'dm')->where('creater_id', dm()->id)->where('creater_type', get_class(dm()))->first();
         return view('district_manager.kyc_verification_center.index', $data);
     }
 
     public function kyc_store(Request $request){
-        $kyc_setting = KycSetting::where('type', 'dm')->where('status',1)->first();
+        $kyc_setting = KycSetting::where('type', 'dm')->activeted()->first();
         $submitted_kyc = SubmittedKyc::where('type', 'dm')->where('creater_id', dm()->id)->where('creater_type', get_class(dm()))->first();
         if($submitted_kyc && ($submitted_kyc->status === 1 || $submitted_kyc->status === 0)){
             flash()->addWarning('Data already submitted.');
