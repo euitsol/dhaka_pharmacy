@@ -46,12 +46,12 @@ class MedicineController extends Controller
 
     public function create(): View
     {
-        $data['pro_cats'] = ProductCategory::activeted()->orderBy('name')->get();
-        $data['generics'] = GenericName::activeted()->orderBy('name')->get();
-        $data['companies'] = CompanyName::activeted()->orderBy('name')->get();
-        $data['medicine_cats'] = MedicineCategory::activeted()->orderBy('name')->get();
-        $data['strengths'] = MedicineStrength::activeted()->orderBy('quantity')->get();
-        $data['units'] = MedicineUnit::activeted()->orderBy('name')->get();
+        $data['pro_cats'] = ProductCategory::activated()->orderBy('name')->get();
+        $data['generics'] = GenericName::activated()->orderBy('name')->get();
+        $data['companies'] = CompanyName::activated()->orderBy('name')->get();
+        $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->get();
+        $data['strengths'] = MedicineStrength::activated()->orderBy('quantity')->get();
+        $data['units'] = MedicineUnit::activated()->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key','medicine')->first();
         return view('admin.product_management.medicine.create',$data);
     }
@@ -88,13 +88,13 @@ class MedicineController extends Controller
     public function edit($slug): View
     {
         $data['medicine'] = Medicine::where('slug',$slug)->first();
-        $data['pro_cats'] = ProductCategory::activeted()->orderBy('name')->get();
-        $data['pro_sub_cats'] = ProductSubCategory::activeted()->orderBy('name')->get();
-        $data['generics'] = GenericName::activeted()->orderBy('name')->get();
-        $data['companies'] = CompanyName::activeted()->orderBy('name')->get();
-        $data['medicine_cats'] = MedicineCategory::activeted()->orderBy('name')->get();
-        $data['strengths'] = MedicineStrength::activeted()->orderBy('quantity')->get();
-        $data['units'] = MedicineUnit::activeted()->orderBy('name')->get();
+        $data['pro_cats'] = ProductCategory::activated()->orderBy('name')->get();
+        $data['pro_sub_cats'] = ProductSubCategory::activated()->orderBy('name')->get();
+        $data['generics'] = GenericName::activated()->orderBy('name')->get();
+        $data['companies'] = CompanyName::activated()->orderBy('name')->get();
+        $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->get();
+        $data['strengths'] = MedicineStrength::activated()->orderBy('quantity')->get();
+        $data['units'] = MedicineUnit::activated()->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key','medicine')->first();
         return view('admin.product_management.medicine.edit',$data);
     }
@@ -159,7 +159,7 @@ class MedicineController extends Controller
     }
     public function get_sub_cat($id): JsonResponse
     {
-        $data['pro_sub_cats'] = ProductSubCategory::where('pro_cat_id',$id)->activeted()->orderBy('name')->get();
+        $data['pro_sub_cats'] = ProductSubCategory::where('pro_cat_id',$id)->activated()->orderBy('name')->get();
         return response()->json($data);
 
     }

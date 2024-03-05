@@ -109,6 +109,9 @@ function timeFormate($time){
     return date($dateFormat." ".$timeFormat, strtotime($time));
 }
 
+function user(){
+    return auth()->guard('web')->user();
+}
 function admin(){
     return auth()->guard('admin')->user();
 }

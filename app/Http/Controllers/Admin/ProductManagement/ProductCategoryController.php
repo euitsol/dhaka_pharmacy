@@ -24,7 +24,7 @@ class ProductCategoryController extends Controller
     public function index(): View
     {
         $data['product_categories'] = ProductCategory::with(['created_user', 'updated_user'])->orderBy('name')->get();
-        $data['menuItemsCount'] = ProductCategory::where('is_menu',1)->activeted()->count();
+        $data['menuItemsCount'] = ProductCategory::where('is_menu',1)->activated()->count();
         return view('admin.product_management.product_category.index', $data);
     }
     public function details($id): JsonResponse
@@ -105,7 +105,7 @@ class ProductCategoryController extends Controller
     public function menu($id): RedirectResponse
     {
         $product_category = ProductCategory::findOrFail($id);
-        $activeCount = ProductCategory::where('is_menu',1)->activeted()->count();
+        $activeCount = ProductCategory::where('is_menu',1)->activated()->count();
         if($product_category->is_menu == 1){
             $product_category->is_menu = 0;
         }else{

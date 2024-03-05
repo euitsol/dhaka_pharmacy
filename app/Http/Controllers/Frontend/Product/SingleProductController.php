@@ -19,9 +19,9 @@ class SingleProductController extends BaseController
 
     public function singleProduct($slug): View
     {
-        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activeted();
+        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated();
         
-        $data['single_product'] = Medicine::activeted()->where('slug',$slug)->first();
+        $data['single_product'] = Medicine::activated()->where('slug',$slug)->first();
         $units = array_map(function ($u) {
             return MedicineUnit::findOrFail($u);
         }, (array) json_decode($data['single_product']->unit, true));

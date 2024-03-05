@@ -36,7 +36,7 @@ class OperationSubAreaController extends Controller
     }
     public function create(): View
     {
-        $data['op_areas'] = OperationArea::activeted()->latest()->get();
+        $data['op_areas'] = OperationArea::activated()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'operation-sub-area')->first();
         return view('admin.dm_management.operation_sub_area.create', $data);
     }
@@ -54,7 +54,7 @@ class OperationSubAreaController extends Controller
     public function edit($slug): View
     {
         $data['operation_sub_area'] = OperationSubArea::where('slug',$slug)->first();
-        $data['operation_areas'] = OperationArea::activeted()->latest()->get();
+        $data['operation_areas'] = OperationArea::activated()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'operation-sub-area')->first();
         return view('admin.dm_management.operation_sub_area.edit', $data);
     }

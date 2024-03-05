@@ -54,7 +54,7 @@
                         <button class="cart-btn" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#cartbtn" aria-controls="offcanvasRight">
                             <i class="fa-solid fa-cart-shopping me-1"></i>
-                            <span>Cart</span>
+                            <span>Cart</span><sup id="cart_btn_quantity"><strong>{{$total_cart_item ?? ''}}</strong></sup>
                         </button>
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="cartbtn"
                             aria-labelledby="offcanvasRightLabel">

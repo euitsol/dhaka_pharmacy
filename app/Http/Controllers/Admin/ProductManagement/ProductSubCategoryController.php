@@ -23,7 +23,7 @@ class ProductSubCategoryController extends Controller
     public function index(): View
     {
         $data['product_categories'] = ProductSubCategory::with(['created_user', 'updated_user'])->orderBy('name')->get();
-        $data['menuItemsCount'] = ProductSubCategory::where('is_menu',1)->activeted()->count();
+        $data['menuItemsCount'] = ProductSubCategory::where('is_menu',1)->activated()->count();
         return view('admin.product_management.product_sub_category.index', $data);
     }
     public function details($id): JsonResponse
@@ -38,7 +38,7 @@ class ProductSubCategoryController extends Controller
     }
     public function create(): View
     {
-        $data['pro_cats'] = ProductCategory::activeted()->latest()->get();
+        $data['pro_cats'] = ProductCategory::activated()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'product_sub_category')->first();
         return view('admin.product_management.product_sub_category.create', $data);
     }
@@ -63,7 +63,7 @@ class ProductSubCategoryController extends Controller
     public function edit($slug): View
     {
         $data['product_sub_category'] = ProductSubCategory::where('slug',$slug)->first();
-        $data['pro_cats'] = ProductCategory::activeted()->latest()->get();
+        $data['pro_cats'] = ProductCategory::activated()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'product_sub_category')->first();
         return view('admin.product_management.product_sub_category.edit', $data);
     }
@@ -99,7 +99,7 @@ class ProductSubCategoryController extends Controller
     public function menu($id): RedirectResponse
     {
         $product_sub_category = ProductSubCategory::findOrFail($id);
-        $activeCount = ProductSubCategory::where('is_menu',1)->activeted()->count();
+        $activeCount = ProductSubCategory::where('is_menu',1)->activated()->count();
         if($product_sub_category->is_menu == 1){
             $product_sub_category->is_menu = 0;
         }else{

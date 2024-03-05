@@ -48,6 +48,7 @@ use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerification
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
 use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
 use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
+use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
 
@@ -546,3 +547,4 @@ Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeatur
 Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
 
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
+Route::get('/add-to-cart', [FrontendBaseController::class, 'add_to_cart'])->name('product.add_to_cart');

@@ -28,9 +28,9 @@ class ProductPageController extends BaseController
 
 
 
-        $data['sub_category'] =  ProductSubCategory::where('slug',$sub_category_slug)->activeted()->first();
-        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat'])->activeted();
-        $sub_cat_query = ProductSubCategory::with(['pro_cat'])->activeted();
+        $data['sub_category'] =  ProductSubCategory::where('slug',$sub_category_slug)->activated()->first();
+        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat'])->activated();
+        $sub_cat_query = ProductSubCategory::with(['pro_cat'])->activated();
         $query->when($category_slug !== 'all', fn ($q) => $q->whereHas('pro_cat', fn ($qs) => $qs->where('slug', $category_slug)));
 
         $query->when(($sub_category_slug !== null), fn ($q) => $q->whereHas('pro_sub_cat', fn ($qs) => $qs->where('slug', $sub_category_slug)));
@@ -47,7 +47,7 @@ class ProductPageController extends BaseController
             return $product;
         });
         if($category_slug !== 'all'){
-            $data['category'] = ProductCategory::with(['pro_sub_cats','medicines'])->activeted()->where('slug',$category_slug)->first();
+            $data['category'] = ProductCategory::with(['pro_sub_cats','medicines'])->activated()->where('slug',$category_slug)->first();
         }
         
         $data['sub_categories'] = $sub_cat_query->orderBy('name')->get();

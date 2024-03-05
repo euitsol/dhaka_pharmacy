@@ -60,7 +60,7 @@ class DistrictManagerController extends Controller
     }
     public function create(): View
     {
-        $data['operation_areas'] = OperationArea::activeted()->orderBy('name')->get();
+        $data['operation_areas'] = OperationArea::activated()->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key','district_manager')->first();
         return view('admin.dm_management.district_manager.create',$data);
     }
@@ -79,7 +79,7 @@ class DistrictManagerController extends Controller
     public function edit($id): View
     {
         $data['dm'] = DistrictManager::findOrFail($id);
-        $data['operation_areas'] = OperationArea::activeted()->orderBy('name')->get();
+        $data['operation_areas'] = OperationArea::activated()->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key','district_manager')->first();
         return view('admin.dm_management.district_manager.edit',$data);
     }

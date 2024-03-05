@@ -16,6 +16,7 @@
 ======================================*/
 :root {
   --primary-bg: #00204B;
+  --white-bg: #fff;
   --secondary-bg: #2D98DA;
   --bg-color-gray: #7d879c;
   --info-bg: #072365;
@@ -132,6 +133,7 @@ h2.title {
   width: 25%;
   transition: 0.4s;
   display: unset;
+  background-color: var(--white-bg);
 }
 
 
@@ -143,12 +145,12 @@ h2.title {
     color: var(--text-color-gray);
     display: block;
     padding: 0px;
-    margin: .4rem 0rem;
+    margin: .3rem 0rem .8rem 0rem;
 }
 .single-pdct .pdct-info .product_title {
   display: flex;
   align-items: center;
-  height: 2.5rem;
+  /* height: 2.5rem; */
 }
 
 .single-pdct .pdct-info h3 {
@@ -1559,3 +1561,6 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .product-section .sub_categories .card{
   transition: .4s;
 }
+
+
+

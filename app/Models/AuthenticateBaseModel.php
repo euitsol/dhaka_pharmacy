@@ -110,7 +110,7 @@ class AuthenticateBaseModel extends Authenticatable
         }
     }
 
-    public function scopeActiveted($query){
+    public function scopeActivated($query){
         return $query->where('status',1);
     }
     public function scopeCreater_name(){

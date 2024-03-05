@@ -123,7 +123,7 @@ btn-arrow">
                                                 </div>
                                                 <h4> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
                                                 <div class="add_to_card">
-                                                    <a class="cart-btn" href="#">
+                                                    <a class="cart-btn" data-product_slug="{{$product->slug}}" href="javascript:void(0)">
                                                         <i class="fa-solid fa-cart-plus"></i>
                                                     </a>
                                                 </div>
@@ -267,4 +267,30 @@ btn-arrow">
             $('.best-selling-products').height(featured_pro_height + "px")
         });
     </script>
+
+
+<script>
+    $(document).ready(function(){
+        $('.add_to_card .cart-btn').on('click',function(){
+            let product_slug = $(this).data('product_slug');
+            let url = ("{{ route('product.add_to_cart', ['product'=>'product_slug']) }}");
+                let _url = url.replace('product_slug', product_slug);
+                $.ajax({
+                    url: _url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.alert !== null ){
+                            toastr.error('already taken');
+                        }else{
+                            $('#cart_btn_quantity').html(data.total_cart_item);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error add to cart data:', error);
+                    }
+                });
+        });
+    });
+</script>
 @endpush

@@ -19,7 +19,7 @@ class OperationalAreaController extends Controller
     }
     public function index(): View
     {
-        $data['operational_areas'] = OperationArea::with(['operation_sub_areas', 'creater'])->activeted()->orderBy('name')->get();
+        $data['operational_areas'] = OperationArea::with(['operation_sub_areas', 'creater'])->activated()->orderBy('name')->get();
         return view('local_area_manager.operational_area.index', $data);
     }
     
