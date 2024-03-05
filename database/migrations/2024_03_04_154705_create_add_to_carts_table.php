@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('add_to_carts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('customer_id');
             $table->float('quantity');
             $table->boolean('status')->default(1);
             $table->timestamps();
@@ -26,7 +26,7 @@ return new class extends Migration
             $this->addMorphedAuditColumns($table);
 
             $table->foreign('product_id')->references('id')->on('medicines')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users ')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
