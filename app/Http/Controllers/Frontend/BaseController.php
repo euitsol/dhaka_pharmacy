@@ -73,7 +73,7 @@ class BaseController extends Controller
     public function add_to_cart(){
         $product_slug = request('product');
         $product = Medicine::activated()->where('slug',$product_slug)->first();
-        $customer_id = user()->id;
+        $customer_id = 1;
         $check = AddToCart::where('product_id',$product->id)->where('customer_id',$customer_id)->first();
         $data['alert'] = null;
         if($check){
