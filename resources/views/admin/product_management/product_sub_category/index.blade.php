@@ -28,6 +28,7 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Product Category') }}</th>
+                                <th>{{ __('Image') }}</th>
                                 <th>{{ __('Menu') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
@@ -41,6 +42,7 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $product_sub_category->name }} </td>
                                     <td> {{ $product_sub_category->pro_cat->name }} </td>
+                                    <td> <img height="70px" width="70px" style="object-fit: contain" src="{{ storage_url($product_sub_category->image) }}" > </td>
                                     <td>
                                         <span
                                             class="{{ $product_sub_category->getMenuBadgeClass() }}">{{ $product_sub_category->getMenu() }}</span>
