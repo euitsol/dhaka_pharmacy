@@ -63,7 +63,7 @@ class LoginController extends BaseController
         }
         $existing = User::where('email', $user->email)->first();
         if ($existing) {
-            auth()->login($existing);
+            Auth::guard('web')->login($existing);
         } else {
             $newUser                  = new User;
             $newUser->name            = $user->name;
@@ -74,7 +74,7 @@ class LoginController extends BaseController
             $newUser->token           = $user->token;
             $newUser->refresh_token   = $user->refreshToken;
             $newUser->save();
-            auth()->login($newUser);
+            Auth::guard('web')->login($newUser);
         }
         return redirect()->route('user.profile');
     }
@@ -95,7 +95,7 @@ class LoginController extends BaseController
         }
         $existing = User::where('email', $githubUser->email)->first();
         if ($existing) {
-            auth()->login($existing);
+            Auth::guard('web')->login($existing);
         } else {
             $newUser                  = new User;
             $newUser->name            = $githubUser->name;
@@ -105,7 +105,7 @@ class LoginController extends BaseController
             $newUser->token           = $githubUser->token;
             $newUser->refresh_token   = $githubUser->refreshToken;
             $newUser->save();
-            auth()->login($newUser);
+            Auth::guard('web')->login($newUser);
         }
         return redirect()->route('user.profile');
     }
@@ -128,7 +128,7 @@ class LoginController extends BaseController
         dd($facebookUser);
         $existing = User::where('email', $facebookUser->email)->first();
         if ($existing) {
-            auth()->login($existing);
+            Auth::guard('web')->login($existing);
         } else {
             $newUser                  = new User;
             $newUser->name            = $facebookUser->name;
@@ -138,7 +138,7 @@ class LoginController extends BaseController
             $newUser->token           = $facebookUser->token;
             $newUser->refresh_token   = $facebookUser->refreshToken;
             $newUser->save();
-            auth()->login($newUser);
+            Auth::guard('web')->login($newUser);
         }
         return redirect()->route('user.profile');
     }
@@ -150,7 +150,7 @@ class LoginController extends BaseController
 
     public function showLoginForm()
     {
-        if (Auth::check()) {
+        if (Auth::guard('web')->check()) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
             return redirect()->route('user.profile');
         }
@@ -165,7 +165,7 @@ class LoginController extends BaseController
         $check = User::where('phone', $request->phone)->first();
         if(isset($check)){
             if($check->status == 1){
-                if (Auth::attempt($credentials)) {
+                if (Auth::guard('web')->attempt($credentials)) {
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');
                     return redirect()->route('user.profile');
                 }
@@ -191,8 +191,8 @@ class LoginController extends BaseController
         if (Auth::guard('pharmacy')->check()) {
             Auth::guard('pharmacy')->logout();
             return redirect()->route('pharmacy.login');
-        }elseif (Auth::check()) {
-            Auth::logout();
+        }elseif (Auth::guard('web')->check()) {
+            Auth::guard('web')->logout();
             return redirect()->route('login');
         }
     }

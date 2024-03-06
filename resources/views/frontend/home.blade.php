@@ -70,7 +70,7 @@
                                                     </li>
                                                     @foreach ($featuredItems as $item)
                                                         <li><a href="javascript:void(0)" class="featured_item"
-                                                                data-id="{{ $item->id }}">{{ __($item->name) }}</a>
+                                                                data-slug="{{ $item->slug }}">{{ __($item->name) }}</a>
                                                         </li>
                                                     @endforeach
                                                 </ul>
@@ -196,9 +196,9 @@ btn-arrow">
                 $('.cat-list li').removeClass('active');
                 $('.cat-list li').removeClass('uk-slide-active');
                 $(this).parent('li').addClass('active');
-                let id = $(this).data('id');
-                let url = ("{{ route('home.featured_products', ['id']) }}");
-                let _url = url.replace('id', id);
+                let slug = $(this).data('slug');
+                let url = ("{{ route('home.featured_products', ['category'=>'slug']) }}");
+                let _url = url.replace('slug', slug);
 
                 $.ajax({
                     url: _url,
@@ -240,7 +240,7 @@ btn-arrow">
                                                 </div>
                                                 <h4> <span> &#2547; </span> ${product.price}</h4>
                                                 <div class="add_to_card">
-                                                    <a class="cart-btn" href="#">
+                                                    <a class="cart-btn" data-product_slug="${product.slug}" href="javascript:void(0)">
                                                         <i class="fa-solid fa-cart-plus"></i>
                                                     </a>
                                                 </div>
@@ -271,7 +271,7 @@ btn-arrow">
 
 <script>
     $(document).ready(function(){
-        $('.add_to_card .cart-btn').on('click',function(){
+        $(document).on('click','.cart-btn',function(){
             let product_slug = $(this).data('product_slug');
             let url = ("{{ route('product.add_to_cart', ['product'=>'product_slug']) }}");
                 let _url = url.replace('product_slug', product_slug);
@@ -281,7 +281,7 @@ btn-arrow">
                     dataType: 'json',
                     success: function(data) {
                         if(data.alert !== null ){
-                            toastr.error('already taken');
+                            toastr.error(data.alert);
                         }else{
                             $('#cart_btn_quantity').html(data.total_cart_item);
                         }

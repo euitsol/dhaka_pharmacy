@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AddToCart;
 use App\Models\Medicine;
 use App\Models\ProductCategory;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,21 +19,24 @@ class BaseController extends Controller
 {
     public function __construct() {
         $data['categories'] = ProductCategory::activated()->orderBy('name')->get();
-        $data['menuItems'] = $data['categories']->where('is_menu',1);
-
-
-        // Cart 
-            $data['atcs'] = AddToCart::with(['product', 'customer'])
-            ->where('customer_id',1)
+        $data['menuItems'] = $data['categories']->where('is_menu', 1);
+        
+        $data['atcs'] = AddToCart::with(['product', 'customer'])
+            ->where('customer_id', 1)
             ->latest()
             ->get();
-            $data['products'] = Medicine::activated()
-                            ->whereIn('id', $data['atcs']->pluck('product_id'))
-                            ->get();
-            $data['total_cart_item'] = $data['products']->count();
+        if(!empty($data['atcs'])){
+            $data['cart_products'] = Medicine::activated()
+            ->whereIn('id', $data['atcs']->pluck('product_id'))
+            ->get();
+            $data['total_cart_item'] = $data['cart_products']->count();
+        }
+        
+
         
         view()->share($data);
     }
+    
 
     public function productSearch($search_value, $category){
         $filter = Medicine::with(['pro_sub_cat','generic','company','strength']);
@@ -86,10 +90,10 @@ class BaseController extends Controller
                         ->where('customer_id', 1)
                         ->latest()
                         ->get();
-        $data['products'] = Medicine::activated()
+        $data['cart_products'] = Medicine::activated()
                             ->whereIn('id', $data['atcs']->pluck('product_id'))
                             ->get();
-        $data['total_cart_item'] = $data['products']->count();
+        $data['total_cart_item'] = $data['cart_products']->count();
         return response()->json($data);
 
 

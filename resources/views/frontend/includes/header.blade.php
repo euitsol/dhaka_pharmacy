@@ -64,7 +64,27 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
-                                <!--======== Cart content here =========-->
+                                @foreach ($cart_products as $product)
+                                    <a href="{{route('product.single_product',$product->slug)}}">
+                                        <div class="card search_item mb-2">
+                                            <div class="card-body py-2">
+                                                <div class="row align-items-center">
+                                                    <div class="image col-2">
+                                                        <img class="w-100 border border-1 rounded-1"
+                                                            src="{{storage_url($product->image)}}"
+                                                            alt="{{$product->name}}">
+                                                    </div>
+                                                    <div class="col-10 details">
+                                                        <h4 class="product_title">{{$product->name}}</h4>
+                                                        <p class="product_sub_cat">{{$product->pro_sub_cat->name}}</p>
+                                                        <p>{{{$product->generic->name}}}</p>
+                                                        <p>{{$product->company->name}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                @endforeach
                             </div>
                         </div>
                     </div>
