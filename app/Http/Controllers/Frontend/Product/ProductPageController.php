@@ -31,11 +31,11 @@ class ProductPageController extends BaseController
         $data['sub_category'] =  ProductSubCategory::where('slug',$sub_category_slug)->activated()->first();
         $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat'])->activated();
         $sub_cat_query = ProductSubCategory::with(['pro_cat'])->activated();
-        $query->when($category_slug !== 'all', fn ($q) => $q->whereHas('pro_cat', fn ($qs) => $qs->where('slug', $category_slug)));
+        $query->when(($category_slug !== 'all' && !empty($category_slug)), fn ($q) => $q->whereHas('pro_cat', fn ($qs) => $qs->where('slug', $category_slug)));
 
         $query->when(($sub_category_slug !== null), fn ($q) => $q->whereHas('pro_sub_cat', fn ($qs) => $qs->where('slug', $sub_category_slug)));
         $query->when(($offset !== null), fn ($q) => $q->offset($offset)->limit(1));
-        $sub_cat_query->when($category_slug !== 'all', fn ($q) => $q->whereHas('pro_cat', fn ($qs) => $qs->where('slug', $category_slug)));
+        $sub_cat_query->when(($category_slug !== 'all' && !empty($category_slug)), fn ($q) => $q->whereHas('pro_cat', fn ($qs) => $qs->where('slug', $category_slug)));
 
         $data['products'] = $query->limit(1)->get()->shuffle()->map(function($product){
             $product->ajax_image = storage_url($product->image);
