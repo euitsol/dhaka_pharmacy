@@ -50,7 +50,8 @@ class ProductPageController extends BaseController
             $data['category'] = ProductCategory::with(['pro_sub_cats','medicines'])->activated()->where('slug',$category_slug)->first();
         }
         
-        $data['sub_categories'] = $sub_cat_query->orderBy('name')->get();
+        $data['sub_categories'] = $sub_cat_query->orderBy('name')->get()->groupBy('pro_cat.name');
+        // dd($data['sub_categories']);
         if (request()->ajax()) {
             return response()->json($data);
         }else{

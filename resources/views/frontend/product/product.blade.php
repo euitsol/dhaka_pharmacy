@@ -27,7 +27,8 @@
                                         <div class="uk-position-relative">
                                             <div class="uk-slider-container uk-light">
                                                 <ul class="uk-slider-items cat-list">
-                                                    @foreach ($sub_categories as $key => $sub_cat)
+                                                    @foreach ($sub_categories as $key => $sub_cats)
+                                                        @foreach ($sub_cats as $sub_cat)
                                                         <li
                                                             class="sub_cat_item {{ $key == 0 ? 'uk-slide-active active' : '' }}">
                                                             <a href="javascript:void(0)" class="sub_cat_link"
@@ -43,6 +44,7 @@
                                                                 </div>
                                                             </a>
                                                         </li>
+                                                        @endforeach
                                                     @endforeach
                                                 </ul>
                                             </div>
