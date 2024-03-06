@@ -1576,9 +1576,10 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 .product-section .sub_categories .sub_cat_link .sub_cat_img {
   
-  object-fit: cover;
+  object-fit: contain;
   transition: .4s;
- 
+  height: 100%;
+  width: 100%; 
 }
 
 /* .product-section .sub_categories .sub_cat_item .card::after{
