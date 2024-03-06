@@ -1604,7 +1604,6 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   width: 0;
   z-index: 99;
   transition: .4s;
-  transition-delay: .4s;
 }
 .product-section .sub_categories .sub_cat_item:hover .card{
   border-color: var(--asent-color);
@@ -1621,6 +1620,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 .product-section .sub_categories .sub_cat_item:hover .card::before{
   width: 100%;
+  transition-delay: .4s;
 }
 .product-section .sub_categories .sub_cat_item:hover .card-title{
   transform: scale(1.1);
