@@ -65,25 +65,54 @@
                             </div>
                             <div class="offcanvas-body">
                                 @foreach ($cart_products as $product)
-                                    <a href="{{route('product.single_product',$product->slug)}}">
-                                        <div class="card search_item mb-2">
-                                            <div class="card-body py-2">
-                                                <div class="row align-items-center">
-                                                    <div class="image col-2">
-                                                        <img class="w-100 border border-1 rounded-1"
-                                                            src="{{storage_url($product->image)}}"
-                                                            alt="{{$product->name}}">
+                                    <div class="card add_to_cart_item mb-2">
+                                        <div class="card-body py-2">
+                                            <div class="row align-items-center product_details mb-2">
+                                                <div class="image col-2">
+                                                    <a href="">
+                                                        <img class="border border-1 rounded-1"
+                                                        src="{{storage_url($product->image)}}"
+                                                        alt="{{$product->name}}">
+                                                    </a>
+                                                </div>
+                                                <div class="col-8 info">
+                                                    <a href=""><h4 class="product_title" title="{{$product->attr_title}}">{{$product->name}}</h4></a>
+                                                    <a href=""><p >{{$product->pro_sub_cat->name}}</p></a>
+                                                    <a href=""><p>{{{$product->generic->name}}}</p></a>
+                                                    <a href=""><p>{{$product->company->name}}</p></a>
+                                                </div>
+                                                <div class="item_price col-2">
+                                                    <h4 class="text-center"> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center atc_functionality">
+                                                
+                                                <div class="item_units col-9">
+                                                    <div class="form-group my-1 boxed">
+                                                        @foreach ($product->units as $key=>$unit)
+                                                            <input type="radio" data-name="{{$unit->name}}"
+                                                                @if ($key == 0) checked @endif
+                                                                class="item_quantity" id="android-{{ $key }}"
+                                                                name="data"
+                                                                value="{{ $product->price * $unit->quantity }}">
+                                                            <label for="android-{{ $key }}">
+                                                                <img src="{{storage_url($unit->image)}}">
+                                                            </label>
+                                                        @endforeach
                                                     </div>
-                                                    <div class="col-10 details">
-                                                        <h4 class="product_title">{{$product->name}}</h4>
-                                                        <p class="product_sub_cat">{{$product->pro_sub_cat->name}}</p>
-                                                        <p>{{{$product->generic->name}}}</p>
-                                                        <p>{{$product->company->name}}</p>
+                                                </div>
+                                                <div class="plus_minus col-3">
+                                                    <div class="form-group">
+                                                        <div class="input-group" role="group">
+                                                            <a href="javascript:void(0)" class="btn btn-sm minus_btn"><i class="fa-solid fa-minus"></i></a>
+                                                            <input type="text" class="form-control text-center item_quantity" value="1" >
+                                                            <a href="javascript:void(0)" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\AddToCart;
 use App\Models\Medicine;
+use App\Models\MedicineUnit;
 use App\Models\ProductCategory;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
@@ -28,7 +29,22 @@ class BaseController extends Controller
         if(!empty($data['atcs'])){
             $data['cart_products'] = Medicine::activated()
             ->whereIn('id', $data['atcs']->pluck('product_id'))
-            ->get();
+            ->get()->map(function($product){
+
+                $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
+                $product->attr_title = Str::ucfirst(Str::lower($product->name . $strength ));
+                $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 45, '..');
+                $product->generic->name = str_limit($product->generic->name, 55, '..');
+                $product->company->name = str_limit($product->company->name, 55, '..');
+
+
+
+                $product->units = array_map(function ($u_id) {
+                    return MedicineUnit::findOrFail($u_id);
+                }, (array) json_decode($product->unit, true));
+                $product->units = collect($product->units)->sortBy('quantity')->values()->all();
+                return $product; 
+            });
             $data['total_cart_item'] = $data['cart_products']->count();
         }
         

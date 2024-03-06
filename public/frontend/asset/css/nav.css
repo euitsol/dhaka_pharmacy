@@ -55,7 +55,8 @@ header{
   .header-section .right-col .item{
     width: inherit;
   }
-  .header-section .right-col button {
+  .header-section .right-col .cart-btn, 
+  .header-section .right-col .wish-btn {
     background: transparent;
     border: none;
     color: var(--nav-text-color);
@@ -103,6 +104,96 @@ header{
     background: var(--nav-primary-bg);
     
   }
+  .header-section .right-col .offcanvas {
+    width: 550px;
+    
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item {
+  
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .product_details {
+  
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .product_details .image{
+  
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .product_details .image img {
+    height: 60px;
+    object-fit: cover;
+    width: 100%;
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .product_details .info .product_title{
+    font-size: 14px;
+    color: var(--text-color-black);
+    line-height: 1.5rem;
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .product_details .info p{
+    font-size: 11px;
+    color: var(--nav-text-gray);
+    line-height: .9rem;
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .atc_functionality .plus_minus .item_quantity{
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .atc_functionality .plus_minus .item_quantity:focus{
+    outline: 0;
+    box-shadow: none;
+    border-color: var(--nav-asent-color);
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .atc_functionality .plus_minus .minus_btn,
+  .header-section .right-col .offcanvas .add_to_cart_item .atc_functionality .plus_minus .plus_btn{
+    background-color: var(--nav-asent-color);
+    color: var(--nav-text-color);
+    line-height: 2;
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .item_price h4{
+    color: var(--nav-asent-color);
+    font-size: 1rem;
+  }
+
+  .header-section .right-col .offcanvas .add_to_cart_item .boxed label {
+      display: inline-block;
+      width: 50px;
+      border: solid 2px #ccc;
+      transition: all 0.3s;
+  }
+
+  .header-section .right-col .offcanvas .add_to_cart_item .boxed input[type="radio"] {
+      display: none;
+  }
+
+  .header-section .right-col .offcanvas .add_to_cart_item .boxed input[type="radio"]:checked+label {
+      border: solid 2px green;
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .boxed img {
+      height: 45px;
+      width: 45px;
+      padding: 3px;
+      object-fit: contain;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   .header-section .search-filter{
     position: relative;
   }
