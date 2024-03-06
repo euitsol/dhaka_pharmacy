@@ -1629,6 +1629,24 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .product-section .sub_categories .sub_cat_item .card.active{
   border-color: var(--asent-color);
 }
+
+.product-section .sub_categories .sub_cat_item .card.active .category_name,
+.product-section .sub_categories .sub_cat_item .card.active .sub_category_name{
+  height: 50%;
+  visibility: visible;
+}
+.product-section .sub_categories .sub_cat_item .card.active .category_name h3,
+.product-section .sub_categories .sub_cat_item .card.active .sub_category_name h3{
+  opacity: 1;
+  visibility: visible;
+}
+.product-section .sub_categories .sub_cat_item .card.active::before{
+  width: 100%;
+}
+
+
+
+
 .product-section .sub_categories .sub_cat_item .card.active .card-title{
   transform: scale(1.2);
   font-weight: bold;
