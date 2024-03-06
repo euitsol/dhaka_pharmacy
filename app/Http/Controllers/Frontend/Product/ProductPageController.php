@@ -23,7 +23,7 @@ class ProductPageController extends BaseController
         $offset = request('offset');
 
         $currentUrl = URL::current();
-        $data['url'] = $currentUrl . "&sub-category=$sub_category_slug";
+        $data['url'] = $currentUrl . "?category=$category_slug&sub-category=$sub_category_slug";
 
 
 
