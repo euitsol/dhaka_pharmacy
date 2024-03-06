@@ -30,11 +30,11 @@ class DistrictManagerController extends Controller
     public function details($id): JsonResponse
     {
         $data = DistrictManager::with('operation_area')->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
         $data->total_lams = count($data->lams);
-        $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->created_by ? $data->created_user->name : 'System';
-        $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
+        $data->creating_time = $data->created_date();
+        $data->updating_time = $data->updated_date();
+        $data->created_by = $data->created_user_name();
+        $data->updated_by = $data->updated_user_name();
         return response()->json($data);
     }
 
@@ -60,7 +60,7 @@ class DistrictManagerController extends Controller
     }
     public function create(): View
     {
-        $data['operation_areas'] = OperationArea::where('deleted_at',null)->where('status',1)->orderBy('name')->get();
+        $data['operation_areas'] = OperationArea::activated()->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key','district_manager')->first();
         return view('admin.dm_management.district_manager.create',$data);
     }
@@ -79,7 +79,7 @@ class DistrictManagerController extends Controller
     public function edit($id): View
     {
         $data['dm'] = DistrictManager::findOrFail($id);
-        $data['operation_areas'] = OperationArea::where('deleted_at',null)->where('status',1)->orderBy('name')->get();
+        $data['operation_areas'] = OperationArea::activated()->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key','district_manager')->first();
         return view('admin.dm_management.district_manager.edit',$data);
     }

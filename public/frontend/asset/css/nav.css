@@ -63,9 +63,19 @@
     font-weight: 600;
     transition: 0.4s;
   }
+  .header-section .right-col button #cart_btn_quantity{
+    font-size: 15px;
+    transition: 0.4s;
+    color: var(--nav-asent-color);
+  }
   .header-section .right-col button:hover {
     color: var(--nav-asent-color);
   }
+  .header-section .right-col button:hover #cart_btn_quantity{
+    color: var(--nav-text-color);
+  }
+  /* Add To Cart CSS  */
+  
   .header-section .right-col .login-btn {
     color: var(--nav-text-color);
     font-family: "Open Sans", sans-serif;

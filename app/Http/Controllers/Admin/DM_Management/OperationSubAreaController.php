@@ -28,15 +28,15 @@ class OperationSubAreaController extends Controller
     public function details($id): JsonResponse
     {
         $data = OperationSubArea::with('operation_area')->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->created_by ? $data->creater->name : 'System';
-        $data->updated_by = $data->updated_by ? $data->updater->name : 'N/A';
+        $data->creating_time = $data->created_date();
+        $data->updating_time = $data->updated_date();
+        $data->created_by = $data->creater_name();
+        $data->updated_by = $data->updater_name();
         return response()->json($data);
     }
     public function create(): View
     {
-        $data['op_areas'] = OperationArea::where('status', 1)->latest()->get();
+        $data['op_areas'] = OperationArea::activated()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'operation-sub-area')->first();
         return view('admin.dm_management.operation_sub_area.create', $data);
     }
@@ -54,7 +54,7 @@ class OperationSubAreaController extends Controller
     public function edit($slug): View
     {
         $data['operation_sub_area'] = OperationSubArea::where('slug',$slug)->first();
-        $data['operation_areas'] = OperationArea::where('status', 1)->latest()->get();
+        $data['operation_areas'] = OperationArea::activated()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'operation-sub-area')->first();
         return view('admin.dm_management.operation_sub_area.edit', $data);
     }

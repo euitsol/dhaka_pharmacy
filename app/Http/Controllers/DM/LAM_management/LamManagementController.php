@@ -29,10 +29,10 @@ class LamManagementController extends Controller
     public function details($id): JsonResponse
     {
         $data = LocalAreaManager::with(['dm.operation_area','operation_sub_area','creater','updater'])->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->creater_id ? $data->creater->name : 'System';
-        $data->updated_by = $data->updater_id ? $data->updater->name : 'N/A';
+        $data->creating_time = $data->created_date();
+        $data->updating_time = $data->updated_date();
+        $data->created_by = $data->creater_name();
+        $data->updated_by = $data->updater_name();
         return response()->json($data);
     }
 
