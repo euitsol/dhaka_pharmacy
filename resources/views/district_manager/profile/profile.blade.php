@@ -13,7 +13,7 @@
                     <form method="POST" action="{{ route('dm.profile.update') }}" autocomplete="off"
                         enctype="multipart/form-data">
                         @csrf
-                        @method('PUT');
+                        @method('PUT')
                         <div class="card-body">
                             <div class="row flex-xl-row flex-column-reverse">
                                 <div class="col-xl-7 col-xxl-8">
