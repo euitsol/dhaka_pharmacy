@@ -1529,21 +1529,97 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   overflow: hidden;
   transition: .4s;
 }
-
+.product-section .sub_categories .sub_cat_item .card {
+  position: relative;
+  transition: .4s;
+  height: 140px;
+  width: 140px;
+  padding: 10px;
+  overflow: hidden;
+}
+.product-section .sub_categories .sub_cat_item .card .category_name{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  z-index: 9;
+  background-color: var(--primary-bg);
+  opacity: .7;
+  transition: .4s;
+}
+.product-section .sub_categories .sub_cat_item .card .sub_category_name{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  z-index: 9;
+  background-color: var(--primary-bg);
+  opacity: .7;
+  transition: .4s;
+}
+.product-section .sub_categories .sub_cat_item .card .category_name h3,
+.product-section .sub_categories .sub_cat_item .card .sub_category_name h3{
+  font-size: 20px;
+  opacity: 0;
+  visibility: hidden;
+}
 .product-section .sub_categories .sub_cat_link {
   display: inline-block;
 }
 .product-section .sub_categories .sub_cat_link .sub_cat_img {
-  height: 100px;
-  width: 140px;
-  object-fit: contain;
+  
+  object-fit: cover;
   transition: .4s;
+ 
 }
-.product-section .sub_categories .sub_cat_link .card-title {
+
+/* .product-section .sub_categories .sub_cat_item .card::after{
+  content: "";
+  background-color: var(--primary-bg);
+  opacity: .7;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
   transition: .4s;
+} */
+.product-section .sub_categories .sub_cat_item .card::before{
+  content: "";
+  background-color: var(--white-bg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  height: 4px;
+  width: 0;
+  z-index: 99;
+  transition: .4s;
+  transition-delay: .4s;
 }
 .product-section .sub_categories .sub_cat_item:hover .card{
   border-color: var(--asent-color);
+}
+.product-section .sub_categories .sub_cat_item:hover .card .category_name,
+.product-section .sub_categories .sub_cat_item:hover .card .sub_category_name{
+  height: 50%;
+  visibility: visible;
+}
+.product-section .sub_categories .sub_cat_item:hover .card .category_name h3,
+.product-section .sub_categories .sub_cat_item:hover .card .sub_category_name h3{
+  opacity: 1;
+  visibility: visible;
+}
+.product-section .sub_categories .sub_cat_item:hover .card::before{
+  width: 100%;
 }
 .product-section .sub_categories .sub_cat_item:hover .card-title{
   transform: scale(1.1);

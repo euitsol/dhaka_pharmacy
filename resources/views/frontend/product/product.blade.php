@@ -38,9 +38,8 @@
                                                                     <img class="sub_cat_img"
                                                                         src="{{ storage_url($sub_cat->image) }}"
                                                                         alt="{{ $sub_cat->name }}">
-                                                                    <div class="card-title">
-                                                                        {{ __(str_limit($sub_cat->name, 12, '..')) }}
-                                                                    </div>
+                                                                    <div class="category_name" title="{{$sub_cat->pro_cat->name}}"><h3>{{str_limit($sub_cat->pro_cat->name,12,'..')}}</h3></div>
+                                                                    <div class="sub_category_name" title="{{$sub_cat->name}}"><h3>{{str_limit($sub_cat->name,12,'..')}}</h3></div>
                                                                 </div>
                                                             </a>
                                                         </li>
