@@ -188,6 +188,9 @@ header{
   .header-section .right-col .offcanvas .add_to_cart_item .boxed input[type="radio"]:checked+label {
       border: solid 2px green;
   }
+  .header-section .right-col .offcanvas .add_to_cart_item .boxed .checked {
+      border: solid 2px green;
+  }
   .header-section .right-col .offcanvas .add_to_cart_item .boxed img {
       height: 45px;
       width: 45px;
