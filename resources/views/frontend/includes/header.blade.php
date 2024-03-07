@@ -64,6 +64,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
+                                @php($count = 0)
                                 @foreach ($cart_products as $key=>$product)
                                     <div class="card add_to_cart_item mb-2">
                                         <div class="card-body py-2">
@@ -95,13 +96,14 @@
                                                 
                                                 <div class="item_units col-7">
                                                     <div class="form-group my-1 boxed">
-                                                        @foreach ($product->units as $key=>$unit)
-                                                            <input type="radio" data-name="{{$unit->name}}"
-                                                                @if ($key == 0) checked @endif
-                                                                class="item_quantity" id="android-{{ $key }}"
+                                                        @foreach ($product->units as $u_key=>$unit)
+                                                            @php($count++)
+                                                            <input type="radio" data-name="{{$unit->name}}" 
+                                                                @if ($u_key == 0) checked @endif
+                                                                class="item_quantity" id="android-{{ $count }}"
                                                                 name="data"
                                                                 value="{{ $product->price * $unit->quantity }}">
-                                                            <label for="android-{{ $key }}">
+                                                            <label for="android-{{ $count }}" class="@if ($u_key == 0) checked @endif">
                                                                 <img src="{{storage_url($unit->image)}}">
                                                             </label>
                                                         @endforeach
