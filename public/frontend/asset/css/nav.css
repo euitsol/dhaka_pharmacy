@@ -188,29 +188,12 @@ header{
   .header-section .right-col .offcanvas .add_to_cart_item .boxed input[type="radio"]:checked+label {
       border: solid 2px green;
   }
-  .header-section .right-col .offcanvas .add_to_cart_item .boxed .checked {
-      border: solid 2px green;
-  }
   .header-section .right-col .offcanvas .add_to_cart_item .boxed img {
       height: 45px;
       width: 45px;
       padding: 3px;
       object-fit: contain;
   }
-
-
-  /* *, *:before, *:after {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  } */
-  
-  
-  
-  
-
   
   .header-section .right-col .offcanvas .add_to_cart_item .product_details .form-group {
     display: block;

@@ -291,6 +291,27 @@ btn-arrow">
                     }
                 });
         });
+
+
+
+
+        $(document).on('click','.cart_remove_btn',function(){
+            let atc_id = $(this).data('atc_id');
+            let url = ("{{ route('product.remove_to_cart', ['atc'=>'atc_id']) }}");
+                let _url = url.replace('atc_id', atc_id);
+                $.ajax({
+                    url: _url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                            toastr.success(data.alert);
+                            $('#cart_btn_quantity').html(data.total_cart_item);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error add to cart data:', error);
+                    }
+                });
+        });
     });
 </script>
 @endpush
