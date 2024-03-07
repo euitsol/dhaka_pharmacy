@@ -64,10 +64,16 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
-                                @foreach ($cart_products as $product)
+                                @foreach ($cart_products as $key=>$product)
                                     <div class="card add_to_cart_item mb-2">
                                         <div class="card-body py-2">
                                             <div class="row align-items-center product_details mb-2">
+                                                <div class="check_order">
+                                                    <div class="form-group">
+                                                        <input type="checkbox" id="atc_item_check-{{$key}}">
+                                                        <label for="atc_item_check-{{$key}}"></label>
+                                                    </div>
+                                                </div>
                                                 <div class="image col-2">
                                                     <a href="">
                                                         <img class="border border-1 rounded-1"
@@ -76,18 +82,18 @@
                                                     </a>
                                                 </div>
                                                 <div class="col-8 info">
-                                                    <a href=""><h4 class="product_title" title="{{$product->attr_title}}">{{$product->name}}</h4></a>
-                                                    <a href=""><p >{{$product->pro_sub_cat->name}}</p></a>
-                                                    <a href=""><p>{{{$product->generic->name}}}</p></a>
-                                                    <a href=""><p>{{$product->company->name}}</p></a>
+                                                    <h4 class="product_title" title="{{$product->attr_title}}"> <a href="">{{$product->name}}</a></h4>
+                                                    <p><a href="">{{$product->pro_sub_cat->name}}</a></p>
+                                                    <p><a href="">{{{$product->generic->name}}}</a></p>
+                                                    <p><a href="">{{$product->company->name}}</a></p>
                                                 </div>
                                                 <div class="item_price col-2">
-                                                    <h4 class="text-center"> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
+                                                    <h4 class="text-end"> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
                                                 </div>
                                             </div>
                                             <div class="row align-items-center atc_functionality">
                                                 
-                                                <div class="item_units col-9">
+                                                <div class="item_units col-7">
                                                     <div class="form-group my-1 boxed">
                                                         @foreach ($product->units as $key=>$unit)
                                                             <input type="radio" data-name="{{$unit->name}}"
@@ -101,7 +107,7 @@
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                                <div class="plus_minus col-3">
+                                                <div class="plus_minus col-5 d-flex align-items-center justify-between">
                                                     <div class="form-group">
                                                         <div class="input-group" role="group">
                                                             <a href="javascript:void(0)" class="btn btn-sm minus_btn"><i class="fa-solid fa-minus"></i></a>
@@ -109,7 +115,13 @@
                                                             <a href="javascript:void(0)" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
                                                         </div>
                                                     </div>
+                                                    <div class="ben ms-3">
+                                                        <div class="text-end">
+                                                            <a href="" class="text-danger"><i class="fa-solid fa-trash-can"></i></i></a>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
