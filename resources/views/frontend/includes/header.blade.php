@@ -137,8 +137,25 @@
                                         </div>
                                     </div>
                                 @endforeach
-
-                                
+                            </div>
+                            <div class="offcanvas-footer cart_sub_total px-4 py-3">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h3>{{__('Total Item')}}</h3>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <h3>20</h3>
+                                    </div>
+                                    <div class="col-8">
+                                        <h3>{{__('Subtotal Price')}}</h3>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <h3><span> &#2547; </span> 20,000</h3>
+                                    </div>
+                                    <div class="col-12">
+                                        <a href="javascript:void(0)" class=" order_button w-100">Order Now</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

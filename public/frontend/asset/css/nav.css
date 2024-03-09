@@ -108,9 +108,6 @@ header{
     width: 600px;
     
   }
-  .header-section .right-col .offcanvas .add_to_cart_item {
-  
-  }
   .header-section .right-col .offcanvas .add_to_cart_item .product_details {
     position: relative;
   }
@@ -119,9 +116,6 @@ header{
     top: 0;
     right: 0;
     text-align: right;
-  }
-  .header-section .right-col .offcanvas .add_to_cart_item .product_details .image{
-  
   }
   .header-section .right-col .offcanvas .add_to_cart_item .product_details .image img {
     height: 60px;
@@ -242,6 +236,45 @@ header{
     border: solid #0079bf;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
+  }
+
+
+  .header-section .right-col .offcanvas .cart_sub_total {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--nav-primary-bg);
+    opacity: .9;
+    z-index: 2;
+  }
+  .header-section .right-col .offcanvas .cart_sub_total h3 {
+    color: var(--nav-text-color);
+    font-size: 15px;
+    line-height: 30px;
+    text-transform: uppercase;
+  }
+  .header-section .right-col .offcanvas .cart_sub_total .order_button {
+    display: block;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--text-color-white);
+    background: var(--secundary-color);
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--asent-color);
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 10px;
+    transition: 0.4s;
+  }
+  .header-section .right-col .offcanvas .cart_sub_total .order_button:hover {
+    color: var(--text-color-white);
+    background: transparent;
+    border: 1px solid var(--text-color-white);
   }
 
 
