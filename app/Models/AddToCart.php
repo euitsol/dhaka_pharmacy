@@ -16,4 +16,7 @@ class AddToCart extends BaseModel
     public function customer(){
         return $this->belongsTo(User::class,'customer_id');
     }
+    public function unit(){
+        return $this->belongsTo(MedicineUnit::class,'unit_id');
+    }
 }

@@ -30,12 +30,11 @@
                                                 <div class="col-4 img">
                                                     <a href="{{ route('product.single_product', $item->slug) }}"></a>
                                                     <img height="90" class="w-100 border border-1 rounded-1"
-                                                        src="{{ storage_url($item->image)}}"
-                                                        alt="{{ $item->name }}">
+                                                        src="{{ storage_url($item->image) }}" alt="{{ $item->name }}">
                                                     </a>
                                                 </div>
                                                 <div class="col-8">
-                                                    <h3 class="pdct-title" title="{{$item->attr_title}}"><a
+                                                    <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
                                                             href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
                                                     </h3>
                                                     <p><a href="">{{ $item->pro_sub_cat->name }}</a>
@@ -102,8 +101,7 @@ btn-arrow">
                                         <div class="single-pdct">
                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                 <div class="pdct-img">
-                                                    <img class="w-100"
-                                                        src="{{ storage_url($product->image)}}"
+                                                    <img class="w-100" src="{{ storage_url($product->image) }}"
                                                         alt="Product Image">
                                                 </div>
                                             </a>
@@ -117,13 +115,15 @@ btn-arrow">
 
                                                 <div class="product_title">
                                                     <a href="{{ route('product.single_product', $product->slug) }}">
-                                                        <h3 class="fw-bold"  title="{{$product->attr_title}}">{{ $product->name}}
+                                                        <h3 class="fw-bold" title="{{ $product->attr_title }}">
+                                                            {{ $product->name }}
                                                         </h3>
                                                     </a>
                                                 </div>
                                                 <h4> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
                                                 <div class="add_to_card">
-                                                    <a class="cart-btn" data-product_slug="{{$product->slug}}" href="javascript:void(0)">
+                                                    <a class="cart-btn" data-product_slug="{{ $product->slug }}"
+                                                        href="javascript:void(0)">
                                                         <i class="fa-solid fa-cart-plus"></i>
                                                     </a>
                                                 </div>
@@ -135,7 +135,8 @@ btn-arrow">
                             </div>
                             @if (count($products) >= 8)
                                 <div class="row show-more mt-5">
-                                    <a class="all-pdct-btn text-center" href="{{route('category.products',['category'=>'all'])}}">{{ __('All Products') }}</a>
+                                    <a class="all-pdct-btn text-center"
+                                        href="{{ route('category.products', ['category' => 'all']) }}">{{ __('All Products') }}</a>
                                 </div>
                             @endif
                         </div>
@@ -197,7 +198,7 @@ btn-arrow">
                 $('.cat-list li').removeClass('uk-slide-active');
                 $(this).parent('li').addClass('active');
                 let slug = $(this).data('slug');
-                let url = ("{{ route('home.featured_products', ['category'=>'slug']) }}");
+                let url = ("{{ route('home.featured_products', ['category' => 'slug']) }}");
                 let _url = url.replace('slug', slug);
 
                 $.ajax({
@@ -206,12 +207,14 @@ btn-arrow">
                     dataType: 'json',
                     success: function(data) {
                         let slug = data.product_cat ? data.product_cat.slug : 'all';
-                        let all_product_route = ("{{ route('category.products', ['category'=>'slug']) }}");
+                        let all_product_route = (
+                            "{{ route('category.products', ['category' => 'slug']) }}");
                         let _all_product_route = all_product_route.replace('slug', slug);
-                        $('.all-pdct-btn').attr('href',_all_product_route);
+                        $('.all-pdct-btn').attr('href', _all_product_route);
                         var result = '';
                         data.products.forEach(function(product) {
-                            let route = ("{{ route('product.single_product', ['slug']) }}");
+                            let route = (
+                                "{{ route('product.single_product', ['slug']) }}");
                             let _route = route.replace('slug', product.slug);
                             result += `
                                 <div class="col-3 px-2">
@@ -267,30 +270,4 @@ btn-arrow">
             $('.best-selling-products').height(featured_pro_height + "px")
         });
     </script>
-
-
-<script>
-    $(document).ready(function(){
-        $(document).on('click','.cart-btn',function(){
-            let product_slug = $(this).data('product_slug');
-            let url = ("{{ route('product.add_to_cart', ['product'=>'product_slug']) }}");
-                let _url = url.replace('product_slug', product_slug);
-                $.ajax({
-                    url: _url,
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        if(data.alert !== null ){
-                            toastr.error(data.alert);
-                        }else{
-                            $('#cart_btn_quantity').html(data.total_cart_item);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error add to cart data:', error);
-                    }
-                });
-        });
-    });
-</script>
 @endpush

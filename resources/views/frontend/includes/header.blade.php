@@ -63,11 +63,12 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="offcanvas-body">
+                            <div class="offcanvas-body add_to_carts">
                                 @php($count = 0)
-                                @foreach ($cart_products as $key=>$product)
+                                @foreach ($atcs as $key=>$atc)
                                     <div class="card add_to_cart_item mb-2">
                                         <div class="card-body py-2">
+                                            {{-- Product Details  --}}
                                             <div class="row align-items-center product_details mb-2">
                                                 <div class="check_order">
                                                     <div class="form-group">
@@ -78,48 +79,56 @@
                                                 <div class="image col-2">
                                                     <a href="">
                                                         <img class="border border-1 rounded-1"
-                                                        src="{{storage_url($product->image)}}"
-                                                        alt="{{$product->name}}">
+                                                        src="{{storage_url($atc->product->image)}}"
+                                                        alt="{{$atc->product->name}}">
                                                     </a>
                                                 </div>
                                                 <div class="col-8 info">
-                                                    <h4 class="product_title" title="{{$product->attr_title}}"> <a href="">{{$product->name}}</a></h4>
-                                                    <p><a href="">{{$product->pro_sub_cat->name}}</a></p>
-                                                    <p><a href="">{{{$product->generic->name}}}</a></p>
-                                                    <p><a href="">{{$product->company->name}}</a></p>
+                                                    <h4 class="product_title" title="{{$atc->product->attr_title}}"> <a href="">{{$atc->product->name}}</a></h4>
+                                                    <p><a href="">{{$atc->product->pro_sub_cat->name}}</a></p>
+                                                    <p><a href="">{{{$atc->product->generic->name}}}</a></p>
+                                                    <p><a href="">{{$atc->product->company->name}}</a></p>
                                                 </div>
-                                                <div class="item_price col-2">
-                                                    <h4 class="text-end"> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
+                                                <div class="item_price col-2 ps-0">
+                                                    <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">{{ (!empty($atc->unit_id)) ? (number_format(($atc->product->price*$atc->unit->quantity),2)) : (number_format($atc->product->price,2))  }}</span></h4>
                                                 </div>
                                             </div>
+
+
                                             <div class="row align-items-center atc_functionality">
-                                                
+
+                                                {{-- Units --}}
                                                 <div class="item_units col-7">
                                                     <div class="form-group my-1 boxed">
-                                                        @foreach ($product->units as $u_key=>$unit)
+                                                        
+                                                        @foreach ($atc->product->units as $u_key=>$unit)
                                                             @php($count++)
                                                             <input type="radio" data-name="{{$unit->name}}" 
-                                                                @if ($u_key == 0) checked @endif
-                                                                class="item_quantity" id="android-{{ $count }}"
-                                                                name="data"
-                                                                value="{{ $product->price * $unit->quantity }}">
-                                                            <label for="android-{{ $count }}" class="@if ($u_key == 0) checked @endif">
-                                                                <img src="{{storage_url($unit->image)}}">
-                                                            </label>
+                                                                @if (!empty($atc->unit_id) && ($unit->id == $atc->unit_id)) checked 
+                                                                @elseif($u_key==0) checked @endif
+                                                                class="unit_quantity" id="android-{{$count+20}}"
+                                                                name="data-{{$key}}"
+                                                                value="{{ $atc->product->price * $unit->quantity }}">
+                                                                <label for="android-{{ $count+20 }}">
+                                                                    <img src="{{storage_url($unit->image)}}">
+                                                                </label>
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                                <div class="plus_minus col-5 d-flex align-items-center justify-between">
+
+
+                                                {{-- Plus Minus  --}}
+                                                <div class="plus_minus col-5 ps-md-4 d-flex align-items-center justify-between">
                                                     <div class="form-group">
                                                         <div class="input-group" role="group">
-                                                            <a href="javascript:void(0)" class="btn btn-sm minus_btn"><i class="fa-solid fa-minus"></i></a>
-                                                            <input type="text" class="form-control text-center item_quantity" value="1" >
+                                                            <a href="javascript:void(0)" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
+                                                            <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="{{ (!empty($atc->unit_id)) ? (number_format(($atc->product->price*$atc->unit->quantity),2)) : (number_format($atc->product->price,2))  }}" value="1" >
                                                             <a href="javascript:void(0)" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
                                                         </div>
                                                     </div>
                                                     <div class="ben ms-3">
                                                         <div class="text-end">
-                                                            <a href="" class="text-danger"><i class="fa-solid fa-trash-can"></i></i></a>
+                                                            <a href="javascript:void(0)" data-atc_id ={{$atc->id}} class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -128,6 +137,25 @@
                                         </div>
                                     </div>
                                 @endforeach
+                            </div>
+                            <div class="offcanvas-footer cart_sub_total px-4 py-3">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h3>{{__('Total Item')}}</h3>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <h3>20</h3>
+                                    </div>
+                                    <div class="col-8">
+                                        <h3>{{__('Subtotal Price')}}</h3>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <h3><span> &#2547; </span> 20,000</h3>
+                                    </div>
+                                    <div class="col-12">
+                                        <a href="javascript:void(0)" class=" order_button w-100">Order Now</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

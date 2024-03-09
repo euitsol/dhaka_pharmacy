@@ -19,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('unit_id')->nullable();
             $table->float('quantity');
             $table->boolean('status')->default(1);
             $table->timestamps();
@@ -27,6 +28,7 @@ return new class extends Migration
 
             $table->foreign('product_id')->references('id')->on('medicines')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('unit_id')->references('id')->on('medicine_units')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

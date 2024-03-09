@@ -6,7 +6,7 @@
 @endpush
 @push('css')
     <style>
-        .boxed label {
+        .product_content .product_price .boxed label {
             display: inline-block;
             width: 100px;
             padding: 10px;
@@ -14,14 +14,14 @@
             transition: all 0.3s;
         }
 
-        .boxed input[type="radio"] {
+        .product_content .product_price .boxed input[type="radio"] {
             display: none;
         }
 
-        .boxed input[type="radio"]:checked+label {
+        .product_content .product_price .boxed input[type="radio"]:checked+label {
             border: solid 2px green;
         }
-        .boxed img {
+        .product_content .product_price .boxed img {
             height: 70px;
             width: 100%;
             object-fit: cover;
@@ -95,7 +95,7 @@
                                                                 </span></strong> /<span class="unit_name">{{ __('piece') }}</span> </p>
                                                         <div class="form-group my-4 boxed">
                                                             @foreach ($units as $key => $unit)
-                                                                <input type="radio" data-name="{{$unit->name}}"
+                                                                <input type="radio" data-id="{{$unit->id}}" data-name="{{$unit->name}}"
                                                                     @if ($key == 0) checked @endif
                                                                     class="item_quantity" id="android-{{ $key }}"
                                                                     name="data"
@@ -107,9 +107,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="add_to_card">
-                                                        <a class="cart-btn" type="submit" href="#"><img
-                                                                src="{{ asset('frontend/asset/img/cart-icon.svg') }}"
-                                                                alt="">{{ __('Add to Cart') }}</a>
+                                                        <a class="cart-btn" href="javascript:void(0)" data-product_slug="{{ $single_product->slug }}"  href="#">
+                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                            {{ __('Add to Cart') }}</a>
                                                     </div>
                                                     <div class="order_button mt-4">
                                                         <a class="order-btn" type="submit"
@@ -526,8 +526,11 @@
         $(document).ready(function() {
 
 
-            $('.item_quantity').on('change', function() {
+            $('.product_price .item_quantity').on('change', function() {
                 var name = $(this).data('name');
+                var id = $(this).data('id');
+                $(this).closest('.product_content').find('.cart-btn').attr('data-unit_id',id);
+
                 var formattedNumber = numberFormat($(this).val(), 2);
                 $('.total_price').html(formattedNumber);
                 $('.unit_name').html(name);
