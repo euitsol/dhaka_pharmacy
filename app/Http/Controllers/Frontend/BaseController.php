@@ -142,7 +142,7 @@ class BaseController extends Controller
     }
 
     public function remove_to_cart(){
-        $act_id = request('act');
+        $act_id = request('atc');
         $atc = AddToCart::findOrFail($act_id);
         $atc->delete();
         $data['sucses_alert'] = "Product Remove From Cart Successfully";

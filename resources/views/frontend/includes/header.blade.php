@@ -63,11 +63,12 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="offcanvas-body">
+                            <div class="offcanvas-body add_to_carts">
                                 @php($count = 0)
                                 @foreach ($atcs as $key=>$atc)
                                     <div class="card add_to_cart_item mb-2">
                                         <div class="card-body py-2">
+                                            {{-- Product Details  --}}
                                             <div class="row align-items-center product_details mb-2">
                                                 <div class="check_order">
                                                     <div class="form-group">
@@ -88,32 +89,40 @@
                                                     <p><a href="">{{{$atc->product->generic->name}}}</a></p>
                                                     <p><a href="">{{$atc->product->company->name}}</a></p>
                                                 </div>
-                                                <div class="item_price col-2">
-                                                    <h4 class="text-end"> <span> &#2547; </span> {{ number_format($atc->product->price) }}</h4>
+                                                <div class="item_price col-2 ps-0">
+                                                    <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">{{ (!empty($atc->unit_id)) ? (number_format(($atc->product->price*$atc->unit->quantity),2)) : (number_format($atc->product->price,2))  }}</span></h4>
                                                 </div>
                                             </div>
+
+
                                             <div class="row align-items-center atc_functionality">
-                                                
+
+                                                {{-- Units --}}
                                                 <div class="item_units col-7">
                                                     <div class="form-group my-1 boxed">
-                                                        @foreach ($atc->product->units as $unit)
+                                                        
+                                                        @foreach ($atc->product->units as $u_key=>$unit)
                                                             @php($count++)
                                                             <input type="radio" data-name="{{$unit->name}}" 
-                                                                @if (isset($atc->unit_id) && ($unit->id == $atc->unit_id)) checked @endif
-                                                                class="item_quantity" id="android-{{ $count }}"
-                                                                name="data"
+                                                                @if (!empty($atc->unit_id) && ($unit->id == $atc->unit_id)) checked 
+                                                                @elseif($u_key==0) checked @endif
+                                                                class="unit_quantity" id="android-{{$count+20}}"
+                                                                name="data-{{$key}}"
                                                                 value="{{ $atc->product->price * $unit->quantity }}">
-                                                            <label for="android-{{ $count }}">
-                                                                <img src="{{storage_url($unit->image)}}">
-                                                            </label>
+                                                                <label for="android-{{ $count+20 }}">
+                                                                    <img src="{{storage_url($unit->image)}}">
+                                                                </label>
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                                <div class="plus_minus col-5 d-flex align-items-center justify-between">
+
+
+                                                {{-- Plus Minus  --}}
+                                                <div class="plus_minus col-5 ps-md-4 d-flex align-items-center justify-between">
                                                     <div class="form-group">
                                                         <div class="input-group" role="group">
-                                                            <a href="javascript:void(0)" class="btn btn-sm minus_btn"><i class="fa-solid fa-minus"></i></a>
-                                                            <input type="text" class="form-control text-center item_quantity" value="1" >
+                                                            <a href="javascript:void(0)" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
+                                                            <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="{{ (!empty($atc->unit_id)) ? (number_format(($atc->product->price*$atc->unit->quantity),2)) : (number_format($atc->product->price,2))  }}" value="1" >
                                                             <a href="javascript:void(0)" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
                                                         </div>
                                                     </div>
@@ -128,6 +137,8 @@
                                         </div>
                                     </div>
                                 @endforeach
+
+                                
                             </div>
                         </div>
                     </div>
