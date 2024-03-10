@@ -150,7 +150,7 @@
                                         <h3>{{__('Subtotal Price')}}</h3>
                                     </div>
                                     <div class="col-4 text-end">
-                                        <h3><span> &#2547; </span class="subtotal_price">1</h3>
+                                        <h3><span> &#2547; </span> <span class="subtotal_price">0.00</span></h3>
                                     </div>
                                     <div class="col-12">
                                         <a href="javascript:void(0)" class=" order_button w-100">Order Now</a>
