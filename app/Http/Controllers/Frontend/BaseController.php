@@ -97,11 +97,12 @@ class BaseController extends Controller
         $product = Medicine::activated()->where('slug',$product_slug)->first();
         $customer_id = 1;
         $check = AddToCart::where('product_id',$product->id)->where('customer_id',$customer_id)->first();
-        $data['alert'] = null;
         if($check){
             $data['alert'] = "Already Add To Cart";
             return response()->json($data);
         }
+        $data['alert'] = "Add To Cart Successfully";
+
         $atc = new AddToCart();
         $atc->product_id = $product->id;
         $atc->customer_id = $customer_id;

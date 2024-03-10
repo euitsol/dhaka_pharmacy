@@ -19,10 +19,11 @@
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    if (data.alert !== null) {
-                        toastr.error(data.alert);
-                    } else {
+                    if(data.atcs) {
                         $('#cart_btn_quantity').html(data.total_cart_item);
+                        toastr.success(data.alert);
+                    }else{
+                        toastr.error(data.alert);
                     }
                 },
                 error: function(xhr, status, error) {
