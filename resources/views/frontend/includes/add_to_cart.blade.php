@@ -220,4 +220,33 @@
         }
     });
 
+
+
+    // Subtotal JS 
+
+    $(document).on('change','.check_atc_item',function(){
+        var check = $(this).prop('checked');
+        var subtotal_price = $('.subtotal_price');
+        if (check == true) {
+            var formatted_subtotal_price = numberFormat(parseInt(subtotal_price.html()));
+
+            var check_item_price = $(this).closest('.add_to_cart_item').find('.item_count_price').html();
+            check_item_price = numberFormat(parseInt(check_item_price));
+
+            var summation = (formatted_subtotal_price + check_item_price);
+
+            subtotal_price.html(summation);
+        }
+    });
+
+    var total_check_item_price = 0;
+    $('.add_to_carts').find('.check_atc_item').each(function() {
+    var check = $(this).prop('checked');
+    if (check == true) {
+        var check_item_price = $(this).closest('.add_to_cart_item').find('.item_count_price').html();
+        // console.log(check_item_price);
+
+    }
+});
+
 </script>

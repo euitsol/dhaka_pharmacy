@@ -240,13 +240,9 @@ header{
 
 
   .header-section .right-col .offcanvas .cart_sub_total {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
     background-color: var(--nav-primary-bg);
     opacity: .9;
-    z-index: 2;
   }
   .header-section .right-col .offcanvas .cart_sub_total h3 {
     color: var(--nav-text-color);

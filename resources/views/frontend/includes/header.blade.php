@@ -72,7 +72,7 @@
                                             <div class="row align-items-center product_details mb-2">
                                                 <div class="check_order">
                                                     <div class="form-group">
-                                                        <input type="checkbox" id="atc_item_check-{{$key}}">
+                                                        <input class="check_atc_item" type="checkbox" id="atc_item_check-{{$key}}">
                                                         <label for="atc_item_check-{{$key}}"></label>
                                                     </div>
                                                 </div>
@@ -144,13 +144,13 @@
                                         <h3>{{__('Total Item')}}</h3>
                                     </div>
                                     <div class="col-4 text-end">
-                                        <h3>20</h3>
+                                        <h3 class="total_check_item">0</h3>
                                     </div>
                                     <div class="col-8">
                                         <h3>{{__('Subtotal Price')}}</h3>
                                     </div>
                                     <div class="col-4 text-end">
-                                        <h3><span> &#2547; </span> 20,000</h3>
+                                        <h3><span> &#2547; </span class="subtotal_price">1</h3>
                                     </div>
                                     <div class="col-12">
                                         <a href="javascript:void(0)" class=" order_button w-100">Order Now</a>
