@@ -14,15 +14,102 @@
             let _url = url.replace('product_slug', product_slug);
             let __url = _url.replace(/&amp;/g, '&');
 
+            let atc_total = $('#cart_btn_quantity strong');
+            let plus_atc_total = parseInt(atc_total.html()) + 1;
+
+            var item_append = $('.add_to_carts');
+            var cart_empty_alert = $('.cart_empty_alert');
+
             $.ajax({
                 url: __url,
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    if (data.alert !== null) {
+                    if(data.atc) {
+                        var count = data.count;
+                        var result = `
+                                    <div class="card add_to_cart_item mb-2">
+                                            <div class="card-body py-2">
+                                                {{-- Product Details  --}}
+                                                <div class="row align-items-center product_details mb-2">
+                                                    <div class="check_order">
+                                                        <div class="form-group">
+                                                            <input class="check_atc_item" type="checkbox" id="atc_item_check-${count}">
+                                                            <label for="atc_item_check-${count}"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="image col-2">
+                                                        <a href="">
+                                                            <img class="border border-1 rounded-1"
+                                                            src="${data.atc.product.image}"
+                                                            alt="${data.atc.product.name}">
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-8 info">
+                                                        <h4 class="product_title" title="${data.atc.product.attr_title}"> <a href="">${data.atc.product.name}</a></h4>
+                                                        <p><a href="">${data.atc.product.pro_sub_cat.name}</a></p>
+                                                        <p><a href="">${data.atc.product.generic.name}</a></p>
+                                                        <p><a href="">${data.atc.product.company.name}</a></p>
+                                                    </div>
+                                                    <div class="item_price col-2 ps-0">
+                                                        <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">${data.atc.product.item_count_price}</span></h4>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row align-items-center atc_functionality">
+                                                    <div class="item_units col-7">
+                                                        <div class="form-group my-1 boxed">
+                        `;
+                        data.atc.product.units.forEach(function(unit, index){
+                            count++;
+                            var checked = '';
+                            if (data.atc.unit_id != null && unit.id == data.atc.unit_id || index === 0) {
+                                checked = 'checked';
+                            }
+                                
+                            result +=`
+                                        <input type="radio" data-name="${unit.name}" ${checked}
+                                        class="unit_quantity" id="android-${count+20}"
+                                        name="data-${index}"
+                                        value="${ data.atc.price * unit.quantity }">
+                                        <label for="android-${count+20}">
+                                            <img src="${unit.image}">
+                                        </label>
+                                    `;
+                            index++;
+                        });
+                        result +=`
+                                            </div>
+                                        </div>
+
+
+                                        {{-- Plus Minus  --}}
+                                        <div class="plus_minus col-5 ps-md-4 d-flex align-items-center justify-between">
+                                            <div class="form-group">
+                                                <div class="input-group" role="group">
+                                                    <a href="javascript:void(0)" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
+                                                    <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${data.atc.product.data_item_price}" value="1" >
+                                                    <a href="javascript:void(0)" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="ben ms-3">
+                                                <div class="text-end">
+                                                    <a href="javascript:void(0)" data-atc_id =${data.atc.id} class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        item_append.prepend(result);
+                        cart_empty_alert.hide();
+                        atc_total.html(plus_atc_total);
+                        toastr.success(data.alert);
+                    }else{
                         toastr.error(data.alert);
-                    } else {
-                        $('#cart_btn_quantity').html(data.total_cart_item);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -36,13 +123,25 @@
             let atc_id = $(this).data('atc_id');
             let url = ("{{ route('product.remove_to_cart', ['atc' => 'atc_id']) }}");
             let _url = url.replace('atc_id', atc_id);
+            let cartItem = $(this).closest('.add_to_cart_item');
+            let atc_total = $('#cart_btn_quantity strong');
+            let minus_atc_total = parseInt(atc_total.html()) - 1;
+
+            var item_append = $('.add_to_carts');
+            var cart_empty_alert = $('.cart_empty_alert');
             $.ajax({
                 url: _url,
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
                     toastr.success(data.sucses_alert);
-                    $('#cart_btn_quantity').html(data.total_cart_item);
+
+                    atc_total.html(minus_atc_total);
+                    cartItem.remove();
+                    if(minus_atc_total === 0){
+                        cart_empty_alert.show();
+                        item_append.html(cart_empty_alert);
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error add to cart data:', error);
@@ -51,124 +150,8 @@
         });
     });
 
-    /////////////////////////////////////////
-    // Won Codes 
-    ///////////////////////////////////////////
-
-    // Item Plus Minus Calculation JS 
-
-    // function numberFormat(value, decimals) {
-    //     return parseFloat(value).toFixed(decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    // }
-    // var container = $('.add_to_carts');
-    // var plus_btn = '.plus_btn';
-    // var minus_btn = '.minus_btn';
-    // var unit = '.unit_quantity';
-
-    // $(document).on('click', plus_btn, function() {
-    //     var quantity = $(this).siblings('.plus_minus_quantity');
-    //     if (isNaN(quantity.val())) {
-    //         quantity.val(1);
-    //     } else {
-    //         var currentVal = parseInt(quantity.val());
-    //         quantity.val(currentVal + 1);
-    //     }
-    //     var item_price = quantity.data('item_price');
-    //     var quantity_val = quantity.val();
-    //     var total_price = item_price * quantity_val;
-    //     $(this).closest('.add_to_cart_item').find('.item_count_price').html(numberFormat(total_price, 2));
-
-
-
-
-    // });
-
-    // $(document).on('click', minus_btn, function() {
-    //     var quantity = $(this).siblings('.plus_minus_quantity');
-    //     var currentVal = parseInt(quantity.val());
-    //     if (currentVal > 1) {
-    //         quantity.val(currentVal - 1);
-    //     }
-    //     var item_price = quantity.data('item_price');
-    //     var quantity_val = quantity.val();
-    //     var total_price = item_price * quantity_val;
-    //     $(this).closest('.add_to_cart_item').find('.item_count_price').html(numberFormat(total_price, 2));
-    // });
-
-
-
-    // $(document).on('change', unit, function() {
-    //     var formattedNumber = numberFormat($(this).val(), 2);
-    //     var item_quantity = $(this).closest('.add_to_cart_item').find('.plus_minus_quantity').val();
-    //     var total_item_price = formattedNumber*item_quantity;
-    //     $(this).closest('.add_to_cart_item').find('.plus_minus_quantity').data('item_price', formattedNumber);
-    //     $(this).closest('.add_to_cart_item').find('.item_count_price').html(numberFormat(total_item_price,2));
-    // });
-
-
-
-
     ////////////////////////////////////////////////////
-    //1st Optimize 
-    ////////////////////////////////////////////////////
-
-    // // Number Format Function 
-    // function numberFormat(value, decimals) {
-    //     return parseFloat(value).toFixed(decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    // }
-    // // Price Refresh Function 
-    // function updateItemPrice(element) {
-    //     var quantityInput = element.siblings('.plus_minus_quantity');
-    //     var currentVal = parseInt(quantityInput.val());
-    //     var itemPrice = parseFloat(quantityInput.data('item_price')) || 0; // Ensure a valid number
-    //     var total_price = itemPrice * currentVal;
-
-    //     var itemContainer = element.closest('.add_to_cart_item');
-    //     itemContainer.find('.item_count_price').html(numberFormat(total_price, 2));
-    // }
-
-    // var container = $('.add_to_carts');
-    // var plus_btn = '.plus_btn';
-    // var minus_btn = '.minus_btn';
-    // var unit = '.unit_quantity';
-
-    // // Plus JS 
-    // $(document).on('click', plus_btn, function() {
-    //     var quantityInput = $(this).siblings('.plus_minus_quantity');
-    //     if (isNaN(quantityInput.val())) {
-    //         quantityInput.val(1);
-    //     } else {
-    //         quantityInput.val(parseInt(quantityInput.val()) + 1);
-    //     }
-    //     updateItemPrice($(this));
-    // });
-
-    // // Minus JS 
-    // $(document).on('click', minus_btn, function() {
-    //     var quantityInput = $(this).siblings('.plus_minus_quantity');
-    //     var currentVal = parseInt(quantityInput.val());
-    //     if (currentVal > 1) {
-    //         quantityInput.val(currentVal - 1);
-    //         updateItemPrice($(this));
-    //     }
-    // });
-
-    // // Unit Change JS 
-    // $(document).on('change', unit, function() {
-    //     var formattedNumber = numberFormat($(this).val(), 2);
-    //     var itemContainer = $(this).closest('.add_to_cart_item');
-    //     var itemQuantityInput = itemContainer.find('.plus_minus_quantity');
-    //     var itemQuantity = parseInt(itemQuantityInput.val()) || 0;
-    //     itemQuantityInput.data('item_price', formattedNumber);
-    //     if (!isNaN(itemQuantity)) {
-    //         var totalItemPrice = formattedNumber * itemQuantity;
-    //         itemContainer.find('.item_count_price').html(numberFormat(totalItemPrice, 2));
-    //     }
-    // });
-
-
-    ////////////////////////////////////////////////////
-    //2nd Optimize 
+    //Price Calculation 
     ////////////////////////////////////////////////////
 
     // Number Format Function 
@@ -185,6 +168,18 @@
 
         var itemContainer = element.closest('.add_to_cart_item');
         itemContainer.find('.item_count_price').html(numberFormat(total_price, 2));
+        refreshSubtotal();
+    }
+
+    // Subtotal Refresh Function 
+    function refreshSubtotal(){
+        $('.total_check_item').html($('.add_to_carts').find('.check_atc_item:checked').length)
+        var total_price = 0;
+        $('.add_to_carts').find('.check_atc_item:checked').each(function() {
+            var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price').html());
+            total_price+=check_item_price;   
+        });
+        $('.subtotal_price').html(numberFormat(total_price,2));
     }
 
     // Increment or Decrement Quantity Function
@@ -195,6 +190,7 @@
             quantityInput.val(increment ? currentVal + 1 : currentVal - 1);
             updateItemPrice(element);
         }
+        refreshSubtotal();
     }
 
     // Plus JS 
@@ -218,6 +214,28 @@
             var totalItemPrice = formattedNumber * itemQuantity;
             itemContainer.find('.item_count_price').html(numberFormat(totalItemPrice, 2));
         }
+        refreshSubtotal();
+    });
+
+
+
+    // Subtotal JS 
+
+    $(document).on('change','.check_atc_item',function(){
+        var check = $(this).prop('checked');
+        var subtotal_price = $('.subtotal_price');
+        var formatted_subtotal_price = parseFloat(subtotal_price.html());
+        var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price').html());
+        var total_check_item = $('.total_check_item');
+        var summation = 0;
+        if (check == true) {
+            summation = (formatted_subtotal_price+check_item_price);
+            total_check_item.html(parseInt(total_check_item.html())+1);
+        }else{
+            summation = (formatted_subtotal_price-check_item_price);
+            total_check_item.html(parseInt(total_check_item.html())-1);
+        }
+        subtotal_price.html(numberFormat(summation,2));
     });
 
 </script>

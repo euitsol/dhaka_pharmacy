@@ -151,7 +151,7 @@
                                     </div>
                                     <h4><span>&#2547;</span> ${product.price}</h4>
                                     <div class="add_to_card">
-                                        <a class="cart-btn" href="#">
+                                        <a class="cart-btn" href="javascript:void(0)" data-product_slug="${product.slug}">
                                             <i class="fa-solid fa-cart-plus"></i>
                                         </a>
                                     </div>
