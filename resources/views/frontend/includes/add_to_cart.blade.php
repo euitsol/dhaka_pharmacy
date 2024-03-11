@@ -14,13 +14,97 @@
             let _url = url.replace('product_slug', product_slug);
             let __url = _url.replace(/&amp;/g, '&');
 
+            let atc_total = $('#cart_btn_quantity strong');
+            let plus_atc_total = parseInt(atc_total.html()) + 1;
+
+            var item_append = $('.add_to_carts');
+
             $.ajax({
                 url: __url,
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    if(data.atcs) {
-                        $('#cart_btn_quantity').html(data.total_cart_item);
+                    if(data.atc) {
+                        var count = data.count;
+                        var result = `
+                                    <div class="card add_to_cart_item mb-2">
+                                            <div class="card-body py-2">
+                                                {{-- Product Details  --}}
+                                                <div class="row align-items-center product_details mb-2">
+                                                    <div class="check_order">
+                                                        <div class="form-group">
+                                                            <input class="check_atc_item" type="checkbox" id="atc_item_check-${count}">
+                                                            <label for="atc_item_check-${count}"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="image col-2">
+                                                        <a href="">
+                                                            <img class="border border-1 rounded-1"
+                                                            src="${data.atc.product.image}"
+                                                            alt="${data.atc.product.name}">
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-8 info">
+                                                        <h4 class="product_title" title="${data.atc.product.attr_title}"> <a href="">${data.atc.product.name}</a></h4>
+                                                        <p><a href="">${data.atc.product.pro_sub_cat.name}</a></p>
+                                                        <p><a href="">${data.atc.product.generic.name}</a></p>
+                                                        <p><a href="">${data.atc.product.company.name}</a></p>
+                                                    </div>
+                                                    <div class="item_price col-2 ps-0">
+                                                        <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">${data.atc.product.item_count_price}</span></h4>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row align-items-center atc_functionality">
+                                                    <div class="item_units col-7">
+                                                        <div class="form-group my-1 boxed">
+                        `;
+                        data.atc.product.units.forEach(function(unit, index){
+                            count++;
+                            var checked = '';
+                            if (data.atc.unit_id != null && unit.id == data.atc.unit_id || index === 0) {
+                                checked = 'checked';
+                            }
+                                
+                            result +=`
+                                        <input type="radio" data-name="${unit.name}" ${checked}
+                                        class="unit_quantity" id="android-${count+20}"
+                                        name="data-${index}"
+                                        value="${ data.atc.price * unit.quantity }">
+                                        <label for="android-${count+20}">
+                                            <img src="${unit.image}">
+                                        </label>
+                                    `;
+                            index++;
+                        });
+                        result +=`
+                                            </div>
+                                        </div>
+
+
+                                        {{-- Plus Minus  --}}
+                                        <div class="plus_minus col-5 ps-md-4 d-flex align-items-center justify-between">
+                                            <div class="form-group">
+                                                <div class="input-group" role="group">
+                                                    <a href="javascript:void(0)" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
+                                                    <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${data.atc.product.data_item_price}" value="1" >
+                                                    <a href="javascript:void(0)" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="ben ms-3">
+                                                <div class="text-end">
+                                                    <a href="javascript:void(0)" data-atc_id =${data.atc.id} class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        item_append.prepend(result);
+                        atc_total.html(plus_atc_total);
                         toastr.success(data.alert);
                     }else{
                         toastr.error(data.alert);
@@ -37,13 +121,18 @@
             let atc_id = $(this).data('atc_id');
             let url = ("{{ route('product.remove_to_cart', ['atc' => 'atc_id']) }}");
             let _url = url.replace('atc_id', atc_id);
+            let cartItem = $(this).closest('.add_to_cart_item');
+            let atc_total = $('#cart_btn_quantity strong');
+            let minus_atc_total = parseInt(atc_total.html()) - 1;
             $.ajax({
                 url: _url,
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
                     toastr.success(data.sucses_alert);
-                    $('#cart_btn_quantity').html(data.total_cart_item);
+
+                    atc_total.html(minus_atc_total);
+                    cartItem.remove();
                 },
                 error: function(xhr, status, error) {
                     console.error('Error add to cart data:', error);

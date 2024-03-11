@@ -91,11 +91,11 @@ class BaseController extends Controller
         $product_slug = request('product');
         $unit_id = request('unit');
 
-
-
+        
 
         $product = Medicine::activated()->where('slug',$product_slug)->first();
         $customer_id = 1;
+        $data['count'] = AddToCart::where('customer_id',$customer_id)->count();
         $check = AddToCart::where('product_id',$product->id)->where('customer_id',$customer_id)->first();
         if($check){
             $data['alert'] = "Already Add To Cart";
@@ -109,35 +109,68 @@ class BaseController extends Controller
         $atc->unit_id = $unit_id;
         $atc->quantity = 1;
         $atc->save();
+        
 
-        $data['atcs'] = AddToCart::with(['product', 'customer'])
-            ->where('customer_id', 1)
-            ->latest()
-            ->get();
+        // $data['atcs'] = AddToCart::with(['product', 'customer'])
+        //     ->where('customer_id', 1)
+        //     ->latest()
+        //     ->get();
+        $data['atc'] = AddToCart::with(['product.generic','product.pro_sub_cat','product.company'])->where('product_id',$atc->product_id)->where('customer_id',$atc->customer_id)->first();
+        $activatedProduct = $data['atc']->product;
 
-        $data['atcs'] = $data['atcs']->map(function ($atc) {
-            $activatedProduct = $atc->product;
+        if ($activatedProduct) {
+            $strength = $activatedProduct->strength ? ' (' . $activatedProduct->strength->quantity . ' ' . $activatedProduct->strength->unit . ')' : '';
+            $activatedProduct->attr_title = Str::ucfirst(Str::lower($activatedProduct->name . $strength));
+            $activatedProduct->name = Str::limit(Str::ucfirst(Str::lower($activatedProduct->name . $strength)), 45, '..');
+            $activatedProduct->generic->name = Str::limit($activatedProduct->generic->name, 55, '..');
+            $activatedProduct->company->name = Str::limit($activatedProduct->company->name, 55, '..');
+            $activatedProduct->image = storage_url($activatedProduct->image);
+            $activatedProduct->item_count_price = (!empty($data['atc']->unit_id)) ? (number_format(($data['atc']->product->price*$data['atc']->unit->quantity),2)) : (number_format($data['atc']->product->price,2));
 
-            if ($activatedProduct) {
-                $strength = $activatedProduct->strength ? ' (' . $activatedProduct->strength->quantity . ' ' . $activatedProduct->strength->unit . ')' : '';
-                $activatedProduct->attr_title = Str::ucfirst(Str::lower($activatedProduct->name . $strength));
-                $activatedProduct->name = Str::limit(Str::ucfirst(Str::lower($activatedProduct->name . $strength)), 45, '..');
-                $activatedProduct->generic->name = Str::limit($activatedProduct->generic->name, 55, '..');
-                $activatedProduct->company->name = Str::limit($activatedProduct->company->name, 55, '..');
+            $activatedProduct->data_item_price = (!empty($data['atc']->unit_id)) ? (number_format(($data['atc']->product->price*$data['atc']->unit->quantity),2)) : (number_format($data['atc']->product->price,2)); 
 
-                $activatedProduct->units = array_map(function ($u_id) {
-                    return MedicineUnit::findOrFail($u_id);
-                }, (array) json_decode($activatedProduct->unit, true));
+             
 
-                $activatedProduct->units = collect($activatedProduct->units)->sortBy('quantity')->values()->all();
-            }
+            $activatedProduct->units = array_map(function ($u_id) {
+                return MedicineUnit::findOrFail($u_id);
+            }, (array) json_decode($activatedProduct->unit, true));
 
-            return $atc;
-        });
+            // $activatedProduct->units = collect($activatedProduct->units)->sortBy('quantity')->values()->all();
+            $activatedProduct->units = collect($activatedProduct->units)
+                                    ->sortBy('quantity')
+                                    ->values()
+                                    ->map(function ($unit) {
+                                        $unit->image = storage_url($unit['image']); // Assuming 'image' is accessed as an array key
+                                        return (object)$unit; // Cast the array back to an object
+                                    })
+                                    ->all();
+        }
+        
+        
 
-        $data['total_cart_item'] = $data['atcs']->sum(function ($atc) {
-            return $atc->product ? 1 : 0;
-        });
+        // $data['atcs'] = $data['atcs']->map(function ($atc) {
+        //     $activatedProduct = $atc->product;
+
+        //     if ($activatedProduct) {
+        //         $strength = $activatedProduct->strength ? ' (' . $activatedProduct->strength->quantity . ' ' . $activatedProduct->strength->unit . ')' : '';
+        //         $activatedProduct->attr_title = Str::ucfirst(Str::lower($activatedProduct->name . $strength));
+        //         $activatedProduct->name = Str::limit(Str::ucfirst(Str::lower($activatedProduct->name . $strength)), 45, '..');
+        //         $activatedProduct->generic->name = Str::limit($activatedProduct->generic->name, 55, '..');
+        //         $activatedProduct->company->name = Str::limit($activatedProduct->company->name, 55, '..');
+
+        //         $activatedProduct->units = array_map(function ($u_id) {
+        //             return MedicineUnit::findOrFail($u_id);
+        //         }, (array) json_decode($activatedProduct->unit, true));
+
+        //         $activatedProduct->units = collect($activatedProduct->units)->sortBy('quantity')->values()->all();
+        //     }
+
+        //     return $atc;
+        // });
+
+        // $data['total_cart_item'] = $data['atcs']->sum(function ($atc) {
+        //     return $atc->product ? 1 : 0;
+        // });
 
         return response()->json($data);
     }
