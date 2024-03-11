@@ -73,7 +73,7 @@
                             <div class="row">
 
                                 <div class="form-group col-md-4">
-                                    <label>{{__('Operational Area')}}</label>
+                                    <label>{{__('DM Area')}}</label>
                                     <input type="text" class="form-control" value="{{$dm->operation_area->name}}" disabled>
                                 </div>
 

@@ -35,9 +35,9 @@
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
                         <div class="form-group">
-                            <label>{{__('Operation Area')}}</label>
+                            <label>{{__('DM Area')}}</label>
                             <select name="oa_id" class="form-control">
-                                <option selected hidden>{{__('Select Operation Area')}}</option>
+                                <option selected hidden>{{__('Select DM Area')}}</option>
                                 @foreach ($operation_areas as $area)
                                     <option value="{{$area->id}}" {{(old('oa_id') == $area->id) ? 'selected' : ''}}>{{__($area->name)}}</option>
                                 @endforeach

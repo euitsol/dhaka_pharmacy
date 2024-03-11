@@ -64,14 +64,14 @@ class OperationAreaController extends Controller
         $operation_area->slug = $req->slug;
         $operation_area->updated_by = admin()->id;
         $operation_area->update();
-        flash()->addSuccess('operation area ' . $operation_area->name . ' Updated Successfully ');
+        flash()->addSuccess('DM Area ' . $operation_area->name . ' Updated Successfully ');
         return redirect()->route('dm_management.operation_area.operation_area_list');
     }
     public function status($id): RedirectResponse
     {
         $operation_area = OperationArea::findOrFail($id);
         $this->statusChange($operation_area);
-        flash()->addSuccess('Operation area ' . $operation_area->name . ' status updated successfully.');
+        flash()->addSuccess('DM Area ' . $operation_area->name . ' status updated successfully.');
         return redirect()->route('dm_management.operation_area.operation_area_list');
     }
 
@@ -79,7 +79,7 @@ class OperationAreaController extends Controller
     {
         $operation_area = OperationArea::findOrFail($id);
         $operation_area->delete();
-        flash()->addSuccess('Opearation area ' . $operation_area->name . ' deleted successfully.');
+        flash()->addSuccess('DM Area ' . $operation_area->name . ' deleted successfully.');
         return redirect()->route('dm_management.operation_area.operation_area_list');
     }
 }

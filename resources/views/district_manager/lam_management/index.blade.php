@@ -26,8 +26,8 @@
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
                                 <th>{{ __('District Manager') }}</th>
-                                <th>{{ __('Operational Area') }}</th>
-                                <th>{{ __('Operational Sub Area') }}</th>
+                                <th>{{ __('DM Area') }}</th>
+                                <th>{{ __('LAM Area') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>

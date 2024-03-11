@@ -22,9 +22,9 @@
                     <form method="POST" action="{{ route('dm_management.operation_sub_area.operation_sub_area_create') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label>{{ __('Operation Area') }}</label>
+                            <label>{{ __('DM Area') }}</label>
                             <select name="oa_id" class="form-control">
-                                <option selected hidden>{{__('Select Operation Area')}}</option>
+                                <option selected hidden>{{__('Select DM Area')}}</option>
                                 @foreach ($op_areas as $area)
                                     <option value="{{$area->id}}" {{(old('oa_id') == $area->id) ? 'selected' : ''}}>{{$area->name}}</option>
                                 @endforeach

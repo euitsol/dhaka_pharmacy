@@ -26,8 +26,8 @@
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
                                 <th>{{ __('District Manager') }}</th>
-                                <th>{{ __('Operational Area') }}</th>
-                                <th>{{ __('Operational Sub Area') }}</th>
+                                <th>{{ __('DM Area') }}</th>
+                                <th>{{ __('LAM Area') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -138,13 +138,13 @@
                                         <td>${data.dm.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Operational Area</th>
+                                        <th class="text-nowrap">DM Area</th>
                                         <th>:</th>
                                         <td>${data.dm.operation_area.name}</td>
                                     </tr>
                                     
                                     <tr>
-                                        <th class="text-nowrap">Operational Sub Area</th>
+                                        <th class="text-nowrap">LAM Area</th>
                                         <th>:</th>
                                         <td>${lam_area}</td>
                                     </tr>

@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Update Operation Sub Area') }}</h4>
+                            <h4 class="card-title">{{ __('Update LAM Area') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -24,7 +24,7 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label>{{ __('Operation Area') }}</label>
+                            <label>{{ __('DM Area') }}</label>
                             <select name="oa_id" class="form-control">
                                 @foreach ($operation_areas as $area)
                                     <option value="{{$area->id}}" {{($operation_sub_area->id == $area->id) ? 'selected' : ''}}>{{$area->name}}</option>

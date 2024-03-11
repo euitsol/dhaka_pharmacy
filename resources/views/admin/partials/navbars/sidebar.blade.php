@@ -214,12 +214,12 @@
                                     [
                                         'pageSlug' => 'operation_area',
                                         'routeName' => 'dm_management.operation_area.operation_area_list',
-                                        'label' => 'Operation Area',
+                                        'label' => 'DM Area',
                                     ],
                                     [
                                         'pageSlug' => 'operation_sub_area',
                                         'routeName' => 'dm_management.operation_sub_area.operation_sub_area_list',
-                                        'label' => 'Operation Sub Area',
+                                        'label' => 'LAM Area',
                                     ],
                                 ],
                             ])

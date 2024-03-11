@@ -48,7 +48,7 @@ class OperationSubAreaController extends Controller
         $operation_sub_area->oa_id = $req->oa_id;
         $operation_sub_area->creater()->associate(admin());
         $operation_sub_area->save();
-        flash()->addSuccess('Operation sub area ' . $operation_sub_area->name . ' created successfully.');
+        flash()->addSuccess('LAM area ' . $operation_sub_area->name . ' created successfully.');
         return redirect()->route('dm_management.operation_sub_area.operation_sub_area_list');
     }
     public function edit($slug): View
@@ -66,7 +66,7 @@ class OperationSubAreaController extends Controller
         $operation_sub_area->oa_id = $req->oa_id;
         $operation_sub_area->updater()->associate(admin());
         $operation_sub_area->update();
-        flash()->addSuccess('Operation sub area ' . $operation_sub_area->name . ' updated successfully.');
+        flash()->addSuccess('LAM area ' . $operation_sub_area->name . ' updated successfully.');
         return redirect()->route('dm_management.operation_sub_area.operation_sub_area_list');
     }
 
@@ -76,11 +76,11 @@ class OperationSubAreaController extends Controller
         if($status == 'accept'){
             $operation_sub_area->status = '1';
             $operation_sub_area->save();
-            flash()->addSuccess('Operation sub area ' . $operation_sub_area->name . ' accepted successfully.');
+            flash()->addSuccess('LAM area ' . $operation_sub_area->name . ' accepted successfully.');
         }elseif($status == 'declined'){
             $operation_sub_area->status = '-1';
             $operation_sub_area->save();
-            flash()->addSuccess('Operation sub area ' . $operation_sub_area->name . ' declined successfully.');
+            flash()->addSuccess('LAM area ' . $operation_sub_area->name . ' declined successfully.');
         }
         return redirect()->route('dm_management.operation_sub_area.operation_sub_area_list');
     }
@@ -88,7 +88,7 @@ class OperationSubAreaController extends Controller
     {
         $operation_sub_area = OperationSubArea::findOrFail($id);
         $operation_sub_area->delete();
-        flash()->addSuccess('Operation sub area ' . $operation_sub_area->name . ' deleted successfully.');
+        flash()->addSuccess('LAM area ' . $operation_sub_area->name . ' deleted successfully.');
         return redirect()->route('dm_management.operation_sub_area.operation_sub_area_list');
     }
 }
