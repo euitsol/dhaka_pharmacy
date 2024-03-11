@@ -47,6 +47,7 @@
         .dashboard_wrap h4 {
             font-size: 60px;
             margin: 0;
+            margin-bottom: 40px;
         }
     </style>
 @endpush
@@ -59,6 +60,7 @@
             <div class="dashboard_wrap d-flex flex-column justify-content-center align-items-center">
                 <h2>{{ __('DHAKA PHARMACY') }}</h2>
                 <h4>{{ __('LOCAL AREA MANAGER') }}</h4>
+                <h4>{{__(strtoupper(lam()->operation_sub_area->name))}}</h4>
             </div>
         </div>
     </div>

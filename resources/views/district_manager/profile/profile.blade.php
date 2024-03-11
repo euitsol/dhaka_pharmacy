@@ -164,7 +164,7 @@
             <form method="POST" action="{{ route('dm.profile.update.password') }}" autocomplete="off"
                 enctype="multipart/form-data">
                 @csrf
-                @method('PUT');
+                @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
                         <label>{{ __('Current Password') }}</label>
