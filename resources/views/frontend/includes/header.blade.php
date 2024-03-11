@@ -51,15 +51,19 @@
             <div class="col-3 right-col">
                 <div class="row align-items-center justify-content-end">
                     <div class="item">
+
                         <button class="cart-btn" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#cartbtn" aria-controls="offcanvasRight">
                             <i class="fa-solid fa-cart-shopping me-1"></i>
                             <span>Cart</span><sup id="cart_btn_quantity"><strong>{{$total_cart_item ?? ''}}</strong></sup>
                         </button>
+
+                        
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="cartbtn"
                             aria-labelledby="offcanvasRightLabel">
                             <div class="offcanvas-header">
                                 <h5 class="offcanvas-title" id="offcanvasRightLabel">Cart</h5>
+                                <a href=""><i class="fa-solid fa-trash-can"></i> Clear All</a>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
                             </div>
@@ -128,7 +132,7 @@
                                                     </div>
                                                     <div class="ben ms-3">
                                                         <div class="text-end">
-                                                            <a href="javascript:void(0)" data-atc_id ={{$atc->id}} class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></i></a>
+                                                            <a href="javascript:void(0)" data-atc_id ={{$atc->id}} class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -137,7 +141,7 @@
                                         </div>
                                     </div>
                                 @empty
-                                    <h5 class="text-center cart_empty_alert">Added Some Product</h5>
+                                    <h5 class="text-center cart_empty_alert">{{__('Added Some Products')}}</h5>
                                 @endforelse
                             </div>
                             <div class="offcanvas-footer cart_sub_total px-4 py-3">
@@ -155,7 +159,7 @@
                                         <h3><span> &#2547; </span> <span class="subtotal_price">0.00</span></h3>
                                     </div>
                                     <div class="col-12">
-                                        <a href="javascript:void(0)" class=" order_button w-100">Order Now</a>
+                                        <a href="javascript:void(0)" class=" order_button w-100">{{__('Order Now')}}</a>
                                     </div>
                                 </div>
                             </div>
