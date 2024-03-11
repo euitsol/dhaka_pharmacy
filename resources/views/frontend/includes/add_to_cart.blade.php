@@ -62,18 +62,17 @@
                                                         <div class="form-group my-1 boxed">
                         `;
                         data.atc.product.units.forEach(function(unit, index){
-                            count++;
                             var checked = '';
-                            if (data.atc.unit_id != null && unit.id == data.atc.unit_id || index === 0) {
+                            if ((data.atc.unit_id != null && unit.id == data.atc.unit_id) || index === 0) {
                                 checked = 'checked';
                             }
                                 
                             result +=`
                                         <input type="radio" data-name="${unit.name}" ${checked}
-                                        class="unit_quantity" id="android-${count+20}"
-                                        name="data-${index}"
-                                        value="${ data.atc.price * unit.quantity }">
-                                        <label for="android-${count+20}">
+                                        class="unit_quantity" id="android-${index+20}"
+                                        name="data-${count}"
+                                        value="${ data.atc.product.price * unit.quantity }">
+                                        <label for="android-${index+20}">
                                             <img src="${unit.image}">
                                         </label>
                                     `;
