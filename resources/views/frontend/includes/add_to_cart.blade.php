@@ -141,6 +141,7 @@
                         cart_empty_alert.show();
                         item_append.html(cart_empty_alert);
                     }
+                    refreshSubtotal();
                 },
                 error: function(xhr, status, error) {
                     console.error('Error add to cart data:', error);
