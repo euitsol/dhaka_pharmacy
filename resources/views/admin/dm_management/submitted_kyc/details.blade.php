@@ -16,6 +16,11 @@
                                     'label' => 'Back',
                                 ])
                             </div>
+                            @if(!empty($data->note))
+                                <div class="col-12">
+                                    <strong class="text-danger">{{__('Previous Declined Reason: ')}}</strong>{!! $data->note !!}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     @php

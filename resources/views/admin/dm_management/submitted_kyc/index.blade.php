@@ -33,7 +33,7 @@
                                     <td> {{ $data->creater_name() }} </td>
                                     <td> {{ strtoupper($data->type) }} </td>
                                     <td>
-                                        <span class="badge {{ ($data->status === 1) ? 'badge-success' : (($data->status === 0) ? 'badge-info' : 'badge-warning') }}">{{ ($data->status === 1) ? 'Active' : (($data->status === 0) ? 'Pending' : 'Declined') }}</span>
+                                        <span class="badge {{($data->status === 1) ? 'badge-success' : (($data->status === 0) ? 'badge-info' : 'badge-warning') }}">{{($data->status === 1) ? 'Accepted' : (($data->status === 0) ? 'Pending' : 'Declined') }}</span>
                                     </td>
                                     <td>{{ $data->created_date() }}</td>
 
