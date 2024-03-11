@@ -108,6 +108,10 @@ header{
     width: 600px;
     
   }
+  .header-section .right-col .offcanvas .add_to_carts .cart_empty_alert {
+    color: var(--nav-text-gray);
+    
+  }
   .header-section .right-col .offcanvas .add_to_cart_item .product_details {
     position: relative;
   }
@@ -360,4 +364,5 @@ header{
       --tw-bg-opacity: 1;
       background-color: rgb(243 246 249/var(--tw-bg-opacity));
   }
+
   

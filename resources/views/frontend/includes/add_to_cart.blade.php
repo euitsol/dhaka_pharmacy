@@ -18,6 +18,7 @@
             let plus_atc_total = parseInt(atc_total.html()) + 1;
 
             var item_append = $('.add_to_carts');
+            var cart_empty_alert = $('.cart_empty_alert');
 
             $.ajax({
                 url: __url,
@@ -104,6 +105,7 @@
                             </div>
                         `;
                         item_append.prepend(result);
+                        cart_empty_alert.hide();
                         atc_total.html(plus_atc_total);
                         toastr.success(data.alert);
                     }else{
@@ -124,6 +126,9 @@
             let cartItem = $(this).closest('.add_to_cart_item');
             let atc_total = $('#cart_btn_quantity strong');
             let minus_atc_total = parseInt(atc_total.html()) - 1;
+
+            var item_append = $('.add_to_carts');
+            var cart_empty_alert = $('.cart_empty_alert');
             $.ajax({
                 url: _url,
                 method: 'GET',
@@ -133,6 +138,10 @@
 
                     atc_total.html(minus_atc_total);
                     cartItem.remove();
+                    if(minus_atc_total === 0){
+                        cart_empty_alert.show();
+                        item_append.html(cart_empty_alert);
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error add to cart data:', error);

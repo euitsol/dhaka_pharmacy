@@ -65,7 +65,7 @@
                             </div>
                             <div class="offcanvas-body add_to_carts">
                                 @php($count = 0)
-                                @foreach ($atcs as $key=>$atc)
+                                @forelse ($atcs as $key=>$atc)
                                     <div class="card add_to_cart_item mb-2">
                                         <div class="card-body py-2">
                                             {{-- Product Details  --}}
@@ -136,7 +136,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <h5 class="text-center cart_empty_alert">Added Some Product</h5>
+                                @endforelse
                             </div>
                             <div class="offcanvas-footer cart_sub_total px-4 py-3">
                                 <div class="row">
