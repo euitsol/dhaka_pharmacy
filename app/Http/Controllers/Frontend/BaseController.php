@@ -100,10 +100,10 @@ class BaseController extends Controller
         $data['count'] = AddToCart::where('customer_id',$customer_id)->count();
         $check = AddToCart::where('product_id',$product->id)->where('customer_id',$customer_id)->first();
         if($check){
-            $data['alert'] = "Already Add To Cart";
+            $data['alert'] = "The item has already been added to the cart";
             return response()->json($data);
         }
-        $data['alert'] = "Add To Cart Successfully";
+        
 
         $atc = new AddToCart();
         $atc->product_id = $product->id;
@@ -111,6 +111,9 @@ class BaseController extends Controller
         $atc->unit_id = $unit_id;
         $atc->quantity = 1;
         $atc->save();
+
+        // $data['alert'] = $atc->product->name ." has been successfully added to your cart";
+        $data['alert'] = "The item has been successfully added to your cart";
         
 
         // $data['atcs'] = AddToCart::with(['product', 'customer'])
@@ -136,8 +139,6 @@ class BaseController extends Controller
             $activatedProduct->units = array_map(function ($u_id) {
                 return MedicineUnit::findOrFail($u_id);
             }, (array) json_decode($activatedProduct->unit, true));
-
-            // $activatedProduct->units = collect($activatedProduct->units)->sortBy('quantity')->values()->all();
             $activatedProduct->units = collect($activatedProduct->units)
                                     ->sortBy('quantity')
                                     ->values()
@@ -182,7 +183,7 @@ class BaseController extends Controller
         $act_id = request('atc');
         $atc = AddToCart::findOrFail($act_id);
         $atc->delete();
-        $data['sucses_alert'] = "Product Remove From Cart Successfully";
+        $data['sucses_alert'] = "The item has been successfully removed from your cart.";
 
         $data['atcs'] = AddToCart::with(['product', 'customer'])
             ->where('customer_id', 1)
@@ -218,11 +219,11 @@ class BaseController extends Controller
 
     public function clearCart():JsonResponse
     {
-        $count = AddToCart::count();
-        $data['alert'] = "Already cleared cart data";
-        if($count>0){
+        $data['count'] = AddToCart::count();
+        $data['alert'] = "The cart data has already been cleared";
+        if($data['count']>0){
             AddToCart::truncate();
-            $data['alert'] = "Clear cart data successfully";
+            $data['alert'] = "The cart data has been cleared successfully";
         }
         
         return response()->json($data);

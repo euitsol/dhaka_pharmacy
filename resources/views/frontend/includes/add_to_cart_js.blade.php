@@ -162,11 +162,16 @@
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    toastr.success(data.alert);
-                    atc_total.html(0);
-                    cartItemContainer.find('.add_to_cart_item').remove();
-                    cartItemContainer.html(text);
-                    refreshSubtotal();
+                    if(data.count != 0){
+                        toastr.success(data.alert);
+                        atc_total.html(0);
+                        cartItemContainer.find('.add_to_cart_item').remove();
+                        cartItemContainer.html(text);
+                        refreshSubtotal();
+                    }else{
+                        toastr.error(data.alert);
+                    }
+                    
                 },
                 error: function(xhr, status, error) {
                     console.error('Error clearing cart data:', error);
