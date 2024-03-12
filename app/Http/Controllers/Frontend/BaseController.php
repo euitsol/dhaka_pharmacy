@@ -55,7 +55,8 @@ class BaseController extends Controller
     }
     
 
-    public function productSearch($search_value, $category){
+    public function productSearch($search_value, $category):JsonResponse
+    {
         $filter = Medicine::with(['pro_sub_cat','generic','company','strength']);
         if($category !== 'all'){
             $filter = $filter->where('pro_cat_id',$category);
@@ -87,7 +88,8 @@ class BaseController extends Controller
         return response()->json($data);
     }
 
-    public function add_to_cart(){
+    public function add_to_cart():JsonResponse
+    {
         $product_slug = request('product');
         $unit_id = request('unit');
 
@@ -175,7 +177,8 @@ class BaseController extends Controller
         return response()->json($data);
     }
 
-    public function remove_to_cart(){
+    public function remove_to_cart():JsonResponse
+    {
         $act_id = request('atc');
         $atc = AddToCart::findOrFail($act_id);
         $atc->delete();
@@ -210,6 +213,18 @@ class BaseController extends Controller
             return $atc->product ? 1 : 0;
         });
 
+        return response()->json($data);
+    }
+
+    public function clearCart():JsonResponse
+    {
+        $count = AddToCart::count();
+        $data['alert'] = "Already cleared cart data";
+        if($count>0){
+            AddToCart::truncate();
+            $data['alert'] = "Clear cart data successfully";
+        }
+        
         return response()->json($data);
     }
 

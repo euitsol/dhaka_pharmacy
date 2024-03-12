@@ -104,7 +104,7 @@
                             </div>
                         `;
                         item_append.prepend(result);
-                        cart_empty_alert.hide();
+                        cart_empty_alert.remove();
                         atc_total.html(plus_atc_total);
                         toastr.success(data.alert);
                     }else{
@@ -125,9 +125,9 @@
             let cartItem = $(this).closest('.add_to_cart_item');
             let atc_total = $('#cart_btn_quantity strong');
             let minus_atc_total = parseInt(atc_total.html()) - 1;
+            var text = "<h5 class='text-center cart_empty_alert'>{{__('Added Some Products')}}</h5>";
 
             var item_append = $('.add_to_carts');
-            var cart_empty_alert = $('.cart_empty_alert');
             $.ajax({
                 url: _url,
                 method: 'GET',
@@ -138,13 +138,38 @@
                     atc_total.html(minus_atc_total);
                     cartItem.remove();
                     if(minus_atc_total === 0){
-                        cart_empty_alert.show();
-                        item_append.html(cart_empty_alert);
+                        item_append.html(text);
                     }
                     refreshSubtotal();
                 },
                 error: function(xhr, status, error) {
                     console.error('Error add to cart data:', error);
+                }
+            });
+        });
+
+
+        // Cart Clear JS 
+
+        $(document).on('click', '.cart_clear_btn', function() {
+            let url = "{{ route('product.clear_cart') }}";
+            let cartItemContainer = $(this).parent('.offcanvas-header').next('.add_to_carts');
+            let atc_total = $('#cart_btn_quantity strong');
+            var text = "<h5 class='text-center cart_empty_alert'>{{__('Added Some Products')}}</h5>";
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    toastr.success(data.alert);
+                    atc_total.html(0);
+                    cartItemContainer.find('.add_to_cart_item').remove();
+                    cartItemContainer.html(text);
+                    refreshSubtotal();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error clearing cart data:', error);
                 }
             });
         });

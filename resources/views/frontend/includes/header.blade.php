@@ -62,8 +62,8 @@
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="cartbtn"
                             aria-labelledby="offcanvasRightLabel">
                             <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="offcanvasRightLabel">Cart</h5>
-                                <a href=""><i class="fa-solid fa-trash-can"></i> Clear All</a>
+                                <h5 class="offcanvas-title" id="offcanvasRightLabel">{{__('Cart')}}</h5>
+                                <a href="javascript:void(0)" class="cart_clear_btn"><i class="fa-solid fa-trash-can"></i> {{__('Clear All')}}</a>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
                             </div>
