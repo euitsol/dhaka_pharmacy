@@ -30,6 +30,11 @@
   --text-color-black: #373f50;
   --text-color-white: #fff;
   --text-color-gray: #7d879c;
+
+  --primary-background-color: #85FFBD;
+  --primary-background-image: linear-gradient(45deg, #85FFBD 40%, #2D98DA 60%);
+  --border-1: #2D98DA;
+
 }
 
 
