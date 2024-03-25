@@ -136,82 +136,36 @@
                         <span class="badge badge-secondary badge-pill">3</span>
                     </h4>
                     <div class="checkout_products">
-                        <div class="row align-items-center mb-3">
-                            <div class="image col-2">
-                                <img class="w-100 border border-1 rounded-1"
-                                    src="http://127.0.0.1:8000/storage/district_manager/Napa 500 MG Tablet/Napa 500 MG Tablet_1708856236.webp"
-                                    alt="Napa 500 mg (500 mg)">
+                        @php
+                            $total_price = 0;
+                        @endphp
+                        @foreach ($checkItems as $cartItem)
+                            <div class="row align-items-center mb-3">
+                                <div class="image col-2">
+                                    <img class="w-100 border border-1 rounded-1"
+                                        src="{{storage_url($cartItem->product->image)}}"
+                                        alt="Napa 500 mg (500 mg)">
+                                </div>
+                                <div class="col-6 details">
+                                    <h4 class="product_title" title="{{$cartItem->product->attr_title}}">{{$cartItem->product->name}}</h4>
+                                    <p class="product_sub_cat">{{$cartItem->product->pro_sub_cat->name}}</p>
+                                    <p>{{{$cartItem->product->generic->name}}}</p>
+                                    <p>{{$cartItem->product->company->name}}</p>
+                                </div>
+                                <div class="product_quantity col-2">
+                                    <span>{{$cartItem->quantity}}</span><span> x </span><span>{{number_format($cartItem->product->price,2)}}</span>
+                                </div>
+                                <div class="total_price col-2">
+                                    @php
+                                        $single_total_price = number_format(($cartItem->quantity * $cartItem->product->price),2);
+                                        $total_price +=$single_total_price;
+                                    @endphp
+                                    <span> &#2547; </span><span>{{$single_total_price}}</span>
+                                </div>
                             </div>
-                            <div class="col-6 details">
-                                <h4 class="product_title">Napa 500 mg (500 mg)</h4>
-                                <p class="product_sub_cat">Tablet</p>
-                                <p>Paracetamol</p>
-                                <p>Beximco pharmaceuticals ltd</p>
-                            </div>
-                            <div class="product_quantity col-2">
-                                <span>1</span><span>x</span><span>10</span>
-                            </div>
-                            <div class="total_price col-2">
-                                <span> &#2547; </span><span>20,000</span>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mb-3">
-                            <div class="image col-2">
-                                <img class="w-100 border border-1 rounded-1"
-                                    src="http://127.0.0.1:8000/storage/district_manager/Napa 500 MG Tablet/Napa 500 MG Tablet_1708856236.webp"
-                                    alt="Napa 500 mg (500 mg)">
-                            </div>
-                            <div class="col-6 details">
-                                <h4 class="product_title">Napa 500 mg (500 mg)</h4>
-                                <p class="product_sub_cat">Tablet</p>
-                                <p>Paracetamol</p>
-                                <p>Beximco pharmaceuticals ltd</p>
-                            </div>
-                            <div class="product_quantity col-2">
-                                <span>1</span><span>x</span><span>10</span>
-                            </div>
-                            <div class="total_price col-2">
-                                <span> &#2547; </span><span>20,000</span>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mb-3">
-                            <div class="image col-2">
-                                <img class="w-100 border border-1 rounded-1"
-                                    src="http://127.0.0.1:8000/storage/district_manager/Napa 500 MG Tablet/Napa 500 MG Tablet_1708856236.webp"
-                                    alt="Napa 500 mg (500 mg)">
-                            </div>
-                            <div class="col-6 details">
-                                <h4 class="product_title">Napa 500 mg (500 mg)</h4>
-                                <p class="product_sub_cat">Tablet</p>
-                                <p>Paracetamol</p>
-                                <p>Beximco pharmaceuticals ltd</p>
-                            </div>
-                            <div class="product_quantity col-2">
-                                <span>1</span><span>x</span><span>10</span>
-                            </div>
-                            <div class="total_price col-2">
-                                <span> &#2547; </span><span>20,000</span>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mb-3">
-                            <div class="image col-2">
-                                <img class="w-100 border border-1 rounded-1"
-                                    src="http://127.0.0.1:8000/storage/district_manager/Napa 500 MG Tablet/Napa 500 MG Tablet_1708856236.webp"
-                                    alt="Napa 500 mg (500 mg)">
-                            </div>
-                            <div class="col-6 details">
-                                <h4 class="product_title">Napa 500 mg (500 mg)</h4>
-                                <p class="product_sub_cat">Tablet</p>
-                                <p>Paracetamol</p>
-                                <p>Beximco pharmaceuticals ltd</p>
-                            </div>
-                            <div class="product_quantity col-2">
-                                <span>1</span><span>x</span><span>10</span>
-                            </div>
-                            <div class="total_price col-2">
-                                <span> &#2547; </span><span>20,000</span>
-                            </div>
-                        </div>
+                        @endforeach
+                        
+                        
                         <form class="card p-2">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Promo code">
@@ -222,34 +176,33 @@
                         </form>
                         <div class="card mt-3">
                             <div class="card-header">
-                                <h3>Order Summary</h3>
+                                <h3>{{__('Order Summary')}}</h3>
                             </div>
                             <div class="card-body">
                                 <table class="table table-striped">
                                     <tr>
-                                        <td>Subtotal(2 items)</td>
+                                        <td>{{__("Subtotal(".$cartItem->count()." items)")}}</td>
                                         <td>:</td>
-                                        <td class="text-end"><span> &#2547; </span><span>40,000</span></td>
+                                        <td class="text-end"><span> &#2547; </span><span>{{$total_price}}</span></td>
                                     </tr>
                                     <tr>
-                                        <td>Delivery Fee</td>
+                                        <td>{{__('Delivery Fee')}}</td>
                                         <td>:</td>
-                                        <td class="text-end"><span> &#2547; </span><span>100</span></td>
+                                        <td class="text-end"><span> &#2547; </span><span>{{number_format($cartItem->product->delivery_fee,2)}}</span></td>
                                     </tr>
                                     <tr>
-                                        <td>Delivery Discount</td>
+                                        <td>{{__('Discounts')}}</td>
                                         <td>:</td>
-                                        <td class="text-end">-<span> &#2547; </span><span>50</span></td>
+                                        <td class="text-end">-<span> &#2547; </span><span>{{number_format($cartItem->product->discount,2)}}</span></td>
                                     </tr>
                                     <tr>
-                                        <td>Discounts</td>
-                                        <td>:</td>
-                                        <td class="text-end">-<span> &#2547; </span><span>1000</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Payment</th>
+                                        @php
+                                            
+                                            $total_payment = ($total_price + (number_format($cartItem->product->delivery_fee,2)))-(number_format($cartItem->product->discount,2))
+                                        @endphp
+                                        <th>{{__('Total Payment')}}</th>
                                         <th>:</th>
-                                        <th class="text-end"><span> &#2547; </span><span>38,950</span></th>
+                                        <th class="text-end"><span> &#2547; </span><span>{{$total_payment}}</span></th>
                                     </tr>
                                 </table>
                             </div>

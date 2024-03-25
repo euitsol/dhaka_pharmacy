@@ -553,5 +553,8 @@ Route::get('/add-to-cart', [FrontendBaseController::class, 'add_to_cart'])->name
 Route::get('/remove-to-cart', [FrontendBaseController::class, 'remove_to_cart'])->name('product.remove_to_cart');
 Route::get('/clear-cart', [FrontendBaseController::class, 'clearCart'])->name('product.clear_cart');
 
+Route::get('/item/check/{id}', [FrontendBaseController::class, 'itemCheck'])->name('cart.item.check');
+Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
+
 // Checkout Routes 
 Route::get('/product/checkout', [CheckoutController::class, 'checkout'])->name('product.checkout');

@@ -228,5 +228,34 @@ class BaseController extends Controller
         
         return response()->json($data);
     }
+    public function itemCheck($id):JsonResponse
+    {
+        $cartItem = AddToCart::findOrFail($id);
+        if($cartItem->is_check == 1){
+            $cartItem->is_check = 0;
+        }else{
+            $cartItem->is_check = 1;
+        }
+        $cartItem->update();
+        $data['alert'] = "Item check status updated";
+
+
+        
+        return response()->json($data);
+    }
+    public function itemQuantity($id, $type):JsonResponse
+    {
+
+        $cartItem = AddToCart::findOrFail($id);
+        if($type == 'plus'){
+            $cartItem->quantity += 1;
+        }else{
+            $cartItem->quantity -= 1;
+        }
+        $cartItem->update();
+        
+        $data['alert'] = "Item quantity updated";
+        return response()->json($data);
+    }
 
 }
