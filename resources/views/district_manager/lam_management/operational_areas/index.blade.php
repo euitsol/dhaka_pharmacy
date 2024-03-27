@@ -23,8 +23,8 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Operational Area') }}</th>
-                                <th>{{ __('Operational Sub Area') }}</th>
+                                <th>{{ __('DM Areas') }}</th>
+                                <th>{{ __('LAM Areas') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>

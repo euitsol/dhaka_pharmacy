@@ -549,3 +549,4 @@ Route::get('/product-details/{slug}', [SingleProductController::class, 'singlePr
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
 Route::get('/add-to-cart', [FrontendBaseController::class, 'add_to_cart'])->name('product.add_to_cart');
 Route::get('/remove-to-cart', [FrontendBaseController::class, 'remove_to_cart'])->name('product.remove_to_cart');
+Route::get('/clear-cart', [FrontendBaseController::class, 'clearCart'])->name('product.clear_cart');

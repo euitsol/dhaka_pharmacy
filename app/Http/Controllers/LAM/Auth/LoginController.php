@@ -64,9 +64,12 @@ class LoginController extends BaseController
             'password' => Hash::make($request->password),
             'dm_id' => $request->dm_id,
         ]);
-        $credentials = $request->only('phone', 'password');
+        $credentials = $request->only('phone', 'password','dm_id');
         Auth::guard('lam')->attempt($credentials);
+
         return redirect()->route('local_area_manager.login');
+        
+        
     }
 
     function reference($id){

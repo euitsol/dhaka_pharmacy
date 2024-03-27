@@ -2,7 +2,7 @@
 header{
   position: sticky;
   top: 0;
-  z-index: 999999;
+  z-index: 99999;
 }
 .header-section {
     padding: 15px 0;
@@ -108,6 +108,10 @@ header{
     width: 600px;
     
   }
+  .header-section .right-col .offcanvas .offcanvas-header .cart_clear_btn{
+    color: var(--nav-secondary-color);
+  }
+
   .header-section .right-col .offcanvas .add_to_carts .cart_empty_alert {
     color: var(--nav-text-gray);
     
@@ -214,7 +218,6 @@ header{
   
   .header-section .right-col .offcanvas .add_to_cart_item .product_details .form-group label:before {
     content:'';
-    -webkit-appearance: none;
     background-color: transparent;
     border: 2px solid #ccc;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);

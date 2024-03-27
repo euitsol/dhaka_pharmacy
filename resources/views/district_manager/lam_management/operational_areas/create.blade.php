@@ -22,12 +22,12 @@
                     <form method="POST" action="{{ route('dm.lam_area.create') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label>{{ __('District Manager Area') }}</label>
+                            <label>{{ __('DM Area') }}</label>
                             <input type="hidden" name="oa_id" class="form-control" value="{{ dm()->operation_area->id }}">
                             <input type="text" class="form-control" value="{{ dm()->operation_area->name }}" disabled>
                         </div>
                         <div class="form-group">
-                            <label>{{ __('Name') }}</label>
+                            <label>{{ __('LAM Area') }}</label>
                             <input type="text" id="title" name="name" class="form-control" placeholder="Enter name"
                                 value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])

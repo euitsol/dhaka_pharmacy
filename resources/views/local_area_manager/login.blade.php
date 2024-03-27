@@ -73,77 +73,6 @@
 </style>
 @endpush
 @section('content')
-    {{-- <div class="container py-5 my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Local Area Manager Login') }}</div>
-
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('local_area_manager.login') }}">
-                            @csrf
-
-                            <div class="row mb-3">
-                                <label for="phone"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Phone Number') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="phone" type="text"
-                                        class="form-control @error('phone') is-invalid @enderror" name="phone"
-                                        value="{{ old('phone') }}" required autocomplete="phone" autofocus>
-
-                                    @error('phone')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="password"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="current-password">
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6 offset-md-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                            {{ old('remember') ? 'checked' : '' }}>
-
-                                        <label class="form-check-label" for="remember">
-                                            {{ __('Remember Me') }}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Login') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
     <section class="lam-login-section bg-gray py-5 my-5">
         <div class="container-fluid">
             <div class="row">
@@ -154,7 +83,7 @@
                                 <div class="row">
                                     <div class="col-md-7 pe-md-0">
                                         <div class="image_wrap h-100">
-                                            <img src="{{asset('no_img/no_img2.png')}}" class="h-100 w-100" alt="">
+                                            <img style="object-fit: cover" src="{{asset('frontend\asset\img\lam_login_reg.jpeg')}}" class="h-100 w-100" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-5 ps-md-0">
@@ -181,7 +110,7 @@
                             <div class="right_column bg-white h-100">
 
                                 <!-- Login Form  -->
-                                <div class="login_form form px-4 py-lg-5 py-4">
+                                <div class="login_form form px-4  py-4">
                                     <form action="{{ route('local_area_manager.login') }}" method="POST" autocomplete="on">
                                         @csrf
                                         <h3 class="text-center mb-5 mb-lg-5">{{__('Login Here')}}</h3>

@@ -15,7 +15,7 @@
                     <form method="POST" action="{{ route('lam.profile.update') }}" autocomplete="off"
                         enctype="multipart/form-data">
                         @csrf
-                        @method('PUT');
+                        @method('PUT')
                         <div class="card-body">
                             <div class="row flex-xl-row flex-column-reverse">
                                 <div class="col-xl-7 col-xxl-8">
@@ -104,13 +104,13 @@
                                         class="form-control" disabled>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Operational Area') }}</label>
+                                    <label>{{ __('DM Area') }}</label>
                                     <input type="text" value="{{ $lam->dm->operation_area->name }}"
                                         class="form-control" disabled>
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Operational Sub Area') }}</label>
+                                    <label>{{ __('LAM Area') }}</label>
                                     @if(empty($lam->osa_id))
                                         <select name="osa_id" class="form-control">
                                             <option selected hidden>{{ __('Select Your Area') }}</option>
@@ -191,7 +191,7 @@
             <form method="POST" action="{{ route('lam.profile.update.password') }}" autocomplete="off"
                 enctype="multipart/form-data">
                 @csrf
-                @method('PUT');
+                @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
                         <label>{{ __('Current Password') }}</label>

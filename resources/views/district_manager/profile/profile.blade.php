@@ -73,7 +73,7 @@
                             <div class="row">
 
                                 <div class="form-group col-md-4">
-                                    <label>{{__('Operational Area')}}</label>
+                                    <label>{{__('DM Area')}}</label>
                                     <input type="text" class="form-control" value="{{$dm->operation_area->name}}" disabled>
                                 </div>
 
@@ -164,7 +164,7 @@
             <form method="POST" action="{{ route('dm.profile.update.password') }}" autocomplete="off"
                 enctype="multipart/form-data">
                 @csrf
-                @method('PUT');
+                @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
                         <label>{{ __('Current Password') }}</label>

@@ -123,7 +123,7 @@
                                         <td>${data.email ?? 'N/A'}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Operation Area</th>
+                                        <th class="text-nowrap">DM Area</th>
                                         <th>:</th>
                                         <td>${data.operation_area ? data.operation_area.name : 'Area not allocated'}</td>
                                     </tr>
