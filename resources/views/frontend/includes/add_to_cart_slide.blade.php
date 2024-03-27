@@ -13,10 +13,9 @@
                                         <div class="card-body py-2">
                                             {{-- Product Details  --}}
                                             <div class="row align-items-center product_details mb-2">
-                                                <div class="check_order">
-                                                    <div class="form-group">
-                                                        <input class="check_atc_item" data-id={{$atc->id}} type="checkbox" id="atc_item_check-{{$key}}" {{($atc->is_check == 1) ? 'checked' : ''}}>
-                                                        <label for="atc_item_check-{{$key}}"></label>
+                                                <div class="ben">
+                                                    <div class="text-end">
+                                                        <a href="javascript:void(0)" data-atc_id ={{$atc->id}} class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></a>
                                                     </div>
                                                 </div>
                                                 <div class="image col-2">
@@ -41,7 +40,7 @@
                                             <div class="row align-items-center atc_functionality">
 
                                                 {{-- Units --}}
-                                                <div class="item_units col-7">
+                                                <div class="item_units col-8">
                                                     <div class="form-group my-1 boxed">
                                                         
                                                         @foreach ($atc->product->units as $u_key=>$unit)
@@ -61,17 +60,12 @@
 
 
                                                 {{-- Plus Minus  --}}
-                                                <div class="plus_minus col-5 ps-md-4 d-flex align-items-center justify-between">
+                                                <div class="plus_minus col-4 ps-md-4 d-flex align-items-center justify-between">
                                                     <div class="form-group">
                                                         <div class="input-group" role="group">
                                                             <a href="javascript:void(0)" data-id="{{$atc->id}}" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
                                                             <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="{{ (!empty($atc->unit_id)) ? (number_format(($atc->product->price*$atc->unit->quantity),2)) : (number_format($atc->product->price,2))  }}" value="{{$atc->quantity}}" >
                                                             <a href="javascript:void(0)" data-id="{{$atc->id}}" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="ben ms-3">
-                                                        <div class="text-end">
-                                                            <a href="javascript:void(0)" data-atc_id ={{$atc->id}} class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>

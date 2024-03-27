@@ -109,6 +109,7 @@
                         cart_empty_alert.remove();
                         atc_total.html(plus_atc_total);
                         toastr.success(data.alert);
+                        refreshSubtotal();
                     } else {
                         toastr.error(data.alert);
                     }
@@ -205,9 +206,9 @@
 
     // Subtotal Refresh Function 
     function refreshSubtotal() {
-        $('.total_check_item').html($('.add_to_carts').find('.check_atc_item:checked').length)
+        $('.total_check_item').html($('.add_to_carts').find('.add_to_cart_item').length)
         var total_price = 0;
-        $('.add_to_carts').find('.check_atc_item:checked').each(function() {
+        $('.add_to_carts').find('.add_to_cart_item').each(function() {
             var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price')
                 .html());
             total_price += check_item_price;
@@ -220,7 +221,14 @@
     function changeQuantity(element, increment) {
         var quantityInput = element.siblings('.plus_minus_quantity');
         var currentVal = parseInt(quantityInput.val()) || 0;
+        element.parent('.input-group').find('.minus_btn').removeClass('disabled');
+        
+        if(currentVal < 3 && increment == false){
+            element.addClass('disabled')
+        }
         if (!isNaN(currentVal) && (increment || currentVal > 1)) {
+            
+            
             quantityInput.val(increment ? currentVal + 1 : currentVal - 1);
             updateItemPrice(element);
 
