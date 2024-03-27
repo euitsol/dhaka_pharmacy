@@ -181,24 +181,24 @@
                             <div class="card-body">
                                 <table class="table table-striped">
                                     <tr>
-                                        <td>{{__("Subtotal(".$cartItem->count()." items)")}}</td>
+                                        <td>{{__("Subtotal(".(isset($cartItem) ? $cartItem->count() : 0)." items)")}}</td>
                                         <td>:</td>
                                         <td class="text-end"><span> &#2547; </span><span>{{$total_price}}</span></td>
                                     </tr>
                                     <tr>
                                         <td>{{__('Delivery Fee')}}</td>
                                         <td>:</td>
-                                        <td class="text-end"><span> &#2547; </span><span>{{number_format($cartItem->product->delivery_fee,2)}}</span></td>
+                                        <td class="text-end"><span> &#2547; </span><span>{{isset($cartItem) ? number_format($cartItem->product->delivery_fee,2) : 0}}</span></td>
                                     </tr>
                                     <tr>
                                         <td>{{__('Discounts')}}</td>
                                         <td>:</td>
-                                        <td class="text-end">-<span> &#2547; </span><span>{{number_format($cartItem->product->discount,2)}}</span></td>
+                                        <td class="text-end">-<span> &#2547; </span><span>{{isset($cartItem) ? number_format($cartItem->product->discount,2) : 0}}</span></td>
                                     </tr>
                                     <tr>
                                         @php
                                             
-                                            $total_payment = ($total_price + (number_format($cartItem->product->delivery_fee,2)))-(number_format($cartItem->product->discount,2))
+                                            $total_payment = ($total_price + (isset($cartItem) ? ((number_format($cartItem->product->delivery_fee,2))-(number_format($cartItem->product->discount,2))) : 0))
                                         @endphp
                                         <th>{{__('Total Payment')}}</th>
                                         <th>:</th>
