@@ -57,7 +57,7 @@
                             <i class="fa-solid fa-cart-shopping me-1"></i>
                             <span>{{__('Cart')}}</span><sup id="cart_btn_quantity"><strong>{{$total_cart_item ?? ''}}</strong></sup>
                         </button>
-                        @include('frontend\includes\add_to_cart_slide')
+                        @include('frontend.includes.add_to_cart_slide')
                     </div>
                     <div class="item">
                         <a href="{{route('login')}}" class="login-btn">
