@@ -95,7 +95,7 @@
 <!--========== custom-js ===========-->
 <script src="{{ asset('frontend/asset/js/custom.js') }}"></script>
 @include('frontend.includes.add_to_cart_js')
-@include('frontend\includes\search_js')
+@include('frontend.includes.search_js')
 {{-- @livewireScripts <!-- Include Livewire scripts here --> --}}
 @stack('js')
 </body>
