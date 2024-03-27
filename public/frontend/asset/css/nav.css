@@ -161,14 +161,21 @@ header{
     color: var(--nav-text-color);
     line-height: 2;
   }
-  .header-section .right-col .offcanvas .add_to_cart_item .atc_functionality .ben a{
+  .header-section .right-col .offcanvas .add_to_cart_item .ben{
+    position: absolute;
+    top: 12px;
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .ben a{
       padding:7px 14px;
       border-radius: 5px;
       border: 1px solid var(--nav-text-gray);
       transition: .4s;
   }
-  .header-section .right-col .offcanvas .add_to_cart_item .atc_functionality .ben a:hover{
+  .header-section .right-col .offcanvas .add_to_cart_item .ben a:hover{
       border: 1px solid red;
+  }
+  .header-section .right-col .offcanvas .add_to_cart_item .item_price{
+    margin-top: 40px;
   }
   .header-section .right-col .offcanvas .add_to_cart_item .item_price h4{
     color: var(--nav-asent-color);
