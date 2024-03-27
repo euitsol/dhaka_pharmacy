@@ -214,6 +214,7 @@
         });
         $('.subtotal_price').html(numberFormat(total_price, 2));
     }
+    refreshSubtotal();
 
     // Increment or Decrement Quantity Function
     function changeQuantity(element, increment) {
