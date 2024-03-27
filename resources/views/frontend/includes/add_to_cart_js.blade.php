@@ -8,7 +8,8 @@
             let unit_id = $(this).data('unit_id');
             let url = ("{{ route('product.add_to_cart', ['product' => 'product_slug']) }}");
             if (unit_id) {
-                url = ("{{ route('product.add_to_cart', ['product' => 'product_slug', 'unit' => 'unit_id']) }}");
+                url = (
+                    "{{ route('product.add_to_cart', ['product' => 'product_slug', 'unit' => 'unit_id']) }}");
                 url = url.replace('unit_id', unit_id);
             }
             let _url = url.replace('product_slug', product_slug);
@@ -25,7 +26,7 @@
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    if(data.atc) {
+                    if (data.atc) {
                         var count = data.count;
                         var result = `
                                     <div class="card add_to_cart_item mb-2">
@@ -61,13 +62,14 @@
                                                     <div class="item_units col-7">
                                                         <div class="form-group my-1 boxed">
                         `;
-                        data.atc.product.units.forEach(function(unit, index){
+                        data.atc.product.units.forEach(function(unit, index) {
                             var checked = '';
-                            if ((data.atc.unit_id != null && unit.id == data.atc.unit_id) || index === 0) {
+                            if ((data.atc.unit_id != null && unit.id == data.atc
+                                    .unit_id) || index === 0) {
                                 checked = 'checked';
                             }
-                                
-                            result +=`
+
+                            result += `
                                         <input type="radio" data-name="${unit.name}" ${checked}
                                         class="unit_quantity" id="android-${index+20}"
                                         name="data-${count}"
@@ -78,7 +80,7 @@
                                     `;
                             index++;
                         });
-                        result +=`
+                        result += `
                                             </div>
                                         </div>
 
@@ -107,7 +109,7 @@
                         cart_empty_alert.remove();
                         atc_total.html(plus_atc_total);
                         toastr.success(data.alert);
-                    }else{
+                    } else {
                         toastr.error(data.alert);
                     }
                 },
@@ -125,7 +127,7 @@
             let cartItem = $(this).closest('.add_to_cart_item');
             let atc_total = $('#cart_btn_quantity strong');
             let minus_atc_total = parseInt(atc_total.html()) - 1;
-            var text = "<h5 class='text-center cart_empty_alert'>{{__('Added Some Products')}}</h5>";
+            var text = "<h5 class='text-center cart_empty_alert'>{{ __('Added Some Products') }}</h5>";
 
             var item_append = $('.add_to_carts');
             $.ajax({
@@ -137,7 +139,7 @@
 
                     atc_total.html(minus_atc_total);
                     cartItem.remove();
-                    if(minus_atc_total === 0){
+                    if (minus_atc_total === 0) {
                         item_append.html(text);
                     }
                     refreshSubtotal();
@@ -155,23 +157,23 @@
             let url = "{{ route('product.clear_cart') }}";
             let cartItemContainer = $(this).parent('.offcanvas-header').next('.add_to_carts');
             let atc_total = $('#cart_btn_quantity strong');
-            var text = "<h5 class='text-center cart_empty_alert'>{{__('Added Some Products')}}</h5>";
+            var text = "<h5 class='text-center cart_empty_alert'>{{ __('Added Some Products') }}</h5>";
 
             $.ajax({
                 url: url,
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    if(data.count != 0){
+                    if (data.count != 0) {
                         toastr.success(data.alert);
                         atc_total.html(0);
                         cartItemContainer.find('.add_to_cart_item').remove();
                         cartItemContainer.html(text);
                         refreshSubtotal();
-                    }else{
+                    } else {
                         toastr.error(data.alert);
                     }
-                    
+
                 },
                 error: function(xhr, status, error) {
                     console.error('Error clearing cart data:', error);
@@ -202,14 +204,15 @@
     }
 
     // Subtotal Refresh Function 
-    function refreshSubtotal(){
+    function refreshSubtotal() {
         $('.total_check_item').html($('.add_to_carts').find('.check_atc_item:checked').length)
         var total_price = 0;
         $('.add_to_carts').find('.check_atc_item:checked').each(function() {
-            var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price').html());
-            total_price+=check_item_price;   
+            var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price')
+                .html());
+            total_price += check_item_price;
         });
-        $('.subtotal_price').html(numberFormat(total_price,2));
+        $('.subtotal_price').html(numberFormat(total_price, 2));
     }
 
     // Increment or Decrement Quantity Function
@@ -219,6 +222,24 @@
         if (!isNaN(currentVal) && (increment || currentVal > 1)) {
             quantityInput.val(increment ? currentVal + 1 : currentVal - 1);
             updateItemPrice(element);
+
+            let type = (increment ? 'plus' : 'minus');
+            let id = element.data('id');
+            let url = "{{ route('cart.item.quantity',['id'=>'itemId', 'type'=>'quantityType']) }}";
+            let _url = url.replace('itemId',id);
+            let __url = _url.replace('quantityType',type);
+
+            $.ajax({
+                url: __url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data.alert);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error clearing cart data:', error);
+                }
+            });
         }
         refreshSubtotal();
     }
@@ -250,22 +271,41 @@
 
 
     // Subtotal JS 
-
-    $(document).on('change','.check_atc_item',function(){
+    $(document).on('change', '.check_atc_item', function() {
         var check = $(this).prop('checked');
         var subtotal_price = $('.subtotal_price');
         var formatted_subtotal_price = parseFloat(subtotal_price.html());
-        var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price').html());
+        var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price')
+    .html());
         var total_check_item = $('.total_check_item');
         var summation = 0;
         if (check == true) {
-            summation = (formatted_subtotal_price+check_item_price);
-            total_check_item.html(parseInt(total_check_item.html())+1);
-        }else{
-            summation = (formatted_subtotal_price-check_item_price);
-            total_check_item.html(parseInt(total_check_item.html())-1);
+            summation = (formatted_subtotal_price + check_item_price);
+            total_check_item.html(parseInt(total_check_item.html()) + 1);
+        } else {
+            summation = (formatted_subtotal_price - check_item_price);
+            total_check_item.html(parseInt(total_check_item.html()) - 1);
         }
-        subtotal_price.html(numberFormat(summation,2));
-    });
+        subtotal_price.html(numberFormat(summation, 2));
 
+
+        let id = $(this).data('id');
+        let url = "{{ route('cart.item.check',['id'=>'itemId']) }}";
+        let _url = url.replace('itemId',id);
+
+        $.ajax({
+            url: _url,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data.alert);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error clearing cart data:', error);
+            }
+        });
+
+
+        
+    });
 </script>

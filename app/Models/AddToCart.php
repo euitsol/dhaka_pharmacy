@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AddToCart extends BaseModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     public function product(){
         return $this->belongsTo(Medicine::class,'product_id');

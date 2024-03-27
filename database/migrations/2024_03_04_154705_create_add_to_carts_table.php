@@ -20,7 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('unit_id')->nullable();
-            $table->float('quantity');
+            $table->integer('quantity');
+            $table->boolean('is_check')->default(0);
             $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
