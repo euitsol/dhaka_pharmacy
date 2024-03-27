@@ -262,6 +262,13 @@
     $(document).on('click', '.minus_btn', function() {
         changeQuantity($(this), false);
     });
+    console.log($('.plus_minus_quantity').length);
+    $('.plus_minus_quantity').each(function(){
+        if($(this).val() == 1){
+            $(this).prev('.minus_btn').addClass('disabled');
+        }
+    });
+    
 
     // Unit Change JS 
     $(document).on('change', '.unit_quantity', function() {
