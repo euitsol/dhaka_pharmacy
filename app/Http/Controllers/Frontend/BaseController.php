@@ -148,33 +148,6 @@ class BaseController extends Controller
                                     })
                                     ->all();
         }
-        
-        
-
-        // $data['atcs'] = $data['atcs']->map(function ($atc) {
-        //     $activatedProduct = $atc->product;
-
-        //     if ($activatedProduct) {
-        //         $strength = $activatedProduct->strength ? ' (' . $activatedProduct->strength->quantity . ' ' . $activatedProduct->strength->unit . ')' : '';
-        //         $activatedProduct->attr_title = Str::ucfirst(Str::lower($activatedProduct->name . $strength));
-        //         $activatedProduct->name = Str::limit(Str::ucfirst(Str::lower($activatedProduct->name . $strength)), 45, '..');
-        //         $activatedProduct->generic->name = Str::limit($activatedProduct->generic->name, 55, '..');
-        //         $activatedProduct->company->name = Str::limit($activatedProduct->company->name, 55, '..');
-
-        //         $activatedProduct->units = array_map(function ($u_id) {
-        //             return MedicineUnit::findOrFail($u_id);
-        //         }, (array) json_decode($activatedProduct->unit, true));
-
-        //         $activatedProduct->units = collect($activatedProduct->units)->sortBy('quantity')->values()->all();
-        //     }
-
-        //     return $atc;
-        // });
-
-        // $data['total_cart_item'] = $data['atcs']->sum(function ($atc) {
-        //     return $atc->product ? 1 : 0;
-        // });
-
         return response()->json($data);
     }
 
