@@ -214,7 +214,7 @@
                                 <div class="col">
                                     <h4><b>{{__('Your Products')}}</b></h4>
                                 </div>
-                                <div class="col align-self-center text-end text-muted">{{optional($checkItems)->count()}} items</div>
+                                <div class="col align-self-center text-end text-muted">{{collect($checkItems)->count()}} items</div>
                             </div>
                         </div>
                         @php
@@ -223,19 +223,19 @@
                         @foreach ($checkItems as $cartItem)
                             <div class="row order-item">
                                 <div class="row main align-items-center py-2 px-0">
-                                    <div class="col-2"><img class="img-fluid" src="{{storage_url($cartItem->product->image)}}"></div>
+                                    <div class="col-2"><img class="img-fluid" src="{{storage_url($cartItem['product']->image)}}"></div>
                                     <div class="col-6">
-                                        <div class="row" title="{{$cartItem->product->attr_title}}">{{$cartItem->product->name}}</div>
-                                        <div class="row text-muted">{{$cartItem->product->pro_sub_cat->name}}</div>
-                                        <div class="row text-muted">{{$cartItem->product->generic->name}}</div>
-                                        <div class="row text-muted">{{$cartItem->product->company->name}}</div>
+                                        <div class="row" title="{{$cartItem['product']->attr_title}}">{{$cartItem['product']->name}}</div>
+                                        <div class="row text-muted">{{$cartItem['product']->pro_sub_cat->name}}</div>
+                                        <div class="row text-muted">{{$cartItem['product']->generic->name}}</div>
+                                        <div class="row text-muted">{{$cartItem['product']->company->name}}</div>
                                     </div>
                                     <div class="col-2">
-                                        <span>1 X {{$cartItem->quantity}}</span>
+                                        <span>1 X {{$cartItem['quantity']}}</span>
                                     </div>
                                     <div class="col-2 text-end">
                                         @php
-                                            $single_total_price = number_format(($cartItem->quantity * $cartItem->product->price),2);
+                                            $single_total_price = number_format(($cartItem['quantity'] * $cartItem['product']->price),2);
                                             $total_price +=$single_total_price;
                                         @endphp
                                         <span> &#2547; </span><span>{{$single_total_price}}</span>

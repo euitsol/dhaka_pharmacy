@@ -113,7 +113,7 @@
                                                     </div>
                                                     <div class="order_button mt-4">
                                                         <a class="order-btn" type="submit"
-                                                            href="#">{{ __('Order Now') }}</a>
+                                                            href="{{route('product.checkout',['product'=>$single_product->slug, 'unit'=>$units[0]['id']])}}">{{ __('Order Now') }}</a>
                                                     </div>
                                                 </form>
 
@@ -530,6 +530,10 @@
                 var name = $(this).data('name');
                 var id = $(this).data('id');
                 $(this).closest('.product_content').find('.cart-btn').attr('data-unit_id',id);
+                
+                let url = "{{route('product.checkout',['product'=>$single_product->slug, 'unit'=>'unit_id'])}}";
+                let _url = url.replace('unit_id',id);
+                $('.order-btn').attr('href',_url);
 
                 var formattedNumber = numberFormat($(this).val(), 2);
                 $('.total_price').html(formattedNumber);
