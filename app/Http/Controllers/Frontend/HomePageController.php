@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Medicine;
+use App\Models\MedicineUnit;
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -23,6 +24,11 @@ class HomePageController extends BaseController
             $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
             $product->generic->name = str_limit($product->generic->name, 30, '..');
             $product->company->name = str_limit($product->company->name, 30, '..');
+            $product->units = array_map(function ($u_id) {
+                return MedicineUnit::findOrFail($u_id);
+            }, (array) json_decode($product->unit, true));
+
+            $product->units = collect($product->units)->sortBy('quantity')->values()->all();
             return $product;
         });
         $data['bsItems'] = $products->where('is_best_selling', 1)->latest()->get()->shuffle()->take(8)->map(function($product){
@@ -31,6 +37,11 @@ class HomePageController extends BaseController
             $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
             $product->generic->name = str_limit($product->generic->name, 30, '..');
             $product->company->name = str_limit($product->company->name, 30, '..');
+            $product->units = array_map(function ($u_id) {
+                return MedicineUnit::findOrFail($u_id);
+            }, (array) json_decode($product->unit, true));
+
+            $product->units = collect($product->units)->sortBy('quantity')->values()->all();
             return $product;
         });
 
@@ -60,6 +71,11 @@ class HomePageController extends BaseController
             $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
             $product->generic->name = str_limit($product->generic->name, 30, '..');
             $product->company->name = str_limit($product->company->name, 30, '..');
+            $product->units = array_map(function ($u_id) {
+                return MedicineUnit::findOrFail($u_id);
+            }, (array) json_decode($product->unit, true));
+
+            $product->units = collect($product->units)->sortBy('quantity')->values()->all();
             return $product;
         });
         return response()->json($data);

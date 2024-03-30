@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\BaseController;
 use App\Models\Medicine;
+use App\Models\MedicineUnit;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Http\JsonResponse;
@@ -44,6 +45,12 @@ class ProductPageController extends BaseController
             $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 25, '..');
             $product->generic->name = str_limit($product->generic->name, 25, '..');
             $product->company->name = str_limit($product->company->name, 25, '..');
+
+            $product->units = array_map(function ($u_id) {
+                return MedicineUnit::findOrFail($u_id);
+            }, (array) json_decode($product->unit, true));
+
+            $product->units = collect($product->units)->sortBy('quantity')->values()->all();
             return $product;
         });
         if($category_slug !== 'all'){

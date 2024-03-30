@@ -107,7 +107,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="add_to_card">
-                                                        <a class="cart-btn" href="javascript:void(0)" data-product_slug="{{ $single_product->slug }}"  href="#">
+                                                        <a class="cart-btn" href="javascript:void(0)" data-product_slug="{{ $single_product->slug }}" data-unit_id="{{$units[0]['id']}}"  href="#">
                                                             <i class="fa-solid fa-cart-plus"></i>
                                                             {{ __('Add to Cart') }}</a>
                                                     </div>
@@ -533,6 +533,7 @@
                 
                 let url = "{{route('product.checkout',['product'=>$single_product->slug, 'unit'=>'unit_id'])}}";
                 let _url = url.replace('unit_id',id);
+                _url = _url.replace(/&amp;/g, '&');
                 $('.order-btn').attr('href',_url);
 
                 var formattedNumber = numberFormat($(this).val(), 2);

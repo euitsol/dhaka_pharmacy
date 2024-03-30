@@ -231,7 +231,11 @@
                                         <div class="row text-muted">{{$cartItem['product']->company->name}}</div>
                                     </div>
                                     <div class="col-2">
-                                        <span>1 X {{$cartItem['quantity']}}</span>
+                                        @if(isset($cartItem['status']))
+                                            <span>1 X {{$cartItem['name']}}</span>
+                                        @else
+                                            <span>{{$cartItem['quantity']}} X {{$cartItem['name']}}</span>
+                                        @endif
                                     </div>
                                     <div class="col-2 text-end">
                                         @php
@@ -245,7 +249,7 @@
                         @endforeach
                         <div class="row order-item">
                             <div class="row main align-items-center py-2 px-0">
-                                <div class="col mb-2">{{__('Total Item')}} ( {{optional($checkItems)->count()}} )</div>
+                                <div class="col mb-2">{{__('Total Item')}} ( {{count($checkItems)}} )</div>
                                 <div class="col text-end"><span>{{__('Sub-total')}}  &#2547; </span> <span>{{$total_price}}</span></div>
                             </div>
                         </div>

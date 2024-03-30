@@ -122,7 +122,7 @@ btn-arrow">
                                                 </div>
                                                 <h4> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
                                                 <div class="add_to_card">
-                                                    <a class="cart-btn" data-product_slug="{{ $product->slug }}"
+                                                    <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id="{{$product->units[0]['id']}}"
                                                         href="javascript:void(0)">
                                                         <i class="fa-solid fa-cart-plus"></i>
                                                     </a>
@@ -243,7 +243,7 @@ btn-arrow">
                                                 </div>
                                                 <h4> <span> &#2547; </span> ${product.price}</h4>
                                                 <div class="add_to_card">
-                                                    <a class="cart-btn" data-product_slug="${product.slug}" href="javascript:void(0)">
+                                                    <a class="cart-btn" data-product_slug="${product.slug}" data-unit_id="${product.units[0]['id']}" href="javascript:void(0)">
                                                         <i class="fa-solid fa-cart-plus"></i>
                                                     </a>
                                                 </div>
