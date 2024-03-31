@@ -32,7 +32,7 @@
                                                     <p><a href="">{{$atc->product->company->name}}</a></p>
                                                 </div>
                                                 <div class="item_price col-2 ps-0">
-                                                    <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">{{ (!empty($atc->unit_id)) ? (number_format(($atc->product->price*$atc->unit->quantity),2)) : (number_format($atc->product->price,2))  }}</span></h4>
+                                                    <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">{{  (number_format(($atc->product->price*$atc->quantity),2))  }}</span></h4>
                                                 </div>
                                             </div>
 

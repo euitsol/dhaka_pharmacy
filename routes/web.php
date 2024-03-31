@@ -558,3 +558,4 @@ Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQu
 
 // Checkout Routes 
 Route::get('/product/checkout', [CheckoutController::class, 'checkout'])->name('product.checkout');
+Route::post('/product/order/confirm/{order_id}', [CheckoutController::class, 'order_confirm'])->name('product.order.confirm');
