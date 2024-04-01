@@ -21,13 +21,12 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->string('customer_type');
             $table->unsignedBigInteger('ref_user')->nullable();
-            $table->json('products')->comment('product_id, unit_id, quantity');
+            $table->json('carts')->comment('cart ids');
             $table->tinyInteger('status')->default(0);
             $table->enum('payment_getway',['bkash', 'nogod', 'roket', 'upay', 'ssl'])->nullable();
             $table->string('payment_id');
-            $table->float('total_amount');
-            $table->float('total_discount');
-            $table->float('delivery_fee');
+            $table->string('promo_code')->nullable();
+            $table->float('delivery_fee')->nullable();
             $table->string('delivery_type')->nullable();
             $table->timestamps();
             $table->softDeletes();

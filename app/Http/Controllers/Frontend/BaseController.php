@@ -24,6 +24,7 @@ class BaseController extends Controller
         
         $data['atcs'] = AddToCart::with(['product', 'customer'])
             ->where('customer_id', 1)
+            ->where('status', 1)
             ->latest()
             ->get();
 
@@ -98,28 +99,30 @@ class BaseController extends Controller
         $product = Medicine::activated()->where('slug',$product_slug)->first();
         $customer_id = 1;
         $data['count'] = AddToCart::where('customer_id',$customer_id)->count();
-        $check = AddToCart::where('product_id',$product->id)->where('customer_id',$customer_id)->first();
-        if($check){
-            $data['alert'] = "The item has already been added to the cart";
-            return response()->json($data);
+        $atc = AddToCart::where('product_id',$product->id)->where('customer_id',$customer_id)->first();
+        if($atc){
+            if($atc->status != 1){
+                $atc->status = 1;
+                $atc->save(); 
+            }else{
+                $data['alert'] = "The item has already been added to the cart";
+                return response()->json($data);
+            }
+            
+            
+        }else{
+            $atc = new AddToCart();
+            $atc->product_id = $product->id;
+            $atc->customer_id = $customer_id;
+            $atc->unit_id = $unit_id;
+            $atc->quantity = 1;
+            $atc->save();
         }
         
 
-        $atc = new AddToCart();
-        $atc->product_id = $product->id;
-        $atc->customer_id = $customer_id;
-        $atc->unit_id = $unit_id;
-        $atc->quantity = 1;
-        $atc->save();
-
-        // $data['alert'] = $atc->product->name ." has been successfully added to your cart";
-        $data['alert'] = "The item has been successfully added to your cart";
         
 
-        // $data['atcs'] = AddToCart::with(['product', 'customer'])
-        //     ->where('customer_id', 1)
-        //     ->latest()
-        //     ->get();
+        $data['alert'] = "The item has been successfully added to your cart";
         $data['atc'] = AddToCart::with(['product.generic','product.pro_sub_cat','product.company'])->where('product_id',$atc->product_id)->where('customer_id',$atc->customer_id)->first();
         $activatedProduct = $data['atc']->product;
 

@@ -92,7 +92,7 @@
                                         <h3><span> &#2547; </span> <span class="subtotal_price">0.00</span></h3>
                                     </div>
                                     <div class="col-12">
-                                        <a href="{{route('product.checkout')}}" class=" order_button w-100">{{__('Proceed To Checkout')}}</a>
+                                        <a href="{{route('product.int','cart-order')}}" class=" order_button w-100">{{__('Proceed To Checkout')}}</a>
                                     </div>
                                 </div>
                             </div>
