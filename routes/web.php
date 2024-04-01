@@ -52,6 +52,8 @@ use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
 use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
+use App\Http\Controllers\Admin\PushNotification\SettingController as PushNotificationSetting;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -427,6 +429,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::post('index', 'notification')->name('notification.site_settings');
         Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
+    });
+    Route::controller(PushNotificationSetting::class, 'push-notification')->prefix('push-notification')->name('push.')->group(function () {
+        Route::get('index', 'index')->name('ns');
+        Route::post('update', 'store')->name('update.ns');
     });
 });
 
