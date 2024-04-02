@@ -47,6 +47,7 @@ use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
 use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
+use App\Http\Controllers\Admin\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
 use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
@@ -119,6 +120,26 @@ Route::prefix('user')->group(function () {
     Route::post('/password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('/password/reset/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('/password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset']);
+});
+
+
+
+
+//SSL Commerz Routes 
+// '/payment/success',
+// '/payment/fail',
+// '/payment/cancel',
+// '/payment/ipn',
+
+Route::controller(SslCommerzController::class, 'payment')->prefix('payment')->name('payment.')->group(function () {
+    // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
+    Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
+    Route::post('/index', 'index')->name('index');
+    // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
+    Route::post('/success', 'success')->name('success');
+    Route::post('/fail', 'fail')->name('fail');
+    Route::post('/cancel', 'cancel')->name('cancel');
+    Route::post('/ipn', 'ipn')->name('ipn');
 });
 
 
