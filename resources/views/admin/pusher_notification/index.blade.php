@@ -167,7 +167,9 @@
                                     <textarea name="message" id="message" class="form-control"></textarea>
                                     @include('alerts.feedback', ['field' => 'message'])
                                 </div>
-                                <span type="submit" id="updateNt"  class="btn btn-primary btn-sm">{{ __('Update') }}</span>
+                                <div class="text-end">
+                                    <span type="submit" id="updateNt"  class="btn btn-primary btn-sm">{{ __('Update') }}</span>
+                                </div>
                             </form>
                         </div>
                     </div>
