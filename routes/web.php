@@ -430,9 +430,14 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
     });
+
+    // Notification Settings 
     Route::controller(PushNotificationSetting::class, 'push-notification')->prefix('push-notification')->name('push.')->group(function () {
         Route::get('index', 'index')->name('ns');
         Route::post('update', 'store')->name('update.ns');
+        Route::get('template/edit/{id}', 'edit_nt')->name('nt.ns');
+        Route::put('template/edit/{id}', 'update_nt')->name('nt.ns');
+        Route::get('template/status/{id}', 'status_nt')->name('nt.status.ns');
     });
 });
 

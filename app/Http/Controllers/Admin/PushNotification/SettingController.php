@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\PushNotification;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PushNotificationTemplateRequest;
 use App\Models\Documentation;
 use App\Models\NotificationSetting;
+use App\Models\NotificationTemplate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,6 +22,7 @@ class SettingController extends Controller
 
     public function index(): View
     {
+        $data['notification_templates'] = NotificationTemplate::latest()->get();
         $data['notification_settings'] = NotificationSetting::pluck('value', 'key')->all();
         $data['document'] = Documentation::where('module_key','push_notification')->first();
         return view('admin.pusher_notification.index', $data);
@@ -48,5 +51,28 @@ class SettingController extends Controller
             flash()->addError('Something is wrong.');
             return redirect()->route('push.ns');
         }
+    }
+    public function edit_nt($id){
+        $data['notification_template'] =  NotificationTemplate::findOrFail($id);
+        return response()->json($data);
+    }
+
+    public function update_nt(PushNotificationTemplateRequest $req, $id) {
+        try {
+            $data = NotificationTemplate::findOrFail($id);
+            $data->message = $req->message;
+            $data->update();
+            flash()->addSuccess('Notification template updated successfully.');
+            return response()->json(['message' => 'Notification template updated successfully.']);
+        } catch (\Exception $e) {
+            flash()->addError('Somethings is wrong.');
+            return response()->json(['message' => 'Somethings is wrong.'], 500);
+        }
+    }
+    public function status_nt($id){
+        $nt = NotificationTemplate::findOrFail($id);
+        $this->statusChange($nt);
+        $data['message'] = "$nt->name status updated successfully.";
+        return response()->json($data);
     }
 }

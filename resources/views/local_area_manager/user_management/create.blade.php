@@ -1,7 +1,7 @@
 @extends('local_area_manager.layouts.master', ['pageSlug' => 'user'])
 
 @section('content')
-    <div class="row px-3 pt-3">
+    <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
