@@ -400,6 +400,18 @@
             </li>
             {{-- @endif --}}
 
+            {{-- Payment Gateways --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'pg_settings',
+                        'routeName' => 'payment_gateway.pg_settings',
+                        'iconClass' => 'fa-solid fa-gears',
+                        'label' => 'Payment Gateways',
+                    ],
+                ],
+            ])
+
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [
                     [
