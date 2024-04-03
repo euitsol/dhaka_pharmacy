@@ -406,7 +406,7 @@
                     [
                         'pageSlug' => 'pg_settings',
                         'routeName' => 'payment_gateway.pg_settings',
-                        'iconClass' => 'fa-solid fa-gears',
+                        'iconClass' => 'fa-solid fa-money-check-alt',
                         'label' => 'Payment Gateways',
                     ],
                 ],
