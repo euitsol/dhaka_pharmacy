@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
             ProductSubCategorySeeder::class,
             MedicineSeeder::class,
             PushNtSeeder::class,
+            PushNotificationSeeder::class,
+            SslCommerzSeeder::class,
         ]);
     }
 }
