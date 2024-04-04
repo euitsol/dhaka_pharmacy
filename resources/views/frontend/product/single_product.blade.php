@@ -83,19 +83,22 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <form action="{{route('product.single_order')}}" method="POST">
+                                                @csrf
                                             <div class="product_content">
                                                 <h1>{{ __($single_product->name) }} </h1>
+                                                <input type="hidden" name="slug" value="{{$single_product->slug}}">
                                                 <p>{{ __($single_product->pro_sub_cat->name) }}</p>
                                                 <p>{{ __($single_product->generic->name) }}</p>
                                                 <p>{{ __($single_product->company->name) }}</p>
-                                                <form action="">
+                                                
                                                     <div class="product_price mt-4">
                                                         <p><strong>{{ __('MRP: Tk') }} <span
                                                                     class="total_price">{{ __(number_format($single_product->price, 2)) }}
                                                                 </span></strong> /<span class="unit_name">{{ __('piece') }}</span> </p>
                                                         <div class="form-group my-4 boxed">
                                                             @foreach ($units as $key => $unit)
-                                                                <input type="radio" data-id="{{$unit->id}}" data-name="{{$unit->name}}"
+                                                                <input type="radio" value="{{$unit->id}}" name="unit_id" data-id="{{$unit->id}}" data-name="{{$unit->name}}"
                                                                     @if ($key == 0) checked @endif
                                                                     class="item_quantity" id="android-{{ $key }}"
                                                                     name="data"
@@ -112,12 +115,12 @@
                                                             {{ __('Add to Cart') }}</a>
                                                     </div>
                                                     <div class="order_button mt-4">
-                                                        <a class="order-btn" type="submit"
-                                                            href="{{route('product.checkout',['product'=>$single_product->slug, 'unit'=>$units[0]['id']])}}">{{ __('Order Now') }}</a>
+                                                        <button class="order-btn" type="submit" >{{ __('Order Now') }}</button>
                                                     </div>
-                                                </form>
+                                                
 
                                             </div>
+                                        </form>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -530,11 +533,6 @@
                 var name = $(this).data('name');
                 var id = $(this).data('id');
                 $(this).closest('.product_content').find('.cart-btn').attr('data-unit_id',id);
-                
-                let url = "{{route('product.checkout',['product'=>$single_product->slug, 'unit'=>'unit_id'])}}";
-                let _url = url.replace('unit_id',id);
-                _url = _url.replace(/&amp;/g, '&');
-                $('.order-btn').attr('href',_url);
 
                 var formattedNumber = numberFormat($(this).val(), 2);
                 $('.total_price').html(formattedNumber);

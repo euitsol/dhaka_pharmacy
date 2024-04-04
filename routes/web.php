@@ -557,4 +557,8 @@ Route::get('/item/check/{id}', [FrontendBaseController::class, 'itemCheck'])->na
 Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
 
 // Checkout Routes 
-Route::get('/product/checkout', [CheckoutController::class, 'checkout'])->name('product.checkout');
+Route::post('/product/single-order', [CheckoutController::class, 'single_order'])->name('product.single_order');
+Route::get('/order/intermediate/{multiple?}', [CheckoutController::class, 'int_order'])->name('product.int');
+Route::get('/product/checkout/{order_id}', [CheckoutController::class, 'checkout'])->name('product.checkout');
+Route::post('/product/order/confirm/{order_id}', [CheckoutController::class, 'order_confirm'])->name('product.order.confirm');
+Route::get('/product/order/success/{order_id}', [CheckoutController::class, 'order_success'])->name('product.order.success');
