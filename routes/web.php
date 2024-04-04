@@ -131,7 +131,7 @@ Route::prefix('user')->group(function () {
 Route::controller(SslCommerzController::class, 'payment')->prefix('payment')->name('payment.')->group(function () {
     // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
     Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
-    Route::post('/index', 'index')->name('index');
+    Route::get('/index/{order_id}', 'index')->name('index');
     // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
     Route::post('/success', 'success')->name('success');
     Route::post('/fail', 'fail')->name('fail');
@@ -598,3 +598,5 @@ Route::get('/order/intermediate/{multiple?}', [CheckoutController::class, 'int_o
 Route::get('/product/checkout/{order_id}', [CheckoutController::class, 'checkout'])->name('product.checkout');
 Route::post('/product/order/confirm/{order_id}', [CheckoutController::class, 'order_confirm'])->name('product.order.confirm');
 Route::get('/product/order/success/{order_id}', [CheckoutController::class, 'order_success'])->name('product.order.success');
+Route::get('/product/order/failed/{order_id}', [CheckoutController::class, 'order_failed'])->name('product.order.failed');
+Route::get('/product/order/cancel/{order_id}', [CheckoutController::class, 'order_cancel'])->name('product.order.cancel');
