@@ -47,12 +47,14 @@ use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
 use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
+use App\Http\Controllers\Admin\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
 use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
 use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
 use App\Http\Controllers\Admin\PushNotification\SettingController as PushNotificationSetting;
+use App\Http\Controllers\Admin\PaymentGateway\SettingController as PaymentGatewaySetting;
 
 
 /*
@@ -119,6 +121,22 @@ Route::prefix('user')->group(function () {
     Route::post('/password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('/password/reset/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('/password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset']);
+});
+
+
+
+
+//SSL Commerz Routes 
+
+Route::controller(SslCommerzController::class, 'payment')->prefix('payment')->name('payment.')->group(function () {
+    // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
+    Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
+    Route::post('/index', 'index')->name('index');
+    // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
+    Route::post('/success', 'success')->name('success');
+    Route::post('/fail', 'fail')->name('fail');
+    Route::post('/cancel', 'cancel')->name('cancel');
+    Route::post('/ipn', 'ipn')->name('ipn');
 });
 
 
@@ -439,6 +457,13 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::put('template/edit/{id}', 'update_nt')->name('nt.ns');
         Route::get('template/status/{id}', 'status_nt')->name('nt.status.ns');
     });
+
+    // Payment Gateway Settings
+    Route::controller(PaymentGatewaySetting::class, 'payment-gateway-settings')->prefix('payment-gateway-settings')->name('payment_gateway.')->group(function () {
+        Route::get('index', 'ssl_commerz')->name('pg_ssl_commerz');
+        Route::post('update', 'store')->name('update.pg_settings');
+    });
+
 });
 
 // User Routes

@@ -44,19 +44,19 @@
                 @include('site_settings.database_settings',['document'=>$document])
             </div>
 
-            <div id="tab4" class="tabcontent py-3">
+            <div id="tab4" class="tabcontent py-3" style="display: none">
                 @php
                     $document = $documents->where('module_key','sms_settings')->first();
                 @endphp
                 @include('site_settings.sms_settings',['document'=>$document])
             </div>
-            <div id="tab5" class="tabcontent py-3">
+            <div id="tab5" class="tabcontent py-3" style="display: none">
                 @php
                     $document = $documents->where('module_key','notification_settings')->first();
                 @endphp
                 @include('site_settings.notification_settings',['document'=>$document])
             </div>
-            <div id="tab6" class="tabcontent py-3">
+            <div id="tab6" class="tabcontent py-3" style="display: none">
                 @include('site_settings.email_templates')
             </div>
 

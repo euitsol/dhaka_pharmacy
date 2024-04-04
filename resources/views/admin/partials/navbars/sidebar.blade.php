@@ -400,6 +400,37 @@
             </li>
             {{-- @endif --}}
 
+            
+            {{-- Payment Gateways --}}
+            {{-- @if (mainMenuCheck(['ns'])) --}}
+            <li>
+                <a class="@if ($pageSlug == 'ssl_commerz') @else collapsed @endif" data-toggle="collapse"
+                    href="#payment_gateway"
+                    @if ($pageSlug == 'ssl_commerz') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-money-check-alt"></i>
+                    <span class="nav-link-text">{{ __('Payment Gateways') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'ssl_commerz') show @endif" id="payment_gateway">
+                    <ul class="nav pl-2">
+                        @include('admin.partials.menu_buttons', [
+                            'menuItems' => [
+                                [
+                                    'pageSlug' => 'ssl_commerz',
+                                    'routeName' => 'payment_gateway.pg_ssl_commerz',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'label' => 'SSL Commerz',
+                                ],
+                            ],
+                        ])
+                    </ul>
+                </div>
+            </li>
+            {{-- @endif --}}
+
+           
+
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [
                     [
