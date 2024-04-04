@@ -46,12 +46,12 @@ class CheckoutController extends BaseController
         }
 
         $atcs = AddToCart::where('is_check',1)->where('status',0)->where('customer_id',1)->pluck('id')->toArray();
-        $paymentId = Str::random(10);
+        $orderId = Str::random(10);
         $order = new Order();
         $order->customer()->associate(admin());
         $order->carts = json_encode($atcs);
         $order->status = 0; //Order initiated
-        $order->payment_id = $paymentId;
+        $order->order_id = $orderId;
         $order->save();
         return redirect()->route('product.checkout',encrypt($order->id));
     }
@@ -79,17 +79,17 @@ class CheckoutController extends BaseController
     }
     public function order_success($order_id){
         $order = Order::findOrFail(decrypt($order_id));
-        $data['payment_id'] = $order->payment_id;
+        $data['order_id'] = $order->order_id;
         return view("frontend.product_order.order_success",$data);
     }
     public function order_failed($order_id){
         $order = Order::findOrFail(decrypt($order_id));
-        $data['payment_id'] = $order->payment_id;
+        $data['order_id'] = $order->order_id;
         return view("frontend.product_order.order_failed",$data);
     }
     public function order_cancel($order_id){
         $order = Order::findOrFail(decrypt($order_id));
-        $data['payment_id'] = $order->payment_id;
+        $data['order_id'] = $order->order_id;
         return view("frontend.product_order.order_cancel",$data);
     }
 
