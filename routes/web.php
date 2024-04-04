@@ -460,7 +460,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
 
     // Payment Gateway Settings
     Route::controller(PaymentGatewaySetting::class, 'payment-gateway-settings')->prefix('payment-gateway-settings')->name('payment_gateway.')->group(function () {
-        Route::get('index', 'index')->name('pg_settings');
+        Route::get('index', 'ssl_commerz')->name('pg_ssl_commerz');
         Route::post('update', 'store')->name('update.pg_settings');
     });
 

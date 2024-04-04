@@ -18,11 +18,11 @@ class SettingController extends Controller
     public function __construct() {
         return $this->middleware('admin');
     }
-    public function index(): View
+    public function ssl_commerz(): View
     {
         $data['pg_settings'] = PaymentGateway::pluck('value', 'key')->all();
-        $data['documents'] = Documentation::where('module_key','pg_settings')->get();
-        return view('admin.payment_gateway.settings.index', $data);
+        $data['document'] = Documentation::where('module_key','pg_settings')->first();
+        return view('admin.payment_gateway.settings.ssl_commerz', $data);
     }
 
     public function store(Request $request): RedirectResponse
