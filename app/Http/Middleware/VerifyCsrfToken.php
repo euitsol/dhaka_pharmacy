@@ -11,7 +11,9 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
+
+    protected $addHttpCookie = true;
     protected $except = [
-        //
+        'payment/pay-via-ajax', 'payment/success','payment/cancel','payment/fail','payment/ipn'
     ];
 }
