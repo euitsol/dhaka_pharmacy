@@ -1,6 +1,6 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'lam'])
 @section('content')
-    <div class="row px-3 pt-3">
+    <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">

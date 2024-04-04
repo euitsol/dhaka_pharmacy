@@ -1,3 +1,14 @@
+@push('css')
+    <style>
+      .datatable{
+        width: 100% !important;
+      }
+      .dataTables_wrapper{
+        overflow: hidden;
+      }
+    </style>
+
+@endpush
 @push('css_link')
     <link rel="stylesheet" href="{{ asset('backend/plugin/datatable/datatables.min.css') }}">
 
@@ -16,6 +27,7 @@
         var order =  {!! json_encode($order ?? 'asc') !!};
         $(this).DataTable({
             dom: 'Bfrtip',
+            responsive: true,
             iDisplayLength: 50,
             order: [[0, order]],
             buttons: [{

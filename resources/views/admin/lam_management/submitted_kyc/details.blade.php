@@ -1,6 +1,6 @@
 @extends('admin.layouts.master', ['pageSlug' => 'lam_kyc_list'])
 @section('content')
-    <div class="row px-3 pt-3">
+    <div class="row px-3">
         <div class="col-md-12">
                 {{-- Medicine Details Card  --}}
                 <div class="card">

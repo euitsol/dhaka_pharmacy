@@ -1,7 +1,7 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine'])
 
 @section('content')
-    <div class="row px-3 pt-3">
+    <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
             <form method="POST" action="{{ route('product.medicine.medicine_create') }}" enctype="multipart/form-data">
                 @csrf

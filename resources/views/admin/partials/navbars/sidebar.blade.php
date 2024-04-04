@@ -372,7 +372,33 @@
             @endif
 
 
+            {{-- Notifications --}}
+            {{-- @if (mainMenuCheck(['ns'])) --}}
+            <li>
+                <a class="@if ($pageSlug == 'push_notification') @else collapsed @endif" data-toggle="collapse"
+                    href="#notification"
+                    @if ($pageSlug == 'push_notification') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span class="nav-link-text">{{ __('Notifications') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
 
+                <div class="collapse @if ($pageSlug == 'push_notification') show @endif" id="notification">
+                    <ul class="nav pl-2">
+                        @include('admin.partials.menu_buttons', [
+                            'menuItems' => [
+                                [
+                                    'pageSlug' => 'push_notification',
+                                    'routeName' => 'push.ns',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'label' => 'Push Notification',
+                                ],
+                            ],
+                        ])
+                    </ul>
+                </div>
+            </li>
+            {{-- @endif --}}
 
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [
