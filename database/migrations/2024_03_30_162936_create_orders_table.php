@@ -24,7 +24,7 @@ return new class extends Migration
             $table->json('carts')->comment('cart ids');
             $table->tinyInteger('status')->default(0);
             $table->enum('payment_getway',['bkash', 'nogod', 'roket', 'upay', 'ssl'])->nullable();
-            $table->string('payment_id');
+            $table->string('order_id');
             $table->string('promo_code')->nullable();
             $table->float('delivery_fee')->nullable();
             $table->string('delivery_type')->nullable();

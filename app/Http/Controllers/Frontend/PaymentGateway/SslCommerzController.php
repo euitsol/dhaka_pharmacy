@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\PaymentGateway;
+namespace App\Http\Controllers\Frontend\PaymentGateway;
 
 use App\Http\Controllers\Controller;
 use App\Library\SslCommerz\SslCommerzNotification;

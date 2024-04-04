@@ -47,7 +47,7 @@ use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
 use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
-use App\Http\Controllers\Admin\PaymentGateway\SslCommerzController;
+use App\Http\Controllers\Frontend\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
 use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
@@ -131,7 +131,7 @@ Route::prefix('user')->group(function () {
 Route::controller(SslCommerzController::class, 'payment')->prefix('payment')->name('payment.')->group(function () {
     // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
     Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
-    Route::get('/index/{order_id}', 'index')->name('index');
+    Route::get('/ssl/{order_id}', 'index')->name('index');
     // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
     Route::post('/success', 'success')->name('success');
     Route::post('/fail', 'fail')->name('fail');

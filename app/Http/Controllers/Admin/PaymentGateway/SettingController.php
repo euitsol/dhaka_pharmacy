@@ -45,10 +45,10 @@ class SettingController extends Controller
             fwrite($fp, implode($env));
             fclose($fp);
             flash()->addSuccess('Payment gateway settings updated successfully.');
-            return redirect()->route('payment_gateway.pg_settings');
+            return redirect()->back();
         } catch (\Exception $e) {
             flash()->addError('Something is wrong.');
-            return redirect()->route('payment_gateway.pg_settings');
+            return redirect()->back();
         }
     }
     private function set($key, $value, $env)
