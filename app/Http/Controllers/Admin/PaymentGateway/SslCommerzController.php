@@ -23,7 +23,7 @@ class SslCommerzController extends Controller
         return view('ssl_commerz.exampleHosted');
     }
 
-    public function index(Request $request)
+    public function index($order_id)
     {
         # Here you have to receive all the order data to initate the payment.
         # Let's say, your oder transaction informations are saving in a table called "orders"
@@ -62,7 +62,7 @@ class SslCommerzController extends Controller
         $post_data['product_profile'] = "physical-goods";
 
         # OPTIONAL PARAMETERS
-        $post_data['value_a'] = "ref001";
+        $post_data['value_a'] = $order_id;
         $post_data['value_b'] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
@@ -74,6 +74,7 @@ class SslCommerzController extends Controller
                 'email' => $post_data['cus_email'],
                 'phone' => $post_data['cus_phone'],
                 'amount' => $post_data['total_amount'],
+                'order_id' => decrypt($post_data['value_a']),
                 'status' => '0', //Pending
                 // 'address' => $post_data['cus_add1'],
                 'transaction_id' => $post_data['tran_id'],
@@ -164,8 +165,9 @@ class SslCommerzController extends Controller
 
     public function success(Request $request)
     {
+
         // echo "Transaction is Successful";
-        flash()->addSuccess('Transaction is Successful');
+        // flash()->addSuccess('Transaction is Successful');
 
         $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');
@@ -188,7 +190,7 @@ class SslCommerzController extends Controller
                 */
                 $update_product = Payment::where('transaction_id', $tran_id)
                     ->update(['status' => 2]); //Status 2 , Processing
-                // flash()->addSuccess('Transaction is successfully Completed');
+                flash()->addSuccess('Transaction is successfully Completed');
             }
         } else if ($order_details->status == 2 || $order_details->status == 1) { //Status 1 , Complete
             /*
@@ -199,7 +201,11 @@ class SslCommerzController extends Controller
             #That means something wrong happened. You can redirect customer to your product page.
             flash()->addSuccess('Transaction is successfully Completed');
         }
-        return redirect()->route('payment.checkout2');
+        if($request->value_a){
+            return redirect()->route('product.order.success',['order_id'=>$request->value_a]);
+        }
+        return redirect()->route('home');
+        
 
 
     }
@@ -220,7 +226,13 @@ class SslCommerzController extends Controller
         } else {
             flash()->addError('Transaction is Invalid');
         }
-        return redirect()->route('payment.checkout2');
+        
+        if($request->value_a){
+            return redirect()->route('product.order.failed',['order_id'=>$request->value_a]);
+        }
+            return redirect()->route('home');
+
+        
 
     }
 
@@ -240,7 +252,10 @@ class SslCommerzController extends Controller
         } else {
             flash()->addError('Transaction is Invalid');
         }
-        return redirect()->route('payment.checkout2');
+        if($request->value_a){
+            return redirect()->route('product.order.cancel',['order_id'=>$request->value_a]);
+        }
+        return redirect()->route('home');
 
 
     }

@@ -82,6 +82,16 @@ class CheckoutController extends BaseController
         $data['payment_id'] = $order->payment_id;
         return view("frontend.product_order.order_success",$data);
     }
+    public function order_failed($order_id){
+        $order = Order::findOrFail(decrypt($order_id));
+        $data['payment_id'] = $order->payment_id;
+        return view("frontend.product_order.order_failed",$data);
+    }
+    public function order_cancel($order_id){
+        $order = Order::findOrFail(decrypt($order_id));
+        $data['payment_id'] = $order->payment_id;
+        return view("frontend.product_order.order_cancel",$data);
+    }
 
     public function order_confirm(Request $req, $order_id){
         $order = Order::findOrFail(decrypt($order_id));
@@ -90,7 +100,13 @@ class CheckoutController extends BaseController
         $order->payment_getway = $req->payment_mathod; 
         $order->delivery_type = $req->delivery_type;
         $order->save();
+        if($req->payment_method == 'ssl'){
+            return redirect()->route('payment.index',$order_id);
+        }else{
+            flash()->addWarning('Payment gateway '.$req->payment_mathod.' not implement yet!');
+            return redirect()->route('product.checkout',$order_id);
+        }
         
-        return redirect()->route('product.order.success',$order_id);
+        
     }
 }

@@ -9,6 +9,7 @@
             <div class="card">
                 <form action="{{route('product.order.confirm',encrypt($order_id))}}" method="POST">
                     @csrf
+                    <input type="hidden" name="order_id" value="{{encrypt($order_id)}}">
                     <div class="row">
                         <div class="col-md-8 cart">
                             <div class="title">
@@ -74,7 +75,7 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <form>
+
                                     <p>{{__('SHIPPING')}}</p>
                                     <select name="delivery_type">
                                         <option class="text-muted" value="normal">{{__('Normal-Delivery')}} </option>
@@ -101,7 +102,6 @@
                                         Address -2 (<span> &#2547; </span> <span> 30 </span>)
                                         </label>
                                     </div>
-                                </form>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{__('DELIVERY FEE')}}</div>
@@ -131,10 +131,15 @@
                                         <label for="android-3">
                                             <img src="{{asset('frontend/asset/img/roket.png')}}">
                                         </label>
+                                        <input type="radio" class="unit_quantity" id="android-4" name="payment_method" value="ssl">
+                                        <label for="android-4">
+                                            <img src="{{asset('frontend/asset/img/ssl.png')}}">
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             <button class="btn" type="submit">{{__('CONFIRM ORDER')}}</button>
+                            
                         </div>
                     </div>
                 </form>
