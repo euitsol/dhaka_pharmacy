@@ -77,4 +77,17 @@ class SettingController extends Controller
         $data['message'] = "$nt->name status updated successfully.";
         return response()->json($data);
     }
+
+    private function set($key, $value, $env)
+    {
+        foreach ($env as $env_key => $env_value) {
+            $entry = explode("=", $env_value, 2);
+            if ($entry[0] == $key) {
+                $env[$env_key] = $key . "=" . $value . "\n";
+            } else {
+                $env[$env_key] = $env_value;
+            }
+        }
+        return $env;
+    }
 }
