@@ -15,9 +15,11 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use stdClass;
+use App\Http\Traits\OrderNotificationTrait;
 
 class CheckoutController extends BaseController
 {
+    use OrderNotificationTrait;
 
     public function single_order(SingleOrderRequest $req){
         $product = Medicine::activated()->where('slug',$req->slug)->first();
@@ -34,6 +36,7 @@ class CheckoutController extends BaseController
     }
 
     public function int_order($m = false){
+
         $status = AddToCart::where('customer_id', 1)->where('status', 0);
         $status->update(['status' => -1]);
 
@@ -73,8 +76,8 @@ class CheckoutController extends BaseController
             $data['checkItems'][$key]['quantity'] = $atc->quantity;
             $data['checkItems'][$key]['name'] = $data['unit']->name;
         }
-       
-        
+
+
         return view('frontend.product_order.checkout',$data);
     }
     public function order_success($order_id){
@@ -97,7 +100,7 @@ class CheckoutController extends BaseController
         $order = Order::findOrFail(decrypt($order_id));
         // $order->address_id = $req->address_id;
         $order->status = 1; //Order Submit
-        $order->payment_getway = $req->payment_mathod; 
+        $order->payment_getway = $req->payment_mathod;
         $order->delivery_type = $req->delivery_type;
         $order->save();
         if($req->payment_method == 'ssl'){
@@ -106,7 +109,7 @@ class CheckoutController extends BaseController
             flash()->addWarning('Payment gateway '.$req->payment_mathod.' not implement yet!');
             return redirect()->route('product.checkout',$order_id);
         }
-        
-        
+
+
     }
 }

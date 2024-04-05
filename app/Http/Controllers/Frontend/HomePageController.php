@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Medicine;
 use App\Models\MedicineUnit;
+use App\Models\Order;
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -11,12 +12,19 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
-
+use App\Http\Traits\OrderNotificationTrait;
 
 class HomePageController extends BaseController
 {
+
+    use OrderNotificationTrait;
     public function home():View
     {
+
+        //test
+        $order = Order::findOrFail(1);
+        $this->order_notification($order, 'order_initialized');
+
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated();
         $data['products'] = $products->latest()->get()->shuffle()->take(8)->map(function($product){
             $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
@@ -56,7 +64,7 @@ class HomePageController extends BaseController
         $category_slug = request('category');
         $currentUrl = URL::current();
         $data['url'] = $currentUrl . "?category=all";
-        
+
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated();
         $datas = $products->latest()->get();
         if($category_slug !== 'all'){
@@ -81,5 +89,5 @@ class HomePageController extends BaseController
         return response()->json($data);
     }
 
-    
+
 }
