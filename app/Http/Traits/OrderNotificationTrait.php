@@ -7,6 +7,7 @@ use App\Models\NotificationTemplate;
 use App\Models\User;
 use App\Notifications\Frontend\OrderNotification;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Log;
 
 trait OrderNotificationTrait{
 
@@ -14,6 +15,7 @@ trait OrderNotificationTrait{
     {
         $template = NotificationTemplate::where('key', $key)->first();
         if(!empty($template) && !empty($template->message)){
+            Log::alert($template);
             $placeholders = [
                 '{order-id}' => $order->order_id,
             ];
