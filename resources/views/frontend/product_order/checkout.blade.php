@@ -76,14 +76,14 @@
                             <hr>
                             <div class="row">
 
-                                    <p>{{__('SHIPPING')}}</p>
+                                    <p class="p-0">{{__('Shipping')}}</p>
                                     <select name="delivery_type">
                                         <option class="text-muted" value="normal">{{__('Normal-Delivery')}} </option>
                                         <option class="text-muted" value="standard">{{__('Standard-Delivery')}} </option>
                                     </select>
                                     {{-- <p>{{__('GIVE PROMO CODE')}}</p>
                                     <input id="code" placeholder="Enter your code"> --}}
-                                    <p>{{__('ADDRESS')}}</p>
+                                    <p>{{__('Address')}}</p>
                                     <div class="form-check ms-2">
                                         <input class="form-check-input" value="1" style="width: 1em" type="radio" name="address_id" id="address1" checked>
                                         <label class="form-check-label ms-2" for="address1">
@@ -104,15 +104,19 @@
                                     </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
-                                <div class="col ps-0">{{__('DELIVERY FEE')}}</div>
+                                <div class="col ps-0">{{__('Sub-total')}}</div>
+                                <div class="col text-end "><span> &#2547; </span> <span>{{number_format($total_price,2)}}</span></div>
+                            </div>
+                            <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
+                                <div class="col ps-0">{{__('Delivery Fee')}}</div>
                                 <div class="col text-end "><span> &#2547; </span> <span>{{number_format($delivery_fee,2)}}</span></div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
-                                <div class="col ps-0">{{__('DISCOUNT')}}</div>
+                                <div class="col ps-0">{{__('Discount')}}</div>
                                 <div class="col text-end "><span> &#2547; </span> <span>{{number_format($total_discount,2)}}</span></div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
-                                <div class="col ps-0">{{__('TOTAL PRICE')}}</div>
+                                <div class="col ps-0">{{__('Total Price')}}</div>
                                 <div class="col text-end "><span> &#2547; </span> <span>{{number_format((($total_price + number_format($delivery_fee,2))-number_format($total_discount,2)),2) }}</span></div>
                             </div>
 
@@ -121,24 +125,25 @@
                                     <div class="form-group my-1 boxed">
                                         <input type="radio" class="unit_quantity" id="android-1" name="payment_method" value="bkash" checked>
                                         <label for="android-1">
-                                            <img src="{{asset('frontend/asset/img/bkash.png')}}">
+                                            <img style="object-fit: cover" src="{{asset('frontend/asset/img/bkash.png')}}">
                                         </label>
                                         <input type="radio" class="unit_quantity" id="android-2" name="payment_method" value="nogod">
                                         <label for="android-2">
-                                            <img src="{{asset('frontend/asset/img/nogod.png')}}">
+                                            <img style="object-fit: cover" src="{{asset('frontend/asset/img/nogod.png')}}">
                                         </label>
                                         <input type="radio" class="unit_quantity" id="android-3" name="payment_method" value="roket">
                                         <label for="android-3">
-                                            <img src="{{asset('frontend/asset/img/roket.png')}}">
+                                            <img style="object-fit: cover" src="{{asset('frontend/asset/img/roket.png')}}">
                                         </label>
                                         <input type="radio" class="unit_quantity" id="android-4" name="payment_method" value="ssl">
                                         <label for="android-4">
-                                            <img src="{{asset('frontend/asset/img/ssl.png')}}">
+                                            <img src="{{asset('frontend/asset/img/ssl.jpg')}}" style="object-fit: cover">
                                         </label>
                                     </div>
                                 </div>
+                                <button class="btn" type="submit">{{__('CONFIRM ORDER')}}</button>
                             </div>
-                            <button class="btn" type="submit">{{__('CONFIRM ORDER')}}</button>
+                            
                             
                         </div>
                     </div>

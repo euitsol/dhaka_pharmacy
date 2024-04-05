@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Payment extends BaseModel
 {
     use HasFactory, SoftDeletes;
+
+    public function customer(){
+        return $this->morphTo();
+    }
 }
