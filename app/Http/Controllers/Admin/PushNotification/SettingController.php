@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
 
 
 class SettingController extends Controller
@@ -48,6 +49,7 @@ class SettingController extends Controller
             flash()->addSuccess('Notification setting updated successfully.');
             return redirect()->route('push.ns');
         } catch (\Exception $e) {
+            Log::error($e);
             flash()->addError('Something is wrong.');
             return redirect()->route('push.ns');
         }
