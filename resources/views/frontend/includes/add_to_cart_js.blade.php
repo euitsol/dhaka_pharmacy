@@ -33,12 +33,11 @@
                                             <div class="card-body py-2">
                                                 {{-- Product Details  --}}
                                                 <div class="row align-items-center product_details mb-2">
-                                                    <div class="check_order">
-                                                        <div class="form-group">
-                                                            <input class="check_atc_item" type="checkbox" id="atc_item_check-${count}">
-                                                            <label for="atc_item_check-${count}"></label>
-                                                        </div>
+                                                    <div class="ben">
+                                                    <div class="text-end">
+                                                        <a href="javascript:void(0)" data-atc_id ="${data.atc.id}" class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></a>
                                                     </div>
+                                                </div>
                                                     <div class="image col-2">
                                                         <a href="">
                                                             <img class="border border-1 rounded-1"
@@ -92,11 +91,6 @@
                                                     <a href="javascript:void(0)" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
                                                     <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${data.atc.product.data_item_price}" value="1" >
                                                     <a href="javascript:void(0)" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="ben ms-3">
-                                                <div class="text-end">
-                                                    <a href="javascript:void(0)" data-atc_id =${data.atc.id} class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></i></a>
                                                 </div>
                                             </div>
                                         </div>
