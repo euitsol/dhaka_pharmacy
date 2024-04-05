@@ -158,7 +158,7 @@ class SslCommerzController extends Controller
 
         if ($order_details->status == 0) {
             $update_product = Payment::where('transaction_id', $tran_id)
-                ->update(['status' => -1]);  //Status 1 , Failed
+                ->update(['status' => -1]);  //Status -1 , Failed
             flash()->addError('Transaction is Falied');
         } else if ($order_details->status == 2 || $order_details->status == 1) {
             flash()->addWarning('Transaction is already Successful');

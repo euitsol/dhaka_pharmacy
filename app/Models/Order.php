@@ -21,4 +21,9 @@ class Order extends BaseModel
     public function ref_user(){
         return $this->belongsTo(User::class, 'ref_user');
     }
+
+    public function scopeStatus($query, $status){
+        $db_status = ($status == 'success') ? 1 : (($status == 'pending') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 2)));
+        return $query->where('status',$db_status);
+    }
 }
