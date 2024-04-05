@@ -15,7 +15,7 @@
                                             <div class="row align-items-center product_details mb-2">
                                                 <div class="ben">
                                                     <div class="text-end">
-                                                        <a href="javascript:void(0)" data-atc_id ={{$atc->id}} class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></a>
+                                                        <a href="javascript:void(0)" data-atc_id ="{{$atc->id}}"class="text-danger cart_remove_btn"><i class="fa-solid fa-trash-can"></i></a>
                                                     </div>
                                                 </div>
                                                 <div class="image col-2">

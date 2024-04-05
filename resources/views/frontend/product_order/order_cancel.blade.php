@@ -186,7 +186,7 @@
                                 Your payment has been canceled, and the transaction has been terminated.
                             </div>
                             <div class="order-details">
-                                <div class="order-number-label">Payment id</div>
+                                <div class="order-number-label">Order Id</div>
                                 <div class="order-number">{{$order_id}}</div>
                             </div>
                             <div class="order-footer">You can close this page!</div>
