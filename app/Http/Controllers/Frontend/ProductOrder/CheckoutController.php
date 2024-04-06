@@ -49,9 +49,11 @@ class CheckoutController extends BaseController
         }
 
         $atcs = AddToCart::where('is_check',1)->where('status',0)->where('customer_id',1)->pluck('id')->toArray();
-        $orderId = Str::random(10);
+        $orderId = generateOrderId();
         $order = new Order();
-        $order->customer()->associate(admin());
+        // $order->customer()->associate(admin());
+        $order->customer_id = 1;//for test
+        $order->customer_type = "App\Models\User";//for test
         $order->carts = json_encode($atcs);
         $order->status = 0; //Order initiated
         $order->order_id = $orderId;

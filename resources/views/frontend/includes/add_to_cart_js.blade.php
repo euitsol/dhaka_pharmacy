@@ -103,6 +103,8 @@
                         cart_empty_alert.remove();
                         atc_total.html(plus_atc_total);
                         toastr.success(data.alert);
+                        $('.order_button').removeClass('disabled');
+                        
                         refreshSubtotal();
                     } else {
                         toastr.error(data.alert);
@@ -136,6 +138,7 @@
                     cartItem.remove();
                     if (minus_atc_total === 0) {
                         item_append.html(text);
+                        $('.order_button').addClass('disabled');
                     }
                     refreshSubtotal();
                 },

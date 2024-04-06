@@ -8,7 +8,7 @@
         }
 
         .main_checkout_wrap .title {
-            margin-bottom: 5vh;
+            margin-bottom: 1.2rem;
         }
         .main_checkout_wrap .order-item {
             border-bottom: 1px solid #dee2e6;
@@ -51,20 +51,20 @@
 
         @media(max-width:767px) {
             .main_checkout_wrap .card {
-                margin: 3vh auto;
+                margin: .8rem auto;
             }
         }
 
         .main_checkout_wrap .cart {
             background-color: #fff;
-            padding: 4vh 5vh;
+            padding: 30px;
             border-bottom-left-radius: 1rem;
             border-top-left-radius: 1rem;
         }
 
         @media(max-width:767px) {
             .main_checkout_wrap .cart {
-                padding: 4vh;
+                padding: 1rem;
                 border-bottom-left-radius: unset;
                 border-top-right-radius: 1rem;
             }
@@ -107,7 +107,7 @@
         }
 
         .main_checkout_wrap a {
-            padding: 0 1vh;
+            padding: 0 .5rem;
         }
 
         .main_checkout_wrap .close {
@@ -123,9 +123,6 @@
             margin-top: 4.5rem;
         }
 
-        .main_checkout_wrap h5 {
-            margin-top: 4vh;
-        }
 
         .main_checkout_wrap hr {
             margin-top: 1.25rem;
@@ -134,8 +131,8 @@
 
         .main_checkout_wrap select {
             border: 1px solid rgba(0, 0, 0, 0.137);
-            padding: 1.5vh 1vh;
-            margin-bottom: 4vh;
+            padding: 1rem 1rem;
+            margin-bottom: 1rem;
             outline: none;
             width: 100%;
             background-color: rgb(247, 247, 247);
@@ -143,8 +140,8 @@
 
         .main_checkout_wrap input {
             border: 1px solid rgba(0, 0, 0, 0.137);
-            padding: 1vh;
-            margin-bottom: 4vh;
+            padding: .5rem;
+            margin-bottom: 1rem;
             outline: none;
             width: 100%;
             background-color: rgb(247, 247, 247);
@@ -161,8 +158,8 @@
             color: white;
             width: 100%;
             font-size: 0.7rem;
-            margin-top: 4vh;
-            padding: 1vh;
+            margin-top: 1rem;
+            padding: .5rem;
             border-radius: 0;
         }
 

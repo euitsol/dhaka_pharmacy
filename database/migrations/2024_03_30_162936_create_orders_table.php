@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->string('customer_type');
             $table->unsignedBigInteger('ref_user')->nullable();
-            $table->json('carts')->comment('cart ids');
+            $table->json('carts');
             $table->tinyInteger('status')->default(0);
             $table->enum('payment_getway',['bkash', 'nogod', 'roket', 'upay', 'ssl'])->nullable();
             $table->string('order_id');

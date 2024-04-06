@@ -17,11 +17,6 @@ use Illuminate\Support\Str;
 
 class SslCommerzController extends Controller
 {
-    public function exampleHostedCheckout()
-    {
-        return view('ssl_commerz.exampleHosted');
-    }
-
     public function index($order_id)
     {
         $order = Order::with(['customer','address','ref_user'])->findOrFail(decrypt($order_id));
@@ -32,7 +27,6 @@ class SslCommerzController extends Controller
             $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->findOrFail($cart_id);
             array_push($cart_items, $cart);
         }
-
         foreach($cart_items as $item){
             $price = (($item->product->price * $item->unit->quantity) * $item->quantity);
             $price -=  $discount;
@@ -45,11 +39,11 @@ class SslCommerzController extends Controller
         $post_data = array();
         $post_data['total_amount'] = $total_price; # You cant not pay less than 10
         $post_data['currency'] = "BDT";
-        $post_data['tran_id'] = uniqid(); // tran_id must be unique
+        $post_data['tran_id'] = generateTranId(); // tran_id must be unique
 
         # CUSTOMER INFORMATION
         $post_data['cus_name'] = $order->customer->name;
-        $post_data['cus_email'] = $order->customer->email;
+        $post_data['cus_email'] = $order->customer->email ? $order->customer->email : 'user@dp.com';
         $post_data['cus_add1'] = $order->address ? $order->address->name :'Mirpur, Dhaka';
         $post_data['cus_add2'] = $order->address ? $order->address->name :'Mirpur, Dhaka';//optional
         $post_data['cus_city'] = $order->address ? $order->address->city : "Dhaka";//optional
@@ -83,9 +77,10 @@ class SslCommerzController extends Controller
         #Before  going to initiate the payment order status need to insert or update as Pending.
         $update_product = Payment::where('transaction_id', $post_data['tran_id'])
             ->updateOrInsert([
-                'name' => $post_data['cus_name'],
-                'email' => $post_data['cus_email'],
-                'phone' => $post_data['cus_phone'],
+                // 'customer_id' => admin()->id, // Assuming 'admin()' returns the ID of the related model
+                // 'customer_type' => admin()->getMorphClass(),
+                'customer_id' => 1, //for test
+                'customer_type' =>  "App\Models\User",//for test
                 'amount' => $post_data['total_amount'],
                 'order_id' => decrypt($post_data['value_a']),
                 'status' => '0', //Pending
@@ -109,6 +104,9 @@ class SslCommerzController extends Controller
         $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');
         $currency = $request->input('currency');
+        $payment = Payment::where('transaction_id', $tran_id)->first();
+        $payment->details = json_encode($request->all());
+        $payment->save();
 
         $sslc = new SslCommerzNotification();
 
@@ -150,13 +148,16 @@ class SslCommerzController extends Controller
     public function fail(Request $request)
     {
         $tran_id = $request->input('tran_id');
+        $payment = Payment::where('transaction_id', $tran_id)->first();
+        $payment->details = json_encode($request->all());
+        $payment->save();
 
         $order_details = Payment::where('transaction_id', $tran_id)
             ->select('transaction_id', 'status', 'currency', 'amount')->first();
 
         if ($order_details->status == 0) {
             $update_product = Payment::where('transaction_id', $tran_id)
-                ->update(['status' => -1]);  //Status 1 , Failed
+                ->update(['status' => -1]);  //Status -1 , Failed
             flash()->addError('Transaction is Falied');
         } else if ($order_details->status == 2 || $order_details->status == 1) {
             flash()->addWarning('Transaction is already Successful');
@@ -176,6 +177,9 @@ class SslCommerzController extends Controller
     public function cancel(Request $request)
     {
         $tran_id = $request->input('tran_id');
+        $payment = Payment::where('transaction_id', $tran_id)->first();
+        $payment->details = json_encode($request->all());
+        $payment->save();
 
         $order_details = Payment::where('transaction_id', $tran_id)
             ->select('transaction_id', 'status', 'currency', 'amount')->first();
@@ -204,6 +208,9 @@ class SslCommerzController extends Controller
         {
 
             $tran_id = $request->input('tran_id');
+            $payment = Payment::where('transaction_id', $tran_id)->first();
+            $payment->details = json_encode($request->all());
+            $payment->save();
 
             #Check order status in order tabel against the transaction id or order id.
             $order_details = Payment::where('transaction_id', $tran_id)

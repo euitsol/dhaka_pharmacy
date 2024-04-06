@@ -47,6 +47,7 @@ use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
 use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
+use App\Http\Controllers\Admin\OrderManagement\OrderManagementController;
 use App\Http\Controllers\Frontend\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
 use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
@@ -130,7 +131,7 @@ Route::prefix('user')->group(function () {
 
 Route::controller(SslCommerzController::class, 'payment')->prefix('payment')->name('payment.')->group(function () {
     // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
-    Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
+    // Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
     Route::get('/ssl/{order_id}', 'index')->name('index');
     // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
     Route::post('/success', 'success')->name('success');
@@ -462,6 +463,15 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
     Route::controller(PaymentGatewaySetting::class, 'payment-gateway-settings')->prefix('payment-gateway-settings')->name('payment_gateway.')->group(function () {
         Route::get('index', 'ssl_commerz')->name('pg_ssl_commerz');
         Route::post('update', 'store')->name('update.pg_settings');
+    });
+
+    // Admin Order Management
+    Route::group(['as' => 'om.', 'prefix' => 'order-management'], function () {
+        Route::controller(OrderManagementController::class, 'order')->prefix('order')->name('order.')->group(function () {
+            Route::get('/{status}', 'index')->name('order_list');
+            Route::get('/details/{id}', 'details')->name('order_details');
+        });
+       
     });
 
 });
