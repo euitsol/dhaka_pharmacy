@@ -66,6 +66,7 @@
         .order_details_wrap .card-footer h2,
         .order_details_wrap .card-footer h1{
             color: #fff;
+            font-size: 30px;
         }
 
         .order_details_wrap h2 {
@@ -115,74 +116,131 @@
 @endpush
 @section('content')
 <div class="order_details_wrap">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-1">
-                <div class="card-body">
-                    <div class="row justify-content-between mb-3">
-                        <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order by, {{$order->customer->name}}</h6> </div>
-                        <div class="col-auto  "> <small>Order ID : {{$order->order_id}}</small> </div>
-                    </div>
-                    <div class="row">
-                        @php
-                            $total_price = 0;
-                        @endphp
-                        @foreach ($order_items as $item)
-                        <div class="col-12">
-                            <div class="card card-2">
-                                <div class="card-body">
-                                    <div class="media">
-                                        <div class="sq align-self-center "> <img class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="{{storage_url($item->product->image)}}" width="135" height="135" /> </div>
-                                        <div class="media-body my-auto text-center">
-                                            <div class="row  my-auto flex-column flex-md-row px-3">
-                                                <div class="col my-auto"> <h6 class="mb-0 text-start">{{$item->product->name}}</h6>  </div>
-                                                <div class="col-auto my-auto"> <small>{{$item->product->pro_cat->name}} </small></div>
-                                                <div class="col my-auto"> <small>Qty : {{$item->quantity}}</small></div>
-                                                <div class="col my-auto"><h6 class="mb-0">&#2547; {{number_format(($item->product->price * $item->quantity), 2)}}</h6>
-                                                    @php
-                                                        $total_price += $item->product->price * $item->quantity;
-                                                    @endphp
+    <div class="row px-3">
+        <div class="card px-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="card ">
+                            <div class="card-body">
+                                <div class="row justify-content-between mb-3">
+                                    <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Items</h6> </div>
+    
+                                    @php
+                                        $badgeBg = ($order->status == 1) ? 'badge badge-success' : (($order->status == 0) ? 'badge badge-info' : (($order->status == -1) ? 'badge badge-danger' : (($order->status == -2) ? 'badge badge-warning' : 'badge badge-primary')));
+    
+                                        $badgeStatus = ($order->status == 1) ? 'Success' : (($order->status == 0) ? 'Pending' : (($order->status == -1) ? 'Failed' : (($order->status == -2) ? 'Cancel' : 'Processing'))); 
+    
+                                    @endphp
+    
+                                    <div class="col-auto  "> Order Status : <span class="{{$badgeBg}}">{{$badgeStatus}}</span></div>
+                                </div>
+                                <div class="row">
+                                    @php
+                                        $total_price = 0;
+                                    @endphp
+                                    @foreach ($order_items as $item)
+                                    <div class="col-12">
+                                        <div class="card card-2">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="sq align-self-center "> <img class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="{{storage_url($item->product->image)}}" width="135" height="135" /> </div>
+                                                    <div class="media-body my-auto text-center">
+                                                        <div class="row  my-auto flex-column flex-md-row px-3">
+                                                            <div class="col my-auto"> <h6 class="mb-0 text-start">{{$item->product->name}}</h6>  </div>
+                                                            <div class="col-auto my-auto"> <small>{{$item->product->pro_cat->name}} </small></div>
+                                                            <div class="col my-auto"> <small>Qty : {{$item->quantity}}</small></div>
+                                                            <div class="col my-auto"><h6 class="mb-0">&#2547; {{number_format(($item->product->price * $item->quantity), 2)}}</h6>
+                                                                @php
+                                                                    $total_price += $item->product->price * $item->quantity;
+                                                                @endphp
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    @endforeach
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Details</h6> </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <th>Customer Name</th>
+                                                <td>:</td>
+                                                <td>{{$order->customer->name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Customer Phone</th>
+                                                <td>:</td>
+                                                <td>{{$order->customer->phone}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Customer Email</th>
+                                                <td>:</td>
+                                                <td>{{$order->customer->email ?? "--"}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Customer Address</th>
+                                                <td>:</td>
+                                                <td>Mirpur-10, Dhaka</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <td>:</td>
+                                                <td>{{$order->order_id}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Order Date</th>
+                                                <td>:</td>
+                                                <td>{{$order->created_date()}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Sub Total</th>
+                                                <td>:</td>
+                                                <td><span>&#2547; </span>{{number_format($total_price,2)}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Discount</th>
+                                                <td>:</td>
+                                                <td><span>&#2547; </span>2</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Delivery Charges</th>
+                                                <td>:</td>
+                                                <td>Free</td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        @endforeach
-                        
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col">
-                            <div class="row justify-content-between">
-                                <div class="col-auto"><p class="mb-1 text-dark"><b>Order Details</b></p></div>
-                                <div class="flex-sm-col text-right col"> <p class="mb-1"><b>Sub Total</b></p> </div>
-                                <div class="flex-sm-col col-auto"> <p class="mb-1">&#2547; {{number_format($total_price,2)}}</p> </div>
-                            </div>
-                            <div class="row justify-content-between">
-                                <div class="flex-sm-col text-right col"><p class="mb-1"> <b>Discount</b></p> </div>
-                                <div class="flex-sm-col col-auto"><p class="mb-1">&#2547; 2</p></div>
-                            </div>
-                            <div class="row justify-content-between">
-                                <div class="flex-sm-col text-right col"><p class="mb-1"><b>Delivery Charges</b></p></div>
-                                <div class="flex-sm-col col-auto"><p class="mb-1">Free</p></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row invoice ">
-                        <div class="col mt-3"><p class="mb-1"> Order ID : {{$order->order_id}}</p><p class="mb-1">Order Date : {{$order->created_date()}}</p></div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="jumbotron-fluid">
-                        <div class="row justify-content-between ">
-                            <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">TOTAL AMOUNT</h2></div>
-                            <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format(($total_price-2),2)}}</h1></div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="card-footer col-md-12">
+                <div class="jumbotron-fluid">
+                    <div class="row justify-content-between ">
+                        <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">TOTAL AMOUNT</h2></div>
+                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format(($total_price-2),2)}}</h1></div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
+
     </div>
 </div>
 <div class="payment_details_wrap">
