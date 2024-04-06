@@ -131,7 +131,7 @@ Route::prefix('user')->group(function () {
 
 Route::controller(SslCommerzController::class, 'payment')->prefix('payment')->name('payment.')->group(function () {
     // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
-    Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
+    // Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
     Route::get('/ssl/{order_id}', 'index')->name('index');
     // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
     Route::post('/success', 'success')->name('success');
@@ -469,6 +469,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
     Route::group(['as' => 'om.', 'prefix' => 'order-management'], function () {
         Route::controller(OrderManagementController::class, 'order')->prefix('order')->name('order.')->group(function () {
             Route::get('/{status}', 'index')->name('order_list');
+            Route::get('/details/{id}', 'details')->name('order_details');
         });
        
     });

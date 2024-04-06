@@ -1,5 +1,4 @@
 @extends('admin.layouts.master', ['pageSlug' => 'order_'.$status])
-
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -7,7 +6,10 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __("Order List ($status)") }}</h4>
+                            <h4 class="card-title">{{ __("Order List") }}</h4>
+                        </div>
+                        <div class="col-4 text-end">
+                            <span class="{{$statusBgColor}}">{{$status}}</span>
                         </div>
                     </div>
                 </div>
@@ -30,7 +32,7 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $order->customer->name }}</td>
                                     <td>{{ $order->order_id }}</td>
-                                    <td>{{ $status }}</td>
+                                    <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
                                     <td>{{ $order->created_date() }}</td>
 
                                     <td> {{ $order->created_user_name() }} </td>
@@ -38,32 +40,9 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'am.admin.admin_profile',
+                                                    'routeName' => 'om.order.order_details',
                                                     'params' => [$order->id],
-                                                    'label' => 'Profile',
-                                                ],
-                                                [
-                                                    'routeName' => 'javascript:void(0)',
-                                                    'params' => [$order->id],
-                                                    'label' => 'View Details',
-                                                    'className' => 'view',
-                                                    'data-id' => $order->id,
-                                                ],
-                                                [
-                                                    'routeName' => 'am.admin.admin_edit',
-                                                    'params' => [$order->id],
-                                                    'label' => 'Update',
-                                                ],
-                                                [
-                                                    'routeName' => 'am.admin.status.admin_edit',
-                                                    'params' => [$order->id],
-                                                    'label' => $order->getBtnStatus(),
-                                                ],
-                                                [
-                                                    'routeName' => 'am.admin.admin_delete',
-                                                    'params' => [$order->id],
-                                                    'label' => 'Delete',
-                                                    'delete' => true,
+                                                    'label' => 'Details',
                                                 ],
                                             ],
                                         ])
@@ -81,7 +60,6 @@
             </div>
         </div>
     </div>
-
     {{-- Admin Details Modal  --}}
     <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">

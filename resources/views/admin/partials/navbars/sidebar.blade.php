@@ -445,15 +445,15 @@
             {{-- Order Managements --}}
             {{-- @if (mainMenuCheck(['ns'])) --}}
             <li>
-                <a class="@if ($pageSlug == 'order_Active' || $pageSlug == 'order_Failed' || $pageSlug == 'order_Cancel' || $pageSlug == 'order_Pending') @else collapsed @endif" data-toggle="collapse"
+                <a class="@if ($pageSlug == 'order_Success' || $pageSlug == 'order_details' || $pageSlug == 'order_Failed' || $pageSlug == 'order_Cancel' || $pageSlug == 'order_Pending') @else collapsed @endif" data-toggle="collapse"
                     href="#order_management"
-                    @if ($pageSlug == 'order_Active' || $pageSlug == 'order_Failed' || $pageSlug == 'order_Cancel' || $pageSlug == 'order_Pending') aria-expanded="true" @else aria-expanded="false" @endif>
-                    <i class="fa-solid fa-money-check-alt"></i>
+                    @if ($pageSlug == 'order_Success' || $pageSlug == 'order_details' || $pageSlug == 'order_Failed' || $pageSlug == 'order_Cancel' || $pageSlug == 'order_Pending') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-truck-fast"></i>
                     <span class="nav-link-text">{{ __('Order Management') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'order_Active' || $pageSlug == 'order_Failed' || $pageSlug == 'order_Cancel' || $pageSlug == 'order_Pending') show @endif" id="order_management">
+                <div class="collapse @if ($pageSlug == 'order_Success' || $pageSlug == 'order_details' || $pageSlug == 'order_Failed' || $pageSlug == 'order_Cancel' || $pageSlug == 'order_Pending') show @endif" id="order_management">
                     <ul class="nav pl-2">
                         @include('admin.partials.menu_buttons', [
                             'menuItems' => [
@@ -465,11 +465,11 @@
                                     'label' => 'Order List (Pending)',
                                 ],
                                 [
-                                    'pageSlug' => 'order_Active',
+                                    'pageSlug' => 'order_Success',
                                     'routeName' => 'om.order.order_list',
                                     'iconClass' => 'fa-solid fa-minus',
-                                    'params' => 'active',
-                                    'label' => 'Order List (Active)',
+                                    'params' => 'success',
+                                    'label' => 'Order List (Success)',
                                 ],
                                 [
                                     'pageSlug' => 'order_Failed',

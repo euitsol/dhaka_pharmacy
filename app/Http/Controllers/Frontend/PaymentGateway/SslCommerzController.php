@@ -27,7 +27,6 @@ class SslCommerzController extends Controller
             $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->findOrFail($cart_id);
             array_push($cart_items, $cart);
         }
-
         foreach($cart_items as $item){
             $price = (($item->product->price * $item->unit->quantity) * $item->quantity);
             $price -=  $discount;
