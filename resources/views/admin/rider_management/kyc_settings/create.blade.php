@@ -1,6 +1,6 @@
-@extends('admin.layouts.master', ['pageSlug' => 'lam_kyc_settings'])
+@extends('admin.layouts.master', ['pageSlug' => 'rider_kyc_settings'])
 
-@section('title', 'KYC Settings')
+@section('title', 'Rider KYC Settings')
 @push('css_link')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
 @endpush
@@ -10,9 +10,9 @@
         <div class="{{$document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{ __('Pharmacy KYC Settings') }}</h5>
+                    <h5 class="title">{{ __('Rider KYC Settings') }}</h5>
                 </div>
-                <form method="POST" action="{{ route('lam_management.lam_kyc.local_area_manager_kyc_settings') }}" autocomplete="off">
+                <form method="POST" action="{{ route('rider_management.rider_kyc.rider_kyc_settings') }}" autocomplete="off">
                     @csrf
                     <div class="card-body">
                         

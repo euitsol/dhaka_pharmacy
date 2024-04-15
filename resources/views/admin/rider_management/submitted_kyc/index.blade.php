@@ -1,5 +1,5 @@
-@extends('admin.layouts.master', ['pageSlug' => 'lam_kyc_list'])
-
+@extends('admin.layouts.master', ['pageSlug' => 'rider_kyc_list'])
+@section('title', 'Rider KYC List')
 @section('content')
     <div class="row">
         @forelse ($datas as $groupDatas)
@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__("Local Area Manager ". (($groupDatas[0]['status'] === 1) ? 'Accepted' : (($groupDatas[0]['status'] === 0) ? 'Pending' : 'Declined')) ." KYC")}}</h4>
+                            <h4 class="card-title">{{__("Rider ". (($groupDatas[0]['status'] === 1) ? 'Accepted' : (($groupDatas[0]['status'] === 0) ? 'Pending' : 'Declined')) ." KYC")}}</h4>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'lam_management.lam_kyc.kyc_list.local_area_manager_kyc_details',
+                                                    'routeName' => 'rider_management.rider_kyc.kyc_list.rider_kyc_details',
                                                     'params' => [$data->id],
                                                     'label' => 'View Details',
                                                 ],
@@ -67,7 +67,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__("Local Area Manager KYC List")}}</h4>
+                            <h4 class="card-title">{{__("Rider KYC List")}}</h4>
                         </div>
                     </div>
                 </div>

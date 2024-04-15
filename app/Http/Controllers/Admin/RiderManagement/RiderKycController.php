@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\LAM_Management;
+namespace App\Http\Controllers\Admin\RiderManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubmittedKycRequest;
@@ -13,25 +13,23 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 
 
-class LamKycController extends Controller
+class RiderKycController extends Controller
 {
-    //
-
     public function __construct() {
         return $this->middleware('admin');
     }
 
     public function index():View
     {
-        $data['datas'] = SubmittedKyc::with('creater')->where('type','lam')->orderBy('status','desc')->get()->groupBy('status');
-        return view('admin.lam_management.submitted_kyc.index',$data);
+        $data['datas'] = SubmittedKyc::with('creater')->where('type','rider')->orderBy('status','desc')->get()->groupBy('status');
+        return view('admin.rider_management.submitted_kyc.index',$data);
 
     }
     public function details($id):View
     {
         $data['data'] = SubmittedKyc::findOrFail($id);
-        $data['kyc_setting'] = KycSetting::where('type','lam')->first();
-        return view('admin.lam_management.submitted_kyc.details',$data);
+        $data['kyc_setting'] = KycSetting::where('type','rider')->first();
+        return view('admin.rider_management.submitted_kyc.details',$data);
 
     }
     public function accept($id)

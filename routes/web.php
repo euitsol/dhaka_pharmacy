@@ -56,6 +56,8 @@ use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
 use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
 use App\Http\Controllers\Admin\PushNotification\SettingController as PushNotificationSetting;
 use App\Http\Controllers\Admin\PaymentGateway\SettingController as PaymentGatewaySetting;
+use App\Http\Controllers\Admin\RiderManagement\RiderKycController;
+use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
 
 /*
@@ -368,7 +370,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
 
         // KYC ROUTES
         Route::group(['as' => 'rider_kyc.', 'prefix' => 'rider-kyc'], function () {
-            Route::controller(LamKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
+            Route::controller(RiderKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
                 Route::get('index', 'index')->name('rider_kyc_list');
                 Route::get('details/{id}', 'details')->name('rider_kyc_details');
                 Route::get('file-download/{url}', 'view_or_download')->name('download.rider_kyc_details');
@@ -377,8 +379,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
                 Route::get('delete/{id}', 'delete')->name('rider_kyc_delete');
             });
 
-            Route::get('/settings', [LamKycSettingsController::class, 'kycSettings'])->name('rider_kyc_settings');
-            Route::post('/settings', [LamKycSettingsController::class, 'kycSettingsUpdate'])->name('rider_kyc_settings');
+            Route::get('/settings', [RiderKycSettingsController::class, 'kycSettings'])->name('rider_kyc_settings');
+            Route::post('/settings', [RiderKycSettingsController::class, 'kycSettingsUpdate'])->name('rider_kyc_settings');
         });
     });
 
