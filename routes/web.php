@@ -30,8 +30,10 @@ use App\Http\Controllers\Admin\ProductManagement\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductManagement\ProductSubCategoryController;
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\LAM\Auth\LoginController as LamLoginController;
+use App\Http\Controllers\Rider\Auth\LoginController as RiderLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
 use App\Http\Controllers\LAM\DashboardController as LamDashboardController;
+use App\Http\Controllers\Rider\DashboardController as RiderDashboardController;
 use App\Http\Controllers\DM\DmProfileController;
 use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
 use App\Http\Controllers\Pharmacy\PharmacyProfileController;
@@ -41,10 +43,12 @@ use App\Http\Controllers\DM\LAM_management\LamManagementController;
 use App\Http\Controllers\DM\UserManagement\UserManagementController as DmUserController;
 use App\Http\Controllers\LAM\UserManagement\UserManagementController as LamUserController;
 use App\Http\Controllers\LAM\LamProfileController;
+use App\Http\Controllers\Rider\RiderProfileController;
 use App\Http\Controllers\DM\KYC\KycVerificationController as DmKycVerificationController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
+use App\Http\Controllers\Rider\KYC\KycVerificationController as RiderKycVerificationController;
 use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
 use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
 use App\Http\Controllers\Admin\OrderManagement\OrderManagementController;
@@ -98,6 +102,11 @@ Route::post('/local-area-manager/login', [LamLoginController::class, 'lamLoginCh
 Route::post('/local-area-manager/logout', [LamLoginController::class, 'logout'])->name('local_area_manager.logout');
 Route::post('local-area-manager/register', [LamLoginController::class, 'lamRegister'])->name('local_area_manager.register');
 Route::get('local-area-manager/reference/{id}', [LamLoginController::class, 'reference'])->name('local_area_manager.reference');
+
+// Rider Login Routes
+Route::get('/rider/login', [RiderLoginController::class, 'riderLogin'])->name('rider.login');
+Route::post('/rider/login', [RiderLoginController::class, 'riderLoginCheck'])->name('rider.login');
+Route::post('/rider/logout', [RiderLoginController::class, 'logout'])->name('rider.logout');
 
 
 // Overwrite Default Authentication Routes
@@ -592,6 +601,44 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
     });
 
     Route::controller(LamProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', 'profile')->name('index');
+        Route::put('/update', 'update')->name('update');
+        Route::put('/update/password', 'updatePassword')->name('update.password');
+        Route::post('/update/image', 'updateImage')->name('update.image');
+    });
+
+    Route::controller(LamOperationalAreaController::class, 'operational-area')->prefix('operational-area')->name('operational_area.')->group(function () {
+        Route::get('index', 'index')->name('list');
+    });
+
+
+
+    Route::controller(LamUserController::class, 'user-management')->prefix('user-management')->name('user.')->group(function () {
+        Route::get('index', 'index')->name('list');
+        Route::get('details/{id}', 'details')->name('details.list');
+        Route::get('profile/{id}', 'profile')->name('profile');
+        Route::get('create', 'create')->name('create');
+        Route::post('create', 'store')->name('create');
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::put('edit/{id}', 'update')->name('edit');
+        Route::get('status/{id}', 'status')->name('status.edit');
+        Route::get('delete/{id}', 'delete')->name('delete');
+    });
+
+   
+});
+// Rider Auth Routes
+Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], function () {
+    Route::get('/dashboard', [RiderDashboardController::class, 'dashboard'])->name('dashboard');
+
+    Route::controller(RiderKycVerificationController::class, 'kyc')->prefix('kyc')->name('kyc.')->group(function () {
+        Route::post('/store', 'kyc_store')->name('store');
+        Route::get('/verification', 'kyc_verification')->name('verification');
+        Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
+        Route::get('/kyc/file/delete', 'delete')->name('file.delete');
+    });
+
+    Route::controller(RiderProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
         Route::get('/', 'profile')->name('index');
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
