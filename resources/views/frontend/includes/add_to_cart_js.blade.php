@@ -207,8 +207,9 @@
         $('.total_check_item').html($('.add_to_carts').find('.add_to_cart_item').length)
         var total_price = 0;
         $('.add_to_carts').find('.add_to_cart_item').each(function() {
-            var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price')
-                .html());
+            var check_item_price = $(this).closest('.add_to_cart_item').find('.item_count_price')
+                .html();
+            check_item_price = check_item_price.replace(',','');
             total_price += check_item_price;
         });
         $('.subtotal_price').html(numberFormat(total_price, 2));

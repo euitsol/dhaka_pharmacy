@@ -11,6 +11,7 @@ use App\Models\Rider;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
@@ -36,17 +37,17 @@ class RiderManagementController extends Controller
         return response()->json($data);
     }
 
-    // public function loginAs($id)
-    // {
-    //     $user = LocalAreaManager::findOrFail($id);
-    //     if ($user) {
-    //         Auth::guard('lam')->login($user);
-    //         return redirect()->route('lam.dashboard');
-    //     } else {
-    //         flash()->addError('User not found');
-    //         return redirect()->back();
-    //     }
-    // }
+    public function loginAs($id)
+    {
+        $user = Rider::findOrFail($id);
+        if ($user) {
+            Auth::guard('rider')->login($user);
+            return redirect()->route('rider.dashboard');
+        } else {
+            flash()->addError('Rider not found');
+            return redirect()->back();
+        }
+    }
 
     public function profile($id): View
     {
