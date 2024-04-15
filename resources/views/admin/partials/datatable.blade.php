@@ -3,9 +3,6 @@
       .datatable{
         width: 100% !important;
       }
-      .dataTables_wrapper{
-        overflow: hidden;
-      }
     </style>
 
 @endpush

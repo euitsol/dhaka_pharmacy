@@ -56,7 +56,7 @@ use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
 use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
 use App\Http\Controllers\Admin\PushNotification\SettingController as PushNotificationSetting;
 use App\Http\Controllers\Admin\PaymentGateway\SettingController as PaymentGatewaySetting;
-
+use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -260,7 +260,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
     });
 
 
-    // District Manager Management Routes
+    //Admin District Manager Management Routes
     Route::group(['as' => 'dm_management.', 'prefix' => 'dm-management'], function () {
         Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
             Route::get('index', 'index')->name('district_manager_list');
@@ -316,7 +316,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
     });
 
-    // Local Area Manager Management Routes
+    //Admin Local Area Manager Management Routes
     Route::group(['as' => 'lam_management.', 'prefix' => 'lam-management'], function () {
         Route::controller(LocalAreaManagerController::class, 'local-area-manager')->prefix('local-area-manager')->name('local_area_manager.')->group(function () {
             Route::get('index', 'index')->name('local_area_manager_list');
@@ -342,10 +342,43 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
                 Route::get('accept/{id}', 'accept')->name('accept.local_area_manager_kyc_status');
                 Route::put('declained/{id}', 'declained')->name('declined.local_area_manager_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('local_area_manager_kyc_delete');
+                
             });
 
             Route::get('/settings', [LamKycSettingsController::class, 'kycSettings'])->name('local_area_manager_kyc_settings');
             Route::post('/settings', [LamKycSettingsController::class, 'kycSettingsUpdate'])->name('local_area_manager_kyc_settings');
+        });
+    });
+
+    //Admin Rider Management Routes
+    Route::group(['as' => 'rider_management.', 'prefix' => 'rider-management'], function () {
+        Route::controller(RiderManagementController::class, 'rider')->prefix('rider')->name('rider.')->group(function () {
+            Route::get('index', 'index')->name('rider_list');
+            Route::get('details/{id}', 'details')->name('details.rider_list');
+            Route::get('profile/{id}', 'profile')->name('rider_profile');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.rider_profile');
+            Route::get('create', 'create')->name('rider_create');
+            Route::post('create', 'store')->name('rider_create');
+            Route::get('edit/{id}', 'edit')->name('rider_edit');
+            Route::put('edit/{id}', 'update')->name('rider_edit');
+            Route::get('status/{id}', 'status')->name('status.rider_edit');
+            Route::get('delete/{id}', 'delete')->name('rider_delete');
+            Route::get('get-operational-sub-area/{oa_id}', 'get_operational_sub_area')->name('operation_sub_area.rider_list');
+        });
+
+        // KYC ROUTES
+        Route::group(['as' => 'rider_kyc.', 'prefix' => 'rider-kyc'], function () {
+            Route::controller(LamKycController::class, 'kyc-list')->prefix('kyc-list')->name('kyc_list.')->group(function () {
+                Route::get('index', 'index')->name('rider_kyc_list');
+                Route::get('details/{id}', 'details')->name('rider_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.rider_kyc_details');
+                Route::get('accept/{id}', 'accept')->name('accept.rider_kyc_status');
+                Route::put('declained/{id}', 'declained')->name('declined.rider_kyc_status');
+                Route::get('delete/{id}', 'delete')->name('rider_kyc_delete');
+            });
+
+            Route::get('/settings', [LamKycSettingsController::class, 'kycSettings'])->name('rider_kyc_settings');
+            Route::post('/settings', [LamKycSettingsController::class, 'kycSettingsUpdate'])->name('rider_kyc_settings');
         });
     });
 
