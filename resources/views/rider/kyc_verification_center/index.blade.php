@@ -2,7 +2,7 @@
 @push('css')
 <style>
     .form-group .form-control, .input .input-group .form-control {
-    padding: 8px 0px 10px 18px;
+    padding: 8px 0px 8px 18px;
     }
     .input .input-group .form-control:first-child, .input .input-group-btn:first-child>.dropdown-toggle, .input .input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle) {
         border-right: 1px solid rgba(29, 37, 59, 0.5);

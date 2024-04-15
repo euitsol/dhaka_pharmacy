@@ -64,7 +64,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group" role="group">
                                                             <a href="javascript:void(0)" data-id="{{$atc->id}}" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
-                                                            <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="{{ (!empty($atc->unit_id)) ? (number_format(($atc->product->price*$atc->unit->quantity),2)) : (number_format($atc->product->price,2))  }}" value="{{$atc->quantity}}" >
+                                                            <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="{{ (!empty($atc->unit_id)) ? ($atc->product->price*$atc->unit->quantity) : ($atc->product->price)  }}" value="{{$atc->quantity}}" >
                                                             <a href="javascript:void(0)" data-id="{{$atc->id}}" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
                                                         </div>
                                                     </div>

@@ -197,7 +197,7 @@
         var total_price = itemPrice * currentVal;
 
         var itemContainer = element.closest('.add_to_cart_item');
-        itemContainer.find('.item_count_price').html(numberFormat(total_price, 2));
+        itemContainer.find('.item_count_price').html(numberFormat(total_price,2));
         refreshSubtotal();
     }
 
