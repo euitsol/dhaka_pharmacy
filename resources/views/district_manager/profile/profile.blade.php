@@ -114,7 +114,7 @@
                                         <option value="NID" {{ $dm->identification_type == 'NID' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
                                         <option value="DOB" {{ $dm->identification_type == 'DOB' ? 'selected' : '' }}>
-                                            {{ __('Date of Birth') }}</option>
+                                            {{ __('Birth Certificate No') }}</option>
                                         <option value="Passport"
                                             {{ $dm->identification_type == 'Passport' ? 'selected' : '' }}>
                                             {{ __('Passport NO') }}</option>
