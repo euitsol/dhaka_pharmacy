@@ -94,7 +94,7 @@
                                                     </h3>
                                                 </a>
                                             </div>
-                                            <h4> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
+                                            <h4> <span> &#2547; </span> {{ number_format($product->price,2) }}</h4>
                                             <div class="add_to_card">
                                                 <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id="{{$product->units[0]['id']}}"
                                                     href="javascript:void(0)">
@@ -125,6 +125,10 @@
 @endsection
 @push('js')
     <script>
+
+        function numberFormat(value, decimals) {
+                return parseFloat(value).toFixed(decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
         $(document).ready(function() {
             function renderProducts(products) {
                 return products.map(function(product) {
@@ -149,7 +153,7 @@
                                             </h3>
                                         </a>
                                     </div>
-                                    <h4><span>&#2547;</span> ${product.price}</h4>
+                                    <h4><span>&#2547;</span> ${numberFormat(product.price,2)}</h4>
                                     <div class="add_to_card">
                                         <a class="cart-btn" href="javascript:void(0)" data-product_slug="${product.slug}">
                                             <i class="fa-solid fa-cart-plus"></i>

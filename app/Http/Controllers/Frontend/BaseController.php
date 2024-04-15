@@ -133,9 +133,7 @@ class BaseController extends Controller
             $activatedProduct->generic->name = Str::limit($activatedProduct->generic->name, 55, '..');
             $activatedProduct->company->name = Str::limit($activatedProduct->company->name, 55, '..');
             $activatedProduct->image = storage_url($activatedProduct->image);
-            $activatedProduct->item_count_price = (!empty($data['atc']->unit_id)) ? (number_format(($data['atc']->product->price*$data['atc']->unit->quantity),2)) : (number_format($data['atc']->product->price,2));
-
-            $activatedProduct->data_item_price = (!empty($data['atc']->unit_id)) ? (number_format(($data['atc']->product->price*$data['atc']->unit->quantity),2)) : (number_format($data['atc']->product->price,2)); 
+            $activatedProduct->data_item_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->price*$data['atc']->unit->quantity) : $data['atc']->product->price; 
 
              
 
