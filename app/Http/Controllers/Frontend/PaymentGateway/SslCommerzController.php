@@ -125,6 +125,8 @@ class SslCommerzController extends Controller
                 */
                 $update_product = Payment::where('transaction_id', $tran_id)
                     ->update(['status' => 2]); //Status 2 , Processing
+                Order::where('id', decrypt($request->value_a))
+                    ->update(['status' => 1]);
                 flash()->addSuccess('Transaction is successfully Completed');
             }
         } else if ($order_details->status == 2 || $order_details->status == 1) { //Status 1 , Complete
@@ -158,6 +160,8 @@ class SslCommerzController extends Controller
         if ($order_details->status == 0) {
             $update_product = Payment::where('transaction_id', $tran_id)
                 ->update(['status' => -1]);  //Status -1 , Failed
+            Order::where('id', decrypt($request->value_a))
+                ->update(['status' => -1]);
             flash()->addError('Transaction is Falied');
         } else if ($order_details->status == 2 || $order_details->status == 1) {
             flash()->addWarning('Transaction is already Successful');
@@ -184,9 +188,11 @@ class SslCommerzController extends Controller
         $order_details = Payment::where('transaction_id', $tran_id)
             ->select('transaction_id', 'status', 'currency', 'amount')->first();
 
-        if ($order_details->status == 'Pending') {
+        if ($order_details->status == 0) {
             $update_product = Payment::where('transaction_id', $tran_id)
                 ->update(['status' => -2]); //Status -2 Canceled
+            Order::where('id', decrypt($request->value_a))
+                ->update(['status' => -2]);
             flash()->addError('Transaction is Cancel');
         } else if ($order_details->status == 2 || $order_details->status == 1) {
             flash()->addWarning('Transaction is already Successful');
@@ -227,6 +233,8 @@ class SslCommerzController extends Controller
                     */
                     $update_product = Payment::where('transaction_id', $tran_id)
                         ->update(['status' => 2]);
+                    Order::where('id', decrypt($request->value_a))
+                        ->update(['status' => 1]);
 
                     flash()->addSuccess('Transaction is successfully Completed');
                 }
