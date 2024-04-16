@@ -22,8 +22,8 @@ class HomePageController extends BaseController
     {
 
         //test
-        $order = Order::findOrFail(1);
-        $this->order_notification($order, 'order_initialized');
+        // $order = Order::findOrFail(1);
+        // $this->order_notification($order, 'order_initialized');
 
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated();
         $data['products'] = $products->latest()->get()->shuffle()->take(8)->map(function($product){

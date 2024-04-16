@@ -155,7 +155,7 @@
                                     </div>
                                     <h4><span>&#2547;</span> ${numberFormat(product.price,2)}</h4>
                                     <div class="add_to_card">
-                                        <a class="cart-btn" href="javascript:void(0)" data-product_slug="${product.slug}">
+                                        <a class="cart-btn" data-unit_id="${product.units[0]['id']}" href="javascript:void(0)" data-product_slug="${product.slug}">
                                             <i class="fa-solid fa-cart-plus"></i>
                                         </a>
                                     </div>
