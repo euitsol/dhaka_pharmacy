@@ -225,8 +225,8 @@
             $('#updateDeclinedNote').click(function () {
                 var form = $('#declined_form');
                 let id = $(this).data('id');
-                let _url = ("{{ route('rider_management.rider_kyc.kyc_list.declined.rider_kyc_status', ['id']) }}");
-                let __url = _url.replace('id', id);
+                let _url = ("{{ route('rider_management.rider_kyc.kyc_list.declined.rider_kyc_status', ['_id']) }}");
+                let __url = _url.replace('_id', id);
                 $.ajax({
                     type: 'PUT',
                     url: __url,
