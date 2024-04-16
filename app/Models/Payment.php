@@ -13,4 +13,11 @@ class Payment extends BaseModel
     public function customer(){
         return $this->morphTo();
     }
+    public function order(){
+        return $this->belongsTo(Order::class, 'order_id');
+    }
+    public function scopeStatus($query, $status){
+        $db_status = ($status == 'success') ? 1 : (($status == 'pending') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 2)));
+        return $query->where('status',$db_status);
+    }
 }

@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'order_details'])
+@extends('admin.layouts.master', ['pageSlug' => 'payment_details'])
 @push('css')
 
 <style>
@@ -127,19 +127,19 @@
                                     <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Items</h6> </div>
     
                                     @php
-                                        $badgeBg = ($order->status == 1) ? 'badge badge-success' : (($order->status == 0) ? 'badge badge-info' : (($order->status == -1) ? 'badge badge-danger' : (($order->status == -2) ? 'badge badge-warning' : 'badge badge-primary')));
+                                        $badgeBg = ($payment->status == 1) ? 'badge badge-success' : (($payment->status == 0) ? 'badge badge-info' : (($payment->status == -1) ? 'badge badge-danger' : (($payment->status == -2) ? 'badge badge-warning' : 'badge badge-primary')));
     
-                                        $badgeStatus = ($order->status == 1) ? 'Success' : (($order->status == 0) ? 'Pending' : (($order->status == -1) ? 'Failed' : (($order->status == -2) ? 'Cancel' : 'Processing'))); 
+                                        $badgeStatus = ($payment->status == 1) ? 'Success' : (($payment->status == 0) ? 'Pending' : (($payment->status == -1) ? 'Failed' : (($payment->status == -2) ? 'Cancel' : 'Processing'))); 
     
                                     @endphp
     
-                                    <div class="col-auto  "> Order Status : <span class="{{$badgeBg}}">{{$badgeStatus}}</span></div>
+                                    <div class="col-auto  "> Payment Status : <span class="{{$badgeBg}}">{{$badgeStatus}}</span></div>
                                 </div>
                                 <div class="row">
                                     @php
                                         $total_price = 0;
                                     @endphp
-                                    @foreach ($order_items as $item)
+                                    @foreach ($payment_items as $item)
                                     <div class="col-12">
                                         <div class="card card-2">
                                             <div class="card-body">
@@ -180,17 +180,17 @@
                                             <tr>
                                                 <th>Customer Name</th>
                                                 <td>:</td>
-                                                <td>{{$order->customer->name}}</td>
+                                                <td>{{$payment->customer->name}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Customer Phone</th>
                                                 <td>:</td>
-                                                <td>{{$order->customer->phone}}</td>
+                                                <td>{{$payment->customer->phone}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Customer Email</th>
                                                 <td>:</td>
-                                                <td>{{$order->customer->email ?? "--"}}</td>
+                                                <td>{{$payment->customer->email ?? "--"}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Customer Address</th>
@@ -200,12 +200,12 @@
                                             <tr>
                                                 <th>Order ID</th>
                                                 <td>:</td>
-                                                <td>{{$order->order_id}}</td>
+                                                <td>{{$payment->order_id}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Order Date</th>
                                                 <td>:</td>
-                                                <td>{{$order->created_date()}}</td>
+                                                <td>{{$payment->created_date()}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Sub Total</th>
@@ -238,77 +238,14 @@
             <div class="card-footer col-md-12">
                 <div class="jumbotron-fluid">
                     <div class="row justify-content-between ">
-                        <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">TOTAL AMOUNT</h2></div>
-                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format(($total_price-2),2)}}</h1></div>
+                        <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">PAID AMOUNT</h2></div>
+                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format(($payment->amount),2)}}</h1></div>
                     </div>
                 </div>
             </div>
         </div>
         
 
-    </div>
-</div>
-<div class="payment_details_wrap">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-8">
-                            <h4 class="card-title">{{ __("Payments") }}</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped datatable">
-                        <thead>
-                            <tr>
-                                <th>{{ __('SL') }}</th>
-                                <th>{{ __('Transaction ID') }}</th>
-                                <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
-                                <th>{{ __('Created by') }}</th>
-                                <th>{{ __('Action') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($payments as $payment)
-                            @php
-                                $statusBgColor = ($payment->status == 1) ? 'badge badge-success' : (($payment->status == 0) ? 'badge badge-info' : (($payment->status == -1) ? 'badge badge-danger' : (($payment->status == -2) ? 'badge badge-warning' : 'badge badge-primary')));
-
-                                $status = ($payment->status == 1) ? 'Success' : (($payment->status == 0) ? 'Pending' : (($payment->status == -1) ? 'Failed' : (($payment->status == -2) ? 'Cancel' : 'Processing')));
-                            @endphp
-                                <tr>
-                                    <td> {{ $loop->iteration }} </td>
-                                    <td>{{ $payment->transaction_id }}</td>
-                                    <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
-                                    <td>{{ $order->created_date() }}</td>
-
-                                    <td> {{ $order->creater_name() }} </td>
-                                    <td>
-                                        @include('admin.partials.action_buttons', [
-                                            'menuItems' => [
-                                                [
-                                                    'routeName' => 'pym.payment.payment_details',
-                                                    'params' => [$payment->id],
-                                                    'target' => '_blank',
-                                                    'label' => 'Details',
-                                                ],
-                                            ],
-                                        ])
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer py-4">
-                    <nav class="d-flex justify-content-end" aria-label="...">
-                    </nav>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

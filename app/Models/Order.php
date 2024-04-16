@@ -17,6 +17,9 @@ class Order extends BaseModel
     public function customer(){
         return $this->morphTo();
     }
+    public function payments(){
+        return $this->hasMany(Payment::class, 'order_id','id');
+    }
 
     public function ref_user(){
         return $this->belongsTo(User::class, 'ref_user');
