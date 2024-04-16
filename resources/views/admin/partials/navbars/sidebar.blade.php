@@ -540,6 +540,62 @@
                 </div>
             </li>
             {{-- @endif --}}
+            {{-- Payment Managements --}}
+            {{-- @if (mainMenuCheck(['ns'])) --}}
+            <li>
+                <a class="@if ($pageSlug == 'payment_Success' || $pageSlug == 'payment_details' || $pageSlug == 'payment_Failed' || $pageSlug == 'payment_Cancel' || $pageSlug == 'payment_Pending' || $pageSlug == 'payment_Processing') @else collapsed @endif" data-toggle="collapse"
+                    href="#payment_management"
+                    @if ($pageSlug == 'payment_Success' || $pageSlug == 'payment_details' || $pageSlug == 'payment_Failed' || $pageSlug == 'payment_Cancel' || $pageSlug == 'payment_Pending' || $pageSlug == 'payment_Processing') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-credit-card"></i>
+                    <span class="nav-link-text">{{ __('Payment Management') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'payment_Success' || $pageSlug == 'payment_details' || $pageSlug == 'payment_Failed' || $pageSlug == 'payment_Cancel' || $pageSlug == 'payment_Pending' || $pageSlug == 'payment_Processing') show @endif" id="payment_management">
+                    <ul class="nav pl-2">
+                        @include('admin.partials.menu_buttons', [
+                            'menuItems' => [
+                                [
+                                    'pageSlug' => 'payment_Pending',
+                                    'routeName' => 'pym.payment.payment_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'pending',
+                                    'label' => 'Payment List (Pending)',
+                                ],
+                                [
+                                    'pageSlug' => 'payment_Success',
+                                    'routeName' => 'pym.payment.payment_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'success',
+                                    'label' => 'Payment List (Success)',
+                                ],
+                                [
+                                    'pageSlug' => 'payment_Failed',
+                                    'routeName' => 'pym.payment.payment_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'failed',
+                                    'label' => 'Payment List (Failed)',
+                                ],
+                                [
+                                    'pageSlug' => 'payment_Cancel',
+                                    'routeName' => 'pym.payment.payment_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'cancel',
+                                    'label' => 'Payment List (Cancel)',
+                                ],
+                                [
+                                    'pageSlug' => 'payment_Processing',
+                                    'routeName' => 'pym.payment.payment_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'processing',
+                                    'label' => 'Payment List (Processing)',
+                                ],
+                            ],
+                        ])
+                    </ul>
+                </div>
+            </li>
+            {{-- @endif --}}
         </ul>
     </div>
 </div>

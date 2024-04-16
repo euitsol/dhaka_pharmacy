@@ -60,6 +60,7 @@ use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
 use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
 use App\Http\Controllers\Admin\PushNotification\SettingController as PushNotificationSetting;
 use App\Http\Controllers\Admin\PaymentGateway\SettingController as PaymentGatewaySetting;
+use App\Http\Controllers\Admin\PaymentManagement\PaymentManagementController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
@@ -514,6 +515,15 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::controller(OrderManagementController::class, 'order')->prefix('order')->name('order.')->group(function () {
             Route::get('/{status}', 'index')->name('order_list');
             Route::get('/details/{id}', 'details')->name('order_details');
+        });
+       
+    });
+
+    // Admin Payment Management
+    Route::group(['as' => 'pym.', 'prefix' => 'payment-management'], function () {
+        Route::controller(PaymentManagementController::class, 'payment')->prefix('payment')->name('payment.')->group(function () {
+            Route::get('/{status}', 'index')->name('payment_list');
+            Route::get('/details/{id}', 'details')->name('payment_details');
         });
        
     });
