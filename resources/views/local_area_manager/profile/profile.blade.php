@@ -81,7 +81,7 @@
                                         <option value="NID" {{ $lam->identification_type == 'NID' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
                                         <option value="DOB" {{ $lam->identification_type == 'DOB' ? 'selected' : '' }}>
-                                            {{ __('Date of Birth') }}</option>
+                                            {{ __('Birth Certificate No') }}</option>
                                         <option value="Passport"
                                             {{ $lam->identification_type == 'Passport' ? 'selected' : '' }}>
                                             {{ __('Passport NO') }}</option>
@@ -139,7 +139,13 @@
                                     @include('alerts.feedback', ['field' => 'gender'])
                                 </div>
 
-                                
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{ __('Upload CV') }}</label>
+                                        <input type="file" accept=".pdf" class="form-control" name="cv">
+                                        @include('alerts.feedback', ['field' => 'cv'])
+                                    </div>
+                                </div>
 
 
                                 
@@ -151,13 +157,7 @@
                                 </div>
                                 
                                 
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label>{{ __('Upload CV') }}</label>
-                                        <input type="file" accept=".pdf" class="form-control" name="cv">
-                                        @include('alerts.feedback', ['field' => 'cv'])
-                                    </div>
-                                </div>
+                                
                                 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Age') }}</label>
@@ -165,6 +165,7 @@
                                         class="form-control" placeholder="Enter age">
                                     @include('alerts.feedback', ['field' => 'age'])
                                 </div>
+                                
 
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Present Address') }}</label>

@@ -124,6 +124,9 @@ function dm(){
 function lam(){
     return auth()->guard('lam')->user();
 }
+function rider(){
+    return auth()->guard('rider')->user();
+}
 
 
 function mainMenuCheck($routes){

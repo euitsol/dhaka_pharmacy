@@ -49,10 +49,10 @@
                                         </div>
                                         <div class="col-2 text-end">
                                             @php
-                                                $single_total_price = number_format(($cartItem['quantity'] * $cartItem['product']->price),2);
+                                                $single_total_price = ($cartItem['quantity'] * $cartItem['product']->price);
                                                 $total_price +=$single_total_price;
                                             @endphp
-                                            <span> &#2547; </span><span>{{$single_total_price}}</span>
+                                            <span> &#2547; </span><span>{{number_format($single_total_price,2)}}</span>
                                         </div>
                                     </div>
                                 </div>

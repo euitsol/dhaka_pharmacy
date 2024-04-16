@@ -21,7 +21,7 @@ class SingleProductController extends BaseController
     {
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated();
         
-        $data['single_product'] = Medicine::activated()->where('slug',$slug)->first();
+        $data['single_product'] = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated()->where('slug',$slug)->first();
         $units = array_map(function ($u) {
             return MedicineUnit::findOrFail($u);
         }, (array) json_decode($data['single_product']->unit, true));
@@ -39,6 +39,11 @@ class SingleProductController extends BaseController
             $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
             $product->generic->name = str_limit($product->generic->name, 30, '..');
             $product->company->name = str_limit($product->company->name, 30, '..');
+            $product->units = array_map(function ($u_id) {
+                return MedicineUnit::findOrFail($u_id);
+            }, (array) json_decode($product->unit, true));
+
+            $product->units = collect($product->units)->sortBy('quantity')->values()->all();
             return $product;
         });
         return view('frontend.product.single_product',$data);

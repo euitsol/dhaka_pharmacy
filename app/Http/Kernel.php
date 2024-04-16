@@ -59,6 +59,10 @@ class Kernel extends HttpKernel
             'web',
             'auth:lam', // Use the 'lam' guard for lam routes
         ],
+        'rider' => [
+            'web',
+            'auth:rider', // Use the 'rider' guard for rider routes
+        ],
     ];
 
     /**
@@ -85,5 +89,6 @@ class Kernel extends HttpKernel
         'pharmacy' => \App\Http\Middleware\PharmacyMiddleware::class,
         'dm' => \App\Http\Middleware\DistrictManagerMiddleware::class,
         'lam' => \App\Http\Middleware\LocalAreaManagerMiddleware::class,
+        'rider' => \App\Http\Middleware\RiderMiddleware::class,
     ];
 }

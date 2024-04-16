@@ -276,6 +276,55 @@
             @endif
 
 
+
+            {{-- Rider Management --}}
+            {{-- @if (mainMenuCheck(['rider_list'])) --}}
+                <li>
+                    <a class="@if ($pageSlug == 'rider' || $pageSlug == 'rider_kyc_list' || $pageSlug == 'rider_kyc_settings') @else collapsed @endif" data-toggle="collapse"
+                        href="#rider"
+                        @if ($pageSlug == 'rider' || $pageSlug == 'rider_kyc_list' || $pageSlug == 'rider_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-map"></i>
+                        <span class="nav-link-text">{{ __('Rider Management') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'rider' || $pageSlug == 'rider_kyc_list' || $pageSlug == 'rider_kyc_settings') show @endif" id="rider">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'rider',
+                                        'routeName' => 'rider_management.rider.rider_list',
+                                        'label' => 'Rider',
+                                    ],
+                                    [
+                                        'pageSlug' => ['rider_kyc_list', 'rider_kyc_settings'],
+                                        'routeName' => 'submenu',
+                                        'label' => 'KYC Verification Center',
+                                        'id' => 'rider_kyc',
+                                        'subMenu' => [
+                                            [
+                                                'subLabel' => 'KYC List',
+                                                'subRouteName' =>
+                                                    'rider_management.rider_kyc.kyc_list.rider_kyc_list',
+                                                'subPageSlug' => 'rider_kyc_list',
+                                            ],
+                                            [
+                                                'subLabel' => 'KYC Settings',
+                                                'subRouteName' =>
+                                                    'rider_management.rider_kyc.rider_kyc_settings',
+                                                'subPageSlug' => 'rider_kyc_settings',
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            {{-- @endif --}}
+
+
             {{-- Product Management --}}
             @if (mainMenuCheck([
                     'generic_name_list',

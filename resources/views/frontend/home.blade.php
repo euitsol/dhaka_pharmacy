@@ -41,7 +41,7 @@
                                                     </p>
                                                     <p><a href="">{{ $item->generic->name }}</a></p>
                                                     <p><a href="">{{ $item->company->name }}</a></p>
-                                                    <h4 class="pdct-price"><span>&#2547;</span>{{ $item->price }}</h4>
+                                                    <h4 class="pdct-price"><span>&#2547;</span>{{ number_format($item->price,2) }}</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -120,7 +120,7 @@ btn-arrow">
                                                         </h3>
                                                     </a>
                                                 </div>
-                                                <h4> <span> &#2547; </span> {{ number_format($product->price) }}</h4>
+                                                <h4> <span> &#2547; </span> {{ number_format($product->price,2) }}</h4>
                                                 <div class="add_to_card">
                                                     <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id="{{$product->units[0]['id']}}"
                                                         href="javascript:void(0)">
@@ -192,6 +192,10 @@ btn-arrow">
 @endsection
 @push('js')
     <script>
+
+        function numberFormat(value, decimals) {
+            return parseFloat(value).toFixed(decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
         $(document).ready(function() {
             $('.featured_item').on('click', function() {
                 $('.cat-list li').removeClass('active');
@@ -241,7 +245,7 @@ btn-arrow">
                                                     </h3>
                                                 </a>
                                                 </div>
-                                                <h4> <span> &#2547; </span> ${product.price}</h4>
+                                                <h4> <span> &#2547; </span> ${numberFormat(product.price,2)}</h4>
                                                 <div class="add_to_card">
                                                     <a class="cart-btn" data-product_slug="${product.slug}" data-unit_id="${product.units[0]['id']}" href="javascript:void(0)">
                                                         <i class="fa-solid fa-cart-plus"></i>

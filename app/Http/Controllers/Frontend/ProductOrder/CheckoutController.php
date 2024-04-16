@@ -66,7 +66,7 @@ class CheckoutController extends BaseController
         $atcs = AddToCart::where('is_check',1)->where('status',0)->where('customer_id',1)->latest()->get();
         foreach($atcs as $key=>$atc){
             $data['unit'] = MedicineUnit::findOrFail($atc->unit_id);
-
+            
             $strength = $atc->product->strength ? ' (' . $atc->product->strength->quantity . ' ' . $atc->product->strength->unit . ')' : '';
             $atc->product->attr_title = Str::ucfirst(Str::lower($atc->product->name . $strength));
             $atc->product->name = Str::limit(Str::ucfirst(Str::lower($atc->product->name . $strength)), 45, '..');
@@ -78,6 +78,7 @@ class CheckoutController extends BaseController
             $data['checkItems'][$key]['quantity'] = $atc->quantity;
             $data['checkItems'][$key]['name'] = $data['unit']->name;
         }
+       
 
 
         return view('frontend.product_order.checkout',$data);

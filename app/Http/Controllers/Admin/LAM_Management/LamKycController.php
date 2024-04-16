@@ -51,7 +51,7 @@ class LamKycController extends Controller
             $data->note = $req->note;
             $data->update();
             flash()->addSuccess('KYC declained succesfully');
-            return response()->json(['message' => 'Email template updated successfully']);
+            return response()->json(['message' => 'KYC declained succesfully']);
         } catch (\Exception $e) {
             flash()->addError('Somethings is wrong.');
             return response()->json(['message' => 'An error occurred'], 500);

@@ -1,4 +1,8 @@
 <script>
+    // Number Format Function 
+    function numberFormat(value, decimals) {
+        return parseFloat(value).toFixed(decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
     // Cart JS 
     $(document).ready(function() {
 
@@ -52,7 +56,7 @@
                                                         <p><a href="">${data.atc.product.company.name}</a></p>
                                                     </div>
                                                     <div class="item_price col-2 ps-0">
-                                                        <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">${data.atc.product.item_count_price}</span></h4>
+                                                        <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">${numberFormat(data.atc.product.data_item_price,2)}</span></h4>
                                                     </div>
                                                 </div>
 
@@ -72,7 +76,7 @@
                                         <input type="radio" data-name="${unit.name}" ${checked}
                                         class="unit_quantity" id="android-${index+20}"
                                         name="data-${count}"
-                                        value="${ data.atc.product.price * unit.quantity }">
+                                        value="${ (data.atc.product.price * unit.quantity) }">
                                         <label for="android-${index+20}">
                                             <img src="${unit.image}">
                                         </label>
@@ -89,7 +93,7 @@
                                             <div class="form-group">
                                                 <div class="input-group" role="group">
                                                     <a href="javascript:void(0)" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
-                                                    <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${data.atc.product.data_item_price}" value="1" >
+                                                    <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${parseFloat(data.atc.product.data_item_price)}" value="1" >
                                                     <a href="javascript:void(0)" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
                                                 </div>
                                             </div>
@@ -184,10 +188,7 @@
     //Price Calculation 
     ////////////////////////////////////////////////////
 
-    // Number Format Function 
-    function numberFormat(value, decimals) {
-        return parseFloat(value).toFixed(decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    }
+    
 
     // Price Refresh Function 
     function updateItemPrice(element) {
@@ -197,7 +198,7 @@
         var total_price = itemPrice * currentVal;
 
         var itemContainer = element.closest('.add_to_cart_item');
-        itemContainer.find('.item_count_price').html(numberFormat(total_price, 2));
+        itemContainer.find('.item_count_price').html(numberFormat(total_price,2));
         refreshSubtotal();
     }
 
@@ -206,8 +207,9 @@
         $('.total_check_item').html($('.add_to_carts').find('.add_to_cart_item').length)
         var total_price = 0;
         $('.add_to_carts').find('.add_to_cart_item').each(function() {
-            var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price')
-                .html());
+            var check_item_price = $(this).closest('.add_to_cart_item').find('.item_count_price')
+                .html();
+            check_item_price = check_item_price.replace(',','');
             total_price += check_item_price;
         });
         $('.subtotal_price').html(numberFormat(total_price, 2));
