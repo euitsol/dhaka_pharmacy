@@ -25,7 +25,7 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Product Category') }}</th>
-                                <th>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</small></th>
+                                <th title="{{__('Maximum Retail Price')}}">{{__('MRP')}}</th>
                                 <th>{{ __('Discount') }} </th>
                                 <th>{{ __('Price') }}</th>
                                 <th>{{ __('Best Selling') }}</th>
