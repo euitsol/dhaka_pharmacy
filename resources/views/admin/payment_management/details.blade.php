@@ -159,12 +159,12 @@
                                                 <td>{{json_decode($payment->details,true)['tran_id']  ?? ''}}</td>
                                             </tr>
                                             <tr>
-                                                <th>Sub Total</th>
-                                                <td>:</td>
-                                                <td><span>&#2547; </span>{{number_format($payment->amount+2,2)}}</td>
                                                 <th>Discount</th>
                                                 <td>:</td>
-                                                <td><span>&#2547; </span>2</td>
+                                                <td><span>&#2547; </span>{{count($payment_items)*2}}</td>
+                                                <th>Sub Total</th>
+                                                <td>:</td>
+                                                <td><span>&#2547; </span>{{number_format($totalPrice,2)}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Delivery Charges</th>

@@ -29,6 +29,7 @@ class OrderManagementController extends Controller
     }
     public function details($id): View
     {
+        $discount = 2;
         $data['order'] = Order::findOrFail($id);
         $data['payments'] = Payment::where('order_id',$id)->latest()->get();
         $data['order_items'] = [];
@@ -36,6 +37,12 @@ class OrderManagementController extends Controller
             $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->findOrFail($cart_id);
             array_push($data['order_items'], $cart);
         }
+        $paymentItemsCollection = collect($data['order_items']);
+        $paymentItemsCollection->map(function($item) use($discount) {
+            $item->price = $item->product->price-$discount;
+            return $item;
+        });
+        $data['totalPrice'] = $paymentItemsCollection->sum('price');
         return view('admin.order_management.details',$data);
     }
    

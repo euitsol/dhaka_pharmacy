@@ -26,12 +26,20 @@ class PaymentManagementController extends Controller
     }
     public function details($id): View
     {
+        $discount = 2;
         $data['payment'] = Payment::with(['customer','order'])->findOrFail($id);
         $data['payment_items'] = [];
         foreach(json_decode($data['payment']->order->carts) as $cart_id){
             $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->findOrFail($cart_id);
             array_push($data['payment_items'], $cart);
         }
+        $paymentItemsCollection = collect($data['payment_items']);
+        $paymentItemsCollection->map(function($item) use($discount) {
+            $item->price = $item->product->price-$discount;
+            return $item;
+        });
+        $data['totalPrice'] = $paymentItemsCollection->sum('price');
+       
         return view('admin.payment_management.details',$data);
     }
    
