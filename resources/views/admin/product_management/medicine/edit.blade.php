@@ -1,6 +1,15 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine'])
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
             <form method="POST" action="{{ route('product.medicine.medicine_edit',$medicine->id) }}" enctype="multipart/form-data">
@@ -192,15 +201,49 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12">
-
                                 <label>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</small></label>
                                 <div class="input-group" role="group">
                                     <input type="text" name="price"
                                     class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
-                                    placeholder="Enter price" value="{{ $medicine->price }}">
+                                    placeholder="Enter price" value="{{ $medicine->regular_price }}">
                                     <span class="bdt_button">BDT</span>
                                 </div>
                                 @include('alerts.feedback', ['field' => 'price'])
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>{{ __('Discount') }}</label>
+                                <div class="form-check form-check-radio">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="0" @if(empty(productDiscountAmount($medicine->id)
+                                        ) && empty(productDiscountPercentage($medicine->id))) checked @endif>
+                                        {{__('NO')}}
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                    <label class="form-check-label ms-5">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" @if(!empty(productDiscountAmount($medicine->id)
+                                        ) && !empty(productDiscountPercentage($medicine->id))) checked @endif>
+                                        {{__('YES')}}
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4" style="display: none;">
+                                <label>{{ __('Discount Percentage') }}</label>
+                                <div class="input-group" role="group">
+                                    <input type="text" id="discount_percentage" name="discount_percentage"
+                                    class="form-control {{ $errors->has('discount_percentage') ? ' is-invalid' : '' }}"
+                                    placeholder="Enter discount percentage" value="{{ optional($discount)->discount_percentage }}">
+                                    <span class="bdt_button">{{__('%')}}</span>
+                                </div>
+                                @include('alerts.feedback', ['field' => 'discount_percentage'])
+                            </div>
+                            <div class="form-group col-md-4" style="display: none;">
+                                <label>{{ __('Discount Amount') }}</label>
+                                    <input type="text" id="discount_amount" name="discount_amount"
+                                    class="form-control {{ $errors->has('discount_amount') ? ' is-invalid' : '' }}"
+                                    placeholder="Enter discount percentage" value="{{ optional($discount)->discount_amount }}">
+                                @include('alerts.feedback', ['field' => 'discount_amount'])
                             </div>
                         </div>
                     </div>
@@ -301,4 +344,49 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            // Initially hide discount fields
+            $('#discount_percentage, #discount_amount').closest('.form-group').hide();
+            
+            // Function to toggle discount fields visibility
+            function toggleDiscountFields() {
+                var discountValue = $('input[name="exampleRadios"]:checked').val();
+                if (discountValue == 1) {
+                    $('#discount_percentage, #discount_amount').closest('.form-group').show();
+                } else {
+                    $('#discount_percentage, #discount_amount').closest('.form-group').hide();
+                    $('#discount_percentage, #discount_amount').val('');
+                }
+            }
+            function toggleFieldDisabled() {
+                var discountPercentage = $('#discount_percentage').val();
+                var discountAmount = $('#discount_amount').val();
+                
+                if (discountPercentage !== '' && discountPercentage !== null) {
+                    $('#discount_amount').prop('disabled', true);
+                }
+                else if (discountAmount !== '' && discountAmount !== null) {
+                    $('#discount_percentage').prop('disabled', true);
+                }
+                else {
+                    $('#discount_amount').prop('disabled', false);
+                    $('#discount_percentage').prop('disabled', false);
+                }
+            }
+            // Call the function on page load
+            toggleDiscountFields();
+            toggleFieldDisabled();
+            
+            // Call the function whenever radio button is changed
+            $('input[name="exampleRadios"]').change(function() {
+                toggleDiscountFields();
+                toggleFieldDisabled();
+            });
+            $('#discount_percentage, #discount_amount').on('input, keyup',function(){
+                toggleFieldDisabled();
+            });
+        });
+    </script>
+        
 @endpush

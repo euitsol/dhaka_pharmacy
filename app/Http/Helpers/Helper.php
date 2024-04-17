@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Discount;
+use App\Models\Medicine;
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
@@ -201,6 +203,41 @@ function generateTranId() {
     $numericPart = mt_rand(100000, 999999); // Generates 5 random alphanumeric characters
 
     return $prefix . $numericPart;
+}
+function productDiscountAmount($pro_id){
+    $discount = Discount::activated()
+                ->where('pro_id', $pro_id)
+                ->where(function ($query) {
+                    $query->whereNotNull('discount_amount')
+                        ->orWhereNotNull('discount_percentage');
+                })
+                ->first();
+    if($discount){
+        if(!empty($discount->discount_amount)){
+            return $discount->discount_amount;
+        }
+        else if(!empty($discount->discount_percentage)){
+            return ($discount->product->regular_price/100)*$discount->discount_percentage;
+        }
+    }
+}
+
+function productDiscountPercentage($pro_id){
+    $discount = Discount::activated()
+                ->where('pro_id', $pro_id)
+                ->where(function ($query) {
+                    $query->whereNotNull('discount_amount')
+                        ->orWhereNotNull('discount_percentage');
+                })
+                ->first();
+    if($discount){
+        if(!empty($discount->discount_amount)){
+            return ($discount->discount_amount/$discount->product->regular_price)*100;
+        }
+        else if(!empty($discount->discount_percentage)){
+            return $discount->discount_percentage;
+        }
+    }
 }
 
 

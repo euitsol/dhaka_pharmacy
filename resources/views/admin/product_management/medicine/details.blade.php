@@ -137,7 +137,22 @@
                         <table class="table table-striped">
                             <tbody>
                                 <tr>
-                                    <th>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</th>
+                                    <th>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</small></th>
+                                    <th>{{ __(':') }}</th>
+                                    <td> {{ number_format($medicine->regular_price,2) }}{{__(' BDT')}} </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ __('Discount Amount') }} </th>
+                                    <th>{{ __(':') }}</th>
+                                    <td> {{ number_format(productDiscountAmount($medicine->id),2) }}{{__(' BDT')}} </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ __('Discount Percentage') }} </th>
+                                    <th>{{ __(':') }}</th>
+                                    <td> {{ number_format(productDiscountPercentage($medicine->id),2) }}{{__(' %')}} </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ __('Price') }} </th>
                                     <th>{{ __(':') }}</th>
                                     <td> {{ number_format($medicine->price,2) }}{{__(' BDT')}} </td>
                                 </tr>

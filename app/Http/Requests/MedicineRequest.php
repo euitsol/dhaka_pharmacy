@@ -26,6 +26,9 @@ class MedicineRequest extends FormRequest
             'prescription_required'=>'boolean|nullable',
             'kyc_required'=>'boolean|nullable',
             'max_quantity'=>'nullable|numeric',
+
+            'discount_amount'=>'nullable|numeric',
+            'discount_percentage'=>'nullable|numeric',
         ]
         +
             ($this->isMethod('POST') ? $this->store() : $this->update());
