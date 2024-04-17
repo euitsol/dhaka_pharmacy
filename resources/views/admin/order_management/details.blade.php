@@ -111,6 +111,9 @@
         .order_details_wrap .border-line {
             border-right: 1px solid rgb(226, 206, 226)
         }
+        .order_items{
+            overflow-y: auto;
+        }
 </style>
     
 @endpush
@@ -118,11 +121,11 @@
 <div class="order_details_wrap">
     <div class="row px-3">
         <div class="card px-0">
-            <div class="card-body">
+            <div class="card-body ">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-7 ">
                         <div class="card ">
-                            <div class="card-body">
+                            <div class="card-body order_items">
                                 <div class="row justify-content-between mb-3">
                                     <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Items</h6> </div>
     
@@ -136,9 +139,6 @@
                                     <div class="col-auto  "> Order Status : <span class="{{$badgeBg}}">{{$badgeStatus}}</span></div>
                                 </div>
                                 <div class="row">
-                                    @php
-                                        $total_price = 0;
-                                    @endphp
                                     @foreach ($order_items as $item)
                                     <div class="col-12">
                                         <div class="card card-2">
@@ -151,9 +151,6 @@
                                                             <div class="col-auto my-auto"> <small>{{$item->product->pro_cat->name}} </small></div>
                                                             <div class="col my-auto"> <small>Qty : {{$item->quantity}}</small></div>
                                                             <div class="col my-auto"><h6 class="mb-0">&#2547; {{number_format(($item->product->price * $item->quantity), 2)}}</h6>
-                                                                @php
-                                                                    $total_price += $item->product->price * $item->quantity;
-                                                                @endphp
                                                             </div>
                                                         </div>
                                                     </div>
@@ -170,7 +167,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body order_details">
                                 <div class="row mb-3">
                                     <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Details</h6> </div>
                                 </div>
@@ -208,14 +205,14 @@
                                                 <td>{{$order->created_date()}}</td>
                                             </tr>
                                             <tr>
-                                                <th>Sub Total</th>
-                                                <td>:</td>
-                                                <td><span>&#2547; </span>{{number_format($total_price,2)}}</td>
-                                            </tr>
-                                            <tr>
                                                 <th>Discount</th>
                                                 <td>:</td>
-                                                <td><span>&#2547; </span>2</td>
+                                                <td><span>&#2547; </span>{{count($order_items)*2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Sub Total</th>
+                                                <td>:</td>
+                                                <td><span>&#2547; </span>{{number_format($totalPrice,2)}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Delivery Charges</th>
@@ -225,7 +222,7 @@
                                             <tr>
                                                 <th>Payable Amount</th>
                                                 <td>:</td>
-                                                <th>{{number_format(($total_price-2),2)}}</th>
+                                                <th>{{number_format($totalPrice,2)}}</th>
                                             </tr>
                                         </table>
                                     </div>
@@ -239,7 +236,7 @@
                 <div class="jumbotron-fluid">
                     <div class="row justify-content-between ">
                         <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">TOTAL AMOUNT</h2></div>
-                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format(($total_price-2),2)}}</h1></div>
+                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format($totalPrice,2)}}</h1></div>
                     </div>
                 </div>
             </div>
@@ -311,7 +308,12 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
+@push('js')
+    <script>
+        $(document).ready(function(){
+            var order_details_height = $('.order_details').height();
+            $('.order_items').height(order_details_height + 'px');
+        });
+    </script>
+@endpush

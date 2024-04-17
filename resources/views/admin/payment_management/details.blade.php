@@ -116,63 +116,13 @@
 @endpush
 @section('content')
 <div class="order_details_wrap">
-    <div class="row px-3">
-        <div class="card px-0">
-            <div class="card-body">
+
                 <div class="row">
-                    <div class="col-md-7">
-                        <div class="card ">
-                            <div class="card-body">
-                                <div class="row justify-content-between mb-3">
-                                    <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Items</h6> </div>
-    
-                                    @php
-                                        $badgeBg = ($payment->status == 1) ? 'badge badge-success' : (($payment->status == 0) ? 'badge badge-info' : (($payment->status == -1) ? 'badge badge-danger' : (($payment->status == -2) ? 'badge badge-warning' : 'badge badge-primary')));
-    
-                                        $badgeStatus = ($payment->status == 1) ? 'Success' : (($payment->status == 0) ? 'Pending' : (($payment->status == -1) ? 'Failed' : (($payment->status == -2) ? 'Cancel' : 'Processing'))); 
-    
-                                    @endphp
-    
-                                    <div class="col-auto  "> Payment Status : <span class="{{$badgeBg}}">{{$badgeStatus}}</span></div>
-                                </div>
-                                <div class="row">
-                                    @php
-                                        $total_price = 0;
-                                    @endphp
-                                    @foreach ($payment_items as $item)
-                                    <div class="col-12">
-                                        <div class="card card-2">
-                                            <div class="card-body">
-                                                <div class="media">
-                                                    <div class="sq align-self-center "> <img class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="{{storage_url($item->product->image)}}" width="135" height="135" /> </div>
-                                                    <div class="media-body my-auto text-center">
-                                                        <div class="row  my-auto flex-column flex-md-row px-3">
-                                                            <div class="col my-auto"> <h6 class="mb-0 text-start">{{$item->product->name}}</h6>  </div>
-                                                            <div class="col-auto my-auto"> <small>{{$item->product->pro_cat->name}} </small></div>
-                                                            <div class="col my-auto"> <small>Qty : {{$item->quantity}}</small></div>
-                                                            <div class="col my-auto"><h6 class="mb-0">&#2547; {{number_format(($item->product->price * $item->quantity), 2)}}</h6>
-                                                                @php
-                                                                    $total_price += $item->product->price * $item->quantity;
-                                                                @endphp
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                    
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row mb-3">
-                                    <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Details</h6> </div>
+                                    <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Payment Details</h6> </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -181,73 +131,123 @@
                                                 <th>Customer Name</th>
                                                 <td>:</td>
                                                 <td>{{$payment->customer->name}}</td>
-                                            </tr>
-                                            <tr>
                                                 <th>Customer Phone</th>
                                                 <td>:</td>
                                                 <td>{{$payment->customer->phone}}</td>
                                             </tr>
                                             <tr>
-                                                <th>Customer Email</th>
-                                                <td>:</td>
-                                                <td>{{$payment->customer->email ?? "--"}}</td>
-                                            </tr>
-                                            <tr>
                                                 <th>Customer Address</th>
                                                 <td>:</td>
                                                 <td>Mirpur-10, Dhaka</td>
-                                            </tr>
-                                            <tr>
                                                 <th>Order ID</th>
                                                 <td>:</td>
-                                                <td>{{$payment->order_id}}</td>
+                                                <td>
+                                                    @if (!auth()->user()->can('order_details'))
+                                                        {{$payment->order->order_id}}
+                                                    @else
+                                                        <a class="btn btn-sm btn-success" href="{{route('om.order.order_details',$payment->order_id)}}">{{$payment->order->order_id}}</a>
+                                                    @endif
+                                                    
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <th>Order Date</th>
+                                                <th>Transaction Date</th>
                                                 <td>:</td>
-                                                <td>{{$payment->created_date()}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Sub Total</th>
+                                                <td>{{json_decode($payment->details,true)['tran_date']  ?? ''}}</td>
+                                                <th>Transaction ID</th>
                                                 <td>:</td>
-                                                <td><span>&#2547; </span>{{number_format($total_price,2)}}</td>
+                                                <td>{{json_decode($payment->details,true)['tran_id']  ?? ''}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Discount</th>
                                                 <td>:</td>
-                                                <td><span>&#2547; </span>2</td>
+                                                <td><span>&#2547; </span>{{count($payment_items)*2}}</td>
+                                                <th>Sub Total</th>
+                                                <td>:</td>
+                                                <td><span>&#2547; </span>{{number_format($totalPrice,2)}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Delivery Charges</th>
                                                 <td>:</td>
                                                 <td>Free</td>
+                                                <th>Card Type</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['card_type'] ?? ''}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Bank Tran ID</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['bank_tran_id'] ?? ''}}</td>
+                                                <th>Status</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['status'] ?? ''}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Currency</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['currency'] ?? ''}}</td>
+                                                <th>Card Issuer</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['card_issuer'] ?? ''}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Card Brand</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['card_brand'] ?? ''}}</td>
+                                                <th>Card Sub Brand</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['card_sub_brand'] ?? ''}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Country</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['card_issuer_country'] ?? ''}}</td>
+                                                <th>Country Code</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['card_issuer_country_code'] ?? ''}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Store ID</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['store_id'] ?? ''}}</td>
+                                                <th>Store Amount</th>
+                                                <td>:</td>
+                                                <td>{{isset(json_decode($payment->details,true)['store_amount']) ? number_format(json_decode($payment->details,true)['store_amount'],2) : '0.00'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Currency Rate</th>
+                                                <td>:</td>
+                                                <td>{{number_format(json_decode($payment->details,true)['currency_rate'],2)}}</td>
+                                                <th>Currency Type</th>
+                                                <td>:</td>
+                                                <td>{{json_decode($payment->details,true)['currency_type'] ?? ''}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Payable Amount</th>
                                                 <td>:</td>
-                                                <th>{{number_format(($total_price-2),2)}}</th>
+                                                <td></td>
+                                                <th></th>
+                                                <td></td>
+                                                <th>{{number_format(($payment->amount),2)}}</th>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                            <div class="card-footer">
+                                <div class="jumbotron-fluid">
+                                    <div class="row justify-content-between ">
+                                        <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">PAID AMOUNT</h2></div>
+                                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format((json_decode($payment->details,true)['amount']),2)}}</h1></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
-            <div class="card-footer col-md-12">
-                <div class="jumbotron-fluid">
-                    <div class="row justify-content-between ">
-                        <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">PAID AMOUNT</h2></div>
-                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format(($payment->amount),2)}}</h1></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-    </div>
-</div>
+            
 
 
 
