@@ -228,7 +228,7 @@
                                                 <td></td>
                                                 <th></th>
                                                 <td></td>
-                                                <th>{{number_format(($payment->amount),2)}}</th>
+                                                <th><span>&#2547; </span>{{number_format(($payment->amount),2)}}</th>
                                             </tr>
                                         </table>
                                     </div>
