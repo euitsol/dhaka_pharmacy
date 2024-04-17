@@ -222,7 +222,7 @@
                                             <tr>
                                                 <th>Payable Amount</th>
                                                 <td>:</td>
-                                                <th>{{number_format($totalPrice,2)}}</th>
+                                                <th><span>&#2547; </span>{{number_format($totalPrice,2)}}</th>
                                             </tr>
                                         </table>
                                     </div>
