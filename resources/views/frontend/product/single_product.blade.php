@@ -66,7 +66,7 @@
                                                 <div class="card-body">
                                                     <div class="product_image xzoom-container">
                                                         @if (productDiscountPercentage($single_product->id))
-                                                        <span class="discount_tag">{{  number_format($single_product->discount_percentage)."% 0ff"}}</span>
+                                                        <span class="discount_tag">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span>
                                                         @endif
                                                         <img class="xzoom" id="xzoom-default"
                                                             src="{{  storage_url($single_product->image) }}"
@@ -98,7 +98,7 @@
                                                 
                                                     <div class="product_price mt-4">
                                                         @if (productDiscountPercentage($single_product->id))
-                                                            <p><del>{{ __('MRP Tk') }} {{ __(number_format($single_product->regular_price, 2)) }}</del> <span class="badge bg-danger">{{  number_format($single_product->discount_percentage)."% 0ff"}}</span></p>
+                                                            <p><del>{{ __('MRP Tk') }} {{ __(number_format($single_product->regular_price, 2)) }}</del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
                                                         @endif
                                                         <p><strong>{{ __('Price: Tk') }} <span
                                                                     class="total_price">{{ __(number_format($single_product->price, 2)) }}
@@ -442,7 +442,7 @@
                                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                                 <div class="pdct-img">
                                                                     @if (productDiscountPercentage($product->id))
-                                                                        <span class="discount_tag">{{  number_format($product->discount_percentage)."% off"}}</span>
+                                                                        <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% off"}}</span>
                                                                     @endif
                                                                     <img class="w-100"
                                                                         src="{{ storage_url($product->image) }}"

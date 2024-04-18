@@ -76,7 +76,7 @@
                                         <a href="{{ route('product.single_product', $product->slug) }}">
                                             <div class="pdct-img">
                                                 @if (productDiscountPercentage($product->id))
-                                                    <span class="discount_tag">{{  number_format($product->discount_percentage)."% 0ff"}}</span>
+                                                    <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% 0ff"}}</span>
                                                 @endif
                                                 <img class="w-100" src="{{ storage_url($product->image) }}"
                                                     alt="Product Image">
@@ -136,6 +136,11 @@
         function numberFormat(value, decimals) {
                 return parseFloat(value).toFixed(decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
+        function formatPercentageNumber(number) {
+            var formattedNumber = number.toString();
+            formattedNumber = formattedNumber.includes('.') ? parseFloat(formattedNumber).toFixed(2).replace(/\.?0+$/, '') : formattedNumber;
+            return formattedNumber;
+        }
         $(document).ready(function() {
             function renderProducts(products) {
                 return products.map(function(product) {
@@ -145,7 +150,7 @@
                     let discount_percentage = '';
                     let discount_amount = '';
                     if(product.discount_percentage){
-                        discount_percentage = `<span class="discount_tag">${numberFormat(product.discount_percentage)}% 0ff</span>`
+                        discount_percentage = `<span class="discount_tag">${formatPercentageNumber(product.discount_percentage)}% 0ff</span>`
                     }
                     
                     if(product.discount_percentage){

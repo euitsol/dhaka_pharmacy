@@ -38,7 +38,7 @@ class SingleProductController extends BaseController
         })->shuffle()->map(function($product){
             $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
             $product->attr_title = Str::ucfirst(Str::lower($product->name . $strength ));
-            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
+            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 25, '..');
             $product->generic->name = str_limit($product->generic->name, 30, '..');
             $product->company->name = str_limit($product->company->name, 30, '..');
             $product->discount_amount = productDiscountAmount($product->id);

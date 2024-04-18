@@ -230,14 +230,22 @@ function productDiscountPercentage($pro_id){
                         ->orWhereNotNull('discount_percentage');
                 })
                 ->first();
+    $result = 0;
     if($discount){
         if(!empty($discount->discount_amount)){
-            return ($discount->discount_amount/$discount->product->regular_price)*100;
+            $result = ($discount->discount_amount/$discount->product->regular_price)*100;
         }
         else if(!empty($discount->discount_percentage)){
-            return $discount->discount_percentage;
+            $result = $discount->discount_percentage;
         }
+    
+        return $result;
     }
 }
 
+
+function formatPercentageNumber($number) {
+    $formattedNumber = rtrim(rtrim(number_format($number,2), '0'), '.');
+    return $formattedNumber;
+}
 

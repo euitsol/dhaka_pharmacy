@@ -149,7 +149,7 @@
                                 <tr>
                                     <th>{{ __('Discount Percentage') }} </th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ number_format(productDiscountPercentage($medicine->id),2) }}{{__(' %')}} </td>
+                                    <td> {{ formatPercentageNumber(productDiscountPercentage($medicine->id)) }}{{__(' %')}} </td>
                                 </tr>
                                 <tr>
                                     <th>{{ __('Price') }} </th>

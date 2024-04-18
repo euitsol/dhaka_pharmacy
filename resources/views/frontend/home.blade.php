@@ -71,7 +71,7 @@
                                                     class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
                                                     <li class="text-right active" style="text-align: right;">
                                                         <a href="javascript:void(0)" class="featured_item"
-                                                            data-id="all">{{ _('All') }}</a>
+                                                            data-slug="{{ __('all') }}">{{ _('All') }}</a>
                                                     </li>
                                                     @foreach ($featuredItems as $item)
                                                         <li><a href="javascript:void(0)" class="featured_item"
@@ -108,7 +108,7 @@ btn-arrow">
                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                 <div class="pdct-img">
                                                     @if (productDiscountPercentage($product->id))
-                                                    <span class="discount_tag">{{  number_format($product->discount_percentage)."% 0ff"}}</span>
+                                                    <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% 0ff"}}</span>
                                                     @endif
                                                     <img class="w-100" src="{{ storage_url($product->image) }}"
                                                         alt="Product Image">
@@ -211,6 +211,11 @@ btn-arrow">
         function numberFormat(value, decimals) {
             return parseFloat(value).toFixed(decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
+        function formatPercentageNumber(number) {
+            var formattedNumber = number.toString();
+            formattedNumber = formattedNumber.includes('.') ? parseFloat(formattedNumber).toFixed(2).replace(/\.?0+$/, '') : formattedNumber;
+            return formattedNumber;
+        }
         $(document).ready(function() {
             $('.featured_item').on('click', function() {
                 $('.cat-list li').removeClass('active');
@@ -236,8 +241,9 @@ btn-arrow">
                         data.products.forEach(function(product) {
                             let discount_percentage = '';
                             let discount_amount = '';
+                            
                             if(product.discount_percentage){
-                                discount_percentage = `<span class="discount_tag">${numberFormat(product.discount_percentage)}% 0ff</span>`
+                                discount_percentage = `<span class="discount_tag">${formatPercentageNumber(product.discount_percentage)}% 0ff</span>`;
                             }
                             
                             if(product.discount_percentage){
