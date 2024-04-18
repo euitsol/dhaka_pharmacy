@@ -443,6 +443,12 @@
                                                                 <div class="pdct-img">
                                                                     @if (productDiscountPercentage($product->id))
                                                                         <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% off"}}</span>
+                                                                        {{-- <span class="discount_tag">
+                                                                            <span class="discount_price">
+                                                                                {{  formatPercentageNumber($product->discount_percentage)."%"}}
+                                                                            </span>
+                                                                            <img src="{{asset('frontend/asset/img/discount_tag.svg')}}" alt="">
+                                                                        </span> --}}
                                                                     @endif
                                                                     <img class="w-100"
                                                                         src="{{ storage_url($product->image) }}"
