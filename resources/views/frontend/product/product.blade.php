@@ -75,6 +75,9 @@
                                     <div class="single-pdct">
                                         <a href="{{ route('product.single_product', $product->slug) }}">
                                             <div class="pdct-img">
+                                                @if (productDiscountPercentage($product->id))
+                                                    <span class="discount_tag">{{  number_format($product->discount_percentage)."% 0ff"}}</span>
+                                                @endif
                                                 <img class="w-100" src="{{ storage_url($product->image) }}"
                                                     alt="Product Image">
                                             </div>
@@ -94,7 +97,11 @@
                                                     </h3>
                                                 </a>
                                             </div>
-                                            <h4> <span> &#2547; </span> {{ number_format($product->price,2) }}</h4>
+                                            <h4> <span> &#2547; {{ number_format($product->price,2) }}</span>
+                                                @if (productDiscountPercentage($product->id))
+                                                 <span class="regular_price"> <del>&#2547; {{ number_format($product->regular_price,2) }}</del></span> 
+                                                @endif
+                                            </h4>
                                             <div class="add_to_card">
                                                 <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id="{{$product->units[0]['id']}}"
                                                     href="javascript:void(0)">
@@ -134,12 +141,23 @@
                 return products.map(function(product) {
                     let route = "{{ route('product.single_product', ['slug']) }}";
                     let _route = route.replace('slug', product.slug);
+
+                    let discount_percentage = '';
+                    let discount_amount = '';
+                    if(product.discount_percentage){
+                        discount_percentage = `<span class="discount_tag">${numberFormat(product.discount_percentage)}% 0ff</span>`
+                    }
+                    
+                    if(product.discount_percentage){
+                        discount_amount = `<span class="regular_price"> <del>&#2547; ${numberFormat(product.regular_price,2)}</del></span>`
+                    }
     
                     return `
                         <div class="col-2 px-2 single-pdct-wrapper">
                             <div class="single-pdct">
                                 <a href="${_route}">
                                     <div class="pdct-img">
+                                        ${discount_percentage}
                                         <img class="w-100" src="${product.ajax_image}" alt="Product Image">
                                     </div>
                                 </a>
@@ -153,7 +171,7 @@
                                             </h3>
                                         </a>
                                     </div>
-                                    <h4><span>&#2547;</span> ${numberFormat(product.price,2)}</h4>
+                                    <h4><span>&#2547; ${numberFormat(product.price,2)}</span>  ${discount_amount}</h4>
                                     <div class="add_to_card">
                                         <a class="cart-btn" data-unit_id="${product.units[0]['id']}" href="javascript:void(0)" data-product_slug="${product.slug}">
                                             <i class="fa-solid fa-cart-plus"></i>

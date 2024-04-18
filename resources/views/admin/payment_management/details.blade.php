@@ -122,7 +122,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row mb-3">
-                                    <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Payment Details</h6> </div>
+                                    <div class="col-auto"> <h6 class="color-1 mb-0 change-color">{{__('Payment Details')}}</h6> </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -161,10 +161,15 @@
                                             <tr>
                                                 <th>Discount</th>
                                                 <td>:</td>
-                                                <td><span>&#2547; </span>{{count($payment_items)*2}}</td>
+                                                <td><span>&#2547; {{number_format($totalDiscount,2)}}</span></td>
                                                 <th>Sub Total</th>
                                                 <td>:</td>
-                                                <td><span>&#2547; </span>{{number_format($totalPrice,2)}}</td>
+                                                <td>
+                                                    <span>&#2547; {{number_format($totalPrice,2)}}</span>
+                                                    @if ($totalRegularPrice !== $totalPrice)
+                                                        <span class="text-danger ms-2"><del>&#2547; {{number_format(($totalRegularPrice), 2)}}</del></span> 
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Delivery Charges</th>

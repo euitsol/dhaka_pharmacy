@@ -84,6 +84,8 @@ class BaseController extends Controller
             $product->generic->name =(Str::ucfirst(Str::lower($product->generic->name)));
             $product->company->name =(Str::ucfirst(Str::lower($product->company->name)));
             $product->pro_sub_cat->name =(Str::ucfirst(Str::lower($product->pro_sub_cat->name)));
+            $product->discount_amount = productDiscountAmount($product->id);
+            $product->discount_percentage = productDiscountPercentage($product->id);
             return $product;
         });
         return response()->json($data);
@@ -133,6 +135,10 @@ class BaseController extends Controller
             $activatedProduct->generic->name = Str::limit($activatedProduct->generic->name, 55, '..');
             $activatedProduct->company->name = Str::limit($activatedProduct->company->name, 55, '..');
             $activatedProduct->image = storage_url($activatedProduct->image);
+            $activatedProduct->discount_amount = productDiscountAmount($activatedProduct->id);
+            $activatedProduct->discount_percentage = productDiscountPercentage($activatedProduct->id);
+
+
             $activatedProduct->data_item_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->price*$data['atc']->unit->quantity) : $data['atc']->product->price; 
 
              

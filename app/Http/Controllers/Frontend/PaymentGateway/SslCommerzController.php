@@ -20,7 +20,6 @@ class SslCommerzController extends Controller
     public function index($order_id)
     {
         $order = Order::with(['customer','address','ref_user'])->findOrFail(decrypt($order_id));
-        $discount = 2;
         $cart_items = [];
         $total_price = 0;
         foreach(json_decode($order->carts) as $cart_id){
@@ -29,7 +28,6 @@ class SslCommerzController extends Controller
         }
         foreach($cart_items as $item){
             $price = (($item->product->price * $item->unit->quantity) * $item->quantity);
-            $price -=  $discount;
             $total_price += $price;
         }
         # Here you have to receive all the order data to initate the payment.

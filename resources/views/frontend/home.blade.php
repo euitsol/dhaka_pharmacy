@@ -41,7 +41,13 @@
                                                     </p>
                                                     <p><a href="">{{ $item->generic->name }}</a></p>
                                                     <p><a href="">{{ $item->company->name }}</a></p>
-                                                    <h4 class="pdct-price"><span>&#2547;</span>{{ number_format($item->price,2) }}</h4>
+                                                   
+                                                        <h4 class="pdct-price"> <span> &#2547; {{ number_format($item->price,2) }}</span>
+                                                            @if (productDiscountPercentage($item->id))
+                                                             <span class="regular_price"> <del>&#2547; {{ number_format($item->regular_price,2) }}</del></span> 
+                                                            @endif
+                                                        </h4>
+                                                   
                                                 </div>
                                             </div>
                                         </div>
@@ -101,6 +107,9 @@ btn-arrow">
                                         <div class="single-pdct">
                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                 <div class="pdct-img">
+                                                    @if (productDiscountPercentage($product->id))
+                                                    <span class="discount_tag">{{  number_format($product->discount_percentage)."% 0ff"}}</span>
+                                                    @endif
                                                     <img class="w-100" src="{{ storage_url($product->image) }}"
                                                         alt="Product Image">
                                                 </div>
@@ -120,7 +129,13 @@ btn-arrow">
                                                         </h3>
                                                     </a>
                                                 </div>
-                                                <h4> <span> &#2547; </span> {{ number_format($product->price,2) }}</h4>
+                                                
+                                                <h4> <span> &#2547; {{ number_format($product->price,2) }}</span> 
+                                                    @if (productDiscountPercentage($product->id))
+                                                        <span class="regular_price"> <del>&#2547; {{ number_format($product->regular_price,2) }}</del></span> 
+                                                    @endif
+                                                </h4>
+                                                
                                                 <div class="add_to_card">
                                                     <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id="{{$product->units[0]['id']}}"
                                                         href="javascript:void(0)">
@@ -215,8 +230,19 @@ btn-arrow">
                             "{{ route('category.products', ['category' => 'slug']) }}");
                         let _all_product_route = all_product_route.replace('slug', slug);
                         $('.all-pdct-btn').attr('href', _all_product_route);
+                       
+                        
                         var result = '';
                         data.products.forEach(function(product) {
+                            let discount_percentage = '';
+                            let discount_amount = '';
+                            if(product.discount_percentage){
+                                discount_percentage = `<span class="discount_tag">${numberFormat(product.discount_percentage)}% 0ff</span>`
+                            }
+                            
+                            if(product.discount_percentage){
+                                discount_amount = `<span class="regular_price"> <del>&#2547; ${numberFormat(product.regular_price,2)}</del></span>`
+                            }
                             let route = (
                                 "{{ route('product.single_product', ['slug']) }}");
                             let _route = route.replace('slug', product.slug);
@@ -225,6 +251,7 @@ btn-arrow">
                                     <div class="single-pdct">
                                             <a href="${_route}">
                                                 <div class="pdct-img">
+                                                    ${discount_percentage}
                                                     <img class="w-100"
                                                         src="${product.image}"
                                                         alt="Product Image">
@@ -245,7 +272,7 @@ btn-arrow">
                                                     </h3>
                                                 </a>
                                                 </div>
-                                                <h4> <span> &#2547; </span> ${numberFormat(product.price,2)}</h4>
+                                                <h4> <span> &#2547; ${numberFormat(product.price,2)}</span>  ${discount_amount}</h4>
                                                 <div class="add_to_card">
                                                     <a class="cart-btn" data-product_slug="${product.slug}" data-unit_id="${product.units[0]['id']}" href="javascript:void(0)">
                                                         <i class="fa-solid fa-cart-plus"></i>

@@ -65,6 +65,9 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="product_image xzoom-container">
+                                                        @if (productDiscountPercentage($single_product->id))
+                                                        <span class="discount_tag">{{  number_format($single_product->discount_percentage)."% 0ff"}}</span>
+                                                        @endif
                                                         <img class="xzoom" id="xzoom-default"
                                                             src="{{  storage_url($single_product->image) }}"
                                                             xoriginal="{{  storage_url($single_product->image) }}">
@@ -91,9 +94,13 @@
                                                 <p>{{ __($single_product->pro_sub_cat->name) }}</p>
                                                 <p>{{ __($single_product->generic->name) }}</p>
                                                 <p>{{ __($single_product->company->name) }}</p>
+                                            
                                                 
                                                     <div class="product_price mt-4">
-                                                        <p><strong>{{ __('MRP: Tk') }} <span
+                                                        @if (productDiscountPercentage($single_product->id))
+                                                            <p><del>{{ __('MRP Tk') }} {{ __(number_format($single_product->regular_price, 2)) }}</del> <span class="badge bg-danger">{{  number_format($single_product->discount_percentage)."% 0ff"}}</span></p>
+                                                        @endif
+                                                        <p><strong>{{ __('Price: Tk') }} <span
                                                                     class="total_price">{{ __(number_format($single_product->price, 2)) }}
                                                                 </span></strong> /<span class="unit_name">{{ __('piece') }}</span> </p>
                                                         <div class="form-group my-4 boxed">
@@ -396,8 +403,10 @@
                                                                 <p><a
                                                                         href="">{{ $product->company->name }}</a>
                                                                 </p>
-                                                                <h4 class="pdct-price">
-                                                                    <span>&#2547;</span>{{ __(number_format($product->price, 2)) }}
+                                                                <h4 class="pdct-price"> <span> &#2547; {{ number_format($product->price,2) }}</span>
+                                                                    @if (productDiscountPercentage($product->id))
+                                                                     <span class="regular_price"> <del>&#2547; {{ number_format($product->regular_price,2) }}</del></span> 
+                                                                    @endif
                                                                 </h4>
                                                             </div>
                                                         </div>
@@ -432,6 +441,9 @@
                                                         <div class="single-pdct">
                                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                                 <div class="pdct-img">
+                                                                    @if (productDiscountPercentage($product->id))
+                                                                        <span class="discount_tag">{{  number_format($product->discount_percentage)."% off"}}</span>
+                                                                    @endif
                                                                     <img class="w-100"
                                                                         src="{{ storage_url($product->image) }}"
                                                                         alt="Product Image">
@@ -451,7 +463,13 @@
                                                                         </h3>
                                                                     </a>
                                                                 </div>
-                                                                <h4> <span> &#2547; </span> {{ number_format($product->price,2) }}</h4>
+                                                                
+                                                                    <h4> <span> &#2547; {{ number_format($product->price,2) }}</span> 
+                                                                        @if (productDiscountPercentage($product->id))
+                                                                            <span class="regular_price"> <del>&#2547; {{ number_format($product->regular_price,2) }}</del></span> 
+                                                                        @endif
+                                                                    </h4>
+                                                              
                                                                 <div class="add_to_card">
                                                                     <a class="cart-btn" href="javascript:void(0)" data-product_slug="{{ $product->slug }}" >
                                                                         <i class="fa-solid fa-cart-plus"></i>
