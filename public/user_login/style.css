@@ -1,5 +1,7 @@
+
 body {
     font-family: "Open Sans", sans-serif;
+    overflow-x: hidden;
 }
 .container-fluid{
     padding: 0 !important;
@@ -92,11 +94,36 @@ body {
     transition: 0.4s;
 }
 
+.log-with-pass .left-col form .otp_button {
+    width: 100%;
+    height: 76px;
+    line-height: 76px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #7CB6E6;
+    padding-left: inherit;
+    box-sizing: border-box;
+    outline: none;
+    padding-right: 0;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid #7CB6E6;
+    transition: 0.4s;
+    display: inline-block;
+}
+
+
 .log-with-pass .left-col {
     z-index: 99;
     position: relative;
 }
-
+.log-with-pass .left-col form .otp_button:hover {
+    background: transparent;
+    color: #7CB6E6;
+}
 .log-with-pass .left-col form input[type="submit"]:hover {
     background: transparent;
     color: #7CB6E6;
@@ -253,3 +280,43 @@ body {
         font-size: 24px;
     }
 }
+
+
+.otp-field {
+    flex-direction: row;
+    column-gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.otp-field input {
+    height: 45px;
+    background-color: #e9e9e9 !important;
+    width: 42px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 1.125rem;
+    text-align: center;
+    border: 1px solid var(--bg-1);
+    padding: unset !important;
+}
+
+.otp-field input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.otp-field input::-webkit-inner-spin-button,
+.otp-field input::-webkit-outer-spin-button {
+    display: none;
+}
+.verify-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+
+
+
+

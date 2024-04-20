@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\BaseController;
+use App\Http\Requests\SendOtpRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Exception;
@@ -194,6 +195,27 @@ class LoginController extends BaseController
         }elseif (Auth::guard('web')->check()) {
             Auth::guard('web')->logout();
             return redirect()->route('login');
+        }
+    }
+
+    public function send_otp(SendOtpRequest $req) {
+        try {
+            $user = User::where('phone',$req->phone)->first();
+            $otp =  mt_rand(100000, 999999);
+            // $otp =  000000;
+            if($user){
+                $user->otp = $otp;
+                $user->save();
+            }else{
+                $new_user = new User();
+                $new_user->name = 'User';
+                $new_user->phone = $req->phone;
+                $new_user->otp = $otp;
+                $new_user->save();
+            }
+            return response()->json(['message' => 'Verification code send successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred'], 500);
         }
     }
 }

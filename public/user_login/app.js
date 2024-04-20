@@ -19,28 +19,22 @@ $(document).ready(function(){
 
     let otp_title = $('.otp_title');
     let login_title = $('.login_title');
-    let otp_button = $('.otp_button');
-    let login_button = $('.login_button');
-    let password_input = $('.password_input');
+    let otp_form = $('.otp_form');
+    let login_form = $('.login_form');
 
     login_switch.on('click',function(){
-        login_switch.parent('p').hide();
-        otp_switch.parent('p').show();
         login_title.show();
         otp_title.hide();
-        login_button.show();
-        otp_button.hide();
-        password_input.show();
+        otp_form.hide()
+        login_form.show();
     });
     otp_switch.on('click',function(){
-        login_switch.parent('p').show();
-        otp_switch.parent('p').hide();
         login_title.hide();
         otp_title.show();
-        login_button.hide();
-        otp_button.show();
-        password_input.hide();
+        login_form.hide();
+        otp_form.show()
     });
 
     
 });
+
