@@ -1,0 +1,255 @@
+body {
+    font-family: "Open Sans", sans-serif;
+}
+.container-fluid{
+    padding: 0 !important;
+}
+
+.log-with-pass {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.log-with-pass::before {
+    position: absolute;
+    content: "";
+    background-image: url("../user_login/img/rebon.png");
+    background-repeat: no-repeat;
+    width: 389px;
+    height: 310px;
+    left: 0;
+    top: -25px;
+    background-size: contain;
+}
+.log-with-pass .left-col{
+    padding-right: 10px;
+}
+.log-with-pass .right-col {
+    background-image: url('../user_login/img/log-with-pass-right-bg.png');
+    width: 1081px;
+    height: 817px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    right: 0;
+    position: absolute;
+    top: 50%;
+    transform: translatey(-50%);
+}
+
+.log-with-pass .left-col .form-title h1 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #03014C;
+    margin-bottom: 15px;
+}
+
+.log-with-pass .left-col .form-title h3 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #03014C73;
+}
+
+.log-with-pass .left-col form {
+    padding-top: 30px;
+}
+
+.log-with-pass .left-col form input {
+    width: 100%;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    background: #F6F6F6;
+    border-radius: 8px;
+    height: 76px;
+    padding-left: 95px;
+    padding-right: 30px;
+}
+
+::placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #7D7BA1;
+}
+
+.log-with-pass .left-col form input[type="submit"] {
+    background-color: #7CB6E6;
+    padding-left: inherit;
+    padding-right: 0;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid #7CB6E6;
+    transition: 0.4s;
+}
+
+.log-with-pass .left-col {
+    z-index: 99;
+    position: relative;
+}
+
+.log-with-pass .left-col form input[type="submit"]:hover {
+    background: transparent;
+    color: #7CB6E6;
+}
+
+.log-with-pass .left-col form .input-box {
+    position: relative;
+}
+
+.log-with-pass .left-col form .input-box.phn {
+    margin-bottom: 20px;
+}
+
+.log-with-pass .left-col form .input-box .icon i {
+    color: #7D7BA1;
+}
+
+.log-with-pass .left-col form .input-box .icon {
+    position: absolute;
+    top: 50%;
+    transform: translatey(-50%);
+    left: 36px;
+}
+
+.log-with-pass .left-col form .input-box .eye {
+    right: 15px;
+    left: inherit;
+    cursor: pointer;
+}
+
+.log-with-pass .left-col form .get-otp {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    color: #03014C;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.log-with-pass .left-col form .get-otp a {
+    font-weight: 700;
+    color: #3048C1;
+    text-decoration: none;
+}
+
+.log-with-pass .left-col .or-login {
+    font-size: 14px;
+    font-weight: 400;
+    color: #7D7BA1;
+    position: relative;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.log-with-pass .left-col .or-login::before {
+    position: absolute;
+    content: "";
+    background-color: #7D7BA1;
+    width: 140px;
+    height: 2px;
+    top: 50%;
+    transform: translatey(-50%);
+    left: 70px;
+}
+
+.log-with-pass .left-col .or-login::after {
+    position: absolute;
+    content: "";
+    background-color: #7D7BA1;
+    width: 140px;
+    height: 2px;
+    top: 50%;
+    transform: translatey(-50%);
+    right: 70px;
+}
+
+.log-with-pass .left-col .other-login {
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+}
+
+.log-with-pass .left-col .other-login a {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #03014C;
+    text-decoration: none;
+    height: 50px;
+    width: 125px;
+    display: inline-block;
+    border: 1px solid #7D7BA170;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+.log-with-pass .left-col .other-login a:hover{
+    color: #7CB6E6;
+}
+.log-with-pass .left-col .other-login a img {
+    width: 25px;
+    margin-right: 5px;
+}
+@media only screen and (max-width: 1400px){
+    .log-with-pass .right-col{
+        height: 730px;
+    }
+    .log-with-pass .left-col .or-login::before {
+        left: 20px;
+        width: 120px;
+    }
+    .log-with-pass .left-col .or-login::after {
+        right: 20px;
+        width: 120px;
+    }
+}
+@media only screen and (max-width: 1300px){
+    .log-with-pass .right-col{
+        height: 700px;
+    }
+}
+@media only screen and (max-width: 1200px){
+    .log-with-pass .right-col{
+        height: 590px;
+    }
+    .log-with-pass .left-col .or-login::before {
+        left: 0px;
+    }
+    .log-with-pass .left-col .or-login::after {
+        right: 0px;
+    }
+}
+@media only screen and (max-width: 1024px){
+    .log-with-pass .col-7{
+        display: none;
+    }
+    .log-with-pass .col-5{
+        width: 100%;
+        padding-right: 0;
+    }
+    .log-with-pass .left-col .or-login::before{
+        display: none;
+    }
+    .log-with-pass .left-col .or-login::after{
+        left: 50%;
+        top: 25px;
+        right: inherit;
+        transform: translate(-50%);
+    }
+}
+@media only screen and (max-width: 767px){
+    .log-with-pass .left-col .form-title h1{
+        font-size: 24px;
+    }
+}
