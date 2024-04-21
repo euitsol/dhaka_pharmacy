@@ -233,7 +233,7 @@
                                 <div class="input-group" role="group">
                                     <input type="text" id="discount_percentage" name="discount_percentage"
                                     class="form-control {{ $errors->has('discount_percentage') ? ' is-invalid' : '' }}"
-                                    placeholder="Enter discount percentage" value="{{ $discount->discount_percentage ?  (formatPercentageNumber($discount->discount_percentage)) : '' }}">
+                                    placeholder="Enter discount percentage" value="{{ isset($discount->discount_percentage) ?  (formatPercentageNumber($discount->discount_percentage)) : '' }}">
                                     <span class="bdt_button">{{__('%')}}</span>
                                 </div>
                                 @include('alerts.feedback', ['field' => 'discount_percentage'])
