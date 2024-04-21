@@ -105,6 +105,7 @@ class BaseController extends Controller
         if($atc){
             if($atc->status != 1){
                 $atc->status = 1;
+                $atc->unit_id = $unit_id;
                 $atc->save(); 
             }else{
                 $data['alert'] = "The item has already been added to the cart";
@@ -140,6 +141,8 @@ class BaseController extends Controller
 
 
             $activatedProduct->data_item_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->price*$data['atc']->unit->quantity) : $data['atc']->product->price; 
+            $activatedProduct->data_item_regular_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->regular_price*$data['atc']->unit->quantity) : $data['atc']->product->regular_price; 
+            $activatedProduct->discount = productDiscountPercentage($activatedProduct->id) ? true : false; 
 
              
 

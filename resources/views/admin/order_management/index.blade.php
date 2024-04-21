@@ -41,7 +41,7 @@
                                             'menuItems' => [
                                                 [
                                                     'routeName' => 'om.order.order_details',
-                                                    'params' => [$order->id],
+                                                    'params' => [encrypt($order->id)],
                                                     'label' => 'Details',
                                                 ],
                                             ],

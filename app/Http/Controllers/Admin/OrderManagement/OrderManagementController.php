@@ -29,18 +29,20 @@ class OrderManagementController extends Controller
     }
     public function details($id): View
     {
-        $data['order'] = Order::findOrFail($id);
+        $data['order'] = Order::findOrFail(decrypt($id));
         $data['payments'] = Payment::where('order_id',$id)->latest()->get();
         $data['order_items'] = [];
         foreach(json_decode($data['order']->carts) as $cart_id){
-            $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->findOrFail($cart_id);
-            array_push($data['order_items'], $cart);
+            $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->where('id',$cart_id)->first();
+            if($cart){
+                array_push($data['order_items'], $cart);
+            }
         }
         $paymentItemsCollection = collect($data['order_items']);
         $paymentItemsCollection->map(function($item) {
-            $item->price = $item->product->price*$item->quantity;
-            $item->regular_price = $item->product->regular_price*$item->quantity;
-            $item->discount = productDiscountAmount($item->product->id)*$item->quantity;
+            $item->price = (($item->product->price*($item->unit->quantity ?? 1))*$item->quantity);
+            $item->regular_price = (($item->product->regular_price*($item->unit->quantity ?? 1))*$item->quantity);
+            $item->discount = (productDiscountAmount($item->product->id)*($item->unit->quantity ?? 1))*$item->quantity;
             return $item;
         });
         $data['totalPrice'] = $paymentItemsCollection->sum('price');

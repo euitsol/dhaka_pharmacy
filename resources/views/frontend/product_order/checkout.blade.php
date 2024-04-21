@@ -38,20 +38,20 @@
                                         <div class="col-2">
                                             @if(isset($cartItem['status']))
                                                 @php
-                                                    $total_discount += $cartItem['quantity']*number_format(($cartItem['product']->discount_amount),2);
+                                                    $total_discount += $cartItem['quantity']*(number_format(($cartItem['product']->discount_amount*$cartItem['unit']->quantity),2));
                                                 @endphp
                                                 <span>1 X {{$cartItem['name']}}</span>
                                             @else
                                                 <span>{{$cartItem['quantity']}} X {{$cartItem['name']}}</span>
                                                 @php
-                                                    $total_discount += $cartItem['quantity']*number_format(($cartItem['product']->discount_amount),2);
+                                                    $total_discount += $cartItem['quantity']*(number_format(($cartItem['product']->discount_amount*$cartItem['unit']->quantity),2));
                                                 @endphp
                                             @endif
                                         </div>
                                         <div class="col-2 text-end">
                                             @php
-                                                $single_total_price = ($cartItem['quantity'] * $cartItem['product']->price);
-                                                $single_regular_price = ($cartItem['quantity'] * $cartItem['product']->regular_price);
+                                                $single_total_price = (($cartItem['product']->price * $cartItem['unit']->quantity)*$cartItem['quantity']);
+                                                $single_regular_price = (($cartItem['product']->regular_price * $cartItem['unit']->quantity)*$cartItem['quantity']);
                                                 $total_price +=$single_total_price;
                                                 $total_regular_price +=$single_regular_price;
                                             @endphp

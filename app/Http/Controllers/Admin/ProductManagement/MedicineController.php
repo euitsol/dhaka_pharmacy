@@ -30,6 +30,7 @@ class MedicineController extends Controller
 
     public function index(): View
     {
+        
         $data['medicines'] = Medicine::with(['pro_cat','generic','company','strength','created_user'])->orderBy('name')->get();
         return view('admin.product_management.medicine.index',$data);
     }

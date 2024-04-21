@@ -98,7 +98,7 @@
                                                 
                                                     <div class="product_price mt-4">
                                                         @if (productDiscountPercentage($single_product->id))
-                                                            <p><del>{{ __('MRP Tk') }} {{ __(number_format($single_product->regular_price, 2)) }}</del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
+                                                            <p><del class="text-danger">{{ __('MRP Tk') }} <span class="total_regular_price">{{ __(number_format($single_product->regular_price, 2)) }}</span></del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
                                                         @endif
                                                         <p><strong>{{ __('Price: Tk') }} <span
                                                                     class="total_price">{{ __(number_format($single_product->price, 2)) }}
@@ -109,7 +109,7 @@
                                                                     @if ($key == 0) checked @endif
                                                                     class="item_quantity" id="android-{{ $key }}"
                                                                     name="data"
-                                                                    value="{{ $single_product->price * $unit->quantity }}">
+                                                                    data-total_price="{{ $single_product->price * $unit->quantity }}" data-total_regular_price="{{ $single_product->regular_price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
                                                                     <img src="{{storage_url($unit->image)}}">
                                                                 </label>
@@ -117,7 +117,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="add_to_card">
-                                                        <a class="cart-btn" href="javascript:void(0)" data-product_slug="{{ $single_product->slug }}" data-unit_id="{{$units[0]['id']}}"  href="#">
+                                                        <a class="cart-btn" href="javascript:void(0)" data-product_slug="{{ $single_product->slug }}" data-unit_id="{{$units[0]['id']}}" >
                                                             <i class="fa-solid fa-cart-plus"></i>
                                                             {{ __('Add to Cart') }}</a>
                                                     </div>
@@ -443,12 +443,6 @@
                                                                 <div class="pdct-img">
                                                                     @if (productDiscountPercentage($product->id))
                                                                         <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% off"}}</span>
-                                                                        {{-- <span class="discount_tag">
-                                                                            <span class="discount_price">
-                                                                                {{  formatPercentageNumber($product->discount_percentage)."%"}}
-                                                                            </span>
-                                                                            <img src="{{asset('frontend/asset/img/discount_tag.svg')}}" alt="">
-                                                                        </span> --}}
                                                                     @endif
                                                                     <img class="w-100"
                                                                         src="{{ storage_url($product->image) }}"
@@ -558,8 +552,10 @@
                 var id = $(this).data('id');
                 $(this).closest('.product_content').find('.cart-btn').attr('data-unit_id',id);
 
-                var formattedNumber = numberFormat($(this).val(), 2);
-                $('.total_price').html(formattedNumber);
+                var TotalPrice = numberFormat($(this).data('total_price'), 2);
+                var TotalRegularPrice = numberFormat($(this).data('total_regular_price'), 2);
+                $('.total_price').html(TotalPrice);
+                $('.total_regular_price').html(TotalRegularPrice);
                 $('.unit_name').html(name);
             });
 

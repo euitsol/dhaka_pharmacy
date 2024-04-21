@@ -19,7 +19,8 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Customer') }}</th>
-                                <th>{{ __('Order ID') }}</th>
+                                <th>{{ __('Tran ID') }}</th>
+                                <th>{{ __('Amount') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -31,7 +32,8 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $payment->customer->name }}</td>
-                                    <td>{{ $payment->order->order_id }}</td>
+                                    <td>{{json_decode($payment->details,true)['tran_id']}}</td>
+                                    <td>&#2547;{{number_format((json_decode($payment->details,true)['amount']),2)}}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
                                     <td>{{ $payment->created_date() }}</td>
 
@@ -41,7 +43,7 @@
                                             'menuItems' => [
                                                 [
                                                     'routeName' => 'pym.payment.payment_details',
-                                                    'params' => [$payment->id],
+                                                    'params' => [encrypt($payment->id)],
                                                     'label' => 'Details',
                                                 ],
                                             ],

@@ -150,13 +150,15 @@
                                                             <div class="col my-auto"> <h6 class="mb-0 text-start">{{$item->product->name}}</h6>  </div>
                                                             <div class="col-auto my-auto"> <small>{{$item->product->pro_cat->name}} </small></div>
                                                             <div class="col my-auto"> <small>Qty : {{$item->quantity}}</small></div>
+                                                            <div class="col my-auto"> <small>Pack : {{$item->unit->name ?? 'Piece'}}</small></div>
                                                             <div class="col my-auto">
-                                                                <h6 class="mb-0">
+                                                                <h6 class="mb-0 text-end">
                                                                     @if (productDiscountPercentage($item->product->id))
-                                                                    <span class="text-danger me-2"><del>&#2547; {{number_format(($item->product->regular_price * $item->quantity), 2)}}</del></span> 
+                                                                    <span class="text-danger"><del>&#2547; {{number_format((($item->product->regular_price*$item->unit->quantity) * $item->quantity), 2)}}</del></span> 
                                                                     @endif
-                                                                    <span>&#2547; {{number_format(($item->product->price * $item->quantity), 2)}}</span> 
-                                                                    
+                                                                </h6>
+                                                                <h6 class="mb-0 text-end">
+                                                                    <span>&#2547; {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}</span> 
                                                                 </h6>
                                                             </div>
                                                         </div>
