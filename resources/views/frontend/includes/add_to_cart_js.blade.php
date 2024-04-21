@@ -92,9 +92,9 @@
                                         <div class="plus_minus col-5 ps-md-4 d-flex align-items-center justify-between">
                                             <div class="form-group">
                                                 <div class="input-group" role="group">
-                                                    <a href="javascript:void(0)" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
+                                                    <a href="javascript:void(0)" data-id="${data.atc.id}" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
                                                     <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${parseFloat(data.atc.product.data_item_price)}" value="1" >
-                                                    <a href="javascript:void(0)" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
+                                                    <a href="javascript:void(0)" data-id="${data.atc.id}" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>
