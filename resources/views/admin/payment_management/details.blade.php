@@ -116,7 +116,6 @@
 @endpush
 @section('content')
 <div class="order_details_wrap">
-
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
