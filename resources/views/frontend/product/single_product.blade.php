@@ -98,7 +98,7 @@
                                                 
                                                     <div class="product_price mt-4">
                                                         @if (productDiscountPercentage($single_product->id))
-                                                            <p><del>{{ __('MRP Tk') }} <span class="total_regular_price">{{ __(number_format($single_product->regular_price, 2)) }}</span></del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
+                                                            <p><del class="text-danger">{{ __('MRP Tk') }} <span class="total_regular_price">{{ __(number_format($single_product->regular_price, 2)) }}</span></del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
                                                         @endif
                                                         <p><strong>{{ __('Price: Tk') }} <span
                                                                     class="total_price">{{ __(number_format($single_product->price, 2)) }}

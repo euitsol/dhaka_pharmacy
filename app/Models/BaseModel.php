@@ -176,7 +176,7 @@ class BaseModel extends Model
     public function scopeActivated($query){
         return $query->where('status',1);
     }
-    public function scopeCreater_name(){
+    public function creater_name(){
         return $this->creater->name ?? 'System';
     }
     public function scopeUpdater_name(){
@@ -185,7 +185,7 @@ class BaseModel extends Model
     public function scopeDeleter_name(){
         return $this->deleter->name ?? '--';
     }
-    public function scopeCreated_user_name(){
+    public function created_user_name(){
         return $this->created_user->name ?? 'System';
     }
     public function scopeUpdated_user_name(){
@@ -194,7 +194,7 @@ class BaseModel extends Model
     public function scopeDeleted_user_name(){
         return $this->deleted_user->name ?? '--';
     }
-    public function scopeCreated_date(){
+    public function created_date(){
         return timeFormate($this->created_at);
     }
     public function scopeUpdated_date(){
