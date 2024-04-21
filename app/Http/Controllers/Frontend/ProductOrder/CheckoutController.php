@@ -78,9 +78,10 @@ class CheckoutController extends BaseController
             $data['checkItems'][$key]['product'] = $atc->product;
             $data['checkItems'][$key]['quantity'] = $atc->quantity;
             $data['checkItems'][$key]['name'] = $data['unit']->name;
+            $data['checkItems'][$key]['unit'] = $atc->unit;
         }
        
-
+        
 
         return view('frontend.product_order.checkout',$data);
     }

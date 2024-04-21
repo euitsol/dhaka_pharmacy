@@ -105,6 +105,7 @@ class BaseController extends Controller
         if($atc){
             if($atc->status != 1){
                 $atc->status = 1;
+                $atc->unit_id = $unit_id;
                 $atc->save(); 
             }else{
                 $data['alert'] = "The item has already been added to the cart";
