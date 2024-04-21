@@ -84,7 +84,7 @@
                                         <input type="radio" data-name="${unit.name}" ${checked}
                                         class="unit_quantity" id="android-${index+20}"
                                         name="data-${count}"
-                                        value="${ (data.atc.product.price * unit.quantity) }">
+                                        value="${ (data.atc.product.price * unit.quantity)*data.atc.quantity }" data-regular_price="${ (data.atc.product.regular_price * unit.quantity)*data.atc.quantity }">
                                         <label for="android-${index+20}">
                                             <img src="${unit.image}">
                                         </label>
@@ -221,6 +221,7 @@
             var check_item_price = $(this).closest('.add_to_cart_item').find('.item_count_price')
                 .html();
             check_item_price = check_item_price.replace(',','');
+            check_item_price = parseFloat(check_item_price);
             total_price += check_item_price;
         });
         $('.subtotal_price').html(numberFormat(total_price, 2));
@@ -282,14 +283,18 @@
 
     // Unit Change JS 
     $(document).on('change', '.unit_quantity', function() {
-        var formattedNumber = numberFormat($(this).val(), 2);
+        var formattedPrice = parseFloat($(this).val());
+        var formattedRegularPrice = parseFloat($(this).data('regular_price'));
         var itemContainer = $(this).closest('.add_to_cart_item');
         var itemQuantityInput = itemContainer.find('.plus_minus_quantity');
         var itemQuantity = parseInt(itemQuantityInput.val()) || 0;
-        itemQuantityInput.data('item_price', formattedNumber);
+        itemQuantityInput.data('item_price', formattedPrice);
+        itemQuantityInput.data('item_regular_price', formattedRegularPrice);
         if (!isNaN(itemQuantity)) {
-            var totalItemPrice = formattedNumber * itemQuantity;
+            var totalItemPrice = formattedPrice * itemQuantity;
+            var totalItemRegularPrice = formattedRegularPrice * itemQuantity;
             itemContainer.find('.item_count_price').html(numberFormat(totalItemPrice, 2));
+            itemContainer.find('.item_count_regular_price').html(numberFormat(totalItemRegularPrice, 2));
         }
         refreshSubtotal();
     });
