@@ -180,7 +180,7 @@ header{
   .header-section .right-col .offcanvas .add_to_cart_item .item_price h4{
     color: var(--nav-asent-color);
     font-size: 1rem;
-    padding: 10px 0;
+    padding: 4px 0 0 0;
   }
 
   .header-section .right-col .offcanvas .add_to_cart_item .boxed label {
