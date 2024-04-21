@@ -22,6 +22,8 @@ class SingleProductController extends BaseController
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated();
         
         $data['single_product'] = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated()->where('slug',$slug)->first();
+        $data['single_product']->discount_amount = productDiscountAmount($data['single_product']->id);
+        $data['single_product']->discount_percentage = productDiscountPercentage($data['single_product']->id);
         $units = array_map(function ($u) {
             return MedicineUnit::findOrFail($u);
         }, (array) json_decode($data['single_product']->unit, true));
@@ -36,9 +38,11 @@ class SingleProductController extends BaseController
         })->shuffle()->map(function($product){
             $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
             $product->attr_title = Str::ucfirst(Str::lower($product->name . $strength ));
-            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
+            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 25, '..');
             $product->generic->name = str_limit($product->generic->name, 30, '..');
             $product->company->name = str_limit($product->company->name, 30, '..');
+            $product->discount_amount = productDiscountAmount($product->id);
+            $product->discount_percentage = productDiscountPercentage($product->id);
             $product->units = array_map(function ($u_id) {
                 return MedicineUnit::findOrFail($u_id);
             }, (array) json_decode($product->unit, true));

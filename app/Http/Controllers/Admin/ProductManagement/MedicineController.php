@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\ProductManagement;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MedicineRequest;
 use App\Models\CompanyName;
+use App\Models\Discount;
 use App\Models\Documentation;
 use App\Models\GenericName;
 use App\Models\Medicine;
@@ -75,6 +76,7 @@ class MedicineController extends Controller
         // $medicine->medicine_cat_id = $req->medicine_cat_id;
         $medicine->strength_id = $req->strength_id;
         $medicine->unit = json_encode($req->unit);
+        $medicine->regular_price = $req->price;
         $medicine->price = $req->price;
         $medicine->description = $req->description;
         $medicine->prescription_required = $req->prescription_required;
@@ -82,12 +84,22 @@ class MedicineController extends Controller
         $medicine->max_quantity = $req->max_quantity;
         $medicine->created_by = admin()->id;
         $medicine->save();
+
+        $discount = new Discount();
+        $discount->pro_id = $medicine->id;
+        $discount->discount_amount = $req->discount_amount;
+        $discount->discount_percentage = $req->discount_percentage;
+        $discount->save();
+        $medicine->price = $req->price-productDiscountAmount($medicine->id);
+        $medicine->save();
+
         flash()->addSuccess('Medicine '.$medicine->name.' created successfully.');
         return redirect()->route('product.medicine.medicine_list');
     }
     public function edit($slug): View
     {
         $data['medicine'] = Medicine::where('slug',$slug)->first();
+        $data['discount'] = Discount::activated()->where('pro_id',$data['medicine']->id)->first();
         $data['pro_cats'] = ProductCategory::activated()->orderBy('name')->get();
         $data['pro_sub_cats'] = ProductSubCategory::activated()->orderBy('name')->get();
         $data['generics'] = GenericName::activated()->orderBy('name')->get();
@@ -121,6 +133,7 @@ class MedicineController extends Controller
         // $medicine->medicine_cat_id = $req->medicine_cat_id;
         $medicine->strength_id = $req->strength_id;
         $medicine->unit = json_encode($req->unit);
+        $medicine->regular_price = $req->price;
         $medicine->price = $req->price;
         $medicine->description = $req->description;
         $medicine->prescription_required = $req->prescription_required;
@@ -128,6 +141,30 @@ class MedicineController extends Controller
         $medicine->max_quantity = $req->max_quantity;
         $medicine->updated_by = admin()->id;
         $medicine->save();
+        $check = Discount::activated()
+                ->where('pro_id', $id)
+                ->where('discount_amount', $req->discount_amount)
+                ->Where('discount_percentage', $req->discount_percentage)
+                ->first();
+
+        if(!$check){
+            Discount::where('pro_id',$id)->where('status',1)->update(['status'=>0]);
+            $discount = new Discount();
+            $discount->pro_id = $id;
+            $discount->discount_amount = $req->discount_amount;
+            $discount->discount_percentage = $req->discount_percentage;
+            $discount->save();
+            $medicine->price = $req->price-productDiscountAmount($id);
+            $medicine->save();
+        }elseif($check && $medicine->price !== $req->price){
+            $medicine->price = $req->price-productDiscountAmount($id);
+            $medicine->save();
+        }
+        
+
+        
+        
+        
         flash()->addSuccess('Medicine '.$medicine->name.' updated successfully.');
         return redirect()->route('product.medicine.medicine_list');
     }

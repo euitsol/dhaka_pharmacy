@@ -150,7 +150,14 @@
                                                             <div class="col my-auto"> <h6 class="mb-0 text-start">{{$item->product->name}}</h6>  </div>
                                                             <div class="col-auto my-auto"> <small>{{$item->product->pro_cat->name}} </small></div>
                                                             <div class="col my-auto"> <small>Qty : {{$item->quantity}}</small></div>
-                                                            <div class="col my-auto"><h6 class="mb-0">&#2547; {{number_format(($item->product->price * $item->quantity), 2)}}</h6>
+                                                            <div class="col my-auto">
+                                                                <h6 class="mb-0">
+                                                                    @if (productDiscountPercentage($item->product->id))
+                                                                    <span class="text-danger me-2"><del>&#2547; {{number_format(($item->product->regular_price * $item->quantity), 2)}}</del></span> 
+                                                                    @endif
+                                                                    <span>&#2547; {{number_format(($item->product->price * $item->quantity), 2)}}</span> 
+                                                                    
+                                                                </h6>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -207,12 +214,17 @@
                                             <tr>
                                                 <th>Discount</th>
                                                 <td>:</td>
-                                                <td><span>&#2547; </span>{{count($order_items)*2}}</td>
+                                                <td><span>&#2547; {{number_format($totalDiscount,2)}}</span></td>
                                             </tr>
                                             <tr>
                                                 <th>Sub Total</th>
                                                 <td>:</td>
-                                                <td><span>&#2547; </span>{{number_format($totalPrice,2)}}</td>
+                                                <td>
+                                                    <span>&#2547; {{number_format($totalPrice,2)}}</span>
+                                                    @if ($totalRegularPrice !== $totalPrice)
+                                                        <span class="text-danger ms-2"><del>&#2547; {{number_format(($totalRegularPrice), 2)}}</del></span> 
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Delivery Charges</th>

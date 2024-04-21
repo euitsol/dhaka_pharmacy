@@ -29,7 +29,6 @@ class OrderManagementController extends Controller
     }
     public function details($id): View
     {
-        $discount = 2;
         $data['order'] = Order::findOrFail($id);
         $data['payments'] = Payment::where('order_id',$id)->latest()->get();
         $data['order_items'] = [];
@@ -38,11 +37,15 @@ class OrderManagementController extends Controller
             array_push($data['order_items'], $cart);
         }
         $paymentItemsCollection = collect($data['order_items']);
-        $paymentItemsCollection->map(function($item) use($discount) {
-            $item->price = $item->product->price-$discount;
+        $paymentItemsCollection->map(function($item) {
+            $item->price = $item->product->price*$item->quantity;
+            $item->regular_price = $item->product->regular_price*$item->quantity;
+            $item->discount = productDiscountAmount($item->product->id)*$item->quantity;
             return $item;
         });
         $data['totalPrice'] = $paymentItemsCollection->sum('price');
+        $data['totalRegularPrice'] = $paymentItemsCollection->sum('regular_price');
+        $data['totalDiscount'] = $paymentItemsCollection->sum('discount');
         return view('admin.order_management.details',$data);
     }
    

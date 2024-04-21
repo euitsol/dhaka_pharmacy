@@ -45,6 +45,8 @@ class ProductPageController extends BaseController
             $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 25, '..');
             $product->generic->name = str_limit($product->generic->name, 25, '..');
             $product->company->name = str_limit($product->company->name, 25, '..');
+            $product->discount_amount = productDiscountAmount($product->id);
+            $product->discount_percentage = productDiscountPercentage($product->id);
 
             $product->units = array_map(function ($u_id) {
                 return MedicineUnit::findOrFail($u_id);

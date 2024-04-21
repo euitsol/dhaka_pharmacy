@@ -110,7 +110,6 @@ Route::post('/rider/login', [RiderLoginController::class, 'riderLoginCheck'])->n
 Route::post('/rider/logout', [RiderLoginController::class, 'logout'])->name('rider.logout');
 
 
-// Overwrite Default Authentication Routes
 // Google Login
 Route::get('/google-redirect', [App\Http\Controllers\Auth\LoginController::class, 'googleRedirect'])->name('login_with_google');
 Route::get('/auth/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'googleCallback']);
@@ -123,6 +122,7 @@ Route::get('/auth/github/callback', [App\Http\Controllers\Auth\LoginController::
 Route::get('/facebook-redirect', [App\Http\Controllers\Auth\LoginController::class, 'facebookRedirect'])->name('login_with_facebook');
 Route::get('/auth/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'facebookCallback']);
 
+// Overwrite Default Authentication Routes
 Route::prefix('user')->group(function () {
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
@@ -134,6 +134,10 @@ Route::prefix('user')->group(function () {
     Route::post('/password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('/password/reset/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('/password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset']);
+
+    Route::post('/send-otp', [App\Http\Controllers\Auth\LoginController::class, 'send_otp'])->name('use.send_otp');
+    Route::get('/send-otp/again/{id}', [App\Http\Controllers\Auth\LoginController::class, 'send_otp_again'])->name('use.send_otp.again');
+    Route::post('/otp/verify', [App\Http\Controllers\Auth\LoginController::class, 'otp_verify'])->name('use.otp.verify');
 });
 
 

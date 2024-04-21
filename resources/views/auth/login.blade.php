@@ -2,491 +2,237 @@
 @section('title', 'User Login')
 
 @push('css')
-    <style>
-        img {
-            width: 100%;
-        }
-
-        .login_box {
-            width: 1050px;
-            height: 600px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 1px 4px 22px -8px #0004;
-            display: flex;
-            overflow: hidden;
-        }
-
-        .login_box .left {
-            width: 41%;
-            height: 100%;
-            padding: 25px 25px;
-            position: relative;
-
-        }
-
-        .login_box .right {
-            width: 59%;
-            height: 100%
-        }
-
-        .left .top_link a {
-            color: #452A5A;
-            font-weight: 400;
-        }
-
-        .left .top_link {
-            height: 20px
-        }
-
-        .left .contact {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            align-self: center;
-            height: 100%;
-            width: 73%;
-            margin: auto;
-        }
-
-        .left h3 {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .left input {
-            border: none;
-            width: 80%;
-            margin: 15px 0px;
-            border-bottom: 1px solid #4f30677d;
-            padding: 7px 9px;
-            width: 100%;
-            overflow: hidden;
-            background: transparent;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .left {
-            background: linear-gradient(-45deg, #dcd7e0, #fff);
-        }
-
-        .submit {
-            border: none;
-            padding: 15px 70px;
-            border-radius: 8px;
-            display: block;
-            margin: auto;
-            background: var(--secondary-bg);
-            color: #fff;
-            font-weight: bold;
-            -webkit-box-shadow: 0px 9px 15px -11px rgba(88, 54, 114, 1);
-            -moz-box-shadow: 0px 9px 15px -11px rgba(88, 54, 114, 1);
-            box-shadow: 0px 9px 15px -11px rgba(88, 54, 114, 1);
-            margin-top: 20px;
-        }
-
-
-
-        .right {
-            background: linear-gradient(212.38deg, rgba(133, 255, 190, 0.5) 0%, rgba(45, 152, 218, 0.5) 100%), url('../frontend/asset/img/user_login_img.jpeg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            color: #fff;
-            position: relative;
-        }
-
-        .right .right-text {
-            height: 100%;
-            position: relative;
-            transform: translate(0%, 45%);
-        }
-
-        .right-text h2 {
-            display: block;
-            width: 100%;
-            text-align: center;
-            font-size: 50px;
-            font-weight: 500;
-        }
-
-        .right-text h5 {
-            display: block;
-            width: 100%;
-            text-align: center;
-            font-size: 19px;
-            font-weight: 400;
-        }
-
-        .right .right-inductor {
-            position: absolute;
-            width: 70px;
-            height: 7px;
-            background: #fff0;
-            left: 50%;
-            bottom: 70px;
-            transform: translate(-50%, 0%);
-        }
-
-        .top_link img {
-            width: 28px;
-            padding-right: 7px;
-            margin-top: -3px;
-        }
-    </style>
-
-
-    <style>
-        .login_main_wrap{
-            position: relative;
-        }
-        .tabbed {
-            width: 100%;
-            min-width: 400px;
-            overflow: hidden;
-            transition: border 250ms ease;
-            position: absolute;
-            left: -13px;
-            top: 40px;
-            /* border-bottom: 4px solid var(--border-1); */
-        }
-
-        .tabbed ul {
-            margin: 0px;
-            padding: 0px;
-            overflow: hidden;
-            float: left;
-            padding-left: 48px;
-            list-style-type: none;
-        }
-
-        .tabbed ul * {
-            margin: 0px;
-            padding: 0px;
-        }
-
-        .tabbed ul li {
-            display: block;
-            float: right;
-            padding: 10px 5px 8px;
-            background-color: var(--white-bg);
-            margin-right: 40px;
-            z-index: 2;
-            position: relative;
-            cursor: pointer;
-            color: #777;
-            text-transform: uppercase;
-            font: 600 13px/20px roboto, "Open Sans", Helvetica, sans-serif;
-            transition: all 250ms ease;
-        }
-
-        .tabbed ul li:before,
-        .tabbed ul li:after {
-            display: block;
-            content: " ";
-            position: absolute;
-            top: 0.1px;
-            height: 100%;
-            width: 35px;
-            background-color: var(--white-bg);
-            transition: all 250ms ease;
-            z-index: -1;
-
-        }
-
-        .tabbed ul li:before {
-            right: -24px;
-            transform: skew(30deg, 0deg);
-            box-shadow: rgba(0, 0, 0, .1) 3px 2px 5px, inset rgba(255, 255, 255, .09) -1px 0;
-        }
-
-        .tabbed ul li:after {
-            left: -24px;
-            transform: skew(-30deg, 0deg);
-            box-shadow: rgba(0, 0, 0, .1) -3px 2px 5px, inset rgba(255, 255, 255, .09) 1px 0;
-        }
-
-        .tabbed ul li:hover,
-        .tabbed ul li:hover:before,
-        .tabbed ul li:hover:after {
-            background-color: var(--white-bg);
-            color: #444;
-        }
-
-        .tabbed ul li.active {
-            z-index: 3;
-        }
-
-        .tabbed ul li.active,
-        .tabbed ul li.active:before,
-        .tabbed ul li.active:after {
-            background-color: var(--secondary-bg);
-            color: var(--white-bg);
-        }
-
-        /* Round Tabs */
-        .tabbed.round ul li {
-            border-radius: 8px 8px 0 0;
-        }
-
-        .tabbed.round ul li:before {
-            border-radius: 0 8px 0 0;
-        }
-
-        .tabbed.round ul li:after {
-            border-radius: 8px 0 0 0;
-        }
-    </style>
-
-
-    {{-- OTP STYLES  --}}
-    {{-- <style>
-        .otp_wrap {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 40vw;
-            min-width: 350px;
-            height: 60vh;
-            background-color: var(--white-bg);
-            border-radius: 12px;
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-                rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-            padding: 24px 0px;
-        }
-
-        .otp_wrap svg {
-            margin: 16px 0;
-        }
-
-        .otp_wrap title {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .otp_wrap p {
-            color: #a3a3a3;
-            font-size: 14px;
-            width: 200px;
-            margin-top: 4px;
-        }
-
-        .otp_wrap input {
-            width: 32px;
-            height: 32px;
-            text-align: center;
-            border: none;
-            border-bottom: 1.5px solid #d2d2d2;
-            margin: 0 10px;
-        }
-
-        .otp_wrap input:focus {
-            border-bottom: 1.5px solid var(--border-1);
-            outline: none;
-        }
-
-        .otp_wrap button {
-            width: 250px;
-            letter-spacing: 2px;
-            margin-top: 24px;
-            padding: 12px 16px;
-            border-radius: 8px;
-            border: none;
-            background-color: var(--secondary-bg);
-            color: var(--text-color-white);
-            cursor: pointer;
-        }
-    </style> --}}
+    <link rel="stylesheet" href="{{asset('user_login/style.css')}}">
 @endpush
 @section('content')
-    <div class="container py-5 my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-10 mx-auto">
-
-                <div class="login_box mx-auto">
-
-                    <div class="left">
-                        {{-- <div class="top_link"><a href="{{ route('home') }}">{{ __('Return home') }}</a></div> --}}
-
-
-                        <div class="card h-100 login_main_wrap">
-                            <div class="tabbed round">
-                                <ul>
-                                    <li class="login_with_otp">{{ __('Login With OTP') }}</li>
-                                    <li class="active login_with_password">{{ __('Login With Password') }}</li>
-                                </ul>
-                            </div>
-                            <div class="contact">
-                                <form method="POST" action="{{ route('login') }}" class="login_with_password_form w-100">
-                                    @csrf
-                                    {{-- <h3>{{ __('SIGN IN') }}</h3> --}}
-                                    <input type="phone" name="phone" placeholder="PHONE">
-                                    @error('phone')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                    <input type="text" name="password" placeholder="PASSWORD">
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                    <button class="submit">{{ __('LET\'S GO') }}</button>
-                                </form>
-    
-                                <form method="POST" action="{{ route('login') }}" class="login_with_otp_form w-100" style="display: none">
-                                    @csrf
-                                    <input type="phone" name="phone" placeholder="PHONE">
-                                    @error('phone')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                    <button class="submit">{{ __('Sent OTP') }}</button>
-                                </form>
-    
-    
-    
-    
-                                {{-- <div class="otp_wrap">
-                                    <svg width="250" height="200" viewBox="0 0 292 208" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <g clip-path="url(#clip0_1_45)">
-                                            <path
-                                                d="M152.106 208C201.536 208 241.606 167.93 241.606 118.5C241.606 69.0706 201.536 29 152.106 29C102.676 29 62.6058 69.0706 62.6058 118.5C62.6058 167.93 102.676 208 152.106 208Z"
-                                                fill="#C5FFFF" />
-                                            <path
-                                                d="M117.144 64.4241C113.81 64.4241 111.108 67.1261 111.108 70.46V167.057C111.108 170.391 113.81 173.093 117.144 173.093H186.572C189.906 173.093 192.608 170.391 192.608 167.057V92.382L163.507 64.4241H117.144Z"
-                                                fill="#91E4FF" />
-                                            <path
-                                                d="M192.608 92.382H169.544C166.21 92.382 163.508 89.68 163.508 86.3461V64.4241L192.608 92.382Z"
-                                                fill="#0CB4EA" />
-                                            <path
-                                                d="M162.304 131.646C162.304 135.494 159.185 138.613 155.339 138.613H104.483C100.635 138.613 97.5186 135.494 97.5186 131.646V110.363C97.5186 106.515 100.635 103.397 104.483 103.397H155.339C159.185 103.397 162.304 106.515 162.304 110.363V131.646Z"
-                                                fill="#0CB4EA" />
-                                            <path
-                                                d="M117.094 114.409C118.563 114.409 119.825 114.707 120.876 115.302C121.93 115.897 122.728 116.745 123.267 117.843C123.807 118.941 124.079 120.23 124.079 121.712C124.079 122.808 123.932 123.803 123.635 124.697C123.338 125.592 122.894 126.369 122.302 127.025C121.71 127.681 120.981 128.184 120.119 128.532C119.257 128.879 118.266 129.053 117.153 129.053C116.044 129.053 115.054 128.875 114.178 128.518C113.302 128.16 112.571 127.657 111.985 127.005C111.398 126.354 110.956 125.572 110.656 124.658C110.358 123.744 110.208 122.755 110.208 121.692C110.208 120.604 110.364 119.604 110.676 118.697C110.99 117.788 111.442 117.017 112.034 116.378C112.627 115.739 113.349 115.253 114.198 114.914C115.047 114.574 116.012 114.409 117.094 114.409ZM121.17 121.692C121.17 120.655 121.003 119.756 120.669 118.997C120.334 118.238 119.856 117.663 119.233 117.273C118.612 116.883 117.899 116.688 117.093 116.688C116.521 116.688 115.991 116.795 115.504 117.012C115.017 117.228 114.599 117.542 114.247 117.954C113.897 118.367 113.621 118.893 113.416 119.534C113.214 120.176 113.113 120.895 113.113 121.694C113.113 122.499 113.214 123.226 113.416 123.877C113.621 124.527 113.907 125.067 114.277 125.495C114.647 125.923 115.073 126.244 115.552 126.456C116.031 126.668 116.558 126.775 117.131 126.775C117.866 126.775 118.54 126.592 119.154 126.224C119.77 125.857 120.259 125.29 120.623 124.524C120.988 123.757 121.17 122.813 121.17 121.692Z"
-                                                fill="white" />
-                                            <path
-                                                d="M134.976 117.018H131.846V127.306C131.846 127.898 131.713 128.338 131.45 128.625C131.187 128.912 130.844 129.054 130.425 129.054C130 129.054 129.654 128.909 129.388 128.619C129.121 128.33 128.987 127.892 128.987 127.305V117.017H125.856C125.366 117.017 125.003 116.909 124.765 116.693C124.528 116.477 124.408 116.192 124.408 115.838C124.408 115.47 124.532 115.181 124.779 114.969C125.028 114.757 125.387 114.649 125.858 114.649H134.977C135.473 114.649 135.842 114.76 136.082 114.977C136.326 115.196 136.446 115.483 136.446 115.836C136.446 116.189 136.323 116.475 136.078 116.691C135.834 116.907 135.466 117.018 134.976 117.018Z"
-                                                fill="white" />
-                                            <path
-                                                d="M143.642 123.297H141.015V127.306C141.015 127.879 140.879 128.313 140.609 128.61C140.339 128.907 139.997 129.054 139.584 129.054C139.152 129.054 138.804 128.907 138.542 128.614C138.279 128.322 138.146 127.891 138.146 127.324V116.409C138.146 115.777 138.291 115.326 138.581 115.056C138.871 114.786 139.331 114.65 139.963 114.65H143.643C144.733 114.65 145.568 114.734 146.154 114.902C146.734 115.063 147.235 115.33 147.657 115.703C148.079 116.077 148.399 116.534 148.619 117.076C148.84 117.617 148.947 118.224 148.947 118.901C148.947 120.344 148.503 121.437 147.615 122.182C146.726 122.926 145.4 123.297 143.642 123.297ZM142.945 116.804H141.014V121.133H142.945C143.622 121.133 144.188 121.062 144.64 120.921C145.095 120.78 145.44 120.548 145.678 120.226C145.917 119.904 146.036 119.483 146.036 118.959C146.036 118.335 145.853 117.826 145.485 117.433C145.074 117.013 144.228 116.804 142.945 116.804Z"
-                                                fill="white" />
-                                            <rect x="233.582" y="79" width="10" height="10" rx="1"
-                                                transform="rotate(27.2727 233.582 79)" fill="#91A3FF" />
-                                            <circle cx="74" cy="139" r="5" fill="#FF91B9" />
-                                            <circle cx="79" cy="43" r="5" fill="#91E5FF" />
-                                            <circle cx="188" cy="203" r="5" fill="#FF9191" />
-                                        </g>
-                                        <circle cx="220" cy="15" r="5" fill="#FFC691" />
-                                        <circle cx="119.606" cy="5" r="5" fill="#91FFAF" />
-                                        <rect x="250.606" y="163" width="10" height="10" rx="1" fill="#E991FF" />
-                                        <rect x="274" y="47.0925" width="10" height="10" rx="1"
-                                            transform="rotate(-24.1576 274 47.0925)" fill="#FF9191" />
-                                        <rect y="68.5666" width="10" height="10" rx="1"
-                                            transform="rotate(-27.1716 0 68.5666)" fill="#91A3FF" />
-                                        <path d="M33.0121 175.265L40.7499 180.821L32.0689 184.744L33.0121 175.265Z"
-                                            fill="#FF9191" />
-                                        <path d="M15.077 128.971L16.567 138.38L7.67356 134.966L15.077 128.971Z"
-                                            fill="#FD91FF" />
-                                        <path d="M286.447 120.204L287.505 129.672L278.777 125.854L286.447 120.204Z"
-                                            fill="#FF91BF" />
-                                        <defs>
-                                            <clipPath id="clip0_1_45">
-                                                <rect width="179" height="179" fill="white"
-                                                    transform="translate(62.6058 29)" />
-                                            </clipPath>
-                                        </defs>
-                                    </svg>
-                                    <div class="title">Verification Code</div>
-                                    <p>We have sent a verification code
-                                        to your mobile number</p>
-                                    <div id='inputs'>
-                                        <input id='input1' type='text' maxLength="1" />
-                                        <input id='input2' type='text' maxLength="1" />
-                                        <input id='input3' type='text' maxLength="1" />
-                                        <input id='input4' type='text' maxLength="1" />
-                                    </div>
-                                    <button>Verify</button>
-                                </div> --}}
-    
-    
-                            </div>
-                        </div>
+<section class="log-with-pass">
+    <div class="container">
+        <div class="row">
+            <div class="col-5">
+                <div class="left-col login_wrap">
+                    <div class="form-title">
+                        <h1 class="otp_title">LOGIN IN WITH OTP</h1>
+                        <h1 class="login_title" style="display: none;">LOGIN WITH PASSWORD</h1>
+                        <h3>Follow the instructions to make it easier to register and you will be able to explore
+                            inside.</h3>
                     </div>
-                    <div class="right">
-                        <div class="right-text">
-                            <h2>{{ __('Dhaka Pharmacy') }}</h2>
-                            <h5>{{ __('User Login Portal') }}</h5>
+
+
+                    {{-- Sent OTP --}}
+                    <form class="otp_form">
+                        @csrf
+                        <div class="phn input-box">
+                            <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
+                            <input type="phone" name="phone" placeholder="Phone">
                         </div>
+                        @include('alerts.feedback', ['field' => 'phone'])
+                        <p class="get-otp">Login With Password? <a class="login_switch" href="javascript:void(0)">Login</a></p>
+                        <a href="javascript:void(0)" class="otp_button">SEND OTP</a>
+                       
+                    </form>
+
+                    {{-- Sent OTP --}}
+
+
+
+                    {{-- login With Password --}}
+                    <form action="{{ route('login') }}" method="POST" class="login_form" style="display: none;">
+                        @csrf
+                        <div class="phn input-box">
+                            <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
+                            <input type="phone" name="phone" placeholder="Phone">
+                        </div>
+                        @include('alerts.feedback', ['field' => 'phone'])
+                        <div class="pass input-box password_input">
+                            <span class="icon"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" name="password" placeholder="Password" id="password">
+                            <span class="icon eye"><i id="eye-icon" class="fa-solid fa-eye"></i></i></span>
+                        </div>
+                        @include('alerts.feedback', ['field' => 'password'])
+                        <p class="get-otp">Login With Phone? <a class="otp_switch" href="javascript:void(0)">GET OTP</a></p>
+                        <input class="login_button" type="submit" value="LOGIN">
+                    </form>
+                    {{-- login With Password --}}
+                    <p class="or-login">Or login With</p>
+                    <div class="other-login">
+                        <a href="{{route('login_with_google')}}" class="google">
+                            <img src="{{asset('user_login/img/logos--google-icon.svg')}}" alt="">
+                            <span>Google</span>
+                        </a>
+                        <a href="{{route('login_with_facebook')}}" class="facebook">
+                            <img src="{{asset('user_login/img/logos--facebook.svg')}}" alt="">
+                            <span>Facebook</span>
+                        </a>
+                        <a href="{{route('login_with_github')}}" class="apple">
+                            <img src="{{asset('user_login/img/logos--apple.svg')}}" alt="">
+                            <span>Apple</span>
+                        </a>
                     </div>
                 </div>
 
 
+
+
+                <div class="verification_wrap left-col" style="display: none;">
+                    <div class="form-title">
+                        <h1 class="otp_title">VERIFICATION CODE</h1>
+                        <h3>We have sent a verification code to your mobile number</h3>
+                    </div>
+                    <form action="{{ route('use.otp.verify') }}" method="POST">
+                        @csrf
+                        <input type="hidden" class="uid" name="uid">
+                        <div class="field-set otp-field text-center">
+                            <input name=otp[] type="number" />
+                            <input name=otp[] type="number" disabled />
+                            <input name=otp[] type="number" disabled />
+                            <input name=otp[] type="number" disabled />
+                            <input name=otp[] type="number" disabled />
+                            <input name=otp[] type="number" disabled />
+                        </div>
+                        <p class="get-otp">Didn't receive a code? <a class="send_otp_again" href="javascript:void(0)"> SEND AGAIN</a></p>
+                        <input type="submit" class=" verify-btn" value="VERIFY">
+                    </form>
+                </div>
+            </div>
+            <div class="col-7">
+                <div class="right-col">
+
+                </div>
             </div>
         </div>
     </div>
+</section>
 @endsection
 @push('js')
+    <script src="{{asset('user_login/app.js')}}"></script>
     <script>
         $(document).ready(function() {
-            $('.tabbed li').click(function() {
-                if ($(this).hasClass('active'))
-                    return;
+            const inputs = $(".otp-field > input");
+            const button = $(".verify-btn");
 
-                var parent = $(this).parent(),
-                    innerTabs = parent.find('li');
+            inputs.eq(0).focus();
+            button.prop("disabled", true);
 
-                innerTabs.removeClass('active');
-                $(this).addClass('active');
+            inputs.eq(0).on("paste", function(event) {
+                event.preventDefault();
+
+                const pastedValue = (event.originalEvent.clipboardData || window.clipboardData).getData(
+                    "text");
+                const otpLength = inputs.length;
+
+                for (let i = 0; i < otpLength; i++) {
+                    if (i < pastedValue.length) {
+                        inputs.eq(i).val(pastedValue[i]);
+                        inputs.eq(i).removeAttr("disabled");
+                        inputs.eq(i).focus();
+                    } else {
+                        inputs.eq(i).val(""); // Clear any remaining inputs
+                        inputs.eq(i).focus();
+                    }
+                }
             });
 
-            let lw_password = $('.login_with_password');
-            let lw_otp = $('.login_with_otp');
-            let lw_password_form = $('.login_with_password_form');
-            let lw_otp_form = $('.login_with_otp_form');
+            inputs.each(function(index1) {
+                $(this).on("keyup", function(e) {
+                    const currentInput = $(this);
+                    const nextInput = currentInput.next();
+                    const prevInput = currentInput.prev();
 
-            lw_password_form.show();
-            lw_otp_form.hide();
-            lw_password.on('click',function(){
-                lw_password_form.show();
-                lw_otp_form.hide();
+                    if (currentInput.val().length > 1) {
+                        currentInput.val("");
+                        return;
+                    }
+
+                    if (nextInput && nextInput.attr("disabled") && currentInput.val() !== "") {
+                        nextInput.removeAttr("disabled");
+                        nextInput.focus();
+                    }
+
+                    if (e.key === "Backspace") {
+                        inputs.each(function(index2) {
+                            if (index1 <= index2 && prevInput) {
+                                $(this).attr("disabled", true);
+                                $(this).val("");
+                                prevInput.focus();
+                            }
+                        });
+                    }
+
+                    button.prop("disabled", true);
+
+                    const inputsNo = inputs.length;
+                    if (!inputs.eq(inputsNo - 1).prop("disabled") && inputs.eq(inputsNo - 1)
+                        .val() !== "") {
+                        button.prop("disabled",false);
+                        return;
+                    }
+                });
             });
-            lw_otp.on('click',function(){
-                lw_password_form.hide();
-                lw_otp_form.show();
+        });
+
+
+
+        $(document).ready(function () {
+            $('.otp_button').click(function () {
+                var form = $('.otp_form');
+                let login_wrap = $('.login_wrap');
+                let verification_wrap = $('.verification_wrap');
+                let send_otp_again = $('.send_otp_again');
+                let uid = $('.uid');
+                let _url = ("{{ route('use.send_otp') }}");
+                $.ajax({
+                    type: 'POST',
+                    url: _url,
+                    data: form.serialize(),
+                    success: function (response) {
+                        toastr.success(response.message);
+                        form.find('.invalid-feedback').addClass('d-none');
+                        login_wrap.hide();
+                        verification_wrap.show();
+                        send_otp_again.attr('data-id',response.user.id);
+                        uid.val(response.user.id);
+                        
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 422) {
+                            // Handle validation errors
+                            var errors = xhr.responseJSON.errors;
+                            toastr.error('Something is wrong!');
+                            $.each(errors, function (field, messages) {
+                                // Display validation errors
+                                var errorHtml = '';
+                                $.each(messages, function (index, message) {
+                                    errorHtml += '<span class="invalid-feedback d-block" role="alert">' + message + '</span>';
+                                });
+                                $('[name="' + field + '"]').after(errorHtml);
+                            });
+                        } else {
+                            // Handle other errors
+                            console.log('An error occurred.');
+                        }
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            $('.send_otp_again').click(function () {
+                let id = $(this).data('id');
+                let _url = ("{{ route('use.send_otp.again', ['id']) }}");
+                let __url = _url.replace('id', id);
+                $.ajax({
+                    url: __url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        toastr.success(data.message);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching member data:', error);
+                        toastr.error('Something is wrong!');
+                    }
+                });
             });
         });
     </script>
-
-    {{-- OTP JS  --}}
-    {{-- <script>
-        const inputs = ["input1", "input2", "input3", "input4"];
-
-        inputs.map((id) => {
-            const input = document.getElementById(id);
-            addListener(input);
-        });
-
-        function addListener(input) {
-            input.addEventListener("keyup", () => {
-                const code = parseInt(input.value);
-                if (code >= 0 && code <= 9) {
-                    const n = input.nextElementSibling;
-                    if (n) n.focus();
-                } else {
-                    input.value = "";
-                }
-
-                const key = event.key; // const {key} = event; ES6+
-                if (key === "Backspace" || key === "Delete") {
-                    const prev = input.previousElementSibling;
-                    if (prev) prev.focus();
-                }
-            });
-        }
-    </script> --}}
 @endpush
+

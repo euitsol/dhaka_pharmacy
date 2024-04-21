@@ -22,6 +22,7 @@
                             </div>
                             @php
                                 $total_price = 0;
+                                $total_regular_price = 0;
                                 $total_discount = 0;
                             @endphp
                             @foreach ($checkItems as $key=>$cartItem)
@@ -37,22 +38,28 @@
                                         <div class="col-2">
                                             @if(isset($cartItem['status']))
                                                 @php
-                                                    $total_discount += 1*number_format(($cartItem['product']->discount),2);
+                                                    $total_discount += $cartItem['quantity']*number_format(($cartItem['product']->discount_amount),2);
                                                 @endphp
                                                 <span>1 X {{$cartItem['name']}}</span>
                                             @else
                                                 <span>{{$cartItem['quantity']}} X {{$cartItem['name']}}</span>
                                                 @php
-                                                    $total_discount += $cartItem['quantity']*number_format(($cartItem['product']->discount),2);
+                                                    $total_discount += $cartItem['quantity']*number_format(($cartItem['product']->discount_amount),2);
                                                 @endphp
                                             @endif
                                         </div>
                                         <div class="col-2 text-end">
                                             @php
                                                 $single_total_price = ($cartItem['quantity'] * $cartItem['product']->price);
+                                                $single_regular_price = ($cartItem['quantity'] * $cartItem['product']->regular_price);
                                                 $total_price +=$single_total_price;
+                                                $total_regular_price +=$single_regular_price;
                                             @endphp
+                                            @if(productDiscountPercentage($cartItem['product']->id))
+                                                <span class="text-danger me-2"><del>&#2547; {{number_format(($single_regular_price), 2)}}</del></span>
+                                            @endif
                                             <span> &#2547; </span><span>{{number_format($single_total_price,2)}}</span>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -60,7 +67,14 @@
                             <div class="row order-item">
                                 <div class="row main align-items-center py-2 px-0">
                                     <div class="col mb-2">{{__('Total Item')}} ( {{count($checkItems)}} )</div>
-                                    <div class="col text-end"><span>{{__('Sub-total')}}  &#2547; </span> <span>{{number_format($total_price,2)}}</span></div>
+                                    <div class="col text-end">
+                                        <span>{{__('Sub-total  ')}}</span>
+                                        @if($total_regular_price !== $total_price)
+                                            <span class="text-danger mx-2"><del>&#2547; {{number_format(($total_regular_price), 2)}}</del></span>
+                                        @endif
+                                        <span>&#2547; {{number_format($total_price,2)}}</span> 
+                                        
+                                    </div>
                                 </div>
                             </div>
 
@@ -104,20 +118,25 @@
                                     </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
+                                <div class="col ps-0">{{__('Discount')}}</div>
+                                <div class="col text-end "><span> &#2547; </span> <span>{{number_format($total_discount,2)}}</span></div>
+                            </div>
+                            <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{__('Sub-total')}}</div>
-                                <div class="col text-end "><span> &#2547; </span> <span>{{number_format($total_price,2)}}</span></div>
+                                <div class="col text-end ">
+                                    @if($total_regular_price !== $total_price)
+                                            <span class="text-danger mx-2"><del>&#2547; {{number_format(($total_regular_price), 2)}}</del></span>
+                                    @endif
+                                    <span> &#2547; {{number_format($total_price,2)}}</span>
+                                </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{__('Delivery Fee')}}</div>
                                 <div class="col text-end "><span> &#2547; </span> <span>{{number_format($delivery_fee,2)}}</span></div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
-                                <div class="col ps-0">{{__('Discount')}}</div>
-                                <div class="col text-end "><span> &#2547; </span> <span>{{number_format($total_discount,2)}}</span></div>
-                            </div>
-                            <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{__('Total Price')}}</div>
-                                <div class="col text-end "><span> &#2547; </span> <span>{{number_format((($total_price + number_format($delivery_fee,2))-number_format($total_discount,2)),2) }}</span></div>
+                                <div class="col text-end "><span> &#2547; </span> <span>{{number_format(($total_price + number_format($delivery_fee,2)),2) }}</span></div>
                             </div>
 
                             <div class="row align-items-center atc_functionality">

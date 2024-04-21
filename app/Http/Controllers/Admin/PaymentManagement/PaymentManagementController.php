@@ -26,7 +26,6 @@ class PaymentManagementController extends Controller
     }
     public function details($id): View
     {
-        $discount = 2;
         $data['payment'] = Payment::with(['customer','order'])->findOrFail($id);
         $data['payment_items'] = [];
         foreach(json_decode($data['payment']->order->carts) as $cart_id){
@@ -34,11 +33,15 @@ class PaymentManagementController extends Controller
             array_push($data['payment_items'], $cart);
         }
         $paymentItemsCollection = collect($data['payment_items']);
-        $paymentItemsCollection->map(function($item) use($discount) {
-            $item->price = $item->product->price-$discount;
+        $paymentItemsCollection->map(function($item) {
+            $item->price = $item->product->price*$item->quantity;
+            $item->regular_price = $item->product->regular_price*$item->quantity;
+            $item->discount = productDiscountAmount($item->product->id)*$item->quantity;
             return $item;
         });
         $data['totalPrice'] = $paymentItemsCollection->sum('price');
+        $data['totalRegularPrice'] = $paymentItemsCollection->sum('regular_price');
+        $data['totalDiscount'] = $paymentItemsCollection->sum('discount');
        
         return view('admin.payment_management.details',$data);
     }
