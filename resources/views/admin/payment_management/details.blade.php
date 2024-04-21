@@ -122,7 +122,18 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row mb-3">
-                                    <div class="col-auto"> <h6 class="color-1 mb-0 change-color">{{__('Payment Details')}}</h6> </div>
+                                    @php
+                                        $Status = ($payment->status == 1) ? 'Success' : (($payment->status == 0) ? 'Pending' : (($payment->status == -1) ? 'Failed' : (($payment->status == -2) ? 'Cancel' : 'Processing'))); 
+                                    @endphp
+                                    <div class="col-12 d-flex justify-content-between align-items-center"> 
+                                        <h6 class="color-1 mb-0 change-color">{{__('Payment Details')}}</h6> 
+                                        @include('admin.partials.button', [
+                                                    'routeName' => 'pym.payment.payment_list',
+                                                    'className' => 'btn-primary',
+                                                    'params'=>strtolower($Status),
+                                                    'label' => 'Back',
+                                                ])
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">

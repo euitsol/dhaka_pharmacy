@@ -178,7 +178,15 @@
                         <div class="card">
                             <div class="card-body order_details">
                                 <div class="row mb-3">
-                                    <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Details</h6> </div>
+                                    <div class="col-12 d-flex justify-content-between align-items-center"> 
+                                        <h6 class="color-1 mb-0 change-color">{{__('Order Details')}}</h6> 
+                                        @include('admin.partials.button', [
+                                                    'routeName' => 'om.order.order_list',
+                                                    'className' => 'btn-primary',
+                                                    'params'=>strtolower($badgeStatus),
+                                                    'label' => 'Back',
+                                                ])
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
