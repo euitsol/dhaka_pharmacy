@@ -30,6 +30,13 @@
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
+                    let regular_price = '';
+                    if(data.atc.product.discount){
+                        regular_price = `<h4 class="text-end"> <del class="text-danger"> &#2547;  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_regular_price,2)}</span></del></h4>`;
+                    }
+
+
+
                     if (data.atc) {
                         var count = data.count;
                         var result = `
@@ -56,6 +63,7 @@
                                                         <p><a href="">${data.atc.product.company.name}</a></p>
                                                     </div>
                                                     <div class="item_price col-2 ps-0">
+                                                        ${regular_price}
                                                         <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">${numberFormat(data.atc.product.data_item_price,2)}</span></h4>
                                                     </div>
                                                 </div>
@@ -93,7 +101,7 @@
                                             <div class="form-group">
                                                 <div class="input-group" role="group">
                                                     <a href="javascript:void(0)" data-id="${data.atc.id}" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
-                                                    <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${parseFloat(data.atc.product.data_item_price)}" value="1" >
+                                                    <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${parseFloat(data.atc.product.data_item_price)}"  data-item_regular_price="${parseFloat(data.atc.product.data_item_regular_price)}" value="1" >
                                                     <a href="javascript:void(0)" data-id="${data.atc.id}" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
                                                 </div>
                                             </div>
@@ -196,9 +204,12 @@
         var currentVal = parseInt(quantityInput.val()) || 0;
         var itemPrice = parseFloat(quantityInput.data('item_price')) || 0; // Ensure a valid number
         var total_price = itemPrice * currentVal;
+        var itemRegularPrice = parseFloat(quantityInput.data('item_regular_price')) || 0; // Ensure a valid number
+        var total_regular_price = itemRegularPrice * currentVal;
 
         var itemContainer = element.closest('.add_to_cart_item');
         itemContainer.find('.item_count_price').html(numberFormat(total_price,2));
+        itemContainer.find('.item_count_regular_price').html(numberFormat(total_regular_price,2));
         refreshSubtotal();
     }
 
