@@ -78,8 +78,9 @@
                         <h1 class="otp_title">VERIFICATION CODE</h1>
                         <h3>We have sent a verification code to your mobile number</h3>
                     </div>
-                    <form action="{{ route('login') }}" method="POST">
+                    <form action="{{ route('use.otp.verify') }}" method="POST">
                         @csrf
+                        <input type="hidden" class="uid" name="uid">
                         <div class="field-set otp-field text-center">
                             <input name=otp[] type="number" />
                             <input name=otp[] type="number" disabled />
@@ -88,7 +89,8 @@
                             <input name=otp[] type="number" disabled />
                             <input name=otp[] type="number" disabled />
                         </div>
-                        <a href="javascript:void(0)" class="otp_button verify-btn mt-4 disabled">VERIFY</a>
+                        <p class="get-otp">Didn't receive a code? <a class="send_otp_again" href="javascript:void(0)"> SEND AGAIN</a></p>
+                        <input type="submit" class=" verify-btn" value="VERIFY">
                     </form>
                 </div>
             </div>
@@ -175,6 +177,8 @@
                 var form = $('.otp_form');
                 let login_wrap = $('.login_wrap');
                 let verification_wrap = $('.verification_wrap');
+                let send_otp_again = $('.send_otp_again');
+                let uid = $('.uid');
                 let _url = ("{{ route('use.send_otp') }}");
                 $.ajax({
                     type: 'POST',
@@ -185,6 +189,8 @@
                         form.find('.invalid-feedback').addClass('d-none');
                         login_wrap.hide();
                         verification_wrap.show();
+                        send_otp_again.attr('data-id',response.user.id);
+                        uid.val(response.user.id);
                         
                     },
                     error: function (xhr) {
@@ -204,6 +210,25 @@
                             // Handle other errors
                             console.log('An error occurred.');
                         }
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            $('.send_otp_again').click(function () {
+                let id = $(this).data('id');
+                let _url = ("{{ route('use.send_otp.again', ['id']) }}");
+                let __url = _url.replace('id', id);
+                $.ajax({
+                    url: __url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        toastr.success(data.message);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching member data:', error);
+                        toastr.error('Something is wrong!');
                     }
                 });
             });
