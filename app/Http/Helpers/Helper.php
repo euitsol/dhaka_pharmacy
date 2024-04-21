@@ -193,14 +193,19 @@ function str_limit($data, $limit = 20, $end = '...'){
 }
 
 function generateOrderId() {
-    $alphaPart = strtoupper(Str::random(3)); // Generates 3 random uppercase letters
-    $numericPart = mt_rand(10000, 99999); // Generates 5 random alphanumeric characters
+    // $alphaPart = strtoupper(Str::random(3)); // Generates 3 random uppercase letters
+    // $numericPart = mt_rand(10000, 99999); // Generates 5 random alphanumeric characters
+
+    $alphaPart = 'DP';
+    $numericPart = date('dmyhi'); // Generates 5 random alphanumeric characters
+    
 
     return $alphaPart . $numericPart;
 }
 function generateTranId() {
     $prefix = 'SSL'; // Specify the prefix
-    $numericPart = mt_rand(100000, 999999); // Generates 5 random alphanumeric characters
+    // $numericPart = mt_rand(100000, 999999); // Generates 5 random alphanumeric characters
+    $numericPart = date('dmyhi'); // Generates 5 random alphanumeric characters
 
     return $prefix . $numericPart;
 }
