@@ -150,7 +150,7 @@
                                                             <div class="col my-auto"> <h6 class="mb-0 text-start">{{$item->product->name}}</h6>  </div>
                                                             <div class="col-auto my-auto"> <small>{{$item->product->pro_cat->name}} </small></div>
                                                             <div class="col my-auto"> <small>Qty : {{$item->quantity}}</small></div>
-                                                            <div class="col my-auto"> <small>Pack : {{$item->unit->name}}</small></div>
+                                                            <div class="col my-auto"> <small>Pack : {{$item->unit->name ?? 'Piece'}}</small></div>
                                                             <div class="col my-auto">
                                                                 <h6 class="mb-0 text-end">
                                                                     @if (productDiscountPercentage($item->product->id))
@@ -158,7 +158,7 @@
                                                                     @endif
                                                                 </h6>
                                                                 <h6 class="mb-0 text-end">
-                                                                    <span>&#2547; {{number_format((($item->product->price*$item->unit->quantity) * $item->quantity), 2)}}</span> 
+                                                                    <span>&#2547; {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}</span> 
                                                                 </h6>
                                                             </div>
                                                         </div>
