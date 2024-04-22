@@ -4,71 +4,36 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\BaseController;
-use App\Providers\RouteServiceProvider;
+use App\Http\Requests\UserRegistrationRequest;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 
 class RegisterController extends BaseController
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function register(): View
     {
-        $this->middleware('guest');
+        return view('auth.register');
     }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    protected function rStore(UserRegistrationRequest $req)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        $user =  new User();
+        $user->name = $req->name;
+        $user->phone = $req->phone;
+        $user->password = Hash::make($req->password);
+        $user->otp = otp();
+        $user->save();
+        $s['data']= encrypt($user->id);
+        $s['message'] = 'Your registration was successful, and a verification code has been sent to your phone.';
+        return redirect()->route('use.send_otp',$s);
     }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+    public function phoneValidation($phone){
+        $user = User::where('phone',$phone)->first();
+        $data['success'] = false;
+        if($user){
+            $data['success'] = true;
+        }
+        return response()->json($data);
     }
 }

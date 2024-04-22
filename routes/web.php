@@ -127,17 +127,24 @@ Route::prefix('user')->group(function () {
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 
-    Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 
-    Route::get('/password/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('/password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('/password/reset/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('/password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset']);
 
-    Route::post('/send-otp', [App\Http\Controllers\Auth\LoginController::class, 'send_otp'])->name('use.send_otp');
+    Route::post('/otp-varify', [App\Http\Controllers\Auth\LoginController::class, 'send_otp'])->name('use.send_otp');
+    Route::get('/otp-varify', [App\Http\Controllers\Auth\LoginController::class, 'verify'])->name('use.send_otp');
     Route::get('/send-otp/again/{id}', [App\Http\Controllers\Auth\LoginController::class, 'send_otp_again'])->name('use.send_otp.again');
     Route::post('/otp/verify', [App\Http\Controllers\Auth\LoginController::class, 'otp_verify'])->name('use.otp.verify');
+
+
+    Route::get('/registration', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('use.register');
+    Route::post('/registration', [App\Http\Controllers\Auth\RegisterController::class, 'rStore'])->name('use.register');
+    Route::get('/register/phone/validation/{phone}', [App\Http\Controllers\Auth\RegisterController::class, 'phoneValidation'])->name('use.register.phone.validation');
+
+    Route::get('/password/forgot', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'forgotPassword'])->name('user.forgot.password');
+    Route::post('/password/forgot', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'forgotPasswordOtp'])->name('user.forgot.password');
+    Route::get('/reset/password/{uid}', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'resetPassword'])->name('user.reset.password');
+    Route::post('/reset/password/{uid}', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'resetPasswordStore'])->name('user.reset.password');
 });
 
 
