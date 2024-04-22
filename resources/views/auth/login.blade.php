@@ -23,7 +23,7 @@
                         @csrf
                         <div class="phn input-box">
                             <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                            <input type="text" name="phone" placeholder="Phone">
+                            <input type="text" name="phone" placeholder="Phone" class="phone">
                         </div>
                         @include('alerts.feedback', ['field' => 'phone'])
 
@@ -42,7 +42,7 @@
                         @csrf
                         <div class="phn input-box">
                             <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                            <input type="text" name="phone" placeholder="Phone">
+                            <input type="text" name="phone" placeholder="Phone" class="phone">
                         </div>
                         @include('alerts.feedback', ['field' => 'phone'])
                         <div class="pass input-box password_input">
@@ -201,8 +201,9 @@
                             window.history.pushState({path: response.url}, '', response.url);
                         }else{
                             toastr.error(response.message);
-                            let errorHtml = '<span class="invalid-feedback d-block" role="alert">' + response.error + '</span>';
-                            $('[name="phone"]').after(errorHtml);
+                            let errorHtml = '<span class="invalid-feedback d-block mb-3" role="alert">' + response.error + '</span>';
+                            $('[name="phone"]').parent('.phn').addClass('mb-0');
+                            $('[name="phone"]').parent('.phn').after(errorHtml);
                         } 
                     },
                     error: function (xhr) {
@@ -214,9 +215,10 @@
                                 // Display validation errors
                                 var errorHtml = '';
                                 $.each(messages, function (index, message) {
-                                    errorHtml += '<span class="invalid-feedback d-block" role="alert">' + message + '</span>';
+                                    errorHtml += '<span class="invalid-feedback d-block mb-3" role="alert">' + message + '</span>';
                                 });
-                                $('[name="' + field + '"]').after(errorHtml);
+                                $('[name="' + field + '"]').parent('.phn').addClass('mb-0');
+                                $('[name="' + field + '"]').parent('.phn').after(errorHtml);
                             });
                         } else {
                             // Handle other errors
@@ -245,6 +247,32 @@
                         toastr.error('Something is wrong!');
                     }
                 });
+            });
+        });
+
+
+
+        // Phone Validation
+        $(document).ready(function(){
+            $('.phone').on('input keyup', function(){
+
+                let phone = $(this).val();
+
+                let digitRegex = /^\d{11}$/;
+                let errorHtml = '';
+                
+                $(this).parent('.phn').next('.invalid-feedback').remove();
+                // Check if the input is a number
+                if (!isNaN(phone)) {
+                    if (digitRegex.test(phone)) {
+                        console.log('Valid');
+                    } else {
+                        errorHtml = '<span class="invalid-feedback d-block" role="alert">Phone number must be 11 digit</span>';
+                    }
+                } else {
+                    errorHtml = '<span class="invalid-feedback d-block" role="alert">Invalid phone number</span>';
+                }
+                $(this).parent('.phn').after(errorHtml);
             });
         });
     </script>

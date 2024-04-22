@@ -28,4 +28,12 @@ class RegisterController extends BaseController
         $s['message'] = 'Your registration was successful, and a verification code has been sent to your phone.';
         return redirect()->route('use.send_otp',$s);
     }
+    public function phoneValidation($phone){
+        $user = User::where('phone',$phone)->first();
+        $data['success'] = false;
+        if($user){
+            $data['success'] = true;
+        }
+        return response()->json($data);
+    }
 }

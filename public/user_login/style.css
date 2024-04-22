@@ -7,6 +7,10 @@ body {
     padding: 0 !important;
 } */
 
+.invalid-feedback{
+    position: relative;
+    top: -15px;
+}
 .log-with-pass {
     display: flex;
     align-items: center;

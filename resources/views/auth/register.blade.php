@@ -24,18 +24,18 @@
                         @include('alerts.feedback', ['field' => 'name'])
                         <div class="phn input-box">
                             <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                            <input type="text" name="phone" placeholder="Phone">
+                            <input type="text" name="phone" placeholder="Phone" class="phone">
                         </div>
                         @include('alerts.feedback', ['field' => 'phone'])
                         <div class="phn input-box password_input">
                             <span class="icon"><i class="fa-solid fa-lock"></i></span>
-                            <input type="password" name="password" placeholder="Password" class="password">
+                            <input type="password" name="password" placeholder="Password" class="password pass-n">
                             <span class="icon eye"><i id="eye-icon" class="fa-solid fa-eye"></i></i></span>
                         </div>
                         @include('alerts.feedback', ['field' => 'password'])
                         <div class="pass input-box password_input">
                             <span class="icon"><i class="fa-solid fa-lock"></i></span>
-                            <input type="password" name="password_confirmation" placeholder="Confirm Password" class="password">
+                            <input type="password" name="password_confirmation" placeholder="Confirm Password" class="password pass-c">
                         </div>
                         <p class="get-otp">Already have an account? <a class="otp_switch" href="{{route('login')}}">Login</a></p>
                         <input class="login_button" type="submit" value="REGISTER">
@@ -54,5 +54,46 @@
 @endsection
 @push('js')
     <script src="{{asset('user_login/app.js')}}"></script>
+    <script>
+        $(document).ready(function(){
+            $('.phone').on('input keyup', function(){
+
+                let phone = $(this).val();
+
+                let digitRegex = /^\d{11}$/;
+                let errorHtml = '';
+
+                $(this).parent('.phn').next('.invalid-feedback').remove();
+                // Check if the input is a number
+                if (!isNaN(phone)) {
+                    if (digitRegex.test(phone)) {
+                        let _url = ("{{ route('use.register.phone.validation', ['_phone']) }}");
+                        let __url = _url.replace('_phone', phone);
+                        $.ajax({
+                            url: __url,
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(data) {
+                                $('.phone').parent('.phn').next('.invalid-feedback').remove();
+                                if(data.success){
+                                    errorHtml = `<span class="invalid-feedback d-block" role="alert">Number already has an account.</span>`;
+                                    $('.phone').parent('.phn').after(errorHtml);
+                                } 
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error fetching member data:', error);
+                                toastr.error('Something is wrong!');
+                            }
+                        });
+                    } else {
+                        errorHtml = '<span class="invalid-feedback d-block" role="alert">Phone number must be 11 digit</span>';
+                    }
+                } else {
+                    errorHtml = '<span class="invalid-feedback d-block" role="alert">Invalid phone number</span>';
+                }
+                $(this).parent('.phn').after(errorHtml);
+            });
+        });
+    </script>
 @endpush
 

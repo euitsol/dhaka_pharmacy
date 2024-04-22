@@ -140,6 +140,7 @@ Route::prefix('user')->group(function () {
 
     Route::get('/registration', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('use.register');
     Route::post('/registration', [App\Http\Controllers\Auth\RegisterController::class, 'rStore'])->name('use.register');
+    Route::get('/register/phone/validation/{phone}', [App\Http\Controllers\Auth\RegisterController::class, 'phoneValidation'])->name('use.register.phone.validation');
 });
 
 
