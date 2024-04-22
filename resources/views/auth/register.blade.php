@@ -38,7 +38,7 @@
                             <input type="password" name="password_confirmation" placeholder="Confirm Password" class="password pass-c">
                         </div>
                         <p class="get-otp">Already have an account? <a class="otp_switch" href="{{route('login')}}">Login</a></p>
-                        <input class="login_button" type="submit" value="REGISTER">
+                        <input class="register_button submit_button" type="submit" value="REGISTER">
                         
                     </form>
                 </div>
@@ -62,6 +62,9 @@
 
                 let digitRegex = /^\d{11}$/;
                 let errorHtml = '';
+                let submit_button = $('.submit_button');
+                submit_button.addClass('disabled');
+                
 
                 $(this).parent('.phn').next('.invalid-feedback').remove();
                 // Check if the input is a number
@@ -78,7 +81,9 @@
                                 if(data.success){
                                     errorHtml = `<span class="invalid-feedback d-block" role="alert">Number already has an account.</span>`;
                                     $('.phone').parent('.phn').after(errorHtml);
-                                } 
+                                }else{
+                                    submit_button.removeClass('disabled');
+                                }
                             },
                             error: function(xhr, status, error) {
                                 console.error('Error fetching member data:', error);
@@ -92,6 +97,14 @@
                     errorHtml = '<span class="invalid-feedback d-block" role="alert">Invalid phone number</span>';
                 }
                 $(this).parent('.phn').after(errorHtml);
+            });
+            $('.pass-c').on('input keyup',function(){
+                let new_pass = $('.pass-n');
+                $(this).parent('.pass').next('.invalid-feedback').remove();
+                if($(this).val() !== new_pass.val()){
+                    errorHtml = `<span class="invalid-feedback d-block mt-3" role="alert">Confirm password not match.</span>`;
+                    $(this).parent('.pass').after(errorHtml);
+                }
             });
         });
     </script>

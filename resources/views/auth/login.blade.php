@@ -28,7 +28,7 @@
                         @include('alerts.feedback', ['field' => 'phone'])
 
                         <p class="get-otp">Login With Password? <a class="login_switch" href="javascript:void(0)">Login</a></p>
-                        <a href="javascript:void(0)" class="otp_button">SEND OTP</a>
+                        <a href="javascript:void(0)" class="otp_button submit_button">SEND OTP</a>
                         <p class="get-otp">Not yet registered? <a href="{{route('use.register')}}">Create an account</a></p> 
                        
                     </form>
@@ -55,7 +55,7 @@
                         <p class="rfp text-end mb-2"><a class="forgot-password" href="javascript:void(0)">Lost your password?</a></p>
 
                         <p class="get-otp">Login With Phone? <a class="otp_switch" href="javascript:void(0)">GET OTP</a></p>
-                        <input class="login_button" type="submit" value="LOGIN">
+                        <input class="login_button submit_button" type="submit" value="LOGIN">
                         <p class="get-otp">Not yet registered? <a href="{{route('use.register')}}">Create an account</a></p> 
                     </form>
                     {{-- login With Password --}}
@@ -96,7 +96,7 @@
                             <input name=otp[] type="number" disabled />
                         </div>
                         <p class="get-otp">Didn't receive a code? <a class="send_otp_again" data-id="{{isset($uid) ? $uid : ''}}" href="javascript:void(0)">SEND AGAIN</a></p>
-                        <input type="submit" class=" verify-btn" value="VERIFY">
+                        <input type="submit" class="verify-btn" value="VERIFY">
                     </form>
                 </div>
             </div>
@@ -260,12 +260,15 @@
 
                 let digitRegex = /^\d{11}$/;
                 let errorHtml = '';
+                let submit_button = $('.submit_button');
+                submit_button.addClass('disabled');
                 
                 $(this).parent('.phn').next('.invalid-feedback').remove();
                 // Check if the input is a number
                 if (!isNaN(phone)) {
                     if (digitRegex.test(phone)) {
                         console.log('Valid');
+                        submit_button.removeClass('disabled');
                     } else {
                         errorHtml = '<span class="invalid-feedback d-block" role="alert">Phone number must be 11 digit</span>';
                     }
