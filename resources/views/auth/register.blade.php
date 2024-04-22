@@ -26,7 +26,7 @@
                             <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
                             <input type="text" name="phone" placeholder="Phone" class="phone">
                         </div>
-                        @include('alerts.feedback', ['field' => 'phone'])
+                        {{-- @include('alerts.feedback', ['field' => 'phone']) --}}
                         <div class="phn input-box password_input">
                             <span class="icon"><i class="fa-solid fa-lock"></i></span>
                             <input type="password" name="password" placeholder="Password" class="password pass-n">
@@ -62,8 +62,7 @@
 
                 let digitRegex = /^\d{11}$/;
                 let errorHtml = '';
-                let submit_button = $('.submit_button');
-                submit_button.addClass('disabled');
+                
                 
 
                 $(this).parent('.phn').next('.invalid-feedback').remove();
@@ -81,8 +80,6 @@
                                 if(data.success){
                                     errorHtml = `<span class="invalid-feedback d-block" role="alert">Number already has an account.</span>`;
                                     $('.phone').parent('.phn').after(errorHtml);
-                                }else{
-                                    submit_button.removeClass('disabled');
                                 }
                             },
                             error: function(xhr, status, error) {

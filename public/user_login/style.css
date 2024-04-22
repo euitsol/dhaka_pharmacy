@@ -329,7 +329,7 @@ body {
 .otp-field input::-webkit-outer-spin-button {
     display: none;
 }
-.verify-btn:disabled {
+.submit_button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
