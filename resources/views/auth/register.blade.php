@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-5">
-                <div class="left-col login_wrap" @if(isset($otp_verify)) style="display: none;" @endif>
+                <div class="left-col login_wrap">
                     <div class="form-title">
                         <h1 class="otp_title">CREATE A NEW ACCOUNT</h1>
                         <h3>Follow the instructions to make it easier to register and you will be able to explore

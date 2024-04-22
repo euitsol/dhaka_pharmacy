@@ -224,14 +224,16 @@ class LoginController extends BaseController
         }
     }
     public function verify(Request $request){
-        $uid = $request->except('message')['data']; // Get data excluding 'message' parameter
+        $uid = $request->except('message','forgot')['data']; // Get data excluding 'message' parameter
         $message = $request->input('message'); 
+        $data['forgot'] = $request->input('forgot'); 
         $data['otp_verify'] = true;
         $data['uid']=decrypt($uid);
         if($message !== null){
             flash()->addSuccess($message);
         }
         $data['url'] = route('use.send_otp', ['data' => $uid]);
+
         return view('auth.login',$data);
     }
     public function send_otp_again($id) {
@@ -246,6 +248,9 @@ class LoginController extends BaseController
             $otp = implode('', $req->otp);
             if($user){
                 if($user->otp == $otp){
+                    if($req->forgot){
+                        return redirect()->route('user.reset.password',encrypt($user->id));
+                    }
                     Auth::guard('web')->login($user);
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');
                 }else{

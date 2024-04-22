@@ -52,7 +52,7 @@
                         </div>
                         @include('alerts.feedback', ['field' => 'password'])
 
-                        <p class="rfp text-end mb-2"><a class="forgot-password" href="javascript:void(0)">Lost your password?</a></p>
+                        <p class="rfp text-end mb-2"><a class="forgot-password" href="{{route('user.forgot.password')}}">Lost your password?</a></p>
 
                         <p class="get-otp">Login With Phone? <a class="otp_switch" href="javascript:void(0)">GET OTP</a></p>
                         <input class="login_button submit_button" type="submit" value="LOGIN">
@@ -87,6 +87,7 @@
                     <form action="{{ route('use.otp.verify') }}" method="POST">
                         @csrf
                         <input type="hidden" class="uid" name="uid" value="{{$uid ?? ''}}">
+                        <input type="hidden" class="forgot" name="forgot" value="{{$forgot ?? ''}}">
                         <div class="field-set otp-field text-center">
                             <input name=otp[] type="number" />
                             <input name=otp[] type="number" disabled />
