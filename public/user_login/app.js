@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $(".eye").click(function(){
-        var passwordField = $("#password");
+        var passwordField = $(".password");
         var eyeIcon = $("#eye-icon");
 
         if (passwordField.attr("type") === "password") {

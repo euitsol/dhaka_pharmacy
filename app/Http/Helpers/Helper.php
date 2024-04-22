@@ -254,3 +254,9 @@ function formatPercentageNumber($number) {
     return $formattedNumber;
 }
 
+function otp(){
+    // $otp =  mt_rand(100000, 999999);
+    $otp =  000000;
+    return $otp;
+}
+

@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-5">
-                <div class="left-col login_wrap">
+                <div class="left-col login_wrap" @if(isset($otp_verify)) style="display: none;" @endif>
                     <div class="form-title">
                         <h1 class="otp_title">LOGIN IN WITH OTP</h1>
                         <h1 class="login_title" style="display: none;">LOGIN WITH PASSWORD</h1>
@@ -23,11 +23,13 @@
                         @csrf
                         <div class="phn input-box">
                             <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                            <input type="phone" name="phone" placeholder="Phone">
+                            <input type="text" name="phone" placeholder="Phone">
                         </div>
                         @include('alerts.feedback', ['field' => 'phone'])
+
                         <p class="get-otp">Login With Password? <a class="login_switch" href="javascript:void(0)">Login</a></p>
                         <a href="javascript:void(0)" class="otp_button">SEND OTP</a>
+                        <p class="get-otp">Not yet registered? <a href="{{route('use.register')}}">Create an account</a></p> 
                        
                     </form>
 
@@ -40,17 +42,21 @@
                         @csrf
                         <div class="phn input-box">
                             <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                            <input type="phone" name="phone" placeholder="Phone">
+                            <input type="text" name="phone" placeholder="Phone">
                         </div>
                         @include('alerts.feedback', ['field' => 'phone'])
                         <div class="pass input-box password_input">
                             <span class="icon"><i class="fa-solid fa-lock"></i></span>
-                            <input type="password" name="password" placeholder="Password" id="password">
+                            <input type="password" name="password" placeholder="Password" class="password">
                             <span class="icon eye"><i id="eye-icon" class="fa-solid fa-eye"></i></i></span>
                         </div>
                         @include('alerts.feedback', ['field' => 'password'])
+
+                        <p class="rfp text-end mb-2"><a class="forgot-password" href="javascript:void(0)">Lost your password?</a></p>
+
                         <p class="get-otp">Login With Phone? <a class="otp_switch" href="javascript:void(0)">GET OTP</a></p>
                         <input class="login_button" type="submit" value="LOGIN">
+                        <p class="get-otp">Not yet registered? <a href="{{route('use.register')}}">Create an account</a></p> 
                     </form>
                     {{-- login With Password --}}
                     <p class="or-login">Or login With</p>
@@ -73,14 +79,14 @@
 
 
 
-                <div class="verification_wrap left-col" style="display: none;">
+                <div class="verification_wrap left-col" @if(isset($otp_verify)) style="display: block;"  @else style="display: none;" @endif>
                     <div class="form-title">
                         <h1 class="otp_title">VERIFICATION CODE</h1>
                         <h3>We have sent a verification code to your mobile number</h3>
                     </div>
                     <form action="{{ route('use.otp.verify') }}" method="POST">
                         @csrf
-                        <input type="hidden" class="uid" name="uid">
+                        <input type="hidden" class="uid" name="uid" value="{{$uid ?? ''}}">
                         <div class="field-set otp-field text-center">
                             <input name=otp[] type="number" />
                             <input name=otp[] type="number" disabled />
@@ -89,7 +95,7 @@
                             <input name=otp[] type="number" disabled />
                             <input name=otp[] type="number" disabled />
                         </div>
-                        <p class="get-otp">Didn't receive a code? <a class="send_otp_again" href="javascript:void(0)"> SEND AGAIN</a></p>
+                        <p class="get-otp">Didn't receive a code? <a class="send_otp_again" data-id="{{isset($uid) ? $uid : ''}}" href="javascript:void(0)">SEND AGAIN</a></p>
                         <input type="submit" class=" verify-btn" value="VERIFY">
                     </form>
                 </div>
@@ -185,13 +191,19 @@
                     url: _url,
                     data: form.serialize(),
                     success: function (response) {
-                        toastr.success(response.message);
-                        form.find('.invalid-feedback').addClass('d-none');
-                        login_wrap.hide();
-                        verification_wrap.show();
-                        send_otp_again.attr('data-id',response.user.id);
-                        uid.val(response.user.id);
-                        
+                        if(response.success){
+                            toastr.success(response.message);
+                            form.find('.invalid-feedback').addClass('d-none');
+                            login_wrap.hide();
+                            verification_wrap.show();
+                            send_otp_again.attr('data-id',response.user.id);
+                            uid.val(response.user.id);
+                            window.history.pushState({path: response.url}, '', response.url);
+                        }else{
+                            toastr.error(response.message);
+                            let errorHtml = '<span class="invalid-feedback d-block" role="alert">' + response.error + '</span>';
+                            $('[name="phone"]').after(errorHtml);
+                        } 
                     },
                     error: function (xhr) {
                         if (xhr.status === 422) {
@@ -214,8 +226,10 @@
                 });
             });
         });
+
         $(document).ready(function () {
-            $('.send_otp_again').click(function () {
+            $('.send_otp_again').click(function (e) {
+                e.preventDefault();
                 let id = $(this).data('id');
                 let _url = ("{{ route('use.send_otp.again', ['id']) }}");
                 let __url = _url.replace('id', id);
@@ -233,6 +247,11 @@
                 });
             });
         });
+    </script>
+
+    <script>
+        let url = '{{ $url ?? '' }}';
+         history.replaceState({}, '', url);
     </script>
 @endpush
 

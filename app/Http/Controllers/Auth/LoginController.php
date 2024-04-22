@@ -13,6 +13,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\URL;
+
+use function PHPUnit\Framework\isNull;
 
 class LoginController extends BaseController
 {
@@ -201,33 +204,41 @@ class LoginController extends BaseController
     public function send_otp(SendOtpRequest $req) {
         try {
             $user = User::where('phone',$req->phone)->first();
-            $otp =  mt_rand(100000, 999999);
-            // $otp =  000000;
             $data['user']=$user;
             if($user){
-                $user->otp = $otp;
+                $user->otp = otp();
                 $user->save();
+                $currentUrl = URL::current();
+                $data['success'] = true;
+                $data['url'] = $currentUrl."?data=".encrypt($data['user']->id);
+                $data['message'] = 'The verification code has been sent successfully.';
             }else{
-                $new_user = new User();
-                $new_user->name = 'User';
-                $new_user->phone = $req->phone;
-                $new_user->otp = $otp;
-                $new_user->save();
-                $data['user'] = $new_user;
+                $data['success'] = false;
+                $data['error'] = 'Phone number didn\'t match.';
+                $data['message'] = 'User Not Found';
             }
-            $data['message'] = 'Verification code send successfully.';
+            
             return response()->json($data);
         } catch (\Exception $e) {
             return response()->json(['message' => 'An error occurred'], 500);
         }
     }
+    public function verify(Request $request){
+        $uid = $request->except('message')['data']; // Get data excluding 'message' parameter
+        $message = $request->input('message'); 
+        $data['otp_verify'] = true;
+        $data['uid']=decrypt($uid);
+        if($message !== null){
+            flash()->addSuccess($message);
+        }
+        $data['url'] = route('use.send_otp', ['data' => $uid]);
+        return view('auth.login',$data);
+    }
     public function send_otp_again($id) {
-            $otp =  mt_rand(100000, 999999);
-            // $otp =  000000;
             $user = User::findOrFail($id);
-            $user->otp = $otp;
+            $user->otp = otp();
             $user->save();
-            $data['message'] = 'Verification code send successfully.';
+            $data['message'] = 'The verification code has been sent successfully.';
             return response()->json($data);
     }
     public function otp_verify(Request $req) {
