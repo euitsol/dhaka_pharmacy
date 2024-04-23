@@ -52,6 +52,7 @@
                 submit_button.addClass('disabled');
                 
                 $(this).parent('.phn').next('.invalid-feedback').remove();
+                $(this).removeClass('form-control is-invalid');
                 // Check if the input is a number
                 if (!isNaN(phone)) {
                     if (digitRegex.test(phone)) {
@@ -59,11 +60,14 @@
                         submit_button.removeClass('disabled');
                     } else {
                         errorHtml = '<span class="invalid-feedback d-block" role="alert">Phone number must be 11 digit</span>';
+                        $(this).addClass('form-control is-invalid');
                     }
                 } else {
                     errorHtml = '<span class="invalid-feedback d-block" role="alert">Invalid phone number</span>';
+                    $(this).addClass('form-control is-invalid');
                 }
                 $(this).parent('.phn').after(errorHtml);
+                
             });
         });
     </script>

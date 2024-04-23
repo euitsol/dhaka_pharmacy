@@ -44,17 +44,5 @@
 @endsection
 @push('js')
     <script src="{{asset('user_login/app.js')}}"></script>
-    <script>
-        $(document).ready(function(){
-            $('.pass-c').on('input keyup',function(){
-                let new_pass = $('.pass-n');
-                $(this).parent('.pass').next('.invalid-feedback').remove();
-                if($(this).val() !== new_pass.val()){
-                    errorHtml = `<span class="invalid-feedback d-block mt-3" role="alert">Confirm password not match.</span>`;
-                    $(this).parent('.pass').after(errorHtml);
-                }
-            });
-        });
-    </script>
 @endpush
 

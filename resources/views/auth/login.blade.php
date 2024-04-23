@@ -195,6 +195,7 @@
                         if(response.success){
                             toastr.success(response.message);
                             form.find('.invalid-feedback').addClass('d-none');
+                            $('[name="phone"]').removeClass('form-control is-invalid');
                             login_wrap.hide();
                             verification_wrap.show();
                             send_otp_again.attr('data-id',response.user.id);
@@ -203,8 +204,8 @@
                         }else{
                             toastr.error(response.message);
                             let errorHtml = '<span class="invalid-feedback d-block mb-3" role="alert">' + response.error + '</span>';
-                            $('[name="phone"]').parent('.phn').addClass('mb-0');
                             $('[name="phone"]').parent('.phn').after(errorHtml);
+                            $('[name="phone"]').addClass('form-control is-invalid');
                         } 
                     },
                     error: function (xhr) {
@@ -218,8 +219,8 @@
                                 $.each(messages, function (index, message) {
                                     errorHtml += '<span class="invalid-feedback d-block mb-3" role="alert">' + message + '</span>';
                                 });
-                                $('[name="' + field + '"]').parent('.phn').addClass('mb-0');
                                 $('[name="' + field + '"]').parent('.phn').after(errorHtml);
+                                $('[name="' + field + '"]').addClass('form-control is-invalid');
                             });
                         } else {
                             // Handle other errors
@@ -265,6 +266,7 @@
                 submit_button.addClass('disabled');
                 
                 $(this).parent('.phn').next('.invalid-feedback').remove();
+                $(this).removeClass('form-control is-invalid');
                 // Check if the input is a number
                 if (!isNaN(phone)) {
                     if (digitRegex.test(phone)) {
@@ -272,11 +274,14 @@
                         submit_button.removeClass('disabled');
                     } else {
                         errorHtml = '<span class="invalid-feedback d-block" role="alert">Phone number must be 11 digit</span>';
+                        $(this).addClass('form-control is-invalid');
                     }
                 } else {
                     errorHtml = '<span class="invalid-feedback d-block" role="alert">Invalid phone number</span>';
+                    $(this).addClass('form-control is-invalid');
                 }
                 $(this).parent('.phn').after(errorHtml);
+                
             });
         });
     </script>

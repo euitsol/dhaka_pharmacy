@@ -66,6 +66,7 @@
                 
 
                 $(this).parent('.phn').next('.invalid-feedback').remove();
+                $(this).removeClass('form-control is-invalid');
                 // Check if the input is a number
                 if (!isNaN(phone)) {
                     if (digitRegex.test(phone)) {
@@ -77,9 +78,11 @@
                             dataType: 'json',
                             success: function(data) {
                                 $('.phone').parent('.phn').next('.invalid-feedback').remove();
+                                $('.phone').removeClass('form-control is-invalid');
                                 if(data.success){
                                     errorHtml = `<span class="invalid-feedback d-block" role="alert">Number already has an account.</span>`;
                                     $('.phone').parent('.phn').after(errorHtml);
+                                    $('.phone').addClass('form-control is-invalid');
                                 }
                             },
                             error: function(xhr, status, error) {
@@ -94,14 +97,7 @@
                     errorHtml = '<span class="invalid-feedback d-block" role="alert">Invalid phone number</span>';
                 }
                 $(this).parent('.phn').after(errorHtml);
-            });
-            $('.pass-c').on('input keyup',function(){
-                let new_pass = $('.pass-n');
-                $(this).parent('.pass').next('.invalid-feedback').remove();
-                if($(this).val() !== new_pass.val()){
-                    errorHtml = `<span class="invalid-feedback d-block mt-3" role="alert">Confirm password not match.</span>`;
-                    $(this).parent('.pass').after(errorHtml);
-                }
+                $(this).addClass('form-control is-invalid');
             });
         });
     </script>
