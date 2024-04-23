@@ -19,7 +19,7 @@
                         @csrf
                         <div class="phn input-box">
                             <span class="icon"><i class="fa-solid fa-user"></i></span>
-                            <input type="text" name="name" placeholder="Name">
+                            <input type="text" name="name" placeholder="Name" class="name">
                         </div>
                         @include('alerts.feedback', ['field' => 'name'])
                         <div class="phn input-box">
@@ -55,9 +55,17 @@
 @push('js')
     <script src="{{asset('user_login/app.js')}}"></script>
     <script>
+        
+
+        
+        $('.name').on('input', function () { 
+            nameValid();
+         });
+
         $(document).ready(function(){
             $('.phone').on('input keyup', function(){
 
+                nameValid();
                 let phone = $(this).val();
 
                 let digitRegex = /^\d{11}$/;
@@ -65,7 +73,7 @@
                 
                 
 
-                $(this).parent('.phn').next('.invalid-feedback').remove();
+                $(this).parent('.input-box').next('.invalid-feedback').remove();
                 $(this).removeClass('form-control is-invalid');
                 // Check if the input is a number
                 if (!isNaN(phone)) {
@@ -77,11 +85,11 @@
                             method: 'GET',
                             dataType: 'json',
                             success: function(data) {
-                                $('.phone').parent('.phn').next('.invalid-feedback').remove();
+                                $('.phone').parent('.input-box').next('.invalid-feedback').remove();
                                 $('.phone').removeClass('form-control is-invalid');
                                 if(data.success){
                                     errorHtml = `<span class="invalid-feedback d-block" role="alert">Number already has an account.</span>`;
-                                    $('.phone').parent('.phn').after(errorHtml);
+                                    $('.phone').parent('.input-box').after(errorHtml);
                                     $('.phone').addClass('form-control is-invalid');
                                 }
                             },
@@ -96,7 +104,7 @@
                 } else {
                     errorHtml = '<span class="invalid-feedback d-block" role="alert">Invalid phone number</span>';
                 }
-                $(this).parent('.phn').after(errorHtml);
+                $(this).parent('.input-box').after(errorHtml);
                 $(this).addClass('form-control is-invalid');
             });
         });

@@ -16,6 +16,15 @@ $(document).ready(function(){
 function removeInvalidFeedback(){
     $(document).find('.invalid-feedback').remove();
 }
+function nameValid(){
+    $('.name').parent('.input-box').next('.invalid-feedback').remove();
+    $('.name').removeClass('form-control is-invalid');
+    if($('.name').val() === '' || $('.name').val() === null){
+        errorHtml = `<span class="invalid-feedback d-block" role="alert">The name field is required.</span>`;
+        $('.name').parent('.input-box').after(errorHtml);
+        $('.name').addClass('form-control is-invalid');
+    }
+}
 
 $(document).ready(function(){
     let login_switch = $('.login_switch');
@@ -48,6 +57,7 @@ $(document).ready(function(){
 
 $(document).ready(function(){
     $('.pass-c').on('input keyup',function(){
+        nameValid();
         let new_pass = $('.pass-n');
         $(this).parent('.pass').next('.invalid-feedback').remove();
         $(this).removeClass('form-control is-invalid');
