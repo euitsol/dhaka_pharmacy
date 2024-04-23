@@ -48,7 +48,7 @@
 
                 </div>
             </div>
-            <div class="col-3 right-col">
+            <div class="col-3 ps-0 right-col">
                 <div class="row align-items-center justify-content-end">
                     <div class="item">
 
@@ -62,7 +62,13 @@
                     <div class="item">
                         <a href="{{route('login')}}" class="login-btn">
                             <i class="fa-regular fa-user me-1"></i>
-                            <span>Login/Register</span>
+                            <span>Login</span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="{{route('use.register')}}" class="login-btn">
+                            <i class="fa-regular fa-address-card me-1"></i>
+                            <span>Register</span>
                         </a>
                     </div>
                     <div class="item">
