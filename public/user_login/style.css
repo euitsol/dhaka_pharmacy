@@ -71,7 +71,7 @@ body {
 .log-with-pass .left-col form input {
     width: 100%;
     border: none;
-    outline: none;
+    outline: transparent;
     box-sizing: border-box;
     background: light-dark(rgb(232, 240, 254), rgba(70, 90, 126, 0.4));
     border-radius: 8px;
