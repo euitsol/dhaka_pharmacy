@@ -13,6 +13,10 @@ $(document).ready(function(){
     });
 });
 
+function removeInvalidFeedback(){
+    $(document).find('.invalid-feedback').remove();
+}
+
 $(document).ready(function(){
     let login_switch = $('.login_switch');
     let otp_switch = $('.otp_switch');
@@ -23,12 +27,15 @@ $(document).ready(function(){
     let login_form = $('.login_form');
 
     login_switch.on('click',function(){
+       
+        removeInvalidFeedback();
         login_title.show();
         otp_title.hide();
         otp_form.hide()
         login_form.show();
     });
     otp_switch.on('click',function(){
+        removeInvalidFeedback();
         login_title.hide();
         otp_title.show();
         login_form.hide();

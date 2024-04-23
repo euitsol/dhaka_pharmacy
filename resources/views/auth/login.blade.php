@@ -194,7 +194,7 @@
                     success: function (response) {
                         if(response.success){
                             toastr.success(response.message);
-                            form.find('.invalid-feedback').addClass('d-none');
+                            removeInvalidFeedback();
                             $('[name="phone"]').removeClass('form-control is-invalid');
                             login_wrap.hide();
                             verification_wrap.show();
