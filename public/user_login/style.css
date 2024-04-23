@@ -193,7 +193,7 @@ body {
     color: #7D7BA1;
     position: relative;
     text-align: center;
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
 .log-with-pass .left-col .or-login::before {

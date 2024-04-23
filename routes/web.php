@@ -133,7 +133,7 @@ Route::prefix('user')->group(function () {
 
     Route::post('/otp-varify', [App\Http\Controllers\Auth\LoginController::class, 'send_otp'])->name('use.send_otp');
     Route::get('/otp-varify', [App\Http\Controllers\Auth\LoginController::class, 'verify'])->name('use.send_otp');
-    Route::get('/send-otp/again/{id}', [App\Http\Controllers\Auth\LoginController::class, 'send_otp_again'])->name('use.send_otp.again');
+    Route::get('/send-otp/again', [App\Http\Controllers\Auth\LoginController::class, 'send_otp_again'])->name('use.send_otp.again');
     Route::post('/otp/verify', [App\Http\Controllers\Auth\LoginController::class, 'otp_verify'])->name('use.otp.verify');
 
 
@@ -143,8 +143,8 @@ Route::prefix('user')->group(function () {
 
     Route::get('/password/forgot', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'forgotPassword'])->name('user.forgot.password');
     Route::post('/password/forgot', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'forgotPasswordOtp'])->name('user.forgot.password');
-    Route::get('/reset/password/{uid}', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'resetPassword'])->name('user.reset.password');
-    Route::post('/reset/password/{uid}', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'resetPasswordStore'])->name('user.reset.password');
+    Route::get('/reset/password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'resetPassword'])->name('user.reset.password');
+    Route::post('/reset/password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'resetPasswordStore'])->name('user.reset.password');
 });
 
 
@@ -542,7 +542,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
 });
 
 // User Routes
-Route::group(['middleware' => 'auth', 'prefix' => 'user'], function () {
+Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'], function () {
     Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
 });
 

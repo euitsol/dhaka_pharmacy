@@ -26,7 +26,7 @@
                             <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
                             <input type="text" name="phone" placeholder="Phone" class="phone">
                         </div>
-                        {{-- @include('alerts.feedback', ['field' => 'phone']) --}}
+                        @include('alerts.feedback', ['field' => 'phone'])
                         <div class="phn input-box password_input">
                             <span class="icon"><i class="fa-solid fa-lock"></i></span>
                             <input type="password" name="password" placeholder="Password" class="password pass-n">
@@ -39,7 +39,7 @@
                         </div>
                         <p class="get-otp">Already have an account? <a class="otp_switch" href="{{route('login')}}">Login</a></p>
                         <input class="register_button submit_button" type="submit" value="REGISTER">
-                        
+                        @include('auth.login_with')
                     </form>
                 </div>
             </div>
@@ -55,13 +55,10 @@
 @push('js')
     <script src="{{asset('user_login/app.js')}}"></script>
     <script>
-        
-
-        
         $('.name').on('input', function () { 
             nameValid();
          });
-
+         $('.phone').parent('.input-box').next('.invalid-feedback').next('.invalid-feedback').remove();
         $(document).ready(function(){
             $('.phone').on('input keyup', function(){
 
@@ -70,9 +67,6 @@
 
                 let digitRegex = /^\d{11}$/;
                 let errorHtml = '';
-                
-                
-
                 $(this).parent('.input-box').next('.invalid-feedback').remove();
                 $(this).removeClass('form-control is-invalid');
                 // Check if the input is a number

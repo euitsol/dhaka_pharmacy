@@ -11,11 +11,11 @@
             <div class="col-5">
                 <div class="left-col login_wrap">
                     <div class="form-title">
-                        <h1 class="otp_title">UPDATE YOUR NEW PASSWORD</h1>
+                        <h1 class="otp_title">UPDATE YOUR PASSWORD</h1>
                         <h3>Follow the instructions to make it easier to reset password and you will be able to explore
                             inside.</h3>
                     </div>
-                    <form action="{{ route('user.reset.password',$uid) }}" method="POST">
+                    <form action="{{ route('user.reset.password') }}" method="POST">
                         @csrf
                         @include('alerts.feedback', ['field' => 'phone'])
                         <div class="phn input-box password_input">
