@@ -54,18 +54,28 @@ $(document).ready(function(){
     
 });
 
+function conPassMatch(){
+    let new_pass = $('.pass-n');
+    let con_pass = $('.pass-c');
+    con_pass.parent('.pass').next('.invalid-feedback').remove();
+    con_pass.removeClass('form-control is-invalid');
+    if(con_pass.val() !== new_pass.val()){
+        errorHtml = `<span class="invalid-feedback d-block mt-3" role="alert">Confirm password not match.</span>`;
+        con_pass.parent('.pass').after(errorHtml);
+        con_pass.addClass('form-control is-invalid');
+    }
+}
 
 $(document).ready(function(){
     $('.pass-c').on('input keyup',function(){
         nameValid();
-        let new_pass = $('.pass-n');
-        $(this).parent('.pass').next('.invalid-feedback').remove();
-        $(this).removeClass('form-control is-invalid');
-        if($(this).val() !== new_pass.val()){
-            errorHtml = `<span class="invalid-feedback d-block mt-3" role="alert">Confirm password not match.</span>`;
-            $(this).parent('.pass').after(errorHtml);
-            $(this).addClass('form-control is-invalid');
-        }
+        conPassMatch();
+        
+    });
+    $('.pass-n').on('input keyup',function(){
+        nameValid();
+        conPassMatch();
+        
     });
 });
 

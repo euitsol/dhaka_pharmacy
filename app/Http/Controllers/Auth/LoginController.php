@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\URL;
 
@@ -128,8 +129,6 @@ class LoginController extends BaseController
         } catch (Exception $e) {
             return redirect('/login');
         }
-
-        dd($facebookUser);
         $existing = User::where('email', $facebookUser->email)->first();
         if ($existing) {
             Auth::guard('web')->login($existing);
@@ -154,6 +153,8 @@ class LoginController extends BaseController
 
     public function showLoginForm()
     {
+        Session::forget('data');
+
         if (Auth::guard('web')->check()) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
             return redirect()->route('user.profile');
@@ -164,13 +165,11 @@ class LoginController extends BaseController
     public function login(Request $request): RedirectResponse
     {
         $credentials = $request->only('phone', 'password');
-
-
         $check = User::where('phone', $request->phone)->first();
         if(isset($check)){
             if($check->status == 1){
                 if (Auth::guard('web')->attempt($credentials)) {
-                    flash()->addSuccess('Welcome to Dhaka Pharmacy');
+                    Session::forget('data');
                     return redirect()->route('user.profile');
                 }
                 flash()->addError('Invalid credentials');
@@ -208,10 +207,13 @@ class LoginController extends BaseController
             if($user){
                 $user->otp = otp();
                 $user->save();
-                $currentUrl = URL::current();
                 $data['success'] = true;
-                $data['url'] = $currentUrl."?data=".encrypt($data['user']->id);
                 $data['message'] = 'The verification code has been sent successfully.';
+                $data['url'] = route('use.send_otp');
+
+                $s['uid'] = encrypt($data['user']->id);
+                $s['otp'] = true;
+                Session::put('data', $s);
             }else{
                 $data['success'] = false;
                 $data['error'] = 'Phone number didn\'t match.';
@@ -223,34 +225,44 @@ class LoginController extends BaseController
             return response()->json(['message' => 'An error occurred'], 500);
         }
     }
-    public function verify(Request $request){
-        $uid = $request->except('message','forgot')['data']; // Get data excluding 'message' parameter
-        $message = $request->input('message'); 
-        $data['forgot'] = $request->input('forgot'); 
-        $data['otp_verify'] = true;
-        $data['uid']=decrypt($uid);
-        if($message !== null){
-            flash()->addSuccess($message);
+    public function verify(){
+        $data=[];
+        if(isset(Session::get('data')['uid'])){
+            $data['uid']=decrypt(Session::get('data')['uid']);
         }
-        $data['url'] = route('use.send_otp', ['data' => $uid]);
+        if(isset(Session::get('data')['message'])){
+            flash()->addSuccess(Session::get('data')['message']);
+        }
+        $session = Session::get('data');
+        unset($session['message']);
+        Session::put('data', $session);
 
-        return view('auth.login',$data);
+        if(isset(Session::get('data')['otp'])){
+            $data['otp'] = Session::get('data')['otp'];
+            return view('auth.login',$data);
+        }
+        return redirect()->route('login');
     }
-    public function send_otp_again($id) {
-            $user = User::findOrFail($id);
+    public function send_otp_again() {
+            $uid = Session::get('data')['uid'];
+            $user = User::findOrFail(decrypt($uid));
             $user->otp = otp();
             $user->save();
             $data['message'] = 'The verification code has been sent successfully.';
             return response()->json($data);
     }
     public function otp_verify(Request $req) {
-            $user = User::where('id',$req->uid)->first();
+            $uid = Session::get('data')['uid'];
+            $user = User::where('id',decrypt($uid))->first();
             $otp = implode('', $req->otp);
             if($user){
                 if($user->otp == $otp){
-                    if($req->forgot){
-                        return redirect()->route('user.reset.password',encrypt($user->id));
+                    $user->is_verify = 1;
+                    $user->update();
+                    if(isset(Session::get('data')['forgot'])){
+                        return redirect()->route('user.reset.password');
                     }
+                    Session::forget('data');
                     Auth::guard('web')->login($user);
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');
                 }else{
@@ -259,6 +271,6 @@ class LoginController extends BaseController
             }else{
                 flash()->addSuccess('Something is wrong! please try again.');
             }
-            return redirect()->route('user.profile');
+            return redirect()->back();
     }
 }

@@ -17,6 +17,7 @@ class UserProfileController extends Controller
 
     public function profile():View
     {
+        flash()->addSuccess('Welcome to Dhaka Pharmacy');
         return view('user.profile');
     }
 }

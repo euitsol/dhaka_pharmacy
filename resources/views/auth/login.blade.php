@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-5">
-                <div class="left-col login_wrap" @if(isset($otp_verify)) style="display: none;" @endif>
+                <div class="left-col login_wrap" @if(isset($otp)) style="display: none;" @endif>
                     <div class="form-title">
                         <h1 class="otp_title">LOGIN IN WITH OTP</h1>
                         <h1 class="login_title" style="display: none;">LOGIN WITH PASSWORD</h1>
@@ -27,7 +27,7 @@
                         </div>
                         @include('alerts.feedback', ['field' => 'phone'])
 
-                        <p class="get-otp">Login With Password? <a class="login_switch" href="javascript:void(0)">Login</a></p>
+                        <p class="get-otp"><a class="login_switch" href="javascript:void(0)">Login with password?</a></p>
                         <a href="javascript:void(0)" class="otp_button submit_button">SEND OTP</a>
                         <p class="get-otp">Not yet registered? <a href="{{route('use.register')}}">Create an account</a></p> 
                        
@@ -54,40 +54,24 @@
 
                         <p class="rfp text-end mb-2"><a class="forgot-password" href="{{route('user.forgot.password')}}">Lost your password?</a></p>
 
-                        <p class="get-otp">Login With Phone? <a class="otp_switch" href="javascript:void(0)">GET OTP</a></p>
+                        <p class="get-otp"> <a class="otp_switch" href="javascript:void(0)">Login with phone?</a></p>
                         <input class="login_button submit_button" type="submit" value="LOGIN">
                         <p class="get-otp">Not yet registered? <a href="{{route('use.register')}}">Create an account</a></p> 
                     </form>
                     {{-- login With Password --}}
-                    <p class="or-login">Or login With</p>
-                    <div class="other-login">
-                        <a href="{{route('login_with_google')}}" class="google">
-                            <img src="{{asset('user_login/img/logos--google-icon.svg')}}" alt="">
-                            <span>Google</span>
-                        </a>
-                        <a href="{{route('login_with_facebook')}}" class="facebook">
-                            <img src="{{asset('user_login/img/logos--facebook.svg')}}" alt="">
-                            <span>Facebook</span>
-                        </a>
-                        <a href="{{route('login_with_github')}}" class="apple">
-                            <img src="{{asset('user_login/img/logos--apple.svg')}}" alt="">
-                            <span>Apple</span>
-                        </a>
-                    </div>
+                    @include('auth.login_with')
                 </div>
 
 
 
 
-                <div class="verification_wrap left-col" @if(isset($otp_verify)) style="display: block;"  @else style="display: none;" @endif>
+                <div class="verification_wrap left-col" @if(isset($otp)) style="display: block;" @else style="display: none;" @endif>
                     <div class="form-title">
-                        <h1 class="otp_title">VERIFICATION CODE</h1>
+                        <h1 class="otp_title">{{isset(Session::get('data')['title']) ? Session::get('data')['title'] : 'VERIFY YOUR PHONE TO LOGIN'}}</h1>
                         <h3>We have sent a verification code to your mobile number</h3>
                     </div>
                     <form action="{{ route('use.otp.verify') }}" method="POST">
                         @csrf
-                        <input type="hidden" class="uid" name="uid" value="{{$uid ?? ''}}">
-                        <input type="hidden" class="forgot" name="forgot" value="{{$forgot ?? ''}}">
                         <div class="field-set otp-field text-center">
                             <input name=otp[] type="number" />
                             <input name=otp[] type="number" disabled />
@@ -96,8 +80,8 @@
                             <input name=otp[] type="number" disabled />
                             <input name=otp[] type="number" disabled />
                         </div>
-                        <p class="get-otp">Didn't receive a code? <a class="send_otp_again" data-id="{{isset($uid) ? $uid : ''}}" href="javascript:void(0)">SEND AGAIN</a></p>
-                        <input type="submit" class="verify-btn" value="VERIFY">
+                        <p class="get-otp">Didn't receive a code? <a class="send_otp_again" href="javascript:void(0)">Send Again</a></p>
+                        <input type="submit" class="verify-btn submit_button" value="VERIFY">
                     </form>
                 </div>
             </div>
@@ -184,9 +168,8 @@
                 var form = $('.otp_form');
                 let login_wrap = $('.login_wrap');
                 let verification_wrap = $('.verification_wrap');
-                let send_otp_again = $('.send_otp_again');
-                let uid = $('.uid');
                 let _url = ("{{ route('use.send_otp') }}");
+                removeInvalidFeedback();
                 $.ajax({
                     type: 'POST',
                     url: _url,
@@ -198,8 +181,6 @@
                             $('[name="phone"]').removeClass('form-control is-invalid');
                             login_wrap.hide();
                             verification_wrap.show();
-                            send_otp_again.attr('data-id',response.user.id);
-                            uid.val(response.user.id);
                             window.history.pushState({path: response.url}, '', response.url);
                         }else{
                             toastr.error(response.message);
@@ -234,11 +215,9 @@
         $(document).ready(function () {
             $('.send_otp_again').click(function (e) {
                 e.preventDefault();
-                let id = $(this).data('id');
-                let _url = ("{{ route('use.send_otp.again', ['id']) }}");
-                let __url = _url.replace('id', id);
+                let _url = ("{{ route('use.send_otp.again') }}");
                 $.ajax({
-                    url: __url,
+                    url: _url,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {

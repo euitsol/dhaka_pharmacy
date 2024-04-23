@@ -90,5 +90,6 @@ class Kernel extends HttpKernel
         'dm' => \App\Http\Middleware\DistrictManagerMiddleware::class,
         'lam' => \App\Http\Middleware\LocalAreaManagerMiddleware::class,
         'rider' => \App\Http\Middleware\RiderMiddleware::class,
+        'user_phone_verify'=>\App\Http\Middleware\UserPhoneVerify::class,
     ];
 }
