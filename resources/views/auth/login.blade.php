@@ -204,7 +204,7 @@
                         }else{
                             toastr.error(response.message);
                             let errorHtml = '<span class="invalid-feedback d-block mb-3" role="alert">' + response.error + '</span>';
-                            $('[name="phone"]').parent('.phn').after(errorHtml);
+                            $('[name="phone"]').parent('.input-box').after(errorHtml);
                             $('[name="phone"]').addClass('form-control is-invalid');
                         } 
                     },
@@ -219,7 +219,7 @@
                                 $.each(messages, function (index, message) {
                                     errorHtml += '<span class="invalid-feedback d-block mb-3" role="alert">' + message + '</span>';
                                 });
-                                $('[name="' + field + '"]').parent('.phn').after(errorHtml);
+                                $('[name="' + field + '"]').parent('.input-box').after(errorHtml);
                                 $('[name="' + field + '"]').addClass('form-control is-invalid');
                             });
                         } else {
@@ -265,7 +265,7 @@
                 let submit_button = $('.submit_button');
                 submit_button.addClass('disabled');
                 
-                $(this).parent('.phn').next('.invalid-feedback').remove();
+                $(this).parent('.input-box').next('.invalid-feedback').remove();
                 $(this).removeClass('form-control is-invalid');
                 // Check if the input is a number
                 if (!isNaN(phone)) {
@@ -280,7 +280,7 @@
                     errorHtml = '<span class="invalid-feedback d-block" role="alert">Invalid phone number</span>';
                     $(this).addClass('form-control is-invalid');
                 }
-                $(this).parent('.phn').after(errorHtml);
+                $(this).parent('.input-box').after(errorHtml);
                 
             });
         });
