@@ -121,6 +121,9 @@ class LocalAreaManagerController extends Controller
     public function get_operation_area($dm_id): JsonResponse
     {
         $data['dm'] = DistrictManager::with('operation_area.operation_sub_areas')->findOrFail($dm_id);
+        $data['operation_sub_areas'] = $data['dm']->operation_area->operation_sub_areas->filter(function ($sub_area) {
+            return $sub_area->status == 1;
+        });
         return response()->json($data);
 
     }

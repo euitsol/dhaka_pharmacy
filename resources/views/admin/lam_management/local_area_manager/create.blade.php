@@ -95,7 +95,7 @@
                     lam_area.prop('disabled',false);
                     dm_area.val(data.dm.operation_area.name);
                     var result = '';
-                    data.dm.operation_area.operation_sub_areas.forEach(function(area) {
+                    data.operation_sub_areas.forEach(function(area) {
                         result += `<option value="${area.id}">${area.name}</option>`;
                     });
                     lam_area.html(result);
