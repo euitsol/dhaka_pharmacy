@@ -25,6 +25,12 @@
                     <p>{{ 'KYC Verification Center' }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'operational_area') class="active" @endif>
+                <a href="{{ route('pharmacy.operational_area.list') }}">
+                    <i class="fa-solid fa-minus @if ($pageSlug == 'operational_area') fa-beat-fade @endif"></i>
+                    <p>{{ 'Operation Areas' }}</p>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

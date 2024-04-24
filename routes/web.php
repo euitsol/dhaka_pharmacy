@@ -60,6 +60,7 @@ use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
 use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
+use App\Http\Controllers\Pharmacy\OperationalAreaController as PharmacyOperationalAreaController;
 use App\Http\Controllers\Admin\PushNotification\SettingController as PushNotificationSetting;
 use App\Http\Controllers\Admin\PaymentGateway\SettingController as PaymentGatewaySetting;
 use App\Http\Controllers\Admin\PaymentManagement\PaymentManagementController;
@@ -574,6 +575,9 @@ Route::group(['middleware' => 'pharmacy','as' => 'pharmacy.', 'prefix' => 'pharm
 
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });
+    Route::controller(PharmacyOperationalAreaController::class, 'operational-area')->prefix('operational-area')->name('operational_area.')->group(function () {
+        Route::get('index', 'index')->name('list');
+    });
 });
 
 
@@ -688,7 +692,7 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
-        
+
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });
 });
