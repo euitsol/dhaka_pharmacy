@@ -130,9 +130,9 @@
                                     <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Items</h6> </div>
     
                                     @php
-                                        $badgeBg = ($order->status == 1) ? 'badge badge-success' : (($order->status == 0) ? 'badge badge-info' : (($order->status == -1) ? 'badge badge-danger' : (($order->status == -2) ? 'badge badge-warning' : 'badge badge-primary')));
+                                        $badgeBg = ($order->status == 2) ? 'badge badge-success' : (($order->status == 1) ? 'badge badge-info' : (($order->status == 0) ? 'badge badge-secondary' : (($order->status == -1) ? 'badge badge-danger' : (($order->status == -2) ? 'badge badge-warning' : 'badge badge-primary'))));
     
-                                        $badgeStatus = ($order->status == 1) ? 'Success' : (($order->status == 0) ? 'Pending' : (($order->status == -1) ? 'Failed' : (($order->status == -2) ? 'Cancel' : 'Processing'))); 
+                                        $badgeStatus = ($order->status == 2) ? 'Success' : (($order->status == 1) ? 'Pending' : (($order->status == 0) ? 'Initiated' : (($order->status == -1) ? 'Failed' : (($order->status == -2) ? 'Cancel' : 'Processing')))); 
     
                                     @endphp
     
