@@ -48,7 +48,7 @@ class OparetionalAreaController extends Controller
         $lam_area->status = 0;
         $lam_area->creater()->associate(dm());
         $lam_area->save();
-        flash()->addSuccess('LAM area ' . $lam_area->name . ' created successfully.');
+        flash()->addSuccess('Operation Sub Area ' . $lam_area->name . ' created successfully.');
         return redirect()->route('dm.lam_area.list');
     }
     public function edit($slug): View
@@ -66,7 +66,7 @@ class OparetionalAreaController extends Controller
         $lam_area->status = 0;
         $lam_area->updater()->associate(dm());
         $lam_area->update();
-        flash()->addSuccess('LAM area ' . $lam_area->name . ' updated successfully.');
+        flash()->addSuccess('Operation Sub Area ' . $lam_area->name . ' updated successfully.');
         return redirect()->route('dm.lam_area.list');
     }
     

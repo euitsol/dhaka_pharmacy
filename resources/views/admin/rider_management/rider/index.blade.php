@@ -133,13 +133,13 @@
                                         <td>${data.email ?? 'N/A'}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Operational Area</th>
+                                        <th class="text-nowrap">Operation Area</th>
                                         <th>:</th>
                                         <td>${oa}</td>
                                     </tr>
                                     
                                     <tr>
-                                        <th class="text-nowrap">Operational Sub Area</th>
+                                        <th class="text-nowrap">Operation Sub Area</th>
                                         <th>:</th>
                                         <td>${osa}</td>
                                     </tr>

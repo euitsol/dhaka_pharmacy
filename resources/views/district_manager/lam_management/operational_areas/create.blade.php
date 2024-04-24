@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Create Operational Area') }}</h4>
+                            <h4 class="card-title">{{ __('Create Operation Area') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -22,12 +22,12 @@
                     <form method="POST" action="{{ route('dm.lam_area.create') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label>{{ __('DM Area') }}</label>
+                            <label>{{ __('Operation Area') }}</label>
                             <input type="hidden" name="oa_id" class="form-control" value="{{ dm()->operation_area->id }}">
                             <input type="text" class="form-control" value="{{ dm()->operation_area->name }}" disabled>
                         </div>
                         <div class="form-group">
-                            <label>{{ __('LAM Area') }}</label>
+                            <label>{{ __('Operation Sub Area') }}</label>
                             <input type="text" id="title" name="name" class="form-control" placeholder="Enter name"
                                 value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])

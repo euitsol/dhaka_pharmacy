@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Operational Area List') }}</h4>
+                            <h4 class="card-title">{{ __('Operation Area List') }}</h4>
                         </div>
                     </div>
                 </div>
@@ -16,8 +16,8 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('DM Areas') }}</th>
-                                <th>{{ __('LAM Areas') }}</th>
+                                <th>{{ __('Operation Areas') }}</th>
+                                <th>{{ __('Operation Sub Areas') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Created by') }}</th>
                             </tr>

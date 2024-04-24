@@ -98,10 +98,10 @@
                                     @include('alerts.feedback', ['field' => 'identification_no'])
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Operational Area') }}</label>
+                                    <label>{{ __('Operation Area') }}</label>
                                     @if(empty($rider->oa_id))
                                         <select name="oa_id" class="form-control">
-                                            <option selected hidden>{{ __('Select Operational Area') }}</option>
+                                            <option selected hidden>{{ __('Select Operation Area') }}</option>
                                             @foreach ($operation_areas as $area)
                                                 <option value="{{$area->id}}">{{ $area->name }}</option>
                                             @endforeach
@@ -114,10 +114,10 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Operational Sub Area') }}</label>
+                                    <label>{{ __('Operation Sub Area') }}</label>
                                     @if(empty($rider->osa_id))
                                         <select name="osa_id" class="form-control">
-                                            <option selected hidden>{{ __('Select Operational Sub Area') }}</option>
+                                            <option selected hidden>{{ __('Select Operation Sub Area') }}</option>
                                             @foreach ($operation_sub_areas as $area)
                                                 <option value="{{$area->id}}">{{ $area->name }}</option>
                                             @endforeach

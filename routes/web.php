@@ -49,8 +49,8 @@ use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Rider\KYC\KycVerificationController as RiderKycVerificationController;
-use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
-use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
+use App\Http\Controllers\Admin\OperationalArea\OperationAreaController;
+use App\Http\Controllers\Admin\OperationalArea\OperationSubAreaController;
 use App\Http\Controllers\Admin\OrderManagement\OrderManagementController;
 use App\Http\Controllers\Frontend\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
@@ -281,23 +281,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::post('/settings', [PharmacyKycSettingsController::class, 'kycSettingsUpdate'])->name('pharmacy_kyc_settings');
         });
     });
-
-
     //Admin District Manager Management Routes
-    Route::group(['as' => 'dm_management.', 'prefix' => 'dm-management'], function () {
-        Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
-            Route::get('index', 'index')->name('district_manager_list');
-            Route::get('details/{id}', 'details')->name('details.district_manager_list');
-            Route::get('profile/{id}', 'profile')->name('district_manager_profile');
-            Route::get('dashboard/{id}', 'loginAs')->name('login_as.district_manager_profile');
-            Route::get('create', 'create')->name('district_manager_create');
-            Route::post('create', 'store')->name('district_manager_create');
-            Route::get('edit/{id}', 'edit')->name('district_manager_edit');
-            Route::put('edit/{id}', 'update')->name('district_manager_edit');
-            Route::get('status/{id}', 'status')->name('status.district_manager_edit');
-            Route::get('delete/{id}', 'delete')->name('district_manager_delete');
-        });
-
+    Route::group(['as' => 'opa.', 'prefix' => 'operational-areas'], function () {
         //Oparetaion Area Route
         Route::controller(OperationAreaController::class, 'operation-area')->prefix('operation-area')->name('operation_area.')->group(function () {
             Route::get('index', 'index')->name('operation_area_list');
@@ -320,6 +305,24 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('status/{id}/{status}', 'status')->name('status.operation_sub_area_edit');
             Route::get('delete/{id}', 'delete')->name('operation_sub_area_delete');
         });
+    });
+
+    //Admin District Manager Management Routes
+    Route::group(['as' => 'dm_management.', 'prefix' => 'dm-management'], function () {
+        Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
+            Route::get('index', 'index')->name('district_manager_list');
+            Route::get('details/{id}', 'details')->name('details.district_manager_list');
+            Route::get('profile/{id}', 'profile')->name('district_manager_profile');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.district_manager_profile');
+            Route::get('create', 'create')->name('district_manager_create');
+            Route::post('create', 'store')->name('district_manager_create');
+            Route::get('edit/{id}', 'edit')->name('district_manager_edit');
+            Route::put('edit/{id}', 'update')->name('district_manager_edit');
+            Route::get('status/{id}', 'status')->name('status.district_manager_edit');
+            Route::get('delete/{id}', 'delete')->name('district_manager_delete');
+        });
+
+        
 
 
 

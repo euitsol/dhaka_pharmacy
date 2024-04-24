@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'operation_area'])
+@extends('admin.layouts.master', ['pageSlug' => 'operation_sub_area'])
 
 @section('content')
     <div class="row">
@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('DM Area List') }}</h4>
+                            <h4 class="card-title">{{ __('Operation Sub Area List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'dm_management.operation_area.operation_area_create',
+                                'routeName' => 'opa.operation_sub_area.operation_sub_area_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new dm area',
+                                'label' => 'Add new operation sub area',
                             ])
                         </div>
                     </div>
@@ -23,7 +23,8 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Operation Area') }}</th>
+                                <th>{{ __('Operation Sub Area') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -31,46 +32,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($operation_areas as $operation_area)
+                            @foreach ($op_sub_areas as $op_sub_area)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $operation_area->name }} </td>
+                                    <td> {{ $op_sub_area->operation_area->name }} </td>
+                                    <td> {{ $op_sub_area->name }} </td>
                                     <td>
-                                        <span
-                                            class="{{ $operation_area->getStatusBadgeClass() }}">{{ $operation_area->getStatus() }}</span>
+                                        <span class="{{$op_sub_area->getMultiStatusClass()}}">{{$op_sub_area->getMultiStatus()}}</span>
                                     </td>
-                                    <td>{{ $operation_area->created_date() }}</td>
+                                    <td>{{ $op_sub_area->created_date() }}</td>
 
-                                    <td> {{ $operation_area->created_user_name() }} </td>
+                                    <td> {{ $op_sub_area->creater_name() }} </td>
                                     <td>
-                                        @include('admin.partials.action_buttons', [
-                                            'menuItems' => [
-                                                [
-                                                    'routeName' => 'javascript:void(0)',
-                                                    'params' => [$operation_area->id],
-                                                    'label' => 'View Details',
-                                                    'className' => 'view',
-                                                    'data-id' => $operation_area->id,
-                                                ],
-                                                [
-                                                    'routeName' => 'dm_management.operation_area.operation_area_edit',
-                                                    'params' => [$operation_area->slug],
-                                                    'label' => 'Update',
-                                                ],
-                                                [
-                                                    'routeName' =>
-                                                        'dm_management.operation_area.status.operation_area_edit',
-                                                    'params' => [$operation_area->id],
-                                                    'label' => $operation_area->getBtnStatus(),
-                                                ],
-                                                [
-                                                    'routeName' => 'dm_management.operation_area.operation_area_delete',
-                                                    'params' => [$operation_area->id],
-                                                    'label' => 'Delete',
-                                                    'delete' => true,
-                                                ],
-                                            ],
-                                        ])
+                                        {{-- {{dd($op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug))}} --}}
+                                        @include('admin.partials.action_buttons', 
+                                            $op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug)
+                                        )
                                     </td>
                                 </tr>
                             @endforeach
@@ -92,7 +69,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('DM Area Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Operation Sub Area Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -109,15 +86,16 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('dm_management.operation_area.details.operation_area_list', ['id']) }}");
+                let url = (
+                    "{{ route('opa.operation_sub_area.details.operation_sub_area_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
+                        let status = data.status === 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status === 1 ? 'badge-success' :
                             'badge-warning';
                         var result = `
                                 <table class="table table-striped">
@@ -127,10 +105,10 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Slug</th>
+                                        <th class="text-nowrap">Category Name</th>
                                         <th>:</th>
-                                        <td>${data.slug}</td>
-                                    </tr>
+                                        <td>${data.operation_area.name}</td>
+                                    </tr>                                
                                     <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
