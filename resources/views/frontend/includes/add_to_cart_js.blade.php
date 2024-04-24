@@ -82,7 +82,7 @@
 
                             result += `
                                         <input type="radio" data-name="${unit.name}" ${checked}
-                                        class="unit_quantity" id="android-${index+20}"
+                                        class="unit_quantity" data-cart_id="${data.atc.id}" data-id="${unit.id}" id="android-${index+20}"
                                         name="data-${count}"
                                         value="${ (data.atc.product.price * unit.quantity)*data.atc.quantity }" data-regular_price="${ (data.atc.product.regular_price * unit.quantity)*data.atc.quantity }">
                                         <label for="android-${index+20}">
@@ -283,6 +283,8 @@
 
     // Unit Change JS 
     $(document).on('change', '.unit_quantity', function() {
+        var unit_id = $(this).data('id');
+        var cart_id = $(this).data('cart_id');
         var formattedPrice = parseFloat($(this).val());
         var formattedRegularPrice = parseFloat($(this).data('regular_price'));
         var itemContainer = $(this).closest('.add_to_cart_item');
@@ -291,12 +293,29 @@
         itemQuantityInput.data('item_price', formattedPrice);
         itemQuantityInput.data('item_regular_price', formattedRegularPrice);
         if (!isNaN(itemQuantity)) {
+
             var totalItemPrice = formattedPrice * itemQuantity;
             var totalItemRegularPrice = formattedRegularPrice * itemQuantity;
-            itemContainer.find('.item_count_price').html(numberFormat(totalItemPrice, 2));
-            itemContainer.find('.item_count_regular_price').html(numberFormat(totalItemRegularPrice, 2));
+
+            let url = "{{ route('cart.item.unit',['unit_id'=>'unitId', 'cart_id'=>'cartId']) }}";
+            let _url = url.replace('unitId',unit_id);
+            let __url = _url.replace('cartId',cart_id);
+            $.ajax({
+                url: __url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data.alert);
+                    itemContainer.find('.item_count_price').html(numberFormat(totalItemPrice, 2));
+                    itemContainer.find('.item_count_regular_price').html(numberFormat(totalItemRegularPrice, 2));
+                    refreshSubtotal();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error clearing cart data:', error);
+                }
+            });
+            
         }
-        refreshSubtotal();
     });
 
 

@@ -49,7 +49,7 @@
                                                         
                                                         @foreach ($atc->product->units as $u_key=>$unit)
                                                             @php($count++)
-                                                            <input type="radio" data-name="{{$unit->name}}" 
+                                                            <input type="radio" data-cart_id="{{$atc->id}}" data-id="{{$unit->id}}" data-name="{{$unit->name}}" 
                                                                 @if (!empty($atc->unit_id) && ($unit->id == $atc->unit_id)) checked @endif
                                                                 class="unit_quantity" id="android-{{$count+20}}"
                                                                 name="data-{{$key}}" data-regular_price="{{ ($atc->product->regular_price * $unit->quantity)*$atc->quantity }}"

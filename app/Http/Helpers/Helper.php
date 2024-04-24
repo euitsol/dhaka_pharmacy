@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-            'am.','um.','pm.','settings.','dm_management.','lam_management','product.','product.product_category.'
+            'am.','um.','pm.','settings.','dm_management.','lam_management','product.','product.product_category.','om.'
         ];
 }
 

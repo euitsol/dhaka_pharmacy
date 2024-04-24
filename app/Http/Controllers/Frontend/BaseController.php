@@ -240,5 +240,14 @@ class BaseController extends Controller
         $data['alert'] = "Item quantity updated";
         return response()->json($data);
     }
+    public function itemUnit($unit_id, $cart_id):JsonResponse
+    {
+
+        $cartItem = AddToCart::findOrFail($cart_id);
+        $cartItem->unit_id = $unit_id;
+        $cartItem->update();
+        $data['alert'] = "Item unit updated";
+        return response()->json($data);
+    }
 
 }

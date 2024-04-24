@@ -95,3 +95,4 @@ operation_sub_area_edit,admin,"Operation Sub Area"
 operation_sub_area_delete,admin,"Operation Sub Area"
 order_list,admin,Order
 order_details,admin,Order
+order_distribution,admin,Order

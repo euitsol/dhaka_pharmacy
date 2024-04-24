@@ -37,15 +37,32 @@
 
                                     <td> {{ $order->created_user_name() }} </td>
                                     <td>
-                                        @include('admin.partials.action_buttons', [
-                                            'menuItems' => [
-                                                [
-                                                    'routeName' => 'om.order.order_details',
-                                                    'params' => [encrypt($order->id)],
-                                                    'label' => 'Details',
+                                        @if($order->status == 1)
+                                            @include('admin.partials.action_buttons', [
+                                                'menuItems' => [
+                                                    [
+                                                        'routeName' => 'om.order.order_details',
+                                                        'params' => [encrypt($order->id)],
+                                                        'label' => 'Details',
+                                                    ],
+                                                    [
+                                                        'routeName' => 'om.order.order_distribution',
+                                                        'params' => [encrypt($order->id)],
+                                                        'label' => 'Order Distribution',
+                                                    ],
                                                 ],
-                                            ],
-                                        ])
+                                            ])
+                                        @else
+                                            @include('admin.partials.action_buttons', [
+                                                'menuItems' => [
+                                                    [
+                                                        'routeName' => 'om.order.order_details',
+                                                        'params' => [encrypt($order->id)],
+                                                        'label' => 'Details',
+                                                    ],
+                                                ],
+                                            ])
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -532,6 +532,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::controller(OrderManagementController::class, 'order')->prefix('order')->name('order.')->group(function () {
             Route::get('/{status}', 'index')->name('order_list');
             Route::get('/details/{id}', 'details')->name('order_details');
+            Route::get('/order-distribution/{id}', 'order_distribution')->name('order_distribution');
         });
        
     });
@@ -714,6 +715,7 @@ Route::get('/clear-cart', [FrontendBaseController::class, 'clearCart'])->name('p
 
 Route::get('/item/check/{id}', [FrontendBaseController::class, 'itemCheck'])->name('cart.item.check');
 Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
+Route::get('/item/unit/{unit_id}/{cart_id}', [FrontendBaseController::class, 'itemUnit'])->name('cart.item.unit');
 
 // Checkout Routes 
 Route::post('/product/single-order', [CheckoutController::class, 'single_order'])->name('product.single_order');
