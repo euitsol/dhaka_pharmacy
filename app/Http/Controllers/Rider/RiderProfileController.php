@@ -139,4 +139,14 @@ class RiderProfileController extends Controller
 
         return response()->json(['message' => 'Image not uploaded'], 400);
     }
+
+    public function get_osa($oa_id){
+        $operation_area = OperationArea::with('operation_sub_areas')->findOrFail($oa_id);
+
+        $data['operation_sub_areas'] = $operation_area->operation_sub_areas->filter(function ($sub_area) {
+            return $sub_area->status == 1;
+        });
+        return response()->json($data);
+
+    }
 }

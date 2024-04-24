@@ -1,4 +1,4 @@
-@extends('rider.layouts.master', ['pageSlug' => 'rider_profile'])
+@extends('pharmacy.layouts.master', ['pageSlug' => 'pharmacy_profile'])
 @push('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
         integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
@@ -12,7 +12,7 @@
                     <div class="card-header">
                         <h5 class="title">{{ __('Update Profile') }}</h5>
                     </div>
-                    <form method="POST" action="{{ route('rider.profile.update') }}" autocomplete="off"
+                    <form method="POST" action="{{ route('pharmacy.profile.update') }}" autocomplete="off"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -23,33 +23,45 @@
                                         <div class="form-group col-md-12">
                                             <label>{{ __('Name') }}</label>
                                             <input type="text" name="name" class="form-control"
-                                                placeholder="Enter Name" value="{{ $rider->name }}">
+                                                placeholder="Enter Name" value="{{ $pharmacy->name }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Father Name') }}</label>
                                             <input type="text" name="father_name" class="form-control"
-                                                placeholder="Enter Father Name" value="{{ $rider->father_name }}">
+                                                placeholder="Enter Father Name" value="{{ $pharmacy->father_name }}">
                                             @include('alerts.feedback', ['field' => 'father_name'])
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Nother Name') }}</label>
                                             <input type="text" name="mother_name" class="form-control"
-                                                placeholder="Enter Mother Name" value="{{ $rider->mother_name }}">
+                                                placeholder="Enter Mother Name" value="{{ $pharmacy->mother_name }}">
                                             @include('alerts.feedback', ['field' => 'mother_name'])
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Phone') }}</label>
                                             <input type="text" name="phone" class="form-control"
-                                                placeholder="Enter Phone" value="{{ $rider->phone }}">
+                                                placeholder="Enter Phone" value="{{ $pharmacy->phone }}">
                                             @include('alerts.feedback', ['field' => 'phone'])
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{ __('Email') }}</label>
+                                            <input type="text" name="email" class="form-control"
+                                                placeholder="Enter Email" value="{{ $pharmacy->email }}">
+                                            @include('alerts.feedback', ['field' => 'email'])
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Emergency Phone') }}</label>
                                             <input type="text" name="emergency_phone" class="form-control"
-                                                placeholder="Enter Emergency Phone" value="{{ $rider->emergency_phone }}">
+                                                placeholder="Enter emergency Phone" value="{{ $pharmacy->emergency_phone }}">
                                             @include('alerts.feedback', ['field' => 'emergency_phone'])
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{ __('Date of Birth') }}</label>
+                                            <input type="date" name="dob" value="{{ $pharmacy->dob ? $pharmacy->dob : old('dob') }}"
+                                                class="form-control">
+                                            @include('alerts.feedback', ['field' => 'dob'])
                                         </div>
                                     </div>
                                 </div>
@@ -59,7 +71,7 @@
                                         <div class="profile_image">
                                             <div class="img mx-auto mt-4 rounded-circle">
                                                 <img class="avatar mb-0 rounded-circle w-100 h-100" id="previewImage"
-                                                    src="{{ $rider->image ? storage_url($rider->image) : asset('no_img/no_img.jpg') }}"
+                                                    src="{{ $pharmacy->image ? storage_url($pharmacy->image) : asset('no_img/no_img.jpg') }}"
                                                     alt="">
                                                 <label for="imageInput" class="camera-icon text-center rounded-circle">
                                                     <i class="fa-solid fa-camera-retro" style="cursor: pointer;"></i>
@@ -78,12 +90,12 @@
                                     <label>{{ __('Identification Type') }}</label>
                                     <select name="identification_type" id="identification_type" class="form-control">
                                         <option selected hidden value="">{{ __('Select Identification Type') }}</option>
-                                        <option value="NID" {{ $rider->identification_type == 'NID' ? 'selected' : '' }}>
+                                        <option value="NID" {{ $pharmacy->identification_type == 'NID' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
-                                        <option value="DOB" {{ $rider->identification_type == 'DOB' ? 'selected' : '' }}>
+                                        <option value="DOB" {{ $pharmacy->identification_type == 'DOB' ? 'selected' : '' }}>
                                             {{ __('Birth Certificate No') }}</option>
                                         <option value="Passport"
-                                            {{ $rider->identification_type == 'Passport' ? 'selected' : '' }}>
+                                            {{ $pharmacy->identification_type == 'Passport' ? 'selected' : '' }}>
                                             {{ __('Passport NO') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'identification_type'])
@@ -93,7 +105,7 @@
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification NO') }}</label>
                                     <input type="text" name="identification_no" id="identification_no"
-                                        value="{{ $rider->identification_no ? $rider->identification_no : old('identification_no') }}"
+                                        value="{{ $pharmacy->identification_no ? $pharmacy->identification_no : old('identification_no') }}"
                                         class="form-control" placeholder="Enter identification number">
                                     @include('alerts.feedback', ['field' => 'identification_no'])
                                 </div>
@@ -101,18 +113,20 @@
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
                                         <option selected hidden value="">{{ __('Select Genger') }}</option>
-                                        <option value="Male" {{ $rider->gender == 'Male' ? 'selected' : '' }}>
+                                        <option value="Male" {{ $pharmacy->gender == 'Male' ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
-                                        <option value="Female" {{ $rider->gender == 'Female' ? 'selected' : '' }}>
+                                        <option value="Female" {{ $pharmacy->gender == 'Female' ? 'selected' : '' }}>
                                             {{ __('Female') }}</option>
-                                        <option value="Others" {{ $rider->gender == 'Others' ? 'selected' : '' }}>
+                                        <option value="Others" {{ $pharmacy->gender == 'Others' ? 'selected' : '' }}>
                                             {{ __('Others') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'gender'])
                                 </div>
+
+
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operation Area') }}</label>
-                                    @if(empty($rider->oa_id))
+                                    @if(empty($pharmacy->oa_id))
                                         <select name="oa_id" class="form-control operation_area">
                                             <option selected hidden>{{ __('Select Operation Area') }}</option>
                                             @foreach ($operation_areas as $area)
@@ -121,20 +135,20 @@
                                         </select>
                                         @include('alerts.feedback', ['field' => 'osa_id'])
                                     @else
-                                        <input type="text" value="{{ $rider->operation_area->name }}"
+                                        <input type="text" value="{{ $pharmacy->operation_area->name }}"
                                         class="form-control" disabled>
                                     @endif
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operation Sub Area') }}</label>
-                                    @if(empty($rider->osa_id))
+                                    @if(empty($pharmacy->osa_id))
                                         <select name="osa_id" class="form-control operation_sub_area" disabled>
                                             <option selected hidden>{{ __('Select Operation Sub Area') }}</option>
                                         </select>
                                         @include('alerts.feedback', ['field' => 'osa_id'])
                                     @else
-                                        <input type="text" value="{{ $rider->operation_sub_area->name }}"
+                                        <input type="text" value="{{ $pharmacy->operation_sub_area->name }}"
                                         class="form-control" disabled>
                                     @endif
                                 </div>
@@ -145,15 +159,15 @@
 
 
                                 
+                                
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Date of Birth') }}</label>
-                                    <input type="date" name="dob" value="{{ $rider->dob ? $rider->dob : old('dob') }}"
-                                        class="form-control">
-                                    @include('alerts.feedback', ['field' => 'dob'])
+                                    <label>{{ __('Age') }}</label>
+                                    <input type="text" name="age" value="{{ $pharmacy->age ? $pharmacy->age : old('age') }}"
+                                        class="form-control" placeholder="Enter age">
+                                    @include('alerts.feedback', ['field' => 'age'])
                                 </div>
                                 
-                                
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label>{{ __('Upload CV') }}</label>
                                         <input type="file" accept=".pdf" class="form-control" name="cv">
@@ -161,21 +175,16 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Age') }}</label>
-                                    <input type="text" name="age" value="{{ $rider->age ? $rider->age : old('age') }}"
-                                        class="form-control" placeholder="Enter age">
-                                    @include('alerts.feedback', ['field' => 'age'])
-                                </div>
+                                
 
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Present Address') }}</label>
-                                    <textarea name="present_address" class="form-control" placeholder="Enter present address">{{ $rider->present_address ? $rider->present_address : old('present_address') }}</textarea>
+                                    <textarea name="present_address" class="form-control" placeholder="Enter present address">{{ $pharmacy->present_address ? $pharmacy->present_address : old('present_address') }}</textarea>
                                     @include('alerts.feedback', ['field' => 'present_address'])
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Permanent Address') }}</label>
-                                    <textarea name="permanent_address" class="form-control" placeholder="Enter permanent address">{{ $rider->permanent_address ? $rider->permanent_address : old('permanent_address') }}</textarea>
+                                    <textarea name="permanent_address" class="form-control" placeholder="Enter permanent address">{{ $pharmacy->permanent_address ? $pharmacy->permanent_address : old('permanent_address') }}</textarea>
                                     @include('alerts.feedback', ['field' => 'permanent_address'])
                                 </div>
                                 <div class="col-md-12">
@@ -190,7 +199,7 @@
             <div class="card-header">
                 <h5 class="title">{{ __('Password') }}</h5>
             </div>
-            <form method="POST" action="{{ route('rider.profile.update.password') }}" autocomplete="off"
+            <form method="POST" action="{{ route('pharmacy.profile.update.password') }}" autocomplete="off"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -255,7 +264,7 @@
             var formData = new FormData();
             formData.append('image', $("#imageInput")[0].files[0]);
             console.log(formData);
-            var _url = "{{ route('rider.profile.update.image') }}";
+            var _url = "{{ route('pharmacy.profile.update.image') }}";
 
             $.ajax({
                 url: _url,
@@ -301,7 +310,7 @@
                                     $('.profile_image .img img.avatar').removeClass(
                                         'image_animation');
                                     $('.profile_image .camera-icon').css('display', 'block');
-                                    $('#previewImage').attr('src', "{{ $rider->image ? storage_url($rider->image) : asset('no_img/no_img.jpg') }}");
+                                    $('#previewImage').attr('src', "{{ $pharmacy->image ? storage_url($pharmacy->image) : asset('no_img/no_img.jpg') }}");
                                     toastr.error('Something is wrong!');
                                     var errors = xhr.responseJSON.errors;
                                     $.each(errors, function(field, messages) {
@@ -328,6 +337,8 @@
         }
 
 
+
+
         $(document).ready(function() {
             $('.operation_area').on('change', function() {
                 let operation_sub_area = $('.operation_sub_area');
@@ -335,7 +346,7 @@
 
                 operation_sub_area.prop('disabled',true);
 
-                let url = ("{{ route('rider.profile.get_osa', ['oa_id']) }}");
+                let url = ("{{ route('pharmacy.profile.get_osa', ['oa_id']) }}");
                 let _url = url.replace('oa_id', oa_id);
                 
                 $.ajax({

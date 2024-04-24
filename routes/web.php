@@ -34,6 +34,7 @@ use App\Http\Controllers\Rider\Auth\LoginController as RiderLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
 use App\Http\Controllers\LAM\DashboardController as LamDashboardController;
 use App\Http\Controllers\Rider\DashboardController as RiderDashboardController;
+use App\Http\Controllers\Pharmacy\DashboardController as PharmacyDashboardController;
 use App\Http\Controllers\DM\DmProfileController;
 use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
 use App\Http\Controllers\Pharmacy\PharmacyProfileController;
@@ -49,6 +50,7 @@ use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Rider\KYC\KycVerificationController as RiderKycVerificationController;
+use App\Http\Controllers\Pharmacy\KYC\KycVerificationController as PharmacyKycVerificationController;
 use App\Http\Controllers\Admin\OperationalArea\OperationAreaController;
 use App\Http\Controllers\Admin\OperationalArea\OperationSubAreaController;
 use App\Http\Controllers\Admin\OrderManagement\OrderManagementController;
@@ -550,9 +552,28 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
 });
 
 
-// Pharmacy Routes
-Route::group(['middleware' => 'pharmacy', 'prefix' => 'pharmacy'], function () {
-    Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('pharmacy.profile');
+// Pharmacy Auth Routes
+Route::group(['middleware' => 'pharmacy','as' => 'pharmacy.', 'prefix' => 'pharmacy'], function () {
+    Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('profile');
+
+
+    Route::get('/dashboard', [PharmacyDashboardController::class, 'dashboard'])->name('dashboard');
+
+    Route::controller(PharmacyKycVerificationController::class, 'kyc')->prefix('kyc')->name('kyc.')->group(function () {
+        Route::post('/store', 'kyc_store')->name('store');
+        Route::get('/verification', 'kyc_verification')->name('verification');
+        Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
+        Route::get('/kyc/file/delete', 'delete')->name('file.delete');
+    });
+
+    Route::controller(PharmacyProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', 'profile')->name('index');
+        Route::put('/update', 'update')->name('update');
+        Route::put('/update/password', 'updatePassword')->name('update.password');
+        Route::post('/update/image', 'updateImage')->name('update.image');
+
+        Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
+    });
 });
 
 
@@ -667,6 +688,8 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
+        
+        Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });
 });
 
