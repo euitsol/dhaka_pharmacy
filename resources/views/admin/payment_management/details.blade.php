@@ -155,7 +155,7 @@
                                                     @if (!auth()->user()->can('order_details'))
                                                         {{$payment->order->order_id}}
                                                     @else
-                                                        <a class="btn btn-sm btn-success" href="{{route('om.order.order_details',$payment->order_id)}}">{{$payment->order->order_id}}</a>
+                                                        <a class="btn btn-sm btn-success" href="{{route('om.order.order_details',encrypt($payment->order_id))}}">{{$payment->order->order_id}}</a>
                                                     @endif
                                                     
                                                 </td>

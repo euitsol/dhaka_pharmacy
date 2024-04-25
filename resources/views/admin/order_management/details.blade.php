@@ -309,7 +309,7 @@
                                             'menuItems' => [
                                                 [
                                                     'routeName' => 'pym.payment.payment_details',
-                                                    'params' => [$payment->id],
+                                                    'params' => [encrypt($payment->id)],
                                                     'target' => '_blank',
                                                     'label' => 'Details',
                                                 ],
