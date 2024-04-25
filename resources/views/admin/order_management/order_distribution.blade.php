@@ -122,6 +122,8 @@
     $badgeBg = ($order->status == 2) ? 'badge badge-success' : (($order->status == 1) ? 'badge badge-info' : (($order->status == 0) ? 'badge badge-secondary' : (($order->status == -1) ? 'badge badge-danger' : (($order->status == -2) ? 'badge badge-warning' : 'badge badge-primary'))));
 
     $badgeStatus = ($order->status == 2) ? 'Success' : (($order->status == 1) ? 'Pending' : (($order->status == 0) ? 'Initiated' : (($order->status == -1) ? 'Failed' : (($order->status == -2) ? 'Cancel' : 'Processing')))); 
+
+    
 @endphp
 <div class="order_details_wrap">
     <div class="row px-3">
@@ -130,10 +132,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-body order_details">
+                            <div class="card-header">
                                 <div class="row mb-3">
                                     <div class="col-12 d-flex justify-content-between align-items-center"> 
-                                        <h6 class="color-1 mb-0 change-color">{{__('Order Details')}}</h6> 
+                                        <h4 class="color-1 mb-0">{{__('Order Details')}}</h4> 
                                         @include('admin.partials.button', [
                                                     'routeName' => 'om.order.order_list',
                                                     'className' => 'btn-primary',
@@ -142,62 +144,35 @@
                                                 ])
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-body order_details">
+                                
                                 <div class="row">
                                     <div class="col-12">
                                         <table class="table table-striped">
                                             <tr>
-                                                <th>Customer Name</th>
-                                                <td>:</td>
-                                                <td>{{$order->customer->name}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Customer Phone</th>
-                                                <td>:</td>
-                                                <td>{{$order->customer->phone}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Customer Email</th>
-                                                <td>:</td>
-                                                <td>{{$order->customer->email ?? "--"}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Customer Address</th>
-                                                <td>:</td>
-                                                <td>Mirpur-10, Dhaka</td>
-                                            </tr>
-                                            <tr>
                                                 <th>Order ID</th>
                                                 <td>:</td>
                                                 <td>{{$order->order_id}}</td>
+                                                <th>Delivery Address</th>
+                                                <td>:</td>
+                                                <td>Mirpur-10, Dhaka</td>
                                             </tr>
                                             <tr>
                                                 <th>Order Date</th>
                                                 <td>:</td>
                                                 <td>{{$order->created_date()}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Discount</th>
+                                                <th>Order Status</th>
                                                 <td>:</td>
-                                                <td><span>&#2547; {{number_format($totalDiscount,2)}}</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Sub Total</th>
-                                                <td>:</td>
-                                                <td>
-                                                    <span>&#2547; {{number_format($totalPrice,2)}}</span>
-                                                    @if ($totalRegularPrice !== $totalPrice)
-                                                        <span class="text-danger ms-2"><del>&#2547; {{number_format(($totalRegularPrice), 2)}}</del></span> 
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>Delivery Charges</th>
-                                                <td>:</td>
-                                                <td>Free</td>
+                                                <td><span class="{{$badgeBg}}">{{$badgeStatus}}</span></td>
+                                                
                                             </tr>
                                             <tr>
                                                 <th>Payable Amount</th>
                                                 <td>:</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <th><span>&#2547; </span>{{number_format($totalPrice,2)}}</th>
                                             </tr>
                                         </table>
@@ -210,11 +185,14 @@
                         @csrf
                         <div class="col-md-12 ">
                             <div class="card ">
-                                <div class="card-body order_items">
+                                <div class="card-header">
                                     <div class="row justify-content-between mb-3">
-                                        <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Distribution</h6> </div>
-                                        <div class="col-auto  "> Order Status : <span class="{{$badgeBg}}">{{$badgeStatus}}</span></div>
+                                        <div class="col-auto"> <h4 class="color-1 mb-0">Order Distribution</h4> </div>
+                                        <div class="col-auto  "> Distribution Status : <span class="{{$order_distribution->statusBg($order_distribution->status) ?? 'badge badge-danger'}}">{{$order_distribution->statusTitle($order_distribution->status) ?? 'Not Distributed'}}</span> </div>
                                     </div>
+                                </div>
+                                <div class="card-body order_items">
+                                    
                                         <div class="row">
                                             @foreach ($order_items as $key=>$item)
                                             <div class="col-12">
@@ -271,7 +249,7 @@
                                                         <label>Payment Type</label>
                                                         <select name="payment_type" class="form-control {{ $errors->has('payment_type') ? ' is-invalid' : '' }}">
                                                             <option selected hidden>Select Payment Type</option>
-                                                            <option value="0" {{((isset($order_distribution->payment_type) && $order_distribution->payment_type == 0) || old('payment_type') == 0) ? 'selected' : ''}}>Fix Payment</option>
+                                                            <option value="0" {{((isset($order_distribution->payment_type) && $order_distribution->payment_type == 0) || old('payment_type') == 0) ? 'selected' : ''}}>Fixed Payment</option>
                                                             <option value="1" {{((isset($order_distribution->payment_type) && $order_distribution->payment_type == 1) || old('payment_type') == 1) ? 'selected' : ''}}>Open Payment</option>
                                                         </select>
                                                         @include('alerts.feedback', ['field' => 'payment_type'])
@@ -285,23 +263,6 @@
                                                         </select>
                                                         @include('alerts.feedback', ['field' => 'distribution_type'])
                                                     </div>
-                                                    {{-- <div class="form-group col-md-4">
-                                                        <select name="prep_time" class="form-control">
-                                                            <option selected hidden>Select Prepare Time</option>
-                                                            <option value="5m">5 Minute</option>
-                                                            <option value="10m">10 Minute</option>
-                                                            <option value="15m">15 Minute</option>
-                                                            <option value="20m">20 Minute</option>
-                                                            <option value="25m">25 Minute</option>
-                                                            <option value="30m">30 Minute</option>
-                                                            <option value="35m">35 Minute</option>
-                                                            <option value="40m">40 Minute</option>
-                                                            <option value="45m">45 Minute</option>
-                                                            <option value="50m">50 Minute</option>
-                                                            <option value="55m">55 Minute</option>
-                                                            <option value="1h">1 Houre</option>
-                                                        </select>
-                                                    </div> --}}
                                                     <div class="form-group col-md-4">
                                                         <label >Prepare Time</label>
                                                         <input type="datetime-local" name="prep_time" value="{{isset($order_distribution->prep_time) ? $order_distribution->prep_time : old('prep_time')}}" class="form-control {{ $errors->has('prep_time') ? ' is-invalid' : '' }}">
@@ -314,7 +275,7 @@
                                                     </div>
                                                     
                                                     <div class="form-group col-md-12 text-end">
-                                                        <input type="submit" value="Distribute" class="btn btn-sm btn-primary">
+                                                        <input type="submit" value="Distribute" class="btn btn-primary">
                                                     </div>
                                                 </div>
                                             </div>
@@ -330,81 +291,9 @@
                     
                 </div>
             </div>
-        
-            <div class="card-footer col-md-12">
-                <div class="jumbotron-fluid">
-                    <div class="row justify-content-between ">
-                        <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">TOTAL AMOUNT</h2></div>
-                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format($totalPrice,2)}}</h1></div>
-                    </div>
-                </div>
-            </div>
         </div>
         
 
-    </div>
-</div>
-<div class="payment_details_wrap">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-8">
-                            <h4 class="card-title">{{ __("Payments") }}</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped datatable">
-                        <thead>
-                            <tr>
-                                <th>{{ __('SL') }}</th>
-                                <th>{{ __('Transaction ID') }}</th>
-                                <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
-                                <th>{{ __('Created by') }}</th>
-                                <th>{{ __('Action') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($payments as $payment)
-                            @php
-                                $statusBgColor = ($payment->status == 1) ? 'badge badge-success' : (($payment->status == 0) ? 'badge badge-info' : (($payment->status == -1) ? 'badge badge-danger' : (($payment->status == -2) ? 'badge badge-warning' : 'badge badge-primary')));
-
-                                $status = ($payment->status == 1) ? 'Success' : (($payment->status == 0) ? 'Pending' : (($payment->status == -1) ? 'Failed' : (($payment->status == -2) ? 'Cancel' : 'Processing')));
-                            @endphp
-                                <tr>
-                                    <td> {{ $loop->iteration }} </td>
-                                    <td>{{ $payment->transaction_id }}</td>
-                                    <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
-                                    <td>{{ $order->created_date() }}</td>
-
-                                    <td> {{ $order->creater_name() }} </td>
-                                    <td>
-                                        @include('admin.partials.action_buttons', [
-                                            'menuItems' => [
-                                                [
-                                                    'routeName' => 'pym.payment.payment_details',
-                                                    'params' => [encrypt($payment->id)],
-                                                    'target' => '_blank',
-                                                    'label' => 'Details',
-                                                ],
-                                            ],
-                                        ])
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer py-4">
-                    <nav class="d-flex justify-content-end" aria-label="...">
-                    </nav>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 @endsection

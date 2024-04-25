@@ -125,19 +125,14 @@
                 <div class="row">
                     <div class="col-md-7 ">
                         <div class="card ">
-                            <div class="card-body order_items">
-                                <div class="row justify-content-between mb-3">
-                                    <div class="col-auto"> <h6 class="color-1 mb-0 change-color">Order Items</h6> </div>
-    
-                                    @php
-                                        $badgeBg = ($order->status == 2) ? 'badge badge-success' : (($order->status == 1) ? 'badge badge-info' : (($order->status == 0) ? 'badge badge-secondary' : (($order->status == -1) ? 'badge badge-danger' : (($order->status == -2) ? 'badge badge-warning' : 'badge badge-primary'))));
-    
-                                        $badgeStatus = ($order->status == 2) ? 'Success' : (($order->status == 1) ? 'Pending' : (($order->status == 0) ? 'Initiated' : (($order->status == -1) ? 'Failed' : (($order->status == -2) ? 'Cancel' : 'Processing')))); 
-    
-                                    @endphp
-    
-                                    <div class="col-auto  "> Order Status : <span class="{{$badgeBg}}">{{$badgeStatus}}</span></div>
+                            <div class="card-header">
+                                <div class="row justify-content-between mb-4">
+                                    <div class="col-auto"> <h4 class="color-1 mb-0">Order Items</h4> </div>
+                                    <div class="col-auto  "> Order Status : <span class="{{$order->statusBg($order->status)}}">{{$order->statusTitle($order->status)}}</span></div>
                                 </div>
+                            </div>
+                            <div class="card-body order_items">
+                                
                                 <div class="row">
                                     @foreach ($order_items as $item)
                                     <div class="col-12">
@@ -176,45 +171,33 @@
                     </div>
                     <div class="col-md-5">
                         <div class="card">
-                            <div class="card-body order_details">
+                            <div class="card-header">
                                 <div class="row mb-3">
                                     <div class="col-12 d-flex justify-content-between align-items-center"> 
-                                        <h6 class="color-1 mb-0 change-color">{{__('Order Details')}}</h6> 
+                                        <h4 class="color-1 mb-0">{{__('Order Details')}}</h4> 
                                         @include('admin.partials.button', [
                                                     'routeName' => 'om.order.order_list',
                                                     'className' => 'btn-primary',
-                                                    'params'=>strtolower($badgeStatus),
+                                                    'params'=>strtolower($order->statusTitle($order->status)),
                                                     'label' => 'Back',
                                                 ])
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-body order_details">
+                                
                                 <div class="row">
                                     <div class="col-12">
                                         <table class="table table-striped">
                                             <tr>
-                                                <th>Customer Name</th>
-                                                <td>:</td>
-                                                <td>{{$order->customer->name}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Customer Phone</th>
-                                                <td>:</td>
-                                                <td>{{$order->customer->phone}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Customer Email</th>
-                                                <td>:</td>
-                                                <td>{{$order->customer->email ?? "--"}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Customer Address</th>
-                                                <td>:</td>
-                                                <td>Mirpur-10, Dhaka</td>
-                                            </tr>
-                                            <tr>
                                                 <th>Order ID</th>
                                                 <td>:</td>
                                                 <td>{{$order->order_id}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Delivery Address</th>
+                                                <td>:</td>
+                                                <td>Mirpur-10, Dhaka</td>
                                             </tr>
                                             <tr>
                                                 <th>Order Date</th>
@@ -285,8 +268,7 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Transaction ID') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
-                                <th>{{ __('Created by') }}</th>
+                                <th>{{ __('Payment date') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -302,8 +284,6 @@
                                     <td>{{ $payment->transaction_id }}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
                                     <td>{{ $order->created_date() }}</td>
-
-                                    <td> {{ $order->creater_name() }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

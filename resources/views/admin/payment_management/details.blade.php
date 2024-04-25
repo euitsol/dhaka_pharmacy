@@ -119,21 +119,20 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-header">
                                 <div class="row mb-3">
-                                    @php
-                                        $Status = ($payment->status == 1) ? 'Success' : (($payment->status == 0) ? 'Pending' : (($payment->status == -1) ? 'Failed' : (($payment->status == -2) ? 'Cancel' : 'Processing'))); 
-                                    @endphp
                                     <div class="col-12 d-flex justify-content-between align-items-center"> 
-                                        <h6 class="color-1 mb-0 change-color">{{__('Payment Details')}}</h6> 
+                                        <h4 class="color-1 mb-0">{{__('Payment Details')}}</h4> 
                                         @include('admin.partials.button', [
                                                     'routeName' => 'pym.payment.payment_list',
                                                     'className' => 'btn-primary',
-                                                    'params'=>strtolower($Status),
+                                                    'params'=>strtolower($payment->statusTitle($payment->status)),
                                                     'label' => 'Back',
                                                 ])
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
                                         <table class="table table-striped">
@@ -232,17 +231,17 @@
                                             <tr>
                                                 <th>Currency Rate</th>
                                                 <td>:</td>
-                                                <td>{{number_format(json_decode($payment->details,true)['currency_rate'],2)}}</td>
+                                                <td>{{isset(json_decode($payment->details,true)['currency_rate']) ? number_format(json_decode($payment->details,true)['currency_rate'],2) : ''}}</td>
                                                 <th>Currency Type</th>
                                                 <td>:</td>
                                                 <td>{{json_decode($payment->details,true)['currency_type'] ?? '--'}}</td>
                                             </tr>
                                             <tr>
+                                                <th>Payment Status</th>
+                                                <td>:</td>
+                                                <th><span class="{{$payment->statusBg($payment->status)}}">{{$payment->statusTitle($payment->status)}}</span></th>
                                                 <th>Payable Amount</th>
                                                 <td>:</td>
-                                                <td></td>
-                                                <th></th>
-                                                <td></td>
                                                 <th><span>&#2547; </span>{{number_format(($payment->amount),2)}}</th>
                                             </tr>
                                         </table>
@@ -253,7 +252,7 @@
                                 <div class="jumbotron-fluid">
                                     <div class="row justify-content-between ">
                                         <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">PAID AMOUNT</h2></div>
-                                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{json_decode($payment->details,true)['amount'] ? number_format((json_decode($payment->details,true)['amount']),2) : '--'}}</h1></div>
+                                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{isset(json_decode($payment->details,true)['amount']) ? number_format((json_decode($payment->details,true)['amount']),2) : '--'}}</h1></div>
                                     </div>
                                 </div>
                             </div>

@@ -56,7 +56,7 @@ class OrderManagementController extends Controller
     }
 
     public function order_distribution($id){
-        $data['order'] = Order::with('address','customer','payments','ref_user')->findOrFail(decrypt($id));
+        $data['order'] = Order::with(['address','customer','payments','ref_user'])->findOrFail(decrypt($id));
         $data['payments'] = Payment::where('order_id',decrypt($id))->latest()->get();
         $data['order_items'] = [];
         foreach(json_decode($data['order']->carts) as $cart_id){

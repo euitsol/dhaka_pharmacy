@@ -18,11 +18,10 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Customer') }}</th>
                                 <th>{{ __('Order ID') }}</th>
+                                <th>{{ __('Total Product') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
-                                <th>{{ __('Created by') }}</th>
+                                <th>{{ __('Order date') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -30,12 +29,10 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td>{{ $order->customer->name }}</td>
                                     <td>{{ $order->order_id }}</td>
+                                    <td>{{ count(json_decode($order->carts,true)) }}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
                                     <td>{{ $order->created_date() }}</td>
-
-                                    <td> {{ $order->created_user_name() }} </td>
                                     <td>
                                         @if($order->status == 1)
                                             @include('admin.partials.action_buttons', [
