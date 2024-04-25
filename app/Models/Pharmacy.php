@@ -26,4 +26,8 @@ class Pharmacy extends AuthenticateBaseModel
     {
         return $this->belongsTo(OperationSubArea::class, 'osa_id');
     }
+
+    public function odps(){
+        return $this->hasMany(OrderDistributionPharmacy::class,'pharmacy_id','id');
+    }
 }

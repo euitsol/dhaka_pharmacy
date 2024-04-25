@@ -533,6 +533,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('/{status}', 'index')->name('order_list');
             Route::get('/details/{id}', 'details')->name('order_details');
             Route::get('/order-distribution/{id}', 'order_distribution')->name('order_distribution');
+            Route::post('/order-distribution/{order_id}', 'order_distribution_store')->name('order_distribution');
         });
        
     });

@@ -163,10 +163,10 @@
                                             <tr>
                                                 <th>Transaction Date</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['tran_date']  ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['tran_date']  ?? '--'}}</td>
                                                 <th>Transaction ID</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['tran_id']  ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['tran_id']  ?? '--'}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Discount</th>
@@ -187,44 +187,44 @@
                                                 <td>Free</td>
                                                 <th>Card Type</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['card_type'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['card_type'] ?? '--'}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Bank Tran ID</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['bank_tran_id'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['bank_tran_id'] ?? '--'}}</td>
                                                 <th>Status</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['status'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['status'] ?? '--'}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Currency</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['currency'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['currency'] ?? '--'}}</td>
                                                 <th>Card Issuer</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['card_issuer'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['card_issuer'] ?? '--'}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Card Brand</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['card_brand'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['card_brand'] ?? '--'}}</td>
                                                 <th>Card Sub Brand</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['card_sub_brand'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['card_sub_brand'] ?? '--'}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Country</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['card_issuer_country'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['card_issuer_country'] ?? '--'}}</td>
                                                 <th>Country Code</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['card_issuer_country_code'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['card_issuer_country_code'] ?? '--'}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Store ID</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['store_id'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['store_id'] ?? '--'}}</td>
                                                 <th>Store Amount</th>
                                                 <td>:</td>
                                                 <td>{!! isset(json_decode($payment->details,true)['store_amount']) ? "&#2547; ". number_format(json_decode($payment->details,true)['store_amount'],2) : '0.00' !!}</td>
@@ -235,7 +235,7 @@
                                                 <td>{{number_format(json_decode($payment->details,true)['currency_rate'],2)}}</td>
                                                 <th>Currency Type</th>
                                                 <td>:</td>
-                                                <td>{{json_decode($payment->details,true)['currency_type'] ?? ''}}</td>
+                                                <td>{{json_decode($payment->details,true)['currency_type'] ?? '--'}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Payable Amount</th>
@@ -253,7 +253,7 @@
                                 <div class="jumbotron-fluid">
                                     <div class="row justify-content-between ">
                                         <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">PAID AMOUNT</h2></div>
-                                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format((json_decode($payment->details,true)['amount']),2)}}</h1></div>
+                                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{json_decode($payment->details,true)['amount'] ? number_format((json_decode($payment->details,true)['amount']),2) : '--'}}</h1></div>
                                     </div>
                                 </div>
                             </div>

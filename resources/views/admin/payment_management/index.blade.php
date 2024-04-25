@@ -32,8 +32,8 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $payment->customer->name }}</td>
-                                    <td>{{json_decode($payment->details,true)['tran_id']}}</td>
-                                    <td>&#2547;{{number_format((json_decode($payment->details,true)['amount']),2)}}</td>
+                                    <td>{{json_decode($payment->details,true)['tran_id'] ?? '--'}}</td>
+                                    <td>&#2547;{{json_decode($payment->details,true)['amount'] ? number_format((json_decode($payment->details,true)['amount']),2) : '--'}}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
                                     <td>{{ $payment->created_date() }}</td>
 
