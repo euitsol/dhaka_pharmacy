@@ -43,4 +43,9 @@ class LoginController extends BaseController
         }
         return redirect()->route('pharmacy.login');
     }
+    public function logout()
+    {
+        Auth::guard('pharmacy')->logout();
+        return redirect()->route('pharmacy.login');
+    }
 }

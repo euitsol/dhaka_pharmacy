@@ -10,6 +10,7 @@ use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
@@ -40,6 +41,17 @@ class PharmacyController extends Controller
     {
         $data['pharmacy'] = Pharmacy::with(['creater','updater'])->findOrFail($id);
         return view('admin.pharmacy_management.pharmacy.profile',$data);
+    }
+    public function loginAs($id)
+    {
+        $user = Pharmacy::findOrFail($id);
+        if ($user) {
+            Auth::guard('pharmacy')->login($user);
+            return redirect()->route('pharmacy.dashboard');
+        } else {
+            flash()->addError('Pharmacy not found');
+            return redirect()->back();
+        }
     }
     public function create(): View
     {

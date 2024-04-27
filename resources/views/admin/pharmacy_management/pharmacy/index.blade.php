@@ -49,6 +49,11 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
+                                                    'routeName' => 'pm.pharmacy.login_as.pharmacy_profile',   
+                                                    'params' => [$pharmacy->id], 
+                                                    'label' => 'Login As',
+                                                    'target'=>'_blank'],
+                                                [
                                                     'routeName' => 'pm.pharmacy.pharmacy_profile',
                                                     'params' => [$pharmacy->id],
                                                     'label' => 'Profile',

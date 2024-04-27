@@ -258,6 +258,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::controller(AdminPharmacyController::class, 'pharmacy')->prefix('pharmacy')->name('pharmacy.')->group(function () {
             Route::get('index', 'index')->name('pharmacy_list');
             Route::get('details/{id}', 'details')->name('details.pharmacy_list');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.pharmacy_profile');
             Route::get('profile/{id}', 'profile')->name('pharmacy_profile');
             Route::get('create', 'create')->name('pharmacy_create');
             Route::post('create', 'store')->name('pharmacy_create');
