@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'order_details'])
+@extends('admin.layouts.master', ['pageSlug' => 'order_'.$status])
 @push('css')
 
 <style>
@@ -128,13 +128,13 @@
                             <div class="card-header">
                                 <div class="row mb-3">
                                     <div class="col-12 d-flex justify-content-between align-items-center"> 
-                                        <h4 class="color-1 mb-0">{{__('Order Details')}}</h4> 
+                                        <h4 class="color-1 mb-0">{{__('Distributed Order Edit')}}</h4> 
                                         @include('admin.partials.button', [
-                                                    'routeName' => 'om.order.order_list',
-                                                    'className' => 'btn-primary',
-                                                    'params'=>strtolower($order->statusTitle($order->status)),
-                                                    'label' => 'Back',
-                                                ])
+                                                'routeName' => 'do.do_details',
+                                                'className' => 'btn-success',
+                                                'params' => [encrypt($do->id),encrypt($do->pharmacy->id)],
+                                                'label' => 'Back',
+                                            ])
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
                                             <tr>
                                                 <th>Order ID</th>
                                                 <td>:</td>
-                                                <td>{{$order->order_id}}</td>
+                                                <td>{{$do->order->order_id}}</td>
                                                 <th>Delivery Address</th>
                                                 <td>:</td>
                                                 <td>Mirpur-10, Dhaka</td>
@@ -154,10 +154,10 @@
                                             <tr>
                                                 <th>Order Date</th>
                                                 <td>:</td>
-                                                <td>{{$order->created_date()}}</td>
+                                                <td>{{$do->order->created_date()}}</td>
                                                 <th>Order Status</th>
                                                 <td>:</td>
-                                                <td><span class="{{$order->statusBg($order->status)}}">{{$order->statusTitle($order->status)}}</span></td>
+                                                <td><span class="{{$do->order->statusBg($do->order->status)}}">{{$do->order->statusTitle($do->order->status)}}</span></td>
                                                 
                                             </tr>
                                             <tr>
@@ -174,42 +174,42 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('om.order.order_distribution',encrypt($order->id))}}" method="POST" class="px-0">
+                    <form action="{{route('do.do_update',['order_id'=>encrypt($do->order->id), 'status'=>$status])}}" method="POST" class="px-0">
                         @csrf
                         <div class="col-md-12 ">
                             <div class="card ">
                                 <div class="card-header">
                                     <div class="row justify-content-between mb-3">
                                         <div class="col-auto"> <h4 class="color-1 mb-0">Order Distribution</h4> </div>
-                                        <div class="col-auto  "> Distribution Status : <span class="{{$order_distribution->statusBg($order_distribution->status) ?? 'badge badge-danger'}}">{{$order_distribution->statusTitle($order_distribution->status) ?? 'Not Distributed'}}</span> </div>
+                                        <div class="col-auto  "> Distribution Status : <span class="{{$do->statusBg($do->status) ?? 'badge badge-danger'}}">{{$do->statusTitle($do->status) ?? 'Not Distributed'}}</span> </div>
                                     </div>
                                 </div>
                                 <div class="card-body order_items">
                                     
                                         <div class="row">
-                                            @foreach ($order_items as $key=>$item)
+                                            @foreach ($do->dops as $key=>$dop)
                                             <div class="col-12">
-                                                    <input type="hidden" name="datas[{{$key}}][cart_id]" value="{{$item->id}}">
+                                                    <input type="hidden" name="datas[{{$key}}][cart_id]" value="{{$dop->cart->id}}">
                                                     <div class="card card-2 mb-3">
                                                         <div class="card-body">
                                                             <div class="row align-items-center">
                                                                 <div class="col-9">
                                                                     <div class="media">
-                                                                        <div class="sq align-self-center "> <img class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="{{storage_url($item->product->image)}}" width="135" height="135" /> </div>
+                                                                        <div class="sq align-self-center "> <img class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="{{storage_url($dop->cart->product->image)}}" width="135" height="135" /> </div>
                                                                         <div class="media-body my-auto text-center">
                                                                             <div class="row  my-auto flex-column flex-md-row px-3">
-                                                                                <div class="col my-auto"> <h6 class="mb-0 text-start">{{$item->product->name}}</h6>  </div>
-                                                                                <div class="col-auto my-auto"> <small>{{$item->product->pro_cat->name}} </small></div>
-                                                                                <div class="col my-auto"> <small>Qty : {{$item->quantity}}</small></div>
-                                                                                <div class="col my-auto"> <small>Pack : {{$item->unit->name ?? 'Piece'}}</small></div>
+                                                                                <div class="col my-auto"> <h6 class="mb-0 text-start">{{$dop->cart->product->name}}</h6>  </div>
+                                                                                <div class="col-auto my-auto"> <small>{{$dop->cart->product->pro_cat->name}} </small></div>
+                                                                                <div class="col my-auto"> <small>Qty : {{$dop->cart->quantity}}</small></div>
+                                                                                <div class="col my-auto"> <small>Pack : {{$dop->cart->unit->name ?? 'Piece'}}</small></div>
                                                                                 <div class="col my-auto">
                                                                                     <h6 class="mb-0 text-end">
-                                                                                        @if (productDiscountPercentage($item->product->id))
-                                                                                        <span class="text-danger"><del>&#2547; {{number_format((($item->product->regular_price*$item->unit->quantity) * $item->quantity), 2)}}</del></span> 
+                                                                                        @if (productDiscountPercentage($dop->cart->product->id))
+                                                                                        <span class="text-danger"><del>&#2547; {{number_format((($dop->cart->product->regular_price*$dop->cart->unit->quantity) * $dop->cart->quantity), 2)}}</del></span> 
                                                                                         @endif
                                                                                     </h6>
                                                                                     <h6 class="mb-0 text-end">
-                                                                                        <span>&#2547; {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}</span> 
+                                                                                        <span>&#2547; {{number_format((($dop->cart->product->price*($dop->cart->unit->quantity ?? 1)) * $dop->cart->quantity), 2)}}</span> 
                                                                                     </h6>
                                                                                     
                                                                                 </div>
@@ -222,7 +222,7 @@
                                                                         <select name="datas[{{$key}}][pharmacy_id]" class="form-control {{ $errors->has('datas.'.$key.'.pharmacy_id') ? ' is-invalid' : '' }}">
                                                                             <option selected hidden>Select Pharmacy</option>
                                                                             @foreach ($pharmacies as $pharmacy)
-                                                                                <option @if((isset($order_distribution->odps) && $order_distribution->odps[$key]->pharmacy_id == $pharmacy->id) || (old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
+                                                                                <option @if((isset($do->odps) && $do->odps[$key]->pharmacy_id == $pharmacy->id) || (old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
                                                                             @endforeach
                                                                         </select>
                                                                         
@@ -242,8 +242,8 @@
                                                         <label>Payment Type</label>
                                                         <select name="payment_type" class="form-control {{ $errors->has('payment_type') ? ' is-invalid' : '' }}">
                                                             <option selected hidden>Select Payment Type</option>
-                                                            <option value="0" {{((isset($order_distribution->payment_type) && $order_distribution->payment_type == 0) || old('payment_type') == 0) ? 'selected' : ''}}>Fixed Payment</option>
-                                                            <option value="1" {{((isset($order_distribution->payment_type) && $order_distribution->payment_type == 1) || old('payment_type') == 1) ? 'selected' : ''}}>Open Payment</option>
+                                                            <option value="0" {{((isset($do->payment_type) && $do->payment_type == 0) || old('payment_type') == 0) ? 'selected' : ''}}>Fixed Payment</option>
+                                                            <option value="1" {{((isset($do->payment_type) && $do->payment_type == 1) || old('payment_type') == 1) ? 'selected' : ''}}>Open Payment</option>
                                                         </select>
                                                         @include('alerts.feedback', ['field' => 'payment_type'])
                                                     </div>
@@ -251,24 +251,24 @@
                                                         <label>Distribution Type</label>
                                                         <select name="distribution_type" class="form-control {{ $errors->has('distribution_type') ? ' is-invalid' : '' }}">
                                                             <option selected hidden>Select Distribution Type</option>
-                                                            <option value="0" {{((isset($order_distribution->distribution_type) && $order_distribution->distribution_type == 0) || old('distribution_type') == 0) ? 'selected' : ''}}>Normal Distribution</option>
-                                                            <option value="1" {{((isset($order_distribution->distribution_type) && $order_distribution->distribution_type == 1) || old('distribution_type') == 1) ? 'selected' : ''}}>Priority Distribution</option>
+                                                            <option value="0" {{((isset($do->distribution_type) && $do->distribution_type == 0) || old('distribution_type') == 0) ? 'selected' : ''}}>Normal Distribution</option>
+                                                            <option value="1" {{((isset($do->distribution_type) && $do->distribution_type == 1) || old('distribution_type') == 1) ? 'selected' : ''}}>Priority Distribution</option>
                                                         </select>
                                                         @include('alerts.feedback', ['field' => 'distribution_type'])
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                         <label >Prepare Time</label>
-                                                        <input type="datetime-local" name="prep_time" value="{{isset($order_distribution->prep_time) ? $order_distribution->prep_time : old('prep_time')}}" class="form-control {{ $errors->has('prep_time') ? ' is-invalid' : '' }}">
+                                                        <input type="datetime-local" name="prep_time" value="{{isset($do->prep_time) ? $do->prep_time : old('prep_time')}}" class="form-control {{ $errors->has('prep_time') ? ' is-invalid' : '' }}">
                                                         @include('alerts.feedback', ['field' => 'prep_time'])
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label >Note</label>
-                                                        <textarea name="note" class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}" placeholder="Enter order instraction for pharmacy">{{isset($order_distribution->note) ? $order_distribution->note : old('note')}}</textarea>
+                                                        <textarea name="note" class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}" placeholder="Enter order instraction for pharmacy">{{isset($do->note) ? $do->note : old('note')}}</textarea>
                                                         @include('alerts.feedback', ['field' => 'note'])
                                                     </div>
                                                     
                                                     <div class="form-group col-md-12 text-end">
-                                                        <input type="submit" value="Distribute" class="btn btn-primary">
+                                                        <input type="submit" value="Update" class="btn btn-primary">
                                                     </div>
                                                 </div>
                                             </div>

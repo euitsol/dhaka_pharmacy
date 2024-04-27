@@ -573,6 +573,66 @@
             {{-- @endif --}}
             {{-- Payment Managements --}}
             {{-- @if (mainMenuCheck(['ns'])) --}}
+
+            {{-- Distributed Order  --}}
+            <li>
+                <a class="@if ($pageSlug == 'order_distributed' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
+                    href="#distributed_order"
+                    @if ($pageSlug == 'order_distributed' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-truck-fast"></i>
+                    <span class="nav-link-text">{{ __('Distributed Orders') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'order_distributed' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') show @endif" id="distributed_order">
+                    <ul class="nav pl-2">
+                        @include('admin.partials.menu_buttons', [
+                            'menuItems' => [
+                                [
+                                    'pageSlug' => 'order_distributed',
+                                    'routeName' => 'do.do_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'distributed',
+                                    'label' => 'Distributed',
+                                ],
+                                [
+                                    'pageSlug' => 'order_preparing',
+                                    'routeName' => 'do.do_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'preparing',
+                                    'label' => 'Preparing',
+                                ],
+                                [
+                                    'pageSlug' => 'order_waiting-for-pickup',
+                                    'routeName' => 'do.do_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'waiting-for-pickup',
+                                    'label' => 'Waiting For Pickup',
+                                ],
+                                [
+                                    'pageSlug' => 'order_picked-up',
+                                    'routeName' => 'do.do_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'picked-up',
+                                    'label' => 'Picked Up',
+                                ],
+                                [
+                                    'pageSlug' => 'order_finish',
+                                    'routeName' => 'do.do_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'finish',
+                                    'label' => 'Finish',
+                                ],
+                            ],
+                        ])
+                    </ul>
+                </div>
+            </li>
+
+
+
+
+            {{-- Payment Management  --}}
             <li>
                 <a class="@if ($pageSlug == 'payment_Success' || $pageSlug == 'payment_details' || $pageSlug == 'payment_Failed' || $pageSlug == 'payment_Cancel' || $pageSlug == 'payment_Pending' || $pageSlug == 'payment_Processing') @else collapsed @endif" data-toggle="collapse"
                     href="#payment_management"

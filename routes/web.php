@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DistributedOrder\DistributedOrderController;
 use App\Http\Controllers\Admin\DM_Management\DistrictManagerController;
 use App\Http\Controllers\Admin\DM_Management\DmKycController;
 use App\Http\Controllers\Admin\DM_Management\DmKycSettingsController;
@@ -538,6 +539,16 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
        
     });
+
+    // Admin Distributed Order
+    Route::controller(DistributedOrderController::class, 'distributed-order')->prefix('distributed-order')->name('do.')->group(function () {
+        Route::get('/{status}', 'index')->name('do_list');
+        Route::get('/details/{do_id}/{pid}', 'details')->name('do_details');
+        Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
+        Route::post('/update/{order_id}/{status}', 'update')->name('do_update');
+    });
+       
+
 
     // Admin Payment Management
     Route::group(['as' => 'pym.', 'prefix' => 'payment-management'], function () {
