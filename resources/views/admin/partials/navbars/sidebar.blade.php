@@ -579,7 +579,7 @@
                 <a class="@if ($pageSlug == 'order_distributed' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
                     href="#distributed_order"
                     @if ($pageSlug == 'order_distributed' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
-                    <i class="fa-solid fa-truck-fast"></i>
+                    <i class="fa-solid fa-network-wired"></i>
                     <span class="nav-link-text">{{ __('Distributed Orders') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
