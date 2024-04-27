@@ -31,6 +31,39 @@
                     <p>{{ 'Operation Areas' }}</p>
                 </a>
             </li>
+
+            <li>
+                <a class="@if ($pageSlug == 'pending_orders' || $pageSlug == 'distributed_orders' || $pageSlug == 'dispute_orders') @else collapsed @endif" data-toggle="collapse"
+                    href="#order_managements"
+                    @if ($pageSlug == 'pending_orders' || $pageSlug == 'distributed_orders' || $pageSlug == 'dispute_orders') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-network-wired"></i>
+                    <span class="nav-link-text">{{ __('Order Managements') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'pending_orders' || $pageSlug == 'distributed_orders' || $pageSlug == 'dispute_orders') show @endif" id="order_managements">
+                    <ul class="nav pl-2">
+                        <li @if ($pageSlug == 'pending_orders') class="active" @endif>
+                            <a href="{{ route('pharmacy.order_management.index','pending') }}">
+                                <i class="fa-solid fa-minus @if ($pageSlug == 'pending_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Pending Orders' }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'distributed_orders') class="active" @endif>
+                            <a href="{{ route('pharmacy.order_management.index','distributed') }}">
+                                <i class="fa-solid fa-minus @if ($pageSlug == 'distributed_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Distributed Orders' }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'dispute_orders') class="active" @endif>
+                            <a href="{{ route('pharmacy.order_management.index','dispute') }}">
+                                <i class="fa-solid fa-minus @if ($pageSlug == 'dispute_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Dispute Orders' }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </div>

@@ -68,6 +68,7 @@ use App\Http\Controllers\Admin\PaymentManagement\PaymentManagementController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
+use App\Http\Controllers\Pharmacy\OrderManagementController as PharmacyOrderManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -589,6 +590,14 @@ Route::group(['middleware' => 'pharmacy','as' => 'pharmacy.', 'prefix' => 'pharm
 
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });
+
+    Route::controller(PharmacyOrderManagementController::class, 'order-management')->prefix('order-management')->name('order_management.')->group(function () {
+        Route::get('/{status}', 'index')->name('index');
+        Route::get('details/{do_id}/{status}', 'details')->name('details');
+        Route::post('update/', 'update')->name('update');
+    });
+
+
     Route::controller(PharmacyOperationalAreaController::class, 'operational-area')->prefix('operational-area')->name('operational_area.')->group(function () {
         Route::get('index', 'index')->name('list');
     });

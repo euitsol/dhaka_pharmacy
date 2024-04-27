@@ -28,14 +28,6 @@ class DistributedOrderController extends Controller
         $data['status'] = $status;
         $data['dos'] = OrderDistribution::with(['order','odps'])->where('status',$this->getStatus($status))->get()
                     ->map(function($do,$key){
-                        $duration = Carbon::parse($do->prep_time)->diff(Carbon::parse($do->created_at));
-                        $formattedDuration = '';
-                        if ($duration->h > 0) {
-                            $formattedDuration .= $duration->h . ' hours ';
-                        }
-                        if ($duration->i > 0) {
-                            $formattedDuration .= $duration->i . ' minutes';
-                        }
                         $do->prep_time = $do->readablePrepTime();
                         $do['dops'] = $do->odps->groupBy('pharmacy_id')
                         ->map(function($dop,$key){
