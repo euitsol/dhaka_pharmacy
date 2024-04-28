@@ -64,8 +64,8 @@
                             </div>
                         </div>
                         @foreach ($do->dops as $key=>$dop)
-                            <div class="col-12">
-                                <div class="card card-2">
+                            <div class="col-12 status_wrap">
+                                <div class="card card-2 mb-0 mt-3">
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="sq align-self-center "> <img
@@ -101,52 +101,18 @@
                                                                 <input type="hidden" name="data[{{$key}}][dop_id]" value="{{$dop->id}}">
                                                                 @if($status == 0)
                                                                     <div class="form-check form-check-radio">
-                                                                        <label class="form-check-label me-2" for="status{{$key}}">
-                                                                            <input class="form-check-input" type="radio"
-                                                                                name="data[{{$key}}][status]" id="status{{$key}}"
+                                                                        <label class="form-check-label me-2" for="status_{{$key}}">
+                                                                            <input class="form-check-input do_status" type="radio"
+                                                                                name="data[{{$key}}][status]" id="status_{{$key}}"
                                                                                 value="1" checked>
                                                                                 Distributed
                                                                             <span class="form-check-sign"></span>
                                                                         </label>
-                                                                        <label class="form-check-label" for="status2">
-                                                                            <input class="form-check-input" type="radio"
-                                                                                name="data[{{$key}}][status]" id="status2"
+                                                                        <label class="form-check-label" for="status{{$key}}">
+                                                                            <input class="form-check-input do_status" type="radio"
+                                                                                name="data[{{$key}}][status]" id="status{{$key}}"
                                                                                 value="2">
                                                                                 Dispute
-                                                                            <span class="form-check-sign"></span>
-                                                                        </label>
-                                                                    </div>
-                                                                @elseif($status == 1)
-                                                                    <div class="form-check form-check-radio">
-                                                                        <label class="form-check-label me-2" for="status{{$key}}">
-                                                                            <input class="form-check-input" type="radio"
-                                                                                name="data[{{$key}}][status]" id="status{{$key}}"
-                                                                                value="0">
-                                                                                Pending
-                                                                            <span class="form-check-sign"></span>
-                                                                        </label>
-                                                                        <label class="form-check-label" for="status2">
-                                                                            <input class="form-check-input" type="radio"
-                                                                                name="data[{{$key}}][status]" id="status2"
-                                                                                value="2" >
-                                                                                Dispute
-                                                                            <span class="form-check-sign"></span>
-                                                                        </label>
-                                                                    </div>
-                                                                @else
-                                                                    <div class="form-check form-check-radio">
-                                                                        <label class="form-check-label me-2" for="status{{$key}}">
-                                                                            <input class="form-check-input" type="radio"
-                                                                                name="data[{{$key}}][status]" id="status{{$key}}"
-                                                                                value="0">
-                                                                                Pending
-                                                                            <span class="form-check-sign"></span>
-                                                                        </label>
-                                                                        <label class="form-check-label" for="status2">
-                                                                            <input class="form-check-input" type="radio"
-                                                                                name="data[{{$key}}][status]" id="status2"
-                                                                                value="1" >
-                                                                                Distributed
                                                                             <span class="form-check-sign"></span>
                                                                         </label>
                                                                     </div>
@@ -158,6 +124,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="input-group status_note" style="display: none">
+                                    <textarea name="data[{{$key}}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
                                 </div>
                             </div>
                         @endforeach
@@ -171,3 +140,18 @@
         </div>
     </div>
 @endsection
+@push('js')
+<script>
+    $(document).ready(function(){
+        $('.do_status').on('change',function(){
+            if($(this).val() == 2){
+                $(this).closest('.status_wrap').find('.status_note').show();
+            }else{
+                $(this).closest('.status_wrap').find('.status_note').hide();
+                $(this).closest('.status_wrap').find('.status_note .form-control').val('');
+            }
+        });
+    });
+</script>
+    
+@endpush
