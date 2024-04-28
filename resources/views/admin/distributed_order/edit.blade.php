@@ -42,7 +42,7 @@
                                                 <td>{{$do->order->created_date()}}</td>
                                                 <th>Order Status</th>
                                                 <td>:</td>
-                                                <td><span class="{{$do->order->statusBg($do->order->status)}}">{{$do->order->statusTitle($do->order->status)}}</span></td>
+                                                <td><span class="{{$do->order->statusBg()}}">{{$do->order->statusTitle()}}</span></td>
                                                 
                                             </tr>
                                             <tr>
@@ -66,7 +66,7 @@
                                 <div class="card-header">
                                     <div class="row justify-content-between mb-3">
                                         <div class="col-auto"> <h4 class="color-1 mb-0">Order Distribution</h4> </div>
-                                        <div class="col-auto  "> Distribution Status : <span class="{{$do->statusBg($do->status) ?? 'badge badge-danger'}}">{{$do->statusTitle($do->status) ?? 'Not Distributed'}}</span> </div>
+                                        <div class="col-auto  "> Distribution Status : <span class="{{$do->statusBg() ?? 'badge badge-danger'}}">{{$do->statusTitle() ?? 'Not Distributed'}}</span> </div>
                                     </div>
                                 </div>
                                 <div class="card-body order_items">

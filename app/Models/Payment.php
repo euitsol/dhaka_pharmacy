@@ -21,8 +21,8 @@ class Payment extends BaseModel
         return $query->where('status',$db_status);
     } 
 
-    public function statusBg($status) {
-        switch ($status) {
+    public function statusBg() {
+        switch ($this->status) {
             case 0:
                 return 'badge badge-info';
             case 1:
@@ -35,8 +35,8 @@ class Payment extends BaseModel
                 return 'badge badge-primary';
         }
     }
-    public function statusTitle($status) {
-        switch ($status) {
+    public function statusTitle() {
+        switch ($this->status) {
             case 0:
                 return 'Pending';
             case 1:

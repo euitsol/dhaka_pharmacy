@@ -31,8 +31,8 @@ class Order extends BaseModel
     }
 
 
-    public function statusBg($status) {
-        switch ($status) {
+    public function statusBg() {
+        switch ($this->status) {
             case 0:
                 return 'badge badge-secondary';
             case 1:
@@ -48,8 +48,8 @@ class Order extends BaseModel
         }
     }
     
-    public function statusTitle($status) {
-        switch ($status) {
+    public function statusTitle() {
+        switch ($this->status) {
             case 0:
                 return 'Initiated';
             case 1:

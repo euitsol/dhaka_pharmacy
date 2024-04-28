@@ -13,7 +13,7 @@
                             <div class="card-header">
                                 <div class="row justify-content-between mb-4">
                                     <div class="col-auto"> <h4 class="color-1 mb-0">Order Items</h4> </div>
-                                    <div class="col-auto  "> Order Status : <span class="{{$order->statusBg($order->status)}}">{{$order->statusTitle($order->status)}}</span></div>
+                                    <div class="col-auto  "> Order Status : <span class="{{$order->statusBg()}}">{{$order->statusTitle()}}</span></div>
                                 </div>
                             </div>
                             <div class="card-body order_items">

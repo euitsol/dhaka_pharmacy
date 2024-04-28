@@ -127,7 +127,7 @@
                                             <tr>
                                                 <th>Payment Status</th>
                                                 <td>:</td>
-                                                <th><span class="{{$payment->statusBg($payment->status)}}">{{$payment->statusTitle($payment->status)}}</span></th>
+                                                <th><span class="{{$payment->statusBg()}}">{{$payment->statusTitle()}}</span></th>
                                                 <th>Payable Amount</th>
                                                 <td>:</td>
                                                 <th><span>&#2547; </span>{{number_format(($payment->amount),2)}}</th>
