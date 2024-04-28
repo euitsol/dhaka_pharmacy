@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pharmacy;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PharmacyOrderRequest;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
 use App\Models\Pharmacy;
@@ -45,6 +46,19 @@ class OrderManagementController extends Controller
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
         return view('pharmacy.orders.details',$data);
     }
+
+    public function update(PharmacyOrderRequest $req){
+        foreach($req->data as $data){
+            $dop = OrderDistributionPharmacy::findOrFail($data['dop_id']);
+            $dop->open_amount = $data['dop_id'];
+            $dop->status = $data['status'];
+            $dop->note = $data['note'];
+            $dop->save();  
+        }
+        flash()->addSuccess('Order distributed successfully.');
+        return redirect()->route('pharmacy.order_management.index','distributed');
+    }
+
 
     protected function getStatus($status){
         switch ($status) {

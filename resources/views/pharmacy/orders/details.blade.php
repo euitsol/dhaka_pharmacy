@@ -57,7 +57,8 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    <form action="{{'pharmacy.order_management.update'}}" method="POST">
+                    <form action="{{route('pharmacy.order_management.update')}}" method="POST">
+                        @csrf
                         <div class="row mb-3">
                             <div class="col-12 px-4 text-end">
                                 <span class="{{ $statusBg }}">{{ $statusTitle }}</span>
@@ -90,7 +91,7 @@
                                                         </h6>
                                                         @if ($do->payment_type == 1)
                                                             <div class="input-group">
-                                                                <input type="text" name="data[{{$key}}][ph_price]" class="form-control"
+                                                                <input type="text" name="data[{{$key}}][open_amount]" class="form-control"
                                                                     placeholder="Enter your product price">
                                                             </div>
                                                         @endif

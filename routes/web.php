@@ -552,7 +552,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
        
     });
-    
+
     // Site Settings
     Route::controller(SiteSettingsController::class, 'site-settings')->prefix('site-settings')->name('settings.')->group(function () {
         Route::get('index', 'index')->name('site_settings');
