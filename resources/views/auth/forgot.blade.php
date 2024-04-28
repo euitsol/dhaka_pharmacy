@@ -2,7 +2,7 @@
 @section('title', 'User Forgot Password')
 
 @push('css')
-    <link rel="stylesheet" href="{{asset('user_login/style.css')}}">
+    <link rel="stylesheet" href="{{asset('user/user_login/style.css')}}">
 @endpush
 @section('content')
 <section class="log-with-pass">
@@ -38,7 +38,7 @@
 </section>
 @endsection
 @push('js')
-    <script src="{{asset('user_login/app.js')}}"></script>
+    <script src="{{asset('user/user_login/app.js')}}"></script>
     <script>
         // Phone Validation
         $(document).ready(function(){

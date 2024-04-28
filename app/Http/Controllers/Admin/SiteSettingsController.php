@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\EmailTemplateRequest;
 use App\Models\Documentation;
 use App\Models\EmailTemplate;
@@ -28,7 +29,7 @@ class SiteSettingsController extends Controller
                                     ->orWhere('module_key','email_templates')
                                     ->get();
         $data['availableTimezones'] = availableTimezones();
-        return view('site_settings.index', $data);
+        return view('admin.site_settings.index', $data);
     }
 
     public function store(Request $request): RedirectResponse

@@ -136,7 +136,7 @@
             let cartItem = $(this).closest('.add_to_cart_item');
             let atc_total = $('#cart_btn_quantity strong');
             let minus_atc_total = parseInt(atc_total.html()) - 1;
-            var text = "<h5 class='text-center cart_empty_alert'>{{ __('Added Some Products') }}</h5>";
+            var text = "<h5 class='text-center cart_empty_alert'>{{ __('Add some product') }}</h5>";
 
             var item_append = $('.add_to_carts');
             $.ajax({
@@ -167,7 +167,7 @@
             let url = "{{ route('product.clear_cart') }}";
             let cartItemContainer = $(this).parent('.offcanvas-header').next('.add_to_carts');
             let atc_total = $('#cart_btn_quantity strong');
-            var text = "<h5 class='text-center cart_empty_alert'>{{ __('Added Some Products') }}</h5>";
+            var text = "<h5 class='text-center cart_empty_alert'>{{ __('Add some product') }}</h5>";
 
             $.ajax({
                 url: url,

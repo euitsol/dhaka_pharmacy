@@ -77,7 +77,7 @@
                                         </div>
                                     </div>
                                 @empty
-                                    <h5 class="text-center cart_empty_alert">{{__('Added Some Products')}}</h5>
+                                    <h5 class="text-center cart_empty_alert">{{__('Add some product')}}</h5>
                                 @endforelse
                             </div>
                             <div class="offcanvas-footer cart_sub_total px-4 py-3">

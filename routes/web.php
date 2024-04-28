@@ -39,7 +39,7 @@ use App\Http\Controllers\Pharmacy\DashboardController as PharmacyDashboardContro
 use App\Http\Controllers\DM\DmProfileController;
 use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
 use App\Http\Controllers\Pharmacy\PharmacyProfileController;
-use App\Http\Controllers\SiteSettingsController;
+use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\DM\LAM_management\LamManagementController;
 use App\Http\Controllers\DM\UserManagement\UserManagementController as DmUserController;
@@ -506,14 +506,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
     });
 
-    // Site Settings
-    Route::controller(SiteSettingsController::class, 'site-settings')->prefix('site-settings')->name('settings.')->group(function () {
-        Route::get('index', 'index')->name('site_settings');
-        Route::post('update', 'store')->name('update.site_settings');
-        Route::post('index', 'notification')->name('notification.site_settings');
-        Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
-        Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
-    });
+    
 
     // Notification Settings 
     Route::controller(PushNotificationSetting::class, 'push-notification')->prefix('push-notification')->name('push.')->group(function () {
@@ -558,6 +551,15 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('/details/{id}', 'details')->name('payment_details');
         });
        
+    });
+    
+    // Site Settings
+    Route::controller(SiteSettingsController::class, 'site-settings')->prefix('site-settings')->name('settings.')->group(function () {
+        Route::get('index', 'index')->name('site_settings');
+        Route::post('update', 'store')->name('update.site_settings');
+        Route::post('index', 'notification')->name('notification.site_settings');
+        Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
+        Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
     });
 
 });

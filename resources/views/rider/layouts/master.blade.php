@@ -20,8 +20,8 @@
     <link href="{{ asset('white') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
-    <link href="{{ asset('backend/css/custom.css') }}" rel="stylesheet">
-    <link href="{{ asset('backend/css/lam/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('rider/css/custom.css') }}" rel="stylesheet">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     @stack('css')
@@ -54,7 +54,8 @@
     <script src="{{ asset('white') }}/js/white-dashboard.min.js?v=1.0.0"></script>
     <script src="{{ asset('white') }}/js/theme.js"></script>
     <script src="{{ asset('white') }}/js/color_change.js"></script>
-    <script src="{{ asset('backend/js/custom.js') }}"></script>
+    <script src="{{ asset('admin/js/custom.js') }}"></script>
+    <script src="{{ asset('rider/js/custom.js') }}"></script>
     @stack('js_link')
     @stack('js')
 
