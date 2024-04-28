@@ -85,7 +85,7 @@
                                                             {{ $dop->cart->unit->name ?? 'Piece' }}</small></div>
                                                     <div class="col my-auto">
                                                         <h6 class="mb-0 text-end">
-                                                            <span><strong>{{ __('MRP : ') }}</strong>&#2547;
+                                                            <span><strong>{{ __('MRP : ') }}</strong>{!! get_taka_icon() !!}
                                                                 {{ number_format($dop->cart->product->price * ($dop->cart->unit->quantity ?? 1) * $dop->cart->quantity, 2) }}</span>
                                                         </h6>
                                                         @if ($do->payment_type == 1)

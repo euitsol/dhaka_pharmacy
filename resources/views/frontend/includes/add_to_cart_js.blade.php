@@ -32,7 +32,7 @@
                 success: function(data) {
                     let regular_price = '';
                     if(data.atc.product.discount){
-                        regular_price = `<h4 class="text-end"> <del class="text-danger"> &#2547;  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_regular_price,2)}</span></del></h4>`;
+                        regular_price = `<h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!}  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_regular_price,2)}</span></del></h4>`;
                     }
 
 
@@ -64,7 +64,7 @@
                                                     </div>
                                                     <div class="item_price col-2 ps-0">
                                                         ${regular_price}
-                                                        <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">${numberFormat(data.atc.product.data_item_price,2)}</span></h4>
+                                                        <h4 class="text-end"> <span> {!! get_taka_icon() !!} </span> <span class="item_count_price">${numberFormat(data.atc.product.data_item_price,2)}</span></h4>
                                                     </div>
                                                 </div>
 

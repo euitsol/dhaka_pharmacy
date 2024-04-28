@@ -42,9 +42,9 @@
                                                     <p><a href="">{{ $item->generic->name }}</a></p>
                                                     <p><a href="">{{ $item->company->name }}</a></p>
                                                    
-                                                        <h4 class="pdct-price"> <span> &#2547; {{ number_format($item->price,2) }}</span>
+                                                        <h4 class="pdct-price"> <span> {!! get_taka_icon() !!} {{ number_format($item->price,2) }}</span>
                                                             @if (productDiscountPercentage($item->id))
-                                                             <span class="regular_price"> <del>&#2547; {{ number_format($item->regular_price,2) }}</del></span> 
+                                                             <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($item->regular_price,2) }}</del></span> 
                                                             @endif
                                                         </h4>
                                                    
@@ -130,9 +130,9 @@ btn-arrow">
                                                     </a>
                                                 </div>
                                                 
-                                                <h4> <span> &#2547; {{ number_format($product->price,2) }}</span> 
+                                                <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->price,2) }}</span> 
                                                     @if (productDiscountPercentage($product->id))
-                                                        <span class="regular_price"> <del>&#2547; {{ number_format($product->regular_price,2) }}</del></span> 
+                                                        <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->regular_price,2) }}</del></span> 
                                                     @endif
                                                 </h4>
                                                 
@@ -247,7 +247,7 @@ btn-arrow">
                             }
                             
                             if(product.discount_percentage){
-                                discount_amount = `<span class="regular_price"> <del>&#2547; ${numberFormat(product.regular_price,2)}</del></span>`
+                                discount_amount = `<span class="regular_price"> <del>{!! get_taka_icon() !!} ${numberFormat(product.regular_price,2)}</del></span>`
                             }
                             let route = (
                                 "{{ route('product.single_product', ['slug']) }}");
@@ -278,7 +278,7 @@ btn-arrow">
                                                     </h3>
                                                 </a>
                                                 </div>
-                                                <h4> <span> &#2547; ${numberFormat(product.price,2)}</span>  ${discount_amount}</h4>
+                                                <h4> <span> {!! get_taka_icon() !!} ${numberFormat(product.price,2)}</span>  ${discount_amount}</h4>
                                                 <div class="add_to_card">
                                                     <a class="cart-btn" data-product_slug="${product.slug}" data-unit_id="${product.units[0]['id']}" href="javascript:void(0)">
                                                         <i class="fa-solid fa-cart-plus"></i>

@@ -403,9 +403,9 @@
                                                                 <p><a
                                                                         href="">{{ $product->company->name }}</a>
                                                                 </p>
-                                                                <h4 class="pdct-price"> <span> &#2547; {{ number_format($product->price,2) }}</span>
+                                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!} {{ number_format($product->price,2) }}</span>
                                                                     @if (productDiscountPercentage($product->id))
-                                                                     <span class="regular_price"> <del>&#2547; {{ number_format($product->regular_price,2) }}</del></span> 
+                                                                     <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->regular_price,2) }}</del></span> 
                                                                     @endif
                                                                 </h4>
                                                             </div>
@@ -464,9 +464,9 @@
                                                                     </a>
                                                                 </div>
                                                                 
-                                                                    <h4> <span> &#2547; {{ number_format($product->price,2) }}</span> 
+                                                                    <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->price,2) }}</span> 
                                                                         @if (productDiscountPercentage($product->id))
-                                                                            <span class="regular_price"> <del>&#2547; {{ number_format($product->regular_price,2) }}</del></span> 
+                                                                            <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->regular_price,2) }}</del></span> 
                                                                         @endif
                                                                     </h4>
                                                               

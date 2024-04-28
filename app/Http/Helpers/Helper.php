@@ -25,7 +25,6 @@ function check_access_by_route_name($routeName = null): bool
 
 
 
-
     if($routeName == null){
         $routeName = Route::currentRouteName();
 
@@ -258,5 +257,9 @@ function otp(){
     // $otp =  mt_rand(100000, 999999);
     $otp =  000000;
     return $otp;
+}
+
+function get_taka_icon(){
+    return '&#2547; ';
 }
 

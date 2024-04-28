@@ -33,9 +33,9 @@
                                                 </div>
                                                 <div class="item_price col-2 ps-0">
                                                     @if (productDiscountPercentage($atc->product->id))
-                                                        <h4 class="text-end"> <del class="text-danger"> &#2547; <span class="item_count_regular_price">{{  (number_format((($atc->product->regular_price*$atc->unit->quantity)*$atc->quantity),2))  }}</span> </del></h4>
+                                                        <h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!} <span class="item_count_regular_price">{{  (number_format((($atc->product->regular_price*$atc->unit->quantity)*$atc->quantity),2))  }}</span> </del></h4>
                                                     @endif
-                                                    <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">{{  (number_format((($atc->product->price*$atc->unit->quantity)*$atc->quantity),2))  }}</span></h4>
+                                                    <h4 class="text-end"> <span> {!! get_taka_icon() !!} </span> <span class="item_count_price">{{  (number_format((($atc->product->price*$atc->unit->quantity)*$atc->quantity),2))  }}</span></h4>
                                                     
                                                 </div>
                                             </div>
@@ -92,7 +92,7 @@
                                         <h3>{{__('Subtotal Price')}}</h3>
                                     </div>
                                     <div class="col-4 text-end">
-                                        <h3><span> &#2547; </span> <span class="subtotal_price">0.00</span></h3>
+                                        <h3><span> {!! get_taka_icon() !!} </span> <span class="subtotal_price">0.00</span></h3>
                                     </div>
                                     <div class="col-12">
                                         <a href="{{route('product.int','cart-order')}}" class="btn order_button w-100 {{count($atcs)<1 ? 'disabled' : ''}}" >{{__('Proceed To Checkout')}}</a>

@@ -51,7 +51,7 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <th><span>&#2547; </span>{{number_format($totalPrice,2)}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format($totalPrice,2)}}</th>
                                             </tr>
                                         </table>
                                     </div>
@@ -66,7 +66,7 @@
                                 <div class="card-header">
                                     <div class="row justify-content-between mb-3">
                                         <div class="col-auto"> <h4 class="color-1 mb-0">Order Distribution</h4> </div>
-                                        <div class="col-auto  "> Distribution Status : <span class="{{$order_distribution->statusBg() ?? 'badge badge-danger'}}">{{$order_distribution->statusTitle() ?? 'Not Distributed'}}</span> </div>
+                                        <div class="col-auto  "> Distribution Status : <span class="{{!empty($order_distribution) ? $order_distribution->statusBg() : 'badge badge-danger'}}">{{!empty($order_distribution) ? $order_distribution->statusTitle() : 'Not Distributed'}}</span> </div>
                                     </div>
                                 </div>
                                 <div class="card-body order_items">
@@ -90,11 +90,11 @@
                                                                                 <div class="col my-auto">
                                                                                     <h6 class="mb-0 text-end">
                                                                                         @if (productDiscountPercentage($item->product->id))
-                                                                                        <span class="text-danger"><del>&#2547; {{number_format((($item->product->regular_price*$item->unit->quantity) * $item->quantity), 2)}}</del></span> 
+                                                                                        <span class="text-danger"><del>{!! get_taka_icon() !!} {{number_format((($item->product->regular_price*$item->unit->quantity) * $item->quantity), 2)}}</del></span> 
                                                                                         @endif
                                                                                     </h6>
                                                                                     <h6 class="mb-0 text-end">
-                                                                                        <span>&#2547; {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}</span> 
+                                                                                        <span>{!! get_taka_icon() !!} {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}</span> 
                                                                                     </h6>
                                                                                     
                                                                                 </div>

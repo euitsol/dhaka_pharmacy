@@ -34,11 +34,11 @@
                                                             <div class="col my-auto">
                                                                 <h6 class="mb-0 text-end">
                                                                     @if (productDiscountPercentage($item->product->id))
-                                                                    <span class="text-danger"><del>&#2547; {{number_format((($item->product->regular_price*$item->unit->quantity) * $item->quantity), 2)}}</del></span> 
+                                                                    <span class="text-danger"><del>{!! get_taka_icon() !!} {{number_format((($item->product->regular_price*$item->unit->quantity) * $item->quantity), 2)}}</del></span> 
                                                                     @endif
                                                                 </h6>
                                                                 <h6 class="mb-0 text-end">
-                                                                    <span>&#2547; {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}</span> 
+                                                                    <span>{!! get_taka_icon() !!} {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}</span> 
                                                                 </h6>
                                                             </div>
                                                         </div>
@@ -92,15 +92,15 @@
                                             <tr>
                                                 <th>Discount</th>
                                                 <td>:</td>
-                                                <td><span>&#2547; {{number_format($totalDiscount,2)}}</span></td>
+                                                <td><span>{!! get_taka_icon() !!} {{number_format($totalDiscount,2)}}</span></td>
                                             </tr>
                                             <tr>
                                                 <th>Sub Total</th>
                                                 <td>:</td>
                                                 <td>
-                                                    <span>&#2547; {{number_format($totalPrice,2)}}</span>
+                                                    <span>{!! get_taka_icon() !!} {{number_format($totalPrice,2)}}</span>
                                                     @if ($totalRegularPrice !== $totalPrice)
-                                                        <span class="text-danger ms-2"><del>&#2547; {{number_format(($totalRegularPrice), 2)}}</del></span> 
+                                                        <span class="text-danger ms-2"><del>{!! get_taka_icon() !!} {{number_format(($totalRegularPrice), 2)}}</del></span> 
                                                     @endif
                                                 </td>
                                             </tr>
@@ -112,7 +112,7 @@
                                             <tr>
                                                 <th>Payable Amount</th>
                                                 <td>:</td>
-                                                <th><span>&#2547; </span>{{number_format($totalPrice,2)}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format($totalPrice,2)}}</th>
                                             </tr>
                                         </table>
                                     </div>
@@ -126,7 +126,7 @@
                 <div class="jumbotron-fluid">
                     <div class="row justify-content-between ">
                         <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">TOTAL AMOUNT</h2></div>
-                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">&#2547; {{number_format($totalPrice,2)}}</h1></div>
+                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{number_format($totalPrice,2)}}</h1></div>
                     </div>
                 </div>
             </div>
@@ -158,7 +158,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($payments as $payment)
+                            @foreach ($order->payments as $payment)
                             @php
                                 $statusBgColor = ($payment->status == 1) ? 'badge badge-success' : (($payment->status == 0) ? 'badge badge-info' : (($payment->status == -1) ? 'badge badge-danger' : (($payment->status == -2) ? 'badge badge-warning' : 'badge badge-primary')));
 

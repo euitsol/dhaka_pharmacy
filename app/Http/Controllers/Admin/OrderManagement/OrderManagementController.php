@@ -34,47 +34,38 @@ class OrderManagementController extends Controller
     public function details($id): View
     {
         $data['order'] = Order::findOrFail(decrypt($id));
-        $data['payments'] = Payment::where('order_id',decrypt($id))->latest()->get();
-        $data['order_items'] = [];
-        foreach(json_decode($data['order']->carts) as $cart_id){
-            $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->where('id',$cart_id)->first();
-            if($cart){
-                array_push($data['order_items'], $cart);
-            }
-        }
-        $paymentItemsCollection = collect($data['order_items']);
-        $paymentItemsCollection->map(function($item) {
+        $data['order_items'] = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
+                            ->whereIn('id', json_decode($data['order']->carts))
+                            ->get();
+        
+        $data['order_items']->transform(function($item) {
             $item->price = (($item->product->price*($item->unit->quantity ?? 1))*$item->quantity);
             $item->regular_price = (($item->product->regular_price*($item->unit->quantity ?? 1))*$item->quantity);
             $item->discount = (productDiscountAmount($item->product->id)*($item->unit->quantity ?? 1))*$item->quantity;
             return $item;
         });
-        $data['totalPrice'] = $paymentItemsCollection->sum('price');
-        $data['totalRegularPrice'] = $paymentItemsCollection->sum('regular_price');
-        $data['totalDiscount'] = $paymentItemsCollection->sum('discount');
+        
+        $data['totalPrice'] = $data['order_items']->sum('price');
+        $data['totalRegularPrice'] = $data['order_items']->sum('regular_price');
+        $data['totalDiscount'] = $data['order_items']->sum('discount');
         return view('admin.order_management.details',$data);
     }
 
     public function order_distribution($id){
         $data['order'] = Order::with(['address','customer','payments','ref_user'])->findOrFail(decrypt($id));
-        $data['payments'] = Payment::where('order_id',decrypt($id))->latest()->get();
-        $data['order_items'] = [];
-        foreach(json_decode($data['order']->carts) as $cart_id){
-            $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->where('id',$cart_id)->first();
-            if($cart){
-                array_push($data['order_items'], $cart);
-            }
-        }
-        $paymentItemsCollection = collect($data['order_items']);
-        $paymentItemsCollection->map(function($item) {
+        $data['order_items'] = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
+                            ->whereIn('id', json_decode($data['order']->carts))
+                            ->get();
+        $data['order_items']->transform(function($item) {
             $item->price = (($item->product->price*($item->unit->quantity ?? 1))*$item->quantity);
             $item->regular_price = (($item->product->regular_price*($item->unit->quantity ?? 1))*$item->quantity);
             $item->discount = (productDiscountAmount($item->product->id)*($item->unit->quantity ?? 1))*$item->quantity;
             return $item;
         });
-        $data['totalPrice'] = $paymentItemsCollection->sum('price');
-        $data['totalRegularPrice'] = $paymentItemsCollection->sum('regular_price');
-        $data['totalDiscount'] = $paymentItemsCollection->sum('discount');
+        
+        $data['totalPrice'] = $data['order_items']->sum('price');
+        $data['totalRegularPrice'] = $data['order_items']->sum('regular_price');
+        $data['totalDiscount'] = $data['order_items']->sum('discount');
         $data['pharmacies'] = Pharmacy::activated()->latest()->get();
         $data['order_distribution'] = OrderDistribution::with(['odps.cart','odps.pharmacy'])->where('status',0)->where('order_id',$data['order']->id)->first();
         return view('admin.order_management.order_distribution',$data);
@@ -82,22 +73,6 @@ class OrderManagementController extends Controller
 
     public function order_distribution_store(OrderDistributionRequest $req, $order_id){
         $order_id = decrypt($order_id);
-
-        // $od = new OrderDistribution();
-        // $od->order_id = $order_id;
-        // $od->payment_type = $req->payment_type;
-        // $od->distribution_type = $req->distribution_type;
-        // $od->prep_time = $req->prep_time;
-        // $od->note = $req->note;
-        // $od->save();
-        // foreach($req->datas as $data){
-        //     $odp = new OrderDistributionPharmacy();
-        //     $odp->order_distribution_id = $od->id;
-        //     $odp->cart_id = $data['cart_id'];
-        //     $odp->pharmacy_id = $data['pharmacy_id'];
-        //     $odp->save();
-        // }
-
         $od = OrderDistribution::updateOrCreate(
             ['order_id' => $order_id],
             [

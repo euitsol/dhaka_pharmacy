@@ -37,8 +37,6 @@ class OrderDistribution extends BaseModel
                 return 'badge badge-primary';
             case 4:
                 return 'badge badge-secondary';
-            default:
-                return 'badge badge-danger';
         }
     }
     
@@ -54,8 +52,6 @@ class OrderDistribution extends BaseModel
                 return 'Picked up';
             case 4:
                 return 'Finish';
-            default:
-                return 'Not Distributed';
         }
     }
     public function paymentType() {
@@ -85,6 +81,11 @@ class OrderDistribution extends BaseModel
             $formattedDuration .= $duration->i . ' minutes';
         }
         return $formattedDuration;
+    }
+    public function prepTotalSeconds(){
+        $duration = Carbon::parse($this->prep_time)->diff(Carbon::parse($this->created_at));
+        $totalSeconds = $duration->s + ($duration->i * 60) + ($duration->h * 3600) + ($duration->days * 86400);
+        return $totalSeconds;
     }
     
 }

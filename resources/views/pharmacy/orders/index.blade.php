@@ -35,7 +35,7 @@
                                     <td> {{ count($dop) }} </td>
                                     <td> {{ $dop->od->paymentType() }} </td>
                                     <td> {{ $dop->od->distributionType() }} </td>
-                                    <td> {{ $dop->od->readablePrepTime() }} </td>
+                                    <td> {{ $dop->od->readablePrepTime() }} <span class="countdown ms-2" data-seconds="{{$dop->od->prepTotalSeconds()}}"></span> </td>
                                     
                                     <td>
                                         <span class="{{ $dop->statusBg }}">{{ $dop->statusTitle }}</span>
@@ -67,4 +67,42 @@
 
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@push('js')
+<script>
+
+        $(document).ready(function(){
+            $(".countdown").each(function() {
+                var countdown = $(this); // Current countdown element
+
+                // Parse the duration from the data attribute
+                var durationInSeconds = parseInt(countdown.data('seconds'));
+                var countDownDate = new Date(Date.now() + durationInSeconds * 1000).getTime();
+
+                // Update the countdown every 1 second
+                var x = setInterval(function() {
+                    // Get the current date and time
+                    var now = new Date().getTime();
+
+                    // Find the distance between now and the count down date
+                    var distance = countDownDate - now;
+
+                    // Calculate remaining time
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // Display the result
+                    countdown.html(minutes + "m " + seconds + "s ");
+
+                    // If the countdown is over, display a message
+                    if (distance < 0) {
+                        clearInterval(x);
+                        countdown.html("EXPIRED");
+                    }
+                }, 1000);
+            });
+            
+        });
+
+</script>
+@endpush
 
