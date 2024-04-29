@@ -79,28 +79,43 @@
                                                         <h6 class="mb-0 text-start">{{ $dop->cart->product->name }}</h6>
                                                         <small>{{ $dop->cart->product->pro_cat->name }} </small>
                                                     </div>
-                                                    <div class="col-auto my-auto"> </div>
-                                                    <div class="col my-auto"> <small>Qty : {{ $dop->cart->quantity }}</small>
+                                                    <div class="col my-auto d-flex justify-content-around"> <small>Qty : {{ $dop->cart->quantity }}</small><small>Pack :
+                                                        {{ $dop->cart->unit->name ?? 'Piece' }}</small>
                                                     </div>
-                                                    <div class="col my-auto"> <small>Pack :
-                                                            {{ $dop->cart->unit->name ?? 'Piece' }}</small></div>
                                                     <div class="col my-auto">
-                                                        <h6 class="mb-0 text-end">
-                                                            <span><strong>{{ __('MRP : ') }}</strong>{!! get_taka_icon() !!}
-                                                                {{ number_format($dop->cart->product->price * ($dop->cart->unit->quantity ?? 1) * $dop->cart->quantity, 2) }}</span>
+                                                        <h6 class="my-auto text-center">
+                                                            @php
+                                                                $totalPrice = ($dop->cart->product->price * ($dop->cart->unit->quantity ?? 1) * $dop->cart->quantity);
+                                                                if ($do->payment_type == 0 && $pharmacy_discount){
+                                                                    $totalPrice -= (($totalPrice/100)*$pharmacy_discount->discount_percent);
+                                                                    $discount = "<span class='badge badge-danger'>$pharmacy_discount->discount_percent.'% off'</span>";
+                                                                }
+                                                            @endphp
+                                                            <span><strong>{{ __('Total Price : ') }}</strong>{!! get_taka_icon() !!}
+                                                                
+                                                                {{ number_format($totalPrice, 2) }}</span> <sup>{!! isset($discount) ? $discount : '' !!}</sup>
                                                         </h6>
-                                                        @if ($do->payment_type == 1)
+                                                        @if ($do->payment_type == 1 && $status == 0)
                                                             <div class="input-group">
                                                                 <input type="text" name="data[{{$key}}][open_amount]" class="form-control"
                                                                     placeholder="Enter your product price">
                                                             </div>
                                                         @endif
                                                     </div>
+                                                    @if ($do->payment_type == 1 && $status == 1 && $dop->open_amount>0)
+                                                        <div class="col my-auto">
+                                                            <h6 class="my-auto text-center">
+                                                                <span><strong>{{ __('Bit Price : ') }}</strong>{!! get_taka_icon() !!}
+                                                                    {{ number_format($dop->open_amount, 2) }}</span>
+                                                            </h6>
+                                                        </div>
+                                                    @endif
+                                                    @if($status == 0)
                                                     <div class="col my-auto">
                                                         <div class="card mb-0">
                                                             <div class="card-body">
                                                                 <input type="hidden" name="data[{{$key}}][dop_id]" value="{{$dop->id}}">
-                                                                @if($status == 0)
+                                                                
                                                                     <div class="form-check form-check-radio">
                                                                         <label class="form-check-label me-2" for="status_{{$key}}">
                                                                             <input class="form-check-input do_status" type="radio"
@@ -117,23 +132,30 @@
                                                                             <span class="form-check-sign"></span>
                                                                         </label>
                                                                     </div>
-                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="input-group status_note" style="display: none">
-                                    <textarea name="data[{{$key}}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
-                                </div>
+                                @if($status == 0)
+                                    <div class="form-group status_note" style="display: none">
+                                        <textarea name="data[{{$key}}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
+                                    </div>
+                                @elseif($status == 2)
+                                    <span><strong class="text-danger">{{__('Resoan: ')}}</strong>{{$dop->note}}</span>
+                                @endif
+                                
                             </div>
                         @endforeach
-                        <div class="col-12 text-end">
-                            <input type="submit" value="Confirm" class="btn btn-success">
-                        </div>
+                        @if($status == 0)
+                            <div class="col-12 text-end">
+                                <input type="submit" value="Confirm" class="btn btn-success">
+                            </div>
+                        @endif
                     </form>
                     
                 </div>

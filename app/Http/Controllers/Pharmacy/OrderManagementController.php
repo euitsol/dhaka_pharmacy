@@ -7,6 +7,7 @@ use App\Http\Requests\PharmacyOrderRequest;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
 use App\Models\Pharmacy;
+use App\Models\PharmacyDiscount;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class OrderManagementController extends Controller
     }
     
     public function details($do_id,$status){
+        $data['pharmacy_discount'] = PharmacyDiscount::activated()->where('pharmacy_id',pharmacy()->id)->first();
         $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
         $data['do']->prep_time = $data['do']->readablePrepTime();
         $data['do']->pharmacy = Pharmacy::findOrFail(pharmacy()->id);

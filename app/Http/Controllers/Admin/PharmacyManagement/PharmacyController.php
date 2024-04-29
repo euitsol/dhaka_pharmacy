@@ -114,7 +114,7 @@ class PharmacyController extends Controller
         $data['pharmacy'] = Pharmacy::with(['pharmacyDiscounts' => function ($query) {
             $query->latest();
         }])->findOrFail(decrypt($id));
-        $data['pharmacy_discount'] = PharmacyDiscount::where('pharmacy_id',decrypt($id))->where('status',1)->first();
+        $data['pharmacy_discount'] = PharmacyDiscount::activated()->where('pharmacy_id',decrypt($id))->first();
         return view('admin.pharmacy_management.pharmacy.discount',$data);
     }
     public function pharmacyDiscountUpdate(PharmacyDiscountRequest $req, $id)
