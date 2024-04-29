@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\Auth\LoginContorller as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DistributedOrder\DistributedOrderController;
 use App\Http\Controllers\Admin\DM_Management\DistrictManagerController;
 use App\Http\Controllers\Admin\DM_Management\DmKycController;
 use App\Http\Controllers\Admin\DM_Management\DmKycSettingsController;
@@ -34,10 +35,11 @@ use App\Http\Controllers\Rider\Auth\LoginController as RiderLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
 use App\Http\Controllers\LAM\DashboardController as LamDashboardController;
 use App\Http\Controllers\Rider\DashboardController as RiderDashboardController;
+use App\Http\Controllers\Pharmacy\DashboardController as PharmacyDashboardController;
 use App\Http\Controllers\DM\DmProfileController;
 use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
 use App\Http\Controllers\Pharmacy\PharmacyProfileController;
-use App\Http\Controllers\SiteSettingsController;
+use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\DM\LAM_management\LamManagementController;
 use App\Http\Controllers\DM\UserManagement\UserManagementController as DmUserController;
@@ -49,8 +51,9 @@ use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
 use App\Http\Controllers\Rider\KYC\KycVerificationController as RiderKycVerificationController;
-use App\Http\Controllers\Admin\DM_Management\OperationAreaController;
-use App\Http\Controllers\Admin\DM_Management\OperationSubAreaController;
+use App\Http\Controllers\Pharmacy\KYC\KycVerificationController as PharmacyKycVerificationController;
+use App\Http\Controllers\Admin\OperationalArea\OperationAreaController;
+use App\Http\Controllers\Admin\OperationalArea\OperationSubAreaController;
 use App\Http\Controllers\Admin\OrderManagement\OrderManagementController;
 use App\Http\Controllers\Frontend\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
@@ -58,12 +61,14 @@ use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
 use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
+use App\Http\Controllers\Pharmacy\OperationalAreaController as PharmacyOperationalAreaController;
 use App\Http\Controllers\Admin\PushNotification\SettingController as PushNotificationSetting;
 use App\Http\Controllers\Admin\PaymentGateway\SettingController as PaymentGatewaySetting;
 use App\Http\Controllers\Admin\PaymentManagement\PaymentManagementController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
+use App\Http\Controllers\Pharmacy\OrderManagementController as PharmacyOrderManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -255,6 +260,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::controller(AdminPharmacyController::class, 'pharmacy')->prefix('pharmacy')->name('pharmacy.')->group(function () {
             Route::get('index', 'index')->name('pharmacy_list');
             Route::get('details/{id}', 'details')->name('details.pharmacy_list');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.pharmacy_profile');
             Route::get('profile/{id}', 'profile')->name('pharmacy_profile');
             Route::get('create', 'create')->name('pharmacy_create');
             Route::post('create', 'store')->name('pharmacy_create');
@@ -262,6 +268,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('pharmacy_edit');
             Route::get('status/{id}', 'status')->name('status.pharmacy_edit');
             Route::get('delete/{id}', 'delete')->name('pharmacy_delete');
+            Route::get('discount/{id}', 'pharmacyDiscount')->name('pharmacy_discount');
+            Route::post('discount/update/{id}', 'pharmacyDiscountUpdate')->name('update.pharmacy_discount');
         });
 
         // KYC ROUTES
@@ -281,23 +289,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::post('/settings', [PharmacyKycSettingsController::class, 'kycSettingsUpdate'])->name('pharmacy_kyc_settings');
         });
     });
-
-
     //Admin District Manager Management Routes
-    Route::group(['as' => 'dm_management.', 'prefix' => 'dm-management'], function () {
-        Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
-            Route::get('index', 'index')->name('district_manager_list');
-            Route::get('details/{id}', 'details')->name('details.district_manager_list');
-            Route::get('profile/{id}', 'profile')->name('district_manager_profile');
-            Route::get('dashboard/{id}', 'loginAs')->name('login_as.district_manager_profile');
-            Route::get('create', 'create')->name('district_manager_create');
-            Route::post('create', 'store')->name('district_manager_create');
-            Route::get('edit/{id}', 'edit')->name('district_manager_edit');
-            Route::put('edit/{id}', 'update')->name('district_manager_edit');
-            Route::get('status/{id}', 'status')->name('status.district_manager_edit');
-            Route::get('delete/{id}', 'delete')->name('district_manager_delete');
-        });
-
+    Route::group(['as' => 'opa.', 'prefix' => 'operational-areas'], function () {
         //Oparetaion Area Route
         Route::controller(OperationAreaController::class, 'operation-area')->prefix('operation-area')->name('operation_area.')->group(function () {
             Route::get('index', 'index')->name('operation_area_list');
@@ -320,6 +313,24 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('status/{id}/{status}', 'status')->name('status.operation_sub_area_edit');
             Route::get('delete/{id}', 'delete')->name('operation_sub_area_delete');
         });
+    });
+
+    //Admin District Manager Management Routes
+    Route::group(['as' => 'dm_management.', 'prefix' => 'dm-management'], function () {
+        Route::controller(DistrictManagerController::class, 'district-manager')->prefix('district-manager')->name('district_manager.')->group(function () {
+            Route::get('index', 'index')->name('district_manager_list');
+            Route::get('details/{id}', 'details')->name('details.district_manager_list');
+            Route::get('profile/{id}', 'profile')->name('district_manager_profile');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.district_manager_profile');
+            Route::get('create', 'create')->name('district_manager_create');
+            Route::post('create', 'store')->name('district_manager_create');
+            Route::get('edit/{id}', 'edit')->name('district_manager_edit');
+            Route::put('edit/{id}', 'update')->name('district_manager_edit');
+            Route::get('status/{id}', 'status')->name('status.district_manager_edit');
+            Route::get('delete/{id}', 'delete')->name('district_manager_delete');
+        });
+
+        
 
 
 
@@ -497,14 +508,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
     });
 
-    // Site Settings
-    Route::controller(SiteSettingsController::class, 'site-settings')->prefix('site-settings')->name('settings.')->group(function () {
-        Route::get('index', 'index')->name('site_settings');
-        Route::post('update', 'store')->name('update.site_settings');
-        Route::post('index', 'notification')->name('notification.site_settings');
-        Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
-        Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
-    });
+    
 
     // Notification Settings 
     Route::controller(PushNotificationSetting::class, 'push-notification')->prefix('push-notification')->name('push.')->group(function () {
@@ -526,9 +530,21 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::controller(OrderManagementController::class, 'order')->prefix('order')->name('order.')->group(function () {
             Route::get('/{status}', 'index')->name('order_list');
             Route::get('/details/{id}', 'details')->name('order_details');
+            Route::get('/order-distribution/{id}', 'order_distribution')->name('order_distribution');
+            Route::post('/order-distribution/{order_id}', 'order_distribution_store')->name('order_distribution');
         });
        
     });
+
+    // Admin Distributed Order
+    Route::controller(DistributedOrderController::class, 'distributed-order')->prefix('distributed-order')->name('do.')->group(function () {
+        Route::get('/{status}', 'index')->name('do_list');
+        Route::get('/details/{do_id}/{pid}', 'details')->name('do_details');
+        Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
+        Route::post('/update/{order_id}/{status}', 'update')->name('do_update');
+    });
+       
+
 
     // Admin Payment Management
     Route::group(['as' => 'pym.', 'prefix' => 'payment-management'], function () {
@@ -539,6 +555,15 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
        
     });
 
+    // Site Settings
+    Route::controller(SiteSettingsController::class, 'site-settings')->prefix('site-settings')->name('settings.')->group(function () {
+        Route::get('index', 'index')->name('site_settings');
+        Route::post('update', 'store')->name('update.site_settings');
+        Route::post('index', 'notification')->name('notification.site_settings');
+        Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
+        Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
+    });
+
 });
 
 // User Routes
@@ -547,9 +572,39 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
 });
 
 
-// Pharmacy Routes
-Route::group(['middleware' => 'pharmacy', 'prefix' => 'pharmacy'], function () {
-    Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('pharmacy.profile');
+// Pharmacy Auth Routes
+Route::group(['middleware' => 'pharmacy','as' => 'pharmacy.', 'prefix' => 'pharmacy'], function () {
+    Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('profile');
+
+
+    Route::get('/dashboard', [PharmacyDashboardController::class, 'dashboard'])->name('dashboard');
+
+    Route::controller(PharmacyKycVerificationController::class, 'kyc')->prefix('kyc')->name('kyc.')->group(function () {
+        Route::post('/store', 'kyc_store')->name('store');
+        Route::get('/verification', 'kyc_verification')->name('verification');
+        Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
+        Route::get('/kyc/file/delete', 'delete')->name('file.delete');
+    });
+
+    Route::controller(PharmacyProfileController::class, 'profile')->prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', 'profile')->name('index');
+        Route::put('/update', 'update')->name('update');
+        Route::put('/update/password', 'updatePassword')->name('update.password');
+        Route::post('/update/image', 'updateImage')->name('update.image');
+
+        Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
+    });
+
+    Route::controller(PharmacyOrderManagementController::class, 'order-management')->prefix('order-management')->name('order_management.')->group(function () {
+        Route::get('/{status}', 'index')->name('index');
+        Route::get('details/{do_id}/{status}', 'details')->name('details');
+        Route::post('update/', 'update')->name('update');
+    });
+
+
+    Route::controller(PharmacyOperationalAreaController::class, 'operational-area')->prefix('operational-area')->name('operational_area.')->group(function () {
+        Route::get('index', 'index')->name('list');
+    });
 });
 
 
@@ -664,6 +719,8 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
+
+        Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });
 });
 
@@ -684,6 +741,7 @@ Route::get('/clear-cart', [FrontendBaseController::class, 'clearCart'])->name('p
 
 Route::get('/item/check/{id}', [FrontendBaseController::class, 'itemCheck'])->name('cart.item.check');
 Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
+Route::get('/item/unit/{unit_id}/{cart_id}', [FrontendBaseController::class, 'itemUnit'])->name('cart.item.unit');
 
 // Checkout Routes 
 Route::post('/product/single-order', [CheckoutController::class, 'single_order'])->name('product.single_order');

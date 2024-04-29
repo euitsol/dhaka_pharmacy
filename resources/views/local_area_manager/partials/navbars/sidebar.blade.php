@@ -34,7 +34,7 @@
             <li @if ($pageSlug == 'operational_area') class="active" @endif>
                 <a href="{{ route('lam.operational_area.list') }}">
                     <i class="fa-solid fa-minus @if ($pageSlug == 'operational_area') fa-beat-fade @endif"></i>
-                    <p>{{ 'Operational Areas' }}</p>
+                    <p>{{ 'Operation Areas' }}</p>
                 </a>
             </li>
             {{--

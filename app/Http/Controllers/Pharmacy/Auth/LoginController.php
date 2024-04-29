@@ -18,7 +18,7 @@ class LoginController extends BaseController
     {
         if (Auth::guard('pharmacy')->check() && pharmacy()->status == 1) {
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('pharmacy.profile');
+            return redirect()->route('pharmacy.dashboard');
         }
         return view('pharmacy.login');
     }
@@ -32,7 +32,7 @@ class LoginController extends BaseController
             if($check->status == 1){
                 if (Auth::guard('pharmacy')->attempt($credentials)) {
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');
-                    return redirect()->route('pharmacy.profile');
+                    return redirect()->route('pharmacy.dashboard');
                 }
                 flash()->addError('Invalid credentials');
             }else{
@@ -41,6 +41,11 @@ class LoginController extends BaseController
         }else{
             flash()->addError('Pharmacy User Not Found');
         }
-        return redirect()->route('local_area_manager.login');
+        return redirect()->route('pharmacy.login');
+    }
+    public function logout()
+    {
+        Auth::guard('pharmacy')->logout();
+        return redirect()->route('pharmacy.login');
     }
 }

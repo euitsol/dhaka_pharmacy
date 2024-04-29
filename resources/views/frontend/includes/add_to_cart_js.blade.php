@@ -32,7 +32,7 @@
                 success: function(data) {
                     let regular_price = '';
                     if(data.atc.product.discount){
-                        regular_price = `<h4 class="text-end"> <del class="text-danger"> &#2547;  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_regular_price,2)}</span></del></h4>`;
+                        regular_price = `<h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!}  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_price,2)}</span></del></h4>`;
                     }
 
 
@@ -64,7 +64,7 @@
                                                     </div>
                                                     <div class="item_price col-2 ps-0">
                                                         ${regular_price}
-                                                        <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">${numberFormat(data.atc.product.data_item_price,2)}</span></h4>
+                                                        <h4 class="text-end"> <span> {!! get_taka_icon() !!} </span> <span class="item_count_price">${numberFormat(data.atc.product.data_item_discount_price,2)}</span></h4>
                                                     </div>
                                                 </div>
 
@@ -82,9 +82,9 @@
 
                             result += `
                                         <input type="radio" data-name="${unit.name}" ${checked}
-                                        class="unit_quantity" id="android-${index+20}"
+                                        class="unit_quantity" data-cart_id="${data.atc.id}" data-id="${unit.id}" id="android-${index+20}"
                                         name="data-${count}"
-                                        value="${ (data.atc.product.price * unit.quantity)*data.atc.quantity }" data-regular_price="${ (data.atc.product.regular_price * unit.quantity)*data.atc.quantity }">
+                                        value="${ (data.atc.product.discountPrice * unit.quantity)*data.atc.quantity }" data-regular_price="${ (data.atc.product.price * unit.quantity)*data.atc.quantity }">
                                         <label for="android-${index+20}">
                                             <img src="${unit.image}">
                                         </label>
@@ -101,7 +101,7 @@
                                             <div class="form-group">
                                                 <div class="input-group" role="group">
                                                     <a href="javascript:void(0)" data-id="${data.atc.id}" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
-                                                    <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${parseFloat(data.atc.product.data_item_price)}"  data-item_regular_price="${parseFloat(data.atc.product.data_item_regular_price)}" value="1" >
+                                                    <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${parseFloat(data.atc.product.data_item_discount_price)}"  data-item_regular_price="${parseFloat(data.atc.product.data_item_price)}" value="1" >
                                                     <a href="javascript:void(0)" data-id="${data.atc.id}" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
                                                 </div>
                                             </div>
@@ -136,7 +136,7 @@
             let cartItem = $(this).closest('.add_to_cart_item');
             let atc_total = $('#cart_btn_quantity strong');
             let minus_atc_total = parseInt(atc_total.html()) - 1;
-            var text = "<h5 class='text-center cart_empty_alert'>{{ __('Added Some Products') }}</h5>";
+            var text = "<h5 class='text-center cart_empty_alert'>{{ __('Add some product') }}</h5>";
 
             var item_append = $('.add_to_carts');
             $.ajax({
@@ -167,7 +167,7 @@
             let url = "{{ route('product.clear_cart') }}";
             let cartItemContainer = $(this).parent('.offcanvas-header').next('.add_to_carts');
             let atc_total = $('#cart_btn_quantity strong');
-            var text = "<h5 class='text-center cart_empty_alert'>{{ __('Added Some Products') }}</h5>";
+            var text = "<h5 class='text-center cart_empty_alert'>{{ __('Add some product') }}</h5>";
 
             $.ajax({
                 url: url,
@@ -283,6 +283,8 @@
 
     // Unit Change JS 
     $(document).on('change', '.unit_quantity', function() {
+        var unit_id = $(this).data('id');
+        var cart_id = $(this).data('cart_id');
         var formattedPrice = parseFloat($(this).val());
         var formattedRegularPrice = parseFloat($(this).data('regular_price'));
         var itemContainer = $(this).closest('.add_to_cart_item');
@@ -291,12 +293,29 @@
         itemQuantityInput.data('item_price', formattedPrice);
         itemQuantityInput.data('item_regular_price', formattedRegularPrice);
         if (!isNaN(itemQuantity)) {
+
             var totalItemPrice = formattedPrice * itemQuantity;
             var totalItemRegularPrice = formattedRegularPrice * itemQuantity;
-            itemContainer.find('.item_count_price').html(numberFormat(totalItemPrice, 2));
-            itemContainer.find('.item_count_regular_price').html(numberFormat(totalItemRegularPrice, 2));
+
+            let url = "{{ route('cart.item.unit',['unit_id'=>'unitId', 'cart_id'=>'cartId']) }}";
+            let _url = url.replace('unitId',unit_id);
+            let __url = _url.replace('cartId',cart_id);
+            $.ajax({
+                url: __url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data.alert);
+                    itemContainer.find('.item_count_price').html(numberFormat(totalItemPrice, 2));
+                    itemContainer.find('.item_count_regular_price').html(numberFormat(totalItemRegularPrice, 2));
+                    refreshSubtotal();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error clearing cart data:', error);
+                }
+            });
+            
         }
-        refreshSubtotal();
     });
 
 

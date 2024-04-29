@@ -46,9 +46,9 @@
                                             @include('alerts.feedback', ['field' => 'phone'])
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Parents Phone') }}</label>
+                                            <label>{{ __('Emergency Phone') }}</label>
                                             <input type="text" name="emergency_phone" class="form-control"
-                                                placeholder="Enter Parents Phone" value="{{ $rider->emergency_phone }}">
+                                                placeholder="Enter Emergency Phone" value="{{ $rider->emergency_phone }}">
                                             @include('alerts.feedback', ['field' => 'emergency_phone'])
                                         </div>
                                     </div>
@@ -98,38 +98,6 @@
                                     @include('alerts.feedback', ['field' => 'identification_no'])
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Operational Area') }}</label>
-                                    @if(empty($rider->oa_id))
-                                        <select name="oa_id" class="form-control">
-                                            <option selected hidden>{{ __('Select Operational Area') }}</option>
-                                            @foreach ($operation_areas as $area)
-                                                <option value="{{$area->id}}">{{ $area->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @include('alerts.feedback', ['field' => 'osa_id'])
-                                    @else
-                                        <input type="text" value="{{ $rider->operation_area->name }}"
-                                        class="form-control" disabled>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Operational Sub Area') }}</label>
-                                    @if(empty($rider->osa_id))
-                                        <select name="osa_id" class="form-control">
-                                            <option selected hidden>{{ __('Select Operational Sub Area') }}</option>
-                                            @foreach ($operation_sub_areas as $area)
-                                                <option value="{{$area->id}}">{{ $area->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @include('alerts.feedback', ['field' => 'osa_id'])
-                                    @else
-                                        <input type="text" value="{{ $rider->operation_sub_area->name }}"
-                                        class="form-control" disabled>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-4">
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
                                         <option selected hidden value="">{{ __('Select Genger') }}</option>
@@ -142,6 +110,36 @@
                                     </select>
                                     @include('alerts.feedback', ['field' => 'gender'])
                                 </div>
+                                <div class="form-group col-md-4">
+                                    <label>{{ __('Operation Area') }}</label>
+                                    @if(empty($rider->oa_id))
+                                        <select name="oa_id" class="form-control operation_area">
+                                            <option selected hidden>{{ __('Select Operation Area') }}</option>
+                                            @foreach ($operation_areas as $area)
+                                                <option value="{{$area->id}}">{{ $area->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @include('alerts.feedback', ['field' => 'osa_id'])
+                                    @else
+                                        <input type="text" value="{{ $rider->operation_area->name }}"
+                                        class="form-control" disabled>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>{{ __('Operation Sub Area') }}</label>
+                                    @if(empty($rider->osa_id))
+                                        <select name="osa_id" class="form-control operation_sub_area" disabled>
+                                            <option selected hidden>{{ __('Select Operation Sub Area') }}</option>
+                                        </select>
+                                        @include('alerts.feedback', ['field' => 'osa_id'])
+                                    @else
+                                        <input type="text" value="{{ $rider->operation_sub_area->name }}"
+                                        class="form-control" disabled>
+                                    @endif
+                                </div>
+
+                                
 
                                 
 
@@ -328,5 +326,35 @@
                 },
             });
         }
+
+
+        $(document).ready(function() {
+            $('.operation_area').on('change', function() {
+                let operation_sub_area = $('.operation_sub_area');
+                let oa_id = $(this).val();
+
+                operation_sub_area.prop('disabled',true);
+
+                let url = ("{{ route('rider.profile.get_osa', ['oa_id']) }}");
+                let _url = url.replace('oa_id', oa_id);
+                
+                $.ajax({
+                    url: _url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        operation_sub_area.prop('disabled',false);
+                        var result = '';
+                        data.operation_sub_areas.forEach(function(sub_area) {
+                            result += `<option value="${sub_area.id}">${sub_area.name}</option>`;
+                        });
+                        operation_sub_area.html(result);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching local area manager data:', error);
+                    }
+                });
+            });
+        });
     </script>
 @endpush

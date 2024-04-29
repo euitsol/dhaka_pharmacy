@@ -33,9 +33,9 @@
                                                 </div>
                                                 <div class="item_price col-2 ps-0">
                                                     @if (productDiscountPercentage($atc->product->id))
-                                                        <h4 class="text-end"> <del class="text-danger"> &#2547; <span class="item_count_regular_price">{{  (number_format((($atc->product->regular_price*$atc->unit->quantity)*$atc->quantity),2))  }}</span> </del></h4>
+                                                        <h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!} <span class="item_count_regular_price">{{  (number_format((($atc->product->price*$atc->unit->quantity)*$atc->quantity),2))  }}</span> </del></h4>
                                                     @endif
-                                                    <h4 class="text-end"> <span> &#2547; </span> <span class="item_count_price">{{  (number_format((($atc->product->price*$atc->unit->quantity)*$atc->quantity),2))  }}</span></h4>
+                                                    <h4 class="text-end"> <span> {!! get_taka_icon() !!} </span> <span class="item_count_price">{{  (number_format((($atc->product->discountPrice()*$atc->unit->quantity)*$atc->quantity),2))  }}</span></h4>
                                                     
                                                 </div>
                                             </div>
@@ -49,11 +49,11 @@
                                                         
                                                         @foreach ($atc->product->units as $u_key=>$unit)
                                                             @php($count++)
-                                                            <input type="radio" data-name="{{$unit->name}}" 
+                                                            <input type="radio" data-cart_id="{{$atc->id}}" data-id="{{$unit->id}}" data-name="{{$unit->name}}" 
                                                                 @if (!empty($atc->unit_id) && ($unit->id == $atc->unit_id)) checked @endif
                                                                 class="unit_quantity" id="android-{{$count+20}}"
-                                                                name="data-{{$key}}" data-regular_price="{{ ($atc->product->regular_price * $unit->quantity)*$atc->quantity }}"
-                                                                value="{{ ($atc->product->price * $unit->quantity)*$atc->quantity }}">
+                                                                name="data-{{$key}}" data-regular_price="{{ ($atc->product->price * $unit->quantity)*$atc->quantity }}"
+                                                                value="{{ ($atc->product->discountPrice() * $unit->quantity)*$atc->quantity }}">
                                                                 <label for="android-{{ $count+20 }}">
                                                                     <img src="{{storage_url($unit->image)}}">
                                                                 </label>
@@ -67,7 +67,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group" role="group">
                                                             <a href="javascript:void(0)" data-id="{{$atc->id}}" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
-                                                            <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="{{ (!empty($atc->unit_id)) ? ($atc->product->price*$atc->unit->quantity) : ($atc->product->price)  }}" data-item_regular_price="{{ (!empty($atc->unit_id)) ? ($atc->product->regular_price*$atc->unit->quantity) : ($atc->product->regular_price)  }}" value="{{$atc->quantity}}" >
+                                                            <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="{{ (!empty($atc->unit_id)) ? ($atc->product->discountPrice()*$atc->unit->quantity) : ($atc->product->discountPrice())  }}" data-item_regular_price="{{ (!empty($atc->unit_id)) ? ($atc->product->price*$atc->unit->quantity) : ($atc->product->price)  }}" value="{{$atc->quantity}}" >
                                                             <a href="javascript:void(0)" data-id="{{$atc->id}}" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
                                                         </div>
                                                     </div>
@@ -77,7 +77,7 @@
                                         </div>
                                     </div>
                                 @empty
-                                    <h5 class="text-center cart_empty_alert">{{__('Added Some Products')}}</h5>
+                                    <h5 class="text-center cart_empty_alert">{{__('Add some product')}}</h5>
                                 @endforelse
                             </div>
                             <div class="offcanvas-footer cart_sub_total px-4 py-3">
@@ -92,7 +92,7 @@
                                         <h3>{{__('Subtotal Price')}}</h3>
                                     </div>
                                     <div class="col-4 text-end">
-                                        <h3><span> &#2547; </span> <span class="subtotal_price">0.00</span></h3>
+                                        <h3><span> {!! get_taka_icon() !!} </span> <span class="subtotal_price">0.00</span></h3>
                                     </div>
                                     <div class="col-12">
                                         <a href="{{route('product.int','cart-order')}}" class="btn order_button w-100 {{count($atcs)<1 ? 'disabled' : ''}}" >{{__('Proceed To Checkout')}}</a>

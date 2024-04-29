@@ -35,9 +35,9 @@
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
                         <div class="form-group {{ $errors->has('oa_id') ? ' has-danger' : '' }}">
-                            <label>{{ __('Operational Area') }}</label>
+                            <label>{{ __('Operation Area') }}</label>
                             <select name="oa_id" class="form-control oa {{ $errors->has('oa_id') ? ' is-invalid' : '' }}">
-                                <option selected hidden>{{ __('Select Operational Area') }}</option>
+                                <option selected hidden>{{ __('Select Operation Area') }}</option>
                                 @foreach ($operational_areas as $oa)
                                     <option {{ old('oa_id') == $oa->id ? 'selected' : '' }} value="{{ $oa->id }}">
                                         {{ $oa->name }}</option>
@@ -46,9 +46,9 @@
                             @include('alerts.feedback', ['field' => 'oa_id'])
                         </div>
                         <div class="form-group">
-                            <label>{{ __('Operational Sub Area') }}</label>
+                            <label>{{ __('Operation Sub Area') }}</label>
                             <select name="osa_id" class="form-control osa {{ $errors->has('osa_id') ? ' is-invalid' : '' }}" disabled>
-                                <option selected hidden>{{ __('Select Operational Sub Area') }}</option>
+                                <option selected hidden>{{ __('Select Operation Sub Area') }}</option>
                             </select>
                             @include('alerts.feedback', ['field' => 'osa_id'])
                         </div>

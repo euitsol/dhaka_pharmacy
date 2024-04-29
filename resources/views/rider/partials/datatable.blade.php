@@ -1,10 +1,10 @@
 @push('css_link')
-    <link rel="stylesheet" href="{{ asset('backend/plugin/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugin/datatable/datatables.min.css') }}">
 
 @endpush
 
 @push('js_link')
-    <script src="{{ asset('backend/plugin/datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('plugin/datatable/datatables.min.js') }}"></script>
 @endpush
 
 

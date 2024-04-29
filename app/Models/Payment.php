@@ -19,5 +19,35 @@ class Payment extends BaseModel
     public function scopeStatus($query, $status){
         $db_status = ($status == 'success') ? 1 : (($status == 'pending') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 2)));
         return $query->where('status',$db_status);
+    } 
+
+    public function statusBg() {
+        switch ($this->status) {
+            case 0:
+                return 'badge badge-info';
+            case 1:
+                return 'badge badge-success';
+            case -1:
+                return 'badge badge-warning';
+            case -2:
+                return 'badge badge-danger';
+            default:
+                return 'badge badge-primary';
+        }
     }
+    public function statusTitle() {
+        switch ($this->status) {
+            case 0:
+                return 'Pending';
+            case 1:
+                return 'Success';
+            case -1:
+                return 'Failed';
+            case -2:
+                return 'Cancel';
+            default:
+                return 'Processing';
+        }
+    }
+
 }

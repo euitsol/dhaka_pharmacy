@@ -41,24 +41,24 @@ public function getMultiStatusClass()
         if ($this->status == 0) {
             return['menuItems' => [
                 ['routeName' => 'javascript:void(0)',   'params' => [$id], 'label' => 'View Details', 'className' => 'view','data-id' => $id,],
-                ['routeName' => 'dm_management.operation_sub_area.status.operation_sub_area_edit',   'params' => [$id,'accept'], 'label' => 'Accept', 'className' => 'accept'],
-                ['routeName' => 'dm_management.operation_sub_area.status.operation_sub_area_edit',   'params' => [$id,'declined'], 'label' => 'Declined'],
-                ['routeName' => 'dm_management.operation_sub_area.operation_sub_area_edit',   'params' => [$slug], 'label' => 'Update'],
-                ['routeName' => 'dm_management.operation_sub_area.operation_sub_area_delete', 'params' => [$id], 'label' => 'Delete', 'delete' => true],
+                ['routeName' => 'opa.operation_sub_area.status.operation_sub_area_edit',   'params' => [$id,'accept'], 'label' => 'Accept', 'className' => 'accept'],
+                ['routeName' => 'opa.operation_sub_area.status.operation_sub_area_edit',   'params' => [$id,'declined'], 'label' => 'Declined'],
+                ['routeName' => 'opa.operation_sub_area.operation_sub_area_edit',   'params' => [$slug], 'label' => 'Update'],
+                ['routeName' => 'opa.operation_sub_area.operation_sub_area_delete', 'params' => [$id], 'label' => 'Delete', 'delete' => true],
             ]];
         } elseif($this->status == 1) {
             return['menuItems' => [
                 ['routeName' => 'javascript:void(0)',   'params' => [$id], 'label' => 'View Details', 'className' => 'view','data-id' => $id,],
-                ['routeName' => 'dm_management.operation_sub_area.status.operation_sub_area_edit',   'params' => [$id,'declined'], 'label' => 'Declined'],
-                ['routeName' => 'dm_management.operation_sub_area.operation_sub_area_edit',   'params' => [$slug], 'label' => 'Update'],
-                ['routeName' => 'dm_management.operation_sub_area.operation_sub_area_delete', 'params' => [$id], 'label' => 'Delete', 'delete' => true],
+                ['routeName' => 'opa.operation_sub_area.status.operation_sub_area_edit',   'params' => [$id,'declined'], 'label' => 'Declined'],
+                ['routeName' => 'opa.operation_sub_area.operation_sub_area_edit',   'params' => [$slug], 'label' => 'Update'],
+                ['routeName' => 'opa.operation_sub_area.operation_sub_area_delete', 'params' => [$id], 'label' => 'Delete', 'delete' => true],
             ]];
         }else{
             return['menuItems' => [
                 ['routeName' => 'javascript:void(0)',   'params' => [$id], 'label' => 'View Details', 'className' => 'view','data-id' => $id,],
-                ['routeName' => 'dm_management.operation_sub_area.status.operation_sub_area_edit',   'params' => [$id,'accept'], 'label' => 'Accept', 'className' => 'accept'],
-                ['routeName' => 'dm_management.operation_sub_area.operation_sub_area_edit',   'params' => [$slug], 'label' => 'Update'],
-                ['routeName' => 'dm_management.operation_sub_area.operation_sub_area_delete', 'params' => [$id], 'label' => 'Delete', 'delete' => true],
+                ['routeName' => 'opa.operation_sub_area.status.operation_sub_area_edit',   'params' => [$id,'accept'], 'label' => 'Accept', 'className' => 'accept'],
+                ['routeName' => 'opa.operation_sub_area.operation_sub_area_edit',   'params' => [$slug], 'label' => 'Update'],
+                ['routeName' => 'opa.operation_sub_area.operation_sub_area_delete', 'params' => [$id], 'label' => 'Delete', 'delete' => true],
             ]];
         }
     }

@@ -26,7 +26,42 @@ class Order extends BaseModel
     }
 
     public function scopeStatus($query, $status){
-        $db_status = ($status == 'success') ? 1 : (($status == 'pending') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 2)));
+        $db_status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
         return $query->where('status',$db_status);
+    }
+
+
+    public function statusBg() {
+        switch ($this->status) {
+            case 0:
+                return 'badge badge-secondary';
+            case 1:
+                return 'badge badge-info';
+            case 2:
+                return 'badge badge-success';
+            case -1:
+                return 'badge badge-danger';
+            case -2:
+                return 'badge badge-warning';
+            default:
+                return 'badge badge-primary';
+        }
+    }
+    
+    public function statusTitle() {
+        switch ($this->status) {
+            case 0:
+                return 'Initiated';
+            case 1:
+                return 'Pending';
+            case 2:
+                return 'Success';
+            case -1:
+                return 'Failed';
+            case -2:
+                return 'Cancel';
+            default:
+                return 'Processing';
+        }
     }
 }

@@ -50,15 +50,15 @@
                                         </div>
                                         <div class="col-2 text-end">
                                             @php
-                                                $single_total_price = (($cartItem['product']->price * $cartItem['unit']->quantity)*$cartItem['quantity']);
-                                                $single_regular_price = (($cartItem['product']->regular_price * $cartItem['unit']->quantity)*$cartItem['quantity']);
+                                                $single_total_price = (($cartItem['product']->discountPrice() * $cartItem['unit']->quantity)*$cartItem['quantity']);
+                                                $single_regular_price = (($cartItem['product']->price * $cartItem['unit']->quantity)*$cartItem['quantity']);
                                                 $total_price +=$single_total_price;
                                                 $total_regular_price +=$single_regular_price;
                                             @endphp
                                             @if(productDiscountPercentage($cartItem['product']->id))
-                                                <span class="text-danger me-2"><del>&#2547; {{number_format(($single_regular_price), 2)}}</del></span>
+                                                <span class="text-danger me-2"><del>{!! get_taka_icon() !!} {{number_format(($single_regular_price), 2)}}</del></span>
                                             @endif
-                                            <span> &#2547; </span><span>{{number_format($single_total_price,2)}}</span>
+                                            <span> {!! get_taka_icon() !!} </span><span>{{number_format($single_total_price,2)}}</span>
                                             
                                         </div>
                                     </div>
@@ -70,9 +70,9 @@
                                     <div class="col text-end">
                                         <span>{{__('Sub-total  ')}}</span>
                                         @if($total_regular_price !== $total_price)
-                                            <span class="text-danger mx-2"><del>&#2547; {{number_format(($total_regular_price), 2)}}</del></span>
+                                            <span class="text-danger mx-2"><del>{!! get_taka_icon() !!} {{number_format(($total_regular_price), 2)}}</del></span>
                                         @endif
-                                        <span>&#2547; {{number_format($total_price,2)}}</span> 
+                                        <span>{!! get_taka_icon() !!} {{number_format($total_price,2)}}</span> 
                                         
                                     </div>
                                 </div>
@@ -101,42 +101,42 @@
                                     <div class="form-check ms-2">
                                         <input class="form-check-input" value="1" style="width: 1em" type="radio" name="address_id" id="address1" checked>
                                         <label class="form-check-label ms-2" for="address1">
-                                        Default Address (<span> &#2547; </span> <span> 10 </span>)
+                                        Default Address (<span> {!! get_taka_icon() !!} </span> <span> 10 </span>)
                                         </label>
                                     </div>
                                     <div class="form-check ms-2">
                                         <input class="form-check-input" value="2" style="width: 1em" type="radio" name="address_id" id="address2">
                                         <label class="form-check-label ms-2" for="address2">
-                                        Address -1 (<span> &#2547; </span> <span> 20 </span>)
+                                        Address -1 (<span> {!! get_taka_icon() !!} </span> <span> 20 </span>)
                                         </label>
                                     </div>
                                     <div class="form-check ms-2">
                                         <input class="form-check-input" value="3" style="width: 1em" type="radio" name="address_id" id="address3">
                                         <label class="form-check-label ms-2" for="address3">
-                                        Address -2 (<span> &#2547; </span> <span> 30 </span>)
+                                        Address -2 (<span> {!! get_taka_icon() !!} </span> <span> 30 </span>)
                                         </label>
                                     </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{__('Discount')}}</div>
-                                <div class="col text-end "><span> &#2547; </span> <span>{{number_format($total_discount,2)}}</span></div>
+                                <div class="col text-end "><span> {!! get_taka_icon() !!} </span> <span>{{number_format($total_discount,2)}}</span></div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{__('Sub-total')}}</div>
                                 <div class="col text-end ">
                                     @if($total_regular_price !== $total_price)
-                                            <span class="text-danger mx-2"><del>&#2547; {{number_format(($total_regular_price), 2)}}</del></span>
+                                            <span class="text-danger mx-2"><del>{!! get_taka_icon() !!} {{number_format(($total_regular_price), 2)}}</del></span>
                                     @endif
-                                    <span> &#2547; {{number_format($total_price,2)}}</span>
+                                    <span> {!! get_taka_icon() !!} {{number_format($total_price,2)}}</span>
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{__('Delivery Fee')}}</div>
-                                <div class="col text-end "><span> &#2547; </span> <span>{{number_format($delivery_fee,2)}}</span></div>
+                                <div class="col text-end "><span> {!! get_taka_icon() !!} </span> <span>{{number_format($delivery_fee,2)}}</span></div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{__('Total Price')}}</div>
-                                <div class="col text-end "><span> &#2547; </span> <span>{{number_format(($total_price + number_format($delivery_fee,2)),2) }}</span></div>
+                                <div class="col text-end "><span> {!! get_taka_icon() !!} </span> <span>{{number_format(($total_price + number_format($delivery_fee,2)),2) }}</span></div>
                             </div>
 
                             <div class="row align-items-center atc_functionality">

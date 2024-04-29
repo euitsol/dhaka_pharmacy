@@ -23,7 +23,7 @@
                                 <th>{{ __('Amount') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
-                                <th>{{ __('Created by') }}</th>
+                                {{-- <th>{{ __('Created by') }}</th> --}}
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -32,12 +32,12 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $payment->customer->name }}</td>
-                                    <td>{{json_decode($payment->details,true)['tran_id']}}</td>
-                                    <td>&#2547;{{number_format((json_decode($payment->details,true)['amount']),2)}}</td>
+                                    <td>{{json_decode($payment->details,true)['tran_id'] ?? '--'}}</td>
+                                    <td>{!! get_taka_icon() !!}{{isset(json_decode($payment->details,true)['amount']) ? number_format((json_decode($payment->details,true)['amount']),2) : '--'}}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
                                     <td>{{ $payment->created_date() }}</td>
 
-                                    <td> {{ $payment->created_user_name() }} </td>
+                                    {{-- <td> {{ $payment->created_user_name() }} </td> --}}
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

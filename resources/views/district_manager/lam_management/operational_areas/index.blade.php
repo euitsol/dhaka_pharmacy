@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Operational Area List') }}</h4>
+                            <h4 class="card-title">{{ __('Operation Area List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
                                 'routeName' => 'dm.lam_area.create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new lam area',
+                                'label' => 'Add new operation sub area',
                             ])
                         </div>
                     </div>
@@ -23,8 +23,8 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('DM Areas') }}</th>
-                                <th>{{ __('LAM Areas') }}</th>
+                                <th>{{ __('Operation Areas') }}</th>
+                                <th>{{ __('Operation Sub Areas') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -90,7 +90,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('LAM Area Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Operation Sub Area Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

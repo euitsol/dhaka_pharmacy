@@ -56,5 +56,5 @@
     </div>
 @endsection
 @push('js')
-    <script src="{{ asset('backend/js/site_settings.js') }}"></script>
+    <script src="{{ asset('admin/js/site_settings.js') }}"></script>
 @endpush

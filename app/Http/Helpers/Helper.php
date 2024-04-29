@@ -15,14 +15,13 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-            'am.','um.','pm.','settings.','dm_management.','lam_management','product.','product.product_category.'
+            'am.','um.','pm.','settings.','dm_management.','lam_management','product.','product.product_category.','om.'
         ];
 }
 
 //This will check the permission of the given route name. Can be used for buttons
 function check_access_by_route_name($routeName = null): bool
 {
-
 
 
 
@@ -215,14 +214,14 @@ function productDiscountAmount($pro_id){
                 ->where(function ($query) {
                     $query->whereNotNull('discount_amount')
                         ->orWhereNotNull('discount_percentage');
-                })
+                })->where('status',1)
                 ->first();
     if($discount){
         if(!empty($discount->discount_amount)){
             return $discount->discount_amount;
         }
         else if(!empty($discount->discount_percentage)){
-            return ($discount->product->regular_price/100)*$discount->discount_percentage;
+            return ($discount->product->price/100)*$discount->discount_percentage;
         }
     }
 }
@@ -233,12 +232,12 @@ function productDiscountPercentage($pro_id){
                 ->where(function ($query) {
                     $query->whereNotNull('discount_amount')
                         ->orWhereNotNull('discount_percentage');
-                })
+                })->where('status',1)
                 ->first();
     $result = 0;
     if($discount){
         if(!empty($discount->discount_amount)){
-            $result = ($discount->discount_amount/$discount->product->regular_price)*100;
+            $result = ($discount->discount_amount/$discount->product->price)*100;
         }
         else if(!empty($discount->discount_percentage)){
             $result = $discount->discount_percentage;
@@ -247,6 +246,7 @@ function productDiscountPercentage($pro_id){
         return $result;
     }
 }
+
 
 
 function formatPercentageNumber($number) {
@@ -258,5 +258,9 @@ function otp(){
     // $otp =  mt_rand(100000, 999999);
     $otp =  000000;
     return $otp;
+}
+
+function get_taka_icon(){
+    return '&#2547; ';
 }
 

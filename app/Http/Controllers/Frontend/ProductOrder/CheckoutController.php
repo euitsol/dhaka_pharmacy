@@ -103,7 +103,7 @@ class CheckoutController extends BaseController
 
     public function order_confirm(Request $req, $order_id){
         $order = Order::findOrFail(decrypt($order_id));
-        // $order->address_id = $req->address_id;
+        $order->address_id = 1;
         $order->status = 1; //Order Submit
         $order->payment_getway = $req->payment_mathod;
         $order->delivery_type = $req->delivery_type;

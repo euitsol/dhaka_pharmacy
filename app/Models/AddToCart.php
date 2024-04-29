@@ -18,4 +18,7 @@ class AddToCart extends BaseModel
     public function unit(){
         return $this->belongsTo(MedicineUnit::class,'unit_id');
     }
+    public function odps(){
+        return $this->hasMany(OrderDistributionPharmacy::class,'cart_id','id');
+    }
 }

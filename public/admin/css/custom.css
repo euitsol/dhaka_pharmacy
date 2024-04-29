@@ -1,0 +1,314 @@
+/*=============================================================
+                Start Overwrite CSS
+ =============================================================*/
+
+:root {
+    --primary-color: #0093E9;
+    --primary-bg-image: linear-gradient( 288deg,  rgba(0,85,255,1) 1.5%, rgb(4, 56, 115) 91.6% );
+    --secondary-color: #043873;
+    --secondary-bg-image: linear-gradient( 288deg, rgba(4,56,115,1) 1.5%, rgba(0,85,255,1) 91.6% );
+
+    --btn-bg-color: #263148;
+    --btn-bg-image: linear-gradient(to bottom left, #344675, #263148, #344675) !important;
+    
+
+    
+
+}
+
+.brand-link .brand-image {
+    float: none;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    max-height: 45px;
+    width: 100%;
+    object-fit: cover;
+}
+.sidebar {
+    background-color:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+
+.btn:not([data-action]):hover{
+    background-color:var(--secondary-color) !important;
+    background-image:var(--secondary-bg-image) !important;
+}
+.white-content .footer .copyright a{
+    color:var(--primary-color) !important;
+}
+.white-content .footer .copyright a:hover{
+    color:var(--secondary-color) !important;
+}
+.main-panel {
+    border-top: 2px solid var(--primary-color) !important;
+    /* background-color:var(--primary-color) !important; */
+    /* background-image:var(--primary-bg-image) !important; */
+}
+
+.btn-primary {
+    background:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+.form-control:focus {
+    border-color: var(--primary-color) !important;
+}
+.form-group input[type=file] {
+    height: auto !important;
+}
+.form-check input[type="checkbox"]:checked+.form-check-sign::before, .form-check input[type="checkbox"]:checked+.form-check-sign::before {
+    background-color: var(--primary-color) !important;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:focus, .btn-primary.active:hover {
+    background:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+
+
+
+
+.white-content .btn:not([data-action]):hover {
+    box-shadow: none !important;
+}
+.btn:not([data-action]):hover, .navbar .navbar-nav>a.btn:not([data-action]):hover {
+    box-shadow: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+}
+
+
+
+
+/* Circle  */
+.toggle.ios,
+.toggle-on.ios,
+.toggle-off.ios {
+    border-radius: 20rem;
+}
+.toggle.ios .toggle-handle {
+    border-radius: 20rem;
+}
+
+
+/* Squer */
+.toggle.android {
+    border-radius: 0px;
+}
+.toggle.android .toggle-handle {
+    border-radius: 0px;
+}
+/*=============================================================
+                End Overwrite CSS
+ =============================================================*/
+
+/*=============================================================
+                Start DM Profile CSS
+ =============================================================*/
+
+ .profile-section .profile_image .camera-icon {
+    position: absolute;
+    bottom: -10%;
+    font-size: 15px;
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid var(--primary-color);
+}
+
+.profile-section .profile_image .img,
+.profile-section .profile_image .overly {
+    height: 215px;
+    width: 215px;
+    border: 5px solid #2b3553;
+    border-bottom-color: transparent;
+    position: relative;
+
+}
+
+.profile-section .profile_image .overly::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #000;
+    display: block;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    opacity: .5;
+    transition: .4s;
+    z-index: 99;
+
+}
+
+.div_animation {
+    animation: round 5s linear infinite;
+}
+.image_animation {
+    animation: rounds 5s linear infinite reverse;
+}
+
+@keyframes round {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rounds {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*=============================================================
+                End DM Profile CSS
+ =============================================================*/
+
+/*=============================================================
+                Start Site Settings CSS
+ =============================================================*/
+ .site_settings .tab {
+
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #ccc;
+    min-height: 80vh;
+}
+
+.site_settings .tab button {
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1em;
+    color: rgba(34, 42, 66, 0.7);
+    text-transform: uppercase;
+}
+
+.site_settings .tab button:hover {
+    background-color: #ddd;
+}
+
+.site_settings .tabcontent {
+    border-radius: 0 5px 5px 0;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    border-left: none;
+    min-height: 80vh;
+}
+
+@media only screen and (max-width: 767px) {
+    .site_settings .tab button {
+        width: auto !important;
+        font-size: .6em;
+    }
+
+    .site_settings .tab {
+        min-height: auto !important;
+    }
+
+    .site_settings .tabcontent {
+        min-height: auto !important;
+    }
+}
+
+
+/*=============================================================
+                End Site Settings CSS
+ =============================================================*/
+/*=============================================================
+                Start Select2 CSS
+ =============================================================*/
+
+ /* Select 2 */
+/* .select2 {
+    width: 100% !important;
+} */
+
+.select2-container .select2-selection--single,
+.select2-container .select2-selection--multiple {
+    height: calc(2.25rem + 2px) !important;
+}
+
+.select2-container--default .select2-selection--single ,
+.select2-container--default .select2-selection--multiple {
+    border-color: rgba(29, 37, 59, 0.5) !important;
+    border-radius: 0.4285rem !important;
+}
+
+.select2-container--default .select2-selection--single ,
+.select2-container--default .select2-selection--multiple {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow ,
+.select2-container--default .select2-selection--multiple .select2-selection__arrow {
+    top: 16% !important;
+}
+.select2-container .select2-selection--single .select2-selection__rendered ,
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+    margin: 0;
+}
+/*=============================================================
+                End Select2 CSS
+ =============================================================*/
+/*=============================================================
+                Start Image Upload CSS
+ =============================================================*/
+.imagePreviewMainDiv {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.imagePreviewDiv {
+    position: relative;
+    margin: .3rem;
+}
+
+.imagePreview {
+    object-fit: cover;
+    width: auto;
+    height: 6rem;
+}
+
+.removeImage {
+    position: absolute;
+    left: 88%;
+    top: 10%;
+    cursor: pointer;
+}
+/*=============================================================
+                End Image Upload CSS
+ =============================================================*/
+
+/*=============================================================
+                Start Product Management CSS
+ =============================================================*/
+
+ .medicine_price_card .bdt_button{
+        background: var( --primary-color );
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        color: #fff;
+ }
+
+/*=============================================================
+                End Product Management CSS
+ =============================================================*/
+

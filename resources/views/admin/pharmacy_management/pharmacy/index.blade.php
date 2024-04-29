@@ -49,30 +49,39 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
+                                                    'routeName' => 'pm.pharmacy.login_as.pharmacy_profile',   
+                                                    'params' => [encrypt($pharmacy->id)], 
+                                                    'label' => 'Login As',
+                                                    'target'=>'_blank'],
+                                                [
                                                     'routeName' => 'pm.pharmacy.pharmacy_profile',
-                                                    'params' => [$pharmacy->id],
+                                                    'params' => [encrypt($pharmacy->id)],
                                                     'label' => 'Profile',
                                                 ],
                                                 [
+                                                    'routeName' => 'pm.pharmacy.pharmacy_discount',
+                                                    'params' => [encrypt($pharmacy->id)],
+                                                    'label' => 'Pharmacy Discount',
+                                                ],
+                                                [
                                                     'routeName' => 'javascript:void(0)',
-                                                    'params' => [$pharmacy->id],
                                                     'label' => 'View Details',
                                                     'className' => 'view',
-                                                    'data-id' => $pharmacy->id,
+                                                    'data-id' => encrypt($pharmacy->id),
                                                 ],
                                                 [
                                                     'routeName' => 'pm.pharmacy.pharmacy_edit',
-                                                    'params' => [$pharmacy->id],
+                                                    'params' => [encrypt($pharmacy->id)],
                                                     'label' => 'Update',
                                                 ],
                                                 [
                                                     'routeName' => 'pm.pharmacy.status.pharmacy_edit',
-                                                    'params' => [$pharmacy->id],
+                                                    'params' => [encrypt($pharmacy->id)],
                                                     'label' => $pharmacy->getBtnStatus(),
                                                 ],
                                                 [
                                                     'routeName' => 'pm.pharmacy.pharmacy_delete',
-                                                    'params' => [$pharmacy->id],
+                                                    'params' => [encrypt($pharmacy->id)],
                                                     'label' => 'Delete',
                                                     'delete' => true,
                                                 ],

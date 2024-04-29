@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Update Operational Area') }}</h4>
+                            <h4 class="card-title">{{ __('Update Operation Area') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -24,12 +24,12 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label>{{ __('DM Area') }}</label>
+                            <label>{{ __('Operation Area') }}</label>
                             <input type="hidden" name="oa_id" class="form-control" value="{{ dm()->operation_area->id }}">
                             <input type="text" class="form-control" value="{{ dm()->operation_area->name }}" disabled>
                         </div>
                         <div class="form-group">
-                            <label>{{ __('LAM Area') }}</label>
+                            <label>{{ __('Operation Sub Area') }}</label>
                             <input type="text" id="title" name="name" class="form-control" placeholder="Enter name"
                                 value="{{ $lam_area->name }}">
                             @include('alerts.feedback', ['field' => 'name'])
