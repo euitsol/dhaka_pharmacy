@@ -141,7 +141,7 @@ class BaseController extends Controller
 
 
             $activatedProduct->data_item_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->price*$data['atc']->unit->quantity) : $data['atc']->product->price; 
-            $activatedProduct->data_item_regular_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->regular_price*$data['atc']->unit->quantity) : $data['atc']->product->regular_price; 
+            $activatedProduct->data_item_discount_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->discountPrice()*$data['atc']->unit->quantity) : $data['atc']->product->discountPrice(); 
             $activatedProduct->discount = productDiscountPercentage($activatedProduct->id) ? true : false; 
 
              

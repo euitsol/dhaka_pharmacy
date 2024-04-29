@@ -57,12 +57,12 @@ class DistributedOrderController extends Controller
         $data['payments'] = Payment::where('order_id',$data['do']->order->id)->latest()->get();
         $data['do']['dops']->map(function($dop) {
             $dop->cart->price = (($dop->cart->product->price*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity);
-            $dop->cart->regular_price = (($dop->cart->product->regular_price*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity);
+            $dop->cart->discount_price = (($dop->cart->product->discountPrice()*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity);
             $dop->cart->discount = (productDiscountAmount($dop->cart->product->id)*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity;
             return $dop->cart;
         });
         $data['totalPrice'] = collect($data['do']['dops'])->sum('cart.price');
-        $data['totalRegularPrice'] = collect($data['do']['dops'])->sum('cart.regular_price');
+        $data['totalRegularPrice'] = collect($data['do']['dops'])->sum('cart.discount_price');
         $data['totalDiscount'] = collect($data['do']['dops'])->sum('cart.discount');
         $data['pharmacies'] = Pharmacy::activated()->latest()->get();
         return view('admin.distributed_order.edit',$data);

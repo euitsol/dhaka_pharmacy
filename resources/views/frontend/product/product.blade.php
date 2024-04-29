@@ -97,9 +97,9 @@
                                                     </h3>
                                                 </a>
                                             </div>
-                                            <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->price,2) }}</span>
+                                            <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span>
                                                 @if (productDiscountPercentage($product->id))
-                                                 <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->regular_price,2) }}</del></span> 
+                                                 <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                 @endif
                                             </h4>
                                             <div class="add_to_card">
@@ -154,7 +154,7 @@
                     }
                     
                     if(product.discount_percentage){
-                        discount_amount = `<span class="regular_price"> <del>{!! get_taka_icon() !!} ${numberFormat(product.regular_price,2)}</del></span>`
+                        discount_amount = `<span class="regular_price"> <del>{!! get_taka_icon() !!} ${numberFormat(product.price,2)}</del></span>`
                     }
     
                     return `
@@ -176,7 +176,7 @@
                                             </h3>
                                         </a>
                                     </div>
-                                    <h4><span>{!! get_taka_icon() !!} ${numberFormat(product.price,2)}</span>  ${discount_amount}</h4>
+                                    <h4><span>{!! get_taka_icon() !!} ${numberFormat(product.discountPrice,2)}</span>  ${discount_amount}</h4>
                                     <div class="add_to_card">
                                         <a class="cart-btn" data-unit_id="${product.units[0]['id']}" href="javascript:void(0)" data-product_slug="${product.slug}">
                                             <i class="fa-solid fa-cart-plus"></i>

@@ -32,7 +32,7 @@
                 success: function(data) {
                     let regular_price = '';
                     if(data.atc.product.discount){
-                        regular_price = `<h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!}  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_regular_price,2)}</span></del></h4>`;
+                        regular_price = `<h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!}  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_price,2)}</span></del></h4>`;
                     }
 
 
@@ -64,7 +64,7 @@
                                                     </div>
                                                     <div class="item_price col-2 ps-0">
                                                         ${regular_price}
-                                                        <h4 class="text-end"> <span> {!! get_taka_icon() !!} </span> <span class="item_count_price">${numberFormat(data.atc.product.data_item_price,2)}</span></h4>
+                                                        <h4 class="text-end"> <span> {!! get_taka_icon() !!} </span> <span class="item_count_price">${numberFormat(data.atc.product.data_item_discount_price,2)}</span></h4>
                                                     </div>
                                                 </div>
 
@@ -84,7 +84,7 @@
                                         <input type="radio" data-name="${unit.name}" ${checked}
                                         class="unit_quantity" data-cart_id="${data.atc.id}" data-id="${unit.id}" id="android-${index+20}"
                                         name="data-${count}"
-                                        value="${ (data.atc.product.price * unit.quantity)*data.atc.quantity }" data-regular_price="${ (data.atc.product.regular_price * unit.quantity)*data.atc.quantity }">
+                                        value="${ (data.atc.product.discountPrice * unit.quantity)*data.atc.quantity }" data-regular_price="${ (data.atc.product.price * unit.quantity)*data.atc.quantity }">
                                         <label for="android-${index+20}">
                                             <img src="${unit.image}">
                                         </label>
@@ -101,7 +101,7 @@
                                             <div class="form-group">
                                                 <div class="input-group" role="group">
                                                     <a href="javascript:void(0)" data-id="${data.atc.id}" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
-                                                    <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${parseFloat(data.atc.product.data_item_price)}"  data-item_regular_price="${parseFloat(data.atc.product.data_item_regular_price)}" value="1" >
+                                                    <input type="text" disabled class="form-control text-center plus_minus_quantity" data-item_price="${parseFloat(data.atc.product.data_item_discount_price)}"  data-item_regular_price="${parseFloat(data.atc.product.data_item_price)}" value="1" >
                                                     <a href="javascript:void(0)" data-id="${data.atc.id}" class="btn btn-sm plus_btn"><i class="fa-solid fa-plus"></i></a>
                                                 </div>
                                             </div>

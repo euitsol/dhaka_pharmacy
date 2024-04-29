@@ -23,7 +23,6 @@ class MedicineSeeder extends Seeder
             'strength_id' => 1,
             'unit' => json_encode(["1","2",'3']),
             'price' => 1.08,
-            'regular_price' => 1.08,
             'description' => "Indications of Napa 500 mg
             Napa 500 mg is indicated for fever, common cold and influenza, headache, toothache, earache, bodyache, myalgia, neuralgia, dysmenorrhoea, sprains, colic pain, back pain, post-operative pain, postpartum pain, inflammatory pain and post vaccination pain in children. It is also indicated for rheumatic & osteoarthritic pain and stiffness of joints.
             

@@ -214,14 +214,14 @@ function productDiscountAmount($pro_id){
                 ->where(function ($query) {
                     $query->whereNotNull('discount_amount')
                         ->orWhereNotNull('discount_percentage');
-                })
+                })->where('status',1)
                 ->first();
     if($discount){
         if(!empty($discount->discount_amount)){
             return $discount->discount_amount;
         }
         else if(!empty($discount->discount_percentage)){
-            return ($discount->product->regular_price/100)*$discount->discount_percentage;
+            return ($discount->product->price/100)*$discount->discount_percentage;
         }
     }
 }
@@ -232,12 +232,12 @@ function productDiscountPercentage($pro_id){
                 ->where(function ($query) {
                     $query->whereNotNull('discount_amount')
                         ->orWhereNotNull('discount_percentage');
-                })
+                })->where('status',1)
                 ->first();
     $result = 0;
     if($discount){
         if(!empty($discount->discount_amount)){
-            $result = ($discount->discount_amount/$discount->product->regular_price)*100;
+            $result = ($discount->discount_amount/$discount->product->price)*100;
         }
         else if(!empty($discount->discount_percentage)){
             $result = $discount->discount_percentage;
@@ -246,6 +246,7 @@ function productDiscountPercentage($pro_id){
         return $result;
     }
 }
+
 
 
 function formatPercentageNumber($number) {

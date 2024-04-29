@@ -205,7 +205,7 @@
                                 <div class="input-group" role="group">
                                     <input type="text" name="price"
                                     class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
-                                    placeholder="Enter price" value="{{ $medicine->regular_price }}">
+                                    placeholder="Enter price" value="{{ $medicine->discountPrice() }}">
                                     <span class="bdt_button">BDT</span>
                                 </div>
                                 @include('alerts.feedback', ['field' => 'price'])

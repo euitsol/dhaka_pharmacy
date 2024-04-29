@@ -50,8 +50,8 @@
                                         </div>
                                         <div class="col-2 text-end">
                                             @php
-                                                $single_total_price = (($cartItem['product']->price * $cartItem['unit']->quantity)*$cartItem['quantity']);
-                                                $single_regular_price = (($cartItem['product']->regular_price * $cartItem['unit']->quantity)*$cartItem['quantity']);
+                                                $single_total_price = (($cartItem['product']->discountPrice() * $cartItem['unit']->quantity)*$cartItem['quantity']);
+                                                $single_regular_price = (($cartItem['product']->price * $cartItem['unit']->quantity)*$cartItem['quantity']);
                                                 $total_price +=$single_total_price;
                                                 $total_regular_price +=$single_regular_price;
                                             @endphp

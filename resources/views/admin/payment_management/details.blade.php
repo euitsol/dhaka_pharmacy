@@ -114,7 +114,7 @@
                                                 <td>{{json_decode($payment->details,true)['store_id'] ?? '--'}}</td>
                                                 <th>Store Amount</th>
                                                 <td>:</td>
-                                                <td>{!! isset(json_decode($payment->details,true)['store_amount']) ? "{!! get_taka_icon() !!} ". number_format(json_decode($payment->details,true)['store_amount'],2) : '0.00' !!}</td>
+                                                <td>{!! isset(json_decode($payment->details,true)['store_amount']) ? get_taka_icon(). number_format(json_decode($payment->details,true)['store_amount'],2) : '0.00' !!}</td>
                                             </tr>
                                             <tr>
                                                 <th>Currency Rate</th>

@@ -27,6 +27,10 @@ class Medicine extends BaseModel
     {
         return $this->belongsTo(CompanyName::class, 'company_id');
     }
+    public function discounts()
+    {
+        return $this->hasMany(Discount::class, 'pro_id','id');
+    }
     // public function medicine_cat()
     // {
     //     return $this->belongsTo(MedicineCategory::class, 'medicine_cat_id');
@@ -68,6 +72,22 @@ class Medicine extends BaseModel
         } else {
             return 'badge badge-info';
         }
+    }
+
+    public function discountPrice()
+    {
+        $price = $this->price;
+        $discount = $this->discounts->where('status',1)->first();
+        if($discount){
+            if(!empty($discount->discount_amount)){
+                return ($price - $discount->discount_amount);
+            }
+            else if(!empty($discount->discount_percentage)){
+                return ($price - (($price/100)*$discount->discount_percentage));
+            }
+        }
+        return $price;
+        
     }
 
 }

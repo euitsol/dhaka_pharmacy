@@ -90,11 +90,17 @@
                                                                                 <div class="col my-auto">
                                                                                     <h6 class="mb-0 text-end">
                                                                                         @if (productDiscountPercentage($item->product->id))
-                                                                                        <span class="text-danger"><del>{!! get_taka_icon() !!} {{number_format((($item->product->regular_price*$item->unit->quantity) * $item->quantity), 2)}}</del></span> 
+                                                                                        <span class="text-danger">
+                                                                                            <del>
+                                                                                                {!! get_taka_icon() !!} {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}
+                                                                                            </del>
+                                                                                        </span> 
                                                                                         @endif
                                                                                     </h6>
                                                                                     <h6 class="mb-0 text-end">
-                                                                                        <span>{!! get_taka_icon() !!} {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}</span> 
+                                                                                        <span>
+                                                                                            {!! get_taka_icon() !!} {{number_format((($item->product->discountPrice()*$item->unit->quantity) * $item->quantity), 2)}}
+                                                                                        </span> 
                                                                                     </h6>
                                                                                     
                                                                                 </div>

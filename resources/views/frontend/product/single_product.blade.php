@@ -98,10 +98,10 @@
                                                 
                                                     <div class="product_price mt-4">
                                                         @if (productDiscountPercentage($single_product->id))
-                                                            <p><del class="text-danger">{{ __('MRP Tk') }} <span class="total_regular_price">{{ __(number_format($single_product->regular_price, 2)) }}</span></del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
+                                                            <p><del class="text-danger">{{ __('MRP Tk') }} <span class="total_regular_price">{{ __(number_format($single_product->price, 2)) }}</span></del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
                                                         @endif
                                                         <p><strong>{{ __('Price: Tk') }} <span
-                                                                    class="total_price">{{ __(number_format($single_product->price, 2)) }}
+                                                                    class="total_price">{{ __(number_format($single_product->discountPrice(), 2)) }}
                                                                 </span></strong> /<span class="unit_name">{{ __('piece') }}</span> </p>
                                                         <div class="form-group my-4 boxed">
                                                             @foreach ($units as $key => $unit)
@@ -109,7 +109,7 @@
                                                                     @if ($key == 0) checked @endif
                                                                     class="item_quantity" id="android-{{ $key }}"
                                                                     name="data"
-                                                                    data-total_price="{{ $single_product->price * $unit->quantity }}" data-total_regular_price="{{ $single_product->regular_price * $unit->quantity }}">
+                                                                    data-total_price="{{ $single_product->discountPrice() * $unit->quantity }}" data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
                                                                     <img src="{{storage_url($unit->image)}}">
                                                                 </label>
@@ -403,9 +403,9 @@
                                                                 <p><a
                                                                         href="">{{ $product->company->name }}</a>
                                                                 </p>
-                                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!} {{ number_format($product->price,2) }}</span>
+                                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span>
                                                                     @if (productDiscountPercentage($product->id))
-                                                                     <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->regular_price,2) }}</del></span> 
+                                                                     <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                                     @endif
                                                                 </h4>
                                                             </div>
@@ -464,9 +464,9 @@
                                                                     </a>
                                                                 </div>
                                                                 
-                                                                    <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->price,2) }}</span> 
+                                                                    <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span> 
                                                                         @if (productDiscountPercentage($product->id))
-                                                                            <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->regular_price,2) }}</del></span> 
+                                                                            <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                                         @endif
                                                                     </h4>
                                                               

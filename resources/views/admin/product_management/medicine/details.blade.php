@@ -139,7 +139,7 @@
                                 <tr>
                                     <th>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</small></th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ number_format($medicine->regular_price,2) }}{{__(' BDT')}} </td>
+                                    <td> {{ number_format($medicine->price,2) }}{{__(' BDT')}} </td>
                                 </tr>
                                 <tr>
                                     <th>{{ __('Discount Amount') }} </th>
@@ -154,7 +154,7 @@
                                 <tr>
                                     <th>{{ __('Price') }} </th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ number_format($medicine->price,2) }}{{__(' BDT')}} </td>
+                                    <td> {{ number_format($medicine->discountPrice(),2) }}{{__(' BDT')}} </td>
                                 </tr>
                             </tbody>
                         </table>

@@ -77,7 +77,6 @@ class MedicineController extends Controller
         // $medicine->medicine_cat_id = $req->medicine_cat_id;
         $medicine->strength_id = $req->strength_id;
         $medicine->unit = json_encode($req->unit);
-        $medicine->regular_price = $req->price;
         $medicine->price = $req->price;
         $medicine->description = $req->description;
         $medicine->prescription_required = $req->prescription_required;
@@ -134,7 +133,6 @@ class MedicineController extends Controller
         // $medicine->medicine_cat_id = $req->medicine_cat_id;
         $medicine->strength_id = $req->strength_id;
         $medicine->unit = json_encode($req->unit);
-        $medicine->regular_price = $req->price;
         $medicine->price = $req->price;
         $medicine->description = $req->description;
         $medicine->prescription_required = $req->prescription_required;

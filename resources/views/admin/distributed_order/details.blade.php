@@ -81,11 +81,17 @@
                                                 <div class="col my-auto">
                                                     <h6 class="mb-0 text-end">
                                                         @if (productDiscountPercentage($dop->cart->product->id))
-                                                        <span class="text-danger"><del>{!! get_taka_icon() !!} {{number_format((($dop->cart->product->regular_price*$dop->cart->unit->quantity) * $dop->cart->quantity), 2)}}</del></span> 
+                                                        <span class="text-danger">
+                                                            <del>
+                                                                {!! get_taka_icon() !!} {{number_format((($dop->cart->product->price*($dop->cart->unit->quantity ?? 1)) * $dop->cart->quantity), 2)}}
+                                                            </del>
+                                                        </span> 
                                                         @endif
                                                     </h6>
                                                     <h6 class="mb-0 text-end">
-                                                        <span>{!! get_taka_icon() !!} {{number_format((($dop->cart->product->price*($dop->cart->unit->quantity ?? 1)) * $dop->cart->quantity), 2)}}</span> 
+                                                        <span>
+                                                            {!! get_taka_icon() !!} {{number_format((($dop->cart->product->discountPrice()*$dop->cart->unit->quantity) * $dop->cart->quantity), 2)}}
+                                                        </span> 
                                                     </h6>
                                                 </div>
                                                 <div class="col my-auto text-end"><span class="{{$dop->statusBg()}}">{{$dop->statusTitle()}}</span></div>

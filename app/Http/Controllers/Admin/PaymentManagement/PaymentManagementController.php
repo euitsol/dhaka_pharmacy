@@ -37,12 +37,12 @@ class PaymentManagementController extends Controller
         $paymentItemsCollection = collect($data['payment_items']);
         $paymentItemsCollection->map(function($item) {
             $item->price = (($item->product->price*$item->unit->quantity)*$item->quantity);
-            $item->regular_price = (($item->product->regular_price*$item->unit->quantity)*$item->quantity);
+            $item->discount_price = (($item->product->discountPrice()*$item->unit->quantity)*$item->quantity);
             $item->discount = (productDiscountAmount($item->product->id)*$item->unit->quantity)*$item->quantity;
             return $item;
         });
         $data['totalPrice'] = $paymentItemsCollection->sum('price');
-        $data['totalRegularPrice'] = $paymentItemsCollection->sum('regular_price');
+        $data['totalRegularPrice'] = $paymentItemsCollection->sum('discount_price');
         $data['totalDiscount'] = $paymentItemsCollection->sum('discount');
        
         return view('admin.payment_management.details',$data);
