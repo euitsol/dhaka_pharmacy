@@ -34,7 +34,7 @@
                                                 <td>{{$order->order_id}}</td>
                                                 <th>Delivery Address</th>
                                                 <td>:</td>
-                                                <td>Mirpur-10, Dhaka</td>
+                                                <td>{!! optional($order->address)->street_address !!}</td>
                                             </tr>
                                             <tr>
                                                 <th>Order Date</th>

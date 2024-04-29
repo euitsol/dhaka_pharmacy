@@ -35,7 +35,7 @@
                                             <tr>
                                                 <th>Customer Address</th>
                                                 <td>:</td>
-                                                <td>Mirpur-10, Dhaka</td>
+                                                <td>{!! optional($payment->order->address)->street_address !!}</td>
                                                 <th>Order ID</th>
                                                 <td>:</td>
                                                 <td>

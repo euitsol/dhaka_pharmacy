@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             PushNtSeeder::class,
             PushNotificationSeeder::class,
             SslCommerzSeeder::class,
+            AddressSeeder::class,
         ]);
     }
 }
