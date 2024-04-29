@@ -268,6 +268,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('pharmacy_edit');
             Route::get('status/{id}', 'status')->name('status.pharmacy_edit');
             Route::get('delete/{id}', 'delete')->name('pharmacy_delete');
+            Route::get('discount/{id}', 'pharmacyDiscount')->name('pharmacy_discount');
+            Route::post('discount/update/{id}', 'pharmacyDiscountUpdate')->name('update.pharmacy_discount');
         });
 
         // KYC ROUTES

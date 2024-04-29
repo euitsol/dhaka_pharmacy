@@ -30,4 +30,8 @@ class Pharmacy extends AuthenticateBaseModel
     public function odps(){
         return $this->hasMany(OrderDistributionPharmacy::class,'pharmacy_id','id');
     }
+
+    public function pharmacyDiscounts(){
+        return $this->hasMany(PharmacyDiscount::class,'pharmacy_id');
+    }
 }

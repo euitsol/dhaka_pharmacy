@@ -26,6 +26,8 @@ class DistributedOrderController extends Controller
     public function index($status): View
     {
         $data['status'] = $status;
+        $data['statusBg'] = $this->statusBg($this->getStatus($status));
+        $data['status'] = $status;
         $data['dos'] = OrderDistribution::with(['order','odps'])->where('status',$this->getStatus($status))->get()
                     ->map(function($do,$key){
                         $do->prep_time = $do->readablePrepTime();
@@ -45,7 +47,6 @@ class DistributedOrderController extends Controller
         $data['do']->prep_time = $data['do']->readablePrepTime();
         $data['do']->pharmacy = Pharmacy::findOrFail(decrypt($pid));
         $data['do']['dops'] = $data['do']->odps->where('pharmacy_id',decrypt($pid));
-        $data['status'] = $this->getStatusTitle($data['do']->status);
         return view('admin.distributed_order.details',$data);
     }
     public function edit($do_id,$pid): View
@@ -53,11 +54,6 @@ class DistributedOrderController extends Controller
         $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
         $data['do']->pharmacy = Pharmacy::findOrFail(decrypt($pid));
         $data['do']['dops'] = $data['do']->odps->where('pharmacy_id',decrypt($pid));
-        $data['status'] = $this->getStatusTitle($data['do']->status);
-
-
-
-
         $data['payments'] = Payment::where('order_id',$data['do']->order->id)->latest()->get();
         $data['do']['dops']->map(function($dop) {
             $dop->cart->price = (($dop->cart->product->price*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity);
@@ -119,18 +115,19 @@ class DistributedOrderController extends Controller
                 return 4;
         }
     }
-    protected function getStatusTitle($status){
+
+    public function statusBg($status) {
         switch ($status) {
             case 0:
-                return 'distributed';
+                return 'badge badge-success';
             case 1:
-                return 'preparing';
+                return 'badge badge-info';
             case 2:
-                return 'waiting-for-pickup';
+                return 'badge badge-warning';
             case 3:
-                return 'picked-up';
+                return 'badge badge-primary';
             case 4:
-                return 'finish';
+                return 'badge badge-secondary';
         }
     }
 

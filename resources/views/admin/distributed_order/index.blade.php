@@ -8,6 +8,9 @@
                         <div class="col-8">
                             <h4 class="card-title">{{ __('Order '.ucwords(strtolower((str_replace('-', ' ', $status))))) }}</h4>
                         </div>
+                        <div class="col-4 text-end">
+                            <span class="{{$statusBg}}">{{$status}}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">

@@ -19,9 +19,11 @@ class OrderDistributionRequest extends FormRequest
             'payment_type'=>'required|numeric',
             'distribution_type'=>'required|numeric',
             'prep_time'=>'required|date',
-            'note'=>'required',
+            'note'=>'nullable',
             'datas.*.cart_id'=>'required|exists:add_to_carts,id',
             'datas.*.pharmacy_id'=>'required|exists:pharmacies,id',
         ];
     }
 }
+
+

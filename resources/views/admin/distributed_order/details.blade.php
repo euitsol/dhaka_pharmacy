@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'order_'.$status])
+@extends('admin.layouts.master', ['pageSlug' => 'order_'.strtolower($do->statusTitle())])
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -18,7 +18,7 @@
                             @include('admin.partials.button', [
                                 'routeName' => 'do.do_list',
                                 'className' => 'btn-primary',
-                                'params' => $status,
+                                'params' => strtolower($do->statusTitle()),
                                 'label' => 'Back',
                             ])
                         </div>

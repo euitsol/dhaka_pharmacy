@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'order_'.$status])
+@extends('admin.layouts.master', ['pageSlug' => 'order_'.strtolower($do->statusTitle())])
 @push('css')
     <link rel="stylesheet" href="{{asset('admin/css/ordermanagement.css')}}">
 @endpush
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('do.do_update',['order_id'=>encrypt($do->order->id), 'status'=>$status])}}" method="POST" class="px-0">
+                    <form action="{{route('do.do_update',['order_id'=>encrypt($do->order->id), 'status'=>strtolower($do->statusTitle())])}}" method="POST" class="px-0">
                         @csrf
                         <div class="col-md-12 ">
                             <div class="card ">
