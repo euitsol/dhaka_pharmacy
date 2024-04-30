@@ -39,7 +39,7 @@ class RiderKycSettingsController extends Controller
             ]
         );
         flash()->addSuccess('KYC settings updated successfully.');
-        return redirect()->route('rider_management.rider_kyc.rider_kyc_settings');
+        return redirect()->route('rm.rider_kyc.rider_kyc_settings');
     }
     
     private function prepareKycData(Request $request): array

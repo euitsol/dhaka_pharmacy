@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'rider_management.rider.rider_create',
+                                'routeName' => 'rm.rider.rider_create',
                                 'className' => 'btn-primary',
                                 'label' => 'Add new rider',
                             ])
@@ -59,12 +59,12 @@
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
-                                                    ['routeName' => 'rider_management.rider.login_as.rider_profile',   'params' => [$rider->id], 'label' => 'Login As','target'=>'_blank'],
-                                                    ['routeName' => 'rider_management.rider.rider_profile',   'params' => [$rider->id], 'label' => 'Profile'],
+                                                    ['routeName' => 'rm.rider.login_as.rider_profile',   'params' => [$rider->id], 'label' => 'Login As','target'=>'_blank'],
+                                                    ['routeName' => 'rm.rider.rider_profile',   'params' => [$rider->id], 'label' => 'Profile'],
                                                     ['routeName' => 'javascript:void(0)',  'params' => [$rider->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $rider->id ],
-                                                    ['routeName' => 'rider_management.rider.rider_edit',   'params' => [$rider->id], 'label' => 'Update'],
-                                                    ['routeName' => 'rider_management.rider.status.rider_edit',   'params' => [$rider->id], 'label' => $rider->getBtnStatus()],
-                                                    ['routeName' => 'rider_management.rider.rider_delete', 'params' => [$rider->id], 'label' => 'Delete', 'delete' => true],
+                                                    ['routeName' => 'rm.rider.rider_edit',   'params' => [$rider->id], 'label' => 'Update'],
+                                                    ['routeName' => 'rm.rider.status.rider_edit',   'params' => [$rider->id], 'label' => $rider->getBtnStatus()],
+                                                    ['routeName' => 'rm.rider.rider_delete', 'params' => [$rider->id], 'label' => 'Delete', 'delete' => true],
                                                 ]
                                             ])
                                     </td>
@@ -104,7 +104,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('rider_management.rider.details.rider_list', ['_id']) }}");
+                let url = ("{{ route('rm.rider.details.rider_list', ['_id']) }}");
                 let _url = url.replace('_id', id);
                 $.ajax({
                     url: _url,

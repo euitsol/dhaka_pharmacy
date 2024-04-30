@@ -73,7 +73,7 @@ class RiderManagementController extends Controller
         $rider->creater()->associate(admin());
         $rider->save();
         flash()->addSuccess('Rider '.$rider->name.' created successfully.');
-        return redirect()->route('rider_management.rider.rider_list');
+        return redirect()->route('rm.rider.rider_list');
     }
     public function edit($id): View
     {
@@ -97,21 +97,21 @@ class RiderManagementController extends Controller
         $rider->update();
 
         flash()->addSuccess('Rider '.$rider->name.' updated successfully.');
-        return redirect()->route('rider_management.rider.rider_list');
+        return redirect()->route('rm.rider.rider_list');
     }
     public function status($id): RedirectResponse
     {
         $rider = Rider::findOrFail($id);
         $this->statusChange($rider);
         flash()->addSuccess('Rider '.$rider->name.' status updated successfully.');
-        return redirect()->route('rider_management.rider.rider_list');
+        return redirect()->route('rm.rider.rider_list');
     }
     public function delete($id): RedirectResponse
     {
         $rider = Rider::findOrFail($id);
         $rider->delete();
         flash()->addSuccess('Rider '.$rider->name.' deleted successfully.');
-        return redirect()->route('rider_management.rider.rider_list');
+        return redirect()->route('rm.rider.rider_list');
 
     }
 

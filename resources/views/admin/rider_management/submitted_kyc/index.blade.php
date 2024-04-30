@@ -42,7 +42,7 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'rider_management.rider_kyc.kyc_list.rider_kyc_details',
+                                                    'routeName' => 'rm.rider_kyc.kyc_list.rider_kyc_details',
                                                     'params' => [$data->id],
                                                     'label' => 'View Details',
                                                 ],

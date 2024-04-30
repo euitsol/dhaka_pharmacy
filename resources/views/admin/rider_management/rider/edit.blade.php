@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'rider_management.rider.rider_list',
+                                'routeName' => 'rm.rider.rider_list',
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
                             ])
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('rider_management.rider.rider_edit',$rider->id) }}">
+                    <form method="POST" action="{{ route('rm.rider.rider_edit',$rider->id) }}">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -82,7 +82,7 @@
             let osa = $('.osa');
             osa.prop('disabled',true);
 
-            let url = ("{{ route('rider_management.rider.operation_sub_area.rider_list', ['oa_id']) }}");
+            let url = ("{{ route('rm.rider.operation_sub_area.rider_list', ['oa_id']) }}");
             let _url = url.replace('oa_id', oa_id);
             
             $.ajax({

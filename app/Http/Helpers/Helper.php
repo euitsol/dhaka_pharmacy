@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-            'am.','um.','pm.','settings.','dm_management.','lam_management','product.','product.product_category.','om.'
+            'am.','um.','pm.','om.','rm.','opa.','do.','pym.','push.','settings.','dm_management.','lam_management','product.','payment_gateway.'
         ];
 }
 
@@ -130,15 +130,21 @@ function rider(){
 }
 
 
-function mainMenuCheck($routes){
+function mainMenuCheck($array){
     $check = false;
-    foreach($routes as $route){
-            if (auth()->user()->can($route)) {
-                $check = true;
-                break;
+    
+    $allowedPrefixes = get_permission_routes();
+    foreach($array['prefixes'] as $prefix){
+        if(in_array($prefix, $allowedPrefixes)){
+            foreach($array['routes'] as $route){
+                if (auth()->user()->can($route)) {
+                    $check = true;
+                    break;
+                } 
             }
-                
-        }
+        } 
+        
+    }  
     return $check;
 }
 

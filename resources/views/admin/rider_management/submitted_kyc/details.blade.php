@@ -10,7 +10,7 @@
                             </div>
                             <div class="col-4 text-right">
                                 @include('admin.partials.button', [
-                                    'routeName' => 'rider_management.rider_kyc.kyc_list.rider_kyc_list',
+                                    'routeName' => 'rm.rider_kyc.kyc_list.rider_kyc_list',
                                     'className' => 'btn-primary',
                                     'label' => 'Back',
                                 ])
@@ -97,7 +97,7 @@
                                             <th>:</th>
                                             <td>
                                                 @if(isset($save_datas[$form_data['field_key']]))
-                                                    <a class="btn btn-info btn-sm" href="{{route('rider_management.rider_kyc.kyc_list.download.rider_kyc_details',base64_encode($save_datas[$form_data['field_key']]))}}"><i class="fa-regular fa-circle-down"></i></a>
+                                                    <a class="btn btn-info btn-sm" href="{{route('rm.rider_kyc.kyc_list.download.rider_kyc_details',base64_encode($save_datas[$form_data['field_key']]))}}"><i class="fa-regular fa-circle-down"></i></a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -109,7 +109,7 @@
                                             <td>
                                                 @if(isset($save_datas[$form_data['field_key']]))
                                                     @foreach ($save_datas[$form_data['field_key']] as $file)
-                                                        <a class="imagePreviewDiv btn btn-info btn-sm" href="{{route('rider_management.rider_kyc.kyc_list.download.rider_kyc_details',base64_encode($file))}}"><i class="fa-regular fa-circle-down"></i></a>
+                                                        <a class="imagePreviewDiv btn btn-info btn-sm" href="{{route('rm.rider_kyc.kyc_list.download.rider_kyc_details',base64_encode($file))}}"><i class="fa-regular fa-circle-down"></i></a>
                                                     @endforeach
                                                     
                                                 @endif
@@ -154,12 +154,12 @@
                                         </div>
                                         <div class="status_button">
                                             @if($data->status === 0)
-                                                <a href="{{route('rider_management.rider_kyc.kyc_list.accept.rider_kyc_status',$data->id)}}" class="btn btn-sm btn-success">{{__('Accept')}}</a>
+                                                <a href="{{route('rm.rider_kyc.kyc_list.accept.rider_kyc_status',$data->id)}}" class="btn btn-sm btn-success">{{__('Accept')}}</a>
                                                 <a href="javascript:void(0)" data-id="{{$data->id}}" class="btn btn-sm btn-warning declined">{{__('Declined')}}</a>
                                             @elseif($data->status === 1)
                                                 <a href="javascript:void(0)" data-id="{{$data->id}}" class="btn btn-sm btn-warning declined">{{__('Declined')}}</a>
                                             @else
-                                                <a href="{{route('rider_management.rider_kyc.kyc_list.accept.rider_kyc_status',$data->id)}}" class="btn btn-sm btn-success">{{__('Accept')}}</a>
+                                                <a href="{{route('rm.rider_kyc.kyc_list.accept.rider_kyc_status',$data->id)}}" class="btn btn-sm btn-success">{{__('Accept')}}</a>
                                             @endif
                                             
                                         </div>
@@ -225,7 +225,7 @@
             $('#updateDeclinedNote').click(function () {
                 var form = $('#declined_form');
                 let id = $(this).data('id');
-                let _url = ("{{ route('rider_management.rider_kyc.kyc_list.declined.rider_kyc_status', ['_id']) }}");
+                let _url = ("{{ route('rm.rider_kyc.kyc_list.declined.rider_kyc_status', ['_id']) }}");
                 let __url = _url.replace('_id', id);
                 $.ajax({
                     type: 'PUT',

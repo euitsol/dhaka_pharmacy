@@ -100,3 +100,14 @@ do_list,admin,"Distributed Orders"
 do_edit,admin,"Distributed Orders"
 do_details,admin,"Distributed Orders"
 do_update,admin,"Distributed Orders"
+pharmacy_discount,admin,Pharmacy
+rider_list,admin,Rider
+rider_profile,admin,Rider
+rider_create,admin,Rider
+rider_edit,admin,Rider
+rider_delete,admin,Rider
+pg_ssl_commerz,admin,"Payment Gateway"
+pg_settings,admin,"Payment Gateway"
+payment_list,admin,"Payment Management"
+payment_details,admin,"Payment Management"
+ns,admin,"Push Notification"

@@ -12,7 +12,7 @@
                 <div class="card-header">
                     <h5 class="title">{{ __('Rider KYC Settings') }}</h5>
                 </div>
-                <form method="POST" action="{{ route('rider_management.rider_kyc.rider_kyc_settings') }}" autocomplete="off">
+                <form method="POST" action="{{ route('rm.rider_kyc.rider_kyc_settings') }}" autocomplete="off">
                     @csrf
                     <div class="card-body">
                         
