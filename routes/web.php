@@ -385,7 +385,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
     });
 
     //Admin Rider Management Routes
-    Route::group(['as' => 'rider_management.', 'prefix' => 'rider-management'], function () {
+    Route::group(['as' => 'rm.', 'prefix' => 'rider-management'], function () {
         Route::controller(RiderManagementController::class, 'rider')->prefix('rider')->name('rider.')->group(function () {
             Route::get('index', 'index')->name('rider_list');
             Route::get('details/{id}', 'details')->name('details.rider_list');
