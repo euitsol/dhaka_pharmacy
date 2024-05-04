@@ -22,7 +22,7 @@ class OperationSubAreaController extends Controller
 
     public function index(): View
     {
-        $data['op_sub_areas'] = OperationSubArea::with(['operation_area', 'creater'])->orderBy('name')->get();
+        $data['op_sub_areas'] = OperationSubArea::with(['operation_area', 'creater'.'getMultiStatusClass','getMultiStatus'])->orderBy('name')->get();
         return view('admin.operational_area.operation_sub_area.index', $data);
     }
     public function details($id): JsonResponse

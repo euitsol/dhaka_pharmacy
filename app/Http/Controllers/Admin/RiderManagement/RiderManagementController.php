@@ -24,7 +24,7 @@ class RiderManagementController extends Controller
 
     public function index(): View
     {
-        $data['riders'] = Rider::with(['operation_area','operation_sub_area','creater'])->latest()->get();
+        $data['riders'] = Rider::with(['operation_area','operation_sub_area','creater','getStatusBadgeClass','getStatus','getBtnStatus'])->latest()->get();
         return view('admin.rider_management.rider.index',$data);
     }
     public function details($id): JsonResponse

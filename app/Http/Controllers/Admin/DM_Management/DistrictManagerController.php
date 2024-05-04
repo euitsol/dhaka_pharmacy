@@ -24,7 +24,7 @@ class DistrictManagerController extends Controller
 
     public function index(): View
     {
-        $data['dms'] = DistrictManager::with(['lams','operation_area','created_user'])->latest()->get();
+        $data['dms'] = DistrictManager::with(['lams','operation_area','created_user','getStatusBadgeClass','getStatus','getBtnStatus'])->latest()->get();
         return view('admin.dm_management.district_manager.index',$data);
     }
     public function details($id): JsonResponse

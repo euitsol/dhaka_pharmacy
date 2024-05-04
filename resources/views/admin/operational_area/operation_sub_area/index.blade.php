@@ -44,7 +44,6 @@
 
                                     <td> {{ c_user_name($op_sub_area->creater) }} </td>
                                     <td>
-                                        {{-- {{dd($op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug))}} --}}
                                         @include('admin.partials.action_buttons', 
                                             $op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug)
                                         )

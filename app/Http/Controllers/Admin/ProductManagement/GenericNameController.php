@@ -21,12 +21,12 @@ class GenericNameController extends Controller
     }
     public function index(): View
     {
-        $data['generic_names'] = GenericName::with(['created_user','updated_user'])->orderBy('name')->get();
+        $data['generic_names'] = GenericName::with(['created_user','getStatusBadgeClass','getStatus','getBtnStatus'])->orderBy('name')->get();
         return view('admin.product_management.generic_name.index',$data);
     }
     public function details($id): JsonResponse
     {
-        $data = GenericName::findOrFail($id);
+        $data = GenericName::with(['created_user','updated_user'])->findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = timeFormate($data->updated_at);
         $data->created_by = c_user_name($data->created_user);

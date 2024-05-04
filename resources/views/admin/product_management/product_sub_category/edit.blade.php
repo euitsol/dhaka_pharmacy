@@ -27,7 +27,7 @@
                             <label>{{ __('Product Category') }}</label>
                             <select name="pro_cat_id" class="form-control">
                                 @foreach ($pro_cats as $cat)
-                                    <option value="{{$cat->id}}" {{($product_sub_category->id == $cat->id) ? 'selected' : ''}}>{{$cat->name}}</option>
+                                    <option value="{{$cat->id}}" {{($product_sub_category->pro_cat->id == $cat->id) ? 'selected' : ''}}>{{$cat->name}}</option>
                                 @endforeach
                             </select>
                             @include('alerts.feedback', ['field' => 'pro_cat_id'])

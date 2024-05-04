@@ -19,14 +19,14 @@ class PaymentManagementController extends Controller
     public function index($status): View
     {
         
-        $data['payments'] = Payment::with(['customer','order'])->status($status)->latest()->get();
+        $data['payments'] = Payment::with('customer')->status($status)->latest()->get();
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getpaymentStatusBgColor($status);
         return view('admin.payment_management.index',$data);
     }
     public function details($id): View
     {
-        $data['payment'] = Payment::with(['customer','order'])->findOrFail(decrypt($id));
+        $data['payment'] = Payment::with(['customer','order','statusBg','statusTitle'])->findOrFail(decrypt($id));
         $data['payment_items'] = [];
         foreach(json_decode($data['payment']->order->carts) as $cart_id){
             $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->where('id',$cart_id)->first();

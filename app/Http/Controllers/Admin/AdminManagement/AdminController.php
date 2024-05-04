@@ -22,7 +22,7 @@ class AdminController extends Controller
 
     public function index(): View
     {
-        $data['admins'] = Admin::with(['role','created_user','updated_user'])->latest()->get();
+        $data['admins'] = Admin::with(['role','created_user','updated_user','getStatusBadgeClass','getStatus','getBtnStatus'])->latest()->get();
         return view('admin.admin_management.admin.index',$data);
     }
     public function details($id): JsonResponse

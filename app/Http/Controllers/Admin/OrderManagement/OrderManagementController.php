@@ -26,7 +26,7 @@ class OrderManagementController extends Controller
     public function index($status): View
     {
         
-        $data['orders'] = Order::with(['address','customer','ref_user'])->status($status)->latest()->get();
+        $data['orders'] = Order::status($status)->latest()->get();
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getOrderStatusBgColor($status);
         return view('admin.order_management.index',$data);
@@ -52,7 +52,7 @@ class OrderManagementController extends Controller
     }
 
     public function order_distribution($id){
-        $data['order'] = Order::with(['address','customer','payments','ref_user'])->findOrFail(decrypt($id));
+        $data['order'] = Order::with('address')->findOrFail(decrypt($id));
         $data['order_items'] = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
                             ->whereIn('id', json_decode($data['order']->carts))
                             ->get();
