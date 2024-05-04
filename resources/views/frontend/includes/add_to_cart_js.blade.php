@@ -164,13 +164,15 @@
         // Cart Clear JS 
 
         $(document).on('click', '.cart_clear_btn', function() {
-            let url = "{{ route('product.clear_cart') }}";
+            let uid = $(this).data('uid');
+            let url = "{{ route('product.clear_cart',['uid'=>'id']) }}";
+            let _url = url.replace('id',uid);
             let cartItemContainer = $(this).parent('.offcanvas-header').next('.add_to_carts');
             let atc_total = $('#cart_btn_quantity strong');
             var text = "<h5 class='text-center cart_empty_alert'>{{ __('Add some product') }}</h5>";
 
             $.ajax({
-                url: url,
+                url: _url,
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -296,6 +298,9 @@
 
             var totalItemPrice = formattedPrice * itemQuantity;
             var totalItemRegularPrice = formattedRegularPrice * itemQuantity;
+
+            console.log(totalItemPrice);
+            console.log(totalItemRegularPrice);
 
             let url = "{{ route('cart.item.unit',['unit_id'=>'unitId', 'cart_id'=>'cartId']) }}";
             let _url = url.replace('unitId',unit_id);

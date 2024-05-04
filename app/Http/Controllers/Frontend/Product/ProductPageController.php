@@ -47,6 +47,7 @@ class ProductPageController extends BaseController
             $product->company->name = str_limit($product->company->name, 25, '..');
             $product->discount_amount = productDiscountAmount($product->id);
             $product->discount_percentage = productDiscountPercentage($product->id);
+            $product->discountPrice = $product->discountPrice();
 
             $product->units = array_map(function ($u_id) {
                 return MedicineUnit::findOrFail($u_id);
