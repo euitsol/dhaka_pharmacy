@@ -22,12 +22,12 @@ class AdminController extends Controller
 
     public function index(): View
     {
-        $data['admins'] = Admin::with(['role','created_user'])->latest()->get();
+        $data['admins'] = Admin::with(['role','created_user','updated_user'])->latest()->get();
         return view('admin.admin_management.admin.index',$data);
     }
     public function details($id): JsonResponse
     {
-        $data = Admin::with('role')->findOrFail($id);
+        $data = Admin::with(['role','created_user','updated_user'])->findOrFail($id);
         $ipsArray = json_decode($data->ip, true);
         if(is_array($ipsArray)){
             $ips = implode(' | ', $ipsArray);
@@ -35,10 +35,10 @@ class AdminController extends Controller
         }else{
             $data->ips = '';
         }
-        $data->creating_time = $data->created_date();
-        $data->updating_time = $data->updated_date();
-        $data->created_by = $data->created_user_name();
-        $data->updated_by = $data->updated_user_name();
+        $data->creating_time = timeFormate($data->created_at);
+        $data->updating_time = timeFormate($data->updated_at);
+        $data->created_by = c_user_name($data->created_user);
+        $data->updated_by = u_user_name($data->updated_user);
         return response()->json($data);
     }
     public function profile($id): View
@@ -70,7 +70,7 @@ class AdminController extends Controller
     }
     public function edit($id): View
     {
-        $data['admin'] = Admin::findOrFail($id);
+        $data['admin'] = Admin::with('role')->findOrFail($id);
         $data['roles'] = Role::latest()->get();
         $data['document'] = Documentation::where('module_key','admin')->first();
         return view('admin.admin_management.admin.edit',$data);

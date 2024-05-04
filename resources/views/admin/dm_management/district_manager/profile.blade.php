@@ -40,7 +40,7 @@
                                         <td>
                                             <span class="{{ $lam->getStatusBadgeClass() }}">{{ $lam->getStatus() }}</span>
                                         </td>
-                                        <td>{{ $lam->created_date() }}</td>
+                                        <td>{{ timeFormate($lam->created_at) }}</td>
                                         <td>
                                             @include('admin.partials.action_buttons', [
                                                     'menuItems' => [

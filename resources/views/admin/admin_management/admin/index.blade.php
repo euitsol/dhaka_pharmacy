@@ -43,9 +43,9 @@
                                     <td>
                                         <span class="{{ $admin->getStatusBadgeClass() }}">{{ $admin->getStatus() }}</span>
                                     </td>
-                                    <td>{{ $admin->created_date() }}</td>
+                                    <td>{{ timeFormate($admin->created_at) }}</td>
 
-                                    <td> {{ $admin->created_user_name() }} </td>
+                                    <td> {{ c_user_name($admin->created_user) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

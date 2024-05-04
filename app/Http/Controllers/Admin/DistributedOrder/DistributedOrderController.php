@@ -28,7 +28,8 @@ class DistributedOrderController extends Controller
         $data['status'] = $status;
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
         $data['status'] = $status;
-        $data['dos'] = OrderDistribution::with(['order','odps'])->where('status',$this->getStatus($status))->get()
+        $data['dos'] = OrderDistribution::with(['order','odps','statusBg','statusTitle','paymentType','distributionType','readablePrepTime','prepTotalSeconds'])
+        ->where('status',$this->getStatus($status))->get()
                     ->map(function($do,$key){
                         $do->prep_time = $do->readablePrepTime();
                         $do['dops'] = $do->odps->groupBy('pharmacy_id')
@@ -43,7 +44,8 @@ class DistributedOrderController extends Controller
 
     public function details($do_id,$pid): View
     {
-        $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
+        $data['do'] = OrderDistribution::with(['order','odps','statusBg','statusTitle','paymentType','distributionType','readablePrepTime','prepTotalSeconds'])->findOrFail(decrypt($do_id));
+
         $data['do']->prep_time = $data['do']->readablePrepTime();
         $data['do']->pharmacy = Pharmacy::findOrFail(decrypt($pid));
         $data['do']['dops'] = $data['do']->odps->where('pharmacy_id',decrypt($pid));
@@ -51,10 +53,9 @@ class DistributedOrderController extends Controller
     }
     public function edit($do_id,$pid): View
     {
-        $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
+        $data['do'] = OrderDistribution::with(['order','odps','statusBg','statusTitle','paymentType','distributionType','readablePrepTime','prepTotalSeconds'])->findOrFail(decrypt($do_id));
         $data['do']->pharmacy = Pharmacy::findOrFail(decrypt($pid));
         $data['do']['dops'] = $data['do']->odps->where('pharmacy_id',decrypt($pid));
-        $data['payments'] = Payment::where('order_id',$data['do']->order->id)->latest()->get();
         $data['do']['dops']->map(function($dop) {
             $dop->cart->price = (($dop->cart->product->price*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity);
             $dop->cart->discount_price = (($dop->cart->product->discountPrice()*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity);

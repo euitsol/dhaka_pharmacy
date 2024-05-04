@@ -33,8 +33,8 @@
                                 <td> {{ $loop->iteration }} </td>
                                 <td>{{$role->name}}</td>
                                 <td>{{$role->guard_name}}</td>
-                                <td>{{$role->created_date()}}</td>
-                                <td>{{$role->updated_date()}}</td>
+                                <td>{{timeFormate($role->created_at)}}</td>
+                                <td>{{timeFormate($role->updated_at)}}</td>
                                 <td>
                                     @include('admin.partials.action_buttons', [
                                         'menuItems' => [

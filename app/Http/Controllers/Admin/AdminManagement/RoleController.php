@@ -20,7 +20,7 @@ class RoleController extends Controller
     }
     public function index(): View
     {
-        $data['roles'] = Role::with('permissions')->latest()->get()
+        $data['roles'] = Role::with(['permissions','created_user','updated_user'])->latest()->get()
         ->map(function($role){
             $permissionNames = $role->permissions->pluck('name')->implode(' | ');
             $role->permissionNames = $permissionNames;
@@ -30,11 +30,11 @@ class RoleController extends Controller
     }
     public function details($id): JsonResponse
     {
-        $data = Role::findOrFail($id);
-        $data->creating_time = $data->created_date();
-        $data->updating_time = $data->updated_date();
-        $data->created_by = $data->created_user_name();
-        $data->updated_by = $data->updated_user_name();
+        $data = Role::with(['permissions','created_user','updated_user'])->findOrFail($id);
+        $data->creating_time = timeFormate($data->created_at);
+        $data->updating_time = timeFormate($data->updated_at);
+        $data->created_by = c_user_name($data->created_user);
+        $data->updated_by = u_user_name($data->updated_user);
         $data->permissionNames = $data->permissions->pluck('name')->implode(' | ');
         return response()->json($data);
     }
@@ -63,7 +63,7 @@ class RoleController extends Controller
     }
     public function edit($id): View
     {
-        $data['role'] = Role::findOrFail($id);
+        $data['role'] = Role::with('permissions')->findOrFail($id);
         $data['permissions'] = Permission::orderBy('name')->get();
         $data['document'] = Documentation::where('module_key','roll')->first();
         $data['groupedPermissions'] = $data['permissions']->groupBy(function ($permission) {

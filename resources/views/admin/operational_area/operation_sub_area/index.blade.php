@@ -40,9 +40,9 @@
                                     <td>
                                         <span class="{{$op_sub_area->getMultiStatusClass()}}">{{$op_sub_area->getMultiStatus()}}</span>
                                     </td>
-                                    <td>{{ $op_sub_area->created_date() }}</td>
+                                    <td>{{ timeFormate($op_sub_area->created_at) }}</td>
 
-                                    <td> {{ $op_sub_area->creater_name() }} </td>
+                                    <td> {{ c_user_name($op_sub_area->creater) }} </td>
                                     <td>
                                         {{-- {{dd($op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug))}} --}}
                                         @include('admin.partials.action_buttons', 

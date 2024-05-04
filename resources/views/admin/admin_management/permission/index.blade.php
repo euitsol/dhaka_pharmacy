@@ -35,8 +35,8 @@
                                     <td>{{ $loop->iteration }} </td>
                                     <td>{{$permission->prefix}}</td>
                                     <td>{{$permission->name}}</td>
-                                    <td>{{$permission->created_date()}}</td>
-                                    <td>{{$permission->created_user_name()}}</td>
+                                    <td>{{timeFormate($permission->created_at)}}</td>
+                                    <td>{{c_user_name($permission->created_user)}}</td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
@@ -116,7 +116,7 @@ $(document).ready(function() {
                             <tr>
                                 <th class="text-nowrap">Created By</th>
                                 <th>:</th>
-                                <td>${data.created_user}</td>
+                                <td>${data.created_by}</td>
                             </tr>
                             <tr>
                                 <th class="text-nowrap">Updated At</th>
@@ -126,7 +126,7 @@ $(document).ready(function() {
                             <tr>
                                 <th class="text-nowrap">Updated By</th>
                                 <th>:</th>
-                                <td>${data.updated_user}</td>
+                                <td>${data.updated_by}</td>
                             </tr>
                         </table>
                         `;

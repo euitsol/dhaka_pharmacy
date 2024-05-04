@@ -53,9 +53,9 @@
                                         <span
                                             class="{{ $rider->getStatusBadgeClass() }}">{{ $rider->getStatus() }}</span>
                                     </td>
-                                    <td>{{ $rider->created_date() }}</td>
+                                    <td>{{ timeFormate($rider->created_at) }}</td>
 
-                                    <td> {{ $rider->creater_name() }} </td>
+                                    <td> {{ c_user_name($rider->creater) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                                 'menuItems' => [

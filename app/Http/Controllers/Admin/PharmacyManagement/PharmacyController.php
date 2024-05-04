@@ -33,10 +33,10 @@ class PharmacyController extends Controller
     public function details($id): JsonResponse
     {
         $data = Pharmacy::with(['role','creater','updater'])->findOrFail(decrypt($id));
-        $data->creating_time = $data->created_date();
-        $data->updating_time = $data->updated_date();
-        $data->created_by = $data->creater_name();
-        $data->updated_by = $data->updater_name();
+        $data->creating_time = timeFormate($data->created_at);
+        $data->updating_time = timeFormate($data->updated_at);
+        $data->created_by = c_user_name($data->creater);
+        $data->updated_by = u_user_name($data->updater);
         return response()->json($data);
     }
     public function profile($id): View

@@ -30,14 +30,14 @@
                             @foreach ($groupDatas as $data)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $data->creater_name() }} </td>
+                                    <td> {{ c_user_name($data->creater) }} </td>
                                     <td> {{ strtoupper($data->type) }} </td>
                                     <td>
                                         <span class="badge {{($data->status === 1) ? 'badge-success' : (($data->status === 0) ? 'badge-info' : 'badge-warning') }}">{{($data->status === 1) ? 'Accepted' : (($data->status === 0) ? 'Pending' : 'Declined') }}</span>
                                     </td>
-                                    <td>{{ $data->created_date() }}</td>
+                                    <td>{{ timeFormate($data->created_at) }}</td>
 
-                                    <td> {{ $data->creater_name() }} </td>
+                                    <td> {{ c_user_name($data->creater) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
