@@ -54,9 +54,9 @@
                                         <span
                                             class="{{ $product_category->getStatusBadgeClass() }}">{{ $product_category->getStatus() }}</span>
                                     </td>
-                                    <td>{{ $product_category->created_date() }}</td>
+                                    <td>{{ timeFormate($product_category->created_at) }}</td>
 
-                                    <td> {{ $product_category->created_user_name() }} </td>
+                                    <td> {{ c_user_name($product_category->created_user) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

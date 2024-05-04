@@ -101,7 +101,7 @@
                                             <tr>
                                                 <th>Order Date</th>
                                                 <td>:</td>
-                                                <td>{{$order->created_date()}}</td>
+                                                <td>{{timeFomate($order->created_at)}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Discount</th>
@@ -182,7 +182,7 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $payment->transaction_id }}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
-                                    <td>{{ $order->created_date() }}</td>
+                                    <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

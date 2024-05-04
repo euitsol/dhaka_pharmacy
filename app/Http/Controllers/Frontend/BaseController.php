@@ -38,6 +38,7 @@ class BaseController extends Controller
                 $activatedProduct->name = Str::limit(Str::ucfirst(Str::lower($activatedProduct->name . $strength)), 45, '..');
                 $activatedProduct->generic->name = Str::limit($activatedProduct->generic->name, 55, '..');
                 $activatedProduct->company->name = Str::limit($activatedProduct->company->name, 55, '..');
+                $activatedProduct->discountPrice = $activatedProduct->discountPrice();
 
                 $activatedProduct->units = array_map(function ($u_id) {
                     return MedicineUnit::findOrFail($u_id);
@@ -86,6 +87,7 @@ class BaseController extends Controller
             $product->pro_sub_cat->name =(Str::ucfirst(Str::lower($product->pro_sub_cat->name)));
             $product->discount_amount = productDiscountAmount($product->id);
             $product->discount_percentage = productDiscountPercentage($product->id);
+            $product->discountPrice = $product->discountPrice();
             return $product;
         });
         return response()->json($data);
@@ -103,7 +105,7 @@ class BaseController extends Controller
         $data['count'] = AddToCart::where('customer_id',$customer_id)->count();
         $atc = AddToCart::where('product_id',$product->id)->where('customer_id',$customer_id)->first();
         if($atc){
-            if($atc->status != 1){
+            if($atc->status !== 1){
                 $atc->status = 1;
                 $atc->unit_id = $unit_id;
                 $atc->save(); 
@@ -138,6 +140,7 @@ class BaseController extends Controller
             $activatedProduct->image = storage_url($activatedProduct->image);
             $activatedProduct->discount_amount = productDiscountAmount($activatedProduct->id);
             $activatedProduct->discount_percentage = productDiscountPercentage($activatedProduct->id);
+            $activatedProduct->discountPrice = $activatedProduct->discountPrice();
 
 
             $activatedProduct->data_item_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->price*$data['atc']->unit->quantity) : $data['atc']->product->price; 
@@ -164,12 +167,12 @@ class BaseController extends Controller
     public function remove_to_cart():JsonResponse
     {
         $act_id = request('atc');
-        $atc = AddToCart::findOrFail($act_id);
-        $atc->delete();
+        AddToCart::where('id',$act_id)->update(['status'=>-1]);
         $data['sucses_alert'] = "The item has been successfully removed from your cart.";
 
         $data['atcs'] = AddToCart::with(['product', 'customer'])
             ->where('customer_id', 1)
+            ->where('status',1)
             ->latest()
             ->get();
 
@@ -182,6 +185,7 @@ class BaseController extends Controller
                 $activatedProduct->name = Str::limit(Str::ucfirst(Str::lower($activatedProduct->name . $strength)), 45, '..');
                 $activatedProduct->generic->name = Str::limit($activatedProduct->generic->name, 55, '..');
                 $activatedProduct->company->name = Str::limit($activatedProduct->company->name, 55, '..');
+                $activatedProduct->discountPrice = $activatedProduct->discountPrice();
 
                 $activatedProduct->units = array_map(function ($u_id) {
                     return MedicineUnit::findOrFail($u_id);
@@ -200,12 +204,12 @@ class BaseController extends Controller
         return response()->json($data);
     }
 
-    public function clearCart():JsonResponse
+    public function clearCart($uid):JsonResponse
     {
-        $data['count'] = AddToCart::count();
+        $data['count'] = AddToCart::where('customer_id',decrypt($uid))->count();
         $data['alert'] = "The cart data has already been cleared";
         if($data['count']>0){
-            AddToCart::truncate();
+            AddToCart::where('customer_id',decrypt($uid))->update(['status'=>-1]);
             $data['alert'] = "The cart data has been cleared successfully";
         }
         

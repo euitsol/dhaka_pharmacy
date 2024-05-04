@@ -270,3 +270,12 @@ function get_taka_icon(){
     return '&#2547; ';
 }
 
+
+function c_user_name($user){
+    return $user->name ?? 'System';
+}
+function u_user_name($user){
+    return $user->name ?? '--';
+}
+
+

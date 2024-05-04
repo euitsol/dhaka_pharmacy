@@ -41,9 +41,9 @@
                                         <span
                                             class="{{ $medicine_strength->getStatusBadgeClass() }}">{{ $medicine_strength->getStatus() }}</span>
                                     </td>
-                                    <td>{{ $medicine_strength->created_date() }}</td>
+                                    <td>{{ timeFormate($medicine_strength->created_at) }}</td>
 
-                                    <td> {{ $medicine_strength->created_user_name() }} </td>
+                                    <td> {{ c_user_name($medicine_strength->created_user) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

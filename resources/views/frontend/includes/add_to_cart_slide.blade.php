@@ -2,7 +2,7 @@
                             aria-labelledby="offcanvasRightLabel">
                             <div class="offcanvas-header">
                                 <h5 class="offcanvas-title" id="offcanvasRightLabel">{{__('Cart')}}</h5>
-                                <a href="javascript:void(0)" class="cart_clear_btn"><i class="fa-solid fa-trash-can"></i> {{__('Clear All')}}</a>
+                                <a href="javascript:void(0)" class="cart_clear_btn" data-uid="{{encrypt(1)}}"><i class="fa-solid fa-trash-can"></i> {{__('Clear All')}}</a>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
                             </div>

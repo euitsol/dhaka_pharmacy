@@ -36,7 +36,7 @@
                                                     {{ $sub_area->status == 1 ? 'Operational' : ($sub_area->status == 0 ? 'Pending' : 'Not Operational') }}
                                                 </span>
                                         </td>
-                                        <td>{{($sub_area->creater_name()) }}</td>
+                                        <td>{{(c_user_name($sub_area->creater)) }}</td>
                                     </tr>
                                 @empty
                                     <tr>

@@ -80,9 +80,9 @@
                                         <span
                                             class="{{ $discount->getStatusBadgeClass() }}">{{ $discount->getStatus() }}</span>
                                     </td>
-                                    <td>{{ $discount->created_date() }}</td>
+                                    <td>{{ timeFormate($discount->created_at) }}</td>
 
-                                    <td> {{ $discount->creater_name() }} </td>
+                                    <td> {{ c_user_name($discount->creater) }} </td>
                                 </tr>
                             @endforeach
 

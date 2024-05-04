@@ -39,7 +39,7 @@
                                             <tr>
                                                 <th>Order Date</th>
                                                 <td>:</td>
-                                                <td>{{$do->order->created_date()}}</td>
+                                                <td>{{timeFormate($do->order->created_at)}}</td>
                                                 <th>Order Status</th>
                                                 <td>:</td>
                                                 <td><span class="{{$do->order->statusBg()}}">{{$do->order->statusTitle()}}</span></td>

@@ -32,7 +32,7 @@
                                     <td>{{ $order->order_id }}</td>
                                     <td>{{ count(json_decode($order->carts,true)) }}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
-                                    <td>{{ $order->created_date() }}</td>
+                                    <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>
                                         @if($order->status == 1)
                                             @include('admin.partials.action_buttons', [

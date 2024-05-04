@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-8">
-                                <h4 class="card-title">{{ $data->creater_name(). __(' KYC Details') }}</h4>
+                                <h4 class="card-title">{{ c_user_name($data->creater). __(' KYC Details') }}</h4>
                             </div>
                             <div class="col-4 text-right">
                                 @include('admin.partials.button', [
