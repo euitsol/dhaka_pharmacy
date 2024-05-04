@@ -70,22 +70,5 @@ class OrderDistribution extends BaseModel
                 return 'Priority Distribution';
         }
     }
-
-    public function readablePrepTime(){
-        $duration = Carbon::parse($this->prep_time)->diff(Carbon::parse($this->created_at));
-        $formattedDuration = '';
-        if ($duration->h > 0) {
-            $formattedDuration .= $duration->h . ' hours ';
-        }
-        if ($duration->i > 0) {
-            $formattedDuration .= $duration->i . ' minutes';
-        }
-        return $formattedDuration;
-    }
-    public function prepTotalSeconds(){
-        $duration = Carbon::parse($this->prep_time)->diff(Carbon::parse($this->created_at));
-        $totalSeconds = $duration->s + ($duration->i * 60) + ($duration->h * 3600) + ($duration->days * 86400);
-        return $totalSeconds;
-    }
     
 }

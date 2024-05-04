@@ -23,12 +23,12 @@ class MedicineUnitController extends Controller
 
     public function index(): View
     {
-        $data['medicine_units'] = MedicineUnit::with(['created_user', 'updated_user'])->orderBy('name')->get();
+        $data['medicine_units'] = MedicineUnit::with('created_user')->orderBy('name')->get();
         return view('admin.product_management.medicine_unit.index', $data);
     }
     public function details($id): JsonResponse
     {
-        $data = MedicineUnit::findOrFail($id);
+        $data = MedicineUnit::with(['created_user', 'updated_user'])->findOrFail($id);
         $data->image = storage_url($data->image);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = timeFormate($data->updated_at);

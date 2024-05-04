@@ -9,8 +9,4 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class MedicineUnit extends BaseModel
 {
     use HasFactory, SoftDeletes;
-    public function discounts()
-    {
-        return $this->hasMany(Discount::class, 'pro_id','id');
-    }
 }

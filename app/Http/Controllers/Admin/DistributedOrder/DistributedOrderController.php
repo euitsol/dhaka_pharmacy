@@ -28,10 +28,10 @@ class DistributedOrderController extends Controller
         $data['status'] = $status;
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
         $data['status'] = $status;
-        $data['dos'] = OrderDistribution::with(['order','odps','statusBg','statusTitle','paymentType','distributionType','readablePrepTime','prepTotalSeconds'])
+        $data['dos'] = OrderDistribution::with(['order','odps'])
         ->where('status',$this->getStatus($status))->get()
                     ->map(function($do,$key){
-                        $do->prep_time = $do->readablePrepTime();
+                        $do->prep_time = readablePrepTime($do->created_at,$do->prep_time);
                         $do['dops'] = $do->odps->groupBy('pharmacy_id')
                         ->map(function($dop,$key){
                             $dop->pharmacy = Pharmacy::findOrFail($key);
@@ -44,16 +44,16 @@ class DistributedOrderController extends Controller
 
     public function details($do_id,$pid): View
     {
-        $data['do'] = OrderDistribution::with(['order','odps','statusBg','statusTitle','paymentType','distributionType','readablePrepTime','prepTotalSeconds'])->findOrFail(decrypt($do_id));
+        $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
 
-        $data['do']->prep_time = $data['do']->readablePrepTime();
+        $data['do']->prep_time = readablePrepTime($data['do']->created_at,$data['do']->prep_time);
         $data['do']->pharmacy = Pharmacy::findOrFail(decrypt($pid));
         $data['do']['dops'] = $data['do']->odps->where('pharmacy_id',decrypt($pid));
         return view('admin.distributed_order.details',$data);
     }
     public function edit($do_id,$pid): View
     {
-        $data['do'] = OrderDistribution::with(['order','odps','statusBg','statusTitle','paymentType','distributionType','readablePrepTime','prepTotalSeconds'])->findOrFail(decrypt($do_id));
+        $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
         $data['do']->pharmacy = Pharmacy::findOrFail(decrypt($pid));
         $data['do']['dops'] = $data['do']->odps->where('pharmacy_id',decrypt($pid));
         $data['do']['dops']->map(function($dop) {

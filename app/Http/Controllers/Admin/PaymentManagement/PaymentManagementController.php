@@ -19,7 +19,7 @@ class PaymentManagementController extends Controller
     public function index($status): View
     {
         
-        $data['payments'] = Payment::with(['customer','order'])->status($status)->latest()->get();
+        $data['payments'] = Payment::with('customer')->status($status)->latest()->get();
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getpaymentStatusBgColor($status);
         return view('admin.payment_management.index',$data);

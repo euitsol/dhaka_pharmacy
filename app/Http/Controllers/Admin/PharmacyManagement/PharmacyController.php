@@ -32,7 +32,7 @@ class PharmacyController extends Controller
     }
     public function details($id): JsonResponse
     {
-        $data = Pharmacy::with(['role','creater','updater'])->findOrFail(decrypt($id));
+        $data = Pharmacy::with(['creater','updater'])->findOrFail(decrypt($id));
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = timeFormate($data->updated_at);
         $data->created_by = c_user_name($data->creater);
@@ -57,7 +57,6 @@ class PharmacyController extends Controller
     }
     public function create(): View
     {
-        $data['roles'] = Role::latest()->get();
         $data['document'] = Documentation::where('module_key','pharmacy')->first();
         return view('admin.pharmacy_management.pharmacy.create',$data);
     }
@@ -75,7 +74,6 @@ class PharmacyController extends Controller
     public function edit($id): View
     {
         $data['pharmacy'] = Pharmacy::findOrFail(decrypt($id));
-        $data['roles'] = Role::latest()->get();
         $data['document'] = Documentation::where('module_key','pharmacy')->first();
         return view('admin.pharmacy_management.pharmacy.edit',$data);
     }

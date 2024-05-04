@@ -23,12 +23,12 @@ class CompanyNameController extends Controller
 
     public function index(): View
     {
-        $data['company_names'] = CompanyName::with(['created_user', 'updated_user'])->orderBy('name')->get();
+        $data['company_names'] = CompanyName::with(['created_user'])->orderBy('name')->get();
         return view('admin.product_management.company_name.index', $data);
     }
     public function details($id): JsonResponse
     {
-        $data = CompanyName::findOrFail($id);
+        $data = CompanyName::wth(['created_user','updated_user'])->findOrFail($id);
         $data->address = html_entity_decode($data->address);
         $data->note = html_entity_decode($data->note);
         $data->creating_time = timeFormate($data->created_at);

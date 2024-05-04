@@ -22,12 +22,12 @@ class MedicineCategoryController extends Controller
 
     public function index(): View
     {
-        $data['medicine_categorys'] = MedicineCategory::with(['created_user','updated_user'])->orderBy('name')->get();
+        $data['medicine_categorys'] = MedicineCategory::with(['created_user'])->orderBy('name')->get();
         return view('admin.product_management.medicine_category.index',$data);
     }
     public function details($id): JsonResponse
     {
-        $data = MedicineCategory::findOrFail($id);
+        $data = MedicineCategory::with(['created_user','updated_user'])->findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = timeFormate($data->updated_at);
         $data->created_by = c_user_name($data->created_user);

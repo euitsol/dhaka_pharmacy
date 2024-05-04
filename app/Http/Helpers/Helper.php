@@ -278,4 +278,22 @@ function u_user_name($user){
     return $user->name ?? '--';
 }
 
+function readablePrepTime($start_time, $end_time){
+    $duration = Carbon::parse($end_time)->diff(Carbon::parse($start_time));
+    $formattedDuration = '';
+    if ($duration->h > 0) {
+        $formattedDuration .= $duration->h . ' hours ';
+    }
+    if ($duration->i > 0) {
+        $formattedDuration .= $duration->i . ' minutes';
+    }
+    return $formattedDuration;
+}
+
+function prepTotalSeconds($start_time, $end_time){
+    $duration = Carbon::parse($end_time)->diff(Carbon::parse($start_time));
+    $totalSeconds = $duration->s + ($duration->i * 60) + ($duration->h * 3600) + ($duration->days * 86400);
+    return $totalSeconds;
+}
+
 

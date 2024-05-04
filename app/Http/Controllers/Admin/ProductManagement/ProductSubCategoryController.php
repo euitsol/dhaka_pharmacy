@@ -22,7 +22,7 @@ class ProductSubCategoryController extends Controller
 
     public function index(): View
     {
-        $data['product_categories'] = ProductSubCategory::with(['created_user', 'updated_user'])->orderBy('name')->get();
+        $data['product_categories'] = ProductSubCategory::with(['created_user','pro_cat'])->orderBy('name')->get();
         $data['menuItemsCount'] = ProductSubCategory::where('is_menu',1)->activated()->count();
         return view('admin.product_management.product_sub_category.index', $data);
     }
@@ -62,7 +62,7 @@ class ProductSubCategoryController extends Controller
     }
     public function edit($slug): View
     {
-        $data['product_sub_category'] = ProductSubCategory::where('slug',$slug)->first();
+        $data['product_sub_category'] = ProductSubCategory::with('pro_cat')->where('slug',$slug)->first();
         $data['pro_cats'] = ProductCategory::activated()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'product_sub_category')->first();
         return view('admin.product_management.product_sub_category.edit', $data);

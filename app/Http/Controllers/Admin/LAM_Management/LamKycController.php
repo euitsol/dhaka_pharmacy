@@ -23,7 +23,7 @@ class LamKycController extends Controller
 
     public function index():View
     {
-        $data['datas'] = SubmittedKyc::with('creater')->where('type','lam')->orderBy('status','desc')->get()->groupBy('status');
+        $data['datas'] = SubmittedKyc::with(['creater','updater'])->where('type','lam')->orderBy('status','desc')->get()->groupBy('status');
         return view('admin.lam_management.submitted_kyc.index',$data);
 
     }

@@ -23,12 +23,12 @@ class MedicineStrengthController extends Controller
 
     public function index(): View
     {
-        $data['medicine_strengths'] = MedicineStrength::with(['created_user', 'updated_user'])->orderBy('quantity')->get();
+        $data['medicine_strengths'] = MedicineStrength::with('created_user')->orderBy('quantity')->get();
         return view('admin.product_management.medicine_strength.index', $data);
     }
     public function details($id): JsonResponse
     {
-        $data = MedicineStrength::findOrFail($id);
+        $data = MedicineStrength::with(['created_user', 'updated_user'])->findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = timeFormate($data->updated_at);
         $data->created_by = c_user_name($data->created_user);

@@ -14,7 +14,7 @@
                                         @include('admin.partials.button', [
                                                     'routeName' => 'pym.payment.payment_list',
                                                     'className' => 'btn-primary',
-                                                    'params'=>strtolower($payment->statusTitle($payment->status)),
+                                                    'params'=>strtolower($payment->statusTitle()),
                                                     'label' => 'Back',
                                                 ])
                                     </div>

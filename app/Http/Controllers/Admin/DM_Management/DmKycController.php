@@ -29,7 +29,7 @@ class DmKycController extends Controller
     }
     public function details($id):View
     {
-        $data['data'] = SubmittedKyc::findOrFail($id);
+        $data['data'] = SubmittedKyc::with(['creater','updater'])->findOrFail($id);
         $data['kyc_setting'] = KycSetting::where('type','dm')->first();
         return view('admin.dm_management.submitted_kyc.details',$data);
 
