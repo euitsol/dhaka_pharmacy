@@ -35,7 +35,7 @@
                                     <td> {{ count($dop) }} </td>
                                     <td> {{ $dop->od->paymentType() }} </td>
                                     <td> {{ $dop->od->distributionType() }} </td>
-                                    <td> {{ $dop->od->readablePrepTime() }} <span class="countdown ms-2" data-seconds="{{$dop->od->prepTotalSeconds()}}"></span> </td>
+                                    <td> {{ readablePrepTime($dop->od->created_at, $dop->od->prep_time) }} <span class="countdown ms-2" data-seconds="{{prepTotalSeconds($dop->od->created_at, $dop->od->prep_time)}}"></span> </td>
                                     
                                     <td>
                                         <span class="{{ $dop->statusBg }}">{{ $dop->statusTitle }}</span>

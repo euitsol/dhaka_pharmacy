@@ -23,7 +23,7 @@ class OperationAreaController extends Controller
     }
     public function index(): view
     {
-        $data['operation_areas'] = OperationArea::with(['created_user', 'updated_user','getStatusBadgeClass','getStatus','getBtnStatus'])->orderBy('name')->get();
+        $data['operation_areas'] = OperationArea::with(['created_user', 'updated_user'])->orderBy('name')->get();
         return view('admin.operational_area.operation_area.index', $data);
     }
 

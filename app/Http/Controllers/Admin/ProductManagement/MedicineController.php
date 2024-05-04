@@ -30,12 +30,12 @@ class MedicineController extends Controller
 
     public function index(): View
     {
-        $data['medicines'] = Medicine::with(['getStatusBadgeClass','getStatus','pro_cat','getBestSelling','getBtnBestSelling','getBestSellingBadgeClass','created_user'])->orderBy('name')->get();
+        $data['medicines'] = Medicine::with(['pro_cat','created_user'])->orderBy('name')->get();
         return view('admin.product_management.medicine.index',$data);
     }
     public function details($slug): View
     {
-        $data['medicine']=Medicine::with(['getStatusBadgeClass','getStatus','pro_cat','pro_sub_cat','generic','company','strength','getBestSelling','getBestSellingBadgeClass','created_user','updated_user'])->where('slug', $slug)->first();
+        $data['medicine']=Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','created_user','updated_user'])->where('slug', $slug)->first();
 
         $data['medicine']->units = collect(json_decode($data['medicine']->unit, true))->map(function ($unit) {
             $medicineUnit = MedicineUnit::findOrFail($unit);

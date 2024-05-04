@@ -21,7 +21,7 @@ class GenericNameController extends Controller
     }
     public function index(): View
     {
-        $data['generic_names'] = GenericName::with(['created_user','getStatusBadgeClass','getStatus','getBtnStatus'])->orderBy('name')->get();
+        $data['generic_names'] = GenericName::with(['created_user'])->orderBy('name')->get();
         return view('admin.product_management.generic_name.index',$data);
     }
     public function details($id): JsonResponse

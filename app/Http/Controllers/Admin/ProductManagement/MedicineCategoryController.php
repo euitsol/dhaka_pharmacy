@@ -22,7 +22,7 @@ class MedicineCategoryController extends Controller
 
     public function index(): View
     {
-        $data['medicine_categorys'] = MedicineCategory::with(['created_user','getFeaturedBadgeClass','getFeatured','getStatusBadgeClass','getStatus','getBtnFeatured','getBtnStatus'])->orderBy('name')->get();
+        $data['medicine_categorys'] = MedicineCategory::with(['created_user'])->orderBy('name')->get();
         return view('admin.product_management.medicine_category.index',$data);
     }
     public function details($id): JsonResponse

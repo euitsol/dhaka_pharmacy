@@ -22,7 +22,7 @@ class ProductSubCategoryController extends Controller
 
     public function index(): View
     {
-        $data['product_categories'] = ProductSubCategory::with(['created_user','pro_cat','getMenuBadgeClass','getMenu','getStatusBadgeClass','getStatus','getBtnMenu','getBtnStatus'])->orderBy('name')->get();
+        $data['product_categories'] = ProductSubCategory::with(['created_user','pro_cat'])->orderBy('name')->get();
         $data['menuItemsCount'] = ProductSubCategory::where('is_menu',1)->activated()->count();
         return view('admin.product_management.product_sub_category.index', $data);
     }

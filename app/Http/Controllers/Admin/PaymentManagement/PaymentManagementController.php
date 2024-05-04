@@ -26,7 +26,7 @@ class PaymentManagementController extends Controller
     }
     public function details($id): View
     {
-        $data['payment'] = Payment::with(['customer','order','statusBg','statusTitle'])->findOrFail(decrypt($id));
+        $data['payment'] = Payment::with(['customer','order'])->findOrFail(decrypt($id));
         $data['payment_items'] = [];
         foreach(json_decode($data['payment']->order->carts) as $cart_id){
             $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->where('id',$cart_id)->first();

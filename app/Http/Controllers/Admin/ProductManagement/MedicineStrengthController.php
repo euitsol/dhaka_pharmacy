@@ -23,7 +23,7 @@ class MedicineStrengthController extends Controller
 
     public function index(): View
     {
-        $data['medicine_strengths'] = MedicineStrength::with(['created_user','getStatusBadgeClass','getStatus','getBtnStatus'])->orderBy('quantity')->get();
+        $data['medicine_strengths'] = MedicineStrength::with('created_user')->orderBy('quantity')->get();
         return view('admin.product_management.medicine_strength.index', $data);
     }
     public function details($id): JsonResponse

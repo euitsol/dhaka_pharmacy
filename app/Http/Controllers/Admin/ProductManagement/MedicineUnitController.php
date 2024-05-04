@@ -23,7 +23,7 @@ class MedicineUnitController extends Controller
 
     public function index(): View
     {
-        $data['medicine_units'] = MedicineUnit::with(['created_user','getStatusBadgeClass','getStatus','getBtnStatus'])->orderBy('name')->get();
+        $data['medicine_units'] = MedicineUnit::with('created_user')->orderBy('name')->get();
         return view('admin.product_management.medicine_unit.index', $data);
     }
     public function details($id): JsonResponse

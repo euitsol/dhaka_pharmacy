@@ -24,7 +24,7 @@ class LocalAreaManagerController extends Controller
 
     public function index(): View
     {
-        $data['lams'] = LocalAreaManager::with(['dm.operation_area','operation_sub_area','creater','getStatusBadgeClass','getStatus','getBtnStatus'])
+        $data['lams'] = LocalAreaManager::with(['dm.operation_area','operation_sub_area','creater'])
                         ->latest()
                         ->get();
         return view('admin.lam_management.local_area_manager.index',$data);

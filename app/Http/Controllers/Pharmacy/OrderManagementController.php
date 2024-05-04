@@ -38,7 +38,7 @@ class OrderManagementController extends Controller
     public function details($do_id,$status){
         $data['pharmacy_discount'] = PharmacyDiscount::activated()->where('pharmacy_id',pharmacy()->id)->first();
         $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
-        $data['do']->prep_time = $data['do']->readablePrepTime();
+        $data['do']->prep_time = readablePrepTime($data['do']->created_at, $data['do']->prep_time);
         $data['do']->pharmacy = Pharmacy::findOrFail(pharmacy()->id);
         $data['do']['dops'] = $data['do']->odps
                             ->where('status',$this->getStatus($status))

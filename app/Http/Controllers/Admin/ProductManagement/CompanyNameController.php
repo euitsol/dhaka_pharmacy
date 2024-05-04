@@ -23,7 +23,7 @@ class CompanyNameController extends Controller
 
     public function index(): View
     {
-        $data['company_names'] = CompanyName::with(['created_user','getStatusBadgeClass','getStatus','getBtnStatus'])->orderBy('name')->get();
+        $data['company_names'] = CompanyName::with(['created_user'])->orderBy('name')->get();
         return view('admin.product_management.company_name.index', $data);
     }
     public function details($id): JsonResponse

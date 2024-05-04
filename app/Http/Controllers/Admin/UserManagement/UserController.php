@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function index(): View
     {
-        $data['users'] = User::with('creater','getMenuBadgeClass','getMenu','getStatusBadgeClass','getStatus','getBtnMenu','getBtnStatus')->latest()->get();
+        $data['users'] = User::with('creater')->latest()->get();
         return view('admin.user_management.user.index',$data);
     }
     public function details($id): JsonResponse
