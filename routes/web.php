@@ -1,14 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\ProductManagement\CompanyNameController;
-use App\Http\Controllers\Admin\ProductManagement\GenericNameController;
-use App\Http\Controllers\Admin\ProductManagement\MedicineCategoryController;
-use App\Http\Controllers\Admin\ProductManagement\MedicineController;
-use App\Http\Controllers\Admin\ProductManagement\MedicineStrengthController;
-use App\Http\Controllers\Admin\ProductManagement\MedicineUnitController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+
 use App\Http\Controllers\Admin\AdminManagement\AdminController;
 use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController as AdminRoleController;
@@ -29,46 +25,57 @@ use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycController;
 use App\Http\Controllers\Admin\PharmacyManagement\PharmacyKycSettingsController;
 use App\Http\Controllers\Admin\ProductManagement\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductManagement\ProductSubCategoryController;
-use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
-use App\Http\Controllers\LAM\Auth\LoginController as LamLoginController;
-use App\Http\Controllers\Rider\Auth\LoginController as RiderLoginController;
-use App\Http\Controllers\DM\DashboardController as DmDashboardController;
-use App\Http\Controllers\LAM\DashboardController as LamDashboardController;
-use App\Http\Controllers\Rider\DashboardController as RiderDashboardController;
-use App\Http\Controllers\Pharmacy\DashboardController as PharmacyDashboardController;
-use App\Http\Controllers\DM\DmProfileController;
-use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
-use App\Http\Controllers\Pharmacy\PharmacyProfileController;
-use App\Http\Controllers\Admin\SiteSettingsController;
-use App\Http\Controllers\User\UserProfileController;
-use App\Http\Controllers\DM\LAM_management\LamManagementController;
-use App\Http\Controllers\DM\UserManagement\UserManagementController as DmUserController;
-use App\Http\Controllers\LAM\UserManagement\UserManagementController as LamUserController;
-use App\Http\Controllers\LAM\LamProfileController;
-use App\Http\Controllers\Rider\RiderProfileController;
-use App\Http\Controllers\DM\KYC\KycVerificationController as DmKycVerificationController;
-use App\Http\Controllers\Frontend\HomePageController;
-use App\Http\Controllers\Frontend\Product\SingleProductController;
-use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
-use App\Http\Controllers\Rider\KYC\KycVerificationController as RiderKycVerificationController;
-use App\Http\Controllers\Pharmacy\KYC\KycVerificationController as PharmacyKycVerificationController;
 use App\Http\Controllers\Admin\OperationalArea\OperationAreaController;
 use App\Http\Controllers\Admin\OperationalArea\OperationSubAreaController;
 use App\Http\Controllers\Admin\OrderManagement\OrderManagementController;
-use App\Http\Controllers\Frontend\PaymentGateway\SslCommerzController;
-use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
-use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
-use App\Http\Controllers\Frontend\Product\ProductPageController;
-use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
-use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
-use App\Http\Controllers\Pharmacy\OperationalAreaController as PharmacyOperationalAreaController;
 use App\Http\Controllers\Admin\PushNotification\SettingController as PushNotificationSetting;
 use App\Http\Controllers\Admin\PaymentGateway\SettingController as PaymentGatewaySetting;
 use App\Http\Controllers\Admin\PaymentManagement\PaymentManagementController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
+use App\Http\Controllers\Admin\SiteSettingsController;
+
+use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
+use App\Http\Controllers\DM\DashboardController as DmDashboardController;
+use App\Http\Controllers\DM\DmProfileController;
+use App\Http\Controllers\DM\LAM_management\LamManagementController;
+use App\Http\Controllers\DM\UserManagement\UserManagementController as DmUserController;
+use App\Http\Controllers\DM\KYC\KycVerificationController as DmKycVerificationController;
+use App\Http\Controllers\DM\LAM_management\OparetionalAreaController as DmOparetionalAreaController;
+
+use App\Http\Controllers\LAM\Auth\LoginController as LamLoginController;
+use App\Http\Controllers\LAM\DashboardController as LamDashboardController;
+use App\Http\Controllers\LAM\UserManagement\UserManagementController as LamUserController;
+use App\Http\Controllers\LAM\LamProfileController;
+use App\Http\Controllers\LAM\KYC\KycVerificationController as LamKycVerificationController;
+use App\Http\Controllers\LAM\OperationalAreaController as LamOperationalAreaController;
+
+use App\Http\Controllers\Rider\Auth\LoginController as RiderLoginController;
+use App\Http\Controllers\Rider\DashboardController as RiderDashboardController;
+use App\Http\Controllers\Rider\RiderProfileController;
+use App\Http\Controllers\Rider\KYC\KycVerificationController as RiderKycVerificationController;
+
+use App\Http\Controllers\Pharmacy\DashboardController as PharmacyDashboardController;
+use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
+use App\Http\Controllers\Pharmacy\PharmacyProfileController;
+use App\Http\Controllers\Pharmacy\KYC\KycVerificationController as PharmacyKycVerificationController;
+use App\Http\Controllers\Pharmacy\OperationalAreaController as PharmacyOperationalAreaController;
 use App\Http\Controllers\Pharmacy\OrderManagementController as PharmacyOrderManagementController;
+
+use App\Http\Controllers\User\UserProfileController;
+use App\Http\Controllers\Auth\LoginController as UserLoginController;
+use App\Http\Controllers\Auth\RegisterController as UserRegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController as UserForgotPasswordController;
+
+use App\Http\Controllers\Frontend\HomePageController;
+use App\Http\Controllers\Frontend\Product\SingleProductController;
+use App\Http\Controllers\Frontend\PaymentGateway\SslCommerzController;
+use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
+use App\Http\Controllers\Frontend\Product\ProductPageController;
+use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -116,40 +123,36 @@ Route::post('/rider/logout', [RiderLoginController::class, 'logout'])->name('rid
 
 
 // Google Login
-Route::get('/google-redirect', [App\Http\Controllers\Auth\LoginController::class, 'googleRedirect'])->name('login_with_google');
-Route::get('/auth/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'googleCallback']);
+Route::get('/google-redirect', [UserLoginController::class, 'googleRedirect'])->name('login_with_google');
+Route::get('/auth/google/callback', [UserLoginController::class, 'googleCallback']);
 
 // Github Login
-Route::get('/github-redirect', [App\Http\Controllers\Auth\LoginController::class, 'githubRedirect'])->name('login_with_github');
-Route::get('/auth/github/callback', [App\Http\Controllers\Auth\LoginController::class, 'githubCallback']);
+Route::get('/github-redirect', [UserLoginController::class, 'githubRedirect'])->name('login_with_github');
+Route::get('/auth/github/callback', [UserLoginController::class, 'githubCallback']);
 
 // Facebook Login
-Route::get('/facebook-redirect', [App\Http\Controllers\Auth\LoginController::class, 'facebookRedirect'])->name('login_with_facebook');
-Route::get('/auth/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'facebookCallback']);
+Route::get('/facebook-redirect', [UserLoginController::class, 'facebookRedirect'])->name('login_with_facebook');
+Route::get('/auth/facebook/callback', [UserLoginController::class, 'facebookCallback']);
 
 // Overwrite Default Authentication Routes
 Route::prefix('user')->group(function () {
-    Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+    Route::get('/login', [UserLoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [UserLoginController::class, 'login']);
+
+    Route::post('/otp-varify', [UserLoginController::class, 'send_otp'])->name('use.send_otp');
+    Route::get('/otp-varify', [UserLoginController::class, 'verify'])->name('use.send_otp');
+    Route::get('/send-otp/again', [UserLoginController::class, 'send_otp_again'])->name('use.send_otp.again');
+    Route::post('/otp/verify', [UserLoginController::class, 'otp_verify'])->name('use.otp.verify');
 
 
-    Route::get('/password/reset/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('/password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset']);
+    Route::get('/registration', [UserRegisterController::class, 'register'])->name('use.register');
+    Route::post('/registration', [UserRegisterController::class, 'rStore'])->name('use.register');
+    Route::get('/register/phone/validation/{phone}', [UserRegisterController::class, 'phoneValidation'])->name('use.register.phone.validation');
 
-    Route::post('/otp-varify', [App\Http\Controllers\Auth\LoginController::class, 'send_otp'])->name('use.send_otp');
-    Route::get('/otp-varify', [App\Http\Controllers\Auth\LoginController::class, 'verify'])->name('use.send_otp');
-    Route::get('/send-otp/again', [App\Http\Controllers\Auth\LoginController::class, 'send_otp_again'])->name('use.send_otp.again');
-    Route::post('/otp/verify', [App\Http\Controllers\Auth\LoginController::class, 'otp_verify'])->name('use.otp.verify');
-
-
-    Route::get('/registration', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('use.register');
-    Route::post('/registration', [App\Http\Controllers\Auth\RegisterController::class, 'rStore'])->name('use.register');
-    Route::get('/register/phone/validation/{phone}', [App\Http\Controllers\Auth\RegisterController::class, 'phoneValidation'])->name('use.register.phone.validation');
-
-    Route::get('/password/forgot', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'forgotPassword'])->name('user.forgot.password');
-    Route::post('/password/forgot', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'forgotPasswordOtp'])->name('user.forgot.password');
-    Route::get('/reset/password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'resetPassword'])->name('user.reset.password');
-    Route::post('/reset/password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'resetPasswordStore'])->name('user.reset.password');
+    Route::get('/password/forgot', [UserForgotPasswordController::class, 'forgotPassword'])->name('user.forgot.password');
+    Route::post('/password/forgot', [UserForgotPasswordController::class, 'forgotPasswordOtp'])->name('user.forgot.password');
+    Route::get('/reset/password', [UserForgotPasswordController::class, 'resetPassword'])->name('user.reset.password');
+    Route::post('/reset/password', [UserForgotPasswordController::class, 'resetPasswordStore'])->name('user.reset.password');
 });
 
 
