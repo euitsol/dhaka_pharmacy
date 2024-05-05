@@ -88,8 +88,6 @@ class MedicineController extends Controller
         $discount->pro_id = $medicine->id;
         $discount->discount_amount = $req->discount_amount;
         $discount->discount_percentage = $req->discount_percentage;
-        $discount->save();
-        $medicine->price = $req->price-productDiscountAmount($medicine->id);
         $medicine->save();
 
         flash()->addSuccess('Medicine '.$medicine->name.' created successfully.');
@@ -152,11 +150,6 @@ class MedicineController extends Controller
             $discount->discount_amount = $req->discount_amount;
             $discount->discount_percentage = $req->discount_percentage;
             $discount->save();
-            $medicine->price = $req->price-productDiscountAmount($id);
-            $medicine->save();
-        }elseif($check && $medicine->price !== $req->price){
-            $medicine->price = $req->price-productDiscountAmount($id);
-            $medicine->save();
         }
         
 

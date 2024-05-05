@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DiscountRequest extends FormRequest
+class DisputeOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,10 @@ class DiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pro_id'=>'required|exists:medicines,id',
-            'unit_id'=>'required|exists:medicine_units,id',
-            'discount_amount'=>'nullable|numeric',
-            'discount_percentage'=>'nullable|numeric',
+            'note'=>'nullable',
+            'datas.*.cart_id'=>'required|exists:add_to_carts,id',
+            'datas.*.pharmacy_id'=>'required|exists:pharmacies,id',
+            'datas.*.dop_id'=>'required|exists:order_distribution_pharmacies,id',
         ];
     }
 }

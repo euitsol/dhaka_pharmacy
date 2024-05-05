@@ -31,6 +31,12 @@ use App\Http\Controllers\Admin\OrderManagement\OrderManagementController;
 use App\Http\Controllers\Admin\PushNotification\SettingController as PushNotificationSetting;
 use App\Http\Controllers\Admin\PaymentGateway\SettingController as PaymentGatewaySetting;
 use App\Http\Controllers\Admin\PaymentManagement\PaymentManagementController;
+use App\Http\Controllers\Admin\ProductManagement\CompanyNameController;
+use App\Http\Controllers\Admin\ProductManagement\GenericNameController;
+use App\Http\Controllers\Admin\ProductManagement\MedicineCategoryController;
+use App\Http\Controllers\Admin\ProductManagement\MedicineController;
+use App\Http\Controllers\Admin\ProductManagement\MedicineStrengthController;
+use App\Http\Controllers\Admin\ProductManagement\MedicineUnitController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
@@ -421,7 +427,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
 
     // Product Management Routes
     Route::group(['as' => 'product.', 'prefix' => 'product-management'], function () {
-        Route::controller(GenericNameController::class, 'generic-name')->prefix('generic-name')->name('generic_name.')->group(function () {
+        Route::controller(GenericNameController::class)->prefix('generic-name')->name('generic_name.')->group(function () {
             Route::get('index', 'index')->name('generic_name_list');
             Route::get('details/{id}', 'details')->name('details.generic_name_list');
             Route::get('create', 'create')->name('generic_name_create');
@@ -431,7 +437,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('status/{id}', 'status')->name('status.generic_name_edit');
             Route::get('delete/{id}', 'delete')->name('generic_name_delete');
         });
-        Route::controller(CompanyNameController::class, 'company-name')->prefix('company-name')->name('company_name.')->group(function () {
+        Route::controller(CompanyNameController::class)->prefix('company-name')->name('company_name.')->group(function () {
             Route::get('index', 'index')->name('company_name_list');
             Route::get('details/{id}', 'details')->name('details.company_name_list');
             Route::get('create', 'create')->name('company_name_create');
@@ -441,7 +447,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('status/{id}', 'status')->name('status.company_name_edit');
             Route::get('delete/{id}', 'delete')->name('company_name_delete');
         });
-        Route::controller(MedicineCategoryController::class, 'medicine-category')->prefix('medicine-category')->name('medicine_category.')->group(function () {
+        Route::controller(MedicineCategoryController::class)->prefix('medicine-category')->name('medicine_category.')->group(function () {
             Route::get('index', 'index')->name('medicine_category_list');
             Route::get('details/{slug}', 'details')->name('details.medicine_category_list');
             Route::get('create', 'create')->name('medicine_category_create');
@@ -453,7 +459,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('delete/{id}', 'delete')->name('medicine_category_delete');
         });
 
-        Route::controller(MedicineUnitController::class, 'medicine-unit')->prefix('medicine-unit')->name('medicine_unit.')->group(function () {
+        Route::controller(MedicineUnitController::class)->prefix('medicine-unit')->name('medicine_unit.')->group(function () {
             Route::get('index', 'index')->name('medicine_unit_list');
             Route::get('details/{id}', 'details')->name('details.medicine_unit_list');
             Route::get('create', 'create')->name('medicine_unit_create');
@@ -463,7 +469,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('status/{id}', 'status')->name('status.medicine_unit_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_unit_delete');
         });
-        Route::controller(MedicineStrengthController::class, 'medicine-strength')->prefix('medicine-strength')->name('medicine_strength.')->group(function () {
+        Route::controller(MedicineStrengthController::class)->prefix('medicine-strength')->name('medicine_strength.')->group(function () {
             Route::get('index', 'index')->name('medicine_strength_list');
             Route::get('details/{id}', 'details')->name('details.medicine_strength_list');
             Route::get('create', 'create')->name('medicine_strength_create');
@@ -474,7 +480,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('delete/{id}', 'delete')->name('medicine_strength_delete');
         });
 
-        Route::controller(ProductCategoryController::class, 'product-category')->prefix('product-category')->name('product_category.')->group(function () {
+        Route::controller(ProductCategoryController::class)->prefix('product-category')->name('product_category.')->group(function () {
             Route::get('index', 'index')->name('product_category_list');
             Route::get('details/{id}', 'details')->name('details.product_category_list');
             Route::get('create', 'create')->name('product_category_create');
@@ -486,7 +492,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('menu/{id}', 'menu')->name('menu.product_category_edit');
             Route::get('delete/{id}', 'delete')->name('product_category_delete');
         });
-        Route::controller(ProductSubCategoryController::class, 'product-sub-category')->prefix('product-sub-category')->name('product_sub_category.')->group(function () {
+        Route::controller(ProductSubCategoryController::class)->prefix('product-sub-category')->name('product_sub_category.')->group(function () {
             Route::get('index', 'index')->name('product_sub_category_list');
             Route::get('details/{id}', 'details')->name('details.product_sub_category_list');
             Route::get('create', 'create')->name('product_sub_category_create');
@@ -497,7 +503,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('menu/{id}', 'menu')->name('menu.product_sub_category_edit');
             Route::get('delete/{id}', 'delete')->name('product_sub_category_delete');
         });
-        Route::controller(MedicineController::class, 'medicine')->prefix('medicine')->name('medicine.')->group(function () {
+        Route::controller(MedicineController::class)->prefix('medicine')->name('medicine.')->group(function () {
             Route::get('index', 'index')->name('medicine_list');
             Route::get('get-sub-category/{id}', 'get_sub_cat')->name('sub_cat.medicine_list');
             Route::get('details/{slug}', 'details')->name('details.medicine_list');
@@ -542,9 +548,9 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
     // Admin Distributed Order
     Route::controller(DistributedOrderController::class)->prefix('distributed-order')->name('do.')->group(function () {
         Route::get('/{status}', 'index')->name('do_list');
-        Route::get('/details/{do_id}/{pid}', 'details')->name('do_details');
+        Route::get('/details/{do_id}', 'details')->name('do_details');
         Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
-        Route::post('/update/{order_id}/{status}', 'update')->name('do_update');
+        Route::post('/update/{od_id}', 'update')->name('do_update');
     });
        
 

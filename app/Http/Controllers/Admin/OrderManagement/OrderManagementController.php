@@ -26,7 +26,16 @@ class OrderManagementController extends Controller
     public function index($status): View
     {
         
-        $data['orders'] = Order::status($status)->latest()->get();
+        $data['orders'] = Order::status($status)->latest()->get()
+                        ->map(function ($order) {
+                            $order->totalPrice = AddToCart::with('product')
+                                ->whereIn('id', json_decode($order->carts))
+                                ->get()
+                                ->sum(function ($item) {
+                                    return (($item->product->discountPrice() * ($item->unit->quantity ?? 1)) * $item->quantity);
+                                });
+                            return $order;
+                        });
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getOrderStatusBgColor($status);
         return view('admin.order_management.index',$data);
@@ -45,8 +54,8 @@ class OrderManagementController extends Controller
             return $item;
         });
         
-        $data['totalPrice'] = $data['order_items']->sum('price');
-        $data['totalRegularPrice'] = $data['order_items']->sum('discount_price');
+        $data['totalPrice'] = $data['order_items']->sum('discount_price');
+        $data['totalRegularPrice'] = $data['order_items']->sum('price');
         $data['totalDiscount'] = $data['order_items']->sum('discount');
         return view('admin.order_management.details',$data);
     }
@@ -63,8 +72,8 @@ class OrderManagementController extends Controller
             return $item;
         });
         
-        $data['totalPrice'] = $data['order_items']->sum('price');
-        $data['totalRegularPrice'] = $data['order_items']->sum('discount_price');
+        $data['totalPrice'] = $data['order_items']->sum('discount_price');
+        $data['totalRegularPrice'] = $data['order_items']->sum('price');
         $data['totalDiscount'] = $data['order_items']->sum('discount');
         $data['pharmacies'] = Pharmacy::activated()->latest()->get();
         $data['order_distribution'] = OrderDistribution::with(['odps.cart','odps.pharmacy'])->where('status',0)->where('order_id',$data['order']->id)->first();

@@ -113,7 +113,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Unit') }}</label>
-                                <select name="unit[]" class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }}"
+                                <select name="unit[]" class="form-control unit {{ $errors->has('unit') ? ' is-invalid' : '' }}"
                                     multiple="multiple">
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}"

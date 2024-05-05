@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin\DistributedOrder;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderDistributionRequest;
+use App\Http\Requests\DisputeOrderRequest;
+use App\Models\AddToCart;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
 use App\Models\Payment;
@@ -29,71 +30,79 @@ class DistributedOrderController extends Controller
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
         $data['status'] = $status;
         $data['dos'] = OrderDistribution::with(['order','odps'])
+        ->withCount(['odps' => function ($query) {
+            $query->where('status','!=', -1);
+        }])
         ->where('status',$this->getStatus($status))->get()
-                    ->map(function($do,$key){
-                        $do->prep_time = readablePrepTime($do->created_at,$do->prep_time);
-                        $do['dops'] = $do->odps->groupBy('pharmacy_id')
-                        ->map(function($dop,$key){
-                            $dop->pharmacy = Pharmacy::findOrFail($key);
-                            return $dop;
-                        });
-                        return $do;
-                    });
+        ->map(function($do){
+            $do->order->totalPrice = AddToCart::with('product')
+                ->whereIn('id', json_decode($do->order->carts))
+                ->get()
+                ->sum(function ($item) {
+                    return (($item->product->discountPrice() * ($item->unit->quantity ?? 1)) * $item->quantity);
+                });
+            return $do;
+        });
         return view('admin.distributed_order.index',$data);
     }
 
-    public function details($do_id,$pid): View
+    public function details($do_id): View
     {
-        $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
-
-        $data['do']->prep_time = readablePrepTime($data['do']->created_at,$data['do']->prep_time);
-        $data['do']->pharmacy = Pharmacy::findOrFail(decrypt($pid));
-        $data['do']['dops'] = $data['do']->odps->where('pharmacy_id',decrypt($pid));
+        $data['do'] = OrderDistribution::with(['order', 'odps' => function ($query) {
+            $query->where('status','!=', -1);
+        }])
+        ->withCount(['odps' => function ($query) {
+            $query->where('status','!=', -1);
+        }])
+        ->findOrFail(decrypt($do_id));
+        $data['totalPrice'] = AddToCart::with('product')
+                ->whereIn('id', json_decode($data['do']->order->carts))
+                ->get()
+                ->sum(function ($item) {
+                    return (($item->product->discountPrice() * ($item->unit->quantity ?? 1)) * $item->quantity);
+                });
+        $data['pharmacies'] = Pharmacy::activated()->latest()->get();
         return view('admin.distributed_order.details',$data);
     }
-    public function edit($do_id,$pid): View
-    {
-        $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
-        $data['do']->pharmacy = Pharmacy::findOrFail(decrypt($pid));
-        $data['do']['dops'] = $data['do']->odps->where('pharmacy_id',decrypt($pid));
-        $data['do']['dops']->map(function($dop) {
-            $dop->cart->price = (($dop->cart->product->price*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity);
-            $dop->cart->discount_price = (($dop->cart->product->discountPrice()*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity);
-            $dop->cart->discount = (productDiscountAmount($dop->cart->product->id)*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity;
-            return $dop->cart;
-        });
-        $data['totalPrice'] = collect($data['do']['dops'])->sum('cart.price');
-        $data['totalRegularPrice'] = collect($data['do']['dops'])->sum('cart.discount_price');
-        $data['totalDiscount'] = collect($data['do']['dops'])->sum('cart.discount');
-        $data['pharmacies'] = Pharmacy::activated()->latest()->get();
-        return view('admin.distributed_order.edit',$data);
-    }
+    // public function edit($do_id,$pid): View
+    // {
+    //     $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
+    //     $data['do']->pharmacy = Pharmacy::findOrFail(decrypt($pid));
+    //     $data['do']['dops'] = $data['do']->odps->where('pharmacy_id',decrypt($pid));
+    //     $data['do']['dops']->map(function($dop) {
+    //         $dop->cart->price = (($dop->cart->product->price*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity);
+    //         $dop->cart->discount_price = (($dop->cart->product->discountPrice()*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity);
+    //         $dop->cart->discount = (productDiscountAmount($dop->cart->product->id)*($dop->cart->unit->quantity ?? 1))*$dop->cart->quantity;
+    //         return $dop->cart;
+    //     });
+    //     $data['totalPrice'] = collect($data['do']['dops'])->sum('cart.discount_price');
+    //     $data['totalRegularPrice'] = collect($data['do']['dops'])->sum('cart.price');
+    //     $data['totalDiscount'] = collect($data['do']['dops'])->sum('cart.discount');
+    //     $data['pharmacies'] = Pharmacy::activated()->latest()->get();
+    //     return view('admin.distributed_order.edit',$data);
+    // }
 
 
-    public function update(OrderDistributionRequest $req, $order_id, $status){
-        $order_id = decrypt($order_id);
-        $od = OrderDistribution::updateOrCreate(
-            ['order_id' => $order_id],
-            [
-                'payment_type' => $req->payment_type,
-                'distribution_type' => $req->distribution_type,
-                'prep_time' => $req->prep_time,
-                'note' => $req->note,
-            ]
-        );
-        
-        // Iterate through the datas and update or create OrderDistributionPharmacy entries
+    public function update(DisputeOrderRequest $req, $od_id){
+        $od_id = decrypt($od_id);
         foreach ($req->datas as $data) {
-            OrderDistributionPharmacy::updateOrCreate(
-                [
-                    'order_distribution_id' => $od->id,
-                    'cart_id' => $data['cart_id'],
-                ],
-                ['pharmacy_id' => $data['pharmacy_id']]
-            );  
+            $old_dop = OrderDistributionPharmacy::findOrFail($data['dop_id']);
+            if($old_dop->pharmacy_id !== $data['pharmacy_id']){
+                $old_dop->status=-1;
+                $old_dop->updater()->associate(admin());
+                $old_dop->update();
+
+                $new = new OrderDistributionPharmacy();
+                $new->order_distribution_id = $od_id;
+                $new->cart_id = $data['cart_id'];
+                $new->pharmacy_id = $data['pharmacy_id'];
+                $new->creater()->associate(admin());
+                $new->save();
+
+            }
         }
-        flash()->addSuccess('Order Distribution Updated Successfully.');
-        return redirect()->route('do.do_list',$status); 
+        flash()->addSuccess('Dispute Updated Successfully.');
+        return redirect()->back(); 
     }
 
 

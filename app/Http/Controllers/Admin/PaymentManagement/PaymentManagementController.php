@@ -41,8 +41,8 @@ class PaymentManagementController extends Controller
             $item->discount = (productDiscountAmount($item->product->id)*$item->unit->quantity)*$item->quantity;
             return $item;
         });
-        $data['totalPrice'] = $paymentItemsCollection->sum('price');
-        $data['totalRegularPrice'] = $paymentItemsCollection->sum('discount_price');
+        $data['totalPrice'] = $paymentItemsCollection->sum('discount_price');
+        $data['totalRegularPrice'] = $paymentItemsCollection->sum('price');
         $data['totalDiscount'] = $paymentItemsCollection->sum('discount');
        
         return view('admin.payment_management.details',$data);
