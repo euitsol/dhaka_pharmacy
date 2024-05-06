@@ -29,7 +29,7 @@ class MedicineRequest extends FormRequest
 
             'discount_amount'=>'nullable|numeric',
             'discount_percentage'=>'nullable|numeric',
-            'unit_id'=>'required|exists:medicine_units,id',
+            'unit_id'=>'nullable|exists:medicine_units,id',
         ]
         +
             ($this->isMethod('POST') ? $this->store() : $this->update());

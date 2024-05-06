@@ -23,7 +23,7 @@ class DiscountRequest extends FormRequest
     {
         return [
             'pro_id'=>'required|exists:medicines,id',
-            'unit_id'=>'required|exists:medicine_units,id',
+            'unit_id'=>'nullable|exists:medicine_units,id',
             'discount_amount'=>'nullable|numeric',
             'discount_percentage'=>'nullable|numeric',
         ];

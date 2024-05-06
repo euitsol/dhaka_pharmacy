@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('customer_type');
             $table->unsignedBigInteger('ref_user')->nullable();
             $table->json('carts');
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(0)->comment('0=>Initiated, 1=>Pending, 2=>Success, -1=>Failed, -2=>Cancel, -3=>distribute');
             $table->enum('payment_getway',['bkash', 'nogod', 'roket', 'upay', 'ssl','cod'])->nullable();
             $table->string('order_id');
             $table->string('promo_code')->nullable();

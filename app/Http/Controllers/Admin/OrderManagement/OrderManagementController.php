@@ -82,25 +82,24 @@ class OrderManagementController extends Controller
 
     public function order_distribution_store(OrderDistributionRequest $req, $order_id){
         $order_id = decrypt($order_id);
-        $od = OrderDistribution::updateOrCreate(
-            ['order_id' => $order_id],
-            [
-                'payment_type' => $req->payment_type,
-                'distribution_type' => $req->distribution_type,
-                'prep_time' => $req->prep_time,
-                'note' => $req->note,
-            ]
-        );
+
+
+        Order::findOrFail($order_id)->update(['status'=>-3]);
+        $od = new OrderDistribution();
+        $od->order_id = $order_id;
+        $od->payment_type = $req->payment_type;
+        $od->distribution_type = $req->distribution_type;
+        $od->prep_time = $req->prep_time;
+        $od->note = $req->note;
+        $od->save();
         
         // Iterate through the datas and update or create OrderDistributionPharmacy entries
         foreach ($req->datas as $data) {
-            OrderDistributionPharmacy::updateOrCreate(
-                [
-                    'order_distribution_id' => $od->id,
-                    'cart_id' => $data['cart_id'],
-                ],
-                ['pharmacy_id' => $data['pharmacy_id']]
-            );  
+            $odp = new OrderDistributionPharmacy();
+            $odp->order_distribution_id = $od->id;
+            $odp->cart_id = $data['cart_id'];
+            $odp->pharmacy_id = $data['pharmacy_id'];
+            $odp->save();
         }
         flash()->addSuccess('Order Distributed Successfully.');
         return redirect()->back(); 
