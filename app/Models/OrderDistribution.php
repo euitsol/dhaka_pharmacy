@@ -15,7 +15,8 @@ class OrderDistribution extends BaseModel
         'payment_type',
         'distribution_type',
         'prep_time',
-        'note'
+        'note',
+        'status'
     ];
 
     public function order(){
@@ -28,29 +29,34 @@ class OrderDistribution extends BaseModel
     public function statusBg() {
         switch ($this->status) {
             case 0:
-                return 'badge badge-success';
-            case 1:
                 return 'badge badge-info';
-            case 2:
+            case 1:
                 return 'badge badge-warning';
+            case 2:
+                return 'badge bg-secondary';
             case 3:
-                return 'badge badge-primary';
+                return 'badge badge-danger';
             case 4:
-                return 'badge badge-secondary';
+                return 'badge badge-primary';
+            case 5:
+                return 'badge badge-success';
+                
         }
     }
     
     public function statusTitle() {
         switch ($this->status) {
             case 0:
-                return 'Distributed';
+                return 'Pending';
             case 1:
                 return 'Preparing';
             case 2:
-                return 'Waiting for pickup';
+                return 'Waiting for rider';
             case 3:
-                return 'Picked up';
+                return 'Waiting for pickup';
             case 4:
+                return 'Picked up';
+            case 5:
                 return 'Finish';
         }
     }

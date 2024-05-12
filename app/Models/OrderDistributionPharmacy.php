@@ -12,7 +12,8 @@ class OrderDistributionPharmacy extends BaseModel
     protected $fillable = [
         'order_distribution_id',
         'cart_id',
-        'pharmacy_id'
+        'pharmacy_id',
+        'status'
     ];
 
     public function od(){
@@ -27,11 +28,15 @@ class OrderDistributionPharmacy extends BaseModel
     public function statusBg() {
         switch ($this->status) {
             case 0:
-                return 'badge badge-warning';
-            case 1:
                 return 'badge badge-info';
+            case 1:
+                return 'badge bg-secondary';
+            case 2:
+                return 'badge badge-success';
             case 2:
                 return 'badge badge-danger';
+            case -1:
+                return 'badge badge-warning';
         }
     }
     
@@ -40,9 +45,13 @@ class OrderDistributionPharmacy extends BaseModel
             case 0:
                 return 'Pending';
             case 1:
-                return 'Distributed';
+                return 'Preparing';
             case 2:
+                return 'Accepted';
+            case 3:
                 return 'Dispute';
+            case -1:
+                return 'Old Disputed';
         }
     }
 }

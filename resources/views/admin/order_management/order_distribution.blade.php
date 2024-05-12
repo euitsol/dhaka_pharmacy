@@ -66,7 +66,7 @@
                                 <div class="card-header">
                                     <div class="row justify-content-between mb-3">
                                         <div class="col-auto"> <h4 class="color-1 mb-0">Order Distribution</h4> </div>
-                                        <div class="col-auto  "> Distribution Status : <span class="{{!empty($order_distribution) ? $order_distribution->statusBg() : 'badge badge-danger'}}">{{!empty($order_distribution) ? $order_distribution->statusTitle() : 'Not Distributed'}}</span> </div>
+                                        <div class="col-auto  "> Distribution Status : <span class="{{isset($order_distribution) ? $order_distribution->statusBg() : 'badge badge-danger'}}">{{isset($order_distribution) ? "Distributed" : 'Not Distributed'}}</span> </div>
                                     </div>
                                 </div>
                                 <div class="card-body order_items">
@@ -110,12 +110,23 @@
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <div class="form-group">
-                                                                        <select name="datas[{{$key}}][pharmacy_id]" class="form-control {{ $errors->has('datas.'.$key.'.pharmacy_id') ? ' is-invalid' : '' }}">
+                                                                        {{-- <select name="datas[{{$key}}][pharmacy_id]" class="form-control {{ $errors->has('datas.'.$key.'.pharmacy_id') ? ' is-invalid' : '' }}">
                                                                             <option selected hidden>Select Pharmacy</option>
                                                                             @foreach ($pharmacies as $pharmacy)
                                                                                 <option @if((isset($order_distribution->odps) && $order_distribution->odps[$key]->pharmacy_id == $pharmacy->id) || (old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
                                                                             @endforeach
-                                                                        </select>
+                                                                        </select> --}}
+
+                                                                        @if(isset($order_distribution) && $order_distribution->status == 0)
+                                                                            <input type="text" value="{{$order_distribution->odps[$key]->pharmacy->name}}" disabled class="form-control">
+                                                                        @else
+                                                                            <select name="datas[{{$key}}][pharmacy_id]" class="form-control {{ $errors->has('datas.'.$key.'.pharmacy_id') ? ' is-invalid' : '' }}">
+                                                                                <option selected hidden>Select Pharmacy</option>
+                                                                                @foreach ($pharmacies as $pharmacy)
+                                                                                    <option @if((old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        @endif
                                                                         
                                                                         @include('alerts.feedback', ['field' => 'datas.'.$key.'.pharmacy_id'])
                                                                     </div>
@@ -130,37 +141,46 @@
                                             <div class="col-12">
                                                 <div class="row mt-3">
                                                     <div class="form-group col-md-4">
-                                                        <label>Payment Type</label>
-                                                        <select name="payment_type" class="form-control {{ $errors->has('payment_type') ? ' is-invalid' : '' }}">
-                                                            <option selected hidden>Select Payment Type</option>
-                                                            <option value="0" {{((isset($order_distribution->payment_type) && $order_distribution->payment_type == 0) || old('payment_type') == 0) ? 'selected' : ''}}>Fixed Payment</option>
-                                                            <option value="1" {{((isset($order_distribution->payment_type) && $order_distribution->payment_type == 1) || old('payment_type') == 1) ? 'selected' : ''}}>Open Payment</option>
-                                                        </select>
+                                                        <label>{{__('Payment Type')}}</label>
+                                                        @if(isset($order_distribution) && $order_distribution->status == 0)
+                                                            <input type="text" value="{{($order_distribution->payment_type == 0) ? 'Fixed Payment' : (($order_distribution->payment_type == 1) ? 'Open Payment' : '') }}" class="form-control" disabled>
+                                                        @else
+                                                            <select name="payment_type" class="form-control {{ $errors->has('payment_type') ? ' is-invalid' : '' }}">
+                                                                <option selected hidden>{{__('Select Payment Type')}}</option>
+                                                                <option value="0" {{(old('payment_type') == 0) ? 'selected' : ''}}>{{__('Fixed Payment')}}</option>
+                                                                <option value="1" {{(old('payment_type') == 1) ? 'selected' : ''}}>{{__('Open Payment')}}</option>
+                                                            </select>
+                                                        @endif
                                                         @include('alerts.feedback', ['field' => 'payment_type'])
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <label>Distribution Type</label>
-                                                        <select name="distribution_type" class="form-control {{ $errors->has('distribution_type') ? ' is-invalid' : '' }}">
-                                                            <option selected hidden>Select Distribution Type</option>
-                                                            <option value="0" {{((isset($order_distribution->distribution_type) && $order_distribution->distribution_type == 0) || old('distribution_type') == 0) ? 'selected' : ''}}>Normal Distribution</option>
-                                                            <option value="1" {{((isset($order_distribution->distribution_type) && $order_distribution->distribution_type == 1) || old('distribution_type') == 1) ? 'selected' : ''}}>Priority Distribution</option>
-                                                        </select>
+                                                        <label>{{__('Distribution Type')}}</label>
+                                                        @if(isset($order_distribution) && $order_distribution->status == 0)
+                                                            <input type="text" value="{{($order_distribution->distribution_type == 0) ? 'Normal Distribution' : (($order_distribution->distribution_type == 1) ? 'Priority Distribution' : '') }}" class="form-control" disabled>
+                                                        @else
+                                                            <select name="distribution_type" class="form-control {{ $errors->has('distribution_type') ? ' is-invalid' : '' }}">
+                                                                <option selected hidden>{{__('Select Distribution Type')}}</option>
+                                                                <option value="0" {{(old('distribution_type') == 0) ? 'selected' : ''}}>{{__('Normal Distribution')}}</option>
+                                                                <option value="1" {{(old('distribution_type') == 1) ? 'selected' : ''}}>{{__('Priority Distribution')}}</option>
+                                                            </select>
+                                                        @endif
                                                         @include('alerts.feedback', ['field' => 'distribution_type'])
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <label >Prepare Time</label>
-                                                        <input type="datetime-local" name="prep_time" value="{{isset($order_distribution->prep_time) ? $order_distribution->prep_time : old('prep_time')}}" class="form-control {{ $errors->has('prep_time') ? ' is-invalid' : '' }}">
+                                                        <label >{{__('Prepare Time')}}</label>
+                                                        <input type="datetime-local" @if(isset($order_distribution) && $order_distribution->status == 0) disabled @endif name="prep_time" value="{{isset($order_distribution->prep_time) ? $order_distribution->prep_time : old('prep_time')}}"  class="form-control {{ $errors->has('prep_time') ? ' is-invalid' : '' }}">
                                                         @include('alerts.feedback', ['field' => 'prep_time'])
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label >Note</label>
-                                                        <textarea name="note" class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}" placeholder="Enter order instraction for pharmacy">{{isset($order_distribution->note) ? $order_distribution->note : old('note')}}</textarea>
+                                                        <label >{{__('Note')}}</label>
+                                                        <textarea name="note" @if(isset($order_distribution) && $order_distribution->status == 0) disabled @endif class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}" placeholder="Enter order instraction for pharmacy">{{isset($order_distribution->note) ? $order_distribution->note : old('note')}}</textarea>
                                                         @include('alerts.feedback', ['field' => 'note'])
                                                     </div>
-                                                    
-                                                    <div class="form-group col-md-12 text-end">
-                                                        <input type="submit" value="Distribute" class="btn btn-primary">
-                                                    </div>
+                                                    @if(!isset($order_distribution))
+                                                        <div class="form-group col-md-12 text-end">
+                                                            <input type="submit" value="Distribute" class="btn btn-primary">
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             

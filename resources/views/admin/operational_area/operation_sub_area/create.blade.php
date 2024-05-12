@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label>{{ _('Slug') }}</label>
-                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" value="{{old('slug')}}" name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
                             @include('alerts.feedback', ['field' => 'slug'])
                         </div>
                         <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>

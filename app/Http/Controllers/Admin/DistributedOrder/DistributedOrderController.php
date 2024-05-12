@@ -28,7 +28,6 @@ class DistributedOrderController extends Controller
     {
         $data['status'] = $status;
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
-        $data['status'] = $status;
         $data['dos'] = OrderDistribution::with(['order','odps'])
         ->withCount(['odps' => function ($query) {
             $query->where('status','!=', -1);
@@ -101,7 +100,7 @@ class DistributedOrderController extends Controller
 
             }
         }
-        flash()->addSuccess('Dispute Updated Successfully.');
+        flash()->addSuccess('Dispute Order Updated Successfully.');
         return redirect()->back(); 
     }
 
@@ -113,7 +112,7 @@ class DistributedOrderController extends Controller
 
     protected function getStatus($status){
         switch ($status) {
-            case 'distributed':
+            case 'pending':
                 return 0;
             case 'preparing':
                 return 1;
@@ -129,15 +128,15 @@ class DistributedOrderController extends Controller
     public function statusBg($status) {
         switch ($status) {
             case 0:
-                return 'badge badge-success';
-            case 1:
                 return 'badge badge-info';
+            case 1:
+                return 'badge bg-secondary';
             case 2:
                 return 'badge badge-warning';
             case 3:
                 return 'badge badge-primary';
             case 4:
-                return 'badge badge-secondary';
+                return 'badge badge-success';
         }
     }
 

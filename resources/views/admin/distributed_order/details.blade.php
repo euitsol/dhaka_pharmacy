@@ -106,7 +106,7 @@
                                                 </div>
                                                 
                                                 <div class="col-3">
-                                                    @if($dop->status == 2)
+                                                    @if($dop->status == 3)
                                                     <input type="hidden" name="datas[{{$key}}][cart_id]" value="{{$dop->cart->id}}">
                                                     <input type="hidden" name="datas[{{$key}}][dop_id]" value="{{$dop->id}}">
                                                     <div class="form-group">
@@ -131,11 +131,13 @@
                                 
                             </div>
                         @endforeach
-                        <div class="row">
-                            <div class="form-group col-md-12 text-end">
-                                <input type="submit" value="Update" class="btn btn-primary">
+                        @if($dop->status == 3)
+                            <div class="row">
+                                <div class="form-group col-md-12 text-end">
+                                    <input type="submit" value="Update" class="btn btn-primary">
+                                </div>
                             </div>
-                        </div>
+                        @endif          
                     </form>
                 </div>
             </div>
