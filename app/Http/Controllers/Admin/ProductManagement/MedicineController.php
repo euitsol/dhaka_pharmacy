@@ -83,12 +83,12 @@ class MedicineController extends Controller
         $medicine->max_quantity = $req->max_quantity;
         $medicine->created_by = admin()->id;
         $medicine->save();
-
+        
         $discount = new Discount();
         $discount->pro_id = $medicine->id;
         $discount->discount_amount = $req->discount_amount;
         $discount->discount_percentage = $req->discount_percentage;
-        $medicine->save();
+        $discount->save();
 
         flash()->addSuccess('Medicine '.$medicine->name.' created successfully.');
         return redirect()->route('product.medicine.medicine_list');

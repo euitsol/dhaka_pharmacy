@@ -224,7 +224,7 @@
                                 <label>{{ __('Discount Amount') }}</label>
                                     <input type="text" id="discount_amount" name="discount_amount"
                                     class="form-control {{ $errors->has('discount_amount') ? ' is-invalid' : '' }}"
-                                    placeholder="Enter discount percentage" value="{{ old('discount_amount') }}">
+                                    placeholder="Enter discount amount" value="{{ old('discount_amount') }}">
                                 @include('alerts.feedback', ['field' => 'discount_amount'])
                             </div>
                         </div>
