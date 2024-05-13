@@ -1,4 +1,5 @@
-@extends('layouts.app', ['pageSlug' => 'user_profile'])
+@extends('user.layouts.master')
+@section('title', 'Profile')
 
 @section('content')
     <div class="row">

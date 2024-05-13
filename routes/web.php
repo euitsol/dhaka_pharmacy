@@ -80,8 +80,7 @@ use App\Http\Controllers\Frontend\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
-
-
+use App\Http\Controllers\User\UserDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -579,6 +578,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
 // User Routes
 Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'], function () {
     Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
+    Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
 });
 
 

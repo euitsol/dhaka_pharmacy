@@ -81,7 +81,7 @@ class LoginController extends BaseController
             $newUser->save();
             Auth::guard('web')->login($newUser);
         }
-        return redirect()->route('user.profile');
+        return redirect()->route('user.dashboard');
     }
 
 
@@ -112,7 +112,7 @@ class LoginController extends BaseController
             $newUser->save();
             Auth::guard('web')->login($newUser);
         }
-        return redirect()->route('user.profile');
+        return redirect()->route('user.dashboard');
     }
 
 
@@ -143,7 +143,7 @@ class LoginController extends BaseController
             $newUser->save();
             Auth::guard('web')->login($newUser);
         }
-        return redirect()->route('user.profile');
+        return redirect()->route('user.dashboard');
     }
 
 
@@ -156,8 +156,7 @@ class LoginController extends BaseController
         Session::forget('data');
 
         if (Auth::guard('web')->check()) {
-            flash()->addSuccess('Welcome to Dhaka Pharmacy');
-            return redirect()->route('user.profile');
+            return redirect()->route('user.dashboard');
         }
         return view('auth.login');
     }
@@ -170,7 +169,7 @@ class LoginController extends BaseController
             if($check->status == 1){
                 if (Auth::guard('web')->attempt($credentials)) {
                     Session::forget('data');
-                    return redirect()->route('user.profile');
+                    return redirect()->route('user.dashboard');
                 }
                 flash()->addError('Invalid credentials');
             }else{
@@ -264,7 +263,6 @@ class LoginController extends BaseController
                     }
                     Session::forget('data');
                     Auth::guard('web')->login($user);
-                    flash()->addSuccess('Welcome to Dhaka Pharmacy');
                 }else{
                     flash()->addSuccess('OTP didn\'t match. Please try again');
                 }
