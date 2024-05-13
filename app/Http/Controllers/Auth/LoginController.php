@@ -190,13 +190,8 @@ class LoginController extends BaseController
 
     public function logout()
     {
-        if (Auth::guard('pharmacy')->check()) {
-            Auth::guard('pharmacy')->logout();
-            return redirect()->route('pharmacy.login');
-        }elseif (Auth::guard('web')->check()) {
-            Auth::guard('web')->logout();
-            return redirect()->route('login');
-        }
+        Auth::guard('web')->logout();
+        return redirect()->route('login');
     }
 
     public function send_otp(SendOtpRequest $req) {

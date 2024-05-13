@@ -29,13 +29,14 @@
                         <tbody>
                             
                             @foreach ($dops as $dop)
+                        
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $dop->od->order->order_id }} </td>
                                     <td> {{ count($dop) }} </td>
                                     <td> {{ $dop->od->paymentType() }} </td>
                                     <td> {{ $dop->od->distributionType() }} </td>
-                                    <td> {{ readablePrepTime($dop->od->created_at, $dop->od->prep_time) }} <span class="countdown ms-2" data-seconds="{{prepTotalSeconds($dop->od->created_at, $dop->od->prep_time)}}"></span> </td>
+                                    <td> <span class="countdown ms-2" data-seconds="{{prepTotalSeconds($dop->od->created_at, $dop->od->prep_time)}}"></span></td>
                                     
                                     <td>
                                         <span class="{{ $dop->statusBg }}">{{ $dop->statusTitle }}</span>

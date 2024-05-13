@@ -1,5 +1,5 @@
 <header class="header-section">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row align-items-center">
             <div class="col-9 flex-row d-flex align-items-center">
                 <div class="logo">
