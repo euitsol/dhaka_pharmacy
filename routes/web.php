@@ -548,9 +548,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
     // Admin Distributed Order
     Route::controller(DistributedOrderController::class)->prefix('distributed-order')->name('do.')->group(function () {
         Route::get('/{status}', 'index')->name('do_list');
+        Route::get('/{status}/orders', 'dispute')->name('dispute.do_list');
         Route::get('/details/{do_id}', 'details')->name('do_details');
         Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
-        Route::post('/update/{od_id}', 'update')->name('do_update');
+        Route::post('/update', 'update')->name('do_update');
     });
        
 

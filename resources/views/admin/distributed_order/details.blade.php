@@ -63,7 +63,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    <form action="{{route('do.do_update',['od_id'=>encrypt($do->id)])}}" method="POST" class="px-0">
+                    <form action="{{route('do.do_update')}}" method="POST" class="px-0">
                     @csrf
                         @php
                             $dop_status = '';

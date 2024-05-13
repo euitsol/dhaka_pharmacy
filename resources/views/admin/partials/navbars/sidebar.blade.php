@@ -573,15 +573,15 @@
                 ]
             ))
                 <li>
-                    <a class="@if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders'|| $pageSlug == 'order_dispute' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
                         href="#distributed_order"
-                        @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders'|| $pageSlug == 'order_dispute'  || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-network-wired"></i>
                         <span class="nav-link-text">{{ __('Distributed Orders') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') show @endif" id="distributed_order">
+                    <div class="collapse @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders'|| $pageSlug == 'order_dispute'  || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') show @endif" id="distributed_order">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -590,42 +590,49 @@
                                         'routeName' => 'do.do_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'pending',
-                                        'label' => 'Pending',
+                                        'label' => 'Pending Orders',
                                     ],
                                     [
                                         'pageSlug' => 'order_preparing',
                                         'routeName' => 'do.do_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'preparing',
-                                        'label' => 'Preparing',
+                                        'label' => 'Preparing Orders',
+                                    ],
+                                    [
+                                        'pageSlug' => 'dispute_orders',
+                                        'routeName' => 'do.dispute.do_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'dispute',
+                                        'label' => 'Dispute Orders',
                                     ],
                                     [
                                         'pageSlug' => 'order_waiting-for-rider',
                                         'routeName' => 'do.do_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'waiting-for-rider',
-                                        'label' => 'Waiting For Rider',
+                                        'label' => 'Waiting For Rider Orders',
                                     ],
                                     [
                                         'pageSlug' => 'order_waiting-for-pickup',
                                         'routeName' => 'do.do_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'waiting-for-pickup',
-                                        'label' => 'Waiting For Pickup',
+                                        'label' => 'Waiting For Pickup Orders',
                                     ],
                                     [
                                         'pageSlug' => 'order_picked-up',
                                         'routeName' => 'do.do_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'picked-up',
-                                        'label' => 'Picked Up',
+                                        'label' => 'Picked Up Orders',
                                     ],
                                     [
                                         'pageSlug' => 'order_finish',
                                         'routeName' => 'do.do_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'finish',
-                                        'label' => 'Finish',
+                                        'label' => 'Finish Orders',
                                     ],
                                 ],
                             ])

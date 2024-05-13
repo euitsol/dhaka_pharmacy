@@ -44,6 +44,27 @@ class DistributedOrderController extends Controller
         });
         return view('admin.distributed_order.index',$data);
     }
+    public function dispute($status): View
+    {
+        $data['status'] = $status;
+        $data['dos'] = OrderDistribution::with(['order', 'odps' => function ($query) {
+            $query->where('status', 3);
+        }])
+        ->withCount(['odps' => function ($query) {
+            $query->where('status', 3);
+        }])
+        ->get()
+        ->map(function($orderDistribution) {
+            $orderDistribution->total_price = $this->calculateTotalPrice($orderDistribution);
+            return $orderDistribution;
+        })
+        ->filter(function($orderDistribution) {
+            return $orderDistribution->odps->where('status', 3)->isNotEmpty();
+        });
+        
+        $data['pharmacies'] = Pharmacy::activated()->latest()->get();
+        return view('admin.distributed_order.dispute_orders',$data);
+    }
 
     public function details($do_id): View
     {
@@ -54,14 +75,22 @@ class DistributedOrderController extends Controller
             $query->where('status','!=', -1);
         }])
         ->findOrFail(decrypt($do_id));
-        $data['totalPrice'] = AddToCart::with('product')
-                ->whereIn('id', json_decode($data['do']->order->carts))
-                ->get()
-                ->sum(function ($item) {
-                    return (($item->product->discountPrice() * ($item->unit->quantity ?? 1)) * $item->quantity);
-                });
+        $data['totalPrice'] = $this->calculateTotalPrice($data['do']);
         $data['pharmacies'] = Pharmacy::activated()->latest()->get();
         return view('admin.distributed_order.details',$data);
+    }
+
+
+    private function calculateTotalPrice($orderDistribution) {
+        return AddToCart::with('product')
+            ->whereIn('id', json_decode($orderDistribution->order->carts))
+            ->get()
+            ->sum(function ($item){
+                $discountedPrice = $item->product->discountPrice();
+                $quantity = $item->quantity;
+                $unitQuantity = $item->unit->quantity ?? 1;
+                return ($discountedPrice * $unitQuantity * $quantity);
+            });
     }
     // public function edit($do_id,$pid): View
     // {
@@ -82,8 +111,7 @@ class DistributedOrderController extends Controller
     // }
 
 
-    public function update(DisputeOrderRequest $req, $od_id){
-        $od_id = decrypt($od_id);
+    public function update(DisputeOrderRequest $req){
         foreach ($req->datas as $data) {
             $old_dop = OrderDistributionPharmacy::findOrFail($data['dop_id']);
             if($old_dop->pharmacy_id !== $data['pharmacy_id']){
@@ -92,7 +120,7 @@ class DistributedOrderController extends Controller
                 $old_dop->update();
 
                 $new = new OrderDistributionPharmacy();
-                $new->order_distribution_id = $od_id;
+                $new->order_distribution_id = $old_dop->order_distribution_id;
                 $new->cart_id = $data['cart_id'];
                 $new->pharmacy_id = $data['pharmacy_id'];
                 $new->creater()->associate(admin());
