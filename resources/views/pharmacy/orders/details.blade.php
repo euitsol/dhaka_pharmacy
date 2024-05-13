@@ -64,6 +64,9 @@
                                 <span class="{{ $statusBg }}">{{ $statusTitle }}</span>
                             </div>
                         </div>
+                        @php
+                            $subtotal = 0;
+                        @endphp
                         @foreach ($do->dops as $key=>$dop)
                             <div class="col-12 status_wrap">
                                 <div class="card card-2 mb-0 mt-3">
@@ -90,6 +93,7 @@
                                                                     $totalPrice -= (($totalPrice/100)*$pharmacy_discount->discount_percent);
                                                                     $discount = "<span class='badge badge-danger'>$pharmacy_discount->discount_percent.'% off'</span>";
                                                                 }
+                                                                $subtotal += $totalPrice;
                                                             @endphp
                                                             <span><strong>{{ __('Total Price : ') }}</strong>{!! get_taka_icon() !!}
                                                                 
@@ -152,6 +156,9 @@
                                 
                             </div>
                         @endforeach
+                        <div class="col-12 text-end">
+                            <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format($subtotal, 2) }}</span></span>
+                        </div>
                         @if($status == 0)
                             <div class="col-12 text-end">
                                 <input type="submit" value="Confirm" class="btn btn-success">

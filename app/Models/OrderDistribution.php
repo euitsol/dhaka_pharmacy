@@ -51,11 +51,11 @@ class OrderDistribution extends BaseModel
             case 1:
                 return 'Preparing';
             case 2:
-                return 'Waiting for rider';
+                return 'Waiting-for-rider';
             case 3:
-                return 'Waiting for pickup';
+                return 'Waiting-for-pickup';
             case 4:
-                return 'Picked up';
+                return 'Picked-up';
             case 5:
                 return 'Finish';
         }

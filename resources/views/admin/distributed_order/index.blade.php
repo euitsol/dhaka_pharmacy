@@ -9,7 +9,7 @@
                             <h4 class="card-title">{{ __(ucwords(strtolower((str_replace('-', ' ', $status))))) }}</h4>
                         </div>
                         <div class="col-4 text-end">
-                            <span class="{{$statusBg}}">{{ucwords($status)}}</span>
+                            <span class="{{$statusBg}}">{{ __(ucwords(strtolower((str_replace('-', ' ', $status))))) }}</span>
                         </div>
                     </div>
                 </div>
