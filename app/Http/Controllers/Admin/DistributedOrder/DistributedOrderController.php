@@ -116,27 +116,31 @@ class DistributedOrderController extends Controller
                 return 0;
             case 'preparing':
                 return 1;
-            case 'waiting-for-pickup':
+            case 'waiting-for-rider':
                 return 2;
-            case 'picked-up':
+            case 'waiting-for-pickup':
                 return 3;
+            case 'picked-up':
+                return 5;
             case 'finish':
-                return 4;
+                return 5;
         }
     }
-
     public function statusBg($status) {
         switch ($status) {
             case 0:
                 return 'badge badge-info';
             case 1:
-                return 'badge bg-secondary';
-            case 2:
                 return 'badge badge-warning';
+            case 2:
+                return 'badge bg-secondary';
             case 3:
-                return 'badge badge-primary';
+                return 'badge badge-danger';
             case 4:
+                return 'badge badge-primary';
+            case 5:
                 return 'badge badge-success';
+                
         }
     }
 

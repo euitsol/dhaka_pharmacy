@@ -65,10 +65,18 @@
                 <div class="card-footer">
                     <form action="{{route('do.do_update',['od_id'=>encrypt($do->id)])}}" method="POST" class="px-0">
                     @csrf
+                        @php
+                            $dop_status = '';
+                        @endphp
                         @foreach ($do->odps as $key=>$dop)
+                            @php
+                                if($dop->status == 3){
+                                    $dop_status = 3;
+                                }
+                            @endphp
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="card card-2">
+                                    <div class="card card-2 mb-0 mt-3">
                                         <div class="card-body">
                                             <div class="row align-items-center">
                                                 <div class="col-9">
@@ -127,17 +135,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                @if($dop->status == 3 || $dop->status == -1)
+                                    <span><strong class="text-danger">{{__('Resoan: ')}}</strong>{{$dop->note}}</span>
+                                @endif
                                 </div>
                                 
                             </div>
                         @endforeach
-                        @if($dop->status == 3)
+                        @if( $dop_status == 3)
                             <div class="row">
                                 <div class="form-group col-md-12 text-end">
                                     <input type="submit" value="Update" class="btn btn-primary">
                                 </div>
-                            </div>
-                        @endif          
+                            </div>   
+                        @endif     
                     </form>
                 </div>
             </div>

@@ -25,17 +25,18 @@ class OrderManagementController extends Controller
     public function index($status): View
     {
         $data['status'] = $status;
-        $data['dops'] = OrderDistributionPharmacy::with(['cart','pharmacy','od'])->where('pharmacy_id',pharmacy()->id)->get()->groupBy('order_distribution_id')
+        $query = OrderDistributionPharmacy::with(['cart','pharmacy','od'])->where('pharmacy_id',pharmacy()->id);
+        if($this->getStatus($status) == 0){
+            $query->where('status',0)->orWhere('status',1);
+        }else{
+            $query->where('status',$this->getStatus($status));
+        }
+        $data['dops'] = $query->get()->groupBy('order_distribution_id')
         ->map(function($dop,$key) use($status){
             $dop->od = OrderDistribution::findOrFail($key);
             $dop->statusTitle = $this->statusTitle($this->getStatus($status));
             $dop->statusBg = $this->statusBg($this->getStatus($status));
             return $dop;
-        })->filter(function($dop) use($status) {
-            if($this->getStatus($status) == 0){
-                return $dop->od->status == 0 || $dop->od->status == 1;
-            }
-            return $dop->od->status == $this->getStatus($status);
         });
         return view('pharmacy.orders.index',$data);
     }
@@ -43,14 +44,18 @@ class OrderManagementController extends Controller
     public function details($do_id,$status){
         
         $data['pharmacy_discount'] = PharmacyDiscount::activated()->where('pharmacy_id',pharmacy()->id)->first();
-        $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
+        $data['do'] = OrderDistribution::with(['order','odps' => function ($query) use($status) {
+            if($this->getStatus($status) == 0){
+                $query->where('status', 0)->orWhere('status',1);
+            }else{
+                $query->where('status',$this->getStatus($status));
+            }
+        }])->findOrFail(decrypt($do_id));
         if($data['do']->odps->where('pharmacy_id', pharmacy()->id)->every(fn($odp) => $odp->status == 0)) {
             $data['do']->odps->where('pharmacy_id', pharmacy()->id)->each(function ($odp) {
                 $odp->update(['status' => 1]);
             });
-            if($data['do']->odps->every(fn($odp) => $odp->status == 1)){
-                $data['do']->update(['status' => 1]);
-            }
+            $data['do']->update(['status' => 1]);
         }
         $data['do']->prep_time = readablePrepTime($data['do']->created_at, $data['do']->prep_time);
         $data['do']->pharmacy = Pharmacy::findOrFail(pharmacy()->id);
@@ -62,13 +67,23 @@ class OrderManagementController extends Controller
         return view('pharmacy.orders.details',$data);
     }
 
-    public function update(PharmacyOrderRequest $req){
+    public function update(PharmacyOrderRequest $req, $do_id){
         foreach($req->data as $data){
             $dop = OrderDistributionPharmacy::findOrFail($data['dop_id']);
             $dop->open_amount = $data['dop_id'];
             $dop->status = $data['status'];
             $dop->note = $data['note'];
             $dop->save();  
+        }
+        $do = OrderDistribution::findOrFail(decrypt($do_id));
+        $odpsArray = $do->odps->toArray(); // Convert the collection to an array
+        $statuses = array_column($odpsArray, 'status');
+        $allValid = array_reduce($statuses, function ($carry, $status) {
+            return $carry && ($status == 2 || $status == -1);
+        }, true);
+
+        if ($allValid) {
+            $do->update(['status' => 2]);
         }
         flash()->addSuccess('Order distributed successfully.');
         return redirect()->route('pharmacy.order_management.index','waiting-for-rider');
@@ -83,11 +98,11 @@ class OrderManagementController extends Controller
                 return 1;
             case 'waiting-for-rider':
                 return 2;
-            case 'waiting-for-pickup':
+            case 'dispute':
                 return 3;
-            case 'picked-up':
-                return 3;
-            case 'finish':
+            case 'old-disputed':
+                return -1;
+            case 'complete':
                 return 4;
         }
     }
@@ -98,12 +113,12 @@ class OrderManagementController extends Controller
             case 1:
                 return 'badge badge-info';
             case 2:
-                return 'badge bg-secondary';
+                return 'badge bg-primary';
             case 3:
+                return 'badge badge-warning';
+            case -1:
                 return 'badge badge-danger';
             case 4:
-                return 'badge badge-primary';
-            case 5:
                 return 'badge badge-success';
                 
         }
@@ -118,11 +133,11 @@ class OrderManagementController extends Controller
             case 2:
                 return 'waiting-for-rider';
             case 3:
-                return 'waiting-for-pickup';
+                return 'dispute';
+            case -1:
+                return 'old-disputed';
             case 4:
-                return 'picked-up';
-            case 5:
-                return 'finish';
+                return 'complete';
         }
     }
 

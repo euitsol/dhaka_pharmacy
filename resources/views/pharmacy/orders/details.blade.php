@@ -57,7 +57,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    <form action="{{route('pharmacy.order_management.update')}}" method="POST">
+                    <form action="{{route('pharmacy.order_management.update',encrypt($do->id))}}" method="POST">
                         @csrf
                         <div class="row mb-3">
                             <div class="col-12 px-4 text-end">
@@ -120,15 +120,15 @@
                                                                         <label class="form-check-label me-2" for="status_{{$key}}">
                                                                             <input class="form-check-input do_status" type="radio"
                                                                                 name="data[{{$key}}][status]" id="status_{{$key}}"
-                                                                                value="1" checked>
-                                                                                Distributed
+                                                                                value="2" checked>
+                                                                                {{__('Accept')}}
                                                                             <span class="form-check-sign"></span>
                                                                         </label>
                                                                         <label class="form-check-label" for="status{{$key}}">
                                                                             <input class="form-check-input do_status" type="radio"
                                                                                 name="data[{{$key}}][status]" id="status{{$key}}"
-                                                                                value="2">
-                                                                                Dispute
+                                                                                value="3">
+                                                                                {{__("Dispute")}}
                                                                             <span class="form-check-sign"></span>
                                                                         </label>
                                                                     </div>
@@ -141,11 +141,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if($status == 0)
+                                @if($status == 0 || $status == 1)
                                     <div class="form-group status_note" style="display: none">
                                         <textarea name="data[{{$key}}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
                                     </div>
-                                @elseif($status == 2)
+                                    @include('alerts.feedback', ['field' => 'data.'.$key.'.note'])
+                                @elseif($status == 3 || $status == -1)
                                     <span><strong class="text-danger">{{__('Resoan: ')}}</strong>{{$dop->note}}</span>
                                 @endif
                                 
@@ -167,7 +168,7 @@
 <script>
     $(document).ready(function(){
         $('.do_status').on('change',function(){
-            if($(this).val() == 2){
+            if($(this).val() == 3){
                 $(this).closest('.status_wrap').find('.status_note').show();
             }else{
                 $(this).closest('.status_wrap').find('.status_note').hide();

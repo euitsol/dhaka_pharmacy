@@ -607,7 +607,7 @@ Route::group(['middleware' => 'pharmacy','as' => 'pharmacy.', 'prefix' => 'pharm
     Route::controller(PharmacyOrderManagementController::class)->prefix('order-management')->name('order_management.')->group(function () {
         Route::get('/{status}', 'index')->name('index');
         Route::get('details/{do_id}/{status}', 'details')->name('details');
-        Route::post('update/', 'update')->name('update');
+        Route::post('update/{do_id}', 'update')->name('update');
     });
 
 

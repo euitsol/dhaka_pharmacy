@@ -32,13 +32,16 @@ class OrderDistributionPharmacy extends BaseModel
             case 1:
                 return 'badge bg-secondary';
             case 2:
-                return 'badge badge-success';
-            case 2:
-                return 'badge badge-danger';
-            case -1:
+                return 'badge badge-primary';
+            case 3:
                 return 'badge badge-warning';
+            case -1:
+                return 'badge badge-danger';
+            case 4:
+                return 'badge badge-success';
         }
     }
+    
     
     public function statusTitle() {
         switch ($this->status) {
@@ -52,6 +55,8 @@ class OrderDistributionPharmacy extends BaseModel
                 return 'Dispute';
             case -1:
                 return 'Old Disputed';
+            case 4:
+                return 'Complete';
         }
     }
 }

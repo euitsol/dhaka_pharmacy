@@ -40,8 +40,7 @@
                     <span class="nav-link-text">{{ __('Order Managements') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
-
-                <div class="collapse @if ($pageSlug == 'pending_orders' || $pageSlug == 'preparing_orders' || $pageSlug == 'waiting-for-pickup_orders' || $pageSlug == 'waiting-for-rider_orders' || $pageSlug == 'picked-up_orders' || $pageSlug == 'finish_orders') show @endif" id="order_managements">
+                <div class="collapse @if ($pageSlug == 'pending_orders' || $pageSlug == 'waiting-for-rider_orders' || $pageSlug == 'dispute_orders' || $pageSlug == 'old-disputed_orders' || $pageSlug == 'complete_orders') show @endif" id="order_managements">
                     <ul class="nav pl-2">
                         <li @if ($pageSlug == 'pending_orders') class="active" @endif>
                             <a href="{{ route('pharmacy.order_management.index','pending') }}">
@@ -55,22 +54,22 @@
                                 <p>{{ 'Waiting For Rider Orders' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'waiting-for-pickup_orders') class="active" @endif>
-                            <a href="{{ route('pharmacy.order_management.index','waiting-for-pickup') }}">
-                                <i class="fa-solid fa-minus @if ($pageSlug == 'waiting-for-pickup_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Waiting For Pickup Orders' }}</p>
+                        <li @if ($pageSlug == 'dispute_orders') class="active" @endif>
+                            <a href="{{ route('pharmacy.order_management.index','dispute') }}">
+                                <i class="fa-solid fa-minus @if ($pageSlug == 'dispute_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Dispute Orders' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'picked-up_orders') class="active" @endif>
-                            <a href="{{ route('pharmacy.order_management.index','picked-up') }}">
-                                <i class="fa-solid fa-minus @if ($pageSlug == 'picked-up_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Picked Up' }}</p>
+                        <li @if ($pageSlug == 'old-disputed_orders') class="active" @endif>
+                            <a href="{{ route('pharmacy.order_management.index','old-disputed') }}">
+                                <i class="fa-solid fa-minus @if ($pageSlug == 'old-disputed_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Old Disputed Orders' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'finish_orders') class="active" @endif>
-                            <a href="{{ route('pharmacy.order_management.index','finish') }}">
-                                <i class="fa-solid fa-minus @if ($pageSlug == 'finish_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Finish' }}</p>
+                        <li @if ($pageSlug == 'complete_orders') class="active" @endif>
+                            <a href="{{ route('pharmacy.order_management.index','complete') }}">
+                                <i class="fa-solid fa-minus @if ($pageSlug == 'complete_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Complete Orders' }}</p>
                             </a>
                         </li>
                         

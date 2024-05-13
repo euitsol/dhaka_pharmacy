@@ -573,15 +573,15 @@
                 ]
             ))
                 <li>
-                    <a class="@if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
                         href="#distributed_order"
-                        @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-network-wired"></i>
                         <span class="nav-link-text">{{ __('Distributed Orders') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') show @endif" id="distributed_order">
+                    <div class="collapse @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_finish') show @endif" id="distributed_order">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -598,6 +598,13 @@
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'preparing',
                                         'label' => 'Preparing',
+                                    ],
+                                    [
+                                        'pageSlug' => 'order_waiting-for-rider',
+                                        'routeName' => 'do.do_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'waiting-for-rider',
+                                        'label' => 'Waiting For Rider',
                                     ],
                                     [
                                         'pageSlug' => 'order_waiting-for-pickup',
