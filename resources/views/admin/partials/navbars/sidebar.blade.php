@@ -600,7 +600,7 @@
                                         'label' => 'Preparing Orders',
                                     ],
                                     [
-                                        'pageSlug' => 'dispute_orders',
+                                        'pageSlug' => 'order_dispute',
                                         'routeName' => 'do.dispute.do_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'dispute',

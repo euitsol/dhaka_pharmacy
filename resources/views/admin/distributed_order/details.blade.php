@@ -119,16 +119,23 @@
                                                     <input type="hidden" name="datas[{{$key}}][dop_id]" value="{{$dop->id}}">
                                                     <div class="form-group">
                                                         <select name="datas[{{$key}}][pharmacy_id]" class="form-control {{ $errors->has('datas.'.$key.'.pharmacy_id') ? ' is-invalid' : '' }}">
-                                                            <option selected hidden>Select Pharmacy</option>
+                                                            <option selected hidden>{{__('Select Pharmacy')}}</option>
                                                             @foreach ($pharmacies as $pharmacy)
-                                                                <option @if((isset($do->odps) && $do->odps[$key]->pharmacy_id == $pharmacy->id) || (old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
+                                                                @php
+                                                                    $area = $pharmacy->operation_area ? "(".$pharmacy->operation_area->name.")" : '';
+                                                                    $sub_area = $pharmacy->operation_sub_area ? "(".$pharmacy->operation_sub_area->name.")" : '';
+                                                                @endphp
+                                                                <option @if((isset($do->odps) && $do->odps[$key]->pharmacy_id == $pharmacy->id) || (old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name.$area.$sub_area}}</option>
                                                             @endforeach
                                                         </select>
-                                                        
                                                         @include('alerts.feedback', ['field' => 'datas.'.$key.'.pharmacy_id'])
                                                     </div>
                                                     @else
-                                                        <input type="text" class="form-control" disabled value="{{$do->odps[$key]->pharmacy->name}}">
+                                                        @php
+                                                            $area = $do->odps[$key]->pharmacy->operation_area ? " (".$do->odps[$key]->pharmacy->operation_area->name.")" : '';
+                                                            $sub_area = $do->odps[$key]->pharmacy->operation_sub_area ? " (".$do->odps[$key]->pharmacy->operation_sub_area->name.")" : '';
+                                                        @endphp
+                                                        <input type="text" class="form-control" disabled value="{{$do->odps[$key]->pharmacy->name.$area.$sub_area}}">
                                                     @endif
                                                 </div>
                                                 

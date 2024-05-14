@@ -26,6 +26,10 @@ class DistributedOrderController extends Controller
 
     public function index($status): View
     {
+        $data['pp_count'] = false;
+        if($this->getStatus($status) == 0 || $this->getStatus($status) == 1){
+            $data['pp_count'] = true;
+        }
         $data['status'] = $status;
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
         $data['dos'] = OrderDistribution::with(['order','odps'])
@@ -46,24 +50,26 @@ class DistributedOrderController extends Controller
     }
     public function dispute($status): View
     {
+        $data['pp_count'] = true;
         $data['status'] = $status;
-        $data['dos'] = OrderDistribution::with(['order', 'odps' => function ($query) {
-            $query->where('status', 3);
-        }])
+        $data['statusBg'] = $this->statusBg($this->getStatus($status));
+        $data['dos'] = OrderDistribution::with(['order','odps'])
         ->withCount(['odps' => function ($query) {
-            $query->where('status', 3);
+            $query->where('status','!=', -1);
         }])
         ->get()
-        ->map(function($orderDistribution) {
-            $orderDistribution->total_price = $this->calculateTotalPrice($orderDistribution);
-            return $orderDistribution;
-        })
-        ->filter(function($orderDistribution) {
-            return $orderDistribution->odps->where('status', 3)->isNotEmpty();
+        ->map(function($do){
+            $do->order->totalPrice = AddToCart::with('product')
+                ->whereIn('id', json_decode($do->order->carts))
+                ->get()
+                ->sum(function ($item) {
+                    return (($item->product->discountPrice() * ($item->unit->quantity ?? 1)) * $item->quantity);
+                });
+            return $do;
+        })->filter(function($do){
+            return $do->odps->where('status', 3)->isNotEmpty();
         });
-        
-        $data['pharmacies'] = Pharmacy::activated()->latest()->get();
-        return view('admin.distributed_order.dispute_orders',$data);
+        return view('admin.distributed_order.index',$data);
     }
 
     public function details($do_id): View
@@ -149,7 +155,7 @@ class DistributedOrderController extends Controller
             case 'waiting-for-pickup':
                 return 3;
             case 'picked-up':
-                return 5;
+                return 4;
             case 'finish':
                 return 5;
         }
