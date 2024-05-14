@@ -20,16 +20,18 @@ class SslCommerzController extends Controller
     public function index($order_id)
     {
         $order = Order::with(['customer','address','ref_user'])->findOrFail(decrypt($order_id));
-        $cart_items = [];
         $total_price = 0;
-        foreach(json_decode($order->carts) as $cart_id){
-            $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->findOrFail($cart_id);
-            array_push($cart_items, $cart);
-        }
-        foreach($cart_items as $item){
-            $price = (($item->product->price * $item->unit->quantity) * $item->quantity);
-            $total_price += $price;
-        }
+        $data['cart_items'] = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
+        ->whereIn('id', json_decode($order->carts))
+        ->get();
+
+        $data['cart_items']->transform(function($item) {
+            $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
+            return $item;
+        });
+        $delivery_fee = 60;
+        $total_price = ($data['cart_items']->sum('discount_price')) + $delivery_fee;
+
         # Here you have to receive all the order data to initate the payment.
         # Let's say, your oder transaction informations are saving in a table called "orders"
         # In "orders" table, order unique identity is "transaction_id". "status" field contain status of the transaction, "amount" is the order amount to be paid and "currency" is for storing Site Currency which will be checked with paid currency.

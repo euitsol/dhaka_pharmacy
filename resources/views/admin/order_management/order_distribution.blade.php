@@ -51,7 +51,7 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format($totalPrice,2)}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format($totalPrice).".00"}}</th>
                                             </tr>
                                         </table>
                                     </div>

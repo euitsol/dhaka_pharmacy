@@ -34,7 +34,7 @@
                                 <td>|</td>
                                 <th>Total Price</th>
                                 <td>:</td>
-                                <th>{!! get_taka_icon(). $totalPrice !!}</th>
+                                <th>{!! get_taka_icon(). number_format($totalPrice).".00" !!}</th>
                             </tr>
                             <tr>
                                 <th>Payment Type</th>

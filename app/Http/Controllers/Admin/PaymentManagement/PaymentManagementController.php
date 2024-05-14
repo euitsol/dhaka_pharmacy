@@ -27,23 +27,19 @@ class PaymentManagementController extends Controller
     public function details($id): View
     {
         $data['payment'] = Payment::with(['customer','order'])->findOrFail(decrypt($id));
-        $data['payment_items'] = [];
-        foreach(json_decode($data['payment']->order->carts) as $cart_id){
-            $cart = AddToCart::with(['product.pro_cat','product.pro_sub_cat','product.generic','product.company','product.strength','customer','unit'])->where('id',$cart_id)->first();
-            if($cart){
-                array_push($data['payment_items'], $cart);
-            }
-        }
-        $paymentItemsCollection = collect($data['payment_items']);
-        $paymentItemsCollection->map(function($item) {
-            $item->price = (($item->product->price*$item->unit->quantity)*$item->quantity);
-            $item->discount_price = (($item->product->discountPrice()*$item->unit->quantity)*$item->quantity);
-            $item->discount = (productDiscountAmount($item->product->id)*$item->unit->quantity)*$item->quantity;
+        $data['payment_items'] = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
+                            ->whereIn('id', json_decode($data['payment']->order->carts))
+                            ->get();
+        
+        $data['payment_items']->transform(function($item) {
+            $item->price = (($item->product->price*($item->unit->quantity ?? 1))*$item->quantity);
+            $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
+            $item->discount = (productDiscountAmount($item->product->id)*($item->unit->quantity ?? 1))*$item->quantity;
             return $item;
         });
-        $data['totalPrice'] = $paymentItemsCollection->sum('discount_price');
-        $data['totalRegularPrice'] = $paymentItemsCollection->sum('price');
-        $data['totalDiscount'] = $paymentItemsCollection->sum('discount');
+        $data['totalPrice'] = $data['payment_items']->sum('discount_price');
+        $data['totalRegularPrice'] = $data['payment_items']->sum('price');
+        $data['totalDiscount'] = $data['payment_items']->sum('discount');
        
         return view('admin.payment_management.details',$data);
     }

@@ -62,16 +62,16 @@
                                                 <th>Sub Total</th>
                                                 <td>:</td>
                                                 <td>
-                                                    <span>{!! get_taka_icon() !!} {{number_format($totalPrice,2)}}</span>
+                                                    <span>{!! get_taka_icon() !!} {{number_format($totalPrice).".00"}}</span>
                                                     @if ($totalRegularPrice !== $totalPrice)
-                                                        <span class="text-danger ms-2"><del>{!! get_taka_icon() !!} {{number_format(($totalRegularPrice), 2)}}</del></span> 
+                                                        <span class="text-danger ms-2"><del>{!! get_taka_icon() !!} {{number_format($totalRegularPrice).".00"}}</del></span> 
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>Delivery Charges</th>
                                                 <td>:</td>
-                                                <td>Free</td>
+                                                <td>{!! get_taka_icon() !!}60.00</td>
                                                 <th>Card Type</th>
                                                 <td>:</td>
                                                 <td>{{json_decode($payment->details,true)['card_type'] ?? '--'}}</td>
@@ -130,7 +130,7 @@
                                                 <th><span class="{{$payment->statusBg()}}">{{$payment->statusTitle()}}</span></th>
                                                 <th>Payable Amount</th>
                                                 <td>:</td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(($payment->amount),2)}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format($payment->amount).".00"}}</th>
                                             </tr>
                                         </table>
                                     </div>
@@ -140,7 +140,7 @@
                                 <div class="jumbotron-fluid">
                                     <div class="row justify-content-between ">
                                         <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">PAID AMOUNT</h2></div>
-                                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{isset(json_decode($payment->details,true)['amount']) ? number_format((json_decode($payment->details,true)['amount']),2) : '--'}}</h1></div>
+                                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{isset(json_decode($payment->details,true)['amount']) ? number_format(json_decode($payment->details,true)['amount']).".00" : '--'}}</h1></div>
                                     </div>
                                 </div>
                             </div>
