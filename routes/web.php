@@ -575,11 +575,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
 
 });
 
-// User Routes
-Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'], function () {
-    Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
-    Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
-});
+
 
 
 // Pharmacy Auth Routes
@@ -736,6 +732,31 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
 
 
 
+// User Routes
+Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'], function () {
+    Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
+    Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
+
+    // Add To Cart Routes 
+    Route::get('/add-to-cart', [FrontendBaseController::class, 'add_to_cart'])->name('product.add_to_cart');
+    Route::get('/remove-to-cart', [FrontendBaseController::class, 'remove_to_cart'])->name('product.remove_to_cart');
+    Route::get('/clear-cart/{uid}', [FrontendBaseController::class, 'clearCart'])->name('product.clear_cart');
+
+    Route::get('/item/check/{id}', [FrontendBaseController::class, 'itemCheck'])->name('cart.item.check');
+    Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
+    Route::get('/item/unit/{unit_id}/{cart_id}', [FrontendBaseController::class, 'itemUnit'])->name('cart.item.unit');
+
+    // Checkout Routes 
+    Route::post('/product/single-order', [CheckoutController::class, 'single_order'])->name('product.single_order');
+    Route::get('/order/intermediate/{multiple?}', [CheckoutController::class, 'int_order'])->name('product.int');
+    Route::get('/product/checkout/{order_id}', [CheckoutController::class, 'checkout'])->name('product.checkout');
+    Route::post('/product/order/confirm/{order_id}', [CheckoutController::class, 'order_confirm'])->name('product.order.confirm');
+    Route::get('/product/order/success/{order_id}', [CheckoutController::class, 'order_success'])->name('product.order.success');
+    Route::get('/product/order/failed/{order_id}', [CheckoutController::class, 'order_failed'])->name('product.order.failed');
+    Route::get('/product/order/cancel/{order_id}', [CheckoutController::class, 'order_cancel'])->name('product.order.cancel');
+
+});
+
 // Frontend Routes
 Route::get('/', [HomePageController::class, 'home'])->name('home');
 Route::get('/product-search/{search_value}/{category}', [HomePageController::class, 'productSearch'])->name('home.product.search');
@@ -744,20 +765,3 @@ Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeatur
 Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
 
-// Add To Cart Routes 
-Route::get('/add-to-cart', [FrontendBaseController::class, 'add_to_cart'])->name('product.add_to_cart');
-Route::get('/remove-to-cart', [FrontendBaseController::class, 'remove_to_cart'])->name('product.remove_to_cart');
-Route::get('/clear-cart/{uid}', [FrontendBaseController::class, 'clearCart'])->name('product.clear_cart');
-
-Route::get('/item/check/{id}', [FrontendBaseController::class, 'itemCheck'])->name('cart.item.check');
-Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
-Route::get('/item/unit/{unit_id}/{cart_id}', [FrontendBaseController::class, 'itemUnit'])->name('cart.item.unit');
-
-// Checkout Routes 
-Route::post('/product/single-order', [CheckoutController::class, 'single_order'])->name('product.single_order');
-Route::get('/order/intermediate/{multiple?}', [CheckoutController::class, 'int_order'])->name('product.int');
-Route::get('/product/checkout/{order_id}', [CheckoutController::class, 'checkout'])->name('product.checkout');
-Route::post('/product/order/confirm/{order_id}', [CheckoutController::class, 'order_confirm'])->name('product.order.confirm');
-Route::get('/product/order/success/{order_id}', [CheckoutController::class, 'order_success'])->name('product.order.success');
-Route::get('/product/order/failed/{order_id}', [CheckoutController::class, 'order_failed'])->name('product.order.failed');
-Route::get('/product/order/cancel/{order_id}', [CheckoutController::class, 'order_cancel'])->name('product.order.cancel');
