@@ -21,4 +21,7 @@ class AddToCart extends BaseModel
     public function odps(){
         return $this->hasMany(OrderDistributionPharmacy::class,'cart_id','id');
     }
+    public function scopeCheck($query){
+        return $query->where('is_check',1);
+    }
 }

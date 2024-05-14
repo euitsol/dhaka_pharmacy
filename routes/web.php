@@ -512,6 +512,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('medicine_edit');
             Route::get('status/{id}', 'status')->name('status.medicine_edit');
             Route::get('best-selling/{id}', 'best_selling')->name('best_selling.medicine_edit');
+            Route::get('featured/{id}', 'featured')->name('featured.medicine_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_delete');
         });
     });

@@ -176,6 +176,10 @@ class BaseModel extends Model
     public function scopeActivated($query){
         return $query->where('status',1);
     }
+    public function scopeFeatured($query){
+        return $query->where('is_featured',1);
+    }
+    
 
     
 }

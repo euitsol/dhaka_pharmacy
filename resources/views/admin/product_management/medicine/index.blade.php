@@ -29,6 +29,7 @@
                                 <th>{{ __('Discount') }} </th>
                                 <th>{{ __('Price') }}</th>
                                 <th>{{ __('Best Selling') }}</th>
+                                <th>{{ __('Featured') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -47,6 +48,10 @@
                                     <td>
                                         <span
                                             class="{{ $medicine->getBestSellingBadgeClass() }}">{{ $medicine->getBestSelling() }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="{{ $medicine->getFeaturedBadgeClass() }}">{{ $medicine->getFeatured() }}</span>
                                     </td>
                                     <td>
                                         <span
@@ -74,6 +79,12 @@
                                                         'product.medicine.best_selling.medicine_edit',
                                                     'params' => [$medicine->id],
                                                     'label' => $medicine->getBtnBestSelling(),
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'product.medicine.featured.medicine_edit',
+                                                    'params' => [$medicine->id],
+                                                    'label' => $medicine->getBtnFeatured(),
                                                 ],
                                                 [
                                                     'routeName' =>

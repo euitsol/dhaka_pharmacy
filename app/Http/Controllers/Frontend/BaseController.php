@@ -21,7 +21,6 @@ class BaseController extends Controller
     public function __construct() {
         $data['categories'] = ProductCategory::activated()->orderBy('name')->get();
         $data['menuItems'] = $data['categories']->where('is_menu', 1);
-        
         $data['atcs'] = AddToCart::with(['product', 'customer'])
             ->where('customer_id', 1)
             ->where('status', 1)

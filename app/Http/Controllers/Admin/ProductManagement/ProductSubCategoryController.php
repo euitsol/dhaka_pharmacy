@@ -23,7 +23,7 @@ class ProductSubCategoryController extends Controller
     public function index(): View
     {
         $data['product_categories'] = ProductSubCategory::with(['created_user','pro_cat'])->orderBy('name')->get();
-        $data['menuItemsCount'] = ProductSubCategory::where('is_menu',1)->activated()->count();
+        $data['menuItemsCount'] = ProductSubCategory::menu()->activated()->count();
         return view('admin.product_management.product_sub_category.index', $data);
     }
     public function details($id): JsonResponse
@@ -99,7 +99,7 @@ class ProductSubCategoryController extends Controller
     public function menu($id): RedirectResponse
     {
         $product_sub_category = ProductSubCategory::findOrFail($id);
-        $activeCount = ProductSubCategory::where('is_menu',1)->activated()->count();
+        $activeCount = ProductSubCategory::menu()->activated()->count();
         if($product_sub_category->is_menu == 1){
             $product_sub_category->is_menu = 0;
         }else{

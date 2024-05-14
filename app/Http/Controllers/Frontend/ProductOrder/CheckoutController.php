@@ -48,7 +48,7 @@ class CheckoutController extends BaseController
             $change_cart_status->update(['status' => 0]);
         }
 
-        $atcs = AddToCart::where('is_check',1)->where('status',0)->where('customer_id',1)->pluck('id')->toArray();
+        $atcs = AddToCart::check()->where('status',0)->where('customer_id',1)->pluck('id')->toArray();
         $orderId = generateOrderId();
         $order = new Order();
         // $order->customer()->associate(admin());
@@ -63,7 +63,7 @@ class CheckoutController extends BaseController
     public function checkout($order_id){
         $data['order_id'] = decrypt($order_id);
         $data['delivery_fee'] = 60;
-        $atcs = AddToCart::where('is_check',1)->where('status',0)->where('customer_id',1)->latest()->get();
+        $atcs = AddToCart::check()->where('status',0)->where('customer_id',1)->latest()->get();
         foreach($atcs as $key=>$atc){
             $data['unit'] = MedicineUnit::findOrFail($atc->unit_id);
             
