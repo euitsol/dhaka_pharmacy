@@ -9,13 +9,6 @@
                         <div class="col-8">
                             <h4 class="card-title">Pharmacy KYC List</h4>
                         </div>
-                        {{-- <div class="col-4 text-right">
-                            @include('admin.partials.button', [
-                                'routeName' => 'um.user.user_kyc_create',
-                                'className' => 'btn-primary',
-                                'label' => 'Add User',
-                            ])
-                        </div> --}}
                     </div>
                 </div>
                 <div class="card-body">
@@ -46,11 +39,9 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'javascript:void(0)',
+                                                    'routeName' => 'pm.pharmacy_kyc.kyc_list.pharmacy_kyc_details',
                                                     'params' => [$data->id],
                                                     'label' => 'View Details',
-                                                    'className' => 'view',
-                                                    'data-id' => $data->id,
                                                 ],
                                             ],
                                         ])

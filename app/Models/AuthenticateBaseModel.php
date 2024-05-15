@@ -116,6 +116,9 @@ class AuthenticateBaseModel extends Authenticatable
     public function scopeFeatured($query){
         return $query->where('is_featured',1);
     }
+    public function scopeKycVerified($query){
+        return $query->where('kyc_status',1);
+    }
 
     
 

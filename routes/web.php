@@ -284,12 +284,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::group(['as' => 'pharmacy_kyc.', 'prefix' => 'pharmacy-kyc'], function () {
             Route::controller(PharmacyKycController::class)->prefix('kyc-list')->name('kyc_list.')->group(function () {
                 Route::get('index', 'index')->name('pharmacy_kyc_list');
-                Route::get('details/{id}', 'details')->name('details.pharmacy_kyc_list');
-                Route::get('create', 'create')->name('pharmacy_kyc_create');
-                Route::post('create', 'store')->name('pharmacy_kyc_create');
-                Route::get('edit/{id}', 'edit')->name('pharmacy_kyc_edit');
-                Route::put('edit/{id}', 'update')->name('pharmacy_kyc_edit');
-                Route::get('status/{id}', 'status')->name('status.pharmacy_kyc_edit');
+                Route::get('details/{id}', 'details')->name('pharmacy_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.pharmacy_kyc_details');
+                Route::get('accept/{id}', 'accept')->name('accept.pharmacy_kyc_status');
+                Route::put('declained/{id}', 'declained')->name('declined.pharmacy_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('pharmacy_kyc_delete');
             });
 
