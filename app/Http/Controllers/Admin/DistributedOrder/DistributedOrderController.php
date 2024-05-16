@@ -9,6 +9,7 @@ use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
 use App\Models\Payment;
 use App\Models\Pharmacy;
+use App\Models\Rider;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -81,8 +82,11 @@ class DistributedOrderController extends Controller
             $query->where('status','!=', -1);
         }])
         ->findOrFail(decrypt($do_id));
+        if($data['do']->status == 2){
+            $data['riders'] = Rider::activated()->kycVerified()->latest()->get();
+        }
         $data['totalPrice'] = $this->calculateTotalPrice($data['do']);
-        $data['pharmacies'] = Pharmacy::activated()->latest()->get();
+        $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
         return view('admin.distributed_order.details',$data);
     }
 
@@ -112,7 +116,7 @@ class DistributedOrderController extends Controller
     //     $data['totalPrice'] = collect($data['do']['dops'])->sum('cart.discount_price');
     //     $data['totalRegularPrice'] = collect($data['do']['dops'])->sum('cart.price');
     //     $data['totalDiscount'] = collect($data['do']['dops'])->sum('cart.discount');
-    //     $data['pharmacies'] = Pharmacy::activated()->latest()->get();
+    //     $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
     //     return view('admin.distributed_order.edit',$data);
     // }
 

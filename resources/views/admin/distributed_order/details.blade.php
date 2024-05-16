@@ -63,6 +63,59 @@
                     </table>
                 </div>
                 <div class="card-footer">
+                    @if($do->status == 2)
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h4 class="card-title">{{ __('Rider Management') }}</h4>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <span class="{{$do->statusBg()}}">{{ __(ucwords(strtolower((str_replace('-', ' ', $do->statusTitle()))))) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form action="" method="POST">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>{{__('Rider')}}</label>
+                                            <select name="rider_id" class="form-control">
+                                                <option selected hidden>{{__('Select Rider')}}</option>
+                                                @foreach ($riders as $rider)
+                                                    @php
+                                                        $area = $rider->operation_area ? ($rider->operation_sub_area ? "( ".$rider->operation_area->name." - " : "( ".$rider->operation_area->name." )")  : '';
+                                                        $sub_area = $rider->operation_sub_area ? ($rider->operation_area ? $rider->operation_sub_area->name." )" : "( ".$rider->operation_sub_area->name." )" )  : '';
+                                                    @endphp
+                                                    <option value="{{$rider->id}}" {{$rider->id == old('rider_id') ? 'selected' : ''}}>{{$rider->name.$area.$sub_area}}</option>
+                                                @endforeach
+                                            </select>
+                                            @include('alerts.feedback', ['field' => 'rider_id'])
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{__('Priority')}}</label>
+                                            <select name="priority" class="form-control">
+                                                <option selected hidden>{{__('Select Priority')}}</option>
+                                                <option value="1">{{__('Normal')}}</option>
+                                                <option value="2">{{__('Medium')}}</option>
+                                                <option value="3">{{__('High')}}</option>
+                                            </select>
+                                            @include('alerts.feedback', ['field' => 'priority'])
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>{{__('Instraction')}}</label>
+                                            <textarea name="instraction" class="form-control" placeholder="Write delivery instration here"></textarea>
+                                            @include('alerts.feedback', ['field' => 'instraction'])
+                                        </div>
+                                        <div class="form-group text-end">
+                                            <input type="submit" class="btn btn-primary" value="Assign">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
                     <form action="{{route('do.do_update')}}" method="POST" class="px-0">
                     @csrf
                         @php
@@ -122,8 +175,8 @@
                                                             <option selected hidden>{{__('Select Pharmacy')}}</option>
                                                             @foreach ($pharmacies as $pharmacy)
                                                                 @php
-                                                                    $area = $pharmacy->operation_area ? "(".$pharmacy->operation_area->name.")" : '';
-                                                                    $sub_area = $pharmacy->operation_sub_area ? "(".$pharmacy->operation_sub_area->name.")" : '';
+                                                                    $area = $pharmacy->operation_area ? ($pharmacy->operation_sub_area ? "( ".$pharmacy->operation_area->name." - " : "( ".$pharmacy->operation_area->name." )")  : '';
+                                                                    $sub_area = $pharmacy->operation_sub_area ? ($pharmacy->operation_area ? $pharmacy->operation_sub_area->name." )" : "( ".$pharmacy->operation_sub_area->name." )" )  : '';
                                                                 @endphp
                                                                 <option @if((isset($do->odps) && $do->odps[$key]->pharmacy_id == $pharmacy->id) || (old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name.$area.$sub_area}}</option>
                                                             @endforeach
@@ -132,8 +185,8 @@
                                                     </div>
                                                     @else
                                                         @php
-                                                            $area = $do->odps[$key]->pharmacy->operation_area ? " (".$do->odps[$key]->pharmacy->operation_area->name.")" : '';
-                                                            $sub_area = $do->odps[$key]->pharmacy->operation_sub_area ? " (".$do->odps[$key]->pharmacy->operation_sub_area->name.")" : '';
+                                                            $area = $do->odps[$key]->pharmacy->operation_area ? ($do->odps[$key]->pharmacy->operation_sub_area ? "( ".$do->odps[$key]->pharmacy->operation_area->name." - " : "( ".$do->odps[$key]->pharmacy->operation_area->name." )")  : '';
+                                                            $sub_area = $do->odps[$key]->pharmacy->operation_sub_area ? ($do->odps[$key]->pharmacy->operation_area ? $do->odps[$key]->pharmacy->operation_sub_area->name." )" : "( ".$do->odps[$key]->pharmacy->operation_sub_area->name." )" )  : '';
                                                         @endphp
                                                         <input type="text" class="form-control" disabled value="{{$do->odps[$key]->pharmacy->name.$area.$sub_area}}">
                                                     @endif

@@ -13,6 +13,7 @@ class LocalAreaManager extends AuthenticateBaseModel
         'password',
         'dm_id',
         'osa_id',
+        'kyc_status',
     ];
     protected $hidden = [
         'password',

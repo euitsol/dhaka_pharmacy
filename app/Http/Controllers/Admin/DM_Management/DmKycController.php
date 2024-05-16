@@ -39,6 +39,7 @@ class DmKycController extends Controller
         $data = SubmittedKyc::findOrFail($id);
         $data->status = 1;
         $data->update();
+        $data->creater->update(['kyc_status'=>1]);
         flash()->addSuccess('KYC accepted succesfully');
         return redirect()->back();
 
@@ -50,6 +51,7 @@ class DmKycController extends Controller
             $data->status = NULL;
             $data->note = $req->note;
             $data->update();
+            $data->creater->update(['kyc_status'=>1]);
             flash()->addSuccess('KYC declained succesfully');
             return response()->json(['message' => 'Email template updated successfully']);
         } catch (\Exception $e) {
