@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin\DistributedOrder;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DisputeOrderRequest;
+use App\Http\Requests\OrderDistributionRiderRequest;
 use App\Models\AddToCart;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
+use App\Models\OrderDistributionRider;
 use App\Models\Payment;
 use App\Models\Pharmacy;
 use App\Models\Rider;
@@ -87,6 +89,11 @@ class DistributedOrderController extends Controller
         }
         $data['totalPrice'] = $this->calculateTotalPrice($data['do']);
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
+        $data['do_rider'] = OrderDistributionRider::where('status','!=',0)->where('order_distribution_id',$data['do']->id)->first();
+
+
+
+
         return view('admin.distributed_order.details',$data);
     }
 
@@ -140,6 +147,21 @@ class DistributedOrderController extends Controller
         }
         flash()->addSuccess('Dispute Order Updated Successfully.');
         return redirect()->back(); 
+    }
+
+
+    public function do_rider(OrderDistributionRiderRequest $req, $do_id){
+        $do_id = decrypt($do_id);
+        $do_rider = new OrderDistributionRider();
+        $do_rider->rider_id = $req->rider_id;
+        $do_rider->order_distribution_id = $do_id;
+        $do_rider->priority = $req->priority;
+        $do_rider->instraction = $req->instraction;
+        $do_rider->save();
+        OrderDistribution::findOrFail($do_id)->update(['status'=>3]);
+        flash()->addSuccess('Assign rider '.$do_rider->rider->name.' succesfully.');
+        return redirect()->back(); 
+
     }
 
 

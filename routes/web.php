@@ -550,6 +550,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('/details/{do_id}', 'details')->name('do_details');
         Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
         Route::post('/update', 'update')->name('do_update');
+
+        Route::post('/rider/{do_id}', 'do_rider')->name('do_rider');
     });
        
 
