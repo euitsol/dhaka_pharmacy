@@ -57,13 +57,16 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    <form action="{{route('pharmacy.order_management.update')}}" method="POST">
+                    <form action="{{route('pharmacy.order_management.update',encrypt($do->id))}}" method="POST">
                         @csrf
                         <div class="row mb-3">
                             <div class="col-12 px-4 text-end">
                                 <span class="{{ $statusBg }}">{{ $statusTitle }}</span>
                             </div>
                         </div>
+                        @php
+                            $subtotal = 0;
+                        @endphp
                         @foreach ($do->dops as $key=>$dop)
                             <div class="col-12 status_wrap">
                                 <div class="card card-2 mb-0 mt-3">
@@ -90,6 +93,7 @@
                                                                     $totalPrice -= (($totalPrice/100)*$pharmacy_discount->discount_percent);
                                                                     $discount = "<span class='badge badge-danger'>$pharmacy_discount->discount_percent.'% off'</span>";
                                                                 }
+                                                                $subtotal += $totalPrice;
                                                             @endphp
                                                             <span><strong>{{ __('Total Price : ') }}</strong>{!! get_taka_icon() !!}
                                                                 
@@ -120,15 +124,15 @@
                                                                         <label class="form-check-label me-2" for="status_{{$key}}">
                                                                             <input class="form-check-input do_status" type="radio"
                                                                                 name="data[{{$key}}][status]" id="status_{{$key}}"
-                                                                                value="1" checked>
-                                                                                Distributed
+                                                                                value="2" checked>
+                                                                                {{__('Accept')}}
                                                                             <span class="form-check-sign"></span>
                                                                         </label>
                                                                         <label class="form-check-label" for="status{{$key}}">
                                                                             <input class="form-check-input do_status" type="radio"
                                                                                 name="data[{{$key}}][status]" id="status{{$key}}"
-                                                                                value="2">
-                                                                                Dispute
+                                                                                value="3">
+                                                                                {{__("Dispute")}}
                                                                             <span class="form-check-sign"></span>
                                                                         </label>
                                                                     </div>
@@ -141,16 +145,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if($status == 0)
+                                @if($status == 0 || $status == 1)
                                     <div class="form-group status_note" style="display: none">
                                         <textarea name="data[{{$key}}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
                                     </div>
-                                @elseif($status == 2)
+                                    @include('alerts.feedback', ['field' => 'data.'.$key.'.note'])
+                                @elseif($status == 3 || $status == -1)
                                     <span><strong class="text-danger">{{__('Resoan: ')}}</strong>{{$dop->note}}</span>
                                 @endif
                                 
                             </div>
                         @endforeach
+                        <div class="col-12 text-end">
+                            <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format($subtotal, 2) }}</span></span>
+                        </div>
                         @if($status == 0)
                             <div class="col-12 text-end">
                                 <input type="submit" value="Confirm" class="btn btn-success">
@@ -167,7 +175,7 @@
 <script>
     $(document).ready(function(){
         $('.do_status').on('change',function(){
-            if($(this).val() == 2){
+            if($(this).val() == 3){
                 $(this).closest('.status_wrap').find('.status_note').show();
             }else{
                 $(this).closest('.status_wrap').find('.status_note').hide();

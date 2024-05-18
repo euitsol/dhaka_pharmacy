@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends BaseModel
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = [
+        'status',
+    ];
 
     public function address(){
         return $this->belongsTo(Address::class, 'address_id');
@@ -43,6 +46,8 @@ class Order extends BaseModel
                 return 'badge badge-danger';
             case -2:
                 return 'badge badge-warning';
+            case -3:
+                return 'badge badge-dark';
             default:
                 return 'badge badge-primary';
         }
@@ -60,6 +65,8 @@ class Order extends BaseModel
                 return 'Failed';
             case -2:
                 return 'Cancel';
+            case -3:
+                return 'Distributed';
             default:
                 return 'Processing';
         }

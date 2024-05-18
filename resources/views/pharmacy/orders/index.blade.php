@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __(ucwords($status)." Orders List") }}</h4>
+                            <h4 class="card-title">{{ __(ucwords(strtolower((str_replace('-', ' ', $status))))." Order List") }}</h4>
                         </div>
                     </div>
                 </div>

@@ -34,7 +34,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ _('Slug') }}</label>
-                                <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                                <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" value="{{old('slug')}}" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
                                 @include('alerts.feedback', ['field' => 'slug'])
                             </div>
                             <div class="form-group col-md-6">
@@ -113,7 +113,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Unit') }}</label>
-                                <select name="unit[]" class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }}"
+                                <select name="unit[]" class="form-control unit {{ $errors->has('unit') ? ' is-invalid' : '' }}"
                                     multiple="multiple">
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}"
@@ -224,7 +224,7 @@
                                 <label>{{ __('Discount Amount') }}</label>
                                     <input type="text" id="discount_amount" name="discount_amount"
                                     class="form-control {{ $errors->has('discount_amount') ? ' is-invalid' : '' }}"
-                                    placeholder="Enter discount percentage" value="{{ old('discount_amount') }}">
+                                    placeholder="Enter discount amount" value="{{ old('discount_amount') }}">
                                 @include('alerts.feedback', ['field' => 'discount_amount'])
                             </div>
                         </div>

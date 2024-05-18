@@ -21,7 +21,7 @@ return new class extends Migration
             $table->tinyInteger('payment_type')->default(1);
             $table->tinyInteger('distribution_type')->default(1);
             $table->dateTime('prep_time');
-            $table->tinyInteger('status')->default(0)->comment('0=Distributed, 1=Preparing, 2=Waiting for pickup, 3=Picked up, 4=Finish');
+            $table->tinyInteger('status')->default(0)->comment('0=Pending, 1=Preparing, 2=Waiting for pickup, 3=Picked up, 4=Finish');
             $table->longText('note')->nullable();
             $table->timestamps();
             $table->softDeletes();

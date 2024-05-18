@@ -101,7 +101,7 @@
                                             <tr>
                                                 <th>Order Date</th>
                                                 <td>:</td>
-                                                <td>{{timeFomate($order->created_at)}}</td>
+                                                <td>{{timeFormate($order->created_at)}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Discount</th>

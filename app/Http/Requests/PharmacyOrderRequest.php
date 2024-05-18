@@ -22,10 +22,16 @@ class PharmacyOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data.*.dop_id'=>'required|exists:order_distribution_pharmacies,id',
-            'data.*.status'=>'nullable',
-            'data.*.open_amount'=>'nullable|numeric',
-            'data.*.note'=>'nullable',
+            'data.*.dop_id' => 'required|exists:order_distribution_pharmacies,id',
+            'data.*.status' => 'required|numeric',
+            'data.*.open_amount' => 'nullable|numeric',
+            'data.*.note' => 'nullable|required_if:data.*.status,3', // Make note required if status is 3
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'data.*.note.required_if' => 'The note field is required for disputing item.',
         ];
     }
 }

@@ -40,8 +40,7 @@
                     <span class="nav-link-text">{{ __('Order Managements') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
-
-                <div class="collapse @if ($pageSlug == 'pending_orders' || $pageSlug == 'distributed_orders' || $pageSlug == 'dispute_orders') show @endif" id="order_managements">
+                <div class="collapse @if ($pageSlug == 'pending_orders' || $pageSlug == 'waiting-for-rider_orders' || $pageSlug == 'dispute_orders' || $pageSlug == 'old-disputed_orders' || $pageSlug == 'complete_orders') show @endif" id="order_managements">
                     <ul class="nav pl-2">
                         <li @if ($pageSlug == 'pending_orders') class="active" @endif>
                             <a href="{{ route('pharmacy.order_management.index','pending') }}">
@@ -49,10 +48,10 @@
                                 <p>{{ 'Pending Orders' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'distributed_orders') class="active" @endif>
-                            <a href="{{ route('pharmacy.order_management.index','distributed') }}">
-                                <i class="fa-solid fa-minus @if ($pageSlug == 'distributed_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Distributed Orders' }}</p>
+                        <li @if ($pageSlug == 'waiting-for-rider_orders') class="active" @endif>
+                            <a href="{{ route('pharmacy.order_management.index','waiting-for-rider') }}">
+                                <i class="fa-solid fa-minus @if ($pageSlug == 'waiting-for-rider_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Waiting For Rider Orders' }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'dispute_orders') class="active" @endif>
@@ -61,6 +60,23 @@
                                 <p>{{ 'Dispute Orders' }}</p>
                             </a>
                         </li>
+                        <li @if ($pageSlug == 'old-disputed_orders') class="active" @endif>
+                            <a href="{{ route('pharmacy.order_management.index','old-disputed') }}">
+                                <i class="fa-solid fa-minus @if ($pageSlug == 'old-disputed_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Old Disputed Orders' }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'complete_orders') class="active" @endif>
+                            <a href="{{ route('pharmacy.order_management.index','complete') }}">
+                                <i class="fa-solid fa-minus @if ($pageSlug == 'complete_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Complete Orders' }}</p>
+                            </a>
+                        </li>
+                        
+
+
+
+
                     </ul>
                 </div>
             </li>

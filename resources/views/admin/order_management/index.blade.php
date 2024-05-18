@@ -20,6 +20,7 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Order ID') }}</th>
                                 <th>{{ __('Total Product') }}</th>
+                                <th>{{ __('Total Price') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Order date') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -31,6 +32,7 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $order->order_id }}</td>
                                     <td>{{ count(json_decode($order->carts,true)) }}</td>
+                                    <td>{!! get_taka_icon() .number_format($order->totalPrice,2) !!}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
                                     <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>
