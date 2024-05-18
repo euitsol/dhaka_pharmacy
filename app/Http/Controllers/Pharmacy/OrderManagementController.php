@@ -25,11 +25,14 @@ class OrderManagementController extends Controller
     public function index($status): View
     {
         $data['status'] = $status;
+        $data['prep_time'] = false;
+        if($this->getStatus($status) == 0 || $this->getStatus($status) == 1){
+            $data['prep_time'] = true;
+        }
         $query = OrderDistributionPharmacy::with(['cart','pharmacy','od'])->where('pharmacy_id',pharmacy()->id);
-        if($this->getStatus($status) == 0){
-            $query->where('status',0)->orWhere('status',1);
-        }else{
-            $query->where('status',$this->getStatus($status));
+        $query->where('status',$this->getStatus($status));
+        if($this->getStatus($status) == 3){
+            $query->orWhere('status',-1);
         }
         $data['dops'] = $query->get()->groupBy('order_distribution_id')
         ->map(function($dop,$key) use($status){
@@ -43,12 +46,15 @@ class OrderManagementController extends Controller
     
     public function details($do_id,$status){
         
+        $data['prep_time'] = false;
+        if($this->getStatus($status) == 0 || $this->getStatus($status) == 1){
+            $data['prep_time'] = true;
+        }
         $data['pharmacy_discount'] = PharmacyDiscount::activated()->where('pharmacy_id',pharmacy()->id)->first();
         $data['do'] = OrderDistribution::with(['order','odps' => function ($query) use($status) {
-            if($this->getStatus($status) == 0){
-                $query->where('status', 0)->orWhere('status',1);
-            }else{
-                $query->where('status',$this->getStatus($status));
+            $query->where('status',$this->getStatus($status));
+            if($this->getStatus($status) == 3){
+                $query->orWhere('status',-1);
             }
         }])->findOrFail(decrypt($do_id));
         if($data['do']->odps->where('pharmacy_id', pharmacy()->id)->every(fn($odp) => $odp->status == 0)) {
@@ -110,12 +116,12 @@ class OrderManagementController extends Controller
     public function statusBg($status) {
         switch ($status) {
             case 0:
-            case 1:
                 return 'badge badge-info';
+            case 1:
+                return 'badge badge-primary';
             case 2:
-                return 'badge bg-primary';
+                return 'badge bg-secondary';
             case 3:
-                return 'badge badge-warning';
             case -1:
                 return 'badge badge-danger';
             case 4:
@@ -128,14 +134,14 @@ class OrderManagementController extends Controller
     public function statusTitle($status) {
         switch ($status) {
             case 0:
-            case 1:
                 return 'pending';
+            case 1:
+                return 'preparing';
             case 2:
                 return 'waiting-for-rider';
             case 3:
-                return 'dispute';
             case -1:
-                return 'old-disputed';
+                return 'dispute';
             case 4:
                 return 'complete';
         }

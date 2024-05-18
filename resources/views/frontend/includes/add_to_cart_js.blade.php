@@ -30,14 +30,15 @@
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    let regular_price = '';
-                    if(data.atc.product.discount){
-                        regular_price = `<h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!}  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_price,2)}</span></del></h4>`;
-                    }
+                    
 
 
 
                     if (data.atc) {
+                        let regular_price = '';
+                        if(data.atc.product.discount){
+                            regular_price = `<h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!}  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_price,2)}</span></del></h4>`;
+                        }
                         var count = data.count;
                         var result = `
                                     <div class="card add_to_cart_item mb-2">
@@ -123,6 +124,8 @@
                     }
                 },
                 error: function(xhr, status, error) {
+                    var loginUrl = '{{ route("login") }}';
+                    window.location.href = loginUrl;
                     console.error('Error add to cart data:', error);
                 }
             });

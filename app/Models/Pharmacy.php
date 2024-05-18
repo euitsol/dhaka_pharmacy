@@ -8,6 +8,9 @@ class Pharmacy extends AuthenticateBaseModel
         'name',
         'email',
         'password',
+        'oa_id',
+        'osa_id',
+        'kyc_status',
     ];
     protected $hidden = [
         'password',

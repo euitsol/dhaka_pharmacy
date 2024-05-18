@@ -15,6 +15,7 @@ class Rider extends AuthenticateBaseModel
         'password',
         'oa_id',
         'osa_id',
+        'kyc_status',
     ];
     protected $hidden = [
         'password',

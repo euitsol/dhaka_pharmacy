@@ -157,7 +157,7 @@
                             </div>
                         @endforeach
                         <div class="col-12 text-end">
-                            <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format($subtotal, 2) }}</span></span>
+                            <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format($subtotal).".00" }}</span></span>
                         </div>
                         @if($status == 0)
                             <div class="col-12 text-end">

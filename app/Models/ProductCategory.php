@@ -18,4 +18,7 @@ class ProductCategory extends BaseModel
     {
         return $this->hasMany(Medicine::class, 'pro_cat_id')->orderBy('name');
     }
+    public function scopeMenu($query){
+        return $query->where('is_menu',1);
+    }
 }

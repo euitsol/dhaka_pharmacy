@@ -175,6 +175,14 @@ class MedicineController extends Controller
         flash()->addSuccess('Medicine '.$medicine->name.' best selling updated successfully.');
         return redirect()->route('product.medicine.medicine_list');
     }
+    public function featured($id): RedirectResponse
+    {
+        $medicine = Medicine::findOrFail($id);
+        $this->featuredChange($medicine);
+
+        flash()->addSuccess('Medicine '.$medicine->name.' featured updated successfully.');
+        return redirect()->route('product.medicine.medicine_list');
+    }
     
     public function delete($id): RedirectResponse
     {

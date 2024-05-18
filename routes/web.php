@@ -80,8 +80,7 @@ use App\Http\Controllers\Frontend\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
-
-
+use App\Http\Controllers\User\UserDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -285,12 +284,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::group(['as' => 'pharmacy_kyc.', 'prefix' => 'pharmacy-kyc'], function () {
             Route::controller(PharmacyKycController::class)->prefix('kyc-list')->name('kyc_list.')->group(function () {
                 Route::get('index', 'index')->name('pharmacy_kyc_list');
-                Route::get('details/{id}', 'details')->name('details.pharmacy_kyc_list');
-                Route::get('create', 'create')->name('pharmacy_kyc_create');
-                Route::post('create', 'store')->name('pharmacy_kyc_create');
-                Route::get('edit/{id}', 'edit')->name('pharmacy_kyc_edit');
-                Route::put('edit/{id}', 'update')->name('pharmacy_kyc_edit');
-                Route::get('status/{id}', 'status')->name('status.pharmacy_kyc_edit');
+                Route::get('details/{id}', 'details')->name('pharmacy_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.pharmacy_kyc_details');
+                Route::get('accept/{id}', 'accept')->name('accept.pharmacy_kyc_status');
+                Route::put('declained/{id}', 'declained')->name('declined.pharmacy_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('pharmacy_kyc_delete');
             });
 
@@ -513,6 +510,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::put('edit/{id}', 'update')->name('medicine_edit');
             Route::get('status/{id}', 'status')->name('status.medicine_edit');
             Route::get('best-selling/{id}', 'best_selling')->name('best_selling.medicine_edit');
+            Route::get('featured/{id}', 'featured')->name('featured.medicine_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_delete');
         });
     });
@@ -552,6 +550,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('/details/{do_id}', 'details')->name('do_details');
         Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
         Route::post('/update', 'update')->name('do_update');
+
+        Route::post('/rider/{do_id}', 'do_rider')->name('do_rider');
     });
        
 
@@ -576,10 +576,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
 
 });
 
-// User Routes
-Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'], function () {
-    Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
-});
+
 
 
 // Pharmacy Auth Routes
@@ -736,6 +733,31 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
 
 
 
+// User Routes
+Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'], function () {
+    Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
+    Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
+
+    // Add To Cart Routes 
+    Route::get('/add-to-cart', [FrontendBaseController::class, 'add_to_cart'])->name('product.add_to_cart');
+    Route::get('/remove-to-cart', [FrontendBaseController::class, 'remove_to_cart'])->name('product.remove_to_cart');
+    Route::get('/clear-cart/{uid}', [FrontendBaseController::class, 'clearCart'])->name('product.clear_cart');
+
+    Route::get('/item/check/{id}', [FrontendBaseController::class, 'itemCheck'])->name('cart.item.check');
+    Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
+    Route::get('/item/unit/{unit_id}/{cart_id}', [FrontendBaseController::class, 'itemUnit'])->name('cart.item.unit');
+
+    // Checkout Routes 
+    Route::post('/product/single-order', [CheckoutController::class, 'single_order'])->name('product.single_order');
+    Route::get('/order/intermediate/{multiple?}', [CheckoutController::class, 'int_order'])->name('product.int');
+    Route::get('/product/checkout/{order_id}', [CheckoutController::class, 'checkout'])->name('product.checkout');
+    Route::post('/product/order/confirm/{order_id}', [CheckoutController::class, 'order_confirm'])->name('product.order.confirm');
+    Route::get('/product/order/success/{order_id}', [CheckoutController::class, 'order_success'])->name('product.order.success');
+    Route::get('/product/order/failed/{order_id}', [CheckoutController::class, 'order_failed'])->name('product.order.failed');
+    Route::get('/product/order/cancel/{order_id}', [CheckoutController::class, 'order_cancel'])->name('product.order.cancel');
+
+});
+
 // Frontend Routes
 Route::get('/', [HomePageController::class, 'home'])->name('home');
 Route::get('/product-search/{search_value}/{category}', [HomePageController::class, 'productSearch'])->name('home.product.search');
@@ -744,20 +766,3 @@ Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeatur
 Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
 
-// Add To Cart Routes 
-Route::get('/add-to-cart', [FrontendBaseController::class, 'add_to_cart'])->name('product.add_to_cart');
-Route::get('/remove-to-cart', [FrontendBaseController::class, 'remove_to_cart'])->name('product.remove_to_cart');
-Route::get('/clear-cart/{uid}', [FrontendBaseController::class, 'clearCart'])->name('product.clear_cart');
-
-Route::get('/item/check/{id}', [FrontendBaseController::class, 'itemCheck'])->name('cart.item.check');
-Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
-Route::get('/item/unit/{unit_id}/{cart_id}', [FrontendBaseController::class, 'itemUnit'])->name('cart.item.unit');
-
-// Checkout Routes 
-Route::post('/product/single-order', [CheckoutController::class, 'single_order'])->name('product.single_order');
-Route::get('/order/intermediate/{multiple?}', [CheckoutController::class, 'int_order'])->name('product.int');
-Route::get('/product/checkout/{order_id}', [CheckoutController::class, 'checkout'])->name('product.checkout');
-Route::post('/product/order/confirm/{order_id}', [CheckoutController::class, 'order_confirm'])->name('product.order.confirm');
-Route::get('/product/order/success/{order_id}', [CheckoutController::class, 'order_success'])->name('product.order.success');
-Route::get('/product/order/failed/{order_id}', [CheckoutController::class, 'order_failed'])->name('product.order.failed');
-Route::get('/product/order/cancel/{order_id}', [CheckoutController::class, 'order_cancel'])->name('product.order.cancel');

@@ -21,7 +21,9 @@
                                 <th>{{ __('Total Product') }}</th>
                                 <th>{{ __('Payment Type') }}</th>
                                 <th>{{ __('Distribution Type') }}</th>
+                                @if($prep_time)
                                 <th>{{ __('Preparetion Time') }}</th>
+                                @endif
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -29,16 +31,18 @@
                         <tbody>
                             
                             @foreach ($dops as $dop)
+                        
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $dop->od->order->order_id }} </td>
                                     <td> {{ count($dop) }} </td>
                                     <td> {{ $dop->od->paymentType() }} </td>
                                     <td> {{ $dop->od->distributionType() }} </td>
-                                    <td> {{ readablePrepTime($dop->od->created_at, $dop->od->prep_time) }} <span class="countdown ms-2" data-seconds="{{prepTotalSeconds($dop->od->created_at, $dop->od->prep_time)}}"></span> </td>
-                                    
+                                    @if($prep_time)
+                                    <td> <span class="countdown ms-2" data-seconds="{{prepTotalSeconds($dop->od->created_at, $dop->od->prep_time)}}"></span></td>
+                                    @endif
                                     <td>
-                                        <span class="{{ $dop->statusBg }}">{{ $dop->statusTitle }}</span>
+                                        <span class="{{ $dop->statusBg }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $dop->statusTitle))))  }}</span>
                                     </td>
                                     <td>
                                         <div class="dropdown">

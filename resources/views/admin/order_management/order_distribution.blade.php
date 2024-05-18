@@ -17,7 +17,7 @@
                                         @include('admin.partials.button', [
                                                     'routeName' => 'om.order.order_list',
                                                     'className' => 'btn-primary',
-                                                    'params'=>strtolower($order->statusTitle($order->status)),
+                                                    'params'=>'pending',
                                                     'label' => 'Back',
                                                 ])
                                     </div>
@@ -51,7 +51,7 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format($totalPrice,2)}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format($totalPrice).".00"}}</th>
                                             </tr>
                                         </table>
                                     </div>
@@ -117,13 +117,27 @@
                                                                             @endforeach
                                                                         </select> --}}
 
+
+                                                                    
+                                                        
                                                                         @if(isset($order_distribution) && $order_distribution->status == 0)
+
+                                                                            @php
+                                                                                $area = $order_distribution->odps[$key]->pharmacy->operation_area ? ($order_distribution->odps[$key]->pharmacy->operation_sub_area ? "( ".$order_distribution->odps[$key]->pharmacy->operation_area->name." - " : "( ".$order_distribution->odps[$key]->pharmacy->operation_area->name." )")  : '';
+                                                                                $sub_area = $order_distribution->odps[$key]->pharmacy->operation_sub_area ? ($order_distribution->odps[$key]->pharmacy->operation_area ? $order_distribution->odps[$key]->pharmacy->operation_sub_area->name." )" : "( ".$order_distribution->odps[$key]->pharmacy->operation_sub_area->name." )" )  : '';
+                                                                            @endphp
+
                                                                             <input type="text" value="{{$order_distribution->odps[$key]->pharmacy->name}}" disabled class="form-control">
                                                                         @else
+                                                                        
                                                                             <select name="datas[{{$key}}][pharmacy_id]" class="form-control {{ $errors->has('datas.'.$key.'.pharmacy_id') ? ' is-invalid' : '' }}">
-                                                                                <option selected hidden>Select Pharmacy</option>
+                                                                                <option selected hidden>{{__('Select Pharmacy')}}</option>
                                                                                 @foreach ($pharmacies as $pharmacy)
-                                                                                    <option @if((old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
+                                                                                @php
+                                                                                    $area = $pharmacy->operation_area ? ($pharmacy->operation_sub_area ? "( ".$pharmacy->operation_area->name." - " : "( ".$pharmacy->operation_area->name." )")  : '';
+                                                                                    $sub_area = $pharmacy->operation_sub_area ? ($pharmacy->operation_area ? $pharmacy->operation_sub_area->name." )" : "( ".$pharmacy->operation_sub_area->name." )" )  : '';
+                                                                                @endphp
+                                                                                    <option @if((old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name.$area.$sub_area}}</option>
                                                                                 @endforeach
                                                                             </select>
                                                                         @endif

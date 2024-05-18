@@ -13,6 +13,7 @@ class DistrictManager extends AuthenticateBaseModel
         'phone',
         'password',
         'oa_id',
+        'kyc_status',
     ];
     protected $hidden = [
         'password',

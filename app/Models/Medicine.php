@@ -89,5 +89,8 @@ class Medicine extends BaseModel
         return $price;
         
     }
+    public function scopeBestSelling($query){
+        return $query->where('is_best_selling',1);
+    }
 
 }

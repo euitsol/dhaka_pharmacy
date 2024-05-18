@@ -20,10 +20,12 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Order ID') }}</th>
                                 <th>{{ __('Total Product') }}</th>
+                                @if($pp_count)
                                 <th>{{ __('Total Pending') }}</th>
                                 <th>{{ __('Total Preparing') }}</th>
-                                <th>{{ __('Total Accepted') }}</th>
                                 <th>{{ __('Total Dispute') }}</th>
+                                @endif
+                                <th>{{ __('Total Accepted') }}</th>
                                 <th>{{ __('Total Price') }}</th>
                                 <th>{{ __('Payment Type') }}</th>
                                 <th>{{ __('Distribution Type') }}</th>
@@ -37,10 +39,12 @@
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$do->order->order_id}}</td>
                                         <td><span class="{{($do->odps_count)>0 ? 'badge badge-info' : ''}}">{{ $do->odps_count }}</span></td>
+                                        @if($pp_count)
                                         <td><span class="{{($do->odps->where('status',0)->count())>0 ? 'badge badge-primary' : ''}}">{{ $do->odps->where('status',0)->count() }}</span></td>
                                         <td><span class="{{($do->odps->where('status',1)->count())>0 ? 'badge badge-warning' : ''}}">{{ $do->odps->where('status',1)->count() }}</span></td>
-                                        <td><span class="{{($do->odps->where('status',2)->count())>0 ? 'badge badge-success' : ''}}">{{ $do->odps->where('status',2)->count() }}</span></td>
                                         <td><span class="{{($do->odps->where('status',3)->count())>0 ? 'badge badge-danger' : ''}}">{{ $do->odps->where('status',3)->count() }}</span> </td>
+                                        @endif
+                                        <td><span class="{{($do->odps->where('status',2)->count())>0 ? 'badge badge-success' : ''}}">{{ $do->odps->where('status',2)->count() }}</span></td>
                                         <td>{!! get_taka_icon() .number_format($do->order->totalPrice,2) !!}</td>
                                         <td>{{$do->paymentType()}}</td>
                                         <td>{{$do->distributionType()}}</td>

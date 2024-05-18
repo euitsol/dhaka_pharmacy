@@ -26,7 +26,7 @@ class HomePageController extends BaseController
         // $this->order_notification($order, 'order_initialized');
 
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated();
-        $data['products'] = $products->latest()->get()->shuffle()->take(8)->map(function($product){
+        $data['products'] = $products->featured()->latest()->get()->shuffle()->take(8)->map(function($product){
             $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
             $product->attr_title = Str::ucfirst(Str::lower($product->name . $strength ));
             $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
@@ -41,7 +41,7 @@ class HomePageController extends BaseController
             $product->units = collect($product->units)->sortBy('quantity')->values()->all();
             return $product;
         });
-        $data['bsItems'] = $products->where('is_best_selling', 1)->latest()->get()->shuffle()->take(8)->map(function($product){
+        $data['bsItems'] = $products->bestSelling()->latest()->get()->shuffle()->take(8)->map(function($product){
             $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
             $product->attr_title = Str::ucfirst(Str::lower($product->name . $strength ));
             $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
@@ -58,7 +58,7 @@ class HomePageController extends BaseController
         });
 
         $data['categories'] = ProductCategory::activated()->orderBy('name')->get();
-        $data['featuredItems'] = $data['categories']->where('is_featured',1);
+        $data['featuredItems'] = ProductCategory::activated()->featured()->orderBy('name')->get();
 
         return view('frontend.home',$data);
     }
@@ -69,7 +69,7 @@ class HomePageController extends BaseController
         $currentUrl = URL::current();
         $data['url'] = $currentUrl . "?category=all";
 
-        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated();
+        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated()->featured();
         $datas = $products->latest()->get();
         if($category_slug !== 'all'){
             $data['product_cat'] = ProductCategory::activated()->where('slug',$category_slug)->first();
