@@ -90,7 +90,7 @@
                                                     <input type="text" class="form-control" value="{{$do_rider->rider->name.$area.$sub_area}}" disabled>
                                                 @else
                                                     <select name="rider_id" class="form-control">
-                                                        <option selected hidden>{{__('Select Rider')}}</option>
+                                                        <option selected hidden value="">{{__('Select Rider')}}</option>
                                                         @foreach ($riders as $rider)
                                                             @php
                                                                 $area = $rider->operation_area ? ($rider->operation_sub_area ? "( ".$rider->operation_area->name." - " : "( ".$rider->operation_area->name." )")  : '';
@@ -109,10 +109,10 @@
                                                     <input type="text" class="form-control" value="{{$do_rider->priority()}}" disabled>
                                                 @else
                                                     <select name="priority" class="form-control">
-                                                        <option selected hidden>{{__('Select Priority')}}</option>
-                                                        <option value="1">{{__('Normal')}}</option>
-                                                        <option value="2">{{__('Medium')}}</option>
-                                                        <option value="3">{{__('High')}}</option>
+                                                        <option selected hidden value="">{{__('Select Priority')}}</option>
+                                                        <option value="0">{{__('Normal')}}</option>
+                                                        <option value="1">{{__('Medium')}}</option>
+                                                        <option value="2">{{__('High')}}</option>
                                                     </select>
                                                 @endif
                                                 @include('alerts.feedback', ['field' => 'priority'])

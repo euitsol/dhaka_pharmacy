@@ -110,6 +110,10 @@ class OrderManagementController extends Controller
                 return -1;
             case 'complete':
                 return 4;
+            case 'cancel':
+                return 7;
+            case 'cancel-complete':
+                return 8;
         }
     }
     
@@ -126,6 +130,10 @@ class OrderManagementController extends Controller
                 return 'badge badge-danger';
             case 4:
                 return 'badge badge-success';
+            case 7:
+                return 'badge badge-danger';
+            case 8:
+                return 'badge badge-warning';
                 
         }
     }
@@ -144,6 +152,10 @@ class OrderManagementController extends Controller
                 return 'dispute';
             case 4:
                 return 'complete';
+            case 4:
+                return 'cancel';
+            case 4:
+                return 'cancel-complete';
         }
     }
 

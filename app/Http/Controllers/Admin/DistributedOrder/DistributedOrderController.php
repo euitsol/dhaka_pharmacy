@@ -62,12 +62,7 @@ class DistributedOrderController extends Controller
         }])
         ->get()
         ->map(function($do){
-            $do->order->totalPrice = AddToCart::with('product')
-                ->whereIn('id', json_decode($do->order->carts))
-                ->get()
-                ->sum(function ($item) {
-                    return (($item->product->discountPrice() * ($item->unit->quantity ?? 1)) * $item->quantity);
-                });
+            $do->order->totalPrice = $this->calculateTotalPrice($do);
             return $do;
         })->filter(function($do){
             return $do->odps->where('status', 3)->isNotEmpty();
@@ -98,17 +93,7 @@ class DistributedOrderController extends Controller
     }
 
 
-    private function calculateTotalPrice($orderDistribution) {
-        return AddToCart::with('product')
-            ->whereIn('id', json_decode($orderDistribution->order->carts))
-            ->get()
-            ->sum(function ($item){
-                $discountedPrice = $item->product->discountPrice();
-                $quantity = $item->quantity;
-                $unitQuantity = $item->unit->quantity ?? 1;
-                return ($discountedPrice * $unitQuantity * $quantity);
-            });
-    }
+    
     // public function edit($do_id,$pid): View
     // {
     //     $data['do'] = OrderDistribution::with(['order','odps'])->findOrFail(decrypt($do_id));
@@ -182,8 +167,14 @@ class DistributedOrderController extends Controller
                 return 3;
             case 'picked-up':
                 return 4;
-            case 'finish':
+            case 'delivered':
                 return 5;
+            case 'finish':
+                return 6;
+            case 'cancel':
+                return 7;
+            case 'cancel-complete':
+                return 8;
         }
     }
     public function statusBg($status) {
@@ -199,7 +190,13 @@ class DistributedOrderController extends Controller
             case 4:
                 return 'badge badge-primary';
             case 5:
+                return 'badge badge-dark';
+            case 6:
                 return 'badge badge-success';
+            case 7:
+                return 'badge badge-danger';
+            case 8:
+                return 'badge badge-warning';
                 
         }
     }

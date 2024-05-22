@@ -99,14 +99,14 @@
                                                                 
                                                                 {{ number_format($totalPrice, 2) }}</span> <sup>{!! isset($discount) ? $discount : '' !!}</sup>
                                                         </h6>
-                                                        @if ($do->payment_type == 1 && $status == 0)
+                                                        @if ($do->payment_type == 1 && ($status == 0 || $status == 1))
                                                             <div class="input-group">
                                                                 <input type="text" name="data[{{$key}}][open_amount]" class="form-control"
                                                                     placeholder="Enter your product price">
                                                             </div>
                                                         @endif
                                                     </div>
-                                                    @if ($do->payment_type == 1 && $status == 1 && $dop->open_amount>0)
+                                                    @if ($do->payment_type == 1 && ($status == 1 || $status == 0) && $dop->open_amount>0)
                                                         <div class="col my-auto">
                                                             <h6 class="my-auto text-center">
                                                                 <span><strong>{{ __('Bit Price : ') }}</strong>{!! get_taka_icon() !!}
@@ -114,7 +114,7 @@
                                                             </h6>
                                                         </div>
                                                     @endif
-                                                    @if($status == 0)
+                                                    @if($status == 0 || $status == 1)
                                                     <div class="col my-auto">
                                                         <div class="card mb-0">
                                                             <div class="card-body">
@@ -159,7 +159,7 @@
                         <div class="col-12 text-end">
                             <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format($subtotal).".00" }}</span></span>
                         </div>
-                        @if($status == 0)
+                        @if($status == 0 || $status == 1)
                             <div class="col-12 text-end">
                                 <input type="submit" value="Confirm" class="btn btn-success">
                             </div>
