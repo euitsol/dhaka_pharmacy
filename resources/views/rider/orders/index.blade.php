@@ -20,7 +20,7 @@
                                 <th>{{ __('Order ID') }}</th>
                                 <th>{{ __('Priority') }}</th>
                                 <th>{{ __('Pharmacies') }}</th>
-                                <th>{{ __('Price') }}</th>
+                                <th>{{ __('Delivery Address') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -35,10 +35,10 @@
                                     <td> {{ $dor->priority() }} </td>
                                     <td>
                                         @foreach ($dor->pharmacy as $key => $pharmacy)
-                                            {{$pharmacy->name}} @if($key != (count($dor->pharmacy) - 1)) {{'| '}} @endif
+                                            {{str_limit($pharmacy->name,10)}} @if($key != (count($dor->pharmacy) - 1)) {{'| '}} @endif
                                         @endforeach 
                                     </td>
-                                    <td> {{ number_format($dor->totalPrice,2) }}{!! get_taka_icon() !!} </td>
+                                    <td> {{str_limit($dor->od->order->address->street_address,30)}} </td>
                                     <td>
                                         <span class="{{ $dor->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $dor->statusTitle()))))  }}</span>
                                     </td>

@@ -62,9 +62,9 @@
                                                 <th>Sub Total</th>
                                                 <td>:</td>
                                                 <td>
-                                                    <span>{!! get_taka_icon() !!} {{number_format($totalPrice).".00"}}</span>
+                                                    <span>{!! get_taka_icon() !!} {{number_format(ceil($totalPrice))}}</span>
                                                     @if ($totalRegularPrice !== $totalPrice)
-                                                        <span class="text-danger ms-2"><del>{!! get_taka_icon() !!} {{number_format($totalRegularPrice).".00"}}</del></span> 
+                                                        <span class="text-danger ms-2"><del>{!! get_taka_icon() !!} {{number_format(ceil($totalRegularPrice))}}</del></span> 
                                                     @endif
                                                 </td>
                                             </tr>
@@ -130,7 +130,7 @@
                                                 <th><span class="{{$payment->statusBg()}}">{{$payment->statusTitle()}}</span></th>
                                                 <th>Payable Amount</th>
                                                 <td>:</td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format($payment->amount).".00"}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($payment->amount))}}</th>
                                             </tr>
                                         </table>
                                     </div>
@@ -140,7 +140,7 @@
                                 <div class="jumbotron-fluid">
                                     <div class="row justify-content-between ">
                                         <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">PAID AMOUNT</h2></div>
-                                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{isset(json_decode($payment->details,true)['amount']) ? number_format(json_decode($payment->details,true)['amount']).".00" : '--'}}</h1></div>
+                                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{isset(json_decode($payment->details,true)['amount']) ? number_format(ceil(json_decode($payment->details,true)['amount'])) : '--'}}</h1></div>
                                     </div>
                                 </div>
                             </div>

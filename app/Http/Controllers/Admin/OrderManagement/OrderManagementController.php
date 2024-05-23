@@ -102,7 +102,7 @@ class OrderManagementController extends Controller
             $odp->save();
         }
         flash()->addSuccess('Order Distributed Successfully.');
-        return redirect()->back(); 
+        return redirect()->route('om.order.order_list','pending'); 
     }
 
    

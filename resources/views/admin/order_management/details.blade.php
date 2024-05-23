@@ -112,9 +112,9 @@
                                                 <th>Sub Total</th>
                                                 <td>:</td>
                                                 <td>
-                                                    <span>{!! get_taka_icon() !!} {{number_format($totalPrice).".00"}}</span>
+                                                    <span>{!! get_taka_icon() !!} {{number_format(ceil($totalPrice))}}</span>
                                                     @if ($totalRegularPrice !== $totalPrice)
-                                                        <span class="text-danger ms-2"><del>{!! get_taka_icon() !!} {{number_format($totalRegularPrice).".00"}}</del></span> 
+                                                        <span class="text-danger ms-2"><del>{!! get_taka_icon() !!} {{number_format(ceil($totalRegularPrice))}}</del></span> 
                                                     @endif
                                                 </td>
                                             </tr>
@@ -126,7 +126,7 @@
                                             <tr>
                                                 <th>Payable Amount</th>
                                                 <td>:</td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format($totalPrice+60).".00"}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice+60))}}</th>
                                             </tr>
                                         </table>
                                     </div>
@@ -140,7 +140,7 @@
                 <div class="jumbotron-fluid">
                     <div class="row justify-content-between ">
                         <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">TOTAL AMOUNT</h2></div>
-                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{number_format($totalPrice+60).".00"}}</h1></div>
+                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{number_format(ceil($totalPrice+60))}}</h1></div>
                     </div>
                 </div>
             </div>

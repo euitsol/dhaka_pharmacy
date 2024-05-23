@@ -39,7 +39,7 @@ class DistributedOrderController extends Controller
         ->withCount(['odps' => function ($query) {
             $query->where('status','!=', -1);
         }])
-        ->where('status',$this->getStatus($status))->get()
+        ->where('status',$this->getStatus($status))->latest()->get()
         ->map(function($do){
             $do->order->totalPrice = AddToCart::with('product')
                 ->whereIn('id', json_decode($do->order->carts))

@@ -47,7 +47,7 @@
                                 <td>|</td>
                                 <th>Total Price</th>
                                 <td>:</td>
-                                <th>{{ $dor->totalPrice }}{!! get_taka_icon() !!}</th>
+                                <th>{!! get_taka_icon() !!}{{ number_format(ceil($dor->totalPrice)) }}</th>
                             </tr>
                             <tr>
                                 <th>Delivery Instraction</th>

@@ -20,7 +20,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-6">
-                            <h4 class="card-title">{{ __(ucwords($statusTitle) . ' Order Details') }}</h4>
+                            <h4 class="card-title">{{ __(ucwords(strtolower((str_replace('-', ' ', $statusTitle)))).' Order Details') }}</h4>
                         </div>
                         <div class="col-6 text-end">
                             @include('admin.partials.button', [
@@ -100,9 +100,9 @@
                                                     <th>{{ $odr->rider->name }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Rider Email</th>
+                                                    <th>Rider Gender</th>
                                                     <td>:</td>
-                                                    <th>{{ $odr->rider->email }}</th>
+                                                    <th>{{ $odr->rider->gender }}</th>
                                                 </tr>
                                                 <tr>
                                                     <th>Rider Contact</th>
@@ -140,7 +140,7 @@
                         @csrf
                         <div class="row mb-3">
                             <div class="col-12 px-4 text-end">
-                                <span class="{{ $statusBg }}">{{ $statusTitle }}</span>
+                                <span class="{{ $statusBg }}">{{  __(ucwords(strtolower((str_replace('-', ' ', $statusTitle))))) }}</span>
                             </div>
                         </div>
                         @php
@@ -236,7 +236,7 @@
                             </div>
                         @endforeach
                         <div class="col-12 text-end">
-                            <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format($subtotal).".00" }}</span></span>
+                            <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format(ceil($subtotal)) }}</span></span>
                         </div>
                         @if($status == 0 || $status == 1)
                             <div class="col-12 text-end">

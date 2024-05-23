@@ -38,7 +38,7 @@ class OrderManagementController extends Controller
         if($this->getStatus($status) == 3){
             $query->orWhere('status',-1);
         }
-        $data['dops'] = $query->get()->groupBy('order_distribution_id')
+        $data['dops'] = $query->latest()->get()->groupBy('order_distribution_id')
         ->map(function($dop,$key) use($status){
             $dop->od = OrderDistribution::findOrFail($key);
             $dop->odr = OrderDistributionRider::with('rider')->where('order_distribution_id',$key)->where('status','!=',0)->first();

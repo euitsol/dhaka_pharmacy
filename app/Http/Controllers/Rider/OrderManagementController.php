@@ -20,12 +20,12 @@ class OrderManagementController extends Controller
     public function index($status): View
     {
         $data['status'] = $status;
-        $query = OrderDistributionRider::with(['od.odps','od.order','rider'])->where('rider_id',rider()->id);
+        $query = OrderDistributionRider::with(['od.odps','od.order.address','rider'])->where('rider_id',rider()->id);
         $query->where('status',$this->getStatus($status));
         if($this->getStatus($status) == 0){
             $query->where('status',-1);
         }
-        $data['dors'] = $query->get()->map(function($dor){
+        $data['dors'] = $query->orderBy('priority','desc')->latest()->get()->map(function($dor){
             $dor->pharmacy = $dor->od->odps->unique('pharmacy_id')->map(function($dop){
                 return $dop->pharmacy;
             })->values();
