@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('order_distribution_id');
             $table->unsignedBigInteger('rider_id');
-            $table->tinyInteger('status')->default(3)->comment('0=dispute, 3=assign, 4=collect, 5=delivared, 6=complete(with payment), 7=cancel, 8=cancel_complete');
+            $table->tinyInteger('status')->default(3)->comment('0=dispute, 3=assign, 4=collect, 5=delivared, 6=complete(with payment), 7=cancel, 8=cancel_complete, -1 = old dispute');
             $table->tinyInteger('priority')->comment('0=Normal, 1=Medium, 2=High');
             $table->longText('instraction')->nullable();
             $table->longText('dispute_note')->nullable();

@@ -18,11 +18,14 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Order ID') }}</th>
+                                @if($rider)
+                                    <th>{{ __('Rider') }}</th>
+                                @endif
                                 <th>{{ __('Total Product') }}</th>
                                 <th>{{ __('Payment Type') }}</th>
                                 <th>{{ __('Distribution Type') }}</th>
                                 @if($prep_time)
-                                <th>{{ __('Preparetion Time') }}</th>
+                                    <th>{{ __('Preparetion Time') }}</th>
                                 @endif
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -35,6 +38,15 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $dop->od->order->order_id }} </td>
+                                    @if($rider)
+                                        <td> 
+                                            @if($dop->odr)
+                                                <span class="badge badge-info">{{$dop->odr->rider->name}}</span> 
+                                            @else 
+                                                <span class="badge badge-warning">{{__("Not Assign Yet")}}</span> 
+                                            @endif 
+                                        </td>
+                                    @endif
                                     <td> {{ count($dop) }} </td>
                                     <td> {{ $dop->od->paymentType() }} </td>
                                     <td> {{ $dop->od->distributionType() }} </td>

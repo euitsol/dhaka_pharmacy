@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PharmacyOrderRequest;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
+use App\Models\OrderDistributionRider;
 use App\Models\Pharmacy;
 use App\Models\PharmacyDiscount;
 use Illuminate\Http\JsonResponse;
@@ -26,8 +27,11 @@ class OrderManagementController extends Controller
     {
         $data['status'] = $status;
         $data['prep_time'] = false;
+        $data['rider'] = false;
         if($this->getStatus($status) == 0 || $this->getStatus($status) == 1){
             $data['prep_time'] = true;
+        }else{
+            $data['rider'] = true;
         }
         $query = OrderDistributionPharmacy::with(['cart','pharmacy','od'])->where('pharmacy_id',pharmacy()->id);
         $query->where('status',$this->getStatus($status));
@@ -37,6 +41,7 @@ class OrderManagementController extends Controller
         $data['dops'] = $query->get()->groupBy('order_distribution_id')
         ->map(function($dop,$key) use($status){
             $dop->od = OrderDistribution::findOrFail($key);
+            $dop->odr = OrderDistributionRider::with('rider')->where('order_distribution_id',$key)->where('status','!=',0)->first();
             $dop->statusTitle = $this->statusTitle($this->getStatus($status));
             $dop->statusBg = $this->statusBg($this->getStatus($status));
             return $dop;
@@ -70,6 +75,7 @@ class OrderManagementController extends Controller
         $data['status'] = $this->getStatus($status);
         $data['statusTitle'] = $this->statusTitle($this->getStatus($status));
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
+        $data['odr'] = OrderDistributionRider::with('rider')->where('status','!=',0)->where('order_distribution_id',decrypt($do_id))->first();
         return view('pharmacy.orders.details',$data);
     }
 
@@ -108,8 +114,10 @@ class OrderManagementController extends Controller
                 return 3;
             case 'old-disputed':
                 return -1;
-            case 'complete':
+            case 'shipped':
                 return 4;
+            case 'complete':
+                return 5;
             case 'cancel':
                 return 7;
             case 'cancel-complete':
@@ -129,6 +137,8 @@ class OrderManagementController extends Controller
             case -1:
                 return 'badge badge-danger';
             case 4:
+                return 'badge badge-dark';
+            case 5:
                 return 'badge badge-success';
             case 7:
                 return 'badge badge-danger';
@@ -151,10 +161,12 @@ class OrderManagementController extends Controller
             case -1:
                 return 'dispute';
             case 4:
+                return 'shipped';
+            case 5:
                 return 'complete';
-            case 4:
+            case 7:
                 return 'cancel';
-            case 4:
+            case 8:
                 return 'cancel-complete';
         }
     }

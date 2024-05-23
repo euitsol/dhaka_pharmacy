@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('order_distribution_id');
             $table->unsignedBigInteger('cart_id');
             $table->unsignedBigInteger('pharmacy_id');
-            $table->tinyInteger('status')->default(0)->comment('0= pending, 1= preparing, 2=distributed, 3=dispute,  -1=old disputed, 4=complete, 7=cancel, 8=cancel complete');
+            $table->tinyInteger('status')->default(0)->comment('0= pending, 1= preparing, 2=accept, 3=dispute,  -1=old disputed, 4=shiped, 5=complete, 7=cancel, 8=cancel complete');
             $table->timestamps();
             $table->softDeletes();
             $this->addMorphedAuditColumns($table);

@@ -22,6 +22,9 @@ class OrderManagementController extends Controller
         $data['status'] = $status;
         $query = OrderDistributionRider::with(['od.odps','od.order','rider'])->where('rider_id',rider()->id);
         $query->where('status',$this->getStatus($status));
+        if($this->getStatus($status) == 0){
+            $query->where('status',-1);
+        }
         $data['dors'] = $query->get()->map(function($dor){
             $dor->pharmacy = $dor->od->odps->unique('pharmacy_id')->map(function($dop){
                 return $dop->pharmacy;
@@ -68,6 +71,8 @@ class OrderManagementController extends Controller
         switch ($status) {
             case 'dispute':
                 return 0;
+            case 'old-dispute':
+                return -1;
             case 'ongoing':
                 return 3;
             case 'collect':
@@ -86,6 +91,7 @@ class OrderManagementController extends Controller
     public function statusBg($status) {
         switch ($status) {
             case 0:
+            case -1:
                 return 'badge badge-danger';
             case 3:
                 return 'badge bg-info';
@@ -107,6 +113,7 @@ class OrderManagementController extends Controller
     public function statusTitle($status) {
         switch ($status) {
             case 0:
+            case -1:
                 return 'Dispute';
             case 3:
                 return 'Ongoing';

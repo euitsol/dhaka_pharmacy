@@ -1,4 +1,18 @@
 @extends('pharmacy.layouts.master', ['pageSlug' => $statusTitle . '_orders'])
+@push('css')
+
+    <style>
+        .rider_image{
+            text-align: center;
+        }
+        .rider_image img{
+            height: 250px;
+            width: 250px;
+            border-radius: 50%; 
+        }
+    </style>
+    
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -57,6 +71,71 @@
                     </table>
                 </div>
                 <div class="card-footer">
+                    @if($odr)
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">{{__('Rider Details')}}</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="rider_image">
+                                                    <img src="{{storage_url($odr->rider->image)}}" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-secondary">
+                                                <h3 class="text-white m-0">{{$odr->rider->name}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <table class="table table-striped datatable">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Rider Name</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->name }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rider Email</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->email }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rider Contact</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->phone }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rider Age</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->age }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Delivery Priority</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->priority() }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Operational Area</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->operation_area->name }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Operational Sub Area</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->operation_sub_area->name }}</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <form action="{{route('pharmacy.order_management.update',encrypt($do->id))}}" method="POST">
                         @csrf
                         <div class="row mb-3">
