@@ -44,8 +44,6 @@ class OrderDistribution extends BaseModel
                 return 'badge badge-success';
             case 7:
                 return 'badge badge-danger';
-            case 8:
-                return 'badge badge-warning';
                 
         }
     }
@@ -68,8 +66,6 @@ class OrderDistribution extends BaseModel
                 return 'Finish';
             case 7:
                 return 'Cancel';
-            case 8:
-                return 'Cancel Complete';
         }
     }
     public function paymentType() {
