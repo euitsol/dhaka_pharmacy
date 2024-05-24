@@ -37,4 +37,9 @@ class Pharmacy extends AuthenticateBaseModel
     public function pharmacyDiscounts(){
         return $this->hasMany(PharmacyDiscount::class,'pharmacy_id');
     }
+
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'creater');
+    }
 }
