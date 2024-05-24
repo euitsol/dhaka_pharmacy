@@ -1,100 +1,112 @@
-const style = "mapbox://styles/qwaszx342432/clwjxz6ta007c01pogy8u4y4t";
+mapboxgl.accessToken = mapbox_token;
+if (!mapboxgl.supported()) {
+    alert(
+        "Your browser does not support Mapbox. Please use a different browser"
+    );
+}
 
-$(document).ready(function () {
-    mapboxgl.accessToken = mapbox_token;
-    if (!mapboxgl.supported()) {
-        alert(
-            "Your browser does not support Mapbox. Please use a different browser"
-        );
-    }
+// const style = "mapbox://styles/qwaszx342432/clwjxz6ta007c01pogy8u4y4t";
+const style = "mapbox://styles/mapbox/streets-v9";
+const dlng = 90.36861933352624;
+const dlat = 23.807125501395834;
 
-    const lat1 = $("#user_d_map").attr("data-lat");
-    const lng1 = $("#user_d_map").attr("data-lng");
-
-    if (lat1 && lng1) {
-        const map1 = new mapboxgl.Map({
-            container: "user_d_map", // container ID
-            style: style, // style URL
-            center: [lng1, lat1], // starting position [lng, lat]
-            zoom: 15, // starting zoom
-        });
-
-        const marker1 = new mapboxgl.Marker() // initialize a new marker
-            .setLngLat([lng1, lat1]) // Marker [lng, lat] coordinates
-            .addTo(map1); // Add the marker to the map
-    }
-
-    const map2 = new mapboxgl.Map({
-        container: "user_a_map", // container ID
-        style: style, // style URL
-        center: [90.36861933352624, 23.807125501395834],
-        zoom: 10, // starting zoom
+function initializeMap(container, style, center, zoom) {
+    return new mapboxgl.Map({
+        container: container,
+        style: style,
+        center: center,
+        zoom: zoom,
     });
+}
 
-    const geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken, // Set the access token
-        mapboxgl: mapboxgl, // Set the mapbox-gl instance
-        marker: false, // Do not use the default marker style
+function initializeGeocode(map) {
+    let geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker: false,
         placeholder: "Search for your address",
     });
+    map.addControl(geocoder);
+}
 
-    map2.addControl(geocoder);
+function addMarker(map, center) {
+    return new mapboxgl.Marker().setLngLat(center).addTo(map);
+}
 
-    let marker2;
-
-    map2.on("click", function (e) {
-        if (marker2) {
-            // Check if the marker exists before trying to remove it
-            marker2.remove();
-        }
-
-        marker2 = new mapboxgl.Marker().setLngLat(e.lngLat).addTo(map2);
-
-        // Fetch the address for the clicked location
-        fetch(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${mapboxgl.accessToken}`
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                const address = data.features[0].place_name;
-                console.log(address);
-
-                const [street, city] = address.split(", ");
-
-                // Autofill the input fields
-                $('[name="address"]').val(address);
-                $('[name="street"]').val(street);
-                $('[name="city"]').val(city);
-            });
-
-        $('[name="lat"]').val(e.lngLat.lat);
-        $('[name="long"]').val(e.lngLat.lng);
-
-        console.log(`Longitude: ${e.lngLat.lng}, Latitude: ${e.lngLat.lat}`);
-    });
-    // Add a button to track the user's current location
-    map2.addControl(
+function addGeolocateControl(map) {
+    map.addControl(
         new mapboxgl.GeolocateControl({
             positionOptions: {
                 enableHighAccuracy: true,
             },
             trackUserLocation: true,
             fitBoundsOptions: {
-                maxZoom: 22, // Set the maximum zoom level when panning to the user's location
+                maxZoom: 20,
             },
         })
     );
+}
 
-    map2.addControl(new mapboxgl.NavigationControl(), "top-left");
+function addNavigationControl(map) {
+    map.addControl(new mapboxgl.NavigationControl(), "top-left");
+}
 
-    $("#address_modal").on("shown.bs.modal", function () {
-        map2.resize();
+function clickNautofill(map, marker, parentID) {
+    // Responsible for marking a pointer and autofill the data
+    map.on("click", function (e) {
+        if (marker) {
+            marker.remove();
+        }
+
+        marker = addMarker(map, e.lngLat);
+
+        fetch(
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${mapboxgl.accessToken}`
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                const address = data.features[0].place_name;
+                const [street, city] = address.split(", ");
+
+                // Autofill the input fields
+                $(parentID + ' input[name="address"]').val(address);
+                $(parentID + ' input[name="street"]').val(street);
+                $(parentID + ' input[name="city"]').val(city);
+            });
+
+        $(parentID + ' input[name="lat"]').val(e.lngLat.lat);
+        $(parentID + ' input[name="long"]').val(e.lngLat.lng);
+    });
+}
+
+//Dashboard
+$(document).ready(function () {
+    const lat = $("#user_d_map").attr("data-lat");
+    const lng = $("#user_d_map").attr("data-lng");
+
+    if (lat && lng) {
+        const map = initializeMap("user_d_map", style, [lng, lat], 15);
+        addMarker(map, [lng, lat]);
+    }
+});
+
+//Add new address
+$(document).ready(function () {
+    const map = initializeMap("user_a_map", style, [dlng, dlat], 15);
+    initializeGeocode(map);
+    clickNautofill(map, null, "#address_add_modal");
+    addGeolocateControl(map);
+    addNavigationControl(map);
+
+    $("#address_add_modal").on("shown.bs.modal", function () {
+        map.resize();
     });
     $(".address-modal .close").on("click", function () {
-        $("#address_modal").modal("hide");
+        $("#address_add_modal").modal("hide");
     });
 });
 
+//Address Details
 $(document).ready(function () {
     const maps = {};
 
@@ -103,13 +115,9 @@ $(document).ready(function () {
         const lat = parseFloat($(this).data("lat"));
         const containerId = $(this).attr("id");
         const mapName = "map" + (index + 1);
-        let map = new mapboxgl.Map({
-            container: containerId,
-            style: style,
-            center: [lng, lat],
-            zoom: 10,
-        });
-        const marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
+        let map = initializeMap(containerId, style, [lng, lat], 15);
+        addMarker(map, [lng, lat]);
+        addNavigationControl(map);
         maps[mapName] = map;
     });
 
@@ -122,7 +130,7 @@ $(document).ready(function () {
     });
 });
 
-//Details
+//Edit Address
 $(document).ready(function () {
     $(".edit-btn").on("click", function () {
         let id = $(this).attr("data-id");
@@ -163,85 +171,21 @@ $(document).ready(function () {
                             response.delivery_instruction
                         );
 
-                        let map = new mapboxgl.Map({
-                            container: "user_e_map",
-                            style: style,
-                            center: [response.longitude, response.latitude],
-                            zoom: 15,
-                        });
-                        let cmarker = new mapboxgl.Marker()
-                            .setLngLat([response.longitude, response.latitude])
-                            .addTo(map);
-
-                        const geocoder = new MapboxGeocoder({
-                            accessToken: mapboxgl.accessToken, // Set the access token
-                            mapboxgl: mapboxgl, // Set the mapbox-gl instance
-                            marker: false, // Do not use the default marker style
-                            placeholder: "Search for your address",
-                        });
-
-                        map.addControl(geocoder);
-
-                        map.on("click", function (e) {
-                            if (cmarker) {
-                                cmarker.remove();
-                            }
-
-                            cmarker = new mapboxgl.Marker()
-                                .setLngLat(e.lngLat)
-                                .addTo(map);
-
-                            // Fetch the address for the clicked location
-                            fetch(
-                                `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${mapboxgl.accessToken}`
-                            )
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    const address = data.features[0].place_name;
-                                    console.log(address);
-
-                                    const [street, city] = address.split(", ");
-
-                                    // Autofill the input fields
-                                    $(
-                                        '#address_edit_modal input[name="address"]'
-                                    ).val(address);
-                                    $(
-                                        '#address_edit_modal input[name="street"]'
-                                    ).val(street);
-                                    $(
-                                        '#address_edit_modal input[name="city"]'
-                                    ).val(city);
-                                });
-
-                            $('#address_edit_modal input[name="lat"]').val(
-                                e.lngLat.lat
-                            );
-                            $('#address_edit_modal input[name="long"]').val(
-                                e.lngLat.lng
-                            );
-
-                            console.log(
-                                `Longitude: ${e.lngLat.lng}, Latitude: ${e.lngLat.lat}`
-                            );
-                        });
-                        // Add a button to track the user's current location
-                        map.addControl(
-                            new mapboxgl.GeolocateControl({
-                                positionOptions: {
-                                    enableHighAccuracy: true,
-                                },
-                                trackUserLocation: true,
-                                fitBoundsOptions: {
-                                    maxZoom: 22, // Set the maximum zoom level when panning to the user's location
-                                },
-                            })
+                        let map = initializeMap(
+                            "user_e_map",
+                            style,
+                            [response.longitude, response.latitude],
+                            15
                         );
+                        let marker = addMarker(map, [
+                            response.longitude,
+                            response.latitude,
+                        ]);
 
-                        map.addControl(
-                            new mapboxgl.NavigationControl(),
-                            "top-left"
-                        );
+                        initializeGeocode(map);
+                        clickNautofill(map, marker, "#address_edit_modal");
+                        addGeolocateControl(map);
+                        addNavigationControl(map);
 
                         $("#address_edit_modal").on(
                             "shown.bs.modal",

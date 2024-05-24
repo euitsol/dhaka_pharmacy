@@ -78,8 +78,7 @@ class AddressController extends Controller
     {
         $data = Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->where('id', $id)->get()->first();
         if(!empty($data)){
-            $data->deleter_id = user()->id;
-            $data->deleter_type = get_class(user());
+            $data->deleter()->associate(user());
             $data->update();
             $data->delete();
 
@@ -96,21 +95,18 @@ class AddressController extends Controller
     public function setDefault($id = null): void
     {
         $datas = Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->get();
-        foreach($datas as $data){
-            if($id == null){
+        foreach($datas as $key => $data){
+            if($id == null && $key == 0){ //randomly make default if there is not specific id
                 $data->is_default = true;
-                $data->updater_id = user()->id;
-                $data->updater_type = get_class(user());
+                $data->updater()->associate(user());
                 $data->update();
             }elseif($id == $data->id){
                 $data->is_default = true;
-                $data->updater_id = user()->id;
-                $data->updater_type = get_class(user());
+                $data->updater()->associate(user());
                 $data->update();
             }else{
                 $data->is_default = false;
-                $data->updater_id = user()->id;
-                $data->updater_type = get_class(user());
+                $data->updater()->associate(user());
                 $data->update();
             }
         }

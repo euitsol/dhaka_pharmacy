@@ -203,7 +203,7 @@
                                 <h3>Address</h3>
                             </div>
                             <div class="btn">
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#address_modal">Add
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#address_add_modal">Add
                                     Address</a>
                             </div>
                         </div>
