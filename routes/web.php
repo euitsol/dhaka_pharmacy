@@ -81,6 +81,7 @@ use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
 use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\User\AddressController as UserAddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -163,7 +164,7 @@ Route::prefix('user')->group(function () {
 
 
 
-//SSL Commerz Routes 
+//SSL Commerz Routes
 
 Route::controller(SslCommerzController::class)->prefix('payment')->name('payment.')->group(function () {
     // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
@@ -336,7 +337,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('delete/{id}', 'delete')->name('district_manager_delete');
         });
 
-        
+
 
 
 
@@ -382,7 +383,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
                 Route::get('accept/{id}', 'accept')->name('accept.local_area_manager_kyc_status');
                 Route::put('declained/{id}', 'declained')->name('declined.local_area_manager_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('local_area_manager_kyc_delete');
-                
+
             });
 
             Route::get('/settings', [LamKycSettingsController::class, 'kycSettings'])->name('local_area_manager_kyc_settings');
@@ -515,9 +516,9 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
     });
 
-    
 
-    // Notification Settings 
+
+    // Notification Settings
     Route::controller(PushNotificationSetting::class)->prefix('push-notification')->name('push.')->group(function () {
         Route::get('index', 'index')->name('ns');
         Route::post('update', 'store')->name('update.ns');
@@ -540,7 +541,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('/order-distribution/{id}', 'order_distribution')->name('order_distribution');
             Route::post('/order-distribution/{order_id}', 'order_distribution_store')->name('order_distribution');
         });
-       
+
     });
 
     // Admin Distributed Order
@@ -553,7 +554,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
 
         Route::post('/rider/{do_id}', 'do_rider')->name('do_rider');
     });
-       
+
 
 
     // Admin Payment Management
@@ -562,7 +563,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('/{status}', 'index')->name('payment_list');
             Route::get('/details/{id}', 'details')->name('payment_details');
         });
-       
+
     });
 
     // Site Settings
@@ -708,7 +709,7 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::get('delete/{id}', 'delete')->name('delete');
     });
 
-   
+
 });
 // Rider Auth Routes
 Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], function () {
@@ -738,7 +739,7 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
     Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
 
-    // Add To Cart Routes 
+    // Add To Cart Routes
     Route::get('/add-to-cart', [FrontendBaseController::class, 'add_to_cart'])->name('product.add_to_cart');
     Route::get('/remove-to-cart', [FrontendBaseController::class, 'remove_to_cart'])->name('product.remove_to_cart');
     Route::get('/clear-cart/{uid}', [FrontendBaseController::class, 'clearCart'])->name('product.clear_cart');
@@ -747,7 +748,7 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
     Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
     Route::get('/item/unit/{unit_id}/{cart_id}', [FrontendBaseController::class, 'itemUnit'])->name('cart.item.unit');
 
-    // Checkout Routes 
+    // Checkout Routes
     Route::post('/product/single-order', [CheckoutController::class, 'single_order'])->name('product.single_order');
     Route::get('/order/intermediate/{multiple?}', [CheckoutController::class, 'int_order'])->name('product.int');
     Route::get('/product/checkout/{order_id}', [CheckoutController::class, 'checkout'])->name('product.checkout');
@@ -756,6 +757,15 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
     Route::get('/product/order/failed/{order_id}', [CheckoutController::class, 'order_failed'])->name('product.order.failed');
     Route::get('/product/order/cancel/{order_id}', [CheckoutController::class, 'order_cancel'])->name('product.order.cancel');
 
+    //Address
+    Route::controller(UserAddressController::class)->prefix('address')->name('u.as.')->group(function () {
+        Route::get('list', 'list')->name('list');
+        Route::post('store', 'store')->name('store');
+        Route::get('details/{id}', 'details')->name('details');
+        Route::put('update', 'update')->name('update');
+
+        Route::get('delete/{id}', 'delete')->name('delete');
+    });
 });
 
 // Frontend Routes

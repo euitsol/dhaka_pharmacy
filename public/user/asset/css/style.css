@@ -4,33 +4,43 @@
     --primary: #DEEBCF;
     --secondery: #C2E7FC;
     --bg: #EEEEEE;
-    --text: #000;   
+    --text: #000;
     --btn_bg: #2581B8;
     --white: #fff;
 }
+
 /*====== Global font size varriable ====== */
 :root{
     --primary_heading_size: 24px;
     --text_size: 20px;
 }
-.btn{
+
+/* Global Paddings */
+:root{
+    --pad-1: 1rem 1rem;
+}
+
+/* .btn{
     padding: 0;
     border: none;
-}
+} */
 /*======== Global Typograpy ======*/
 h2{
     font-size: 24px;
     font-weight: 700;
     line-height: 30px;
 }
+
 h3{
     font-size: 24px;
     font-weight: 600;
     line-height: 30px;
 }
+
 body{
     font-family: "Inter", sans-serif;
 }
+
 .container{
     max-width: 1440px;
     padding: 0 30px;
