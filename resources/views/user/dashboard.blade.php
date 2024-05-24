@@ -243,9 +243,6 @@
                     document.getElementById('logout-form').submit();">
                             <img src="{{ asset('user/asset/img/log-out.png') }}" alt="">
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
                     </div>
                 </div>
             </div>

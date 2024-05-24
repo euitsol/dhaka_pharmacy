@@ -35,11 +35,11 @@
                     <a href="#">Robin</a>
                 </div>
                 <div class="profile">
-                    <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                    <a href="javascript:void(0)" class="nav-link dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-expanded="false" id="dropdownMenuButton">
                         <img src="{{ asset('user/asset/img/user.png') }}" alt="">
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" href="#"><img
                                     src="{{ asset('user/asset/img/manage-account.png') }}" alt="">
                                 <span>Manage My Account</span></a></li>
@@ -61,7 +61,6 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
-
                 </div>
             </div>
         </div>
