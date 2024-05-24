@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Pharmacy;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pharmacy\AddressRequest;
+use App\Models\Address;
 use App\Models\Documentation;
 use App\Models\OperationArea;
 use App\Models\OperationSubArea;
@@ -25,10 +27,35 @@ class PharmacyProfileController extends Controller
     public function profile(): View
     {
         $data['document'] = Documentation::where('module_key', 'pharmacy_profile_documentation')->first();
-        $data['pharmacy'] = Pharmacy::findOrFail(pharmacy()->id);
+        $data['pharmacy'] = Pharmacy::with(['address'])->findOrFail(pharmacy()->id);
         $data['operation_areas'] = OperationArea::activated()->latest()->get();
         $data['operation_sub_areas'] = OperationSubArea::activated()->latest()->get();
+
         return view('pharmacy.profile.profile', $data);
+    }
+
+    public function address(AddressRequest $request): RedirectResponse
+    {
+        $address = Address::where('creater_id', pharmacy()->id)->where('creater_type', get_class(pharmacy()))->get();
+        if($address->count() > 0){
+            $save = $address->first();
+        }else{
+            $save = new Address;
+        }
+
+        $save->longitude = $request->long;
+        $save->latitude = $request->lat;
+        $save->address = $request->address;
+        $save->city = $request->city;
+        $save->street_address = $request->street;
+        $save->apartment = $request->apartment;
+        $save->floor = $request->floor;
+        $save->delivery_instruction = $request->instruction;
+        $save->creater()->associate(pharmacy());
+        $save->save();
+
+        flash()->addSuccess('Address modified successfully');
+        return redirect()->back();
     }
 
     public function update(Request $request)
@@ -65,7 +92,7 @@ class PharmacyProfileController extends Controller
             $pharmacy->cv = $path;
         }
 
-        
+
         if(empty($pharmacy->oa_id)){
             $pharmacy->oa_id = $request->oa_id;
         }
