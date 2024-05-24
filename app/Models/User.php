@@ -30,4 +30,9 @@ class User extends AuthenticateBaseModel
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function address()
+    {
+        return $this->morphMany(Address::class, 'creater');
+    }
 }

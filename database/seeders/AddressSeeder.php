@@ -14,55 +14,46 @@ class AddressSeeder extends Seeder
     public function run(): void
     {
         Address::create([
-            'user_id' => 1,
-            'name' => 'Md Shariful Islam',
-            'phone' => '01792980503',
-            'city' => 'Lalmonirhat',
-            'street_address' => 'Baninagar, Kakina, Kaliganj, Lalmonirhat, Rangpur.',
-            'latitude' => '25.952858464386182',
-            'longitude' => '89.24699435090237',
-            'apartment' => 'N/A',
-            'floor' => 'N/A',
-            'apartment_type' => 'home',
-            'delivery_instruction' => 'Please give me a call before delivering my product.',
+            'city' => 'Mirpur - 10',
+            'street_address' => '123 Main St',
+            'latitude' => 40.7128,
+            'longitude' => -74.0060,
+            'apartment' => 'Apt 101',
+            'floor' => '2nd',
+            'delivery_instruction' => 'Ring the bell twice',
+            'created_at' => now(),
+            'address' => '123 Main St, Mirpur - 10',
+            'note' => 'This is a sample address note',
+            'creater_id' => 1,
+            'creater_type' => 'App\Models\User'
         ]);
         Address::create([
-            'user_id' => 2,
-            'name' => 'Md Sayful Islam',
-            'phone' => '01792980503',
-            'city' => 'Lalmonirhat',
-            'street_address' => 'Baninagar, Kakina, Kaliganj, Lalmonirhat',
-            'latitude' => '25.952858464386182',
-            'longitude' => '89.24699435090237',
-            'apartment' => 'N/A',
-            'floor' => 'N/A',
-            'apartment_type' => 'home',
-            'delivery_instruction' => 'Please give me a call before delivering my product.',
+            'city' => 'Mirpur - 10',
+            'street_address' => '123 Main St',
+            'latitude' => 40.7128,
+            'longitude' => -74.0060,
+            'apartment' => 'Apt 101',
+            'floor' => '2nd',
+            'delivery_instruction' => 'Ring the bell twice',
+            'created_at' => now(),
+            'address' => '123 Main St, Mirpur - 10',
+            'note' => 'This is a sample address note',
+            'creater_id' => 2,
+            'creater_type' => 'App\Models\User'
         ]);
         Address::create([
-            'user_id' => 3,
-            'name' => 'Md Shofiqul Islam',
-            'phone' => '01792980503',
-            'city' => 'Lalmonirhat',
-            'street_address' => 'Baninagar, Kakina, Kaliganj, Lalmonirhat, Rangpur, Bangladesh.',
-            'latitude' => '25.952858464386182',
-            'longitude' => '89.24699435090237',
-            'apartment' => 'N/A',
-            'floor' => 'N/A',
-            'apartment_type' => 'home',
-            'delivery_instruction' => 'Please give me a call before delivering my product.',
+            'city' => 'Mirpur - 10',
+            'street_address' => '123 Main St',
+            'latitude' => 40.7128,
+            'longitude' => -74.0060,
+            'apartment' => 'Apt 101',
+            'floor' => '2nd',
+            'delivery_instruction' => 'Ring the bell twice',
+            'created_at' => now(),
+            'address' => '123 Main St, Mirpur - 10',
+            'note' => 'This is a sample address note',
+            'creater_id' => 3,
+            'creater_type' => 'App\Models\User'
         ]);
-        
-
-
-
-
-
-
-
-
-
-
-
     }
 }
