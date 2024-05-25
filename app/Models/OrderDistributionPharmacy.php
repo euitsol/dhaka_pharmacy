@@ -38,7 +38,13 @@ class OrderDistributionPharmacy extends BaseModel
             case -1:
                 return 'badge badge-danger';
             case 4:
+                return 'badge badge-dark';
+            case 5:
                 return 'badge badge-success';
+            case 7:
+                return 'badge badge-danger';
+            case 8:
+                return 'badge badge-warning';
         }
     }
     
@@ -50,13 +56,19 @@ class OrderDistributionPharmacy extends BaseModel
             case 1:
                 return 'Preparing';
             case 2:
-                return 'Accepted';
+                return 'Waiting for Rider';
             case 3:
                 return 'Dispute';
             case -1:
                 return 'Old Disputed';
             case 4:
+                return 'Shipped';
+            case 5:
                 return 'Complete';
+            case 7:
+                return 'Cancel';
+            case 8:
+                return 'Cancel Complete';
         }
     }
 }

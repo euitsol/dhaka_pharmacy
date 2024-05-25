@@ -77,20 +77,13 @@ function createCSV($filename = 'permissions.csv'): string
 }
 
 function storage_url($urlOrArray){
-
-    if(((is_array($urlOrArray) || is_object($urlOrArray)) && !$urlOrArray->isNotEmpty()) || empty($urlOrArray)){
-        return asset('frontend\default\cat_img.png');
-    }
-
-
-
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
         $result = '';
         $count = 0;
         $itemCount = count($urlOrArray);
         foreach ($urlOrArray as $index => $url) {
 
-            $result .= asset('storage/'.$url);
+            $result .= $url ? asset('storage/'.$url) : asset('frontend\default\cat_img.png');
 
             if($count === $itemCount - 1) {
                 $result .= '';
@@ -101,7 +94,7 @@ function storage_url($urlOrArray){
         }
         return $result;
     } else {
-        return asset('storage/'.$urlOrArray);
+        return $urlOrArray ? asset('storage/'.$urlOrArray) : asset('frontend\default\cat_img.png');
     }
 }
 

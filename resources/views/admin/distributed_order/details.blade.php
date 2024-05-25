@@ -1,4 +1,18 @@
 @extends('admin.layouts.master', ['pageSlug' => 'order_'.strtolower($do->statusTitle())])
+@push('css')
+
+    <style>
+        .rider_image{
+            text-align: center;
+        }
+        .rider_image img{
+            height: 250px;
+            width: 250px;
+            border-radius: 50%; 
+        }
+    </style>
+    
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -34,7 +48,7 @@
                                 <td>|</td>
                                 <th>{{__('Total Price')}}</th>
                                 <td>:</td>
-                                <th>{!! get_taka_icon(). number_format($totalPrice).".00" !!}</th>
+                                <th>{!! get_taka_icon(). number_format(ceil($totalPrice)) !!}</th>
                             </tr>
                             <tr>
                                 <th>{{__('Payment Type')}}</th>
@@ -64,7 +78,7 @@
                 </div>
                 <div class="card-footer">
                     @if($do->status !=0 && $do->status !=1)
-                        @if(auth()->user()->can('do_rider'))
+                        @if(auth()->user()->can('do_rider') && !$do_rider)
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
@@ -82,15 +96,8 @@
                                         <div class="row">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('Rider')}}</label>
-                                                @if($do_rider)
-                                                    @php
-                                                        $area = $do_rider->rider->operation_area ? ($do_rider->rider->operation_sub_area ? "( ".$do_rider->rider->operation_area->name." - " : "( ".$do_rider->rider->operation_area->name." )")  : '';
-                                                        $sub_area = $do_rider->rider->operation_sub_area ? ($do_rider->rider->operation_area ? $do_rider->rider->operation_sub_area->name." )" : "( ".$do_rider->rider->operation_sub_area->name." )" )  : '';
-                                                    @endphp
-                                                    <input type="text" class="form-control" value="{{$do_rider->rider->name.$area.$sub_area}}" disabled>
-                                                @else
                                                     <select name="rider_id" class="form-control">
-                                                        <option selected hidden>{{__('Select Rider')}}</option>
+                                                        <option selected hidden value="">{{__('Select Rider')}}</option>
                                                         @foreach ($riders as $rider)
                                                             @php
                                                                 $area = $rider->operation_area ? ($rider->operation_sub_area ? "( ".$rider->operation_area->name." - " : "( ".$rider->operation_area->name." )")  : '';
@@ -99,63 +106,103 @@
                                                             <option value="{{$rider->id}}" {{$rider->id == old('rider_id') ? 'selected' : ''}}>{{$rider->name.$area.$sub_area}}</option>
                                                         @endforeach
                                                     </select>
-                                                @endif
                                                 @include('alerts.feedback', ['field' => 'rider_id'])
 
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>{{__('Priority')}}</label>
-                                                @if($do_rider)
-                                                    <input type="text" class="form-control" value="{{$do_rider->priority()}}" disabled>
-                                                @else
                                                     <select name="priority" class="form-control">
-                                                        <option selected hidden>{{__('Select Priority')}}</option>
-                                                        <option value="1">{{__('Normal')}}</option>
-                                                        <option value="2">{{__('Medium')}}</option>
-                                                        <option value="3">{{__('High')}}</option>
+                                                        <option selected hidden value="">{{__('Select Priority')}}</option>
+                                                        <option value="0">{{__('Normal')}}</option>
+                                                        <option value="1">{{__('Medium')}}</option>
+                                                        <option value="2">{{__('High')}}</option>
                                                     </select>
-                                                @endif
                                                 @include('alerts.feedback', ['field' => 'priority'])
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label>{{__('Instraction')}}</label>
-                                                <textarea name="instraction" {{$do_rider ? 'disabled' : ''}} class="form-control" placeholder="Write delivery instration here">{{optional($do_rider)->instraction}}</textarea>
+                                                <textarea name="instraction" class="form-control" placeholder="Write delivery instration here">{{optional($do_rider)->instraction}}</textarea>
                                                 @include('alerts.feedback', ['field' => 'instraction'])
                                             </div>
-                                            @if(!$do_rider)
-                                                <div class="form-group text-end">
-                                                    <input type="submit" class="btn btn-primary" value="Assign">
-                                                </div>
-                                            @endif
+                                            <div class="form-group text-end">
+                                                <input type="submit" class="btn btn-primary" value="Assign">
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                        @else
-                            @if($do->status !=2)
-                            <div class="card">
-                                <div class="card-body">
-                                    <table class="table table-striped datatable">
-                                        <tbody>
-                                            <tr>
-                                                <th>{{__('Assined Rider')}}</th>
-                                                <td>:</td>
-                                                <th>{{$do_rider ? $do_rider->rider->name : 'Not Assign Yet'}}</th>
-                                                <td>|</td>
-                                                <th>{{__('Priority')}}</th>
-                                                <td>:</td>
-                                                <th>{{ $do_rider ? $do_rider->priority() : '--'}}</th>
-                                            </tr>
-                                            <tr>
-                                                <th>{{__('Delivery Instraction')}}</th>
-                                                <td>:</td>
-                                                <th colspan="5">{!! $do_rider ? $do_rider->instraction : '__' !!}</th>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        @elseif($do_rider)
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h4 class="card-title">{{__('Rider Details')}}</h4>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <span class="{{$do->statusBg()}}">{{ __(ucwords(strtolower((str_replace('-', ' ', $do->statusTitle()))))) }}</span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="rider_image">
+                                                    <img src="{{storage_url($do_rider->rider->image)}}" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-secondary">
+                                                <h3 class="text-white m-0">{{$do_rider->rider->name}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <table class="table table-striped datatable">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Rider Name</th>
+                                                    <td>:</td>
+                                                    <th>{{ $do_rider->rider->name }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rider Gender</th>
+                                                    <td>:</td>
+                                                    <th>{{ $do_rider->rider->gender }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rider Contact</th>
+                                                    <td>:</td>
+                                                    <th>{{ $do_rider->rider->phone }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rider Age</th>
+                                                    <td>:</td>
+                                                    <th>{{ $do_rider->rider->age }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Delivery Priority</th>
+                                                    <td>:</td>
+                                                    <th>{{ $do_rider->priority() }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Operational Area</th>
+                                                    <td>:</td>
+                                                    <th>{{ $do_rider->rider->operation_area->name }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Operational Sub Area</th>
+                                                    <td>:</td>
+                                                    <th>{{ $do_rider->rider->operation_sub_area->name }}</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                            @endif
+                        </div>
                         @endif
                     @endif
                     <form action="{{route('do.do_update')}}" method="POST" class="px-0">

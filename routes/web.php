@@ -61,6 +61,7 @@ use App\Http\Controllers\Rider\Auth\LoginController as RiderLoginController;
 use App\Http\Controllers\Rider\DashboardController as RiderDashboardController;
 use App\Http\Controllers\Rider\RiderProfileController;
 use App\Http\Controllers\Rider\KYC\KycVerificationController as RiderKycVerificationController;
+use App\Http\Controllers\Rider\OrderManagementController as RiderOrderManagementController;
 
 use App\Http\Controllers\Pharmacy\DashboardController as PharmacyDashboardController;
 use App\Http\Controllers\Pharmacy\Auth\LoginController as PharmacyLoginController;
@@ -721,6 +722,10 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::get('/verification', 'kyc_verification')->name('verification');
         Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
         Route::get('/kyc/file/delete', 'delete')->name('file.delete');
+    });
+    Route::controller(RiderOrderManagementController::class)->prefix('order-management')->name('order_management.')->group(function () {
+        Route::get('/{status}', 'index')->name('index');
+        Route::get('/details/{dor_id}', 'details')->name('details');
     });
 
     Route::controller(RiderProfileController::class)->prefix('profile')->name('profile.')->group(function () {

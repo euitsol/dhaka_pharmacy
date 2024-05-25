@@ -1,4 +1,18 @@
 @extends('pharmacy.layouts.master', ['pageSlug' => $statusTitle . '_orders'])
+@push('css')
+
+    <style>
+        .rider_image{
+            text-align: center;
+        }
+        .rider_image img{
+            height: 250px;
+            width: 250px;
+            border-radius: 50%; 
+        }
+    </style>
+    
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -6,7 +20,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-6">
-                            <h4 class="card-title">{{ __(ucwords($statusTitle) . ' Order Details') }}</h4>
+                            <h4 class="card-title">{{ __(ucwords(strtolower((str_replace('-', ' ', $statusTitle)))).' Order Details') }}</h4>
                         </div>
                         <div class="col-6 text-end">
                             @include('admin.partials.button', [
@@ -57,11 +71,76 @@
                     </table>
                 </div>
                 <div class="card-footer">
+                    @if($odr)
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">{{__('Rider Details')}}</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="rider_image">
+                                                    <img src="{{storage_url($odr->rider->image)}}" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-secondary">
+                                                <h3 class="text-white m-0">{{$odr->rider->name}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <table class="table table-striped datatable">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Rider Name</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->name }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rider Gender</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->gender }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rider Contact</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->phone }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rider Age</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->age }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Delivery Priority</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->priority() }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Operational Area</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->operation_area->name }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Operational Sub Area</th>
+                                                    <td>:</td>
+                                                    <th>{{ $odr->rider->operation_sub_area->name }}</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <form action="{{route('pharmacy.order_management.update',encrypt($do->id))}}" method="POST">
                         @csrf
                         <div class="row mb-3">
                             <div class="col-12 px-4 text-end">
-                                <span class="{{ $statusBg }}">{{ $statusTitle }}</span>
+                                <span class="{{ $statusBg }}">{{  __(ucwords(strtolower((str_replace('-', ' ', $statusTitle))))) }}</span>
                             </div>
                         </div>
                         @php
@@ -99,14 +178,14 @@
                                                                 
                                                                 {{ number_format($totalPrice, 2) }}</span> <sup>{!! isset($discount) ? $discount : '' !!}</sup>
                                                         </h6>
-                                                        @if ($do->payment_type == 1 && $status == 0)
+                                                        @if ($do->payment_type == 1 && ($status == 0 || $status == 1))
                                                             <div class="input-group">
                                                                 <input type="text" name="data[{{$key}}][open_amount]" class="form-control"
                                                                     placeholder="Enter your product price">
                                                             </div>
                                                         @endif
                                                     </div>
-                                                    @if ($do->payment_type == 1 && $status == 1 && $dop->open_amount>0)
+                                                    @if ($do->payment_type == 1 && ($status == 1 || $status == 0) && $dop->open_amount>0)
                                                         <div class="col my-auto">
                                                             <h6 class="my-auto text-center">
                                                                 <span><strong>{{ __('Bit Price : ') }}</strong>{!! get_taka_icon() !!}
@@ -114,7 +193,7 @@
                                                             </h6>
                                                         </div>
                                                     @endif
-                                                    @if($status == 0)
+                                                    @if($status == 0 || $status == 1)
                                                     <div class="col my-auto">
                                                         <div class="card mb-0">
                                                             <div class="card-body">
@@ -157,9 +236,9 @@
                             </div>
                         @endforeach
                         <div class="col-12 text-end">
-                            <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format($subtotal).".00" }}</span></span>
+                            <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format(ceil($subtotal)) }}</span></span>
                         </div>
-                        @if($status == 0)
+                        @if($status == 0 || $status == 1)
                             <div class="col-12 text-end">
                                 <input type="submit" value="Confirm" class="btn btn-success">
                             </div>

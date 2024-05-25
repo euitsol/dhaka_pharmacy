@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AddToCart;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
@@ -74,5 +75,16 @@ class Controller extends BaseController
         } else {
             return response()->json(['error' => 'File not found'], 404);
         }
+    }
+    public function calculateTotalPrice($orderDistribution) {
+        return AddToCart::with('product')
+            ->whereIn('id', json_decode($orderDistribution->order->carts))
+            ->get()
+            ->sum(function ($item){
+                $discountedPrice = $item->product->discountPrice();
+                $quantity = $item->quantity;
+                $unitQuantity = $item->unit->quantity ?? 1;
+                return ($discountedPrice * $unitQuantity * $quantity);
+            });
     }
 }
