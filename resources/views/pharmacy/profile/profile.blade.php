@@ -1,8 +1,22 @@
 @extends('pharmacy.layouts.master', ['pageSlug' => 'pharmacy_profile'])
-@push('css')
+@push('css_link')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
         integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
+        type="text/css" />
+@endpush
+
+@push('css')
+    <style>
+        .map {
+            width: 100%;
+            height: 500;
+        }
+    </style>
 @endpush
 @section('content')
     <div class="profile-section">
@@ -54,12 +68,14 @@
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Emergency Phone') }}</label>
                                             <input type="text" name="emergency_phone" class="form-control"
-                                                placeholder="Enter emergency Phone" value="{{ $pharmacy->emergency_phone }}">
+                                                placeholder="Enter emergency Phone"
+                                                value="{{ $pharmacy->emergency_phone }}">
                                             @include('alerts.feedback', ['field' => 'emergency_phone'])
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Date of Birth') }}</label>
-                                            <input type="date" name="dob" value="{{ $pharmacy->dob ? $pharmacy->dob : old('dob') }}"
+                                            <input type="date" name="dob"
+                                                value="{{ $pharmacy->dob ? $pharmacy->dob : old('dob') }}"
                                                 class="form-control">
                                             @include('alerts.feedback', ['field' => 'dob'])
                                         </div>
@@ -85,14 +101,17 @@
                             </div>
                             <div class="row">
 
-                                
+
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification Type') }}</label>
                                     <select name="identification_type" id="identification_type" class="form-control">
-                                        <option selected hidden value="">{{ __('Select Identification Type') }}</option>
-                                        <option value="NID" {{ $pharmacy->identification_type == 'NID' ? 'selected' : '' }}>
+                                        <option selected hidden value="">{{ __('Select Identification Type') }}
+                                        </option>
+                                        <option value="NID"
+                                            {{ $pharmacy->identification_type == 'NID' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
-                                        <option value="DOB" {{ $pharmacy->identification_type == 'DOB' ? 'selected' : '' }}>
+                                        <option value="DOB"
+                                            {{ $pharmacy->identification_type == 'DOB' ? 'selected' : '' }}>
                                             {{ __('Birth Certificate No') }}</option>
                                         <option value="Passport"
                                             {{ $pharmacy->identification_type == 'Passport' ? 'selected' : '' }}>
@@ -126,47 +145,48 @@
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operation Area') }}</label>
-                                    @if(empty($pharmacy->oa_id))
+                                    @if (empty($pharmacy->oa_id))
                                         <select name="oa_id" class="form-control operation_area">
                                             <option selected hidden>{{ __('Select Operation Area') }}</option>
                                             @foreach ($operation_areas as $area)
-                                                <option value="{{$area->id}}">{{ $area->name }}</option>
+                                                <option value="{{ $area->id }}">{{ $area->name }}</option>
                                             @endforeach
                                         </select>
                                         @include('alerts.feedback', ['field' => 'osa_id'])
                                     @else
                                         <input type="text" value="{{ $pharmacy->operation_area->name }}"
-                                        class="form-control" disabled>
+                                            class="form-control" disabled>
                                     @endif
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operation Sub Area') }}</label>
-                                    @if(empty($pharmacy->osa_id))
+                                    @if (empty($pharmacy->osa_id))
                                         <select name="osa_id" class="form-control operation_sub_area" disabled>
                                             <option selected hidden>{{ __('Select Operation Sub Area') }}</option>
                                         </select>
                                         @include('alerts.feedback', ['field' => 'osa_id'])
                                     @else
                                         <input type="text" value="{{ $pharmacy->operation_sub_area->name }}"
-                                        class="form-control" disabled>
+                                            class="form-control" disabled>
                                     @endif
                                 </div>
 
-                                
-
-                                
 
 
-                                
-                                
+
+
+
+
+
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Age') }}</label>
-                                    <input type="text" name="age" value="{{ $pharmacy->age ? $pharmacy->age : old('age') }}"
-                                        class="form-control" placeholder="Enter age">
+                                    <input type="text" name="age"
+                                        value="{{ $pharmacy->age ? $pharmacy->age : old('age') }}" class="form-control"
+                                        placeholder="Enter age">
                                     @include('alerts.feedback', ['field' => 'age'])
                                 </div>
-                                
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>{{ __('Upload CV') }}</label>
@@ -174,8 +194,8 @@
                                         @include('alerts.feedback', ['field' => 'cv'])
                                     </div>
                                 </div>
-                                
-                                
+
+
 
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Present Address') }}</label>
@@ -188,12 +208,14 @@
                                     @include('alerts.feedback', ['field' => 'permanent_address'])
                                 </div>
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-sm btn-primary">{{ __('Update') }}</button>
+                                    <button type="submit"
+                                        class="btn btn-sm btn-primary float-end">{{ __('Update') }}</button>
                                 </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
-
         </div>
         <div class="card">
             <div class="card-header">
@@ -221,8 +243,62 @@
                             placeholder="Confirm New Password">
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer float-end">
                     <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">{{ __('My Location') }}</h5>
+            </div>
+            <form method="POST" action="{{ route('pharmacy.profile.address') }}" autocomplete="off">
+                @csrf
+                <div class="card-body map-card">
+                    <div class="map" id="map" data-lat="{{ optional($pharmacy->address)->latitude }}"
+                        data-lng="{{ optional($pharmacy->address)->longitude }}"></div>
+
+                    <input type="hidden" name="lat" value="{{ optional($pharmacy->address)->latitude }}">
+                    <input type="hidden" name="long" value="{{ optional($pharmacy->address)->longitude }}">
+                    <div class="row mt-3">
+                        <div class="form-group col-md-12">
+                            <label for="address">Full Address <small class="text-danger">*</small></label>
+                            <input type="text" class="form-control mt-1" id="address" name="address"
+                                value="{{ optional($pharmacy->address)->address }}"
+                                placeholder="Enter your full address">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="city">City <small class="text-danger">*</small></label>
+                            <input type="text" class="form-control mt-1" id="city" name="city"
+                                value="{{ optional($pharmacy->address)->city }}" placeholder="Enter your city name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="street">Street Name <small class="text-danger">*</small></label>
+                            <input type="text" class="form-control mt-1" id="street" name="street"
+                                value="{{ optional($pharmacy->address)->street_address }}"
+                                placeholder="Enter your street name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="apartment">Apartment Name <small class="text-danger">*</small></label>
+                            <input type="text" class="form-control mt-1" id="apartment" name="apartment"
+                                value="{{ optional($pharmacy->address)->apartment }}"
+                                placeholder="Enter your apartment name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="floor">Floor <small class="text-danger">*</small></label>
+                            <input type="text" class="form-control mt-1" id="floor" name="floor"
+                                value="{{ optional($pharmacy->address)->floor }}"
+                                placeholder="Enter your apartment floor">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="instruction">Delivery Man Instruction <small>(optional)</small></label>
+                            <textarea type="text" class="form-control mt-1" id="instruction" name="instruction">{{ optional($pharmacy->address)->delivery_instruction }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer float-end">
+                    <button type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
                 </div>
             </form>
         </div>
@@ -230,10 +306,16 @@
     @include('district_manager.partials.documentation', ['document' => $document])
     </div>
 @endsection
+
 @push('js_link')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
+    </script>
+
+    <script src="{{ asset('pharmacy/js/mapbox.js') }}"></script>
 @endpush
 @push('js')
     <script>
@@ -306,11 +388,14 @@
                             error: function(xhr) {
                                 if (xhr.status === 422) {
                                     $('.profile_image .img').removeClass(
-                                    'div_animation overly');
+                                        'div_animation overly');
                                     $('.profile_image .img img.avatar').removeClass(
                                         'image_animation');
-                                    $('.profile_image .camera-icon').css('display', 'block');
-                                    $('#previewImage').attr('src', "{{ $pharmacy->image ? storage_url($pharmacy->image) : asset('no_img/no_img.jpg') }}");
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src',
+                                        "{{ $pharmacy->image ? storage_url($pharmacy->image) : asset('no_img/no_img.jpg') }}"
+                                    );
                                     toastr.error('Something is wrong!');
                                     var errors = xhr.responseJSON.errors;
                                     $.each(errors, function(field, messages) {
@@ -344,20 +429,21 @@
                 let operation_sub_area = $('.operation_sub_area');
                 let oa_id = $(this).val();
 
-                operation_sub_area.prop('disabled',true);
+                operation_sub_area.prop('disabled', true);
 
                 let url = ("{{ route('pharmacy.profile.get_osa', ['oa_id']) }}");
                 let _url = url.replace('oa_id', oa_id);
-                
+
                 $.ajax({
                     url: _url,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        operation_sub_area.prop('disabled',false);
+                        operation_sub_area.prop('disabled', false);
                         var result = '';
                         data.operation_sub_areas.forEach(function(sub_area) {
-                            result += `<option value="${sub_area.id}">${sub_area.name}</option>`;
+                            result +=
+                                `<option value="${sub_area.id}">${sub_area.name}</option>`;
                         });
                         operation_sub_area.html(result);
                     },
