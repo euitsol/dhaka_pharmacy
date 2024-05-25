@@ -36,34 +36,34 @@
                     <table class="table table-striped datatable">
                         <tbody>
                             <tr>
-                                <th>Pharmacy</th>
+                                <th>{{__('Pharmacy')}}</th>
                                 <td>:</td>
                                 <th>{{ $do->pharmacy->name }}</th>
                                 <td>|</td>
-                                <th>Order ID</th>
+                                <th>{{__('Order ID')}}</th>
                                 <td>:</td>
                                 <th>{{ $do->order->order_id }}</th>
                             </tr>
                             <tr>
-                                <th>Payment Type</th>
+                                <th>{{__('Payment Type')}}</th>
                                 <td>:</td>
                                 <th>{{ $do->paymentType() }}</th>
                                 <td>|</td>
-                                <th>Distribution Type</th>
+                                <th>{{__('Distribution Type')}}</th>
                                 <td>:</td>
                                 <th>{{ $do->distributionType() }}</th>
                             </tr>
                             <tr>
-                                <th>Total Product</th>
+                                <th>{{__('Total Product')}}</th>
                                 <td>:</td>
                                 <th>{{ count($do->dops) }}</th>
                                 <td>|</td>
-                                <th>Preparation Time</th>
+                                <th>{{__('Preparation Time')}}</th>
                                 <td>:</td>
                                 <th>{{ $do->prep_time }}</th>
                             </tr>
                             <tr>
-                                <th>Note</th>
+                                <th>{{__('Note')}}</th>
                                 <td>:</td>
                                 <th colspan="5">{!! $do->note !!}</th>
                             </tr>
@@ -95,37 +95,37 @@
                                         <table class="table table-striped datatable">
                                             <tbody>
                                                 <tr>
-                                                    <th>Rider Name</th>
+                                                    <th>{{__('Rider Name')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->name }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Rider Gender</th>
+                                                    <th>{{__('Rider Gender')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->gender }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Rider Contact</th>
+                                                    <th>{{__('Rider Contact')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->phone }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Rider Age</th>
+                                                    <th>{{__('Rider Age')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->age }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Delivery Priority</th>
+                                                    <th>{{__('Delivery Priority')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->priority() }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Operational Area</th>
+                                                    <th>{{__('Operational Area')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->operation_area->name }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Operational Sub Area</th>
+                                                    <th>{{__('Operational Sub Area')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->operation_sub_area->name }}</th>
                                                 </tr>
@@ -161,8 +161,7 @@
                                                         <h6 class="mb-0 text-start">{{ $dop->cart->product->name }}</h6>
                                                         <small>{{ $dop->cart->product->pro_cat->name }} </small>
                                                     </div>
-                                                    <div class="col my-auto d-flex justify-content-around"> <small>Qty : {{ $dop->cart->quantity }}</small><small>Pack :
-                                                        {{ $dop->cart->unit->name ?? 'Piece' }}</small>
+                                                    <div class="col my-auto d-flex justify-content-around"> <small>Qty : {{ $dop->cart->quantity }}</small><small>Pack : {{ $dop->cart->unit->name ?? 'Piece' }}</small>
                                                     </div>
                                                     <div class="col my-auto">
                                                         <h6 class="my-auto text-center">

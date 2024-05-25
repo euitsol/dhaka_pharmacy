@@ -20,12 +20,11 @@ return new class extends Migration
             $table->unsignedBigInteger('order_distribution_id');
             $table->unsignedBigInteger('cart_id');
             $table->unsignedBigInteger('pharmacy_id');
-            // $table->tinyInteger('status')->default(0)->comment('0= pending, 1= preparing, 2=accept, 3=dispute,  -1=old disputed, 4=shiped, 5=complete, 7=cancel, 8=cancel complete');
             $table->tinyInteger('status')->default(0)->comment('0= pending, 1= preparing, 2=waiting for rider, 3=dispute, 4=Picked Up, 5=delivered, 6=cancel, -1=old disputed');
             $table->timestamps();
             $table->softDeletes();
             $this->addMorphedAuditColumns($table);
-
+            
             $table->foreign('order_distribution_id')->references('id')->on('order_distributions')->onDelete('cascade')->onUpdate('cascade');  
             $table->foreign('cart_id')->references('id')->on('add_to_carts')->onDelete('cascade')->onUpdate('cascade');  
             $table->foreign('pharmacy_id')->references('id')->on('pharmacies')->onDelete('cascade')->onUpdate('cascade');  

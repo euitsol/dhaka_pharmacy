@@ -41,7 +41,7 @@ class OrderManagementController extends Controller
         $data['dops'] = $query->latest()->get()->groupBy('order_distribution_id')
         ->map(function($dop,$key) use($status){
             $dop->od = OrderDistribution::findOrFail($key);
-            $dop->odr = OrderDistributionRider::with('rider')->where('order_distribution_id',$key)->where('status','!=',0)->first();
+            $dop->odr = OrderDistributionRider::with('rider')->where('order_distribution_id',$key)->whereNotIn('status', [0, -1])->first();
             $dop->statusTitle = $this->statusTitle($this->getStatus($status));
             $dop->statusBg = $this->statusBg($this->getStatus($status));
             return $dop;
@@ -75,7 +75,7 @@ class OrderManagementController extends Controller
         $data['status'] = $this->getStatus($status);
         $data['statusTitle'] = $this->statusTitle($this->getStatus($status));
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
-        $data['odr'] = OrderDistributionRider::with('rider')->where('status','!=',0)->where('order_distribution_id',decrypt($do_id))->first();
+        $data['odr'] = OrderDistributionRider::with('rider')->whereNotIn('status', [0, -1])->where('order_distribution_id',decrypt($do_id))->first();
         return view('pharmacy.orders.details',$data);
     }
 
@@ -101,74 +101,6 @@ class OrderManagementController extends Controller
         return redirect()->route('pharmacy.order_management.index','waiting-for-rider');
     }
 
-
-    // protected function getStatus($status){
-    //     switch ($status) {
-    //         case 'pending':
-    //             return 0;
-    //         case 'preparing':
-    //             return 1;
-    //         case 'waiting-for-rider':
-    //             return 2;
-    //         case 'dispute':
-    //             return 3;
-    //         case 'old-disputed':
-    //             return -1;
-    //         case 'shipped':
-    //             return 4;
-    //         case 'complete':
-    //             return 5;
-    //         case 'cancel':
-    //             return 7;
-    //         case 'cancel-complete':
-    //             return 8;
-    //     }
-    // }
-    
-    // public function statusBg($status) {
-    //     switch ($status) {
-    //         case 0:
-    //             return 'badge badge-info';
-    //         case 1:
-    //             return 'badge badge-primary';
-    //         case 2:
-    //             return 'badge bg-secondary';
-    //         case 3:
-    //         case -1:
-    //             return 'badge badge-danger';
-    //         case 4:
-    //             return 'badge badge-dark';
-    //         case 5:
-    //             return 'badge badge-success';
-    //         case 7:
-    //             return 'badge badge-danger';
-    //         case 8:
-    //             return 'badge badge-warning';
-                
-    //     }
-    // }
-    
-    // public function statusTitle($status) {
-    //     switch ($status) {
-    //         case 0:
-    //             return 'pending';
-    //         case 1:
-    //             return 'preparing';
-    //         case 2:
-    //             return 'waiting-for-rider';
-    //         case 3:
-    //         case -1:
-    //             return 'dispute';
-    //         case 4:
-    //             return 'shipped';
-    //         case 5:
-    //             return 'complete';
-    //         case 7:
-    //             return 'cancel';
-    //         case 8:
-    //             return 'cancel-complete';
-    //     }
-    // }
     protected function getStatus($status){
         switch ($status) {
             case 'pending':
