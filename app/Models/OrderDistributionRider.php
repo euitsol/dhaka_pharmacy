@@ -25,47 +25,6 @@ class OrderDistributionRider extends BaseModel
                 return "High";
         }
     }
-    // public function statusBg() {
-    //     switch ($this->status) {
-    //         case 0:
-    //             return 'badge badge-danger';
-    //         case 3:
-    //             return 'badge bg-info';
-    //         case 4:
-    //             return 'badge badge-primary';
-    //         case 5:
-    //             return 'badge badge-dark';
-    //         case 6:
-    //             return 'badge badge-success';
-    //         case 7:
-    //             return 'badge badge-danger';
-    //         case 8:
-    //             return 'badge badge-warning';
-    //     }
-    // }
-    
-    
-    // public function statusTitle() {
-    //     switch ($this->status) {
-    //         case 0:
-    //             return 'dispute';
-    //         case 3:
-    //             return 'ongoing';
-    //         case 4:
-    //             return 'collect';
-    //         case 5:
-    //             return 'delivered';
-    //         case 6:
-    //             return 'complete';
-    //         case 7:
-    //             return 'Cancel';
-    //         case 8:
-    //             return 'Cancel Complete';
-    //     }
-    // }
-
-
-    
     public function statusBg() {
         switch ($this->status) {
             case 0:

@@ -22,35 +22,35 @@
                     <table class="table table-striped datatable">
                         <tbody>
                             <tr>
-                                <th>Customer Name</th>
+                                <th>{{__('Customer Name')}}</th>
                                 <td>:</td>
                                 <th>{{ $dor->od->order->address->name }}</th>
                                 <td>|</td>
-                                <th>Customer Contact</th>
+                                <th>{{__('Customer Contact')}}</th>
                                 <td>:</td>
                                 <th>{{ $dor->od->order->address->phone }}</th>
                             </tr>
                             <tr>
-                                <th>Delivery Address</th>
+                                <th>{{__('Delivery Address')}}</th>
                                 <td>:</td>
                                 <th>{!! $dor->od->order->address->street_address !!}</th>
                                 <td>|</td>
-                                <th>Order ID</th>
+                                <th>{{__('Order ID')}}</th>
                                 <td>:</td>
                                 <th>{{ $dor->od->order->order_id }}</th>
                                
                             </tr>
                             <tr>
-                                <th>Priority</th>
+                                <th>{{__('Priority')}}</th>
                                 <td>:</td>
                                 <th>{{ $dor->priority() }}</th>
                                 <td>|</td>
-                                <th>Total Price</th>
+                                <th>{{__('Total Price')}}</th>
                                 <td>:</td>
                                 <th>{!! get_taka_icon() !!}{{ number_format(ceil($dor->totalPrice)) }}</th>
                             </tr>
                             <tr>
-                                <th>Delivery Instraction</th>
+                                <th>{{__('Delivery Instraction')}}</th>
                                 <td>:</td>
                                 <th colspan="5">{{ $dor->instraction }}</th>
                             </tr>
@@ -74,26 +74,26 @@
                                         <table class="table table-striped datatable">
                                             <tbody>
                                                 <tr>
-                                                    <th>Pharmacy Name</th>
+                                                    <th>{{__('Pharmacy Name')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $pharmacy->name }}</th>
                                                     <td>|</td>
-                                                    <th>Pharmacy Contact</th>
+                                                    <th>{{__('Pharmacy Contact')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $pharmacy->phone }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Operational Area</th>
+                                                    <th>{{__('Operational Area')}}</th>
                                                     <td>:</td>
                                                     <th>{{optional($pharmacy->operation_area)->name}}</th>
                                                     <td>|</td>
-                                                    <th>Operational Sub Area</th>
+                                                    <th>{{__('Operational Sub Area')}}</th>
                                                     <td>:</td>
                                                     <th>{{ optional($pharmacy->operation_sub_area)->name }}</th>
                                                    
                                                 </tr>
                                                 <tr>
-                                                    <th>Pharmacy Address</th>
+                                                    <th>{{__('Pharmacy Address')}}</th>
                                                     <td>:</td>
                                                     <th colspan="5">{{ $pharmacy->present_address }}</th>
                                                 </tr>
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    @if($dor->status == 3)
+                    @if($dor->status == 1)
                         <div class="buttons text-end">
                             <a href="javascript:void(0)" class="btn btn-danger dispute" data-class="dispute_form">{{__('Dispute')}}</a>
                             <a href="javascript:void(0)" class="btn btn-primary collect" data-class="pharmacy_collect_otp_form">{{__('Collect')}}</a>
@@ -131,7 +131,7 @@
                             </div>
                         </form>
                     @endif
-                    @if($dor->status == 4)
+                    @if($dor->status == 2)
                         <a href="javascript:void(0)" class="btn btn-danger cancel" data-class="cancel_form">{{__('Cancel')}}</a>
                         <a href="javascript:void(0)" class="btn btn-primary delivered" data-class="user_otp_form" >{{__('Delivered')}}</a>
 
@@ -154,25 +154,13 @@
                             </div>
                         </form>
                     @endif
-                    @if($dor->status == 5)
+                    @if($dor->status == 3)
                         <a href="javascript:void(0)" class="btn btn-primary complete" data-class="transaction_form">{{__('Complete')}}</a>
                         <form style="display:none;" class="mt-3 form transaction_form" action="" method="POST">
                             <div class="form-group transaction">
                                 <input type="text" name="transaction" class="form-control" placeholder="Enter transaction id">
                             </div>
                             @include('alerts.feedback', ['field' => 'transaction'])
-                            <div class="form-group text-end">
-                                <input type="submit" class="btn btn-secondary" value="Update">
-                            </div>
-                        </form>
-                    @endif
-                    @if($dor->status == 7)
-                        <a href="javascript:void(0)" class="btn btn-primary cancel_complete" data-class="pharmacy_return_otp_form">{{__('Cancel Complete')}}</a>
-                        <form style="display:none;" class="mt-3 form pharmacy_return_otp_form" action="" method="POST">
-                            <div class="form-group pharmacy_return_otp">
-                                <input type="text" name="pharmacy_return_otp" class="form-control" placeholder="Enter pharmacy return otp">
-                            </div>
-                            @include('alerts.feedback', ['field' => 'pharmacy_return_otp'])
                             <div class="form-group text-end">
                                 <input type="submit" class="btn btn-secondary" value="Update">
                             </div>
@@ -194,7 +182,7 @@
             $('.' + form_class).show();
         }
 
-        $(document).on('click', '.dispute, .collect, .cancel, .delivered, .complete, .cancel_complete', function() {
+        $(document).on('click', '.dispute, .collect, .cancel, .delivered, .complete', function() {
             showForm($(this));
         });
     });

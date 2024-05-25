@@ -44,68 +44,6 @@ class OrderManagementController extends Controller
 
         return view('rider.orders.details',$data);
     }
-    // protected function getStatus($status){
-    //     switch ($status) {
-    //         case 'dispute':
-    //             return 0;
-    //         case 'old-dispute':
-    //             return -1;
-    //         case 'ongoing':
-    //             return 3;
-    //         case 'collect':
-    //             return 4;
-    //         case 'delivered':
-    //             return 5;
-    //         case 'complete':
-    //             return 6;
-    //         case 'cancel':
-    //             return 7;
-    //         case 'cancel-complete':
-    //             return 8;
-    //     }
-    // }
-    
-    // public function statusBg($status) {
-    //     switch ($status) {
-    //         case 0:
-    //         case -1:
-    //             return 'badge badge-danger';
-    //         case 3:
-    //             return 'badge bg-info';
-    //         case 4:
-    //             return 'badge badge-primary';
-    //         case 5:
-    //             return 'badge badge-dark';
-    //         case 6:
-    //             return 'badge badge-success';
-    //         case 7:
-    //             return 'badge badge-danger';
-    //         case 8:
-    //             return 'badge badge-warning';
-                
-    //     }
-    // }
-    
-    
-    // public function statusTitle($status) {
-    //     switch ($status) {
-    //         case 0:
-    //         case -1:
-    //             return 'Dispute';
-    //         case 3:
-    //             return 'Ongoing';
-    //         case 4:
-    //             return 'Collect';
-    //         case 5:
-    //             return 'Delivered';
-    //         case 6:
-    //             return 'Complete';
-    //         case 7:
-    //             return 'Cancel';
-    //         case 8:
-    //             return 'Cancel Complete';
-    //     }
-    // }
     protected function getStatus($status){
         switch ($status) {
             case 'dispute':
