@@ -44,47 +44,84 @@ class OrderManagementController extends Controller
 
         return view('rider.orders.details',$data);
     }
-
-    // public function update(PharmacyOrderRequest $req, $do_id){
-    //     foreach($req->data as $data){
-    //         $dop = OrderDistributionPharmacy::findOrFail($data['dop_id']);
-    //         $dop->open_amount = $data['dop_id'];
-    //         $dop->status = $data['status'];
-    //         $dop->note = $data['note'];
-    //         $dop->save();  
+    // protected function getStatus($status){
+    //     switch ($status) {
+    //         case 'dispute':
+    //             return 0;
+    //         case 'old-dispute':
+    //             return -1;
+    //         case 'ongoing':
+    //             return 3;
+    //         case 'collect':
+    //             return 4;
+    //         case 'delivered':
+    //             return 5;
+    //         case 'complete':
+    //             return 6;
+    //         case 'cancel':
+    //             return 7;
+    //         case 'cancel-complete':
+    //             return 8;
     //     }
-    //     $do = OrderDistribution::findOrFail(decrypt($do_id));
-    //     $odpsArray = $do->odps->toArray(); // Convert the collection to an array
-    //     $statuses = array_column($odpsArray, 'status');
-    //     $allValid = array_reduce($statuses, function ($carry, $status) {
-    //         return $carry && ($status == 2 || $status == -1);
-    //     }, true);
-
-    //     if ($allValid) {
-    //         $do->update(['status' => 2]);
-    //     }
-    //     flash()->addSuccess('Order distributed successfully.');
-    //     return redirect()->route('pharmacy.order_management.index','waiting-for-rider');
     // }
-
+    
+    // public function statusBg($status) {
+    //     switch ($status) {
+    //         case 0:
+    //         case -1:
+    //             return 'badge badge-danger';
+    //         case 3:
+    //             return 'badge bg-info';
+    //         case 4:
+    //             return 'badge badge-primary';
+    //         case 5:
+    //             return 'badge badge-dark';
+    //         case 6:
+    //             return 'badge badge-success';
+    //         case 7:
+    //             return 'badge badge-danger';
+    //         case 8:
+    //             return 'badge badge-warning';
+                
+    //     }
+    // }
+    
+    
+    // public function statusTitle($status) {
+    //     switch ($status) {
+    //         case 0:
+    //         case -1:
+    //             return 'Dispute';
+    //         case 3:
+    //             return 'Ongoing';
+    //         case 4:
+    //             return 'Collect';
+    //         case 5:
+    //             return 'Delivered';
+    //         case 6:
+    //             return 'Complete';
+    //         case 7:
+    //             return 'Cancel';
+    //         case 8:
+    //             return 'Cancel Complete';
+    //     }
+    // }
     protected function getStatus($status){
         switch ($status) {
             case 'dispute':
                 return 0;
             case 'old-dispute':
                 return -1;
-            case 'ongoing':
-                return 3;
-            case 'collect':
-                return 4;
+            case 'waiting-for-pickup':
+                return 1;
+            case 'picked-up':
+                return 2;
             case 'delivered':
-                return 5;
-            case 'complete':
-                return 6;
+                return 3;
+            case 'finish':
+                return 4;
             case 'cancel':
-                return 7;
-            case 'cancel-complete':
-                return 8;
+                return 5;
         }
     }
     
@@ -93,40 +130,34 @@ class OrderManagementController extends Controller
             case 0:
             case -1:
                 return 'badge badge-danger';
-            case 3:
+            case 1:
                 return 'badge bg-info';
-            case 4:
+            case 2:
                 return 'badge badge-primary';
-            case 5:
+            case 3:
                 return 'badge badge-dark';
-            case 6:
+            case 4:
                 return 'badge badge-success';
-            case 7:
+            case 5:
                 return 'badge badge-danger';
-            case 8:
-                return 'badge badge-warning';
                 
         }
     }
-    
-    
     public function statusTitle($status) {
         switch ($status) {
             case 0:
             case -1:
                 return 'Dispute';
+            case 1:
+                return 'Waiting for Pickup';
+            case 2:
+                return 'Picked Up';
             case 3:
-                return 'Ongoing';
-            case 4:
-                return 'Collect';
-            case 5:
                 return 'Delivered';
-            case 6:
-                return 'Complete';
-            case 7:
+            case 4:
+                return 'Finish';
+            case 5:
                 return 'Cancel';
-            case 8:
-                return 'Cancel Complete';
         }
     }
 }
