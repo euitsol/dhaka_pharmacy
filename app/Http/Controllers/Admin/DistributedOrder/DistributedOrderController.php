@@ -80,11 +80,7 @@ class DistributedOrderController extends Controller
         }
         $data['totalPrice'] = $this->calculateTotalPrice($data['do']);
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
-        $data['do_rider'] = OrderDistributionRider::where('status','!=',0)->where('order_distribution_id',$data['do']->id)->first();
-
-
-
-
+        $data['do_rider'] = OrderDistributionRider::whereNotIn('status', [0, -1])->where('order_distribution_id',$data['do']->id)->first();
         return view('admin.distributed_order.details',$data);
     }
     public function update(DisputeOrderRequest $req):RedirectResponse
@@ -124,58 +120,6 @@ class DistributedOrderController extends Controller
         return redirect()->back(); 
 
     }
-
-
-
-
-
-
-
-    // protected function getStatus($status){
-    //     switch ($status) {
-    //         case 'pending':
-    //             return 0;
-    //         case 'preparing':
-    //             return 1;
-    //         case 'waiting-for-rider':
-    //             return 2;
-    //         case 'waiting-for-pickup':
-    //             return 3;
-    //         case 'picked-up':
-    //             return 4;
-    //         case 'delivered':
-    //             return 5;
-    //         case 'finish':
-    //             return 6;
-    //         case 'cancel':
-    //             return 7;
-    //         case 'cancel-complete':
-    //             return 8;
-    //     }
-    // }
-    // public function statusBg($status) {
-    //     switch ($status) {
-    //         case 0:
-    //             return 'badge badge-info';
-    //         case 1:
-    //             return 'badge badge-warning';
-    //         case 2:
-    //             return 'badge bg-secondary';
-    //         case 3:
-    //             return 'badge badge-danger';
-    //         case 4:
-    //             return 'badge badge-primary';
-    //         case 5:
-    //             return 'badge badge-dark';
-    //         case 6:
-    //             return 'badge badge-success';
-    //         case 7:
-    //             return 'badge badge-danger';
-    //         case 8:
-    //             return 'badge badge-warning';
-                
-    //     }
-    // }
     protected function getStatus($status){
         switch ($status) {
             case 'pending':

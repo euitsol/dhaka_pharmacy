@@ -23,12 +23,6 @@
                             <h4 class="card-title">{{ __('Distributed Order Details') }}</h4>
                         </div>
                         <div class="col-6 text-end">
-                            {{-- @include('admin.partials.button', [
-                                'routeName' => 'do.do_edit',
-                                'className' => 'btn-success',
-                                'params' => [encrypt($do->id),encrypt($do->pharmacy->id)],
-                                'label' => 'Edit',
-                            ]) --}}
                             @include('admin.partials.button', [
                                 'routeName' => 'do.do_list',
                                 'className' => 'btn-primary',
@@ -163,37 +157,37 @@
                                         <table class="table table-striped datatable">
                                             <tbody>
                                                 <tr>
-                                                    <th>Rider Name</th>
+                                                    <th>{{__('Rider Name')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $do_rider->rider->name }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Rider Gender</th>
+                                                    <th>{{__('Rider Gender')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $do_rider->rider->gender }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Rider Contact</th>
+                                                    <th>{{__('Rider Contact')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $do_rider->rider->phone }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Rider Age</th>
+                                                    <th>{{__('Rider Age')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $do_rider->rider->age }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Delivery Priority</th>
+                                                    <th>{{__('Delivery Priority')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $do_rider->priority() }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Operational Area</th>
+                                                    <th>{{__('Operational Area')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $do_rider->rider->operation_area->name }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Operational Sub Area</th>
+                                                    <th>{{__('Operational Sub Area')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $do_rider->rider->operation_sub_area->name }}</th>
                                                 </tr>
@@ -257,21 +251,21 @@
                                                 
                                                 <div class="col-3">
                                                     @if($dop->status == 3)
-                                                    <input type="hidden" name="datas[{{$key}}][cart_id]" value="{{$dop->cart->id}}">
-                                                    <input type="hidden" name="datas[{{$key}}][dop_id]" value="{{$dop->id}}">
-                                                    <div class="form-group">
-                                                        <select name="datas[{{$key}}][pharmacy_id]" class="form-control {{ $errors->has('datas.'.$key.'.pharmacy_id') ? ' is-invalid' : '' }}">
-                                                            <option selected hidden>{{__('Select Pharmacy')}}</option>
-                                                            @foreach ($pharmacies as $pharmacy)
-                                                                @php
-                                                                    $area = $pharmacy->operation_area ? ($pharmacy->operation_sub_area ? "( ".$pharmacy->operation_area->name." - " : "( ".$pharmacy->operation_area->name." )")  : '';
-                                                                    $sub_area = $pharmacy->operation_sub_area ? ($pharmacy->operation_area ? $pharmacy->operation_sub_area->name." )" : "( ".$pharmacy->operation_sub_area->name." )" )  : '';
-                                                                @endphp
-                                                                <option @if((isset($do->odps) && $do->odps[$key]->pharmacy_id == $pharmacy->id) || (old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name.$area.$sub_area}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @include('alerts.feedback', ['field' => 'datas.'.$key.'.pharmacy_id'])
-                                                    </div>
+                                                        <input type="hidden" name="datas[{{$key}}][cart_id]" value="{{$dop->cart->id}}">
+                                                        <input type="hidden" name="datas[{{$key}}][dop_id]" value="{{$dop->id}}">
+                                                        <div class="form-group">
+                                                            <select name="datas[{{$key}}][pharmacy_id]" class="form-control {{ $errors->has('datas.'.$key.'.pharmacy_id') ? ' is-invalid' : '' }}">
+                                                                <option selected hidden>{{__('Select Pharmacy')}}</option>
+                                                                @foreach ($pharmacies as $pharmacy)
+                                                                    @php
+                                                                        $area = $pharmacy->operation_area ? ($pharmacy->operation_sub_area ? "( ".$pharmacy->operation_area->name." - " : "( ".$pharmacy->operation_area->name." )")  : '';
+                                                                        $sub_area = $pharmacy->operation_sub_area ? ($pharmacy->operation_area ? $pharmacy->operation_sub_area->name." )" : "( ".$pharmacy->operation_sub_area->name." )" )  : '';
+                                                                    @endphp
+                                                                    <option @if((isset($do->odps) && $do->odps[$key]->pharmacy_id == $pharmacy->id) || (old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name.$area.$sub_area}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            @include('alerts.feedback', ['field' => 'datas.'.$key.'.pharmacy_id'])
+                                                        </div>
                                                     @else
                                                         @php
                                                             $area = $do->odps[$key]->pharmacy->operation_area ? ($do->odps[$key]->pharmacy->operation_sub_area ? "( ".$do->odps[$key]->pharmacy->operation_area->name." - " : "( ".$do->odps[$key]->pharmacy->operation_area->name." )")  : '';
