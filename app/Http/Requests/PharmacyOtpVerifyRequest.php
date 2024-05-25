@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DistributionOtpRequest extends FormRequest
+class PharmacyOtpVerifyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,9 @@ class DistributionOtpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_distribution_id'=>'required|exists:order_distributions,id',
-            'otp_author_id'=>'required',
-            'otp_author_type'=>'required',
-            'otp'=>'required',
-            'rider_id'=>'nullable|exists:riders,id',
+            'collect_otp'=>'required',
+            'pid'=>'required',
+            'od_id'=>'required',
         ];
     }
 }

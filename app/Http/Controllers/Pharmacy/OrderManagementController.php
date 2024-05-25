@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pharmacy;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PharmacyOrderRequest;
+use App\Models\DistributionOtp;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
 use App\Models\OrderDistributionRider;
@@ -76,6 +77,8 @@ class OrderManagementController extends Controller
         $data['statusTitle'] = $this->statusTitle($this->getStatus($status));
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
         $data['odr'] = OrderDistributionRider::with('rider')->whereNotIn('status', [0, -1])->where('order_distribution_id',decrypt($do_id))->first();
+
+        $data['otp'] = DistributionOtp::where('order_distribution_id',$data['do']->id)->where('otp_author_id', pharmacy()->id)->where('otp_author_type', get_class(pharmacy()))->first();
         return view('pharmacy.orders.details',$data);
     }
 

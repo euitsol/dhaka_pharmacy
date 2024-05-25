@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\OrderManagement;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderDistributionRequest;
 use App\Models\AddToCart;
+use App\Models\DistributionOtp;
 use App\Models\Order;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
@@ -38,6 +39,7 @@ class OrderManagementController extends Controller
                         });
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getOrderStatusBgColor($status);
+        $data['delivery_charge'] = 60;
         return view('admin.order_management.index',$data);
     }
     public function details($id): View
@@ -102,6 +104,15 @@ class OrderManagementController extends Controller
             $odp->cart_id = $data['cart_id'];
             $odp->pharmacy_id = $data['pharmacy_id'];
             $odp->save();
+
+            $check = DistributionOtp::where('order_distribution_id',$od->id)->where('otp_author_id', $odp->pharmacy->id)->where('otp_author_type', get_class($odp->pharmacy))->first();
+            if(!$check){
+                $PVotp = new DistributionOtp();
+                $PVotp->order_distribution_id = $od->id;
+                $PVotp->otp_author()->associate($odp->pharmacy);
+                $PVotp->otp = otp();
+                $PVotp->save();
+            }
         }
         flash()->addSuccess('Order Distributed Successfully.');
         return redirect()->route('om.order.order_list','pending'); 

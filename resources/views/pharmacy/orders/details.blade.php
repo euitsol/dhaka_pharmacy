@@ -72,6 +72,7 @@
                 </div>
                 <div class="card-footer">
                     @if($odr)
+                        <h5><b>Note:</b> <span class="text-danger">Please verify your order before handing it over to the rider. Your OTP is </span> <strong class="text-success">{{$otp->otp}}</strong></h5>
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">{{__('Rider Details')}}</h4>

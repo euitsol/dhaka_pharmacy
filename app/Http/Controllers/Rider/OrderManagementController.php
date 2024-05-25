@@ -44,6 +44,10 @@ class OrderManagementController extends Controller
 
         return view('rider.orders.details',$data);
     }
+
+    public function pOtpVerify(){
+        
+    }
     protected function getStatus($status){
         switch ($status) {
             case 'dispute':

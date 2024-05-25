@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DisputeOrderRequest;
 use App\Http\Requests\OrderDistributionRiderRequest;
 use App\Models\AddToCart;
+use App\Models\DistributionOtp;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
 use App\Models\OrderDistributionRider;
@@ -100,8 +101,11 @@ class DistributedOrderController extends Controller
                 $new->cart_id = $data['cart_id'];
                 $new->pharmacy_id = $data['pharmacy_id'];
                 $new->creater()->associate(admin());
-                $new->save();
+                $new->save(); 
 
+                $PVotp = DistributionOtp::where('order_distribution_id',$old_dop->order_distribution_id)->where('otp_author_id', $old_dop->pharmacy->id)->where('otp_author_type', get_class($old_dop->pharmacy))->first();
+                $PVotp->otp_author()->associate($new->pharmacy);
+                $PVotp->update();
             }
         }
         flash()->addSuccess('Dispute Order Updated Successfully.');

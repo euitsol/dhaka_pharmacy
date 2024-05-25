@@ -21,7 +21,8 @@ return new class extends Migration
             $table->unsignedBigInteger('otp_author_id');
             $table->string('otp_author_type');
             $table->string('otp');
-            $table->unsignedBigInteger('rider_id');
+            $table->boolean('status')->default(0);
+            $table->unsignedBigInteger('rider_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);

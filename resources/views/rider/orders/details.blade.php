@@ -99,6 +99,17 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <form class="mt-3 form collect_form d-flex justify-content-between align-items-center" action="{{route('rider.order_management.pharmacy.otp_verify')}}" method="POST">
+                                            <div class="form-group collect_otp">
+                                                <input type="text" name="collect_otp" class="form-control" placeholder="Enter pharmacy verify otp">
+                                                <input type="hidden" name="pid" class="form-control" value="{{encrypt($pharmacy->id)}}">
+                                                <input type="hidden" name="od_id" class="form-control" value="{{encrypt($dor->od->id)}}">
+                                            </div>
+                                            @include('alerts.feedback', ['field' => 'collect_otp'])
+                                            <div class="form-group text-end">
+                                                <input type="submit" class="btn btn-secondary" value="Collect">
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
