@@ -42,7 +42,7 @@
                                 <td>|</td>
                                 <th>{{__('Total Price')}}</th>
                                 <td>:</td>
-                                <th>{!! get_taka_icon(). number_format(ceil($totalPrice)) !!}</th>
+                                <th>{!! get_taka_icon(). number_format(ceil($totalPrice+$delivery_charge)) !!}</th>
                             </tr>
                             <tr>
                                 <th>{{__('Payment Type')}}</th>

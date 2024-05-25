@@ -109,7 +109,6 @@
                     @if($dor->status == 1)
                         <div class="buttons text-end">
                             <a href="javascript:void(0)" class="btn btn-danger dispute" data-class="dispute_form">{{__('Dispute')}}</a>
-                            <a href="javascript:void(0)" class="btn btn-primary collect" data-class="pharmacy_collect_otp_form">{{__('Collect')}}</a>
                         </div>
                         <form style="display:none;" class="mt-3 form dispute_form" action="" method="POST">
                             <div class="form-group dispute_note">
@@ -120,15 +119,6 @@
                                 <input type="submit" class="btn btn-secondary" value="Update">
                             </div>
                             
-                        </form>
-                        <form style="display:none;" class="mt-3 form pharmacy_collect_otp_form" action="" method="POST">
-                            <div class="form-group pharmacy_collect_otp">
-                                <input type="text" name="pharmacy_collect_otp" class="form-control" placeholder="Enter pharmacy otp">
-                            </div>
-                            @include('alerts.feedback', ['field' => 'pharmacy_collect_otp'])
-                            <div class="form-group text-end">
-                                <input type="submit" class="btn btn-secondary" value="Update">
-                            </div>
                         </form>
                     @endif
                     @if($dor->status == 2)

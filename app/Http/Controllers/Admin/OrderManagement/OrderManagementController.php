@@ -57,6 +57,7 @@ class OrderManagementController extends Controller
         $data['totalPrice'] = $data['order_items']->sum('discount_price');
         $data['totalRegularPrice'] = $data['order_items']->sum('price');
         $data['totalDiscount'] = $data['order_items']->sum('discount');
+        $data['delivery_charge'] = 60;
         return view('admin.order_management.details',$data);
     }
 
@@ -77,6 +78,7 @@ class OrderManagementController extends Controller
         $data['totalDiscount'] = $data['order_items']->sum('discount');
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
         $data['order_distribution'] = OrderDistribution::with(['odps.cart','odps.pharmacy'])->where('status',0)->where('order_id',$data['order']->id)->first();
+        $data['delivery_charge'] = 60;
         return view('admin.order_management.order_distribution',$data);
     }
 
