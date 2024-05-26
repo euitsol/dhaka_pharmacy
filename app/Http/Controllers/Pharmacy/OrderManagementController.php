@@ -72,7 +72,15 @@ class OrderManagementController extends Controller
         $data['do']->prep_time = readablePrepTime($data['do']->created_at, $data['do']->prep_time);
         $data['do']->pharmacy = Pharmacy::findOrFail(pharmacy()->id);
         $data['do']['dops'] = $data['do']->odps
-                            ->where('pharmacy_id',pharmacy()->id);
+                            ->where('pharmacy_id',pharmacy()->id)->map(function($dop) use($data){
+                                $dop->totalPrice = ($dop->cart->product->price * ($dop->cart->unit->quantity ?? 1) * $dop->cart->quantity);
+                                if ($data['do']->payment_type == 0 && $data['pharmacy_discount']){
+                                    $dop->totalPrice -= (($dop->totalPrice/100)*$data['pharmacy_discount']->discount_percent);
+                                    $dop->discount = $data['pharmacy_discount']->discount_percent;
+                                }
+                                return $dop;
+
+                            });
         $data['status'] = $this->getStatus($status);
         $data['statusTitle'] = $this->statusTitle($this->getStatus($status));
         $data['statusBg'] = $this->statusBg($this->getStatus($status));

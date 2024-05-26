@@ -36,13 +36,13 @@
                     <table class="table table-striped datatable">
                         <tbody>
                             <tr>
-                                <th>{{__('Pharmacy')}}</th>
-                                <td>:</td>
-                                <th>{{ $do->pharmacy->name }}</th>
-                                <td>|</td>
                                 <th>{{__('Order ID')}}</th>
                                 <td>:</td>
                                 <th>{{ $do->order->order_id }}</th>
+                                <td>|</td>
+                                <th>{{__('Total Price')}}</th>
+                                <td>:</td>
+                                <th>{!! get_taka_icon() !!}{{ number_format(ceil($do->dops->sum('totalPrice'))) }}</th>
                             </tr>
                             <tr>
                                 <th>{{__('Payment Type')}}</th>
@@ -153,9 +153,6 @@
                                 <span class="{{ $statusBg }}">{{  __(ucwords(strtolower((str_replace('-', ' ', $statusTitle))))) }}</span>
                             </div>
                         </div>
-                        @php
-                            $subtotal = 0;
-                        @endphp
                         @foreach ($do->dops as $key=>$dop)
                             <div class="col-12 status_wrap">
                                 <div class="card card-2 mb-0 mt-3">
@@ -175,17 +172,9 @@
                                                     </div>
                                                     <div class="col my-auto">
                                                         <h6 class="my-auto text-center">
-                                                            @php
-                                                                $totalPrice = ($dop->cart->product->price * ($dop->cart->unit->quantity ?? 1) * $dop->cart->quantity);
-                                                                if ($do->payment_type == 0 && $pharmacy_discount){
-                                                                    $totalPrice -= (($totalPrice/100)*$pharmacy_discount->discount_percent);
-                                                                    $discount = "<span class='badge badge-danger'>$pharmacy_discount->discount_percent.'% off'</span>";
-                                                                }
-                                                                $subtotal += $totalPrice;
-                                                            @endphp
                                                             <span><strong>{{ __('Total Price : ') }}</strong>{!! get_taka_icon() !!}
                                                                 
-                                                                {{ number_format($totalPrice, 2) }}</span> <sup>{!! isset($discount) ? $discount : '' !!}</sup>
+                                                                {{ number_format($dop->totalPrice, 2) }}</span> <sup><span class='badge badge-danger'>@if(isset($dop->discount)){{$dop->discount.'% off'}}@endif</span></sup>
                                                         </h6>
                                                         @if ($do->payment_type == 1 && ($status == 0 || $status == 1))
                                                             <div class="input-group">
@@ -244,9 +233,6 @@
                                 
                             </div>
                         @endforeach
-                        <div class="col-12 text-end">
-                            <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format(ceil($subtotal)) }}</span></span>
-                        </div>
                         @if($status == 0 || $status == 1)
                             <div class="col-12 text-end">
                                 <input type="submit" value="Confirm" class="btn btn-success">
