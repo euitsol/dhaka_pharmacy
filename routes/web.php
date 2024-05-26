@@ -766,6 +766,10 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
     Route::get('/product/order/failed/{order_id}', [CheckoutController::class, 'order_failed'])->name('product.order.failed');
     Route::get('/product/order/cancel/{order_id}', [CheckoutController::class, 'order_cancel'])->name('product.order.cancel');
 
+    Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
+        Route::get('/address/{id}', 'address')->name('address');
+    });
+
     //Address
     Route::controller(UserAddressController::class)->prefix('address')->name('u.as.')->group(function () {
         Route::get('list', 'list')->name('list');

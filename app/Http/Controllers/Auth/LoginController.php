@@ -47,13 +47,12 @@ class LoginController extends BaseController
      */
     public function __construct()
     {
-        parent::__construct();
         $this->middleware('guest')->except('logout');
     }
 
 
 
-    // Google Login 
+    // Google Login
     public function googleRedirect()
     {
         return Socialite::driver('google')->redirect();
@@ -85,7 +84,7 @@ class LoginController extends BaseController
     }
 
 
-    // Github Login 
+    // Github Login
     public function githubRedirect()
     {
         return Socialite::driver('github')->redirect();
@@ -116,7 +115,7 @@ class LoginController extends BaseController
     }
 
 
-    // Facebook Login 
+    // Facebook Login
     public function facebookRedirect()
     {
         return Socialite::driver('facebook')->redirect();
@@ -213,7 +212,7 @@ class LoginController extends BaseController
                 $data['error'] = 'Phone number didn\'t match.';
                 $data['message'] = 'User Not Found';
             }
-            
+
             return response()->json($data);
         } catch (\Exception $e) {
             return response()->json(['message' => 'An error occurred'], 500);
