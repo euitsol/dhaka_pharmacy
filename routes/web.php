@@ -728,6 +728,7 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::get('/details/{dor_id}', 'details')->name('details');
         Route::post('/pharmacy/otp-verify', 'pOtpVerify')->name('pharmacy.otp_verify');
         Route::post('/customer/otp-verify/{od_id}', 'cOtpVerify')->name('customer.otp_verify');
+        Route::post('/dispute/{od_id}', 'dispute')->name('dispute');
     });
 
     Route::controller(RiderProfileController::class)->prefix('profile')->name('profile.')->group(function () {

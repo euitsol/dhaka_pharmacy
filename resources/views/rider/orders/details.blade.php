@@ -109,26 +109,28 @@
                                             @if($pharmacyOtp->status == 1)
                                                 @if($dor->od->status == 5)
                                                     <h4 class="text-success m-0 py-3">{{__('Order successfully delivered.')}}</h4>
-                                                @if($dor->od->status == 6)
+                                                @elseif($dor->od->status == 6)
                                                     <h4 class="text-success m-0 py-3">{{__('Order successfully finished.')}}</h4>
                                                 @else
                                                     <h4 class="text-success m-0 py-3">{{__('Order successfully collected.')}}</h4>
                                                 @endif
                                             @else
-                                                <form class="mt-3 form collect_form d-flex justify-content-between align-items-center" action="{{route('rider.order_management.pharmacy.otp_verify')}}" method="POST">
-                                                    @csrf
-                                                    <div class="form-group collect_otp">
-                                                        <input type="text" name="collect_otp" class="form-control" placeholder="Enter pharmacy verify otp">
-                                                        <input type="hidden" name="pid" class="form-control" value="{{encrypt($pharmacy->id)}}">
-                                                        <input type="hidden" name="od_id" class="form-control" value="{{encrypt($dor->od->id)}}">
-                                                    </div>
-                                                    @include('alerts.feedback', ['field' => 'collect_otp'])
-                                                    @include('alerts.feedback', ['field' => 'pid'])
-                                                    @include('alerts.feedback', ['field' => 'od_id'])
-                                                    <div class="form-group text-end">
-                                                        <input type="submit" class="btn btn-secondary" value="Collect">
-                                                    </div>
-                                                </form>
+                                                @if($dor->status != 0 && $dor->status != -1)
+                                                    <form class="mt-3 form collect_form d-flex justify-content-between align-items-center" action="{{route('rider.order_management.pharmacy.otp_verify')}}" method="POST">
+                                                        @csrf
+                                                        <div class="form-group collect_otp">
+                                                            <input type="text" name="collect_otp" class="form-control" placeholder="Enter pharmacy verify otp">
+                                                            <input type="hidden" name="pid" class="form-control" value="{{encrypt($pharmacy->id)}}">
+                                                            <input type="hidden" name="od_id" class="form-control" value="{{encrypt($dor->od->id)}}">
+                                                        </div>
+                                                        @include('alerts.feedback', ['field' => 'collect_otp'])
+                                                        @include('alerts.feedback', ['field' => 'pid'])
+                                                        @include('alerts.feedback', ['field' => 'od_id'])
+                                                        <div class="form-group text-end">
+                                                            <input type="submit" class="btn btn-secondary" value="Collect">
+                                                        </div>
+                                                    </form>
+                                                @endif
                                             @endif
                                             
                                         @endif
@@ -141,7 +143,7 @@
                 <div class="card-footer ms-auto">
                     @if($dor->status == 1)
                         <div class="buttons text-end">
-                            <a href="javascript:void(0)" class="btn btn-danger dispute" data-name="dispute_reason" data-action="javascript:void(0)" data-placeholder="Enter dispute reason" data-title="Dispute Form">{{__('Dispute')}}</a>
+                            <a href="javascript:void(0)" class="btn btn-danger dispute" data-name="dispute_reason" data-action="{{route('rider.order_management.dispute',encrypt($dor->od->id))}}" data-placeholder="Enter dispute reason" data-title="Dispute Form">{{__('Dispute')}}</a>
                         </div>
                     @endif
                     @if($dor->status == 2)
@@ -190,7 +192,7 @@
                                 </div>
                                 @include('alerts.feedback', ['field' => '${name}'])
                                 <div class="form-group text-end">
-                                    <input type="submit" data-action="${action}" class="btn btn-secondary formSubmit" value="Submit">
+                                    <span type="submit" data-action="${action}" id="updateEmailTemplate"  class="btn btn-primary formSubmit">{{ __('Submit') }}</span>
                                 </div>
                             </form>`;
             $('.modal_data').html(data_form);
@@ -221,6 +223,7 @@
                             $.each(messages, function (index, message) {
                                 errorHtml += '<span class="invalid-feedback d-block" role="alert">' + message + '</span>';
                             });
+                            $('[name="' + field + '"]').next('.invalid-feedback').remove();
                             $('[name="' + field + '"]').after(errorHtml);
                         });
                     } else {

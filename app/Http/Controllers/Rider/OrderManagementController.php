@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Rider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerOtpVerifyRequest;
 use App\Http\Requests\PharmacyOtpVerifyRequest;
+use App\Http\Requests\Rider\RiderDisputeRequest;
 use App\Models\DistributionOtp;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
@@ -29,7 +30,7 @@ class OrderManagementController extends Controller
         $query = OrderDistributionRider::with(['od.odps','od.order.address','rider'])->where('rider_id',rider()->id);
         $query->where('status',$this->getStatus($status));
         if($this->getStatus($status) == 0){
-            $query->where('status',-1);
+            $query->orWhere('status',-1);
         }
         $data['dors'] = $query->orderBy('priority','desc')->latest()->get()->map(function($dor){
             $dor->pharmacy = $dor->od->odps->unique('pharmacy_id')->map(function($dop){
@@ -111,13 +112,13 @@ class OrderManagementController extends Controller
             flash()->addError('Something is wrong please try again.');
         }
         return redirect()->back();
-
     }
-
-
-
-
-
+    public function dispute(RiderDisputeRequest $req, $od_id){
+        OrderDistribution::findOrFail(decrypt($od_id))->update(['status'=>2]);
+        OrderDistributionRider::where('rider_id',rider()->id)->where('order_distribution_id', decrypt($od_id))->where('status',1)->update(['status'=>0,'dispute_note'=>$req->dispute_reason]);
+        flash()->addSuccess('Order disputed successfully.');
+        return redirect()->back();
+    }
 
     protected function getStatus($status){
         switch ($status) {

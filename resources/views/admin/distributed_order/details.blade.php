@@ -72,6 +72,13 @@
                 </div>
                 <div class="card-footer">
                     @if($do->status !=0 && $do->status !=1)
+                    @if(count($dispute_do_riders)>0)
+                        <h4>{{__('Rider Dispute Reasons:')}}</h4>
+                    @endif
+                    @foreach ($dispute_do_riders as $ddor)
+                        <p class="m-0 mb-1"><b class="fw-bold">{{$ddor->rider->name." : "}}</b><span class="text-danger">{{$ddor->dispute_note}}</span></p>
+                    @endforeach
+                    
                         @if(auth()->user()->can('do_rider') && !$do_rider)
                             <div class="card">
                                 <div class="card-header">

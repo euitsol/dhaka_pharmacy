@@ -84,6 +84,7 @@ class DistributedOrderController extends Controller
         $data['totalPrice'] = $this->calculateTotalPrice($data['do']);
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
         $data['do_rider'] = OrderDistributionRider::whereNotIn('status', [0, -1])->where('order_distribution_id',$data['do']->id)->first();
+        $data['dispute_do_riders'] = OrderDistributionRider::with('rider')->whereIn('status', [0, -1])->where('order_distribution_id',$data['do']->id)->latest()->get();;
         $data['delivery_charge'] = 60;
         return view('admin.distributed_order.details',$data);
     }
@@ -117,6 +118,7 @@ class DistributedOrderController extends Controller
     public function do_rider(OrderDistributionRiderRequest $req, $do_id):RedirectResponse
     {
         $do_id = decrypt($do_id);
+        OrderDistributionRider::where('status', 0)->where('order_distribution_id',$do_id)->update(['status'=>-1]);
         $do_rider = new OrderDistributionRider();
         $do_rider->rider_id = $req->rider_id;
         $do_rider->order_distribution_id = $do_id;
