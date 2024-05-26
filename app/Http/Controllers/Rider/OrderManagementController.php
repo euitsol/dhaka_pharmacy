@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Rider;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerOtpVerifyRequest;
+use App\Http\Requests\PharmacyOtpVerifyRequest;
+use App\Models\DistributionOtp;
+use App\Models\OrderDistribution;
+use App\Models\OrderDistributionPharmacy;
 use App\Models\OrderDistributionRider;
+use App\Models\Pharmacy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,18 +42,83 @@ class OrderManagementController extends Controller
     }
     
     public function details($dor_id){
-        $data['dor'] = OrderDistributionRider::with(['od.odps','od.order.address','rider'])->findORFail($dor_id);
+        $data['dor'] = OrderDistributionRider::with(['od.odps','od.order.address','rider'])->findORFail(decrypt($dor_id));
         $data['dor']->pharmacy = $data['dor']->od->odps->unique('pharmacy_id')->map(function($dop){
                 return $dop->pharmacy;
             })->values();
         $data['dor']->totalPrice = $this->calculateTotalPrice($data['dor']->od);
-
         return view('rider.orders.details',$data);
     }
 
-    public function pOtpVerify(){
-        
+    public function pOtpVerify(PharmacyOtpVerifyRequest $req){
+        $pharmacy = Pharmacy::findOrFail(decrypt($req->pid));
+        $check = DistributionOtp::where('order_distribution_id',decrypt($req->od_id))->where('otp_author_id', $pharmacy->id)->where('otp_author_type', get_class($pharmacy))->where('otp',$req->collect_otp)->first();
+        if($check){
+            $check->status = 1;
+            $check->rider_id = rider()->id;
+            $check->update();
+
+            OrderDistributionPharmacy::where('order_distribution_id', decrypt($req->od_id))
+                                        ->where('status', 2)
+                                        ->where('pharmacy_id',$pharmacy->id)
+                                        ->update(['status'=>4]);
+            flash()->addSuccess('Order collected from '.$pharmacy->name.' successfully.');
+        }else{
+            flash()->addError('Something is wrong please try again.');
+        }
+
+        $odps = OrderDistributionPharmacy::with('pharmacy')->where('order_distribution_id', decrypt($req->od_id))
+                                        ->where('status', 2)
+                                        ->get()
+                                        ->unique('pharmacy_id');
+
+        $all_collect = $odps->every(function ($dop) use ($req) {
+            $check = DistributionOtp::where('order_distribution_id', decrypt($req->od_id))
+                ->where('otp_author_id', $dop->pharmacy->id)
+                ->where('otp_author_type', get_class($dop->pharmacy))
+                ->first();
+            return $check && $check->status == 1;
+        });
+        if($all_collect){
+            OrderDistributionRider::where('rider_id',rider()->id)->where('order_distribution_id', decrypt($req->od_id))->where('status',1)->update(['status'=>2]);
+            OrderDistribution::where('id', decrypt($req->od_id))->update(['status'=>4]);
+
+            $od = OrderDistribution::with('order.customer')->findOrFail(decrypt($req->od_id));
+            $CustomerVotp = new DistributionOtp();
+            $CustomerVotp->order_distribution_id = $od->id;
+            $CustomerVotp->otp_author()->associate($od->order->customer);
+            $CustomerVotp->otp = otp();
+            $CustomerVotp->save();
+        }
+        return redirect()->back(); 
     }
+    public function cOtpVerify(CustomerOtpVerifyRequest $req, $od_id){
+        $od = OrderDistribution::with('order.customer')->findOrFail(decrypt($od_id));
+        $check = DistributionOtp::where('order_distribution_id',decrypt($od_id))->where('otp_author_id', $od->order->customer->id)->where('otp_author_type', get_class($od->order->customer))->where('otp',$req->delivered_otp)->first();
+        if($check){
+            $check->status = 1;
+            $check->rider_id = rider()->id;
+            $check->update();
+
+            OrderDistributionRider::where('rider_id',rider()->id)->where('order_distribution_id', decrypt($od_id))->where('status',2)->update(['status'=>3]);
+            OrderDistribution::where('id', decrypt($od_id))->update(['status'=>5]);
+
+            OrderDistributionPharmacy::where('order_distribution_id', decrypt($od_id))
+                                        ->where('status', 4)
+                                        ->update(['status'=>5]);
+            flash()->addSuccess('Order delivered successfully.');
+        }else{
+            flash()->addError('Something is wrong please try again.');
+        }
+        return redirect()->back();
+
+    }
+
+
+
+
+
+
     protected function getStatus($status){
         switch ($status) {
             case 'dispute':

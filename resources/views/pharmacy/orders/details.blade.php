@@ -72,7 +72,16 @@
                 </div>
                 <div class="card-footer">
                     @if($odr)
-                        <h5><b>Note:</b> <span class="text-danger">Please verify your order before handing it over to the rider. Your OTP is </span> <strong class="text-success">{{$otp->otp}}</strong></h5>
+                        @if($status == 2)
+                            <h5><b>{{__('Note:')}}</b> <span class="text-danger">{{__('Please verify your order before handing it over to the rider. Your OTP is : ')}} </span> <strong class="text-success">{{optional($otp)->otp}}</strong></h5>
+                        @endif
+                        @if($status == 4)
+                            <h4 class="text-success m-0 py-3">{{__('Order successfully collected.')}}</h4>
+                        @endif
+                        @if($status == 5)
+                            <h4 class="text-success m-0 py-3">{{__('Order successfully delivered.')}}</h4>
+                        @endif
+                        
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">{{__('Rider Details')}}</h4>

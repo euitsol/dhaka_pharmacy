@@ -105,6 +105,7 @@ class DistributedOrderController extends Controller
 
                 $PVotp = DistributionOtp::where('order_distribution_id',$old_dop->order_distribution_id)->where('otp_author_id', $old_dop->pharmacy->id)->where('otp_author_type', get_class($old_dop->pharmacy))->first();
                 $PVotp->otp_author()->associate($new->pharmacy);
+                $PVotp->updated_by = admin()->id;
                 $PVotp->update();
             }
         }

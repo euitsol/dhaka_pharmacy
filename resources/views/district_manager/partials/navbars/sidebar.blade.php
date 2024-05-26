@@ -1,8 +1,8 @@
 <div class="sidebar">
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="{{ route('dm.dashboard') }}" class="simple-text logo-mini">{{ __('DP') }}</a>
-            <a href="{{ route('dm.dashboard') }}" class="simple-text logo-normal">{{ __('Dhaka Pharmacy') }}</a>
+            <a href="{{ route('home') }}" class="simple-text logo-mini">{{ __('DP') }}</a>
+            <a href="{{ route('home') }}" class="simple-text logo-normal">{{ __('Dhaka Pharmacy') }}</a>
         </div>
         <ul class="nav">
 

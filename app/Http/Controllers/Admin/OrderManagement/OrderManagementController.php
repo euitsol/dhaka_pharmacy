@@ -95,6 +95,7 @@ class OrderManagementController extends Controller
         $od->distribution_type = $req->distribution_type;
         $od->prep_time = $req->prep_time;
         $od->note = $req->note;
+        $od->creater()->associate(admin());
         $od->save();
         
         // Iterate through the datas and update or create OrderDistributionPharmacy entries
@@ -103,6 +104,7 @@ class OrderManagementController extends Controller
             $odp->order_distribution_id = $od->id;
             $odp->cart_id = $data['cart_id'];
             $odp->pharmacy_id = $data['pharmacy_id'];
+            $odp->creater()->associate(admin());
             $odp->save();
 
             $check = DistributionOtp::where('order_distribution_id',$od->id)->where('otp_author_id', $odp->pharmacy->id)->where('otp_author_type', get_class($odp->pharmacy))->first();
@@ -111,6 +113,7 @@ class OrderManagementController extends Controller
                 $PVotp->order_distribution_id = $od->id;
                 $PVotp->otp_author()->associate($odp->pharmacy);
                 $PVotp->otp = otp();
+                $PVotp->created_by = admin()->id;
                 $PVotp->save();
             }
         }
