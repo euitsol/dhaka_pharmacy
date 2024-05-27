@@ -139,7 +139,7 @@
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Discount') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
-                                    <span>{{ number_format($total_discount, 2) }}</span>
+                                    <span>{{ number_format(ceil($total_discount)) }}</span>
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
@@ -155,7 +155,7 @@
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Delivery Fee') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
-                                    <span>{{ number_format($delivery_fee, 2) }}</span>
+                                    <span>{{ number_format(ceil($delivery_fee)) }}</span>
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">

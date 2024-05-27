@@ -55,7 +55,7 @@ class CheckoutController extends BaseController
         $orderId = generateOrderId();
         $order = new Order();
 
-        $order->customer()->associate(admin());
+        $order->customer()->associate(user());
         // $order->customer_id = 1;//for test
         // $order->customer_type = "App\Models\User";//for test
 
