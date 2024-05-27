@@ -1,8 +1,13 @@
 <script>
     // Number Format Function 
-    function numberFormat(value, decimals) {
-        return parseFloat(value).toFixed(decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    }
+    // function numberFormat(value, decimals) {
+    //         if (decimals != null && decimals >= 0) {
+    //             value = parseFloat(value).toFixed(decimals);
+    //         } else {
+    //             value = Math.round(parseFloat(value)).toString();
+    //         }
+    //         return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    // }
     // Cart JS 
     $(document).ready(function() {
 

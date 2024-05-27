@@ -121,7 +121,7 @@
                                 </select>
                                 {{-- <p>{{__('GIVE PROMO CODE')}}</p>
                                     <input id="code" placeholder="Enter your code"> --}}
-                                <p>{{ __('Address') }}</p>
+                                <p class="p-0">{{ __('Address') }}</p>
 
                                 @foreach ($customer->address as $key => $address)
                                     <div class="form-check ms-2">
@@ -155,13 +155,14 @@
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Delivery Fee') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
-                                    <span>{{ number_format(ceil($delivery_fee)) }}</span>
+                                    <span class="delivery_fee">{{ number_format(ceil($default_delivery_fee)) }}</span>
+                                    <input type="hidden" name="delivery_fee" class="delivery_input" value="{{ ceil($default_delivery_fee) }}">
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Total Price') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
-                                    <span>{{ number_format(ceil($total_price + $delivery_fee)) }}</span>
+                                    <span class="total_price" data-total_price="{{ceil($total_price)}}">{{ number_format(ceil($total_price+$default_delivery_fee)) }}</span>
                                 </div>
                             </div>
 
@@ -194,7 +195,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <button class="btn" type="submit">{{ __('CONFIRM ORDER') }}</button>
+                                <button class="btn confirm_button" disabled type="submit">{{ __('CONFIRM ORDER') }}</button>
                             </div>
                         </div>
                     </div>
@@ -214,6 +215,15 @@
 
 @push('js')
     <script>
+        // Number Format Function 
+        // function numberFormat(value, decimals) {
+        //     if (decimals != null && decimals >= 0) {
+        //         value = parseFloat(value).toFixed(decimals);
+        //     } else {
+        //         value = Math.round(parseFloat(value)).toString();
+        //     }
+        //     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        // }
         const data = {
             'details_url': `{{ route('u.ck.address', ['param']) }}`,
         };

@@ -32,9 +32,9 @@
                                                 <th>{{__('Order ID')}}</th>
                                                 <td>:</td>
                                                 <td>{{$order->order_id}}</td>
-                                                <th>{{__('Delivery Address')}}</th>
+                                                <th>{{__('Delivery Type')}}</th>
                                                 <td>:</td>
-                                                <td>{!! optional($order->address)->street_address !!}</td>
+                                                <td>{{ucwords($order->delivery_type)}}</td>
                                             </tr>
                                             <tr>
                                                 <th>{{__('Order Date')}}</th>
@@ -46,12 +46,17 @@
                                                 
                                             </tr>
                                             <tr>
+                                                <th>{{__('Delivery Fee')}}</th>
+                                                <td>:</td>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($order->delivery_fee))}}</th>
                                                 <th>{{__('Payable Amount')}}</th>
                                                 <td>:</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice+$delivery_charge))}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice+$order->delivery_fee))}}</th>
+                                            </tr>
+                                            <tr>
+                                                <th>{{__('Delivery Address')}}</th>
+                                                <td>:</td>
+                                                <td colspan="4">{!! optional($order->address)->street_address !!}</td>
                                             </tr>
                                         </table>
                                     </div>

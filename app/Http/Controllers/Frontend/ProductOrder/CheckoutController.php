@@ -68,7 +68,7 @@ class CheckoutController extends BaseController
     public function checkout($order_id){
         $customer_id = user()->id;
         $data['order_id'] = decrypt($order_id);
-        $data['delivery_fee'] = 60;
+        $data['default_delivery_fee'] = 60;
         $atcs = AddToCart::check()->where('status',0)->where('customer_id', $customer_id)->latest()->get();
         foreach($atcs as $key=>$atc){
             $data['unit'] = MedicineUnit::findOrFail($atc->unit_id);
@@ -114,6 +114,7 @@ class CheckoutController extends BaseController
         $order->status = 1; //Order Submit
         $order->payment_getway = $req->payment_mathod;
         $order->delivery_type = $req->delivery_type;
+        $order->delivery_fee = $req->delivery_fee;
         $order->save();
         if($req->payment_method == 'ssl'){
             return redirect()->route('payment.index',$order_id);

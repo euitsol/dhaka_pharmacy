@@ -119,14 +119,14 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>{{__('Delivery Charges')}}</th>
+                                                <th>{{__('Delivery Fee')}}</th>
                                                 <td>:</td>
-                                                <td>{!! get_taka_icon() !!}{{number_format(ceil($delivery_charge))}}</td>
+                                                <td>{!! get_taka_icon() !!}{{number_format(ceil($order->delivery_fee))}}</td>
                                             </tr>
                                             <tr>
                                                 <th>{{__('Payable Amount')}}</th>
                                                 <td>:</td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice+$delivery_charge))}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice+$order->delivery_fee))}}</th>
                                             </tr>
                                         </table>
                                     </div>
@@ -140,7 +140,7 @@
                 <div class="jumbotron-fluid">
                     <div class="row justify-content-between ">
                         <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">{{__('TOTAL AMOUNT')}}</h2></div>
-                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{number_format(ceil($totalPrice+$delivery_charge))}}</h1></div>
+                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{number_format(ceil($totalPrice+$order->delivery_fee))}}</h1></div>
                     </div>
                 </div>
             </div>

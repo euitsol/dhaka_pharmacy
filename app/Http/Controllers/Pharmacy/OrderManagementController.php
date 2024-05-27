@@ -63,12 +63,15 @@ class OrderManagementController extends Controller
                 $query->orWhere('status',-1);
             }
         }])->findOrFail(decrypt($do_id));
-        if($data['do']->odps->where('pharmacy_id', pharmacy()->id)->every(fn($odp) => $odp->status == 0)) {
-            $data['do']->odps->where('pharmacy_id', pharmacy()->id)->each(function ($odp) {
-                $odp->update(['status' => 1]);
-            });
-            $data['do']->update(['status' => 1]);
+        if($data['do']->status == 0){
+            if($data['do']->odps->where('pharmacy_id', pharmacy()->id)->every(fn($odp) => $odp->status == 0)) {
+                $data['do']->odps->where('pharmacy_id', pharmacy()->id)->each(function ($odp) {
+                    $odp->update(['status' => 1]);
+                });
+                $data['do']->update(['status' => 1]);
+            }
         }
+        
         $data['do']->prep_time = readablePrepTime($data['do']->created_at, $data['do']->prep_time);
         $data['do']->pharmacy = Pharmacy::findOrFail(pharmacy()->id);
         $data['do']['dops'] = $data['do']->odps

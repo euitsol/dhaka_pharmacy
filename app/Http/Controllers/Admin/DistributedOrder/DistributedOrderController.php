@@ -46,7 +46,6 @@ class DistributedOrderController extends Controller
                 });
             return $do;
         });
-        $data['delivery_charge'] = 60;
         return view('admin.distributed_order.index',$data);
     }
     public function dispute($status): View
@@ -65,7 +64,6 @@ class DistributedOrderController extends Controller
         })->filter(function($do){
             return $do->odps->where('status', 3)->isNotEmpty();
         });
-        $data['delivery_charge'] = 60;
         return view('admin.distributed_order.index',$data);
     }
 
@@ -85,7 +83,6 @@ class DistributedOrderController extends Controller
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
         $data['do_rider'] = OrderDistributionRider::whereNotIn('status', [0, -1])->where('order_distribution_id',$data['do']->id)->first();
         $data['dispute_do_riders'] = OrderDistributionRider::with('rider')->whereIn('status', [0, -1])->where('order_distribution_id',$data['do']->id)->latest()->get();;
-        $data['delivery_charge'] = 60;
         return view('admin.distributed_order.details',$data);
     }
     public function update(DisputeOrderRequest $req):RedirectResponse

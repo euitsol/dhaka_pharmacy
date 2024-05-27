@@ -40,9 +40,18 @@
                                 <td>:</td>
                                 <th>{{$do->order->order_id}}</th>
                                 <td>|</td>
+                                <th>{{__('Delivery Type')}}</th>
+                                <td>:</td>
+                                <th>{{ucwords($do->order->delivery_type)}}</th>
+                            </tr>
+                            <tr>
+                                <th>{{__('Delivery Fee')}}</th>
+                                <td>:</td>
+                                <th>{!! get_taka_icon(). number_format(ceil($do->order->delivery_fee)) !!}</th>
+                                <td>|</td>
                                 <th>{{__('Total Price')}}</th>
                                 <td>:</td>
-                                <th>{!! get_taka_icon(). number_format(ceil($totalPrice+$delivery_charge)) !!}</th>
+                                <th>{!! get_taka_icon(). number_format(ceil($totalPrice+$do->order->delivery_fee)) !!}</th>
                             </tr>
                             <tr>
                                 <th>{{__('Payment Type')}}</th>

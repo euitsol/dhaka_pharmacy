@@ -47,7 +47,7 @@
                                 <td>|</td>
                                 <th>{{__('Total Price')}}</th>
                                 <td>:</td>
-                                <th>{!! get_taka_icon() !!}{{ number_format(ceil($dor->totalPrice)) }}</th>
+                                <th>{!! get_taka_icon() !!}{{ number_format(ceil($dor->totalPrice+$dor->od->order->delivery_fee)) }}</th>
                             </tr>
                             <tr>
                                 <th>{{__('Delivery Instraction')}}</th>

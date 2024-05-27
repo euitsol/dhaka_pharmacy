@@ -29,8 +29,8 @@ class SslCommerzController extends Controller
             $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
             return $item;
         });
-        $delivery_fee = 60;
-        $total_price = ($data['cart_items']->sum('discount_price')) + $delivery_fee;
+        
+        $total_price = ($data['cart_items']->sum('discount_price')) + $order->delivery_fee;
 
         # Here you have to receive all the order data to initate the payment.
         # Let's say, your oder transaction informations are saving in a table called "orders"

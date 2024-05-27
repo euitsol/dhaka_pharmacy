@@ -23,8 +23,8 @@ class AddressController extends Controller
     public function store(AddressRequest $request): RedirectResponse
     {
         $save = new Address();
-        $save->latitude = $request->lat;
-        $save->longitude = $request->long;
+        $save->latitude = '25.952858464386182';
+        $save->longitude = '89.24699435090237';
         $save->address = $request->address;
         $save->city = $request->city;
         $save->street_address = $request->street;
