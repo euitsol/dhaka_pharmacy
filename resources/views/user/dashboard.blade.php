@@ -11,15 +11,6 @@
 @endpush
 
 @section('content')
-{{-- @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif --}}
     <div class="container">
         <div class="row">
             <div class="col-3">
@@ -49,7 +40,7 @@
                             <span>10</span>
                         </div>
                         <div class="title">
-                            <h2>Current Order</h2>
+                            <h2>Previous Order</h2>
                         </div>
                     </div>
                     <div class="single-box cancel-order">
@@ -57,7 +48,7 @@
                             <span>05</span>
                         </div>
                         <div class="title">
-                            <h2>Current Order</h2>
+                            <h2>Pending Order</h2>
                         </div>
                     </div>
                 </div>

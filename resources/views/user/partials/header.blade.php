@@ -14,6 +14,8 @@
                                 href="{{ route('user.dashboard') }}">Dashboard</a></li>
                         <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'address') active @endif"
                                 href="{{ route('u.as.list') }}">Address</a></li>
+                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'order') active @endif"
+                                href="{{ route('u.order.list') }}">Order</a></li>
                     </ul>
                 </div>
             </div>

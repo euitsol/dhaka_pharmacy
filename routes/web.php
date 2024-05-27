@@ -83,6 +83,7 @@ use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
+use App\Http\Controllers\User\UserOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -778,6 +779,9 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
         Route::put('update', 'update')->name('update');
 
         Route::get('delete/{id}', 'delete')->name('delete');
+    });
+    Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
+        Route::get('list', 'order_list')->name('list');
     });
 });
 
