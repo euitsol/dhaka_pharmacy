@@ -7,6 +7,7 @@ use App\Models\AddToCart;
 use App\Models\Medicine;
 use App\Models\MedicineUnit;
 use App\Models\ProductCategory;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -69,6 +70,7 @@ class BaseController extends Controller
             if($atc->status !== 1){
                 $atc->status = 1;
                 $atc->unit_id = $unit_id;
+                $atc->created_at = Carbon::now();
                 $atc->save();
             }else{
                 $data['alert'] = "The item has already been added to the cart";
