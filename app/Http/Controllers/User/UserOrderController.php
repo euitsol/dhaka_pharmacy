@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\AddToCart;
 use App\Models\Order;
 use App\Models\OrderDistribution;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 
 
 class UserOrderController extends Controller
@@ -22,15 +24,32 @@ class UserOrderController extends Controller
         return $this->middleware('auth');
     }
 
-    public function order_list():View
+    public function order_list()
     {
-        $data['orders'] = Order::with(['address','customer','payments'])->where('status','!=',0)->where('customer_id',user()->id)->where('customer_type',get_class(user()))->latest()->get()->map(function($order){
+        $filter_val = request('filter');
+        $query = Order::with(['address','customer','payments'])->where('status','!=',0)->where('customer_id',user()->id)->where('customer_type',get_class(user()))->latest();
+
+        $currentUrl = URL::current();
+        $data['url'] = $currentUrl . "?all";
+        if($filter_val != null && $filter_val !='all'){
+            if($filter_val == 5){
+                $query->take(1);
+                $data['url'] = $currentUrl."?last-$filter_val-orders";
+            }else{
+                $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
+                $data['url'] = $currentUrl."?last-$filter_val-days-orders";
+            }
+        }
+        
+        $data['orders'] = $query->get()->map(function($order){
             $order->order_items = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
             ->whereIn('id', json_decode($order->carts))
             ->get();
             $order->od = OrderDistribution::where('order_id',$order->id)->first();
+            $order->place_date = date('d M Y h:m:s',strtotime($order->created_at));
 
             $order->order_items->transform(function($item) {
+                $item->product->image = storage_url($item->product->image);
                 $item->price = (($item->product->price*($item->unit->quantity ?? 1))*$item->quantity);
                 $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
                 $item->discount = (productDiscountAmount($item->product->id)*($item->unit->quantity ?? 1))*$item->quantity;
@@ -51,7 +70,11 @@ class UserOrderController extends Controller
 
             return $order;
         });
-        
-        return view('user.order.order_list',$data);
+
+        if (request()->ajax()) {
+            return response()->json($data);
+        }else{
+            return view('user.order.order_list',$data);
+        } 
     }
 }
