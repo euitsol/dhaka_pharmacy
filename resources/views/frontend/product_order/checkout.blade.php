@@ -137,6 +137,12 @@
                                 @endforeach
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
+                                <div class="col ps-0">{{ __('Total Price') }}</div>
+                                <div class="col text-end ">
+                                    <span> {!! get_taka_icon() !!} {{ number_format(ceil($total_regular_price)) }}</span>
+                                </div>
+                            </div>
+                            <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Discount') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
                                     <span>{{ number_format(ceil($total_discount)) }}</span>
@@ -145,10 +151,6 @@
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Sub-total') }}</div>
                                 <div class="col text-end ">
-                                    @if ($total_regular_price !== $total_price)
-                                        <span class="text-danger mx-2"><del>{!! get_taka_icon() !!}
-                                                {{ number_format(ceil($total_regular_price)) }}</del></span>
-                                    @endif
                                     <span> {!! get_taka_icon() !!} {{ number_format(ceil($total_price)) }}</span>
                                 </div>
                             </div>
@@ -160,7 +162,7 @@
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
-                                <div class="col ps-0">{{ __('Total Price') }}</div>
+                                <div class="col ps-0">{{ __('Payable Amount') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
                                     <span class="total_price" data-total_price="{{ceil($total_price)}}">{{ number_format(ceil($total_price+$default_delivery_fee)) }}</span>
                                 </div>
