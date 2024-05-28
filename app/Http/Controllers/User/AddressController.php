@@ -52,7 +52,11 @@ class AddressController extends Controller
 
     public function update(AddressRequest $request): RedirectResponse
     {
-        $save = Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->where('id', $request->id)->get()->first();
+        $query = Address::where('creater_id', user()->id)->where('creater_type', get_class(user()));
+        if($request->is_default == 1){
+            $query->update(['is_default'=>0]);
+        }
+        $save = $query->where('id', $request->id)->get()->first();
         $save->latitude = $request->lat;
         $save->longitude = $request->long;
         $save->address = $request->address;
@@ -61,6 +65,7 @@ class AddressController extends Controller
         $save->apartment = $request->apartment;
         $save->floor = $request->floor;
         $save->delivery_instruction = $request->instruction;
+        $save->is_default = $request->is_default ?? false;
         $save->updater()->associate(user());
         $save->save();
 

@@ -32,10 +32,10 @@
                                 <h2 class="accordion-header d-flex align-items-center justify-content-center"
                                     id="heading{{ $key }}">
                                     <button
-                                        class="accordion-button @if ($key == 0) @else collapsed @endif"
+                                        class="accordion-button @if ($address->is_default == 1) @else collapsed @endif"
                                         type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapse{{ $key }}"
-                                        @if ($key == 0) aria-expanded="true" @else  aria-expanded="false" @endif
+                                        @if ($address->is_default == 1) aria-expanded="true" @else  aria-expanded="false" @endif
                                         aria-controls="collapse{{ $key }}">
                                         {{ $address->address }} <span
                                             class="ml-2 badge {{ $address->getFeaturedBadgeClass() }}">{{ $address->getFeaturedStatus() }}</span>
@@ -50,7 +50,7 @@
 
                                 </h2>
                                 <div id="collapse{{ $key }}" data-count="{{ $key }}"
-                                    class="accordion-collapse collapse @if ($key == 0) show @endif "
+                                    class="accordion-collapse collapse @if ($address->is_default == 1) show @endif "
                                     aria-labelledby="heading{{ $key }}" data-bs-parent="#accordion">
                                     <div class="accordion-body">
                                         <div class="row">

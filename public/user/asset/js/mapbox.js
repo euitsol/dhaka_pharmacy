@@ -170,6 +170,9 @@ $(document).ready(function () {
                         $("#address_edit_modal input[name='instruction']").val(
                             response.delivery_instruction
                         );
+                        if(response.is_default == 1){
+                            $("#address_edit_modal input[name='is_default']").prop('checked',true);
+                        }
 
                         let map = initializeMap(
                             "user_e_map",
