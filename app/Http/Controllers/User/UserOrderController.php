@@ -24,7 +24,7 @@ class UserOrderController extends Controller
 
     public function order_list():View
     {
-        $data['orders'] = Order::with(['address','customer','payments'])->where('customer_id',user()->id)->where('customer_type',get_class(user()))->latest()->get()->map(function($order){
+        $data['orders'] = Order::with(['address','customer','payments'])->where('status','!=',0)->where('customer_id',user()->id)->where('customer_type',get_class(user()))->latest()->get()->map(function($order){
             $order->order_items = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
             ->whereIn('id', json_decode($order->carts))
             ->get();

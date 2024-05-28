@@ -440,15 +440,17 @@ select.form-select::selection{
 }
 .my-order-section .order-row .product-info .name{
     font-family: "Inter", sans-serif;
-    font-size: 32px;
+    font-size: 22px;
     font-weight: 600;
     line-height: 39px;
+    margin-bottom: 0;
 }
 .my-order-section .order-row .product-info .cat{
     font-family: "Inter", sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 29px;
+    margin-bottom: 0;
 }
 .my-order-section .order-row .qty{
     font-family: "Inter", sans-serif;

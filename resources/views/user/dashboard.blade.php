@@ -48,7 +48,7 @@
                             <span>05</span>
                         </div>
                         <div class="title">
-                            <h2>Pending Order</h2>
+                            <h2>Cancel Order</h2>
                         </div>
                     </div>
                 </div>
