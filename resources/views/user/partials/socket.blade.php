@@ -2,9 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <p>
-                    © 2003-{{date('Y')}} <a href="https://europeanit-inst.com/" target="_blank">European IT Solutions</a>
-                </p>
+                <p class="text-center m-0">{{date('Y')}} &copy all rights reserved by Dhaka Pharmacy</p>
             </div>
         </div>
     </div>

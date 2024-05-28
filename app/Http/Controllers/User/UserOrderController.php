@@ -33,7 +33,7 @@ class UserOrderController extends Controller
         $data['url'] = $currentUrl . "?all";
         if($filter_val != null && $filter_val !='all'){
             if($filter_val == 5){
-                $query->take(1);
+                $query->take($filter_val);
                 $data['url'] = $currentUrl."?last-$filter_val-orders";
             }else{
                 $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
