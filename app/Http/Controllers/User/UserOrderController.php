@@ -28,16 +28,12 @@ class UserOrderController extends Controller
     {
         $filter_val = request('filter');
         $query = Order::with(['address','customer','payments'])->where('status','!=',0)->where('customer_id',user()->id)->where('customer_type',get_class(user()))->latest();
-
-        $currentUrl = URL::current();
-        $data['url'] = $currentUrl . "?all";
+        
         if($filter_val != null && $filter_val !='all'){
             if($filter_val == 5){
                 $query->take($filter_val);
-                $data['url'] = $currentUrl."?last-$filter_val-orders";
             }else{
                 $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
-                $data['url'] = $currentUrl."?last-$filter_val-days-orders";
             }
         }
         
