@@ -56,7 +56,7 @@
                                             <tr>
                                                 <th>{{__('Delivery Address')}}</th>
                                                 <td>:</td>
-                                                <td colspan="4">{!! optional($order->address)->street_address !!}</td>
+                                                <td colspan="4">{!! optional($order->address)->address !!}</td>
                                             </tr>
                                         </table>
                                     </div>

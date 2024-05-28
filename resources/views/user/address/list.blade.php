@@ -58,7 +58,7 @@
                                                 <span class="strong">City: </span>{{ $address->city }}
                                             </div>
                                             <div class="col-md-3">
-                                                <span class="strong">Street: </span>{{ $address->street_address }}
+                                                <span class="strong">Street: </span>{{ $address->address }}
                                             </div>
                                             <div class="col-md-3">
                                                 <span class="strong">Appartment: </span>{{ $address->apartment }}

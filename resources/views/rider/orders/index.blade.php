@@ -38,7 +38,7 @@
                                             {{str_limit($pharmacy->name,10)}} @if($key != (count($dor->pharmacy) - 1)) {{'| '}} @endif
                                         @endforeach 
                                     </td>
-                                    <td> {{str_limit($dor->od->order->address->street_address,30)}} </td>
+                                    <td> {{str_limit($dor->od->order->address->address,30)}} </td>
                                     <td>
                                         <span class="{{ $dor->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $dor->statusTitle()))))  }}</span>
                                     </td>

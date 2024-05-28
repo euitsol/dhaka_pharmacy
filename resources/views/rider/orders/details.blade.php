@@ -33,7 +33,7 @@
                             <tr>
                                 <th>{{__('Delivery Address')}}</th>
                                 <td>:</td>
-                                <th>{!! $dor->od->order->address->street_address !!}</th>
+                                <th>{!! $dor->od->order->address->address !!}</th>
                                 <td>|</td>
                                 <th>{{__('Order ID')}}</th>
                                 <td>:</td>

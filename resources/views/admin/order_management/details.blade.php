@@ -96,7 +96,7 @@
                                             <tr>
                                                 <th>{{__('Delivery Address')}}</th>
                                                 <td>:</td>
-                                                <td>{!! optional($order->address)->street_address !!}</td>
+                                                <td>{!! optional($order->address)->address !!}</td>
                                             </tr>
                                             <tr>
                                                 <th>{{__('Order Date')}}</th>
@@ -104,18 +104,22 @@
                                                 <td>{{timeFormate($order->created_at)}}</td>
                                             </tr>
                                             <tr>
+                                                <th>{{__('Total Price')}}</th>
+                                                <td>:</td>
+                                                <td>
+                                                    <span>{!! get_taka_icon() !!} {{number_format(ceil($totalRegularPrice))}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <th>{{__('Discount')}}</th>
                                                 <td>:</td>
-                                                <td><span>{!! get_taka_icon() !!} {{number_format($totalDiscount,2)}}</span></td>
+                                                <td><span>{!! get_taka_icon() !!} {{number_format(ceil($totalDiscount))}}</span></td>
                                             </tr>
                                             <tr>
                                                 <th>{{__('Sub Total')}}</th>
                                                 <td>:</td>
                                                 <td>
                                                     <span>{!! get_taka_icon() !!} {{number_format(ceil($totalPrice))}}</span>
-                                                    @if ($totalRegularPrice !== $totalPrice)
-                                                        <span class="text-danger ms-2"><del>{!! get_taka_icon() !!} {{number_format(ceil($totalRegularPrice))}}</del></span> 
-                                                    @endif
                                                 </td>
                                             </tr>
                                             <tr>
@@ -166,6 +170,7 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Transaction ID') }}</th>
+                                <th>{{ __('Total Amount') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Payment date') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -181,6 +186,7 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $payment->transaction_id }}</td>
+                                    <td><span>{!! get_taka_icon() !!} </span>{{ number_format(ceil($payment->amount)) }}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
                                     <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>
