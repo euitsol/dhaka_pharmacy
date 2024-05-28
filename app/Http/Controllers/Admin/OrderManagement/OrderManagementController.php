@@ -26,7 +26,7 @@ class OrderManagementController extends Controller
     }
     public function index($status): View
     {
-        
+
         $data['orders'] = Order::status($status)->latest()->get()
                         ->map(function ($order) {
                             $order->totalPrice = AddToCart::with('product')
@@ -47,14 +47,14 @@ class OrderManagementController extends Controller
         $data['order_items'] = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
                             ->whereIn('id', json_decode($data['order']->carts))
                             ->get();
-        
+
         $data['order_items']->transform(function($item) {
             $item->price = (($item->product->price*($item->unit->quantity ?? 1))*$item->quantity);
             $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
             $item->discount = (productDiscountAmount($item->product->id)*($item->unit->quantity ?? 1))*$item->quantity;
             return $item;
         });
-        
+
         $data['totalPrice'] = $data['order_items']->sum('discount_price');
         $data['totalRegularPrice'] = $data['order_items']->sum('price');
         $data['totalDiscount'] = $data['order_items']->sum('discount');
@@ -72,7 +72,7 @@ class OrderManagementController extends Controller
             $item->discount = (productDiscountAmount($item->product->id)*($item->unit->quantity ?? 1))*$item->quantity;
             return $item;
         });
-        
+
         $data['totalPrice'] = $data['order_items']->sum('discount_price');
         $data['totalRegularPrice'] = $data['order_items']->sum('price');
         $data['totalDiscount'] = $data['order_items']->sum('discount');
@@ -94,7 +94,7 @@ class OrderManagementController extends Controller
         $od->note = $req->note;
         $od->creater()->associate(admin());
         $od->save();
-        
+
         // Iterate through the datas and update or create OrderDistributionPharmacy entries
         foreach ($req->datas as $data) {
             $odp = new OrderDistributionPharmacy();
@@ -115,15 +115,15 @@ class OrderManagementController extends Controller
             }
         }
         flash()->addSuccess('Order Distributed Successfully.');
-        return redirect()->route('om.order.order_list','pending'); 
+        return redirect()->route('om.order.order_list','pending');
     }
 
-   
+
     protected function getOrderStatusBgColor($status){
         $statusBgColor = ($status == 'success') ? 'badge badge-success' : (($status == 'pending') ? 'badge badge-info' : (($status == 'failed') ? 'badge badge-danger' : (($status == 'cancel') ? 'badge badge-warning' : 'badge badge-primary')));
         return $statusBgColor;
     }
 
 
-    
+
 }
