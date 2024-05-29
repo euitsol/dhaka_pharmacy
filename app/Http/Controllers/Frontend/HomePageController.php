@@ -27,19 +27,17 @@ class HomePageController extends BaseController
         // $this->order_notification($order, 'order_initialized');
 
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated();
-        $data['products'] = $products->featured()->latest()->get()->shuffle()->take(8)->map(function($product){
+        $data['products'] = $products->featured()->latest()->get()->shuffle()->take(8)->transform(function($product){
             $product = $this->transformProduct($product,30);
             $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
-        $data['bsItems'] = $products->bestSelling()->latest()->get()->shuffle()->take(8)->map(function($product){
+        $data['bsItems'] = $products->bestSelling()->latest()->get()->shuffle()->take(8)->transform(function($product){
             $product = $this->transformProduct($product,30);
             $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
-        $query = ProductCategory::activated()->orderBy('name');
-        $data['categories'] = $query->get();
-        $data['featuredItems'] = $query->featured()->get();
+        $data['featuredItems'] = ProductCategory::activated()->featured()->orderBy('name')->get();
 
         return view('frontend.home',$data);
     }
@@ -57,7 +55,7 @@ class HomePageController extends BaseController
             $data['url'] = $currentUrl . "?category=".$data['product_cat']->slug;
             $datas = $products->where('pro_cat_id',$data['product_cat']->id)->latest()->get();
         }
-        $data['products'] = $datas->shuffle()->take(8)->map(function($product){
+        $data['products'] = $datas->shuffle()->take(8)->transform(function($product){
             $product = $this->transformProduct($product,30);
             $product->units = $this->getSortedUnits($product->unit);
             return $product;

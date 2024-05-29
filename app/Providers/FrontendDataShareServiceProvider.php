@@ -28,11 +28,12 @@ class FrontendDataShareServiceProvider extends ServiceProvider
         view()->composer(['frontend.*'], function ($view) {
 
             $data = [];
-            $data['categories'] = ProductCategory::activated()->orderBy('name')->get();
-            $data['menuItems'] = $data['categories']->where('is_menu', 1);
+            $query = ProductCategory::activated()->orderBy('name')->get();
+            $data['categories'] = $query;
+            $data['menuItems'] = $query->where('is_menu', 1);
             $data['atcs'] = [];
             if(Auth::guard('web')->check()){
-                $data['atcs'] = AddToCart::with(['product', 'customer'])->where('customer_id', user()->id)->where('status', 1)->latest()->get();
+                $data['atcs'] = AddToCart::with(['product.discounts', 'customer'])->where('customer_id', user()->id)->where('status', 1)->latest()->get();
                 $data['atcs'] = $data['atcs']->map(function ($atc) {
                     $activatedProduct = $atc->product;
                     if ($activatedProduct) {

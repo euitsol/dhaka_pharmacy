@@ -248,7 +248,7 @@ function generateTranId() {
 //     }
 // }
 
-function calculateProductDiscount($product, $isPercent = false) {
+function calculateProductDiscount($product,$discounts, $isPercent = false) {
     $discount = $product->discounts()->where('status', 1)->where(function ($query) {
                             $query->whereNotNull('discount_amount')
                                 ->orWhereNotNull('discount_percentage');
@@ -275,6 +275,9 @@ function calculateProductDiscount($product, $isPercent = false) {
     
     
 }
+
+
+
 
 
 

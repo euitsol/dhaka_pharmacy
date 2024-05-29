@@ -55,8 +55,9 @@ class BaseController extends Controller
 
         $product = Medicine::activated()->where('slug',$product_slug)->first();
         $customer_id = user()->id;
-        $data['count'] = AddToCart::where('customer_id',$customer_id)->count();
-        $atc = AddToCart::where('product_id',$product->id)->where('customer_id',$customer_id)->first();
+        $carts = AddToCart::where('customer_id',$customer_id);
+        $data['count'] = $carts->count();
+        $atc = $carts->where('product_id',$product->id)->first();
         if($atc){
             if($atc->status !== 1){
                 $atc->status = 1;
@@ -101,7 +102,7 @@ class BaseController extends Controller
         AddToCart::where('id',$act_id)->update(['status'=>-1]);
         $data['sucses_alert'] = "The item has been successfully removed from your cart.";
 
-        $data['atcs'] = AddToCart::with(['product', 'customer'])
+        $data['atcs'] = AddToCart::with(['product.discounts', 'customer'])
             ->where('customer_id', user()->id)
             ->where('status',1)
             ->latest()
