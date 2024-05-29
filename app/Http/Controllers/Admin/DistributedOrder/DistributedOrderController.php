@@ -33,19 +33,19 @@ class DistributedOrderController extends Controller
         $data['status'] = $status;
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
         $data['dos'] = OrderDistribution::with(['order','odps'])
-        ->withCount(['odps' => function ($query) {
-            $query->where('status','!=', -1);
-        }])
-        ->where('status',$this->getStatus($status))->latest()->get()
-        ->map(function($do){
-            $do->order->totalPrice = AddToCart::with('product')
-                ->whereIn('id', json_decode($do->order->carts))
-                ->get()
-                ->sum(function ($item) {
-                    return (($item->product->discountPrice() * ($item->unit->quantity ?? 1)) * $item->quantity);
-                });
-            return $do;
-        });
+                    ->withCount(['odps' => function ($query) {
+                        $query->where('status','!=', -1);
+                    }])
+                    ->where('status',$this->getStatus($status))->latest()->get()
+                    ->map(function($do){
+                        $do->order->totalPrice = AddToCart::with('product')
+                            ->whereIn('id', json_decode($do->order->carts))
+                            ->get()
+                            ->sum(function ($item) {
+                                return (($item->product->discountPrice() * ($item->unit->quantity ?? 1)) * $item->quantity);
+                            });
+                        return $do;
+                    });
         return view('admin.distributed_order.index',$data);
     }
     public function dispute($status): View

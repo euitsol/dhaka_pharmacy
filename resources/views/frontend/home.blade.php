@@ -30,7 +30,7 @@
                                                 <div class="col-4 img">
                                                     <a href="{{ route('product.single_product', $item->slug) }}"></a>
                                                     <img height="90" class="w-100 border border-1 rounded-1"
-                                                        src="{{ storage_url($item->image) }}" alt="{{ $item->name }}">
+                                                        src="{{ $item->image }}" alt="{{ $item->name }}">
                                                     </a>
                                                 </div>
                                                 <div class="col-8">
@@ -44,7 +44,7 @@
 
                                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
                                                             {{ number_format($item->discountPrice(), 2) }}</span>
-                                                        @if (productDiscountPercentage($item->id))
+                                                        @if (calculateProductDiscount($item, true))
                                                             <span class="regular_price"> <del>{!! get_taka_icon() !!}
                                                                     {{ number_format($item->price, 2) }}</del></span>
                                                         @endif
@@ -109,11 +109,11 @@ btn-arrow">
                                         <div class="single-pdct">
                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                 <div class="pdct-img">
-                                                    @if (productDiscountPercentage($product->id))
+                                                    @if (calculateProductDiscount($product,true))
                                                         <span
                                                             class="discount_tag">{{ formatPercentageNumber($product->discount_percentage) . '% 0ff' }}</span>
                                                     @endif
-                                                    <img class="w-100" src="{{ storage_url($product->image) }}"
+                                                    <img class="w-100" src="{{ $product->image }}"
                                                         alt="Product Image">
                                                 </div>
                                             </a>
@@ -135,7 +135,7 @@ btn-arrow">
 
                                                 <h4> <span> {!! get_taka_icon() !!}
                                                         {{ number_format($product->discountPrice(), 2) }}</span>
-                                                    @if (productDiscountPercentage($product->id))
+                                                    @if (calculateProductDiscount($product,true))
                                                         <span class="regular_price"> <del>{!! get_taka_icon() !!}
                                                                 {{ number_format($product->price, 2) }}</del></span>
                                                     @endif

@@ -21,7 +21,7 @@ class BaseController extends Controller
 {
     public function productSearch($search_value, $category):JsonResponse
     {
-        $filter = Medicine::with(['pro_sub_cat','generic','company','strength']);
+        $filter = Medicine::with(['pro_sub_cat','generic','company','strength','discounts']);
         if($category !== 'all'){
             $filter = $filter->where('pro_cat_id',$category);
         }
@@ -41,16 +41,7 @@ class BaseController extends Controller
                 ->orWhere('name', 'like', '%' . $search_value . '%');
         })
         ->get()->map(function ($product) {
-            $product->image = storage_url($product->image);
-            $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
-            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )));
-            $product->generic->name =(Str::ucfirst(Str::lower($product->generic->name)));
-            $product->company->name =(Str::ucfirst(Str::lower($product->company->name)));
-            $product->pro_sub_cat->name =(Str::ucfirst(Str::lower($product->pro_sub_cat->name)));
-            $product->discount_amount = productDiscountAmount($product->id);
-            $product->discount_percentage = productDiscountPercentage($product->id);
-            $product->discountPrice = $product->discountPrice();
-            return $product;
+            return $this->transformProduct($product, 30);
         });
         return response()->json($data);
     }
@@ -76,8 +67,6 @@ class BaseController extends Controller
                 $data['alert'] = "The item has already been added to the cart";
                 return response()->json($data);
             }
-
-
         }else{
             $atc = new AddToCart();
             $atc->product_id = $product->id;
@@ -91,38 +80,17 @@ class BaseController extends Controller
 
 
         $data['alert'] = "The item has been successfully added to your cart";
-        $data['atc'] = AddToCart::with(['product.generic','product.pro_sub_cat','product.company'])->where('product_id',$atc->product_id)->where('customer_id',$atc->customer_id)->first();
+        $data['atc'] = AddToCart::with(['product.generic','product.pro_sub_cat','product.company','product.discounts'])->where('product_id',$atc->product_id)->where('customer_id',$atc->customer_id)->first();
         $activatedProduct = $data['atc']->product;
 
         if ($activatedProduct) {
-            $strength = $activatedProduct->strength ? ' (' . $activatedProduct->strength->quantity . ' ' . $activatedProduct->strength->unit . ')' : '';
-            $activatedProduct->attr_title = Str::ucfirst(Str::lower($activatedProduct->name . $strength));
-            $activatedProduct->name = Str::limit(Str::ucfirst(Str::lower($activatedProduct->name . $strength)), 45, '..');
-            $activatedProduct->generic->name = Str::limit($activatedProduct->generic->name, 55, '..');
-            $activatedProduct->company->name = Str::limit($activatedProduct->company->name, 55, '..');
-            $activatedProduct->image = storage_url($activatedProduct->image);
-            $activatedProduct->discount_amount = productDiscountAmount($activatedProduct->id);
-            $activatedProduct->discount_percentage = productDiscountPercentage($activatedProduct->id);
-            $activatedProduct->discountPrice = $activatedProduct->discountPrice();
-
-
+            $activatedProduct = $this->transformProduct($activatedProduct, 45);
+            
             $activatedProduct->data_item_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->price*$data['atc']->unit->quantity) : $data['atc']->product->price;
             $activatedProduct->data_item_discount_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->discountPrice()*$data['atc']->unit->quantity) : $data['atc']->product->discountPrice();
-            $activatedProduct->discount = productDiscountPercentage($activatedProduct->id) ? true : false;
+            $activatedProduct->discount = calculateProductDiscount($activatedProduct, true) ? true : false;
 
-
-
-            $activatedProduct->units = array_map(function ($u_id) {
-                return MedicineUnit::findOrFail($u_id);
-            }, (array) json_decode($activatedProduct->unit, true));
-            $activatedProduct->units = collect($activatedProduct->units)
-                                    ->sortBy('quantity')
-                                    ->values()
-                                    ->map(function ($unit) {
-                                        $unit->image = storage_url($unit['image']); // Assuming 'image' is accessed as an array key
-                                        return (object)$unit; // Cast the array back to an object
-                                    })
-                                    ->all();
+            $activatedProduct->units = $this->getSortedUnits($activatedProduct->unit);
         }
         return response()->json($data);
     }
@@ -141,22 +109,10 @@ class BaseController extends Controller
 
         $data['atcs'] = $data['atcs']->map(function ($atc) {
             $activatedProduct = $atc->product;
-
             if ($activatedProduct) {
-                $strength = $activatedProduct->strength ? ' (' . $activatedProduct->strength->quantity . ' ' . $activatedProduct->strength->unit . ')' : '';
-                $activatedProduct->attr_title = Str::ucfirst(Str::lower($activatedProduct->name . $strength));
-                $activatedProduct->name = Str::limit(Str::ucfirst(Str::lower($activatedProduct->name . $strength)), 45, '..');
-                $activatedProduct->generic->name = Str::limit($activatedProduct->generic->name, 55, '..');
-                $activatedProduct->company->name = Str::limit($activatedProduct->company->name, 55, '..');
-                $activatedProduct->discountPrice = $activatedProduct->discountPrice();
-
-                $activatedProduct->units = array_map(function ($u_id) {
-                    return MedicineUnit::findOrFail($u_id);
-                }, (array) json_decode($activatedProduct->unit, true));
-
-                $activatedProduct->units = collect($activatedProduct->units)->sortBy('quantity')->values()->all();
+                $activatedProduct = $this->transformProduct($activatedProduct, 45);
+                $activatedProduct->units = $this->getSortedUnits($activatedProduct->unit);
             }
-
             return $atc;
         });
 
