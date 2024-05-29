@@ -37,7 +37,7 @@ class FrontendDataShareServiceProvider extends ServiceProvider
                         ->where('customer_id', user()->id)
                         ->where('status', 1)
                         ->latest()->get()
-                        ->transform(function ($atc) {
+                        ->each(function ($atc) {
                             if ($atc->product) {
                                 $atc->product = $this->transformProduct($atc->product,45);
                                 $atc->product->units = $this->getSortedUnits($atc->product->unit);

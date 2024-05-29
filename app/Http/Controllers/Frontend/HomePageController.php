@@ -27,12 +27,12 @@ class HomePageController extends BaseController
         // $this->order_notification($order, 'order_initialized');
 
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated();
-        $data['products'] = $products->featured()->latest()->get()->shuffle()->take(8)->transform(function($product){
+        $data['products'] = $products->featured()->latest()->get()->shuffle()->take(8)->each(function($product){
             $product = $this->transformProduct($product,30);
             $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
-        $data['bsItems'] = $products->bestSelling()->latest()->get()->shuffle()->take(8)->transform(function($product){
+        $data['bsItems'] = $products->bestSelling()->latest()->get()->shuffle()->take(8)->each(function($product){
             $product = $this->transformProduct($product,30);
             $product->units = $this->getSortedUnits($product->unit);
             return $product;

@@ -65,7 +65,7 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="product_image xzoom-container">
-                                                        @if (productDiscountPercentage($single_product->id))
+                                                        @if (calculateProductDiscount($single_product,true))
                                                         <span class="discount_tag">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span>
                                                         @endif
                                                         <img class="xzoom" id="xzoom-default"
@@ -97,7 +97,7 @@
                                             
                                                 
                                                     <div class="product_price mt-4">
-                                                        @if (productDiscountPercentage($single_product->id))
+                                                        @if (calculateProductDiscount($single_product, true))
                                                             <p><del class="text-danger">{{ __('MRP Tk') }} <span class="total_regular_price">{{ __(number_format($single_product->price, 2)) }}</span></del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
                                                         @endif
                                                         <p><strong>{{ __('Price: Tk') }} <span
@@ -404,7 +404,7 @@
                                                                         href="">{{ $product->company->name }}</a>
                                                                 </p>
                                                                 <h4 class="pdct-price"> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span>
-                                                                    @if (productDiscountPercentage($product->id))
+                                                                    @if (calculateProductDiscount($product,true))
                                                                      <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                                     @endif
                                                                 </h4>
@@ -441,7 +441,7 @@
                                                         <div class="single-pdct">
                                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                                 <div class="pdct-img">
-                                                                    @if (productDiscountPercentage($product->id))
+                                                                    @if (calculateProductDiscount($product,true))
                                                                         <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% off"}}</span>
                                                                     @endif
                                                                     <img class="w-100"
@@ -465,7 +465,7 @@
                                                                 </div>
                                                                 
                                                                     <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span> 
-                                                                        @if (productDiscountPercentage($product->id))
+                                                                        @if (calculateProductDiscount($product,true))
                                                                             <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                                         @endif
                                                                     </h4>

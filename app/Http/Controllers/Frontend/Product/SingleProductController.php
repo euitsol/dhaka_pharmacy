@@ -23,7 +23,7 @@ class SingleProductController extends BaseController
     {
         $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated();
         
-        $data['single_product'] = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated()->where('slug',$slug)->first();
+        $data['single_product'] = $products->where('slug',$slug)->first();
         $data['single_product']->discount_amount = calculateProductDiscount($data['single_product'],false);
         $data['single_product']->discount_percentage = calculateProductDiscount($data['single_product'], true);
         $data['units'] = $this->getSortedUnits($data['single_product']->unit);
@@ -31,7 +31,7 @@ class SingleProductController extends BaseController
         $data['similar_products'] = $products->where('generic_id',($data['single_product']->generic_id))->latest()->get()
         ->reject(function ($p) use ($data) {
             return $p->id == $data['single_product']->id;
-        })->shuffle()->map(function($product){
+        })->shuffle()->each(function($product){
             $product = $this->transformProduct($product,30);
             $product->units = $this->getSortedUnits($product->unit);
             return $product;
