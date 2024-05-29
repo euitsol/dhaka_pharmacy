@@ -226,18 +226,6 @@ function generateTranId() {
 //     }
 // }
 
-// calculateDiscountedPrice($price, $discount, $isPercent = false)
-//     {
-//         if ($isPercent) {
-//             // Calculate discounted price based on percentage
-//             $discountedPrice = $price - ($price * ($discount / 100));
-//         } else {
-//             // Calculate discounted price based on fixed amount
-//             $discountedPrice = $price - $discount;
-//         }
-
-//         return $discountedPrice;
-//     }
 
 // function productDiscountPercentage($pro_id){
 //     $discount = Discount::activated()
@@ -261,26 +249,26 @@ function generateTranId() {
 // }
 
 function calculateProductDiscount($product, $isPercent = false) {
-    $discount = $product->discounts->where('status', 1)->where(function ($query) {
+    $discount = $product->discounts()->where('status', 1)->where(function ($query) {
                             $query->whereNotNull('discount_amount')
                                 ->orWhereNotNull('discount_percentage');
                         })->first();
     if($discount){
         if($isPercent){
-            if (!is_null($discount->discount_amount)) {
+            if (!empty($discount->discount_amount)) {
                 return ($discount->discount_amount/$product->price)*100;
-            } elseif (!is_null($discount->discount_percentage)) {
+            } elseif (!empty($discount->discount_percentage)) {
                 return $discount->discount_percentage;
             } else {
                 return 0; // No discount
             }
         }else{
-            if (!is_null($discount->discount_amount)) {
+            if (!empty($discount->discount_amount)) {
                 return $discount->discount_amount;
-            } elseif (!is_null($discount->discount_percentage)) {
+            } elseif (!empty($discount->discount_percentage)) {
                 return ($product->price / 100) * $discount->discount_percentage;
             } else {
-                return 0.00; // No discount
+                return 0; // No discount
             }
         }
     }

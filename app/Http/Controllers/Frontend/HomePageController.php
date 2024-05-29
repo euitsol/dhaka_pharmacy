@@ -37,9 +37,9 @@ class HomePageController extends BaseController
             $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
-
-        $data['categories'] = ProductCategory::activated()->orderBy('name')->get();
-        $data['featuredItems'] = ProductCategory::activated()->featured()->orderBy('name')->get();
+        $query = ProductCategory::activated()->orderBy('name');
+        $data['categories'] = $query->get();
+        $data['featuredItems'] = $query->featured()->get();
 
         return view('frontend.home',$data);
     }
