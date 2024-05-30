@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Frontend\BaseController;
 use App\Http\Requests\SendOtpRequest;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class ForgotPasswordController extends BaseController
+class ForgotPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------

@@ -5,15 +5,9 @@ namespace App\Http\Controllers\Frontend\PaymentGateway;
 use App\Http\Controllers\Controller;
 use App\Library\SslCommerz\SslCommerzNotification;
 use App\Models\AddToCart;
-use App\Models\MedicineUnit;
 use App\Models\Order;
 use App\Models\Payment;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Illuminate\Support\Str;
-
 
 class SslCommerzController extends Controller
 {

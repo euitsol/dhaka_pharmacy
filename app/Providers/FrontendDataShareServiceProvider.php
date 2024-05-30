@@ -33,21 +33,17 @@ class FrontendDataShareServiceProvider extends ServiceProvider
             $data['menuItems'] = $query->where('is_menu', 1);
             $data['atcs'] = [];
             if(Auth::guard('web')->check()){
-                $data['atcs'] = AddToCart::with(['product.generic','product.pro_sub_cat','product.company','product.discounts','customer'])
-                        ->where('customer_id', user()->id)
-                        ->where('status', 1)
-                        ->latest()->get()
-                        ->each(function ($atc) {
-                            if ($atc->product) {
-                                $atc->product = $this->transformProduct($atc->product,45);
-                                $atc->product->units = $this->getSortedUnits($atc->product->unit);
-                            }
+                $query = AddToCart::activated()->where('customer_id', user()->id);
+                $data['atcs'] = $query->with(['product.pro_cat','product.generic','product.pro_sub_cat','product.company','product.discounts','customer'])
+                ->latest()->get()
+                ->each(function ($atc) {
+                    if ($atc->product) {
+                        $atc->product = $this->transformProduct($atc->product,45);
+                        $atc->product->units = $this->getSortedUnits($atc->product->unit);
+                    }
                     return $atc;
                 });
-    
-                $data['total_cart_item'] = $data['atcs']->sum(function ($atc) {
-                    return $atc->product ? 1 : 0;
-                });
+                $data['total_cart_item'] = $query->count();
             }
            
             $view->with($data);

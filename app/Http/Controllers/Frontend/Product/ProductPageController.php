@@ -3,21 +3,14 @@
 namespace App\Http\Controllers\Frontend\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Frontend\BaseController;
 use App\Models\Medicine;
-use App\Models\MedicineUnit;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
 use App\Http\Traits\TransformProductTrait;
 
 
-class ProductPageController extends BaseController
+class ProductPageController extends Controller
 {
     use TransformProductTrait;
     public function products(){

@@ -21,7 +21,7 @@
                                                 <div class="image col-2">
                                                     <a href="">
                                                         <img class="border border-1 rounded-1"
-                                                        src="{{storage_url($atc->product->image)}}"
+                                                        src="{{$atc->product->image}}"
                                                         alt="{{$atc->product->name}}">
                                                     </a>
                                                 </div>

@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Medicine;
-use App\Models\MedicineUnit;
-use App\Models\Order;
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
 use App\Http\Traits\OrderNotificationTrait;
 use App\Http\Traits\TransformProductTrait;
 
-class HomePageController extends BaseController
+class HomePageController extends Controller
 {
 
     use OrderNotificationTrait, TransformProductTrait;

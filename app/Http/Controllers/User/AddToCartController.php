@@ -1,49 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\AddToCart;
 use App\Models\Medicine;
-use App\Models\MedicineUnit;
-use App\Models\ProductCategory;
 use Carbon\Carbon;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
-use Illuminate\Support\Str;
+use App\Http\Traits\TransformProductTrait;
 
 
-class BaseController extends Controller
+class AddToCartController extends Controller
 {
-    public function productSearch($search_value, $category):JsonResponse
-    {
-        $filter = Medicine::with(['pro_sub_cat','generic','company','strength','discounts']);
-        if($category !== 'all'){
-            $filter = $filter->where('pro_cat_id',$category);
-        }
-        $data['products'] = $filter->where(function ($query) use ($search_value) {
-            $query->whereHas('generic', function ($query) use ($search_value) {
-                    $query->where('name', 'like', '%' . $search_value . '%')
-                        ->activated();
-                })
-                ->orWhereHas('company', function ($query) use ($search_value) {
-                    $query->where('name', 'like', '%' . $search_value . '%')
-                        ->activated();
-                })
-                ->orWhereHas('pro_sub_cat', function ($query) use ($search_value) {
-                    $query->where('name', 'like', '%' . $search_value . '%')
-                        ->activated();
-                })
-                ->orWhere('name', 'like', '%' . $search_value . '%');
-        })
-        ->get()->map(function ($product) {
-            return $this->transformProduct($product, 30);
-        });
-        return response()->json($data);
+    use TransformProductTrait;
+
+    public function __construct() {
+        return $this->middleware('auth');
     }
 
     public function add_to_cart():JsonResponse
@@ -55,7 +27,7 @@ class BaseController extends Controller
 
         $product = Medicine::activated()->where('slug',$product_slug)->first();
         $customer_id = user()->id;
-        $carts = AddToCart::where('customer_id',$customer_id);
+        $carts = AddToCart::where('customer_id',$customer_id)->get();
         $data['count'] = $carts->count();
         $atc = $carts->where('product_id',$product->id)->first();
         if($atc){
@@ -81,15 +53,15 @@ class BaseController extends Controller
 
 
         $data['alert'] = "The item has been successfully added to your cart";
-        $data['atc'] = AddToCart::with(['product.generic','product.pro_sub_cat','product.company','product.discounts'])->where('product_id',$atc->product_id)->where('customer_id',$atc->customer_id)->first();
+        $data['atc'] = AddToCart::with(['product.pro_cat','product.generic','product.pro_sub_cat','product.company','product.discounts'])->where('product_id',$atc->product_id)->where('customer_id',$atc->customer_id)->first();
         $activatedProduct = $data['atc']->product;
 
         if ($activatedProduct) {
             $activatedProduct = $this->transformProduct($activatedProduct, 45);
             
             $activatedProduct->data_item_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->price*$data['atc']->unit->quantity) : $data['atc']->product->price;
-            $activatedProduct->data_item_discount_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->discountPrice()*$data['atc']->unit->quantity) : $data['atc']->product->discountPrice();
-            $activatedProduct->discount = calculateProductDiscount($activatedProduct, true) ? true : false;
+            $activatedProduct->data_item_discount_price = ((!empty($data['atc']->unit_id)) ? ($data['atc']->product->discountPrice()*$data['atc']->unit->quantity) : $data['atc']->product->discountPrice());
+            $activatedProduct->discount = $activatedProduct->discountPrice() != $activatedProduct->price ? true : false;
 
             $activatedProduct->units = $this->getSortedUnits($activatedProduct->unit);
         }
@@ -101,25 +73,18 @@ class BaseController extends Controller
         $act_id = request('atc');
         AddToCart::where('id',$act_id)->update(['status'=>-1]);
         $data['sucses_alert'] = "The item has been successfully removed from your cart.";
-
-        $data['atcs'] = AddToCart::with(['product.discounts', 'customer'])
-            ->where('customer_id', user()->id)
-            ->where('status',1)
+        $query = AddToCart::activated()->where('customer_id', user()->id);
+        $data['atcs'] = $query->with(['product.pro_cat','product.generic','product.pro_sub_cat','product.company','product.discounts','customer'])
             ->latest()
-            ->get();
-
-        $data['atcs'] = $data['atcs']->map(function ($atc) {
-            $activatedProduct = $atc->product;
-            if ($activatedProduct) {
-                $activatedProduct = $this->transformProduct($activatedProduct, 45);
-                $activatedProduct->units = $this->getSortedUnits($activatedProduct->unit);
-            }
-            return $atc;
-        });
-
-        $data['total_cart_item'] = $data['atcs']->sum(function ($atc) {
-            return $atc->product ? 1 : 0;
-        });
+            ->get()->each(function ($atc) {
+                $activatedProduct = $atc->product;
+                if ($activatedProduct) {
+                    $activatedProduct = $this->transformProduct($activatedProduct, 45);
+                    $activatedProduct->units = $this->getSortedUnits($activatedProduct->unit);
+                }
+                return $atc;
+            });
+        $data['total_cart_item'] = $query->count();
 
         return response()->json($data);
     }
@@ -173,5 +138,4 @@ class BaseController extends Controller
         $data['alert'] = "Item unit updated";
         return response()->json($data);
     }
-
 }

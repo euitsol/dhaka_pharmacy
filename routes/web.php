@@ -81,8 +81,10 @@ use App\Http\Controllers\Frontend\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
+use App\Http\Controllers\Frontend\ProductSearchController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
+use App\Http\Controllers\User\AddToCartController;
 use App\Http\Controllers\User\UserOrderController;
 
 /*
@@ -750,13 +752,13 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
 
     // Add To Cart Routes
-    Route::get('/add-to-cart', [FrontendBaseController::class, 'add_to_cart'])->name('product.add_to_cart');
-    Route::get('/remove-to-cart', [FrontendBaseController::class, 'remove_to_cart'])->name('product.remove_to_cart');
-    Route::get('/clear-cart/{uid}', [FrontendBaseController::class, 'clearCart'])->name('product.clear_cart');
+    Route::get('/add-to-cart', [AddToCartController::class, 'add_to_cart'])->name('product.add_to_cart');
+    Route::get('/remove-to-cart', [AddToCartController::class, 'remove_to_cart'])->name('product.remove_to_cart');
+    Route::get('/clear-cart/{uid}', [AddToCartController::class, 'clearCart'])->name('product.clear_cart');
 
-    Route::get('/item/check/{id}', [FrontendBaseController::class, 'itemCheck'])->name('cart.item.check');
-    Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
-    Route::get('/item/unit/{unit_id}/{cart_id}', [FrontendBaseController::class, 'itemUnit'])->name('cart.item.unit');
+    Route::get('/item/check/{id}', [AddToCartController::class, 'itemCheck'])->name('cart.item.check');
+    Route::get('/item/quantity/{id}/{type}', [AddToCartController::class, 'itemQuantity'])->name('cart.item.quantity');
+    Route::get('/item/unit/{unit_id}/{cart_id}', [AddToCartController::class, 'itemUnit'])->name('cart.item.unit');
 
     // Checkout Routes
     Route::post('/product/single-order', [CheckoutController::class, 'single_order'])->name('product.single_order');
@@ -787,7 +789,7 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
 
 // Frontend Routes
 Route::get('/', [HomePageController::class, 'home'])->name('home');
-Route::get('/product-search/{search_value}/{category}', [HomePageController::class, 'productSearch'])->name('home.product.search');
+Route::get('/product-search/{search_value}/{category}', [ProductSearchController::class, 'productSearch'])->name('home.product.search');
 Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeaturedProducts'])->name('home.featured_products');
 
 Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');

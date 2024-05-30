@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend\ProductOrder;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Frontend\BaseController;
 use App\Http\Requests\SingleOrderRequest;
 use App\Models\Address;
 use App\Models\AddToCart;
@@ -12,14 +11,11 @@ use App\Models\MedicineUnit;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Str;
-use stdClass;
 use App\Http\Traits\OrderNotificationTrait;
 
-class CheckoutController extends BaseController
+class CheckoutController extends Controller
 {
     use OrderNotificationTrait;
 
