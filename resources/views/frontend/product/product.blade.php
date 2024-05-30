@@ -78,7 +78,7 @@
                                                 @if (calculateProductDiscount($product, true))
                                                     <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% 0ff"}}</span>
                                                 @endif
-                                                <img class="w-100" src="{{ storage_url($product->image) }}"
+                                                <img class="w-100" src="{{ $product->image }}"
                                                     alt="Product Image">
                                             </div>
                                         </a>
@@ -159,7 +159,7 @@
                                 <a href="${_route}">
                                     <div class="pdct-img">
                                         ${discount_percentage}
-                                        <img class="w-100" src="${product.ajax_image}" alt="Product Image">
+                                        <img class="w-100" src="${product.image}" alt="Product Image">
                                     </div>
                                 </a>
                                 <div class="pdct-info">
