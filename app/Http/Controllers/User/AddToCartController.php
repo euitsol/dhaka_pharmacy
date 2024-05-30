@@ -71,7 +71,7 @@ class AddToCartController extends Controller
     public function remove_to_cart():JsonResponse
     {
         $act_id = request('atc');
-        AddToCart::where('id',$act_id)->update(['status'=>-1]);
+        AddToCart::where('id',$act_id)->update(['status'=>-1,'unit_id'=>NULL,'quantity'=>1]);
         $data['sucses_alert'] = "The item has been successfully removed from your cart.";
         $query = AddToCart::activated()->where('customer_id', user()->id);
         $data['atcs'] = $query->with(['product.pro_cat','product.generic','product.pro_sub_cat','product.company','product.discounts','customer'])
@@ -94,7 +94,7 @@ class AddToCartController extends Controller
         $data['count'] = AddToCart::where('customer_id',decrypt($uid))->count();
         $data['alert'] = "The cart data has already been cleared";
         if($data['count']>0){
-            AddToCart::where('customer_id',decrypt($uid))->update(['status'=>-1]);
+            AddToCart::where('customer_id',decrypt($uid))->update(['status'=>-1,'unit_id'=>NULL,'quantity'=>1]);
             $data['alert'] = "The cart data has been cleared successfully";
         }
 
