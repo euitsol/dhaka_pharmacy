@@ -7,7 +7,7 @@
     <div class="row py-5 my-5 main_checkout_wrap">
         <div class="col-md-10 mx-auto">
             <div class="card">
-                <form action="{{ route('product.order.confirm', encrypt($order_id)) }}" method="POST">
+                <form action="{{ route('u.ck.product.order.confirm', encrypt($order_id)) }}" method="POST">
                     @csrf
                     <input type="hidden" name="order_id" value="{{ encrypt($order_id) }}">
                     <div class="row">
@@ -30,7 +30,7 @@
                                 <div class="row order-item">
                                     <div class="row main align-items-center py-2 px-0">
                                         <div class="col-2"><img class="img-fluid"
-                                                src="{{ storage_url($cartItem['product']->image) }}"></div>
+                                                src="{{ $cartItem['product']->image }}"></div>
                                         <div class="col-6">
                                             <div class="row" title="{{ $cartItem['product']->attr_title }}">
                                                 {{ $cartItem['product']->name }}</div>
@@ -76,7 +76,7 @@
                                                 $total_price += $single_total_price;
                                                 $total_regular_price += $single_regular_price;
                                             @endphp
-                                            @if (calculateProductDiscount($cartItem['product'], true))
+                                            @if ($cartItem['product']->discountPrice() != $cartItem['product']->price)
                                                 <span class="text-danger me-2"><del>{!! get_taka_icon() !!}
                                                         {{ number_format($single_regular_price, 2) }}</del></span>
                                             @endif

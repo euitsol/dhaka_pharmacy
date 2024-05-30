@@ -86,7 +86,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <form action="{{route('product.single_order')}}" method="POST">
+                                            <form action="{{route('u.ck.product.single_order')}}" method="POST">
                                                 @csrf
                                             <div class="product_content">
                                                 <h1>{{ __($single_product->name) }} </h1>

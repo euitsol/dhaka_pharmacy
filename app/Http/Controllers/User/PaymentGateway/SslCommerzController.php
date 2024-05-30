@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\PaymentGateway;
+namespace App\Http\Controllers\User\PaymentGateway;
 
 use App\Http\Controllers\Controller;
 use App\Library\SslCommerz\SslCommerzNotification;
@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 
 class SslCommerzController extends Controller
 {
+
+    public function __construct() {
+        return $this->middleware('auth');
+    }
     public function index($order_id)
     {
         $order = Order::with(['customer','address','ref_user'])->findOrFail(decrypt($order_id));
@@ -133,7 +137,7 @@ class SslCommerzController extends Controller
             flash()->addSuccess('Transaction is successfully Completed');
         }
         if($request->value_a){
-            return redirect()->route('product.order.success',['order_id'=>$request->value_a]);
+            return redirect()->route('u.ck.product.order.success',['order_id'=>$request->value_a]);
         }
         return redirect()->route('home');
         
@@ -164,7 +168,7 @@ class SslCommerzController extends Controller
         }
         
         if($request->value_a){
-            return redirect()->route('product.order.failed',['order_id'=>$request->value_a]);
+            return redirect()->route('u.ck.product.order.failed',['order_id'=>$request->value_a]);
         }
             return redirect()->route('home');
 
@@ -194,7 +198,7 @@ class SslCommerzController extends Controller
             flash()->addError('Transaction is Invalid');
         }
         if($request->value_a){
-            return redirect()->route('product.order.cancel',['order_id'=>$request->value_a]);
+            return redirect()->route('u.ck.product.order.cancel',['order_id'=>$request->value_a]);
         }
         return redirect()->route('home');
 

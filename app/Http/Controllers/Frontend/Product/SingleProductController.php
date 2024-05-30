@@ -14,7 +14,7 @@ class SingleProductController extends Controller
 
     public function singleProduct($slug): View
     {
-        $data['single_product'] = Medicine::with('discounts')->activated()->where('slug',$slug)->first();
+        $data['single_product'] = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated()->where('slug',$slug)->first();
         $data['single_product']->discount_amount = calculateProductDiscount($data['single_product'],false);
         $data['single_product']->discount_percentage = calculateProductDiscount($data['single_product'], true);
         $data['single_product']->image = storage_url($data['single_product']->image);

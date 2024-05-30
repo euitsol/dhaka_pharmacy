@@ -55,7 +55,7 @@
                                                                 name="data-{{$key}}" data-regular_price="{{ ($atc->product->price * $unit->quantity)*$atc->quantity }}"
                                                                 value="{{ ($atc->product->discountPrice() * $unit->quantity)*$atc->quantity }}">
                                                                 <label for="android-{{ $count+20 }}">
-                                                                    <img src="{{storage_url($unit->image)}}">
+                                                                    <img src="{{$unit->image}}">
                                                                 </label>
                                                         @endforeach
                                                     </div>
@@ -95,7 +95,7 @@
                                         <h3><span> {!! get_taka_icon() !!} </span> <span class="subtotal_price">0.00</span></h3>
                                     </div>
                                     <div class="col-12">
-                                        <a href="{{route('product.int','cart-order')}}" class="btn order_button w-100 {{count($atcs)<1 ? 'disabled' : ''}}" >{{__('Proceed To Checkout')}}</a>
+                                        <a href="{{route('u.ck.product.int','cart-order')}}" class="btn order_button w-100 {{count($atcs)<1 ? 'disabled' : ''}}" >{{__('Proceed To Checkout')}}</a>
                                     </div>
                                 </div>
                             </div>

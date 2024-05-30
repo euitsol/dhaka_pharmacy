@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Frontend\BaseController;
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
 use Illuminate\Http\JsonResponse;
@@ -13,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 
-class LoginContorller extends BaseController
+class LoginContorller extends Controller
 {
     public function adminLogin()
     {
