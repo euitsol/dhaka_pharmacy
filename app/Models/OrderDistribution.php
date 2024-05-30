@@ -25,6 +25,9 @@ class OrderDistribution extends BaseModel
     public function odps(){
         return $this->hasMany(OrderDistributionPharmacy::class,'order_distribution_id','id');
     }
+    public function odrs(){
+        return $this->hasMany(OrderDistributionRider::class,'order_distribution_id','id');
+    }
 
     public function statusBg() {
         switch ($this->status) {
