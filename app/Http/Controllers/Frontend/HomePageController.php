@@ -44,14 +44,15 @@ class HomePageController extends Controller
         $currentUrl = URL::current();
         $data['url'] = $currentUrl . "?category=all";
 
-        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated()->featured();
-        $datas = $products->latest()->get();
-        if($category_slug !== 'all'){
+        $products = '';
+        if($category_slug == 'all'){
+            $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated()->latest()->get();
+        }else{
             $data['product_cat'] = ProductCategory::activated()->where('slug',$category_slug)->first();
             $data['url'] = $currentUrl . "?category=".$data['product_cat']->slug;
-            $datas = $products->where('pro_cat_id',$data['product_cat']->id)->latest()->get();
+            $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated()->featured()->where('pro_cat_id',$data['product_cat']->id)->latest()->get();
         }
-        $data['products'] = $datas->shuffle()->take(8)->transform(function($product){
+        $data['products'] = $products->shuffle()->take(8)->each(function($product){
             $product = $this->transformProduct($product,30);
             $product->units = $this->getSortedUnits($product->unit);
             return $product;

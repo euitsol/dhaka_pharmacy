@@ -91,13 +91,13 @@ class AddToCartController extends Controller
 
     public function clearCart($uid):JsonResponse
     {
-        $data['count'] = AddToCart::where('customer_id',decrypt($uid))->count();
+        $query = AddToCart::where('customer_id',decrypt($uid))->activated();
+        $data['count'] = $query->count();
         $data['alert'] = "The cart data has already been cleared";
         if($data['count']>0){
-            AddToCart::where('customer_id',decrypt($uid))->update(['status'=>-1,'unit_id'=>NULL,'quantity'=>1]);
+            $query->update(['status'=>-1,'unit_id'=>NULL,'quantity'=>1]);
             $data['alert'] = "The cart data has been cleared successfully";
         }
-
         return response()->json($data);
     }
     public function itemCheck($id):JsonResponse
