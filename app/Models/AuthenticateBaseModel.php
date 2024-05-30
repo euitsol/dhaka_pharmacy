@@ -119,6 +119,9 @@ class AuthenticateBaseModel extends Authenticatable
     public function scopeKycVerified($query){
         return $query->where('kyc_status',1);
     }
+    public function scopeMenu($query){
+        return $query->where('is_menu',1);
+    }
 
     
 

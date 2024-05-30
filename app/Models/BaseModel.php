@@ -179,6 +179,9 @@ class BaseModel extends Model
     public function scopeFeatured($query){
         return $query->where('is_featured',1);
     }
+    public function scopeMenu($query){
+        return $query->where('is_menu',1);
+    }
     
 
     
