@@ -78,8 +78,8 @@ class CheckoutController extends BaseController
             $atc->product->name = Str::limit(Str::ucfirst(Str::lower($atc->product->name . $strength)), 45, '..');
             $atc->product->generic->name = Str::limit($atc->product->generic->name, 55, '..');
             $atc->product->company->name = Str::limit($atc->product->company->name, 55, '..');
-            $atc->product->discount_amount = productDiscountAmount($atc->product->id);
-            $atc->product->discount_percentage = productDiscountPercentage($atc->product->id);
+            $atc->product->discount_amount = calculateProductDiscount($atc->product, false);
+            $atc->product->discount_percentage = calculateProductDiscount($atc->product, true);
 
             $data['checkItems'][$key]['product'] = $atc->product;
             $data['checkItems'][$key]['quantity'] = $atc->quantity;

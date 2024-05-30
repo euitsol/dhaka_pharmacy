@@ -65,20 +65,20 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="product_image xzoom-container">
-                                                        @if (calculateProductDiscount($single_product,true))
+                                                        @if ($single_product->discountPrice() != $single_product->price)
                                                         <span class="discount_tag">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span>
                                                         @endif
                                                         <img class="xzoom" id="xzoom-default"
-                                                            src="{{  storage_url($single_product->image) }}"
-                                                            xoriginal="{{  storage_url($single_product->image) }}">
+                                                            src="{{  $single_product->image }}"
+                                                            xoriginal="{{  $single_product->image }}">
 
                                                         <!-- Thumbnails -->
                                                         <div class="xzoom-thumbs">
                                                             <a
-                                                                href="{{  storage_url($single_product->image) }}">
+                                                                href="{{  $single_product->image }}">
                                                                 <img class="xzoom-gallery xactive" width="80"
-                                                                    src="{{  storage_url($single_product->image) }}"
-                                                                    xpreview="{{  storage_url($single_product->image) }}">
+                                                                    src="{{  $single_product->image }}"
+                                                                    xpreview="{{  $single_product->image }}">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -97,7 +97,7 @@
                                             
                                                 
                                                     <div class="product_price mt-4">
-                                                        @if (calculateProductDiscount($single_product, true))
+                                                        @if ($single_product->discountPrice() != $single_product->price)
                                                             <p><del class="text-danger">{{ __('MRP Tk') }} <span class="total_regular_price">{{ __(number_format($single_product->price, 2)) }}</span></del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
                                                         @endif
                                                         <p><strong>{{ __('Price: Tk') }} <span
@@ -111,7 +111,7 @@
                                                                     name="data"
                                                                     data-total_price="{{ $single_product->discountPrice() * $unit->quantity }}" data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
-                                                                    <img src="{{storage_url($unit->image)}}">
+                                                                    <img src="{{$unit->image}}">
                                                                 </label>
                                                             @endforeach
                                                         </div>
@@ -384,7 +384,7 @@
                                                                     href="{{ route('product.single_product', $product->slug) }}">
                                                                     <img height=""
                                                                         class="w-100 border border-1 rounded-1"
-                                                                        src="{{ storage_url($product->image) }}"
+                                                                        src="{{ $product->image }}"
                                                                         alt="{{ __($product->name) }}">
                                                                 </a>
                                                             </div>
@@ -404,7 +404,7 @@
                                                                         href="">{{ $product->company->name }}</a>
                                                                 </p>
                                                                 <h4 class="pdct-price"> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span>
-                                                                    @if (calculateProductDiscount($product,true))
+                                                                    @if ($product->discountPrice() != $product->price)
                                                                      <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                                     @endif
                                                                 </h4>
@@ -441,11 +441,11 @@
                                                         <div class="single-pdct">
                                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                                 <div class="pdct-img">
-                                                                    @if (calculateProductDiscount($product,true))
+                                                                    @if ($product->discountPrice() != $product->price)
                                                                         <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% off"}}</span>
                                                                     @endif
                                                                     <img class="w-100"
-                                                                        src="{{ storage_url($product->image) }}"
+                                                                        src="{{ $product->image }}"
                                                                         alt="Product Image">
                                                                 </div>
                                                             </a>
@@ -465,7 +465,7 @@
                                                                 </div>
                                                                 
                                                                     <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span> 
-                                                                        @if (calculateProductDiscount($product,true))
+                                                                        @if ($product->discountPrice() != $product->price)
                                                                             <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                                         @endif
                                                                     </h4>

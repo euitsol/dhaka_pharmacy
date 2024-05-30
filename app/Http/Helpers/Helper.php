@@ -208,45 +208,6 @@ function generateTranId() {
 
     return $prefix.$date.$numericPart;
 }
-// function productDiscountAmount($pro_id){
-//     $discount = Discount::activated()
-//                 ->where('pro_id', $pro_id)
-//                 ->where(function ($query) {
-//                     $query->whereNotNull('discount_amount')
-//                         ->orWhereNotNull('discount_percentage');
-//                 })->where('status',1)
-//                 ->first();
-//     if($discount){
-//         if(!empty($discount->discount_amount)){
-//             return $discount->discount_amount;
-//         }
-//         else if(!empty($discount->discount_percentage)){
-//             return ($discount->product->price/100)*$discount->discount_percentage;
-//         }
-//     }
-// }
-
-
-// function productDiscountPercentage($pro_id){
-//     $discount = Discount::activated()
-//                 ->where('pro_id', $pro_id)
-//                 ->where(function ($query) {
-//                     $query->whereNotNull('discount_amount')
-//                         ->orWhereNotNull('discount_percentage');
-//                 })->where('status',1)
-//                 ->first();
-//     $result = 0;
-//     if($discount){
-//         if(!empty($discount->discount_amount)){
-//             $result = ($discount->discount_amount/$discount->product->price)*100;
-//         }
-//         else if(!empty($discount->discount_percentage)){
-//             $result = $discount->discount_percentage;
-//         }
-
-//         return $result;
-//     }
-// }
 
 function calculateProductDiscount($product, $isPercent = false) {
     $discount = $product->discounts->where('status', 1)->first();

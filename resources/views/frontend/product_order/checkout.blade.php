@@ -76,7 +76,7 @@
                                                 $total_price += $single_total_price;
                                                 $total_regular_price += $single_regular_price;
                                             @endphp
-                                            @if (productDiscountPercentage($cartItem['product']->id))
+                                            @if (calculateProductDiscount($cartItem['product'], true))
                                                 <span class="text-danger me-2"><del>{!! get_taka_icon() !!}
                                                         {{ number_format($single_regular_price, 2) }}</del></span>
                                             @endif

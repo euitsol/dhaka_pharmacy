@@ -144,12 +144,12 @@
                                 <tr>
                                     <th>{{ __('Discount Amount') }} </th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ number_format(productDiscountAmount($medicine->id),2) }}{{__(' BDT')}} </td>
+                                    <td> {{ number_format(calculateProductDiscount($medicine, false),2) }}{{__(' BDT')}} </td>
                                 </tr>
                                 <tr>
                                     <th>{{ __('Discount Percentage') }} </th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ formatPercentageNumber(productDiscountPercentage($medicine->id)) }}{{__(' %')}} </td>
+                                    <td> {{ formatPercentageNumber(calculateProductDiscount($medicine, true)) }}{{__(' %')}} </td>
                                 </tr>
                                 <tr>
                                     <th>{{ __('Price') }} </th>

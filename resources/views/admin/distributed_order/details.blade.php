@@ -245,7 +245,7 @@
                                                                 <div class="col my-auto"> <small>Pack : {{$dop->cart->unit->name ?? 'Piece'}}</small></div>
                                                                 <div class="col my-auto">
                                                                     <h6 class="mb-0 text-end">
-                                                                        @if (productDiscountPercentage($dop->cart->product->id))
+                                                                        @if (calculateProductDiscount($dop->cart->product, true))
                                                                         <span class="text-danger">
                                                                             <del>
                                                                                 {!! get_taka_icon() !!} {{number_format((($dop->cart->product->price*($dop->cart->unit->quantity ?? 1)) * $dop->cart->quantity), 2)}}

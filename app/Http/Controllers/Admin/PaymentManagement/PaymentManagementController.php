@@ -34,7 +34,7 @@ class PaymentManagementController extends Controller
         $data['payment_items']->transform(function($item) {
             $item->price = (($item->product->price*($item->unit->quantity ?? 1))*$item->quantity);
             $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
-            $item->discount = (productDiscountAmount($item->product->id)*($item->unit->quantity ?? 1))*$item->quantity;
+            $item->discount = (calculateProductDiscount($item->product, false)*($item->unit->quantity ?? 1))*$item->quantity;
             return $item;
         });
         $data['totalPrice'] = $data['payment_items']->sum('discount_price');

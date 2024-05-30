@@ -75,7 +75,7 @@
                                     <div class="single-pdct">
                                         <a href="{{ route('product.single_product', $product->slug) }}">
                                             <div class="pdct-img">
-                                                @if (productDiscountPercentage($product->id))
+                                                @if (calculateProductDiscount($product, true))
                                                     <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% 0ff"}}</span>
                                                 @endif
                                                 <img class="w-100" src="{{ storage_url($product->image) }}"
@@ -98,7 +98,7 @@
                                                 </a>
                                             </div>
                                             <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span>
-                                                @if (productDiscountPercentage($product->id))
+                                                @if (calculateProductDiscount($product, true))
                                                  <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                 @endif
                                             </h4>

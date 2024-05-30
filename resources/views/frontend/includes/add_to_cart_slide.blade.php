@@ -32,7 +32,7 @@
                                                     <p><a href="">{{$atc->product->company->name}}</a></p>
                                                 </div>
                                                 <div class="item_price col-2 ps-0">
-                                                    @if (productDiscountPercentage($atc->product->id))
+                                                    @if (calculateProductDiscount($atc->product, true))
                                                         <h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!} <span class="item_count_regular_price">{{  (number_format((($atc->product->price*$atc->unit->quantity)*$atc->quantity),2))  }}</span> </del></h4>
                                                     @endif
                                                     <h4 class="text-end"> <span> {!! get_taka_icon() !!} </span> <span class="item_count_price">{{  (number_format((($atc->product->discountPrice()*$atc->unit->quantity)*$atc->quantity),2))  }}</span></h4>
