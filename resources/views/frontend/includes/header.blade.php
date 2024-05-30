@@ -50,26 +50,33 @@
             </div>
             <div class="col-3 ps-0 right-col">
                 <div class="row align-items-center justify-content-end">
+                    @if(Auth::guard('web')->check())
+                        <div class="item">
+                            <a href="{{route('user.dashboard')}}" class="login-btn">
+                                <i class="fa-regular fa-user me-1"></i>
+                                <span>{{user()->name}}</span>
+                            </a>
+                        </div>
+                    @else
+                        <div class="item">
+                            <a href="{{route('login')}}" class="login-btn">
+                                <i class="fa-regular fa-user me-1"></i>
+                                <span>Login</span>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="{{route('use.register')}}" class="login-btn">
+                                <i class="fa-regular fa-address-card me-1"></i>
+                                <span>Register</span>
+                            </a>
+                        </div>
+                    @endif
+                    
                     <div class="item">
-
-                        <button class="cart-btn" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#cartbtn" aria-controls="offcanvasRight">
-                            <i class="fa-solid fa-cart-shopping me-1"></i>
-                            <span>{{__('Cart')}}</span><sup id="cart_btn_quantity"><strong>{{$total_cart_item ?? ''}}</strong></sup>
-                        </button>
-                        @include('frontend.includes.add_to_cart_slide')
-                    </div>
-                    <div class="item">
-                        <a href="{{route('login')}}" class="login-btn">
-                            <i class="fa-regular fa-user me-1"></i>
-                            <span>Login</span>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="{{route('use.register')}}" class="login-btn">
-                            <i class="fa-regular fa-address-card me-1"></i>
-                            <span>Register</span>
-                        </a>
+                        <select name="" id="">
+                            <option value="english">English</option>
+                            <option value="bangla">Bangla</option>
+                        </select>
                     </div>
                     <div class="item">
                         <button class="wish-btn bg-none" type="button" data-bs-toggle="offcanvas"
@@ -90,10 +97,12 @@
                         </div>
                     </div>
                     <div class="item">
-                        <select name="" id="">
-                            <option value="english">English</option>
-                            <option value="bangla">Bangla</option>
-                        </select>
+                        <button class="cart-btn" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#cartbtn" aria-controls="offcanvasRight">
+                            <i class="fa-solid fa-cart-shopping me-1"></i>
+                            <span>{{__('Cart')}}</span><sup id="cart_btn_quantity"><strong>{{$total_cart_item ?? ''}}</strong></sup>
+                        </button>
+                        @include('frontend.includes.add_to_cart_slide')
                     </div>
                 </div>
             </div>
