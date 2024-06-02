@@ -44,7 +44,7 @@ trait TransformOrderItemTrait{
         if($order_items == false){
             $order_items = $this->getOrderItems($order);
         }
-        return number_format(ceil($order_items->sum('discount')));
+        return number_format($order_items->sum('discount'),2);
     }
     private function calculateOrderSubTotalPrice($order, $order_items = false){
         if($order_items == false){
