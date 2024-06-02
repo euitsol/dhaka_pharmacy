@@ -22,6 +22,7 @@
                                     <th>{{ __('Rider') }}</th>
                                 @endif
                                 <th>{{ __('Total Product') }}</th>
+                                <th>{{ __('Total Price') }}</th>
                                 <th>{{ __('Payment Type') }}</th>
                                 <th>{{ __('Distribution Type') }}</th>
                                 @if($prep_time)
@@ -48,6 +49,7 @@
                                         </td>
                                     @endif
                                     <td> {{ count($dop) }} </td>
+                                    <td> {{ number_format(ceil($dop->sum('price'))) }} </td>
                                     <td> {{ $dop->od->paymentType() }} </td>
                                     <td> {{ $dop->od->distributionType() }} </td>
                                     @if($prep_time)

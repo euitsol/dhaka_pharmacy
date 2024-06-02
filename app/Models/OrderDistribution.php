@@ -28,6 +28,9 @@ class OrderDistribution extends BaseModel
     public function odrs(){
         return $this->hasMany(OrderDistributionRider::class,'order_distribution_id','id');
     }
+    public function odr(){
+        return $this->hasMany(OrderDistributionRider::class,'order_distribution_id','id')->whereNotIn('status', [0, -1]);
+    }
 
     public function statusBg() {
         switch ($this->status) {

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\DistributedOrder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DisputeOrderRequest;
 use App\Http\Requests\OrderDistributionRiderRequest;
-use App\Models\AddToCart;
 use App\Models\DistributionOtp;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
@@ -80,9 +79,6 @@ class DistributedOrderController extends Controller
             $data['riders'] = Rider::activated()->kycVerified()->latest()->get();
         }
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
-        
-        // $data['do_rider'] = OrderDistributionRider::whereNotIn('status', [0, -1])->where('order_distribution_id',$data['do']->id)->first();
-        // $data['dispute_do_riders'] = OrderDistributionRider::with('rider')->whereIn('status', [0, -1])->where('order_distribution_id',$data['do']->id)->latest()->get();
         if($query->odrs){
             $data['do_rider'] = $query->odrs->where('status', '!=', 0)->where('status', '!=', -1)->first();
             $data['dispute_do_riders'] = $query->odrs()->where('status', '=', 0)->where('status', '=', -1)->latest()->get();

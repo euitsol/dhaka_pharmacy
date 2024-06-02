@@ -174,7 +174,7 @@
                                                         <h6 class="my-auto text-center">
                                                             <span><strong>{{ __('Total Price : ') }}</strong>{!! get_taka_icon() !!}
                                                                 
-                                                                {{ number_format($dop->totalPrice, 2) }}</span> <sup><span class='badge badge-danger'>@if(isset($dop->discount)){{$dop->discount.'% off'}}@endif</span></sup>
+                                                                {{ number_format(ceil($dop->totalPrice)) }}</span> <sup><span class='badge badge-danger'>@if(isset($dop->discount)){{$dop->discount.'% off'}}@endif</span></sup>
                                                         </h6>
                                                         @if ($do->payment_type == 1 && ($status == 0 || $status == 1))
                                                             <div class="input-group">
