@@ -12,7 +12,6 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::post('otp-login', 'otp_login')->name('l.o');
     });
 
-
 Route::controller(UserController::class)->middleware('auth:api-user')->prefix('info')->name('info')->group(function () {
         Route::get('', 'info');
     });
