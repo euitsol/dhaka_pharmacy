@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class AddToCart extends BaseModel
 {
     use HasFactory;
+    protected $fillable = [
+        'status',
+        'unit_id',
+        'quantity',
+    ];
+    
 
     public function product(){
         return $this->belongsTo(Medicine::class,'product_id');

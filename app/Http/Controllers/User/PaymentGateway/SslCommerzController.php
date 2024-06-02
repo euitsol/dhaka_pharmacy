@@ -130,7 +130,7 @@ class SslCommerzController extends Controller
         } else if ($order_details->status == 2 || $order_details->status == 1) { //Status 1 , Complete
             /*
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
-             */;
+             */
             flash()->addSuccess('Transaction is successfully Completed');
         } else {
             #That means something wrong happened. You can redirect customer to your product page.
@@ -249,6 +249,6 @@ class SslCommerzController extends Controller
         } else {
             flash()->addError('Invalid Data');
         }
-        return redirect()->route('payment.checkout2');
+        return redirect()->route('u.payment.checkout2');
     }
 }

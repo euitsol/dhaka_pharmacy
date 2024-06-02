@@ -72,4 +72,4 @@
     </div>
 
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]])

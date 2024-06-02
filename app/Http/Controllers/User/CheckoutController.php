@@ -17,11 +17,6 @@ use App\Http\Traits\TransformProductTrait;
 class CheckoutController extends Controller
 {
     use OrderNotificationTrait, TransformProductTrait;
-    public function __construct() {
-        return $this->middleware('auth');
-    }
-
-
     public function single_order(SingleOrderRequest $req){
         $product = Medicine::activated()->where('slug',$req->slug)->first();
         $customer_id = user()->id;
@@ -55,9 +50,6 @@ class CheckoutController extends Controller
         $order = new Order();
 
         $order->customer()->associate(user());
-        // $order->customer_id = 1;//for test
-        // $order->customer_type = "App\Models\User";//for test
-
         $order->carts = json_encode($atcs);
         $order->status = 0; //Order initiated
         $order->order_id = $orderId;
@@ -105,7 +97,7 @@ class CheckoutController extends Controller
         $order->delivery_fee = $req->delivery_fee;
         $order->save();
         if($req->payment_method == 'ssl'){
-            return redirect()->route('payment.index',$order_id);
+            return redirect()->route('u.payment.index',$order_id);
         }else{
             flash()->addWarning('Payment gateway '.$req->payment_mathod.' not implement yet!');
             return redirect()->route('u.ck.product.checkout',$order_id);

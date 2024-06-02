@@ -32,6 +32,7 @@ class AddToCartController extends Controller
         $atc = $carts->where('product_id',$product->id)->first();
         if($atc){
             if($atc->status !== 1){
+                $atc->quantity = 1;
                 $atc->status = 1;
                 $atc->unit_id = $unit_id;
                 $atc->created_at = Carbon::now();

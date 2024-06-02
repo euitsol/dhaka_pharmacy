@@ -775,17 +775,17 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
 
     //SSL Commerz Routes
 
-    Route::controller(SslCommerzController::class)->prefix('payment')->name('payment.')->group(function () {
+    Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {
         // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
         // Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
         Route::get('/ssl/{order_id}', 'index')->name('index');
         // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
         Route::post('/success', 'success')->name('success');
-        Route::post('/fail', 'fail')->name('fail');
+        Route::post('/fail', 'fail')->name('failed');
         Route::post('/cancel', 'cancel')->name('cancel');
         Route::post('/ipn', 'ipn')->name('ipn');
     });
-
+    
 
 
     //Address
@@ -800,6 +800,16 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
     Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
         Route::get('list', 'order_list')->name('list');
     });
+});
+Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {
+    // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
+    // Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
+    Route::get('/ssl/{order_id}', 'index')->name('index');
+    // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
+    Route::post('/success', 'success')->name('success');
+    Route::post('/fail', 'fail')->name('failed');
+    Route::post('/cancel', 'cancel')->name('cancel');
+    Route::post('/ipn', 'ipn')->name('ipn');
 });
 
 // Frontend Routes
