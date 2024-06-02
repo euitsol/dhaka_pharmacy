@@ -27,6 +27,7 @@ class OrderManagementController extends Controller
         $data['status'] = $status;
         $data['prep_time'] = false;
         $data['rider'] = false;
+        $pharmacy_discount = PharmacyDiscount::activated()->where('pharmacy_id',pharmacy()->id)->first();
         if($this->getStatus($status) == 0 || $this->getStatus($status) == 1){
             $data['prep_time'] = true;
         }else{
@@ -48,13 +49,16 @@ class OrderManagementController extends Controller
             ->get()
             ->groupBy('order_distribution_id');
 
-        $data['dops'] = $dops->each(function ($dop, $key) use ($orderDistributions, $orderDistributionRiders, $status) {
+        $data['dops'] = $dops->each(function ($dop, $key) use ($orderDistributions, $orderDistributionRiders, $status, $pharmacy_discount) {
             $dop->od = $orderDistributions->get($key);
             $dop->odr = $orderDistributionRiders->get($key)?->first();
             $dop->statusTitle = $this->statusTitle($this->getStatus($status));
             $dop->statusBg = $this->statusBg($this->getStatus($status));
-            $dop->each(function($dp){
+            $dop->each(function($dp) use($dop, $pharmacy_discount){
                 $dp->price = cartItemPrice($dp->cart);
+                if ($dop->od->payment_type == 0 && $pharmacy_discount){
+                    $dp->price -= (($dp->price/100)*$pharmacy_discount->discount_percent);
+                }
                 return $dp;
             });
             return $dop;
