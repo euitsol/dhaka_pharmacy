@@ -45,7 +45,7 @@
                                         <td><span class="{{($do->odps->where('status',3)->count())>0 ? 'badge badge-danger' : ''}}">{{ $do->odps->where('status',3)->count() }}</span> </td>
                                         @endif
                                         <td><span class="{{($do->odps->where('status',2)->count())>0 ? 'badge badge-success' : ''}}">{{ $do->odps->where('status',2)->count() }}</span></td>
-                                        <td>{!! get_taka_icon() .number_format(ceil($do->order->totalPrice+$do->order->delivery_fee)) !!}</td>
+                                        <td>{!! get_taka_icon() !!}{{$do->order->totalPrice}}</td>
                                         <td>{{$do->paymentType()}}</td>
                                         <td>{{$do->distributionType()}}</td>
                                         <td>{{ readablePrepTime($do->created_at,$do->prep_time) }}</td>
