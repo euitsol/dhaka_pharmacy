@@ -123,10 +123,9 @@ function rider(){
     return auth()->guard('rider')->user();
 }
 
-
 function mainMenuCheck($array){
     $check = false;
-    
+
     $allowedPrefixes = get_permission_routes();
     foreach($array['prefixes'] as $prefix){
         if(in_array($prefix, $allowedPrefixes)){
@@ -134,11 +133,11 @@ function mainMenuCheck($array){
                 if (auth()->user()->can($route)) {
                     $check = true;
                     break;
-                } 
+                }
             }
-        } 
-        
-    }  
+        }
+
+    }
     return $check;
 }
 
@@ -197,7 +196,7 @@ function generateOrderId() {
 
     $alphaPart = 'DP';
     $date = date('d'); // Generates 5 random alphanumeric characters
-    
+
 
     return $alphaPart.$date.$numericPart;
 }
@@ -242,7 +241,7 @@ function productDiscountPercentage($pro_id){
         else if(!empty($discount->discount_percentage)){
             $result = $discount->discount_percentage;
         }
-    
+
         return $result;
     }
 }
@@ -290,4 +289,16 @@ function prepTotalSeconds($start_time, $end_time){
     return $totalSeconds;
 }
 
+function sendResponse($success, $message, $data = null, $statusCode = 200, $additional = null){
+        $responseData = [
+            'success' => $success,
+            'message' => $message,
+            'data' => $data
+        ];
+        if (!empty($additional) && is_array($additional)) {
+            $responseData = array_merge($responseData, $additional);
+        }
+
+        return response()->json($responseData, $statusCode);
+}
 

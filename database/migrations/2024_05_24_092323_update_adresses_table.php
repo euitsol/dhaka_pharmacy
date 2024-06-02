@@ -18,14 +18,13 @@ return new class extends Migration
             $table->dropColumn('name');
             $table->dropColumn('phone');
             $table->dropColumn('apartment_type');
-            $table->dropColumn('delivery_instruction');
 
             $this->dropAuditColumns($table);
 
             $table->string('address');
             $table->text('note')->nullable();
             $table->boolean('is_default')->default(0);
-            $table->longText('delivery_instruction')->nullable();
+            $table->longText('delivery_instruction')->nullable()->change();
             $this->addMorphedAuditColumns($table);
         });
     }
