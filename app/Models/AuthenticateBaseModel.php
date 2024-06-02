@@ -13,7 +13,7 @@ use Spatie\Permission\Models\Role;
 
 class AuthenticateBaseModel extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
+    use HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     public function created_user()
     {
@@ -120,7 +120,7 @@ class AuthenticateBaseModel extends Authenticatable
         return $query->where('kyc_status',1);
     }
 
-    
+
 
 
 

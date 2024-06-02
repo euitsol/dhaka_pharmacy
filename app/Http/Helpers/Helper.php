@@ -123,7 +123,6 @@ function rider(){
     return auth()->guard('rider')->user();
 }
 
-
 function mainMenuCheck($array){
     $check = false;
 
@@ -290,8 +289,21 @@ function prepTotalSeconds($start_time, $end_time){
     return $totalSeconds;
 }
 
+
 function formatOperationArea($pharmacy) {
     return $pharmacy->operation_area ? '(' . $pharmacy->operation_area->name . ($pharmacy->operation_sub_area ? ' - ' : ')') : '';
+}
+function sendResponse($success, $message, $data = null, $statusCode = 200, $additional = null){
+        $responseData = [
+            'success' => $success,
+            'message' => $message,
+            'data' => $data
+        ];
+        if (!empty($additional) && is_array($additional)) {
+            $responseData = array_merge($responseData, $additional);
+        }
+
+        return response()->json($responseData, $statusCode);
 }
 
 function formatOperationSubArea($pharmacy) {
