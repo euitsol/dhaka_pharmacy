@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Admin\PaymentManagement;
 use App\Http\Controllers\Controller;
 use App\Models\AddToCart;
 use App\Models\Payment;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\TransformOrderItemTrait;
 
 
 class PaymentManagementController extends Controller
 {
+    use TransformOrderItemTrait;
     public function __construct() {
         return $this->middleware('admin');
     }
@@ -27,19 +26,12 @@ class PaymentManagementController extends Controller
     public function details($id): View
     {
         $data['payment'] = Payment::with(['customer','order'])->findOrFail(decrypt($id));
-        $data['payment_items'] = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
-                            ->whereIn('id', json_decode($data['payment']->order->carts))
-                            ->get();
-        
-        $data['payment_items']->transform(function($item) {
-            $item->price = (($item->product->price*($item->unit->quantity ?? 1))*$item->quantity);
-            $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
-            $item->discount = (calculateProductDiscount($item->product, false)*($item->unit->quantity ?? 1))*$item->quantity;
-            return $item;
-        });
-        $data['totalPrice'] = $data['payment_items']->sum('discount_price');
-        $data['totalRegularPrice'] = $data['payment_items']->sum('price');
-        $data['totalDiscount'] = $data['payment_items']->sum('discount');
+        $data['payment_items'] = $this->getOrderItems($data['payment']->order);
+    
+        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['payment']->order, $data['payment_items']);
+        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['payment']->order, $data['payment_items']);
+        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['payment']->order, $data['payment_items']);
+        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['payment']->order, $data['payment_items']);
        
         return view('admin.payment_management.details',$data);
     }
