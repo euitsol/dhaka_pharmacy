@@ -36,7 +36,7 @@
                                                                     $cartItemRegPrice = cartItemRegPrice($item);
                                                                     $cartItemPrice = cartItemPrice($item);
                                                                 @endphp
-                                                                @if ($cartItemRegPrice != $$cartItemPrice)
+                                                                @if ($cartItemRegPrice != $cartItemPrice)
                                                                     <h6 class="mb-0 text-end">
                                                                         <span class="text-danger">
                                                                             <del>
@@ -47,7 +47,7 @@
                                                                 @endif
                                                                 <h6 class="mb-0 text-end">
                                                                     <span>
-                                                                        {!! get_taka_icon() !!} {{$$cartItemPrice}}
+                                                                        {!! get_taka_icon() !!} {{$cartItemPrice}}
                                                                     </span> 
                                                                 </h6>
                                                             </div>
