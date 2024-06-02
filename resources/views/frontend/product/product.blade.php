@@ -71,11 +71,14 @@
                         </div>
                         <div class="row all-products mt-3">
                             @foreach ($products as $product)
+                                @php
+                                    $proDisPrice = proDisPrice($product->price, $product->discounts);
+                                @endphp
                                 <div class="col-2 px-2 single-pdct-wrapper">
                                     <div class="single-pdct">
                                         <a href="{{ route('product.single_product', $product->slug) }}">
                                             <div class="pdct-img">
-                                                @if (calculateProductDiscount($product, true))
+                                                @if ($proDisPrice != $product->price)
                                                     <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% 0ff"}}</span>
                                                 @endif
                                                 <img class="w-100" src="{{ $product->image }}"
@@ -97,8 +100,8 @@
                                                     </h3>
                                                 </a>
                                             </div>
-                                            <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span>
-                                                @if (calculateProductDiscount($product, true))
+                                            <h4> <span> {!! get_taka_icon() !!} {{ number_format($proDisPrice,2) }}</span>
+                                                @if ($proDisPrice != $product->price)
                                                  <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                 @endif
                                             </h4>

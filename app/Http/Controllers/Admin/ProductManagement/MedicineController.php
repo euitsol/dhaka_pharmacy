@@ -30,12 +30,12 @@ class MedicineController extends Controller
 
     public function index(): View
     {
-        $data['medicines'] = Medicine::with(['pro_cat','created_user'])->orderBy('name')->get();
+        $data['medicines'] = Medicine::with(['pro_cat','created_user','discounts'])->orderBy('name')->get();
         return view('admin.product_management.medicine.index',$data);
     }
     public function details($slug): View
     {
-        $data['medicine']=Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','created_user','updated_user'])->where('slug', $slug)->first();
+        $data['medicine']=Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','created_user','updated_user','discounts'])->where('slug', $slug)->first();
 
         $data['medicine']->units = collect(json_decode($data['medicine']->unit, true))->map(function ($unit) {
             $medicineUnit = MedicineUnit::findOrFail($unit);
@@ -95,8 +95,10 @@ class MedicineController extends Controller
     }
     public function edit($slug): View
     {
-        $data['medicine'] = Medicine::where('slug',$slug)->first();
-        $data['discount'] = Discount::activated()->where('pro_id',$data['medicine']->id)->first();
+        $data['medicine'] = Medicine::with('discounts')->where('slug',$slug)->first();
+        if($data['medicine']->discounts){
+            $data['discount'] = $data['medicine']->discounts->where('status',1)->first();
+        }
         $data['pro_cats'] = ProductCategory::activated()->orderBy('name')->get();
         $data['pro_sub_cats'] = ProductSubCategory::activated()->orderBy('name')->get();
         $data['generics'] = GenericName::activated()->orderBy('name')->get();

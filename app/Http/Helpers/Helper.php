@@ -241,9 +241,25 @@ function cartItemRegPrice($cart)
 }
 function cartItemPrice($cart)
 {
-    return $cart->unit ? number_format((($cart->product->discountPrice()*$cart->unit->quantity) * $cart->quantity), 2) : number_format(($cart->product->discountPrice()* $cart->quantity), 2);
+    $product_discount = proDisPrice($cart->product->price,$cart->product->discounts);
+    return $cart->unit ? number_format((($product_discount*$cart->unit->quantity) * $cart->quantity), 2) : number_format(($product_discount* $cart->quantity), 2);
    
 }
+
+function proDisPrice($price, $pro_discounts)
+    {
+        $discount = $pro_discounts->where('status',1)->first();
+        if($discount){
+            if(!empty($discount->discount_amount)){
+                return ($price - $discount->discount_amount);
+            }
+            else if(!empty($discount->discount_percentage)){
+                return ($price - (($price/100)*$discount->discount_percentage));
+            }
+        }
+        return $price;
+        
+    }
 
 
 

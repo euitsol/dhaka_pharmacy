@@ -17,7 +17,7 @@ trait TransformProductTrait{
         $product->company->name = Str::limit($product->company->name, $limit, '..');
         $product->discount_amount = calculateProductDiscount($product, false);
         $product->discount_percentage = calculateProductDiscount($product, true);
-        $product->discountPrice = $product->discountPrice();
+        $product->discountPrice = proDisPrice($product->price, $product->discounts);
         return $product;
     }
     private function getSortedUnits($unitJson)

@@ -65,8 +65,9 @@
                                         </div>
                                         <div class="col-2 text-end">
                                             @php
+                                                $proDisPrice = proDisPrice($cartItem['product']->price, $cartItem['product']->discounts);
                                                 $single_total_price =
-                                                    $cartItem['product']->discountPrice() *
+                                                    $proDisPrice *
                                                     $cartItem['unit']->quantity *
                                                     $cartItem['quantity'];
                                                 $single_regular_price =
@@ -76,7 +77,7 @@
                                                 $total_price += $single_total_price;
                                                 $total_regular_price += $single_regular_price;
                                             @endphp
-                                            @if ($cartItem['product']->discountPrice() != $cartItem['product']->price)
+                                            @if ($proDisPrice != $cartItem['product']->price)
                                                 <span class="text-danger me-2"><del>{!! get_taka_icon() !!}
                                                         {{ number_format($single_regular_price, 2) }}</del></span>
                                             @endif

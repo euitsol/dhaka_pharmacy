@@ -154,7 +154,7 @@
                                 <tr>
                                     <th>{{ __('Price') }} </th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ number_format($medicine->discountPrice(),2) }}{{__(' BDT')}} </td>
+                                    <td> {{ number_format(proDisPrice($medicine->price, $medicine->discounts),2) }}{{__(' BDT')}} </td>
                                 </tr>
                             </tbody>
                         </table>

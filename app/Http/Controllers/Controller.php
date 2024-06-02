@@ -76,15 +76,4 @@ class Controller extends BaseController
             return response()->json(['error' => 'File not found'], 404);
         }
     }
-    // public function calculateTotalPrice($orderDistribution) {
-    //     return AddToCart::with('product')
-    //         ->whereIn('id', json_decode($orderDistribution->order->carts))
-    //         ->get()
-    //         ->sum(function ($item){
-    //             $discountedPrice = $item->product->discountPrice();
-    //             $quantity = $item->quantity;
-    //             $unitQuantity = $item->unit->quantity ?? 1;
-    //             return ($discountedPrice * $unitQuantity * $quantity);
-    //         });
-    // }
 }

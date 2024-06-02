@@ -44,7 +44,7 @@
                                     <td> {{ $medicine->pro_cat->name }} </td>
                                     <td> {{ number_format($medicine->price,2) }} {{__('BDT')}} </td>
                                     <td> {{ number_format(calculateProductDiscount($medicine, false),2) }}{{__(' BDT')}} </td>
-                                    <td> {{ number_format($medicine->discountPrice(),2) }} {{__('BDT')}} </td>
+                                    <td> {{ number_format(proDisPrice($medicine->price, $medicine->discounts),2) }} {{__('BDT')}} </td>
                                     <td>
                                         <span
                                             class="{{ $medicine->getBestSellingBadgeClass() }}">{{ $medicine->getBestSelling() }}</span>
