@@ -37,7 +37,7 @@ class MedicineController extends Controller
     {
         $data['medicine']=Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','created_user','updated_user','discounts'])->where('slug', $slug)->first();
 
-        $data['medicine']->units = collect(json_decode($data['medicine']->unit, true))->map(function ($unit) {
+        $data['medicine']->units = collect(json_decode($data['medicine']->unit, true))->each(function ($unit) {
             $medicineUnit = MedicineUnit::findOrFail($unit);
             return $medicineUnit->name . " ($medicineUnit->quantity)";
         })->implode(' | ');
