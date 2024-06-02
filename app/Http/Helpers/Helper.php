@@ -123,11 +123,6 @@ function rider(){
     return auth()->guard('rider')->user();
 }
 
-function api_user(){
-    return auth()->guard('api-user')->user();
-}
-
-
 function mainMenuCheck($array){
     $check = false;
 
@@ -294,4 +289,16 @@ function prepTotalSeconds($start_time, $end_time){
     return $totalSeconds;
 }
 
+function sendResponse($success, $message, $data = null, $statusCode = 200, $additional = null){
+        $responseData = [
+            'success' => $success,
+            'message' => $message,
+            'data' => $data
+        ];
+        if (!empty($additional) && is_array($additional)) {
+            $responseData = array_merge($responseData, $additional);
+        }
+
+        return response()->json($responseData, $statusCode);
+}
 
