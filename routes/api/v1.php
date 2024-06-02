@@ -13,7 +13,7 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
     });
 
 
- Route::controller(UserController::class)->middleware('auth:api-user')->prefix('info')->name('info')->group(function () {
+Route::controller(UserController::class)->middleware('auth:api-user')->prefix('info')->name('info')->group(function () {
         Route::get('', 'info');
     });
 });
