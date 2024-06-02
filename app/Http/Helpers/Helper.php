@@ -236,13 +236,14 @@ function calculateProductDiscount($product, $isPercent = false) {
 
 function cartItemRegPrice($cart)
 {
-    // return number_format((($cart->product->price*($cart->unit->quantity ?? 1)) * $cart->quantity), 2);
-    return  $cart->unit ? number_format((($cart->product->price*($cart->unit->quantity)) * $cart->quantity), 2) : number_format(($cart->product->price*$cart->quantity), 2);
+    $unit = $cart->unit ? $cart->unit->quantity : 1;
+    return  number_format(($cart->product->price*$unit* $cart->quantity), 2);
 }
 function cartItemPrice($cart)
 {
     $product_discount = proDisPrice($cart->product->price,$cart->product->discounts);
-    return $cart->unit ? number_format((($product_discount*$cart->unit->quantity) * $cart->quantity), 2) : number_format(($product_discount* $cart->quantity), 2);
+    $unit = $cart->unit ? $cart->unit->quantity : 1;
+    return number_format(($product_discount*$unit* $cart->quantity), 2);
    
 }
 
@@ -260,12 +261,6 @@ function proDisPrice($price, $pro_discounts)
         return $price;
         
     }
-
-
-
-
-
-
 function formatPercentageNumber($number) {
     $formattedNumber = rtrim(rtrim(number_format($number,2), '0'), '.');
     return $formattedNumber;
