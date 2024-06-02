@@ -214,14 +214,12 @@
                                 <label>{{ __('Discount') }}</label>
                                 <div class="form-check form-check-radio">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="0" @if(empty(calculateProductDiscount($medicine, false)
-                                        ) && empty(calculateProductDiscount($medicine, true))) checked @endif>
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="0" @if(empty(calculateProductDiscount($medicine, false))) checked @endif>
                                         {{__('NO')}}
                                         <span class="form-check-sign"></span>
                                     </label>
                                     <label class="form-check-label ms-5">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" @if(!empty(calculateProductDiscount($medicine, false)
-                                        ) && !empty(calculateProductDiscount($medicine, true))) checked @endif>
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" @if(!empty(calculateProductDiscount($medicine, false))) checked @endif>
                                         {{__('YES')}}
                                         <span class="form-check-sign"></span>
                                     </label>
