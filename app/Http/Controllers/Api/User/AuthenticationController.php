@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\API\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
 
-class AuthenticationController extends Controller
+class AuthenticationController extends BaseController
 {
 
     public function pass_login(LoginRequest $request):JsonResponse
@@ -21,37 +21,16 @@ class AuthenticationController extends Controller
         if (!empty($user)) {
             if (Hash::check($password, $user->password)) {
                 if ($user->status !== 1) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Your account is disabled. Please contact support',
-                        'token' => null,
-                        'data' => null,
-                    ], 403); // Forbidden
+                    return sendResponse(false, 'Your account is disabled. Please contact support', null, 403);
                 }
 
                 $token = $user->createToken('appToken')->accessToken;
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Successfully logged in',
-                    'token' => $token,
-                    'data' => $user->only('id', 'name','phone',), // Return only necessary user data
-                ], 200);
+                return sendResponse(true, 'Successfully logged in', $user->only('id', 'name','phone',), 200, ['token' => $token]);
             }else{
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Invalid password',
-                    'token' => null,
-                    'data' => null,
-                ], 401); // Unauthorized
+                return sendResponse(false, 'Invalid password', null , 401);
             }
         } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid phone number',
-                'token' => null,
-                'data' => null,
-            ], 401); // Unauthorized
+            return sendResponse(false, 'Invalid phone number', null , 401);
         }
     }
 }
