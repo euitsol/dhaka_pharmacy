@@ -32,7 +32,7 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $order->order_id }}</td>
                                     <td>{{ count(json_decode($order->carts,true)) }}</td>
-                                    <td>{!! get_taka_icon() .number_format(ceil($order->totalPrice+$order->delivery_fee)) !!}</td>
+                                    <td>{!! get_taka_icon() !!}{{$order->totalPrice}}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
                                     <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>
@@ -76,96 +76,5 @@
             </div>
         </div>
     </div>
-    {{-- Admin Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Admin Details') }}</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body modal_data">
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5],'order'=>'asc'])
-@push('js')
-    <script>
-        $(document).ready(function() {
-            $('.view').on('click', function() {
-                let id = $(this).data('id');
-                let url = ("{{ route('am.admin.details.admin_list', ['id']) }}");
-                let _url = url.replace('id', id);
-                $.ajax({
-                    url: _url,
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
-                            'badge-warning';
-                        var result = `
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th class="text-nowrap">Name</th>
-                                        <th>:</th>
-                                        <td>${data.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Email</th>
-                                        <th>:</th>
-                                        <td>${data.email}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Role</th>
-                                        <th>:</th>
-                                        <td>${data.role.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">IP Address</th>
-                                        <th>:</th>
-                                        <td>${data.ips}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Status</th>
-                                        <th>:</th>
-                                        <td><span class="badge ${statusClass}">${status}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Created At</th>
-                                        <th>:</th>
-                                        <td>${data.creating_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Created By</th>
-                                        <th>:</th>
-                                        <td>${data.created_by}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Updated At</th>
-                                        <th>:</th>
-                                        <td>${data.updating_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Updated By</th>
-                                        <th>:</th>
-                                        <td>${data.updated_by}</td>
-                                    </tr>
-                                </table>
-                                `;
-                        $('.modal_data').html(result);
-                        $('.view_modal').modal('show');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching admin data:', error);
-                    }
-                });
-            });
-        });
-    </script>
-@endpush
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4],'order'=>'asc'])

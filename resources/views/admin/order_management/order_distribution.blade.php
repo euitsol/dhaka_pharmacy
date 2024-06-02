@@ -51,7 +51,7 @@
                                                 <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($order->delivery_fee))}}</th>
                                                 <th>{{__('Payable Amount')}}</th>
                                                 <td>:</td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice+$order->delivery_fee))}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{$totalPrice}}</th>
                                             </tr>
                                             <tr>
                                                 <th>{{__('Delivery Address')}}</th>
@@ -94,7 +94,7 @@
                                                                                 <div class="col my-auto"> <small>{{__('Pack :')}} {{$item->unit->name ?? 'Piece'}}</small></div>
                                                                                 <div class="col my-auto">
                                                                                     <h6 class="mb-0 text-end">
-                                                                                        @if (calculateProductDiscount($item->product, true))
+                                                                                        @if ($item->product->discountPrice() != $item->product->price)
                                                                                         <span class="text-danger">
                                                                                             <del>
                                                                                                 {!! get_taka_icon() !!} {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}

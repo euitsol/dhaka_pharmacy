@@ -34,22 +34,28 @@ trait TransformOrderItemTrait{
         $cart_item->discount = calculateProductDiscount($product, false) * $unitQuantity * $cart_item->quantity;
         return $cart_item;
     }
-    private function calculateOrderTotalPrice($order, $order_items = false){
-        if($order_items == false){
-            $order_items = $this->getOrderItems($order);
-        }
-        return number_format(ceil($order_items->sum('discount_price') + $order->delivery_fee));
-    }
     private function calculateOrderTotalRegularPrice($order, $order_items = false){
         if($order_items == false){
             $order_items = $this->getOrderItems($order);
         }
-        return number_format(ceil($order_items->sum('price') + $order->delivery_fee));
+        return number_format(ceil($order_items->sum('price')));
     }
     private function calculateOrderTotalDiscount($order, $order_items = false){
         if($order_items == false){
             $order_items = $this->getOrderItems($order);
         }
         return number_format(ceil($order_items->sum('discount')));
+    }
+    private function calculateOrderSubTotalPrice($order, $order_items = false){
+        if($order_items == false){
+            $order_items = $this->getOrderItems($order);
+        }
+        return number_format(ceil($order_items->sum('discount_price')));
+    }
+    private function calculateOrderTotalPrice($order, $order_items = false){
+        if($order_items == false){
+            $order_items = $this->getOrderItems($order);
+        }
+        return number_format(ceil($order_items->sum('discount_price') + $order->delivery_fee));
     }
 }

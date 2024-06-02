@@ -33,7 +33,7 @@
                                                             <div class="col my-auto"> <small>{{__('Pack :')}} {{$item->unit->name ?? 'Piece'}}</small></div>
                                                             <div class="col my-auto">
                                                                 <h6 class="mb-0 text-end">
-                                                                    @if (calculateProductDiscount($item->product, true))
+                                                                    @if ($item->product->discountPrice() != $item->product->price)
                                                                     <span class="text-danger">
                                                                         <del>
                                                                             {!! get_taka_icon() !!} {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}
@@ -107,19 +107,19 @@
                                                 <th>{{__('Total Price')}}</th>
                                                 <td>:</td>
                                                 <td>
-                                                    <span>{!! get_taka_icon() !!} {{number_format(ceil($totalRegularPrice))}}</span>
+                                                    <span>{!! get_taka_icon() !!} {{$totalRegularPrice}}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>{{__('Discount')}}</th>
                                                 <td>:</td>
-                                                <td><span>{!! get_taka_icon() !!} {{number_format(ceil($totalDiscount))}}</span></td>
+                                                <td><span>{!! get_taka_icon() !!} {{$totalDiscount}}</span></td>
                                             </tr>
                                             <tr>
                                                 <th>{{__('Sub Total')}}</th>
                                                 <td>:</td>
                                                 <td>
-                                                    <span>{!! get_taka_icon() !!} {{number_format(ceil($totalPrice))}}</span>
+                                                    <span>{!! get_taka_icon() !!} {{$subTotalPrice}}</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -130,7 +130,7 @@
                                             <tr>
                                                 <th>{{__('Payable Amount')}}</th>
                                                 <td>:</td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice+$order->delivery_fee))}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{$totalPrice}}</th>
                                             </tr>
                                         </table>
                                     </div>
@@ -144,7 +144,7 @@
                 <div class="jumbotron-fluid">
                     <div class="row justify-content-between ">
                         <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">{{__('TOTAL AMOUNT')}}</h2></div>
-                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{number_format(ceil($totalPrice+$order->delivery_fee))}}</h1></div>
+                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{$totalPrice}}</h1></div>
                     </div>
                 </div>
             </div>
