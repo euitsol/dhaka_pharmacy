@@ -10,12 +10,15 @@
         .main_checkout_wrap .title {
             margin-bottom: 1.2rem;
         }
+
         .main_checkout_wrap .order-item {
             border-bottom: 1px solid #dee2e6;
         }
+
         .main_checkout_wrap .order-item:first-child{
             border-top: 1px solid #dee2e6;
         }
+
         .main_checkout_wrap .order-item:last-child{
             border-bottom: 0;
         }
@@ -34,13 +37,13 @@
         .main_checkout_wrap .boxed input[type="radio"]:checked+label {
             border: solid 2px green;
         }
+
         .main_checkout_wrap .boxed img {
             height: 45px;
             width: 45px;
             padding: 3px;
             object-fit: contain;
         }
-        
 
         .main_checkout_wrap .card {
             box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -123,11 +126,9 @@
             margin-top: 4.5rem;
         }
 
-
         .main_checkout_wrap hr {
             margin-top: 1.25rem;
         }
-
 
         .main_checkout_wrap select {
             border: 1px solid rgba(0, 0, 0, 0.137);
@@ -146,7 +147,6 @@
             width: 100%;
             background-color: rgb(247, 247, 247);
         }
-        
 
         .main_checkout_wrap input:focus::-webkit-input-placeholder {
             color: transparent;
@@ -164,11 +164,20 @@
         }
 
         .main_checkout_wrap .form-check {
-            max-height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            margin-bottom: .5rem;
         }
+
+        .main_checkout_wrap .form-check-input {
+            margin-bottom: unset !important;
+        }
+
         .main_checkout_wrap .form-check-label {
             margin-top: 5px;
         }
+
         .main_checkout_wrap .btn:focus {
             box-shadow: none;
             outline: none;

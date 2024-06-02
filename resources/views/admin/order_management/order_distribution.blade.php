@@ -29,29 +29,34 @@
                                     <div class="col-12">
                                         <table class="table table-striped">
                                             <tr>
-                                                <th>Order ID</th>
+                                                <th>{{__('Order ID')}}</th>
                                                 <td>:</td>
                                                 <td>{{$order->order_id}}</td>
-                                                <th>Delivery Address</th>
+                                                <th>{{__('Delivery Type')}}</th>
                                                 <td>:</td>
-                                                <td>{!! optional($order->address)->street_address !!}</td>
+                                                <td>{{ucwords($order->delivery_type)}}</td>
                                             </tr>
                                             <tr>
-                                                <th>Order Date</th>
+                                                <th>{{__('Order Date')}}</th>
                                                 <td>:</td>
                                                 <td>{{timeFormate($order->created_at)}}</td>
-                                                <th>Order Status</th>
+                                                <th>{{__('Order Status')}}</th>
                                                 <td>:</td>
                                                 <td><span class="{{$order->statusBg()}}">{{$order->statusTitle()}}</span></td>
                                                 
                                             </tr>
                                             <tr>
-                                                <th>Payable Amount</th>
+                                                <th>{{__('Delivery Fee')}}</th>
                                                 <td>:</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice))}}</th>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($order->delivery_fee))}}</th>
+                                                <th>{{__('Payable Amount')}}</th>
+                                                <td>:</td>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice+$order->delivery_fee))}}</th>
+                                            </tr>
+                                            <tr>
+                                                <th>{{__('Delivery Address')}}</th>
+                                                <td>:</td>
+                                                <td colspan="4">{!! optional($order->address)->address !!}</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -65,8 +70,8 @@
                             <div class="card ">
                                 <div class="card-header">
                                     <div class="row justify-content-between mb-3">
-                                        <div class="col-auto"> <h4 class="color-1 mb-0">Order Distribution</h4> </div>
-                                        <div class="col-auto  "> Distribution Status : <span class="{{isset($order_distribution) ? $order_distribution->statusBg() : 'badge badge-danger'}}">{{isset($order_distribution) ? "Distributed" : 'Not Distributed'}}</span> </div>
+                                        <div class="col-auto"> <h4 class="color-1 mb-0">{{__('Order Distribution')}}</h4> </div>
+                                        <div class="col-auto  ">{{__(' Distribution Status :')}} <span class="{{isset($order_distribution) ? $order_distribution->statusBg() : 'badge badge-danger'}}">{{isset($order_distribution) ? "Distributed" : 'Not Distributed'}}</span> </div>
                                     </div>
                                 </div>
                                 <div class="card-body order_items">
@@ -85,8 +90,8 @@
                                                                             <div class="row  my-auto flex-column flex-md-row px-3">
                                                                                 <div class="col my-auto"> <h6 class="mb-0 text-start">{{$item->product->name}}</h6>  </div>
                                                                                 <div class="col-auto my-auto"> <small>{{$item->product->pro_cat->name}} </small></div>
-                                                                                <div class="col my-auto"> <small>Qty : {{$item->quantity}}</small></div>
-                                                                                <div class="col my-auto"> <small>Pack : {{$item->unit->name ?? 'Piece'}}</small></div>
+                                                                                <div class="col my-auto"> <small>{{__('Qty :')}} {{$item->quantity}}</small></div>
+                                                                                <div class="col my-auto"> <small>{{__('Pack :')}} {{$item->unit->name ?? 'Piece'}}</small></div>
                                                                                 <div class="col my-auto">
                                                                                     <h6 class="mb-0 text-end">
                                                                                         @if (productDiscountPercentage($item->product->id))
@@ -110,16 +115,6 @@
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <div class="form-group">
-                                                                        {{-- <select name="datas[{{$key}}][pharmacy_id]" class="form-control {{ $errors->has('datas.'.$key.'.pharmacy_id') ? ' is-invalid' : '' }}">
-                                                                            <option selected hidden>Select Pharmacy</option>
-                                                                            @foreach ($pharmacies as $pharmacy)
-                                                                                <option @if((isset($order_distribution->odps) && $order_distribution->odps[$key]->pharmacy_id == $pharmacy->id) || (old('datas.'.$key.'.pharmacy_id') == $pharmacy->id)) selected @endif value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
-                                                                            @endforeach
-                                                                        </select> --}}
-
-
-                                                                    
-                                                        
                                                                         @if(isset($order_distribution) && $order_distribution->status == 0)
 
                                                                             @php

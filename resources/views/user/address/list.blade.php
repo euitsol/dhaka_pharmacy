@@ -20,7 +20,7 @@
                     </div>
                     <div>
                         <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal"
-                            data-target="#address_modal">Add
+                            data-target="#address_add_modal">Add
                             Address</a>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                                                 <span class="strong">City: </span>{{ $address->city }}
                                             </div>
                                             <div class="col-md-3">
-                                                <span class="strong">Street: </span>{{ $address->street_address }}
+                                                <span class="strong">Street: </span>{{ $address->address }}
                                             </div>
                                             <div class="col-md-3">
                                                 <span class="strong">Appartment: </span>{{ $address->apartment }}

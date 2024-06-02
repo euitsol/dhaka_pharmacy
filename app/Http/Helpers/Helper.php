@@ -289,6 +289,10 @@ function prepTotalSeconds($start_time, $end_time){
     return $totalSeconds;
 }
 
+
+function formatOperationArea($pharmacy) {
+    return $pharmacy->operation_area ? '(' . $pharmacy->operation_area->name . ($pharmacy->operation_sub_area ? ' - ' : ')') : '';
+}
 function sendResponse($success, $message, $data = null, $statusCode = 200, $additional = null){
         $responseData = [
             'success' => $success,
@@ -302,3 +306,12 @@ function sendResponse($success, $message, $data = null, $statusCode = 200, $addi
         return response()->json($responseData, $statusCode);
 }
 
+function formatOperationSubArea($pharmacy) {
+    return $pharmacy->operation_sub_area ? ($pharmacy->operation_area ? $pharmacy->operation_sub_area->name . ' )' : '( ' . $pharmacy->operation_sub_area->name . ' )') : '';
+}
+
+function formatPharmacyOption($pharmacy) {
+    $area = formatOperationArea($pharmacy);
+    $sub_area = formatOperationSubArea($pharmacy);
+    return $pharmacy->name . $area . $sub_area;
+}

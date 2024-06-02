@@ -6,7 +6,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __(ucwords(strtolower((str_replace('-', ' ', $status))))) }} Orders</h4>
+                            <h4 class="card-title">{{ __(ucwords(strtolower((str_replace('-', ' ', $status)))).' Orders') }} </h4>
                         </div>
                         <div class="col-4 text-end">
                             <span class="{{$statusBg}}">{{ __(ucwords(strtolower((str_replace('-', ' ', $status))))) }}</span>
@@ -45,7 +45,7 @@
                                         <td><span class="{{($do->odps->where('status',3)->count())>0 ? 'badge badge-danger' : ''}}">{{ $do->odps->where('status',3)->count() }}</span> </td>
                                         @endif
                                         <td><span class="{{($do->odps->where('status',2)->count())>0 ? 'badge badge-success' : ''}}">{{ $do->odps->where('status',2)->count() }}</span></td>
-                                        <td>{!! get_taka_icon() .number_format(ceil($do->order->totalPrice)) !!}</td>
+                                        <td>{!! get_taka_icon() .number_format(ceil($do->order->totalPrice+$do->order->delivery_fee)) !!}</td>
                                         <td>{{$do->paymentType()}}</td>
                                         <td>{{$do->distributionType()}}</td>
                                         <td>{{ readablePrepTime($do->created_at,$do->prep_time) }}</td>

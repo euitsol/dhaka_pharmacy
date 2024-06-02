@@ -38,7 +38,7 @@
                                             {{str_limit($pharmacy->name,10)}} @if($key != (count($dor->pharmacy) - 1)) {{'| '}} @endif
                                         @endforeach 
                                     </td>
-                                    <td> {{str_limit($dor->od->order->address->street_address,30)}} </td>
+                                    <td> {{str_limit($dor->od->order->address->address,30)}} </td>
                                     <td>
                                         <span class="{{ $dor->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $dor->statusTitle()))))  }}</span>
                                     </td>
@@ -48,7 +48,7 @@
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                <a class="dropdown-item" href="{{route('rider.order_management.details',$dor->id)}}">{{ __("View Details") }}</a>
+                                                <a class="dropdown-item" href="{{route('rider.order_management.details',encrypt($dor->id))}}">{{ __("View Details") }}</a>
                                             </div>
                                         </div>
                                     </td>

@@ -83,6 +83,7 @@ use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
+use App\Http\Controllers\User\UserOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -726,6 +727,9 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
     Route::controller(RiderOrderManagementController::class)->prefix('order-management')->name('order_management.')->group(function () {
         Route::get('/{status}', 'index')->name('index');
         Route::get('/details/{dor_id}', 'details')->name('details');
+        Route::post('/pharmacy/otp-verify', 'pOtpVerify')->name('pharmacy.otp_verify');
+        Route::post('/customer/otp-verify/{od_id}', 'cOtpVerify')->name('customer.otp_verify');
+        Route::post('/dispute/{od_id}', 'dispute')->name('dispute');
     });
 
     Route::controller(RiderProfileController::class)->prefix('profile')->name('profile.')->group(function () {
@@ -763,6 +767,10 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
     Route::get('/product/order/failed/{order_id}', [CheckoutController::class, 'order_failed'])->name('product.order.failed');
     Route::get('/product/order/cancel/{order_id}', [CheckoutController::class, 'order_cancel'])->name('product.order.cancel');
 
+    Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
+        Route::get('/address/{id}', 'address')->name('address');
+    });
+
     //Address
     Route::controller(UserAddressController::class)->prefix('address')->name('u.as.')->group(function () {
         Route::get('list', 'list')->name('list');
@@ -771,6 +779,9 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
         Route::put('update', 'update')->name('update');
 
         Route::get('delete/{id}', 'delete')->name('delete');
+    });
+    Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
+        Route::get('list', 'order_list')->name('list');
     });
 });
 

@@ -40,7 +40,7 @@
                             <span>10</span>
                         </div>
                         <div class="title">
-                            <h2>Current Order</h2>
+                            <h2>Previous Order</h2>
                         </div>
                     </div>
                     <div class="single-box cancel-order">
@@ -48,7 +48,7 @@
                             <span>05</span>
                         </div>
                         <div class="title">
-                            <h2>Current Order</h2>
+                            <h2>Cancel Order</h2>
                         </div>
                     </div>
                 </div>

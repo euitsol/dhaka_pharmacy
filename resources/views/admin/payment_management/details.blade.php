@@ -35,7 +35,7 @@
                                             <tr>
                                                 <th>Customer Address</th>
                                                 <td>:</td>
-                                                <td>{!! optional($payment->order->address)->street_address !!}</td>
+                                                <td>{!! optional($payment->order->address)->address !!}</td>
                                                 <th>Order ID</th>
                                                 <td>:</td>
                                                 <td>

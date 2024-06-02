@@ -3,7 +3,14 @@
 namespace App\Http\Controllers\Rider;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerOtpVerifyRequest;
+use App\Http\Requests\PharmacyOtpVerifyRequest;
+use App\Http\Requests\Rider\RiderDisputeRequest;
+use App\Models\DistributionOtp;
+use App\Models\OrderDistribution;
+use App\Models\OrderDistributionPharmacy;
 use App\Models\OrderDistributionRider;
+use App\Models\Pharmacy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,7 +30,7 @@ class OrderManagementController extends Controller
         $query = OrderDistributionRider::with(['od.odps','od.order.address','rider'])->where('rider_id',rider()->id);
         $query->where('status',$this->getStatus($status));
         if($this->getStatus($status) == 0){
-            $query->where('status',-1);
+            $query->orWhere('status',-1);
         }
         $data['dors'] = $query->orderBy('priority','desc')->latest()->get()->map(function($dor){
             $dor->pharmacy = $dor->od->odps->unique('pharmacy_id')->map(function($dop){
@@ -36,36 +43,82 @@ class OrderManagementController extends Controller
     }
     
     public function details($dor_id){
-        $data['dor'] = OrderDistributionRider::with(['od.odps','od.order.address','rider'])->findORFail($dor_id);
+        $data['dor'] = OrderDistributionRider::with(['od.odps','od.order.address','rider'])->findORFail(decrypt($dor_id));
         $data['dor']->pharmacy = $data['dor']->od->odps->unique('pharmacy_id')->map(function($dop){
                 return $dop->pharmacy;
             })->values();
         $data['dor']->totalPrice = $this->calculateTotalPrice($data['dor']->od);
-
         return view('rider.orders.details',$data);
     }
 
-    // public function update(PharmacyOrderRequest $req, $do_id){
-    //     foreach($req->data as $data){
-    //         $dop = OrderDistributionPharmacy::findOrFail($data['dop_id']);
-    //         $dop->open_amount = $data['dop_id'];
-    //         $dop->status = $data['status'];
-    //         $dop->note = $data['note'];
-    //         $dop->save();  
-    //     }
-    //     $do = OrderDistribution::findOrFail(decrypt($do_id));
-    //     $odpsArray = $do->odps->toArray(); // Convert the collection to an array
-    //     $statuses = array_column($odpsArray, 'status');
-    //     $allValid = array_reduce($statuses, function ($carry, $status) {
-    //         return $carry && ($status == 2 || $status == -1);
-    //     }, true);
+    public function pOtpVerify(PharmacyOtpVerifyRequest $req){
+        $pharmacy = Pharmacy::findOrFail(decrypt($req->pid));
+        $check = DistributionOtp::where('order_distribution_id',decrypt($req->od_id))->where('otp_author_id', $pharmacy->id)->where('otp_author_type', get_class($pharmacy))->where('otp',$req->collect_otp)->first();
+        if($check){
+            $check->status = 1;
+            $check->rider_id = rider()->id;
+            $check->update();
 
-    //     if ($allValid) {
-    //         $do->update(['status' => 2]);
-    //     }
-    //     flash()->addSuccess('Order distributed successfully.');
-    //     return redirect()->route('pharmacy.order_management.index','waiting-for-rider');
-    // }
+            OrderDistributionPharmacy::where('order_distribution_id', decrypt($req->od_id))
+                                        ->where('status', 2)
+                                        ->where('pharmacy_id',$pharmacy->id)
+                                        ->update(['status'=>4]);
+            flash()->addSuccess('Order collected from '.$pharmacy->name.' successfully.');
+        }else{
+            flash()->addError('Something is wrong please try again.');
+        }
+
+        $odps = OrderDistributionPharmacy::with('pharmacy')->where('order_distribution_id', decrypt($req->od_id))
+                                        ->where('status', 2)
+                                        ->get()
+                                        ->unique('pharmacy_id');
+
+        $all_collect = $odps->every(function ($dop) use ($req) {
+            $check = DistributionOtp::where('order_distribution_id', decrypt($req->od_id))
+                ->where('otp_author_id', $dop->pharmacy->id)
+                ->where('otp_author_type', get_class($dop->pharmacy))
+                ->first();
+            return $check && $check->status == 1;
+        });
+        if($all_collect){
+            OrderDistributionRider::where('rider_id',rider()->id)->where('order_distribution_id', decrypt($req->od_id))->where('status',1)->update(['status'=>2]);
+            OrderDistribution::where('id', decrypt($req->od_id))->update(['status'=>4]);
+
+            $od = OrderDistribution::with('order.customer')->findOrFail(decrypt($req->od_id));
+            $CustomerVotp = new DistributionOtp();
+            $CustomerVotp->order_distribution_id = $od->id;
+            $CustomerVotp->otp_author()->associate($od->order->customer);
+            $CustomerVotp->otp = otp();
+            $CustomerVotp->save();
+        }
+        return redirect()->back(); 
+    }
+    public function cOtpVerify(CustomerOtpVerifyRequest $req, $od_id){
+        $od = OrderDistribution::with('order.customer')->findOrFail(decrypt($od_id));
+        $check = DistributionOtp::where('order_distribution_id',decrypt($od_id))->where('otp_author_id', $od->order->customer->id)->where('otp_author_type', get_class($od->order->customer))->where('otp',$req->delivered_otp)->first();
+        if($check){
+            $check->status = 1;
+            $check->rider_id = rider()->id;
+            $check->update();
+
+            OrderDistributionRider::where('rider_id',rider()->id)->where('order_distribution_id', decrypt($od_id))->where('status',2)->update(['status'=>3]);
+            OrderDistribution::where('id', decrypt($od_id))->update(['status'=>5]);
+
+            OrderDistributionPharmacy::where('order_distribution_id', decrypt($od_id))
+                                        ->where('status', 4)
+                                        ->update(['status'=>5]);
+            flash()->addSuccess('Order delivered successfully.');
+        }else{
+            flash()->addError('Something is wrong please try again.');
+        }
+        return redirect()->back();
+    }
+    public function dispute(RiderDisputeRequest $req, $od_id){
+        OrderDistribution::findOrFail(decrypt($od_id))->update(['status'=>2]);
+        OrderDistributionRider::where('rider_id',rider()->id)->where('order_distribution_id', decrypt($od_id))->where('status',1)->update(['status'=>0,'dispute_note'=>$req->dispute_reason]);
+        flash()->addSuccess('Order disputed successfully.');
+        return redirect()->back();
+    }
 
     protected function getStatus($status){
         switch ($status) {
@@ -73,18 +126,16 @@ class OrderManagementController extends Controller
                 return 0;
             case 'old-dispute':
                 return -1;
-            case 'ongoing':
-                return 3;
-            case 'collect':
-                return 4;
+            case 'waiting-for-pickup':
+                return 1;
+            case 'picked-up':
+                return 2;
             case 'delivered':
-                return 5;
-            case 'complete':
-                return 6;
+                return 3;
+            case 'finish':
+                return 4;
             case 'cancel':
-                return 7;
-            case 'cancel-complete':
-                return 8;
+                return 5;
         }
     }
     
@@ -93,40 +144,34 @@ class OrderManagementController extends Controller
             case 0:
             case -1:
                 return 'badge badge-danger';
-            case 3:
+            case 1:
                 return 'badge bg-info';
-            case 4:
+            case 2:
                 return 'badge badge-primary';
-            case 5:
+            case 3:
                 return 'badge badge-dark';
-            case 6:
+            case 4:
                 return 'badge badge-success';
-            case 7:
+            case 5:
                 return 'badge badge-danger';
-            case 8:
-                return 'badge badge-warning';
                 
         }
     }
-    
-    
     public function statusTitle($status) {
         switch ($status) {
             case 0:
             case -1:
                 return 'Dispute';
+            case 1:
+                return 'Waiting for Pickup';
+            case 2:
+                return 'Picked Up';
             case 3:
-                return 'Ongoing';
-            case 4:
-                return 'Collect';
-            case 5:
                 return 'Delivered';
-            case 6:
-                return 'Complete';
-            case 7:
+            case 4:
+                return 'Finish';
+            case 5:
                 return 'Cancel';
-            case 8:
-                return 'Cancel Complete';
         }
     }
 }

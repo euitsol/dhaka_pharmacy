@@ -29,21 +29,21 @@ class OrderDistribution extends BaseModel
     public function statusBg() {
         switch ($this->status) {
             case 0:
-                return 'badge badge-info';
+                return 'badge bg-info';
             case 1:
-                return 'badge badge-warning';
+                return 'badge bg-warning';
             case 2:
                 return 'badge bg-secondary';
             case 3:
-                return 'badge badge-danger';
+                return 'badge bg-danger';
             case 4:
-                return 'badge badge-primary';
+                return 'badge bg-primary';
             case 5:
-                return 'badge badge-dark';
+                return 'badge bg-dark';
             case 6:
-                return 'badge badge-success';
+                return 'badge bg-success';
             case 7:
-                return 'badge badge-danger';
+                return 'badge bg-danger';
                 
         }
     }

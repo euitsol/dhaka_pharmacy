@@ -15,16 +15,16 @@ return new class extends Migration
         Schema::table('addresses', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
-            $table->dropColumn('name');
-            $table->dropColumn('phone');
             $table->dropColumn('apartment_type');
 
             $this->dropAuditColumns($table);
 
+            $table->string('name')->nullable()->change();
+            $table->string('phone')->nullable()->change();
+            $table->longText('delivery_instruction')->nullable()->change();
             $table->string('address');
             $table->text('note')->nullable();
             $table->boolean('is_default')->default(0);
-            $table->longText('delivery_instruction')->nullable()->change();
             $this->addMorphedAuditColumns($table);
         });
     }
@@ -40,11 +40,7 @@ return new class extends Migration
             $table->dropColumn('is_default');
 
             $table->unsignedBigInteger('user_id');
-            $table->string('name');
-            $table->string('phone');
             $table->string('apartment_type');
-            $table->longText('delivery_instruction');
-
         });
     }
 };

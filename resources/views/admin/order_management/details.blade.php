@@ -12,8 +12,8 @@
                         <div class="card ">
                             <div class="card-header">
                                 <div class="row justify-content-between mb-4">
-                                    <div class="col-auto"> <h4 class="color-1 mb-0">Order Items</h4> </div>
-                                    <div class="col-auto  "> Order Status : <span class="{{$order->statusBg()}}">{{$order->statusTitle()}}</span></div>
+                                    <div class="col-auto"> <h4 class="color-1 mb-0">{{__('Order Items')}}</h4> </div>
+                                    <div class="col-auto  "> {{__('Order Status :')}} <span class="{{$order->statusBg()}}">{{$order->statusTitle()}}</span></div>
                                 </div>
                             </div>
                             <div class="card-body order_items">
@@ -29,8 +29,8 @@
                                                         <div class="row  my-auto flex-column flex-md-row px-3">
                                                             <div class="col my-auto"> <h6 class="mb-0 text-start">{{$item->product->name}}</h6>  </div>
                                                             <div class="col-auto my-auto"> <small>{{$item->product->pro_cat->name}} </small></div>
-                                                            <div class="col my-auto"> <small>Qty : {{$item->quantity}}</small></div>
-                                                            <div class="col my-auto"> <small>Pack : {{$item->unit->name ?? 'Piece'}}</small></div>
+                                                            <div class="col my-auto"> <small>{{__('Qty :')}} {{$item->quantity}}</small></div>
+                                                            <div class="col my-auto"> <small>{{__('Pack :')}} {{$item->unit->name ?? 'Piece'}}</small></div>
                                                             <div class="col my-auto">
                                                                 <h6 class="mb-0 text-end">
                                                                     @if (productDiscountPercentage($item->product->id))
@@ -89,44 +89,48 @@
                                     <div class="col-12">
                                         <table class="table table-striped">
                                             <tr>
-                                                <th>Order ID</th>
+                                                <th>{{__('Order ID')}}</th>
                                                 <td>:</td>
                                                 <td>{{$order->order_id}}</td>
                                             </tr>
                                             <tr>
-                                                <th>Delivery Address</th>
+                                                <th>{{__('Delivery Address')}}</th>
                                                 <td>:</td>
-                                                <td>{!! optional($order->address)->street_address !!}</td>
+                                                <td>{!! optional($order->address)->address !!}</td>
                                             </tr>
                                             <tr>
-                                                <th>Order Date</th>
+                                                <th>{{__('Order Date')}}</th>
                                                 <td>:</td>
                                                 <td>{{timeFormate($order->created_at)}}</td>
                                             </tr>
                                             <tr>
-                                                <th>Discount</th>
-                                                <td>:</td>
-                                                <td><span>{!! get_taka_icon() !!} {{number_format($totalDiscount,2)}}</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Sub Total</th>
+                                                <th>{{__('Total Price')}}</th>
                                                 <td>:</td>
                                                 <td>
-                                                    <span>{!! get_taka_icon() !!} {{number_format(ceil($totalPrice))}}</span>
-                                                    @if ($totalRegularPrice !== $totalPrice)
-                                                        <span class="text-danger ms-2"><del>{!! get_taka_icon() !!} {{number_format(ceil($totalRegularPrice))}}</del></span> 
-                                                    @endif
+                                                    <span>{!! get_taka_icon() !!} {{number_format(ceil($totalRegularPrice))}}</span>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>Delivery Charges</th>
+                                                <th>{{__('Discount')}}</th>
                                                 <td>:</td>
-                                                <td>{!! get_taka_icon() !!}60.00</td>
+                                                <td><span>{!! get_taka_icon() !!} {{number_format(ceil($totalDiscount))}}</span></td>
                                             </tr>
                                             <tr>
-                                                <th>Payable Amount</th>
+                                                <th>{{__('Sub Total')}}</th>
                                                 <td>:</td>
-                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice+60))}}</th>
+                                                <td>
+                                                    <span>{!! get_taka_icon() !!} {{number_format(ceil($totalPrice))}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{__('Delivery Fee')}}</th>
+                                                <td>:</td>
+                                                <td>{!! get_taka_icon() !!}{{number_format(ceil($order->delivery_fee))}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{__('Payable Amount')}}</th>
+                                                <td>:</td>
+                                                <th><span>{!! get_taka_icon() !!} </span>{{number_format(ceil($totalPrice+$order->delivery_fee))}}</th>
                                             </tr>
                                         </table>
                                     </div>
@@ -139,8 +143,8 @@
             <div class="card-footer col-md-12">
                 <div class="jumbotron-fluid">
                     <div class="row justify-content-between ">
-                        <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">TOTAL AMOUNT</h2></div>
-                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{number_format(ceil($totalPrice+60))}}</h1></div>
+                        <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold">{{__('TOTAL AMOUNT')}}</h2></div>
+                        <div class="col-auto my-auto ml-auto"><h1 class="display-3 ">{!! get_taka_icon() !!} {{number_format(ceil($totalPrice+$order->delivery_fee))}}</h1></div>
                     </div>
                 </div>
             </div>
@@ -166,6 +170,7 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Transaction ID') }}</th>
+                                <th>{{ __('Total Amount') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Payment date') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -181,6 +186,7 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $payment->transaction_id }}</td>
+                                    <td><span>{!! get_taka_icon() !!} </span>{{ number_format(ceil($payment->amount)) }}</td>
                                     <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
                                     <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>

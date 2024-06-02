@@ -24,7 +24,7 @@ class OrderDistributionPharmacy extends BaseModel
     }
     public function pharmacy(){
         return $this->belongsTo(Pharmacy::class,'pharmacy_id');
-    }
+    } 
     public function statusBg() {
         switch ($this->status) {
             case 0:
@@ -35,20 +35,18 @@ class OrderDistributionPharmacy extends BaseModel
                 return 'badge badge-primary';
             case 3:
                 return 'badge badge-warning';
-            case -1:
-                return 'badge badge-danger';
             case 4:
                 return 'badge badge-dark';
             case 5:
                 return 'badge badge-success';
-            case 7:
+            case 6:
                 return 'badge badge-danger';
-            case 8:
-                return 'badge badge-warning';
+            case -1:
+                return 'badge badge-danger';
         }
     }
     
-    
+
     public function statusTitle() {
         switch ($this->status) {
             case 0:
@@ -59,16 +57,14 @@ class OrderDistributionPharmacy extends BaseModel
                 return 'Waiting for Rider';
             case 3:
                 return 'Dispute';
-            case -1:
-                return 'Old Disputed';
             case 4:
-                return 'Shipped';
+                return 'Picked Up';
             case 5:
-                return 'Complete';
+                return 'Delivered';
             case 7:
                 return 'Cancel';
-            case 8:
-                return 'Cancel Complete';
+            case -1:
+                return 'Old Disputed';
         }
     }
 }

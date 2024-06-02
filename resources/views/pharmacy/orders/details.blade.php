@@ -36,34 +36,34 @@
                     <table class="table table-striped datatable">
                         <tbody>
                             <tr>
-                                <th>Pharmacy</th>
-                                <td>:</td>
-                                <th>{{ $do->pharmacy->name }}</th>
-                                <td>|</td>
-                                <th>Order ID</th>
+                                <th>{{__('Order ID')}}</th>
                                 <td>:</td>
                                 <th>{{ $do->order->order_id }}</th>
+                                <td>|</td>
+                                <th>{{__('Total Price')}}</th>
+                                <td>:</td>
+                                <th>{!! get_taka_icon() !!}{{ number_format(ceil($do->dops->sum('totalPrice'))) }}</th>
                             </tr>
                             <tr>
-                                <th>Payment Type</th>
+                                <th>{{__('Payment Type')}}</th>
                                 <td>:</td>
                                 <th>{{ $do->paymentType() }}</th>
                                 <td>|</td>
-                                <th>Distribution Type</th>
+                                <th>{{__('Distribution Type')}}</th>
                                 <td>:</td>
                                 <th>{{ $do->distributionType() }}</th>
                             </tr>
                             <tr>
-                                <th>Total Product</th>
+                                <th>{{__('Total Product')}}</th>
                                 <td>:</td>
                                 <th>{{ count($do->dops) }}</th>
                                 <td>|</td>
-                                <th>Preparation Time</th>
+                                <th>{{__('Preparation Time')}}</th>
                                 <td>:</td>
                                 <th>{{ $do->prep_time }}</th>
                             </tr>
                             <tr>
-                                <th>Note</th>
+                                <th>{{__('Note')}}</th>
                                 <td>:</td>
                                 <th colspan="5">{!! $do->note !!}</th>
                             </tr>
@@ -72,6 +72,16 @@
                 </div>
                 <div class="card-footer">
                     @if($odr)
+                        @if($status == 2)
+                            <h5><b>{{__('Note:')}}</b> <span class="text-danger">{{__('Please verify your order before handing it over to the rider. Your OTP is : ')}} </span> <strong class="text-success">{{optional($otp)->otp}}</strong></h5>
+                        @endif
+                        @if($status == 4)
+                            <h4 class="text-success m-0 py-3">{{__('Order successfully collected.')}}</h4>
+                        @endif
+                        @if($status == 5)
+                            <h4 class="text-success m-0 py-3">{{__('Order successfully delivered.')}}</h4>
+                        @endif
+                        
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">{{__('Rider Details')}}</h4>
@@ -95,37 +105,37 @@
                                         <table class="table table-striped datatable">
                                             <tbody>
                                                 <tr>
-                                                    <th>Rider Name</th>
+                                                    <th>{{__('Rider Name')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->name }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Rider Gender</th>
+                                                    <th>{{__('Rider Gender')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->gender }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Rider Contact</th>
+                                                    <th>{{__('Rider Contact')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->phone }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Rider Age</th>
+                                                    <th>{{__('Rider Age')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->age }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Delivery Priority</th>
+                                                    <th>{{__('Delivery Priority')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->priority() }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Operational Area</th>
+                                                    <th>{{__('Operational Area')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->operation_area->name }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Operational Sub Area</th>
+                                                    <th>{{__('Operational Sub Area')}}</th>
                                                     <td>:</td>
                                                     <th>{{ $odr->rider->operation_sub_area->name }}</th>
                                                 </tr>
@@ -143,9 +153,6 @@
                                 <span class="{{ $statusBg }}">{{  __(ucwords(strtolower((str_replace('-', ' ', $statusTitle))))) }}</span>
                             </div>
                         </div>
-                        @php
-                            $subtotal = 0;
-                        @endphp
                         @foreach ($do->dops as $key=>$dop)
                             <div class="col-12 status_wrap">
                                 <div class="card card-2 mb-0 mt-3">
@@ -161,22 +168,13 @@
                                                         <h6 class="mb-0 text-start">{{ $dop->cart->product->name }}</h6>
                                                         <small>{{ $dop->cart->product->pro_cat->name }} </small>
                                                     </div>
-                                                    <div class="col my-auto d-flex justify-content-around"> <small>Qty : {{ $dop->cart->quantity }}</small><small>Pack :
-                                                        {{ $dop->cart->unit->name ?? 'Piece' }}</small>
+                                                    <div class="col my-auto d-flex justify-content-around"> <small>Qty : {{ $dop->cart->quantity }}</small><small>Pack : {{ $dop->cart->unit->name ?? 'Piece' }}</small>
                                                     </div>
                                                     <div class="col my-auto">
                                                         <h6 class="my-auto text-center">
-                                                            @php
-                                                                $totalPrice = ($dop->cart->product->price * ($dop->cart->unit->quantity ?? 1) * $dop->cart->quantity);
-                                                                if ($do->payment_type == 0 && $pharmacy_discount){
-                                                                    $totalPrice -= (($totalPrice/100)*$pharmacy_discount->discount_percent);
-                                                                    $discount = "<span class='badge badge-danger'>$pharmacy_discount->discount_percent.'% off'</span>";
-                                                                }
-                                                                $subtotal += $totalPrice;
-                                                            @endphp
                                                             <span><strong>{{ __('Total Price : ') }}</strong>{!! get_taka_icon() !!}
                                                                 
-                                                                {{ number_format($totalPrice, 2) }}</span> <sup>{!! isset($discount) ? $discount : '' !!}</sup>
+                                                                {{ number_format($dop->totalPrice, 2) }}</span> <sup><span class='badge badge-danger'>@if(isset($dop->discount)){{$dop->discount.'% off'}}@endif</span></sup>
                                                         </h6>
                                                         @if ($do->payment_type == 1 && ($status == 0 || $status == 1))
                                                             <div class="input-group">
@@ -235,9 +233,6 @@
                                 
                             </div>
                         @endforeach
-                        <div class="col-12 text-end">
-                            <span class="me-5 pe-5"><span class="me-3 pe-5"><strong>{{ __('SUBTOTAL PRICE : ') }}</strong>{!! get_taka_icon() !!}{{ number_format(ceil($subtotal)) }}</span></span>
-                        </div>
                         @if($status == 0 || $status == 1)
                             <div class="col-12 text-end">
                                 <input type="submit" value="Confirm" class="btn btn-success">
