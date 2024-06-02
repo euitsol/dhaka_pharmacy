@@ -29,7 +29,7 @@ class SslCommerzController extends Controller
             $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
             return $item;
         });
-        
+
         $total_price = ($data['cart_items']->sum('discount_price')) + $order->delivery_fee;
 
         # Here you have to receive all the order data to initate the payment.
@@ -50,7 +50,7 @@ class SslCommerzController extends Controller
         $post_data['cus_state'] = "Dhaka";//optional
         $post_data['cus_postcode'] = "1255";//optional
         $post_data['cus_country'] = "Bangladesh";
-        $post_data['cus_phone'] = $order->address ? $order->address->phone : '01877018305';
+        $post_data['cus_phone'] = $order->customer ? $order->customer->phone : '01700000000';
         $post_data['cus_fax'] = "null";//optional
 
         # SHIPMENT INFORMATION
@@ -142,7 +142,7 @@ class SslCommerzController extends Controller
             return redirect()->route('product.order.success',['order_id'=>$request->value_a]);
         }
         return redirect()->route('home');
-        
+
 
 
     }
@@ -168,13 +168,13 @@ class SslCommerzController extends Controller
         } else {
             flash()->addError('Transaction is Invalid');
         }
-        
+
         if($request->value_a){
             return redirect()->route('product.order.failed',['order_id'=>$request->value_a]);
         }
             return redirect()->route('home');
 
-        
+
 
     }
 
