@@ -94,17 +94,17 @@
                                                                                 <div class="col my-auto"> <small>{{__('Pack :')}} {{$item->unit->name ?? 'Piece'}}</small></div>
                                                                                 <div class="col my-auto">
                                                                                     <h6 class="mb-0 text-end">
-                                                                                        @if ($item->product->discountPrice() != $item->product->price)
+                                                                                        @if (cartItemRegPrice($item) != cartItemPrice($item))
                                                                                         <span class="text-danger">
                                                                                             <del>
-                                                                                                {!! get_taka_icon() !!} {{number_format((($item->product->price*($item->unit->quantity ?? 1)) * $item->quantity), 2)}}
+                                                                                                {!! get_taka_icon() !!} {{cartItemRegPrice($item)}}
                                                                                             </del>
                                                                                         </span> 
                                                                                         @endif
                                                                                     </h6>
                                                                                     <h6 class="mb-0 text-end">
                                                                                         <span>
-                                                                                            {!! get_taka_icon() !!} {{number_format((($item->product->discountPrice()*$item->unit->quantity) * $item->quantity), 2)}}
+                                                                                            {!! get_taka_icon() !!} {{cartItemPrice($item)}}
                                                                                         </span> 
                                                                                     </h6>
                                                                                     

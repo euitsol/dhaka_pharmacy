@@ -27,11 +27,9 @@ trait TransformOrderItemTrait{
     }
     private function transformOrderItemPrice($cart_item)
     {
-        $product = $cart_item->product;
-        $unitQuantity = $cart_item->unit->quantity ?? 1;
-        $cart_item->price = ($product->price * $unitQuantity) * $cart_item->quantity;
-        $cart_item->discount_price = ($product->discountPrice() * $unitQuantity) * $cart_item->quantity;
-        $cart_item->discount = calculateProductDiscount($product, false) * $unitQuantity * $cart_item->quantity;
+        $cart_item->price = cartItemRegPrice($cart_item);
+        $cart_item->discount_price = cartItemPrice($cart_item);
+        $cart_item->discount = ($cart_item->price - $cart_item->discount_price);
         return $cart_item;
     }
     private function calculateOrderTotalRegularPrice($order, $order_items = false){

@@ -244,18 +244,18 @@
                                                                 <div class="col my-auto"> <small>{{__("Qty :")}} {{$dop->cart->quantity}}</small></div>
                                                                 <div class="col my-auto"> <small>{{__("Pack :")}} {{$dop->cart->unit->name ?? 'Piece'}}</small></div>
                                                                 <div class="col my-auto">
-                                                                    @if ($dop->cart->product->discountPrice() != $dop->cart->product->price)
+                                                                    @if (cartItemRegPrice($dop->cart) != cartItemPrice($dop->cart))
                                                                         <h6 class="mb-0 text-end">
                                                                             <span class="text-danger">
                                                                                 <del>
-                                                                                    {!! get_taka_icon() !!} {{number_format((($dop->cart->product->price*($dop->cart->unit->quantity ?? 1)) * $dop->cart->quantity), 2)}}
+                                                                                    {!! get_taka_icon() !!} {{cartItemRegPrice($dop->cart)}}
                                                                                 </del>
                                                                             </span> 
                                                                         </h6>
                                                                     @endif
                                                                     <h6 class="mb-0 text-end">
                                                                         <span>
-                                                                            {!! get_taka_icon() !!} {{number_format((($dop->cart->product->discountPrice()*$dop->cart->unit->quantity) * $dop->cart->quantity), 2)}}
+                                                                            {!! get_taka_icon() !!} {{cartItemPrice($dop->cart)}}
                                                                         </span> 
                                                                     </h6>
                                                                 </div>

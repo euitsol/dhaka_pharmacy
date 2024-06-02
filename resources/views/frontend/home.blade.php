@@ -135,7 +135,7 @@ btn-arrow">
 
                                                 <h4> <span> {!! get_taka_icon() !!}
                                                         {{ number_format($product->discountPrice(), 2) }}</span>
-                                                        @if ($product->discountPrice() != $product->price)
+                                                    @if ($product->discountPrice() != $product->price)
                                                         <span class="regular_price"> <del>{!! get_taka_icon() !!}
                                                                 {{ number_format($product->price, 2) }}</del></span>
                                                     @endif

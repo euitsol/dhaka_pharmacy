@@ -234,6 +234,17 @@ function calculateProductDiscount($product, $isPercent = false) {
     
 }
 
+function cartItemRegPrice($cart)
+{
+    // return number_format((($cart->product->price*($cart->unit->quantity ?? 1)) * $cart->quantity), 2);
+    return  $cart->unit ? number_format((($cart->product->price*($cart->unit->quantity)) * $cart->quantity), 2) : number_format(($cart->product->price*$cart->quantity), 2);
+}
+function cartItemPrice($cart)
+{
+    return $cart->unit ? number_format((($cart->product->discountPrice()*$cart->unit->quantity) * $cart->quantity), 2) : number_format(($cart->product->discountPrice()* $cart->quantity), 2);
+   
+}
+
 
 
 

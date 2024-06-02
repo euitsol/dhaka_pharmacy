@@ -60,10 +60,9 @@ class AddToCartController extends Controller
         if ($activatedProduct) {
             $activatedProduct = $this->transformProduct($activatedProduct, 45);
             
-            $activatedProduct->data_item_price = (!empty($data['atc']->unit_id)) ? ($data['atc']->product->price*$data['atc']->unit->quantity) : $data['atc']->product->price;
-            $activatedProduct->data_item_discount_price = ((!empty($data['atc']->unit_id)) ? ($data['atc']->product->discountPrice()*$data['atc']->unit->quantity) : $data['atc']->product->discountPrice());
-            $activatedProduct->discount = $activatedProduct->discountPrice() != $activatedProduct->price ? true : false;
-
+            $activatedProduct->data_item_price = cartItemRegPrice($data['atc']);
+            $activatedProduct->data_item_discount_price = cartItemPrice($data['atc']);
+            $activatedProduct->discount = ($activatedProduct->data_item_price != $activatedProduct->data_item_discount_price) ? true : false;
             $activatedProduct->units = $this->getSortedUnits($activatedProduct->unit);
         }
         return response()->json($data);
