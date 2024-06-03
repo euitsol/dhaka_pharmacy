@@ -23,39 +23,45 @@ class UserOrderController extends Controller
     use TransformProductTrait;
 
 
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('auth');
     }
 
-    public function order_list()
+    public function order_list(Request $request)
     {
-        $filter_val = request('filter');
-        $query = Order::with('od')->where('status','!=',0)->where('customer_id',user()->id)->where('customer_type',get_class(user()))->latest();
-
-        if($filter_val && $filter_val !='all'){
-            if($filter_val == 5){
-                $query->take($filter_val);
-            }else{
+        $query = Order::with(['od', 'address', 'customer', 'payments', 'ref_user'])
+            ->where('status', '!=', 0)
+            ->where('customer_id', user()->id)
+            ->where('customer_type', get_class(user()))
+            ->latest();
+        $data['pageNumber'] = $request->query('page', 1);
+        if ($data['pageNumber'] == 1) {
+            $filter_val = request('filter');
+            if ($filter_val && $filter_val != 'all') {
                 $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
             }
         }
-        $data['orders'] = $query->get()->map(function($order){
-            $order->place_date = date('d M Y h:m:s',strtotime($order->created_at));
+        $orders =  $query->paginate(5);
+        $orders->getCollection()->each(function ($order) {
+            $order->place_date = date('d M Y h:m:s', strtotime($order->created_at));
             $order->order_items = $this->getOrderItems($order);
             $order->totalPrice = $this->calculateOrderTotalPrice($order, $order->order_items);
             $order->totalRegularPrice = $this->calculateOrderTotalRegularPrice($order, $order->order_items);
             $order->totalDiscount = $this->calculateOrderTotalDiscount($order, $order->order_items);
-            $order->order_items->transform(function($item) {
+            $order->order_items->each(function ($item) {
                 $item->product = $this->transformProduct($item->product, 30);
                 return $item;
             });
             return $order;
         });
 
+        $data['orders'] = $orders;
+        $data['pagination'] = $orders->links('vendor.pagination.bootstrap-5')->render();
         if (request()->ajax()) {
             return response()->json($data);
-        }else{
-            return view('user.order.order_list',$data);
+        } else {
+            return view('user.order.order_list', $data);
         }
     }
 }
