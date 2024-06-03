@@ -22,7 +22,7 @@ class UserOrderController extends Controller
     use TransformOrderItemTrait;
     use TransformProductTrait;
 
-    
+
     public function __construct() {
         return $this->middleware('auth');
     }
@@ -31,7 +31,7 @@ class UserOrderController extends Controller
     {
         $filter_val = request('filter');
         $query = Order::with('od')->where('status','!=',0)->where('customer_id',user()->id)->where('customer_type',get_class(user()))->latest();
-        
+
         if($filter_val && $filter_val !='all'){
             if($filter_val == 5){
                 $query->take($filter_val);
@@ -56,6 +56,6 @@ class UserOrderController extends Controller
             return response()->json($data);
         }else{
             return view('user.order.order_list',$data);
-        } 
+        }
     }
 }

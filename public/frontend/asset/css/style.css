@@ -126,33 +126,7 @@ h2.title {
   right: -25%;
   top: 0;
 }
-/* .discount_tag {
-  position: absolute;
-  right: -4px;
-  top: -5px;
-  height: 110px;
-  width: 85px;
-  display: flex;
-  align-items: center;
-  color: var(--text-color-white);
-  padding: 5px;
-  font-size: 12px;
-  justify-content: center;
-}
-.discount_tag img{
-  width: 100%;
-  height: 100%;
-}
-.discount_tag .discount_price {
-  position: absolute;
-  top: 44px;
-  left: 31px;
-  rotate: -57deg;
-  font-weight: 700;
-  font-size: 12px;
-} */
-
- .single-pdct .pdct-img > img{
+.single-pdct .pdct-img > img{
   object-fit: cover;
   height: 150px;
   border-radius: 15px 15px 0 0 ;
@@ -168,7 +142,7 @@ h2.title {
 
 .single-pdct .add_to_card{
     position: absolute;
-    bottom: 11%;
+    bottom: 14%;
     right: -23%;
     background: unset;
     padding: unset;
@@ -218,14 +192,15 @@ h2.title {
 .single-pdct .pdct-info .product_title {
   display: flex;
   align-items: center;
-  /* height: 2.5rem; */
 }
 
 .single-pdct .pdct-info h3 {
-    font-family: "Rubik", sans-serif;
-    font-size: 14px;
-    color: var(--text-color-black);
-    transition: .4s;
+  font-family: "Rubik", sans-serif;
+  font-size: 14px;
+  color: var(--text-color-black);
+  transition: .4s;
+  margin-top: .3rem;
+  line-height: 20px;
 }
 .single-pdct .pdct-info h3:hover {
     color: var(--asent-color);
@@ -254,7 +229,7 @@ h2.title {
     font-family: "Rubik", sans-serif;
     font-size: 12px;
     font-weight: 500;
-    line-height: 18px;
+    line-height: 14px;
     color: var(--text-color-gray);
     display: block;
     padding: 0px;
@@ -284,6 +259,7 @@ h2.title {
 
 .single-item .pdct-title{
   line-height: 0;
+  margin-bottom: .3rem;
 }
 
 
@@ -299,11 +275,11 @@ h2.title {
     font-family: "Rubik", sans-serif;
     font-size: 12px;
     font-weight: 500;
-    line-height: 18px;
+    line-height: 14px;
     color: var(--text-color-gray);
     display: block;
     padding: 0px;
-    margin: 0px;
+    margin: 0;
     transition: .4s;
 }
 
@@ -320,7 +296,7 @@ h2.title {
     color: var(--secundary-color);
     display: block;
     padding: 0px;
-    margin: .5rem 0rem;
+    margin: .3rem 0 0 0;
 }
 .single-item .pdct-price .regular_price{
   color: var(--text-color-red) !important;
