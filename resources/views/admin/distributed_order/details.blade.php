@@ -51,7 +51,7 @@
                                 <td>|</td>
                                 <th>{{__('Total Price')}}</th>
                                 <td>:</td>
-                                <th>{!! get_taka_icon(). number_format(ceil($totalPrice+$do->order->delivery_fee)) !!}</th>
+                                <th>{!! get_taka_icon(). $totalPrice !!}</th>
                             </tr>
                             <tr>
                                 <th>{{__('Payment Type')}}</th>
@@ -241,21 +241,25 @@
                                                                     <small>{{$dop->cart->product->pro_cat->name}} </small> 
                                                                 </div>
                                                                 <div class="col-auto my-auto"> </div>
-                                                                <div class="col my-auto"> <small>Qty : {{$dop->cart->quantity}}</small></div>
-                                                                <div class="col my-auto"> <small>Pack : {{$dop->cart->unit->name ?? 'Piece'}}</small></div>
+                                                                <div class="col my-auto"> <small>{{__("Qty :")}} {{$dop->cart->quantity}}</small></div>
+                                                                <div class="col my-auto"> <small>{{__("Pack :")}} {{$dop->cart->unit->name ?? 'Piece'}}</small></div>
                                                                 <div class="col my-auto">
-                                                                    <h6 class="mb-0 text-end">
-                                                                        @if (productDiscountPercentage($dop->cart->product->id))
-                                                                        <span class="text-danger">
-                                                                            <del>
-                                                                                {!! get_taka_icon() !!} {{number_format((($dop->cart->product->price*($dop->cart->unit->quantity ?? 1)) * $dop->cart->quantity), 2)}}
-                                                                            </del>
-                                                                        </span> 
-                                                                        @endif
-                                                                    </h6>
+                                                                    @php
+                                                                        $cartItemRegPrice = number_format(cartItemRegPrice($dop->cart),2);
+                                                                        $cartItemPrice = number_format(cartItemPrice($dop->cart),2);
+                                                                    @endphp
+                                                                    @if ($cartItemRegPrice != $cartItemPrice)
+                                                                        <h6 class="mb-0 text-end">
+                                                                            <span class="text-danger">
+                                                                                <del>
+                                                                                    {!! get_taka_icon() !!} {{$cartItemRegPrice}}
+                                                                                </del>
+                                                                            </span> 
+                                                                        </h6>
+                                                                    @endif
                                                                     <h6 class="mb-0 text-end">
                                                                         <span>
-                                                                            {!! get_taka_icon() !!} {{number_format((($dop->cart->product->discountPrice()*$dop->cart->unit->quantity) * $dop->cart->quantity), 2)}}
+                                                                            {!! get_taka_icon() !!} {{$cartItemPrice}}
                                                                         </span> 
                                                                     </h6>
                                                                 </div>

@@ -25,7 +25,9 @@
                                 <th>{{ __('Total Preparing') }}</th>
                                 <th>{{ __('Total Dispute') }}</th>
                                 @endif
+                                @if($pp_count || $status == 'waiting-for-rider')
                                 <th>{{ __('Total Accepted') }}</th>
+                                @endif
                                 <th>{{ __('Total Price') }}</th>
                                 <th>{{ __('Payment Type') }}</th>
                                 <th>{{ __('Distribution Type') }}</th>
@@ -44,8 +46,10 @@
                                         <td><span class="{{($do->odps->where('status',1)->count())>0 ? 'badge badge-warning' : ''}}">{{ $do->odps->where('status',1)->count() }}</span></td>
                                         <td><span class="{{($do->odps->where('status',3)->count())>0 ? 'badge badge-danger' : ''}}">{{ $do->odps->where('status',3)->count() }}</span> </td>
                                         @endif
+                                        @if($pp_count || $status == 'waiting-for-rider')
                                         <td><span class="{{($do->odps->where('status',2)->count())>0 ? 'badge badge-success' : ''}}">{{ $do->odps->where('status',2)->count() }}</span></td>
-                                        <td>{!! get_taka_icon() .number_format(ceil($do->order->totalPrice+$do->order->delivery_fee)) !!}</td>
+                                        @endif
+                                        <td>{!! get_taka_icon() !!}{{$do->order->totalPrice}}</td>
                                         <td>{{$do->paymentType()}}</td>
                                         <td>{{$do->distributionType()}}</td>
                                         <td>{{ readablePrepTime($do->created_at,$do->prep_time) }}</td>
@@ -72,4 +76,4 @@
     </div>
 
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]])

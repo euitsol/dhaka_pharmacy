@@ -54,17 +54,12 @@
                                                         </span>{{ number_format(ceil($order->delivery_fee)) }}</th>
                                                     <th>{{ __('Payable Amount') }}</th>
                                                     <td>:</td>
-                                                    <th><span>{!! get_taka_icon() !!}
-                                                        </span>{{ number_format(ceil($totalPrice + $order->delivery_fee)) }}
-                                                    </th>
+                                                    <th><span>{!! get_taka_icon() !!} </span>{{ $totalPrice }}</th>
                                                 </tr>
                                                 <tr>
                                                     <th>{{ __('Delivery Address') }}</th>
                                                     <td>:</td>
-                                                    <td colspan="4">{!! optional($order->address)->address !!}
-                                                        <span class="user-location"
-                                                            data-location="[{{ optional($order->address)->longitude }}, {{ optional($order->address)->latitude }}]"></span>
-                                                    </td>
+                                                    <td colspan="4">{!! optional($order->address)->address !!}</td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -123,20 +118,30 @@
                                                                                         {{ $item->unit->name ?? 'Piece' }}</small>
                                                                                 </div>
                                                                                 <div class="col my-auto">
-                                                                                    <h6 class="mb-0 text-end">
-                                                                                        @if (productDiscountPercentage($item->product->id))
+                                                                                    @php
+                                                                                        $cartItemRegPrice = number_format(
+                                                                                            cartItemRegPrice($item),
+                                                                                            2,
+                                                                                        );
+                                                                                        $cartItemPrice = number_format(
+                                                                                            cartItemPrice($item),
+                                                                                            2,
+                                                                                        );
+                                                                                    @endphp
+                                                                                    @if ($cartItemRegPrice != $cartItemPrice)
+                                                                                        <h6 class="mb-0 text-end">
                                                                                             <span class="text-danger">
                                                                                                 <del>
                                                                                                     {!! get_taka_icon() !!}
-                                                                                                    {{ number_format($item->product->price * ($item->unit->quantity ?? 1) * $item->quantity, 2) }}
+                                                                                                    {{ $cartItemRegPrice }}
                                                                                                 </del>
                                                                                             </span>
-                                                                                        @endif
-                                                                                    </h6>
+                                                                                        </h6>
+                                                                                    @endif
                                                                                     <h6 class="mb-0 text-end">
                                                                                         <span>
                                                                                             {!! get_taka_icon() !!}
-                                                                                            {{ number_format($item->product->discountPrice() * $item->unit->quantity * $item->quantity, 2) }}
+                                                                                            {{ $cartItemPrice }}
                                                                                         </span>
                                                                                     </h6>
 

@@ -10,9 +10,7 @@ use App\Models\OrderDistributionPharmacy;
 use App\Models\OrderDistributionRider;
 use App\Models\Pharmacy;
 use App\Models\PharmacyDiscount;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
@@ -29,6 +27,7 @@ class OrderManagementController extends Controller
         $data['status'] = $status;
         $data['prep_time'] = false;
         $data['rider'] = false;
+        $pharmacy_discount = PharmacyDiscount::activated()->where('pharmacy_id',pharmacy()->id)->first();
         if($this->getStatus($status) == 0 || $this->getStatus($status) == 1){
             $data['prep_time'] = true;
         }else{
@@ -39,25 +38,43 @@ class OrderManagementController extends Controller
         if($this->getStatus($status) == 3){
             $query->orWhere('status',-1);
         }
-        $data['dops'] = $query->latest()->get()->groupBy('order_distribution_id')
-        ->map(function($dop,$key) use($status){
-            $dop->od = OrderDistribution::findOrFail($key);
-            $dop->odr = OrderDistributionRider::with('rider')->where('order_distribution_id',$key)->whereNotIn('status', [0, -1])->first();
+        $dops = $query->latest()->get()->groupBy('order_distribution_id');
+
+        $od_ids = $dops->keys()->all();
+
+        $orderDistributions = OrderDistribution::whereIn('id', $od_ids)->get()->keyBy('id');
+        $orderDistributionRiders = OrderDistributionRider::with('rider')
+            ->whereIn('order_distribution_id', $od_ids)
+            ->whereNotIn('status', [0, -1])
+            ->get()
+            ->groupBy('order_distribution_id');
+
+        $data['dops'] = $dops->each(function ($dop, $key) use ($orderDistributions, $orderDistributionRiders, $status, $pharmacy_discount) {
+            $dop->od = $orderDistributions->get($key);
+            $dop->odr = $orderDistributionRiders->get($key)?->first();
             $dop->statusTitle = $this->statusTitle($this->getStatus($status));
             $dop->statusBg = $this->statusBg($this->getStatus($status));
+            $dop->each(function($dp) use($dop, $pharmacy_discount){
+                $dp->price = cartItemPrice($dp->cart);
+                if ($dop->od->payment_type == 0 && $pharmacy_discount){
+                    $dp->price -= (($dp->price/100)*$pharmacy_discount->discount_percent);
+                }
+                return $dp;
+            });
             return $dop;
         });
         return view('pharmacy.orders.index',$data);
     }
     
-    public function details($do_id,$status){
+    public function details($do_id,$status):View
+    {
         
         $data['prep_time'] = false;
         if($this->getStatus($status) == 0 || $this->getStatus($status) == 1){
             $data['prep_time'] = true;
         }
         $data['pharmacy_discount'] = PharmacyDiscount::activated()->where('pharmacy_id',pharmacy()->id)->first();
-        $data['do'] = OrderDistribution::with(['order','odps' => function ($query) use($status) {
+        $data['do'] = OrderDistribution::with(['order','odr','odps' => function ($query) use($status) {
             $query->where('status',$this->getStatus($status));
             if($this->getStatus($status) == 3){
                 $query->orWhere('status',-1);
@@ -76,7 +93,7 @@ class OrderManagementController extends Controller
         $data['do']->pharmacy = Pharmacy::findOrFail(pharmacy()->id);
         $data['do']['dops'] = $data['do']->odps
                             ->where('pharmacy_id',pharmacy()->id)->map(function($dop) use($data){
-                                $dop->totalPrice = ($dop->cart->product->price * ($dop->cart->unit->quantity ?? 1) * $dop->cart->quantity);
+                                $dop->totalPrice = cartItemPrice($dop->cart);
                                 if ($data['do']->payment_type == 0 && $data['pharmacy_discount']){
                                     $dop->totalPrice -= (($dop->totalPrice/100)*$data['pharmacy_discount']->discount_percent);
                                     $dop->discount = $data['pharmacy_discount']->discount_percent;
@@ -87,13 +104,14 @@ class OrderManagementController extends Controller
         $data['status'] = $this->getStatus($status);
         $data['statusTitle'] = $this->statusTitle($this->getStatus($status));
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
-        $data['odr'] = OrderDistributionRider::with('rider')->whereNotIn('status', [0, -1])->where('order_distribution_id',decrypt($do_id))->first();
+        $data['odr'] = $data['do']->odr->first();
 
         $data['otp'] = DistributionOtp::where('order_distribution_id',$data['do']->id)->where('otp_author_id', pharmacy()->id)->where('otp_author_type', get_class(pharmacy()))->first();
         return view('pharmacy.orders.details',$data);
     }
 
-    public function update(PharmacyOrderRequest $req, $do_id){
+    public function update(PharmacyOrderRequest $req, $do_id):RedirectResponse
+    {
         foreach($req->data as $data){
             $dop = OrderDistributionPharmacy::findOrFail($data['dop_id']);
             $dop->open_amount = $data['dop_id'];

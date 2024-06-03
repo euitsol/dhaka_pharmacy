@@ -71,18 +71,19 @@ use App\Http\Controllers\Pharmacy\OperationalAreaController as PharmacyOperation
 use App\Http\Controllers\Pharmacy\OrderManagementController as PharmacyOrderManagementController;
 
 use App\Http\Controllers\User\UserProfileController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\Auth\LoginController as UserLoginController;
 use App\Http\Controllers\Auth\RegisterController as UserRegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController as UserForgotPasswordController;
 
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
-use App\Http\Controllers\Frontend\PaymentGateway\SslCommerzController;
-use App\Http\Controllers\Frontend\BaseController as FrontendBaseController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
-use App\Http\Controllers\Frontend\ProductOrder\CheckoutController;
+use App\Http\Controllers\Frontend\ProductSearchController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
+use App\Http\Controllers\User\AddToCartController;
 use App\Http\Controllers\User\UserOrderController;
 
 /*
@@ -103,31 +104,46 @@ use App\Http\Controllers\User\UserOrderController;
 
 Auth::routes();
 // Admin Login Routes
-Route::get('/admin/login', [AdminLoginController::class, 'adminLogin'])->name('admin.login');
-Route::post('/admin/login', [AdminLoginController::class, 'adminLoginCheck'])->name('admin.login');
-Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+Route::controller(AdminLoginController::class)->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', 'adminLogin')->name('login');
+    Route::post('/login', 'adminLoginCheck')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+});
+
 
 // Pharmacy Login Routes
-Route::get('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLogin'])->name('pharmacy.login');
-Route::post('/pharmacy/login', [PharmacyLoginController::class, 'pharmacyLoginCheck'])->name('pharmacy.login');
-Route::post('/pharmacy/logout', [PharmacyLoginController::class, 'logout'])->name('pharmacy.logout');
+Route::controller(PharmacyLoginController::class)->prefix('pharmacy')->name('pharmacy.')->group(function () {
+    Route::get('/login', 'pharmacyLogin')->name('login');
+    Route::post('/login', 'pharmacyLoginCheck')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+});
+
 
 
 // DM Login Routes
-Route::get('/district-manager/login', [DmLoginController::class, 'dmLogin'])->name('district_manager.login');
-Route::post('/district-manager/login', [DmLoginController::class, 'dmLoginCheck'])->name('district_manager.login');
-Route::post('/district-manager/logout', [DmLoginController::class, 'logout'])->name('district_manager.logout');
+Route::controller(DmLoginController::class)->prefix('district-manager')->name('district_manager.')->group(function () {
+    Route::get('/login', 'dmLogin')->name('login');
+    Route::post('/login', 'dmLoginCheck')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+});
+
 // LAM Login Routes
-Route::get('/local-area-manager/login', [LamLoginController::class, 'lamLogin'])->name('local_area_manager.login');
-Route::post('/local-area-manager/login', [LamLoginController::class, 'lamLoginCheck'])->name('local_area_manager.login');
-Route::post('/local-area-manager/logout', [LamLoginController::class, 'logout'])->name('local_area_manager.logout');
-Route::post('local-area-manager/register', [LamLoginController::class, 'lamRegister'])->name('local_area_manager.register');
-Route::get('local-area-manager/reference/{id}', [LamLoginController::class, 'reference'])->name('local_area_manager.reference');
+Route::controller(LamLoginController::class)->prefix('local-area-manager')->name('local_area_manager.')->group(function () {
+    Route::get('/login', 'lamLogin')->name('login');
+    Route::post('/login', 'lamLoginCheck')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+    Route::post('/register', 'lamRegister')->name('register');
+    Route::get('/reference/{id}', 'reference')->name('reference');
+});
+
 
 // Rider Login Routes
-Route::get('/rider/login', [RiderLoginController::class, 'riderLogin'])->name('rider.login');
-Route::post('/rider/login', [RiderLoginController::class, 'riderLoginCheck'])->name('rider.login');
-Route::post('/rider/logout', [RiderLoginController::class, 'logout'])->name('rider.logout');
+Route::controller(RiderLoginController::class)->prefix('rider')->name('rider.')->group(function () {
+    Route::get('/login', 'riderLogin')->name('login');
+    Route::post('/login', 'riderLoginCheck')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+});
+
 
 
 // Google Login
@@ -143,52 +159,28 @@ Route::get('/facebook-redirect', [UserLoginController::class, 'facebookRedirect'
 Route::get('/auth/facebook/callback', [UserLoginController::class, 'facebookCallback']);
 
 // Overwrite Default Authentication Routes
-Route::prefix('user')->group(function () {
-    Route::get('/login', [UserLoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [UserLoginController::class, 'login']);
-
-    Route::post('/otp-varify', [UserLoginController::class, 'send_otp'])->name('use.send_otp');
-    Route::get('/otp-varify', [UserLoginController::class, 'verify'])->name('use.send_otp');
-    Route::get('/send-otp/again', [UserLoginController::class, 'send_otp_again'])->name('use.send_otp.again');
-    Route::post('/otp/verify', [UserLoginController::class, 'otp_verify'])->name('use.otp.verify');
-
-
-    Route::get('/registration', [UserRegisterController::class, 'register'])->name('use.register');
-    Route::post('/registration', [UserRegisterController::class, 'rStore'])->name('use.register');
-    Route::get('/register/phone/validation/{phone}', [UserRegisterController::class, 'phoneValidation'])->name('use.register.phone.validation');
-
-    Route::get('/password/forgot', [UserForgotPasswordController::class, 'forgotPassword'])->name('user.forgot.password');
-    Route::post('/password/forgot', [UserForgotPasswordController::class, 'forgotPasswordOtp'])->name('user.forgot.password');
-    Route::get('/reset/password', [UserForgotPasswordController::class, 'resetPassword'])->name('user.reset.password');
-    Route::post('/reset/password', [UserForgotPasswordController::class, 'resetPasswordStore'])->name('user.reset.password');
+Route::controller(UserLoginController::class)->prefix('user')->group(function () {
+    Route::get('/login', 'showLoginForm')->name('login');
+    Route::post('/login', 'login');
+    Route::post('/otp-varify', 'send_otp')->name('use.send_otp');
+    Route::get('/otp-varify', 'verify')->name('use.send_otp');
+    Route::get('/send-otp/again', 'send_otp_again')->name('use.send_otp.again');
+    Route::post('/otp/verify', 'otp_verify')->name('use.otp.verify');
 });
 
+Route::controller(UserRegisterController::class)->prefix('user')->group(function () {
 
-
-
-//SSL Commerz Routes
-
-Route::controller(SslCommerzController::class)->prefix('payment')->name('payment.')->group(function () {
-    // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
-    // Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
-    Route::get('/ssl/{order_id}', 'index')->name('index');
-    // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
-    Route::post('/success', 'success')->name('success');
-    Route::post('/fail', 'fail')->name('fail');
-    Route::post('/cancel', 'cancel')->name('cancel');
-    Route::post('/ipn', 'ipn')->name('ipn');
+    Route::get('/registration', 'register')->name('use.register');
+    Route::post('/registration', 'rStore')->name('use.register');
+    Route::get('/register/phone/validation/{phone}', 'phoneValidation')->name('use.register.phone.validation');
 });
 
-
-
-
-
-
-
-
-
-
-
+Route::controller(UserForgotPasswordController::class)->prefix('user')->group(function () {
+    Route::get('/password/forgot', 'forgotPassword')->name('user.forgot.password');
+    Route::post('/password/forgot', 'forgotPasswordOtp')->name('user.forgot.password');
+    Route::get('/reset/password', 'resetPassword')->name('user.reset.password');
+    Route::post('/reset/password', 'resetPasswordStore')->name('user.reset.password');
+});
 
 Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
@@ -259,8 +251,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
                 Route::get('delete/{id}', 'delete')->name('user_kyc_delete');
             });
 
-            Route::get('/settings', [UserKycSettingsController::class, 'kycSettings'])->name('user_kyc_settings');
-            Route::post('/settings', [UserKycSettingsController::class, 'kycSettingsUpdate'])->name('user_kyc_settings');
+            Route::controller(UserKycSettingsController::class)->prefix('settings')->group(function () {
+                Route::get('/', 'kycSettings')->name('user_kyc_settings');
+                Route::post('/', 'kycSettingsUpdate')->name('user_kyc_settings');
+            }); 
         });
     });
 
@@ -293,9 +287,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
                 Route::put('declained/{id}', 'declained')->name('declined.pharmacy_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('pharmacy_kyc_delete');
             });
-
-            Route::get('/settings', [PharmacyKycSettingsController::class, 'kycSettings'])->name('pharmacy_kyc_settings');
-            Route::post('/settings', [PharmacyKycSettingsController::class, 'kycSettingsUpdate'])->name('pharmacy_kyc_settings');
+            Route::controller(PharmacyKycSettingsController::class)->prefix('settings')->group(function () {
+                Route::get('/', 'kycSettings')->name('pharmacy_kyc_settings');
+                Route::post('/', 'kycSettingsUpdate')->name('pharmacy_kyc_settings');
+            }); 
         });
     });
     //Admin District Manager Management Routes
@@ -353,9 +348,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
                 Route::put('declained/{id}', 'declained')->name('declined.district_manager_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('district_manager_kyc_delete');
             });
-
-            Route::get('/settings', [DmKycSettingsController::class, 'kycSettings'])->name('district_manager_kyc_settings');
-            Route::post('/settings', [DmKycSettingsController::class, 'kycSettingsUpdate'])->name('district_manager_kyc_settings');
+            Route::controller(DmKycSettingsController::class)->prefix('settings')->group(function () {
+                Route::get('/', 'kycSettings')->name('district_manager_kyc_settings');
+                Route::post('/', 'kycSettingsUpdate')->name('district_manager_kyc_settings');
+            }); 
         });
     });
 
@@ -387,9 +383,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
                 Route::get('delete/{id}', 'delete')->name('local_area_manager_kyc_delete');
 
             });
-
-            Route::get('/settings', [LamKycSettingsController::class, 'kycSettings'])->name('local_area_manager_kyc_settings');
-            Route::post('/settings', [LamKycSettingsController::class, 'kycSettingsUpdate'])->name('local_area_manager_kyc_settings');
+            Route::controller(LamKycSettingsController::class)->prefix('settings')->group(function () {
+                Route::get('/', 'kycSettings')->name('local_area_manager_kyc_settings');
+                Route::post('/', 'kycSettingsUpdate')->name('local_area_manager_kyc_settings');
+            }); 
         });
     });
 
@@ -420,8 +417,10 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
                 Route::get('delete/{id}', 'delete')->name('rider_kyc_delete');
             });
 
-            Route::get('/settings', [RiderKycSettingsController::class, 'kycSettings'])->name('rider_kyc_settings');
-            Route::post('/settings', [RiderKycSettingsController::class, 'kycSettingsUpdate'])->name('rider_kyc_settings');
+            Route::controller(RiderKycSettingsController::class)->prefix('settings')->group(function () {
+                Route::get('/', 'kycSettings')->name('rider_kyc_settings');
+                Route::post('/', 'kycSettingsUpdate')->name('rider_kyc_settings');
+            }); 
         });
     });
 
@@ -750,26 +749,44 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
 
     // Add To Cart Routes
-    Route::get('/add-to-cart', [FrontendBaseController::class, 'add_to_cart'])->name('product.add_to_cart');
-    Route::get('/remove-to-cart', [FrontendBaseController::class, 'remove_to_cart'])->name('product.remove_to_cart');
-    Route::get('/clear-cart/{uid}', [FrontendBaseController::class, 'clearCart'])->name('product.clear_cart');
-
-    Route::get('/item/check/{id}', [FrontendBaseController::class, 'itemCheck'])->name('cart.item.check');
-    Route::get('/item/quantity/{id}/{type}', [FrontendBaseController::class, 'itemQuantity'])->name('cart.item.quantity');
-    Route::get('/item/unit/{unit_id}/{cart_id}', [FrontendBaseController::class, 'itemUnit'])->name('cart.item.unit');
+    Route::controller(AddToCartController::class)->prefix('cart')->group(function () {
+        Route::get('/add', 'add_to_cart')->name('product.add_to_cart');
+        Route::get('/remove', 'remove_to_cart')->name('product.remove_to_cart');
+        Route::get('/clear/{uid}', 'clearCart')->name('product.clear_cart');
+    
+        Route::get('/item/check/{id}', 'itemCheck')->name('cart.item.check');
+        Route::get('/item/quantity/{id}/{type}', 'itemQuantity')->name('cart.item.quantity');
+        Route::get('/item/unit/{unit_id}/{cart_id}', 'itemUnit')->name('cart.item.unit');
+    });
+    
 
     // Checkout Routes
-    Route::post('/product/single-order', [CheckoutController::class, 'single_order'])->name('product.single_order');
-    Route::get('/order/intermediate/{multiple?}', [CheckoutController::class, 'int_order'])->name('product.int');
-    Route::get('/product/checkout/{order_id}', [CheckoutController::class, 'checkout'])->name('product.checkout');
-    Route::post('/product/order/confirm/{order_id}', [CheckoutController::class, 'order_confirm'])->name('product.order.confirm');
-    Route::get('/product/order/success/{order_id}', [CheckoutController::class, 'order_success'])->name('product.order.success');
-    Route::get('/product/order/failed/{order_id}', [CheckoutController::class, 'order_failed'])->name('product.order.failed');
-    Route::get('/product/order/cancel/{order_id}', [CheckoutController::class, 'order_cancel'])->name('product.order.cancel');
-
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
         Route::get('/address/{id}', 'address')->name('address');
+        Route::post('/single-order', 'single_order')->name('product.single_order');
+        Route::get('/order/intermediate/{multiple?}', 'int_order')->name('product.int');
+        Route::get('/{order_id}', 'checkout')->name('product.checkout');
+        Route::post('/order/confirm/{order_id}', 'order_confirm')->name('product.order.confirm');
+        Route::get('/order/success/{order_id}', 'order_success')->name('product.order.success');
+        Route::get('/order/failed/{order_id}', 'order_failed')->name('product.order.failed');
+        Route::get('/order/cancel/{order_id}', 'order_cancel')->name('product.order.cancel');
     });
+
+
+    //SSL Commerz Routes
+
+    Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {
+        // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
+        // Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
+        Route::get('/ssl/{order_id}', 'index')->name('index');
+        // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
+        Route::post('/success', 'success')->name('success');
+        Route::post('/fail', 'fail')->name('failed');
+        Route::post('/cancel', 'cancel')->name('cancel');
+        Route::post('/ipn', 'ipn')->name('ipn');
+    });
+    
+
 
     //Address
     Route::controller(UserAddressController::class)->prefix('address')->name('u.as.')->group(function () {
@@ -784,12 +801,25 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
         Route::get('list', 'order_list')->name('list');
     });
 });
+Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {
+    // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
+    // Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
+    Route::get('/ssl/{order_id}', 'index')->name('index');
+    // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
+    Route::post('/success', 'success')->name('success');
+    Route::post('/fail', 'fail')->name('failed');
+    Route::post('/cancel', 'cancel')->name('cancel');
+    Route::post('/ipn', 'ipn')->name('ipn');
+});
 
 // Frontend Routes
-Route::get('/', [HomePageController::class, 'home'])->name('home');
-Route::get('/product-search/{search_value}/{category}', [HomePageController::class, 'productSearch'])->name('home.product.search');
-Route::get('/featured-products/{id?}', [HomePageController::class, 'updateFeaturedProducts'])->name('home.featured_products');
 
+Route::controller(HomePageController::class)->group(function () {
+    Route::get('/', 'home')->name('home');
+    Route::get('/featured-products/{id?}', 'updateFeaturedProducts')->name('home.featured_products');
+});
+
+Route::get('/product-search/{search_value}/{category}', [ProductSearchController::class, 'productSearch'])->name('home.product.search');
 Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
 

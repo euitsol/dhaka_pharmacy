@@ -65,20 +65,23 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="product_image xzoom-container">
-                                                        @if (productDiscountPercentage($single_product->id))
+                                                        @php
+                                                            $singleProDisPrice = proDisPrice($single_product->price, $single_product->discounts);
+                                                        @endphp
+                                                        @if ($singleProDisPrice != $single_product->price)
                                                         <span class="discount_tag">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span>
                                                         @endif
                                                         <img class="xzoom" id="xzoom-default"
-                                                            src="{{  storage_url($single_product->image) }}"
-                                                            xoriginal="{{  storage_url($single_product->image) }}">
+                                                            src="{{  $single_product->image }}"
+                                                            xoriginal="{{  $single_product->image }}">
 
                                                         <!-- Thumbnails -->
                                                         <div class="xzoom-thumbs">
                                                             <a
-                                                                href="{{  storage_url($single_product->image) }}">
+                                                                href="{{  $single_product->image }}">
                                                                 <img class="xzoom-gallery xactive" width="80"
-                                                                    src="{{  storage_url($single_product->image) }}"
-                                                                    xpreview="{{  storage_url($single_product->image) }}">
+                                                                    src="{{  $single_product->image }}"
+                                                                    xpreview="{{  $single_product->image }}">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -86,7 +89,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <form action="{{route('product.single_order')}}" method="POST">
+                                            <form action="{{route('u.ck.product.single_order')}}" method="POST">
                                                 @csrf
                                             <div class="product_content">
                                                 <h1>{{ __($single_product->name) }} </h1>
@@ -97,11 +100,11 @@
                                             
                                                 
                                                     <div class="product_price mt-4">
-                                                        @if (productDiscountPercentage($single_product->id))
+                                                        @if ($singleProDisPrice != $single_product->price)
                                                             <p><del class="text-danger">{{ __('MRP Tk') }} <span class="total_regular_price">{{ __(number_format($single_product->price, 2)) }}</span></del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
                                                         @endif
                                                         <p><strong>{{ __('Price: Tk') }} <span
-                                                                    class="total_price">{{ __(number_format($single_product->discountPrice(), 2)) }}
+                                                                    class="total_price">{{ __(number_format($singleProDisPrice, 2)) }}
                                                                 </span></strong> /<span class="unit_name">{{ __('piece') }}</span> </p>
                                                         <div class="form-group my-4 boxed">
                                                             @foreach ($units as $key => $unit)
@@ -109,9 +112,9 @@
                                                                     @if ($key == 0) checked @endif
                                                                     class="item_quantity" id="android-{{ $key }}"
                                                                     name="data"
-                                                                    data-total_price="{{ $single_product->discountPrice() * $unit->quantity }}" data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
+                                                                    data-total_price="{{ $singleProDisPrice * $unit->quantity }}" data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
-                                                                    <img src="{{storage_url($unit->image)}}">
+                                                                    <img src="{{$unit->image}}">
                                                                 </label>
                                                             @endforeach
                                                         </div>
@@ -377,6 +380,9 @@
                                         <div class="products">
                                             <div class="row px-3">
                                                 @foreach ($similar_products as $product)
+                                                    @php
+                                                        $ProDisPrice = proDisPrice($product->price, $product->discounts);
+                                                    @endphp
                                                     <div class="col-12 single-item">
                                                         <div class="row align-items-center">
                                                             <div class="col-4 img">
@@ -384,7 +390,7 @@
                                                                     href="{{ route('product.single_product', $product->slug) }}">
                                                                     <img height=""
                                                                         class="w-100 border border-1 rounded-1"
-                                                                        src="{{ storage_url($product->image) }}"
+                                                                        src="{{ $product->image }}"
                                                                         alt="{{ __($product->name) }}">
                                                                 </a>
                                                             </div>
@@ -403,8 +409,8 @@
                                                                 <p><a
                                                                         href="">{{ $product->company->name }}</a>
                                                                 </p>
-                                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span>
-                                                                    @if (productDiscountPercentage($product->id))
+                                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!} {{ number_format($ProDisPrice,2) }}</span>
+                                                                    @if ($ProDisPrice != $product->price)
                                                                      <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                                     @endif
                                                                 </h4>
@@ -435,17 +441,18 @@
                                     <div class="col-md-12">
                                         <div id="related-product-slider" class="owl-carousel">
                                             @foreach ($similar_products as $product)
+                                                    @php
+                                                        $similarProDisPrice = proDisPrice($product->price, $product->discounts);
+                                                    @endphp
                                                     <div class="px-2 py-1">
-                                                        
-
                                                         <div class="single-pdct">
                                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                                 <div class="pdct-img">
-                                                                    @if (productDiscountPercentage($product->id))
+                                                                    @if ($similarProDisPrice != $product->price)
                                                                         <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% off"}}</span>
                                                                     @endif
                                                                     <img class="w-100"
-                                                                        src="{{ storage_url($product->image) }}"
+                                                                        src="{{ $product->image }}"
                                                                         alt="Product Image">
                                                                 </div>
                                                             </a>
@@ -464,8 +471,8 @@
                                                                     </a>
                                                                 </div>
                                                                 
-                                                                    <h4> <span> {!! get_taka_icon() !!} {{ number_format($product->discountPrice(),2) }}</span> 
-                                                                        @if (productDiscountPercentage($product->id))
+                                                                    <h4> <span> {!! get_taka_icon() !!} {{ number_format($similarProDisPrice ,2) }}</span> 
+                                                                        @if ($similarProDisPrice != $product->price)
                                                                             <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
                                                                         @endif
                                                                     </h4>

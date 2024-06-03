@@ -18,10 +18,11 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Order ID') }}</th>
-                                @if($rider)
+                                @if($rider && $status != 'dispute')
                                     <th>{{ __('Rider') }}</th>
                                 @endif
                                 <th>{{ __('Total Product') }}</th>
+                                <th>{{ __('Total Price') }}</th>
                                 <th>{{ __('Payment Type') }}</th>
                                 <th>{{ __('Distribution Type') }}</th>
                                 @if($prep_time)
@@ -38,7 +39,7 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $dop->od->order->order_id }} </td>
-                                    @if($rider)
+                                    @if($rider && $status != 'dispute')
                                         <td> 
                                             @if($dop->odr)
                                                 <span class="badge badge-info">{{$dop->odr->rider->name}}</span> 
@@ -48,6 +49,7 @@
                                         </td>
                                     @endif
                                     <td> {{ count($dop) }} </td>
+                                    <td> {{ number_format(ceil($dop->sum('price'))) }} </td>
                                     <td> {{ $dop->od->paymentType() }} </td>
                                     <td> {{ $dop->od->distributionType() }} </td>
                                     @if($prep_time)

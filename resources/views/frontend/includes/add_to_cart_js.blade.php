@@ -1,14 +1,4 @@
 <script>
-    // Number Format Function 
-    // function numberFormat(value, decimals) {
-    //         if (decimals != null && decimals >= 0) {
-    //             value = parseFloat(value).toFixed(decimals);
-    //         } else {
-    //             value = Math.round(parseFloat(value)).toString();
-    //         }
-    //         return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    // }
-    // Cart JS 
     $(document).ready(function() {
 
         // Add To Card JS 
@@ -79,6 +69,8 @@
                                                     <div class="item_units col-7">
                                                         <div class="form-group my-1 boxed">
                         `;
+                        var random_num1 = Math.floor(100000 + Math.random() * 900000);
+                        var random_num2 = Math.floor(100000 + Math.random() * 900000);
                         data.atc.product.units.forEach(function(unit, index) {
                             var checked = '';
                             if ((data.atc.unit_id != null && unit.id == data.atc
@@ -88,14 +80,14 @@
 
                             result += `
                                         <input type="radio" data-name="${unit.name}" ${checked}
-                                        class="unit_quantity" data-cart_id="${data.atc.id}" data-id="${unit.id}" id="android-${index+20}"
-                                        name="data-${count}"
+                                        class="unit_quantity" data-cart_id="${data.atc.id}" data-id="${unit.id}" id="android-${random_num1}"
+                                        name="data-${random_num2}"
                                         value="${ (data.atc.product.discountPrice * unit.quantity)*data.atc.quantity }" data-regular_price="${ (data.atc.product.price * unit.quantity)*data.atc.quantity }">
-                                        <label for="android-${index+20}">
+                                        <label for="android-${random_num1}}">
                                             <img src="${unit.image}">
                                         </label>
                                     `;
-                            index++;
+                                    random_num1++;   
                         });
                         result += `
                                             </div>
@@ -283,7 +275,7 @@
     $(document).on('click', '.minus_btn', function() {
         changeQuantity($(this), false);
     });
-    console.log($('.plus_minus_quantity').length);
+    
     $('.plus_minus_quantity').each(function(){
         if($(this).val() == 1){
             $(this).prev('.minus_btn').addClass('disabled');
@@ -338,8 +330,7 @@
         var check = $(this).prop('checked');
         var subtotal_price = $('.subtotal_price');
         var formatted_subtotal_price = parseFloat(subtotal_price.html());
-        var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price')
-    .html());
+        var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price').html());
         var total_check_item = $('.total_check_item');
         var summation = 0;
         if (check == true) {

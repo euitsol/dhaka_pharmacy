@@ -207,47 +207,59 @@ function generateTranId() {
 
     return $prefix.$date.$numericPart;
 }
-function productDiscountAmount($pro_id){
-    $discount = Discount::activated()
-                ->where('pro_id', $pro_id)
-                ->where(function ($query) {
-                    $query->whereNotNull('discount_amount')
-                        ->orWhereNotNull('discount_percentage');
-                })->where('status',1)
-                ->first();
+
+function calculateProductDiscount($product, $isPercent = false) {
+    $discount = $product->discounts->where('status', 1)->first();
     if($discount){
-        if(!empty($discount->discount_amount)){
-            return $discount->discount_amount;
-        }
-        else if(!empty($discount->discount_percentage)){
-            return ($discount->product->price/100)*$discount->discount_percentage;
+        if($isPercent){
+            if (!empty($discount->discount_amount)) {
+                return ($discount->discount_amount/$product->price)*100;
+            } elseif (!empty($discount->discount_percentage)) {
+                return $discount->discount_percentage;
+            } else {
+                return 0; // No discount
+            }
+        }else{
+            if (!empty($discount->discount_amount)) {
+                return $discount->discount_amount;
+            } elseif (!empty($discount->discount_percentage)) {
+                return ($product->price / 100) * $discount->discount_percentage;
+            } else {
+                return 0; // No discount
+            }
         }
     }
+    
+    
 }
 
-function productDiscountPercentage($pro_id){
-    $discount = Discount::activated()
-                ->where('pro_id', $pro_id)
-                ->where(function ($query) {
-                    $query->whereNotNull('discount_amount')
-                        ->orWhereNotNull('discount_percentage');
-                })->where('status',1)
-                ->first();
-    $result = 0;
-    if($discount){
-        if(!empty($discount->discount_amount)){
-            $result = ($discount->discount_amount/$discount->product->price)*100;
-        }
-        else if(!empty($discount->discount_percentage)){
-            $result = $discount->discount_percentage;
-        }
+function cartItemRegPrice($cart)
+{
+    $unit = $cart->unit ? $cart->unit->quantity : 1;
+    return  ($cart->product->price*$unit* $cart->quantity);
+}
+function cartItemPrice($cart)
+{
+    $product_discount = proDisPrice($cart->product->price,$cart->product->discounts);
+    $unit = $cart->unit ? $cart->unit->quantity : 1;
+    return ($product_discount*$unit* $cart->quantity);
+   
+}
 
-        return $result;
+function proDisPrice($price, $pro_discounts)
+    {
+        $discount = $pro_discounts->where('status',1)->first();
+        if($discount){
+            if(!empty($discount->discount_amount)){
+                return ($price - $discount->discount_amount);
+            }
+            else if(!empty($discount->discount_percentage)){
+                return ($price - (($price/100)*$discount->discount_percentage));
+            }
+        }
+        return $price;
+        
     }
-}
-
-
-
 function formatPercentageNumber($number) {
     $formattedNumber = rtrim(rtrim(number_format($number,2), '0'), '.');
     return $formattedNumber;

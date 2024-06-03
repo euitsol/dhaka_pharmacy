@@ -15,26 +15,20 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-
+use App\Http\Traits\TransformOrderItemTrait;
 
 class OrderManagementController extends Controller
 {
-    //
+    use TransformOrderItemTrait;
 
     public function __construct() {
         return $this->middleware('admin');
     }
     public function index($status): View
     {
-
         $data['orders'] = Order::status($status)->latest()->get()
-                        ->map(function ($order) {
-                            $order->totalPrice = AddToCart::with('product')
-                                ->whereIn('id', json_decode($order->carts))
-                                ->get()
-                                ->sum(function ($item) {
-                                    return (($item->product->discountPrice() * ($item->unit->quantity ?? 1)) * $item->quantity);
-                                });
+                        ->each(function ($order) {
+                            $order->totalPrice = $this->calculateOrderTotalPrice($order);
                             return $order;
                         });
         $data['status'] = ucfirst($status);
@@ -44,47 +38,34 @@ class OrderManagementController extends Controller
     public function details($id): View
     {
         $data['order'] = Order::findOrFail(decrypt($id));
-        $data['order_items'] = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
-                            ->whereIn('id', json_decode($data['order']->carts))
-                            ->get();
+        $data['order_items'] = $this->getOrderItems($data['order']);
 
-        $data['order_items']->transform(function($item) {
-            $item->price = (($item->product->price*($item->unit->quantity ?? 1))*$item->quantity);
-            $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
-            $item->discount = (productDiscountAmount($item->product->id)*($item->unit->quantity ?? 1))*$item->quantity;
-            return $item;
-        });
 
-        $data['totalPrice'] = $data['order_items']->sum('discount_price');
-        $data['totalRegularPrice'] = $data['order_items']->sum('price');
-        $data['totalDiscount'] = $data['order_items']->sum('discount');
+        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order'], $data['order_items']);
+        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order'], $data['order_items']);
+        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order'], $data['order_items']);
+        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order'], $data['order_items']);
         return view('admin.order_management.details',$data);
     }
 
     public function order_distribution($id){
-        $data['order'] = Order::with('address')->findOrFail(decrypt($id));
-        $data['order_items'] = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
-                            ->whereIn('id', json_decode($data['order']->carts))
-                            ->get();
-        $data['order_items']->transform(function($item) {
-            $item->price = (($item->product->price*($item->unit->quantity ?? 1))*$item->quantity);
-            $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
-            $item->discount = (productDiscountAmount($item->product->id)*($item->unit->quantity ?? 1))*$item->quantity;
-            return $item;
-        });
+        $data['order'] = Order::with(['address','od.odps.cart','od.odps.pharmacy'])->findOrFail(decrypt($id));
+        $data['order_items'] = $this->getOrderItems($data['order']);
 
-        $data['totalPrice'] = $data['order_items']->sum('discount_price');
-        $data['totalRegularPrice'] = $data['order_items']->sum('price');
-        $data['totalDiscount'] = $data['order_items']->sum('discount');
+        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order'], $data['order_items']);
+        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order'], $data['order_items']);
+        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order'], $data['order_items']);
+        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order'], $data['order_items']);
+
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
-        $data['order_distribution'] = OrderDistribution::with(['odps.cart','odps.pharmacy'])->where('status',0)->where('order_id',$data['order']->id)->first();
+        if($data['order']->od){
+            $data['order_distribution'] = $data['order']->od->where('status',0)->first();
+        }
         return view('admin.order_management.order_distribution',$data);
     }
 
     public function order_distribution_store(OrderDistributionRequest $req, $order_id){
         $order_id = decrypt($order_id);
-
-
         Order::findOrFail($order_id)->update(['status'=>-3]);
         $od = new OrderDistribution();
         $od->order_id = $order_id;

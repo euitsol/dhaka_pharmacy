@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\DistributedOrder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DisputeOrderRequest;
 use App\Http\Requests\OrderDistributionRiderRequest;
-use App\Models\AddToCart;
 use App\Models\DistributionOtp;
 use App\Models\OrderDistribution;
 use App\Models\OrderDistributionPharmacy;
@@ -14,11 +13,12 @@ use App\Models\Pharmacy;
 use App\Models\Rider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Http\Traits\TransformOrderItemTrait;
 
 
 class DistributedOrderController extends Controller
 {
-    //
+    use TransformOrderItemTrait;
 
     public function __construct() {
         return $this->middleware('admin');
@@ -33,19 +33,14 @@ class DistributedOrderController extends Controller
         $data['status'] = $status;
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
         $data['dos'] = OrderDistribution::with(['order','odps'])
-        ->withCount(['odps' => function ($query) {
-            $query->where('status','!=', -1);
-        }])
-        ->where('status',$this->getStatus($status))->latest()->get()
-        ->map(function($do){
-            $do->order->totalPrice = AddToCart::with('product')
-                ->whereIn('id', json_decode($do->order->carts))
-                ->get()
-                ->sum(function ($item) {
-                    return (($item->product->discountPrice() * ($item->unit->quantity ?? 1)) * $item->quantity);
-                });
-            return $do;
-        });
+                    ->withCount(['odps' => function ($query) {
+                        $query->where('status','!=', -1);
+                    }])
+                    ->where('status',$this->getStatus($status))->latest()->get()
+                    ->each(function($do){
+                        $do->order->totalPrice = $this->calculateOrderTotalPrice($do->order);
+                        return $do;
+                    });
         return view('admin.distributed_order.index',$data);
     }
     public function dispute($status): View
@@ -58,8 +53,8 @@ class DistributedOrderController extends Controller
             $query->where('status','!=', -1);
         }])
         ->get()
-        ->map(function($do){
-            $do->order->totalPrice = $this->calculateTotalPrice($do);
+        ->each(function($do){
+            $do->order->totalPrice = $this->calculateOrderTotalPrice($do->order);
             return $do;
         })->filter(function($do){
             return $do->odps->where('status', 3)->isNotEmpty();
@@ -69,20 +64,25 @@ class DistributedOrderController extends Controller
 
     public function details($do_id): View
     {
-        $data['do'] = OrderDistribution::with(['order', 'odps' => function ($query) {
+        $query = OrderDistribution::with(['order', 'odrs.rider', 'odps' => function ($query) {
             $query->where('status','!=', -1);
         }])
         ->withCount(['odps' => function ($query) {
             $query->where('status','!=', -1);
         }])
         ->findOrFail(decrypt($do_id));
-        if($data['do']->status == 2){
+
+        $data['do'] = $query;
+        $data['totalPrice'] = $this->calculateOrderTotalPrice($query->order);
+
+        if($query->status == 2){
             $data['riders'] = Rider::activated()->kycVerified()->latest()->get();
         }
-        $data['totalPrice'] = $this->calculateTotalPrice($data['do']);
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
-        $data['do_rider'] = OrderDistributionRider::whereNotIn('status', [0, -1])->where('order_distribution_id',$data['do']->id)->first();
-        $data['dispute_do_riders'] = OrderDistributionRider::with('rider')->whereIn('status', [0, -1])->where('order_distribution_id',$data['do']->id)->latest()->get();;
+        if($query->odrs){
+            $data['do_rider'] = $query->odrs->where('status', '!=', 0)->where('status', '!=', -1)->first();
+            $data['dispute_do_riders'] = $query->odrs()->where('status', '=', 0)->where('status', '=', -1)->latest()->get();
+        }
         return view('admin.distributed_order.details',$data);
     }
     public function update(DisputeOrderRequest $req):RedirectResponse

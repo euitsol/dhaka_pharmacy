@@ -30,7 +30,7 @@
                                                 <div class="col-4 img">
                                                     <a href="{{ route('product.single_product', $item->slug) }}"></a>
                                                     <img height="90" class="w-100 border border-1 rounded-1"
-                                                        src="{{ storage_url($item->image) }}" alt="{{ $item->name }}">
+                                                        src="{{ $item->image }}" alt="{{ $item->name }}">
                                                     </a>
                                                 </div>
                                                 <div class="col-8">
@@ -41,10 +41,12 @@
                                                     </p>
                                                     <p><a href="">{{ $item->generic->name }}</a></p>
                                                     <p><a href="">{{ $item->company->name }}</a></p>
-
+                                                    @php
+                                                        $disPrice = proDisPrice($item->price, $item->discounts);
+                                                    @endphp
                                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                            {{ number_format($item->discountPrice(), 2) }}</span>
-                                                        @if (productDiscountPercentage($item->id))
+                                                            {{ number_format($disPrice, 2) }}</span>
+                                                        @if ($disPrice != $item->price)
                                                             <span class="regular_price"> <del>{!! get_taka_icon() !!}
                                                                     {{ number_format($item->price, 2) }}</del></span>
                                                         @endif
@@ -105,15 +107,18 @@ btn-arrow">
                             </div>
                             <div class="row all-products mt-3">
                                 @foreach ($products as $product)
+                                    @php
+                                        $prodDisPrice = proDisPrice($product->price, $product->discounts);
+                                    @endphp
                                     <div class="col-3 px-2 single-pdct-wrapper">
                                         <div class="single-pdct">
                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                 <div class="pdct-img">
-                                                    @if (productDiscountPercentage($product->id))
+                                                    @if ($prodDisPrice != $product->price)
                                                         <span
                                                             class="discount_tag">{{ formatPercentageNumber($product->discount_percentage) . '% 0ff' }}</span>
                                                     @endif
-                                                    <img class="w-100" src="{{ storage_url($product->image) }}"
+                                                    <img class="w-100" src="{{ $product->image }}"
                                                         alt="Product Image">
                                                 </div>
                                             </a>
@@ -134,8 +139,8 @@ btn-arrow">
                                                 </div>
 
                                                 <h4> <span> {!! get_taka_icon() !!}
-                                                        {{ number_format($product->discountPrice(), 2) }}</span>
-                                                    @if (productDiscountPercentage($product->id))
+                                                        {{ number_format($prodDisPrice, 2) }}</span>
+                                                    @if ($prodDisPrice != $product->price)
                                                         <span class="regular_price"> <del>{!! get_taka_icon() !!}
                                                                 {{ number_format($product->price, 2) }}</del></span>
                                                     @endif

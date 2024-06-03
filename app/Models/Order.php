@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends BaseModel
@@ -31,6 +32,11 @@ class Order extends BaseModel
     public function scopeStatus($query, $status){
         $db_status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
         return $query->where('status',$db_status);
+    }
+
+    public function od(): HasOne
+    {
+        return $this->hasOne(OrderDistribution::class);
     }
 
 

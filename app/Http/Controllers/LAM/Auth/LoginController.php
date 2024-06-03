@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\LAM\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Frontend\BaseController;
 use App\Http\Requests\DistrictManagerRequest;
 use App\Models\DistrictManager;
 use App\Models\LocalAreaManager;
@@ -16,7 +15,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Validator;
 
 
-class LoginController extends BaseController
+class LoginController extends Controller
 {
     public function lamLogin()
     {

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Frontend\BaseController;
 use App\Http\Requests\SendOtpRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -18,7 +17,7 @@ use Illuminate\Support\Facades\URL;
 
 use function PHPUnit\Framework\isNull;
 
-class LoginController extends BaseController
+class LoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------

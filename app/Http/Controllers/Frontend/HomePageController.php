@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Medicine;
-use App\Models\MedicineUnit;
-use App\Models\Order;
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
 use App\Http\Traits\OrderNotificationTrait;
+use App\Http\Traits\TransformProductTrait;
 
-class HomePageController extends BaseController
+class HomePageController extends Controller
 {
 
-    use OrderNotificationTrait;
+    use OrderNotificationTrait, TransformProductTrait;
     public function home():View
     {
 
@@ -25,39 +22,17 @@ class HomePageController extends BaseController
         // $order = Order::findOrFail(1);
         // $this->order_notification($order, 'order_initialized');
 
-        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated();
-        $data['products'] = $products->featured()->latest()->get()->shuffle()->take(8)->map(function($product){
-            $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
-            $product->attr_title = Str::ucfirst(Str::lower($product->name . $strength ));
-            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
-            $product->generic->name = str_limit($product->generic->name, 30, '..');
-            $product->company->name = str_limit($product->company->name, 30, '..');
-            $product->discount_amount = productDiscountAmount($product->id);
-            $product->discount_percentage = productDiscountPercentage($product->id);
-            $product->units = array_map(function ($u_id) {
-                return MedicineUnit::findOrFail($u_id);
-            }, (array) json_decode($product->unit, true));
-
-            $product->units = collect($product->units)->sortBy('quantity')->values()->all();
+        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated();
+        $data['products'] = $products->featured()->latest()->get()->shuffle()->take(8)->each(function($product){
+            $product = $this->transformProduct($product,30);
+            $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
-        $data['bsItems'] = $products->bestSelling()->latest()->get()->shuffle()->take(8)->map(function($product){
-            $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
-            $product->attr_title = Str::ucfirst(Str::lower($product->name . $strength ));
-            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
-            $product->generic->name = str_limit($product->generic->name, 30, '..');
-            $product->company->name = str_limit($product->company->name, 30, '..');
-            $product->discount_amount = productDiscountAmount($product->id);
-            $product->discount_percentage = productDiscountPercentage($product->id);
-            $product->units = array_map(function ($u_id) {
-                return MedicineUnit::findOrFail($u_id);
-            }, (array) json_decode($product->unit, true));
-
-            $product->units = collect($product->units)->sortBy('quantity')->values()->all();
+        $data['bsItems'] = $products->bestSelling()->latest()->get()->shuffle()->take(8)->each(function($product){
+            $product = $this->transformProduct($product,30);
+            $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
-
-        $data['categories'] = ProductCategory::activated()->orderBy('name')->get();
         $data['featuredItems'] = ProductCategory::activated()->featured()->orderBy('name')->get();
 
         return view('frontend.home',$data);
@@ -69,27 +44,17 @@ class HomePageController extends BaseController
         $currentUrl = URL::current();
         $data['url'] = $currentUrl . "?category=all";
 
-        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength'])->activated()->featured();
-        $datas = $products->latest()->get();
-        if($category_slug !== 'all'){
+        $products = '';
+        if($category_slug == 'all'){
+            $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated()->latest()->get();
+        }else{
             $data['product_cat'] = ProductCategory::activated()->where('slug',$category_slug)->first();
             $data['url'] = $currentUrl . "?category=".$data['product_cat']->slug;
-            $datas = $products->where('pro_cat_id',$data['product_cat']->id)->latest()->get();
+            $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated()->featured()->where('pro_cat_id',$data['product_cat']->id)->latest()->get();
         }
-        $data['products'] = $datas->shuffle()->take(8)->map(function($product){
-            $product->image = storage_url($product->image);
-            $strength = $product->strength ? ' ('.$product->strength->quantity.' '.$product->strength->unit.')' : '' ;
-            $product->attr_title = Str::ucfirst(Str::lower($product->name . $strength ));
-            $product->name = str_limit(Str::ucfirst(Str::lower($product->name . $strength )), 30, '..');
-            $product->generic->name = str_limit($product->generic->name, 30, '..');
-            $product->company->name = str_limit($product->company->name, 30, '..');
-            $product->discount_amount = productDiscountAmount($product->id);
-            $product->discount_percentage = productDiscountPercentage($product->id);
-            $product->units = array_map(function ($u_id) {
-                return MedicineUnit::findOrFail($u_id);
-            }, (array) json_decode($product->unit, true));
-
-            $product->units = collect($product->units)->sortBy('quantity')->values()->all();
+        $data['products'] = $products->shuffle()->take(8)->each(function($product){
+            $product = $this->transformProduct($product,30);
+            $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
         return response()->json($data);

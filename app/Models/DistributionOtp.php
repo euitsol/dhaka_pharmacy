@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DistributionOtp extends BaseModel
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'status',
+        'rider_id',
+        'order_distribution_id',
+        'otp_author_id',
+        'otp_author_type',
+        'otp',
+    ];
     public function od(){
         return $this->belongsTo(OrderDistribution::class,'order_distribution_id');
     }

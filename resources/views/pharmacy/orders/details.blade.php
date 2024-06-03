@@ -71,7 +71,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    @if($odr)
+                    @if($odr && $status != 3 && $status != -1)
                         @if($status == 2)
                             <h5><b>{{__('Note:')}}</b> <span class="text-danger">{{__('Please verify your order before handing it over to the rider. Your OTP is : ')}} </span> <strong class="text-success">{{optional($otp)->otp}}</strong></h5>
                         @endif
@@ -174,7 +174,7 @@
                                                         <h6 class="my-auto text-center">
                                                             <span><strong>{{ __('Total Price : ') }}</strong>{!! get_taka_icon() !!}
                                                                 
-                                                                {{ number_format($dop->totalPrice, 2) }}</span> <sup><span class='badge badge-danger'>@if(isset($dop->discount)){{$dop->discount.'% off'}}@endif</span></sup>
+                                                                {{ number_format(ceil($dop->totalPrice)) }}</span> <sup><span class='badge badge-danger'>@if(isset($dop->discount)){{$dop->discount.'% off'}}@endif</span></sup>
                                                         </h6>
                                                         @if ($do->payment_type == 1 && ($status == 0 || $status == 1))
                                                             <div class="input-group">

@@ -1,37 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\PaymentGateway;
+namespace App\Http\Controllers\User\PaymentGateway;
 
 use App\Http\Controllers\Controller;
 use App\Library\SslCommerz\SslCommerzNotification;
 use App\Models\AddToCart;
-use App\Models\MedicineUnit;
 use App\Models\Order;
 use App\Models\Payment;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Illuminate\Support\Str;
-
+use App\Http\Traits\TransformOrderItemTrait;
 
 class SslCommerzController extends Controller
 {
+    use TransformOrderItemTrait;
+    public function __construct() {
+        return $this->middleware('auth');
+    }
     public function index($order_id)
     {
         $order = Order::with(['customer','address','ref_user'])->findOrFail(decrypt($order_id));
-        $total_price = 0;
-        $data['cart_items'] = AddToCart::with(['product.pro_cat', 'product.pro_sub_cat', 'product.generic', 'product.company', 'product.strength', 'customer', 'unit'])
-        ->whereIn('id', json_decode($order->carts))
-        ->get();
-
-        $data['cart_items']->transform(function($item) {
-            $item->discount_price = (($item->product->discountPrice()*($item->unit->quantity ?? 1))*$item->quantity);
-            return $item;
-        });
-
-        $total_price = ($data['cart_items']->sum('discount_price')) + $order->delivery_fee;
-
+        $data['cart_items'] = $this->getOrderItems($order);
+        $total_price = $this->calculateOrderTotalPrice($order, $data['cart_items']);
+        $total_price = str_replace(',','',$total_price);
         # Here you have to receive all the order data to initate the payment.
         # Let's say, your oder transaction informations are saving in a table called "orders"
         # In "orders" table, order unique identity is "transaction_id". "status" field contain status of the transaction, "amount" is the order amount to be paid and "currency" is for storing Site Currency which will be checked with paid currency.
@@ -132,14 +122,14 @@ class SslCommerzController extends Controller
         } else if ($order_details->status == 2 || $order_details->status == 1) { //Status 1 , Complete
             /*
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
-             */;
+             */
             flash()->addSuccess('Transaction is successfully Completed');
         } else {
             #That means something wrong happened. You can redirect customer to your product page.
             flash()->addSuccess('Transaction is successfully Completed');
         }
         if($request->value_a){
-            return redirect()->route('product.order.success',['order_id'=>$request->value_a]);
+            return redirect()->route('u.ck.product.order.success',['order_id'=>$request->value_a]);
         }
         return redirect()->route('home');
 
@@ -170,7 +160,7 @@ class SslCommerzController extends Controller
         }
 
         if($request->value_a){
-            return redirect()->route('product.order.failed',['order_id'=>$request->value_a]);
+            return redirect()->route('u.ck.product.order.failed',['order_id'=>$request->value_a]);
         }
             return redirect()->route('home');
 
@@ -200,7 +190,7 @@ class SslCommerzController extends Controller
             flash()->addError('Transaction is Invalid');
         }
         if($request->value_a){
-            return redirect()->route('product.order.cancel',['order_id'=>$request->value_a]);
+            return redirect()->route('u.ck.product.order.cancel',['order_id'=>$request->value_a]);
         }
         return redirect()->route('home');
 
@@ -251,6 +241,6 @@ class SslCommerzController extends Controller
         } else {
             flash()->addError('Invalid Data');
         }
-        return redirect()->route('payment.checkout2');
+        return redirect()->route('u.payment.checkout2');
     }
 }
