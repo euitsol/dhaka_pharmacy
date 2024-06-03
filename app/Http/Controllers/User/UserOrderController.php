@@ -3,16 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\AddToCart;
 use App\Models\Order;
-use App\Models\OrderDistribution;
 use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\URL;
 use App\Http\Traits\TransformOrderItemTrait;
 use App\Http\Traits\TransformProductTrait;
 
@@ -30,11 +23,25 @@ class UserOrderController extends Controller
 
     public function order_list(Request $request)
     {
-        $query = Order::with(['od', 'address', 'customer', 'payments', 'ref_user'])
-            ->where('status', '!=', 0)
-            ->where('customer_id', user()->id)
-            ->where('customer_type', get_class(user()))
-            ->latest();
+        $status = $request->query('status', 'orders');
+        $query = Order::query();
+        if ($status == 'current-orders') {
+            $query->with(['address', 'customer', 'payments', 'ref_user', 'od' => function ($q) {
+                return $q->whereNotIn('status', [5, 6, 7]);
+            }]);
+        } elseif ($status == 'previous-orders') {
+            $query->with(['address', 'customer', 'payments', 'ref_user', 'od' => function ($q) {
+                return $q->whereIn('status', [5, 6]);
+            }]);
+        } elseif ($status == 'cancel-orders') {
+            $query->with(['address', 'customer', 'payments', 'ref_user', 'od' => function ($q) {
+                return $q->where('status', 7);
+            }]);
+        } else {
+            $query->with(['address', 'customer', 'payments', 'ref_user', 'od']);
+        }
+        $query->where([['status', '!=', 0], ['customer_id', user()->id], ['customer_type', get_class(user())]])->latest();
+
         $data['pageNumber'] = $request->query('page', 1);
         if ($data['pageNumber'] == 1) {
             $filter_val = request('filter');
@@ -62,6 +69,13 @@ class UserOrderController extends Controller
             return response()->json($data);
         } else {
             return view('user.order.order_list', $data);
+        }
+    }
+
+    private function getStatus($textStatus)
+    {
+        if ($textStatus == 'current-orders') {
+            return whereNotIn('status', [5, 6, 7]);
         }
     }
 }

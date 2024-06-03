@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
-    use AuditColumnsTrait,SoftDeletes;
+    use AuditColumnsTrait, SoftDeletes;
 
     /**
      * Run the migrations.
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->softDeletes();
             $this->addMorphedAuditColumns($table);
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');  
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

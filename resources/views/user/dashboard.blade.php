@@ -18,11 +18,12 @@
                     <div class="single-box current-order">
                         <div class="processing d-flex align-items-center justify-content-between">
                             <div class="title">
-                                <h3>Processing</h3>
-                                <h4>Est. Delivery 01 apr 23</h4>
+                                <h3>{{ __('Processing') }}</h3>
+                                {{-- <h4>{{ __('Est. Delivery 01 apr 23') }}</h4> --}}
                             </div>
                             <div class="btn">
-                                <a href="#">Details</a>
+                                <a
+                                    href="{{ route('u.order.list', ['status' => 'current-orders']) }}">{{ __('Details') }}</a>
                             </div>
                         </div>
                         <div class="progress-box">
@@ -32,25 +33,31 @@
                             </div>
                         </div>
                         <div class="title">
-                            <h2>Current Order</h2>
+                            <h2>{{ __('Current Orders') }}</h2>
                         </div>
                     </div>
-                    <div class="single-box previous-order">
-                        <div class="count">
-                            <span>10</span>
+                    <a href="{{ route('u.order.list', ['status' => 'previous-orders']) }}"
+                        style="text-decoration: none; color:#212529;">
+                        <div class="single-box previous-order">
+                            <div class="count">
+                                <span>{{ __('10') }}</span>
+                            </div>
+                            <div class="title">
+                                <h2>{{ __('Previous Orders') }}</h2>
+                            </div>
                         </div>
-                        <div class="title">
-                            <h2>Previous Order</h2>
+                    </a>
+                    <a href="{{ route('u.order.list', ['status' => 'cancel-orders']) }}"
+                        style="text-decoration: none; color:#212529;">
+                        <div class="single-box cancel-order">
+                            <div class="count">
+                                <span>{{ __('05') }}</span>
+                            </div>
+                            <div class="title">
+                                <h2>{{ __('Cancel Orders') }}</h2>
+                            </div>
                         </div>
-                    </div>
-                    <div class="single-box cancel-order">
-                        <div class="count">
-                            <span>05</span>
-                        </div>
-                        <div class="title">
-                            <h2>Cancel Order</h2>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="col-6">
@@ -169,7 +176,8 @@
                                     <div class="carousel-item active">
                                         <div class="items d-flex">
                                             <div class="img-col">
-                                                <a href="#"><img src="{{ asset('user/asset/img/offer-img01') }}.png"
+                                                <a href="#"><img
+                                                        src="{{ asset('user/asset/img/offer-img01') }}.png"
                                                         class="d-block w-100" alt="..."></a>
                                             </div>
                                             <div class="img-col">
