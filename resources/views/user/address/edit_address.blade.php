@@ -50,8 +50,14 @@
                                     <label for="instruction">Delivery Details <small>(optional)</small></label>
                                     <textarea type="text" class="form-control mt-1" id="instruction" name="instruction">Receiver name: &#10;Receiver phone number:</textarea>
                                 </div>
-
-
+                                <div class="form-group col-md-12 p-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="is_default" value="1" id="is_default">
+                                        <label class="form-check-label" for="is_default">
+                                            Set as default
+                                        </label>
+                                      </div>
+                                </div>
                                 <div class="form-group col-md-12 p-2">
                                     <button type="submit" class="btn btn-sm btn-success w-100">Update</button>
                                 </div>
