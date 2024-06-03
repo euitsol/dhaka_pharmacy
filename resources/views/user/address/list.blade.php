@@ -100,6 +100,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
     </script>
+    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
 @endpush
 
 @push('js')
@@ -108,5 +109,4 @@
             'details_url': `{{ route('u.as.details', 'param') }}`,
         };
     </script>
-    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
 @endpush

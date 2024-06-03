@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'order_'.$status])
+@extends('admin.layouts.master', ['pageSlug' => 'order_' . $status])
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -6,10 +6,10 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __("Order List") }}</h4>
+                            <h4 class="card-title">{{ __('Order List') }}</h4>
                         </div>
                         <div class="col-4 text-end">
-                            <span class="{{$statusBgColor}}">{{$status}}</span>
+                            <span class="{{ $statusBgColor }}">{{ $status }}</span>
                         </div>
                     </div>
                 </div>
@@ -31,12 +31,12 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $order->order_id }}</td>
-                                    <td>{{ count(json_decode($order->carts,true)) }}</td>
-                                    <td>{!! get_taka_icon() !!}{{$order->totalPrice}}</td>
-                                    <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
+                                    <td>{{ count(json_decode($order->carts, true)) }}</td>
+                                    <td>{!! get_taka_icon() !!}{{ $order->totalPrice }}</td>
+                                    <td><span class="{{ $statusBgColor }}">{{ $status }}</span></td>
                                     <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>
-                                        @if($order->status == 1)
+                                        @if ($order->status == 1)
                                             @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
                                                     [
@@ -77,4 +77,4 @@
         </div>
     </div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4],'order'=>'asc'])
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4], 'order' => 'asc'])

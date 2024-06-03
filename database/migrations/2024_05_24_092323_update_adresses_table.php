@@ -16,6 +16,7 @@ return new class extends Migration
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
             $table->dropColumn('apartment_type');
+
             $this->dropAuditColumns($table);
 
             $table->string('name')->nullable()->change();

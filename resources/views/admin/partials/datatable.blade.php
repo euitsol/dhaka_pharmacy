@@ -19,7 +19,7 @@
         $(document).ready(function() {
             $('.datatable').each(function() {
                 var columnsToShow = {!! json_encode($columns_to_show ?? []) !!};
-                var order = 'ASC';
+                var order = {{$order ?? 'asc' }};
                 $(this).DataTable({
                     dom: 'Bfrtip',
                     responsive: true,
