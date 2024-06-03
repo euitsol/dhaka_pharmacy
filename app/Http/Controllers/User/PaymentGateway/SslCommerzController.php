@@ -21,7 +21,7 @@ class SslCommerzController extends Controller
         $order = Order::with(['customer','address','ref_user'])->findOrFail(decrypt($order_id));
         $data['cart_items'] = $this->getOrderItems($order);
         $total_price = $this->calculateOrderTotalPrice($order, $data['cart_items']);
-
+        $total_price = str_replace(',','',$total_price);
         # Here you have to receive all the order data to initate the payment.
         # Let's say, your oder transaction informations are saving in a table called "orders"
         # In "orders" table, order unique identity is "transaction_id". "status" field contain status of the transaction, "amount" is the order amount to be paid and "currency" is for storing Site Currency which will be checked with paid currency.

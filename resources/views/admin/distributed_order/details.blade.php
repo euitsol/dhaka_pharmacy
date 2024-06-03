@@ -245,8 +245,8 @@
                                                                 <div class="col my-auto"> <small>{{__("Pack :")}} {{$dop->cart->unit->name ?? 'Piece'}}</small></div>
                                                                 <div class="col my-auto">
                                                                     @php
-                                                                        $cartItemRegPrice = cartItemRegPrice($dop->cart);
-                                                                        $cartItemPrice = cartItemPrice($dop->cart);
+                                                                        $cartItemRegPrice = number_format(cartItemRegPrice($dop->cart),2);
+                                                                        $cartItemPrice = number_format(cartItemPrice($dop->cart),2);
                                                                     @endphp
                                                                     @if ($cartItemRegPrice != $cartItemPrice)
                                                                         <h6 class="mb-0 text-end">

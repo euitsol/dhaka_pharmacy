@@ -71,7 +71,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    @if($odr)
+                    @if($odr && $status != 3 && $status != -1)
                         @if($status == 2)
                             <h5><b>{{__('Note:')}}</b> <span class="text-danger">{{__('Please verify your order before handing it over to the rider. Your OTP is : ')}} </span> <strong class="text-success">{{optional($otp)->otp}}</strong></h5>
                         @endif

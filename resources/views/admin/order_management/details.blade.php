@@ -33,8 +33,8 @@
                                                             <div class="col my-auto"> <small>{{__('Pack :')}} {{$item->unit->name ?? 'Piece'}}</small></div>
                                                             <div class="col my-auto">
                                                                 @php
-                                                                    $cartItemRegPrice = cartItemRegPrice($item);
-                                                                    $cartItemPrice = cartItemPrice($item);
+                                                                    $cartItemRegPrice = number_format(cartItemRegPrice($item),2);
+                                                                    $cartItemPrice = number_format(cartItemPrice($item),2);
                                                                 @endphp
                                                                 @if ($cartItemRegPrice != $cartItemPrice)
                                                                     <h6 class="mb-0 text-end">

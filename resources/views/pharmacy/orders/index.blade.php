@@ -18,7 +18,7 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Order ID') }}</th>
-                                @if($rider)
+                                @if($rider && $status != 'dispute')
                                     <th>{{ __('Rider') }}</th>
                                 @endif
                                 <th>{{ __('Total Product') }}</th>
@@ -39,7 +39,7 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $dop->od->order->order_id }} </td>
-                                    @if($rider)
+                                    @if($rider && $status != 'dispute')
                                         <td> 
                                             @if($dop->odr)
                                                 <span class="badge badge-info">{{$dop->odr->rider->name}}</span> 
