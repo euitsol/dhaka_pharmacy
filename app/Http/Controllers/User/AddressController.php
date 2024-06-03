@@ -75,7 +75,7 @@ class AddressController extends Controller
 
     public function list():View
     {
-        $data['address'] = Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->orderBy('is_default','desc')->latest()->get();
+        $data['address'] = Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->orderBy('is_default','asc')->get();
         return view('user.address.list', $data);
     }
 
