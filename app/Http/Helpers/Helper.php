@@ -327,3 +327,15 @@ function formatPharmacyOption($pharmacy) {
     $sub_area = formatOperationSubArea($pharmacy);
     return $pharmacy->name . $area . $sub_area;
 }
+
+function abbreviateName($name) {
+    $words = explode(' ', $name);
+    if (count($words) == 1) {
+        return $name;
+    }
+    $abbreviated = array_map(function($word) {
+        return strtoupper(substr($word, 0, 1));
+    }, array_slice($words, 0, -1));
+    $abbreviated[] = end($words);
+    return implode(' ', $abbreviated);
+}
