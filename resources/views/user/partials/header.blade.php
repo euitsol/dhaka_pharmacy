@@ -34,7 +34,7 @@
                     </a>
                 </div>
                 <div class="name me-3">
-                    <a href="#">Robin</a>
+                    <a href="#">{{abbreviateName('Al Kafi Sohag')}}</a>
                 </div>
                 <div class="profile">
                     <a href="javascript:void(0)" class="nav-link dropdown-toggle" type="button" data-toggle="dropdown"
