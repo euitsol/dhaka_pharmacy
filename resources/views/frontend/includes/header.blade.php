@@ -50,14 +50,7 @@
             </div>
             <div class="col-3 ps-0 right-col">
                 <div class="row align-items-center justify-content-end">
-                    @if(Auth::guard('web')->check())
-                        <div class="item" style="max-width: 185px; overflow:hidden;">
-                            <a href="{{route('user.dashboard')}}" class="login-btn d-flex align-items-center">
-                                <img style="height: 35px; width: 35px; object-fit: cover; border-radius: 50%;" src="{{ user()->image ? storage_url(user()->image) : asset('user/asset/img/user.png') }}" alt="">
-                                <span class="ms-1">{{user()->name}}</span>
-                            </a>
-                        </div>
-                    @else
+                    @if(!Auth::guard('web')->check())
                         <div class="item">
                             <a href="{{route('login')}}" class="login-btn">
                                 <i class="fa-regular fa-user me-1"></i>
@@ -104,6 +97,14 @@
                         </button>
                         @include('frontend.includes.add_to_cart_slide')
                     </div>
+                    @if(Auth::guard('web')->check())
+                        <div class="item" style="max-width: 185px; overflow:hidden;">
+                            <a href="{{route('user.dashboard')}}" class="login-btn d-flex align-items-center">
+                                <img style="height: 35px; width: 35px; object-fit: cover; border-radius: 50%;" src="{{ user()->image ? storage_url(user()->image) : asset('user/asset/img/user.png') }}" alt="">
+                                <span class="ms-1">{{abbreviateName(user()->name)}}</span>
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
