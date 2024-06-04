@@ -1,4 +1,4 @@
-@extends('pharmacy.layouts.master', ['pageSlug' => $status.'_orders'])
+@extends('pharmacy.layouts.master', ['pageSlug' => $status . '_orders'])
 
 @section('content')
     <div class="row">
@@ -7,7 +7,8 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __(ucwords(strtolower((str_replace('-', ' ', $status))))." Order List") }}</h4>
+                            <h4 class="card-title">
+                                {{ __(ucwords(strtolower(str_replace('-', ' ', $status))) . ' Order List') }}</h4>
                         </div>
                     </div>
                 </div>
@@ -18,14 +19,14 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Order ID') }}</th>
-                                @if($rider && $status != 'dispute')
+                                @if ($rider && $status != 'dispute')
                                     <th>{{ __('Rider') }}</th>
                                 @endif
                                 <th>{{ __('Total Product') }}</th>
                                 <th>{{ __('Total Price') }}</th>
                                 <th>{{ __('Payment Type') }}</th>
                                 <th>{{ __('Distribution Type') }}</th>
-                                @if($prep_time)
+                                @if ($prep_time)
                                     <th>{{ __('Preparetion Time') }}</th>
                                 @endif
                                 <th>{{ __('Status') }}</th>
@@ -33,38 +34,43 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                             @foreach ($dops as $dop)
-                        
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $dop->od->order->order_id }} </td>
-                                    @if($rider && $status != 'dispute')
-                                        <td> 
-                                            @if($dop->odr)
-                                                <span class="badge badge-info">{{$dop->odr->rider->name}}</span> 
-                                            @else 
-                                                <span class="badge badge-warning">{{__("Not Assign Yet")}}</span> 
-                                            @endif 
+                                    @if ($rider && $status != 'dispute')
+                                        <td>
+                                            @if ($dop->odr)
+                                                <span class="badge badge-info">{{ $dop->odr->rider->name }}</span>
+                                            @else
+                                                <span class="badge badge-warning">{{ __('Not Assign Yet') }}</span>
+                                            @endif
                                         </td>
                                     @endif
                                     <td> {{ count($dop) }} </td>
-                                    <td> {{ number_format(ceil($dop->sum('price'))) }} </td>
+                                    <td> {!! get_taka_icon() !!}{{ number_format(ceil($dop->sum('price'))) }} </td>
                                     <td> {{ $dop->od->paymentType() }} </td>
                                     <td> {{ $dop->od->distributionType() }} </td>
-                                    @if($prep_time)
-                                    <td> <span class="countdown ms-2" data-seconds="{{prepTotalSeconds($dop->od->created_at, $dop->od->prep_time)}}"></span></td>
+                                    @if ($prep_time)
+                                        <td> <span class="countdown ms-2"
+                                                data-seconds="{{ prepTotalSeconds($dop->od->created_at, $dop->od->prep_time) }}"></span>
+                                        </td>
                                     @endif
                                     <td>
-                                        <span class="{{ $dop->statusBg }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $dop->statusTitle))))  }}</span>
+                                        <span
+                                            class="{{ $dop->statusBg }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $dop->statusTitle)))) }}</span>
                                     </td>
                                     <td>
                                         <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)"
+                                                role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="{{route('pharmacy.order_management.details',['do_id'=>encrypt($dop->od->id), 'status'=>$status])}}">{{ __("View Details") }}</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('pharmacy.order_management.details', ['do_id' => encrypt($dop->od->id), 'status' => $status]) }}">{{ __('View Details') }}</a>
                                             </div>
                                         </div>
                                     </td>
@@ -81,14 +87,11 @@
             </div>
         </div>
     </div>
-
-
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6, 7]])
 @push('js')
-<script>
-
-        $(document).ready(function(){
+    <script>
+        $(document).ready(function() {
             $(".countdown").each(function() {
                 var countdown = $(this); // Current countdown element
 
@@ -118,9 +121,7 @@
                     }
                 }, 1000);
             });
-            
+
         });
-
-</script>
+    </script>
 @endpush
-

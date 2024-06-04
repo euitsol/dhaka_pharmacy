@@ -130,21 +130,31 @@ header{
     object-fit: cover;
     width: 100%;
   }
-  .header-section .right-col .offcanvas .add_to_cart_item .product_details .info .product_title{
-    line-height: 1.5rem;
+  .header-section .right-col .offcanvas .add_to_cart_item .product_details .info .product_title {
+      font-family: "Rubik", sans-serif;
+      margin-bottom: .4rem;
+      line-height: 12px;
   }
   .header-section .right-col .offcanvas .add_to_cart_item .product_details .info .product_title a{
-    font-size: 14px;
-    color: var(--text-color-black);
-    
+      font-size: 14px;
+      color: var(--text-color-black);
+      transition:.4s;
   }
-  .header-section .right-col .offcanvas .add_to_cart_item .product_details .info p{
+  .header-section .right-col .offcanvas .add_to_cart_item .product_details .info .product_title a:hover{
+      color: var(--asent-color);
+  }
+  /* .header-section .right-col .offcanvas .add_to_cart_item .product_details .info p{
     line-height: .9rem;
-  }
+  } */
   .header-section .right-col .offcanvas .add_to_cart_item .product_details .info p a{
-    font-size: 11px;
-    color: var(--nav-text-gray);
-    
+      font-family: "Rubik", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 14px;
+      color: var(--text-color-gray);
+      display: block;
+      padding: 0px;
+      margin: 0px;
   }
   .header-section .right-col .offcanvas .add_to_cart_item .atc_functionality .plus_minus .item_quantity{
     padding-left: 5px;

@@ -68,7 +68,7 @@
 
 
                                                 <div class="row align-items-center atc_functionality">
-                                                    <div class="item_units col-7">
+                                                    <div class="item_units col-8">
                                                         <div class="form-group my-1 boxed">
                         `;
                         var random_num1 = Math.floor(100000 + Math.random() * 900000);
@@ -97,7 +97,7 @@
 
 
                                         {{-- Plus Minus  --}}
-                                        <div class="plus_minus col-5 ps-md-4 d-flex align-items-center justify-between">
+                                        <div class="plus_minus col-4 ps-md-4 d-flex align-items-center justify-between">
                                             <div class="form-group">
                                                 <div class="input-group" role="group">
                                                     <a href="javascript:void(0)" data-id="${data.atc.id}" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>

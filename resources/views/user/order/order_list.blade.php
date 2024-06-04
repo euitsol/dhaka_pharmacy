@@ -26,12 +26,13 @@
                         <div class="order-id-row">
                             <div class="row">
                                 <div class="col-10">
-                                    <h3 class="order-num">Order: <span>{{ $order->order_id }}</span></h3>
-                                    <p class="date-time">Placed on <span>{{ $order->place_date }}</span></p>
+                                    <h3 class="order-num">{{ __('Order: ') }}<span>{{ $order->order_id }}</span></h3>
+                                    <p class="date-time">{{ __('Placed on ') }}<span>{{ $order->place_date }}</span></p>
                                 </div>
                                 <div class="col-2 text-end">
                                     @if ($order->od)
-                                        <span class="{{ $order->od->statusBg() }}">{{ $order->od->statusTitle() }}</span>
+                                        <span
+                                            class="{{ $order->od->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $order->od->statusTitle())))) }}</span>
                                     @else
                                         <span class="badge bg-info">{{ __('Pending') }}</span>
                                     @endif
@@ -127,11 +128,11 @@
                 case 1:
                     return 'Preparing';
                 case 2:
-                    return 'Waiting-for-rider';
+                    return 'Waiting For Rider';
                 case 3:
-                    return 'Waiting-for-pickup';
+                    return 'Waiting For Pickup';
                 case 4:
-                    return 'Picked-up';
+                    return 'Picked Up';
                 case 5:
                     return 'Delivered';
                 case 6:
