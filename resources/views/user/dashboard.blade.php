@@ -63,7 +63,7 @@
             <div class="col-6">
                 <div class="col-mid">
                     <div class="tips">
-                        <h2>Our Latest Offers</h2>
+                        <h2>{{ __('Our Latest Offers') }}</h2>
                         <div class="single-tips d-flex align-items-center justify-content-between">
                             <img src="{{ asset('user/asset/img/tips-img.png') }}" alt="">
                             <p>Helps you <span>track if you have missed any medication and aboid taking them too
@@ -82,11 +82,11 @@
                         </div>
                     </div>
                     <div class="order-cart-wish d-flex justify-content-center">
-                        <a href="#">
+                        <a href="{{ route('u.order.list') }}">
                             <div class="single d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
                                     <img src="{{ asset('user/asset/img/my-order.png') }}" alt="">
-                                    <h2>My Orders</h2>
+                                    <h2>{{ __('My Orders') }}</h2>
                                 </div>
                             </div>
                         </a>
@@ -94,7 +94,7 @@
                             <div class="single  d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
                                     <img src="{{ asset('user/asset/img/my-cart.png') }}" alt="">
-                                    <h2>My Cart</h2>
+                                    <h2>{{ __('My Cart') }}</h2>
                                 </div>
                             </div>
                         </a>
@@ -102,7 +102,7 @@
                             <div class="single  d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
                                     <img src="{{ asset('user/asset/img/wishtlist2.png') }}" alt="">
-                                    <h2>Wishlist</h2>
+                                    <h2>{{ __('Wishlist') }}</h2>
                                 </div>
                             </div>
                         </a>
@@ -129,13 +129,13 @@
                             <button class="carousel-control-prev" type="button"
                                 data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
+                                <span class="visually-hidden">{{ __('Previous') }}</span>
                             </button>
                             <div class="circle"></div>
                             <button class="carousel-control-next" type="button"
                                 data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
+                                <span class="visually-hidden">{{ __('Next') }}</span>
                             </button>
                         </div>
                     </div>
@@ -145,7 +145,7 @@
                                 <div class="img">
                                     <img src="{{ asset('user/asset/img/my-payment.png') }}" alt="">
                                 </div>
-                                <h3 class="m-0">My Payment</h3>
+                                <h3 class="m-0">{{ __('My Payment') }}</h3>
                             </div>
                         </a>
                         <a href="#" class="single">
@@ -153,7 +153,7 @@
                                 <div class="img">
                                     <img src="{{ asset('user/asset/img/feedback.png') }}" alt="">
                                 </div>
-                                <h3 class="m-0">Feedback</h3>
+                                <h3 class="m-0">{{ __('Feedback') }}</h3>
                             </div>
                         </a>
                     </div>
@@ -162,7 +162,7 @@
             <div class="col-3">
                 <div class="col-right">
                     <div class="latest-offer">
-                        <h2>Our Latest Offers</h2>
+                        <h2>{{ __('Our Latest Offers') }}</h2>
                         <div class="slider">
                             <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
                                 <div class="carousel-indicators">
@@ -208,11 +208,11 @@
                     <div class="google-map">
                         <div class="address d-flex  align-items-center justify-content-between">
                             <div class="title">
-                                <h3>Address</h3>
+                                <h3>{{ __('Address') }}</h3>
                             </div>
                             <div class="btn">
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#address_add_modal">Add
-                                    Address</a>
+                                <a href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#address_add_modal">{{ __('Add Address') }}</a>
                             </div>
                         </div>
 
@@ -226,7 +226,7 @@
                             </div>
                         @else
                             <div class="map d-flex align-items-center justify-content-center ">
-                                <h6 class="text-warning">Please add address</h6>
+                                <h6 class="text-warning">{{ __('Please add address') }}</h6>
                             </div>
                             <div class="address-btn">
 
@@ -240,7 +240,7 @@
                                     <img src="{{ asset('user/asset/img/customer-support.png') }}" alt="">
                                 </div>
                                 <div class="title">
-                                    <h3 class="text-center">Customer<br> Support</h3>
+                                    <h3 class="text-center">{{ __('Customer') }}<br> {{ __('Support') }}</h3>
                                 </div>
                             </div>
                         </a>
