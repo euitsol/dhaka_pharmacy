@@ -40,7 +40,7 @@
                         style="text-decoration: none; color:#212529;">
                         <div class="single-box previous-order">
                             <div class="count">
-                                <span>{{ __('10') }}</span>
+                                <span>{{ $total_previous_orders }}</span>
                             </div>
                             <div class="title">
                                 <h2>{{ __('Previous Orders') }}</h2>
@@ -51,7 +51,7 @@
                         style="text-decoration: none; color:#212529;">
                         <div class="single-box cancel-order">
                             <div class="count">
-                                <span>{{ __('05') }}</span>
+                                <span>{{ $total_cancel_orders }}</span>
                             </div>
                             <div class="title">
                                 <h2>{{ __('Cancel Orders') }}</h2>

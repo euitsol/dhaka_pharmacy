@@ -23,25 +23,22 @@ class UserOrderController extends Controller
 
     public function order_list(Request $request)
     {
-        $status = $request->query('status', 'orders');
-        $query = Order::query();
+        $status = $request->query('status', 'orders') ?? request('status');
+        $query = Order::where([['status', '!=', 0], ['customer_id', user()->id], ['customer_type', get_class(user())]])->latest();
         if ($status == 'current-orders') {
-            $query->with(['address', 'customer', 'payments', 'ref_user', 'od' => function ($q) {
-                return $q->whereNotIn('status', [5, 6, 7]);
-            }]);
+            $query->whereHas('od', function ($q) {
+                $q->whereNotIn('status', [5, 6, 7]);
+            })->orWhere('status', 1);
         } elseif ($status == 'previous-orders') {
-            $query->with(['address', 'customer', 'payments', 'ref_user', 'od' => function ($q) {
-                return $q->whereIn('status', [5, 6]);
-            }]);
+            $query->whereHas('od', function ($q) {
+                $q->whereIn('status', [5, 6]);
+            });
         } elseif ($status == 'cancel-orders') {
-            $query->with(['address', 'customer', 'payments', 'ref_user', 'od' => function ($q) {
-                return $q->where('status', 7);
-            }]);
-        } else {
-            $query->with(['address', 'customer', 'payments', 'ref_user', 'od']);
+            $query->whereHas('od', function ($q) {
+                $q->where('status', 7);
+            });
         }
-        $query->where([['status', '!=', 0], ['customer_id', user()->id], ['customer_type', get_class(user())]])->latest();
-
+        $query->with(['address', 'customer', 'payments', 'ref_user', 'od']);
         $data['pageNumber'] = $request->query('page', 1);
         if ($data['pageNumber'] == 1) {
             $filter_val = request('filter');
@@ -64,18 +61,12 @@ class UserOrderController extends Controller
         });
 
         $data['orders'] = $orders;
+        $data['status'] = $status;
         $data['pagination'] = $orders->links('vendor.pagination.bootstrap-5')->render();
         if (request()->ajax()) {
             return response()->json($data);
         } else {
             return view('user.order.order_list', $data);
-        }
-    }
-
-    private function getStatus($textStatus)
-    {
-        if ($textStatus == 'current-orders') {
-            return whereNotIn('status', [5, 6, 7]);
         }
     }
 }

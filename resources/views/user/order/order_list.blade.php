@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="order_wrap">
-                @foreach ($orders as $order)
+                @forelse ($orders as $order)
                     <div class="order-row">
                         <div class="order-id-row">
                             <div class="row">
@@ -70,11 +70,11 @@
                             <div class="col-3 d-flex justify-content-end align-items-center py-3 px-4">
                                 <div class="order-status">
                                     <div class="btn">
-                                        @if ($order->od)
-                                            <a href="#">{{ __('Details') }}</a>
-                                        @else
-                                            <a href="#" class="text-danger">{{ __('Cancel') }}</a>
-                                        @endif
+                                        {{-- @if ($order->od) --}}
+                                        <a href="#">{{ __('Details') }}</a>
+                                        {{-- @else --}}
+                                        {{-- <a href="#" class="text-danger">{{ __('Cancel') }}</a>
+                                        @endif --}}
 
                                     </div>
                                     <div class="total">
@@ -85,7 +85,9 @@
                         </div>
 
                     </div>
-                @endforeach
+                @empty
+                    <h3 class="my-5 text-danger text-center">Order Not Found</h3>
+                @endforelse
             </div>
             <div class="paginate mt-3">
                 {!! $pagination !!}
@@ -142,21 +144,26 @@
             $('.order_filter').on('change', function() {
                 var filter_value = $(this).val();
                 var pageNumber = "{{ $pageNumber }}";
+                var status = "{{ $status }}";
                 let url = (
-                    "{{ route('u.order.list', ['filter' => 'filter_value', 'page' => 'pageNumber']) }}"
+                    "{{ route('u.order.list', ['filter' => 'filter_value', 'page' => 'pageNumber', 'status' => '_status']) }}"
                 );
                 let _url = url.replace('filter_value', filter_value);
                 let __url = _url.replace('pageNumber', pageNumber);
-                __url = __url.replace(/&amp;/g, '&');
-                console.log(__url);
+                let ___url = __url.replace('_status', status);
+                ___url = ___url.replace(/&amp;/g, '&');
+                console.log(___url);
                 $.ajax({
-                    url: __url,
+                    url: ___url,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
                         var result = '';
-
                         var orders = data.orders.data;
+                        if (orders.length === 0) {
+                            result =
+                                `<h3 class="my-5 text-danger text-center">Order Not Found</h3>`;
+                        }
                         orders.forEach(function(order) {
                             result += `
                                 <div class="order-row">
@@ -215,13 +222,8 @@
                                                 <div class="col-3 d-flex justify-content-end align-items-center py-3 px-4">
                                                     <div class="order-status">
                                                         <div class="btn">
+                                                            <a href="#">{{ __('Details') }}</a>
                                         `;
-                            if (order.od) {
-                                result += `<a href="#">{{ __('Details') }}</a>`;
-                            } else {
-                                result +=
-                                    `<a href="#" class="text-danger">{{ __('Cancel') }}</a>`;
-                            }
                             result += `
                                                             
                                                         </div>
