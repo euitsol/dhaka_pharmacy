@@ -82,7 +82,7 @@
                         </div>
                     </div>
                     <div class="order-cart-wish d-flex justify-content-center">
-                        <a href="{{ route('u.order.list', ['status' => 'orders']) }}">
+                        <a href="{{ route('u.order.list') }}">
                             <div class="single d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
                                     <img src="{{ asset('user/asset/img/my-order.png') }}" alt="">

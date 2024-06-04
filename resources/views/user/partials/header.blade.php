@@ -15,7 +15,7 @@
                         <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'address') active @endif"
                                 href="{{ route('u.as.list') }}">{{ __('Address') }}</a></li>
                         <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'order') active @endif"
-                                href="{{ route('u.order.list', ['status' => 'orders']) }}">{{ __('Order') }}</a></li>
+                                href="{{ route('u.order.list') }}">{{ __('Orders') }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                         <li><a class="dropdown-item" href="#"><img
                                     src="{{ asset('user/asset/img/manage-account.png') }}" alt="">
                                 <span>{{ __('Manage My Account') }}</span></a></li>
-                        <li><a class="dropdown-item" href="{{ route('u.order.list', ['status' => 'orders']) }}"><img
+                        <li><a class="dropdown-item" href="{{ route('u.order.list') }}"><img
                                     src="{{ asset('user/asset/img/setting.png') }}"
                                     alt=""><span>{{ __('My Orders') }}</span></a></li>
                         <li><a class="dropdown-item" href="#"><img

@@ -12,10 +12,16 @@
                     <div class="show-order d-flex align-items-center">
                         <h4 class="me-2">{{ __('Show:') }}</h4>
                         <select class="form-select order_filter" aria-label="Default select example">
-                            <option value="all">{{ __('All orders') }}</option>
-                            <option value="7">{{ __('Last 7 days') }}</option>
-                            <option value="15">{{ __('Last 15 days') }}</option>
-                            <option value="30">{{ __('Last 30 days') }}</option>
+                            <option value="all" {{ $filterValue == 'all' ? 'selected' : '' }}>{{ __('All orders') }}
+                            </option>
+                            <option value="5" {{ $filterValue == '5' ? 'selected' : '' }}>{{ __('Last 5 orders') }}
+                            </option>
+                            <option value="7" {{ $filterValue == '7' ? 'selected' : '' }}>{{ __('Last 7 days') }}
+                            </option>
+                            <option value="15" {{ $filterValue == '15' ? 'selected' : '' }}>{{ __('Last 15 days') }}
+                            </option>
+                            <option value="30" {{ $filterValue == '30' ? 'selected' : '' }}>{{ __('Last 30 days') }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -71,15 +77,10 @@
                             <div class="col-3 d-flex justify-content-end align-items-center py-3 px-4">
                                 <div class="order-status">
                                     <div class="btn">
-                                        {{-- @if ($order->od) --}}
                                         <a href="#">{{ __('Details') }}</a>
-                                        {{-- @else --}}
-                                        {{-- <a href="#" class="text-danger">{{ __('Cancel') }}</a>
-                                        @endif --}}
-
                                     </div>
                                     <div class="total">
-                                        <p class="total">Total: <span>{{ $order->totalPrice }}</span>tk</p>
+                                        <p class="total text-center">Total: <span>{{ $order->totalPrice }}</span>tk</p>
                                     </div>
                                 </div>
                             </div>
@@ -223,18 +224,16 @@
         $(document).ready(function() {
             $('.order_filter').on('change', function() {
                 var filter_value = $(this).val();
-                var pageNumber = "{{ $pageNumber }}";
                 var status = "{{ $status }}";
                 let url = (
-                    "{{ route('u.order.list', ['filter' => 'filter_value', 'page' => 'pageNumber', 'status' => '_status']) }}"
+                    "{{ route('u.order.list', ['filter' => 'filter_value', 'page' => '1', 'status' => '_status']) }}"
                 );
                 let _url = url.replace('filter_value', filter_value);
-                let __url = _url.replace('pageNumber', pageNumber);
-                let ___url = __url.replace('_status', status);
-                ___url = ___url.replace(/&amp;/g, '&');
-                console.log(___url);
+                let __url = _url.replace('_status', status);
+                __url = __url.replace(/&amp;/g, '&');
+                console.log(__url);
                 $.ajax({
-                    url: ___url,
+                    url: __url,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {

@@ -23,24 +23,23 @@ class UserOrderController extends Controller
     public function order_list(Request $request)
     {
         $status = $request->get('status') ?? request('status');
-        if ($status) {
-            Session::put('user_order_status', $status);
-        } else {
-            $status = Session::get('user_order_status');
-        }
-        $data['pageNumber'] = $request->query('page', 1);
+        $data['pageNumber'] = request('status') ?? $request->query('page', 1);
 
-        $filter_val = request('filter');
+        $filter_val = $request->get('filter') ?? request('filter');
         $data['filterValue'] = $filter_val;
 
         $query = $this->buildOrderQuery($status);
+        $perPage = 10;
         $query->with(['address', 'customer', 'payments', 'ref_user', 'od']);
-        if ($data['pageNumber'] == 1) {
-            if ($filter_val && $filter_val != 'all') {
+        if ($filter_val && $filter_val != 'all') {
+            if ($filter_val == 5) {
+                $query->latest();
+                $perPage = 5;
+            } else {
                 $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
             }
         }
-        $orders =  $query->paginate(5);
+        $orders =  $query->paginate($perPage)->withQueryString();
         $this->prepareOrderData($orders);
 
         $data['orders'] = $orders;
