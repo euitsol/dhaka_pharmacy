@@ -16,7 +16,7 @@ class UserController extends BaseController
         $user = $request->user();
 
         if ($user) {
-            $userData = $user->only('id', 'name', 'email', 'is_verify');
+            $userData = $user->only('id', 'name', 'email');
             return sendResponse(true, 'User information retrived successfully', $userData);
         } else {
             return sendResponse(false, 'User is invalid', null);
