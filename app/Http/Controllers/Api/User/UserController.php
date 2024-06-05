@@ -11,16 +11,15 @@ use Illuminate\View\View;
 
 class UserController extends BaseController
 {
-    public function info(Request $request):JsonResponse
+    public function info(Request $request): JsonResponse
     {
         $user = $request->user();
 
-        if($user){
-            $userData = $user->only('id', 'name', 'email');
+        if ($user) {
+            $userData = $user->only('id', 'name', 'email', 'is_verify');
             return sendResponse(true, 'User information retrived successfully', $userData);
-        }else{
+        } else {
             return sendResponse(false, 'User is invalid', null);
         }
-
     }
 }
