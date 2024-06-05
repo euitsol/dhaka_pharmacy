@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthenticationController extends BaseController
 {
 
-    public function pass_login(LoginRequest $request):JsonResponse
+    public function pass_login(LoginRequest $request): JsonResponse
     {
 
         $phone = $request->phone;
@@ -25,12 +25,12 @@ class AuthenticationController extends BaseController
                 }
 
                 $token = $user->createToken('appToken')->accessToken;
-                return sendResponse(true, 'Successfully logged in', $user->only('id', 'name','phone',), 200, ['token' => $token]);
-            }else{
-                return sendResponse(false, 'Invalid password', null , 401);
+                return sendResponse(true, 'Successfully logged in', $user->only('id', 'name', 'phone',), 200, ['token' => $token]);
+            } else {
+                return sendResponse(false, 'Invalid password', null, 401);
             }
         } else {
-            return sendResponse(false, 'Invalid phone number', null , 401);
+            return sendResponse(false, 'Invalid phone number', null, 401);
         }
     }
 }

@@ -21,7 +21,7 @@ trait TransformOrderItemTrait
         ])
             ->whereIn('id', json_decode($order->carts))
             ->orderBy('created_at', 'asc')
-            ->get()->map(function ($cart_item) {
+            ->get()->each(function ($cart_item) {
                 return $this->transformOrderItemPrice($cart_item);
             });
         return $cart_items;

@@ -15,22 +15,23 @@ use Illuminate\View\View;
 
 class RoleController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
     public function index(): View
     {
-        $data['roles'] = Role::with(['permissions','created_user','updated_user'])->latest()->get()
-        ->map(function($role){
-            $permissionNames = $role->permissions->pluck('name')->implode(' | ');
-            $role->permissionNames = $permissionNames;
-            return $role;
-        });
+        $data['roles'] = Role::with(['permissions', 'created_user', 'updated_user'])->latest()->get()
+            ->each(function ($role) {
+                $permissionNames = $role->permissions->pluck('name')->implode(' | ');
+                $role->permissionNames = $permissionNames;
+                return $role;
+            });
         return view('admin.admin_management.role.index', $data);
     }
     public function details($id): JsonResponse
     {
-        $data = Role::with(['permissions','created_user','updated_user'])->findOrFail($id);
+        $data = Role::with(['permissions', 'created_user', 'updated_user'])->findOrFail($id);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = timeFormate($data->updated_at);
         $data->created_by = c_user_name($data->created_user);
@@ -41,11 +42,11 @@ class RoleController extends Controller
     public function create(): View
     {
         $permissions = Permission::orderBy('name')->get();
-        $data['document'] = Documentation::where('module_key','roll')->first();
+        $data['document'] = Documentation::where('module_key', 'roll')->first();
         $data['groupedPermissions'] = $permissions->groupBy(function ($permission) {
             return $permission->prefix;
         });
-        return view('admin.admin_management.role.create',$data);
+        return view('admin.admin_management.role.create', $data);
     }
     public function store(RoleRequest $req): RedirectResponse
     {
@@ -58,18 +59,16 @@ class RoleController extends Controller
         $role->givePermissionTo($permissions);
         flash()->addSuccess("$role->name role created successfully");
         return redirect()->route('am.role.role_list');
-
-
     }
     public function edit($id): View
     {
         $data['role'] = Role::with('permissions')->findOrFail($id);
         $data['permissions'] = Permission::orderBy('name')->get();
-        $data['document'] = Documentation::where('module_key','roll')->first();
+        $data['document'] = Documentation::where('module_key', 'roll')->first();
         $data['groupedPermissions'] = $data['permissions']->groupBy(function ($permission) {
             return $permission->prefix;
         });
-        return view('admin.admin_management.role.edit',$data);
+        return view('admin.admin_management.role.edit', $data);
     }
 
     public function update(RoleRequest $req, $id): RedirectResponse
@@ -80,7 +79,7 @@ class RoleController extends Controller
         $role->save();
         $permissions = Permission::whereIn('id', $req->permissions)->pluck('name')->toArray();
         $role->syncPermissions($permissions);
-        flash()->addSuccess($role->name.' role updated successfully.');
+        flash()->addSuccess($role->name . ' role updated successfully.');
         return redirect()->route('am.role.role_list');
     }
 
@@ -89,7 +88,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->delete();
 
-        flash()->addSuccess($role->name.' role deleted successfully.');
+        flash()->addSuccess($role->name . ' role deleted successfully.');
         return redirect()->route('am.role.role_list');
     }
 }
