@@ -154,7 +154,7 @@ class LoginController extends Controller
     {
         $credentials = $request->only('phone', 'password');
         $check = User::where('phone', $request->phone)->first();
-        if (isset($check)) {
+        if ($check) {
             if ($check->status == 1) {
                 if (Auth::guard('web')->attempt($credentials)) {
                     Session::forget('data');

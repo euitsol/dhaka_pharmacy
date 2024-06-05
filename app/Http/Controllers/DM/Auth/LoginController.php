@@ -27,22 +27,20 @@ class LoginController extends Controller
     {
         $credentials = $request->only('phone', 'password');
         $check = DistrictManager::where('phone', $request->phone)->first();
-        if(isset($check)){
-            if($check->status == 1){
+        if ($check) {
+            if ($check->status == 1) {
                 if (Auth::guard('dm')->attempt($credentials)) {
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');
                     return redirect()->route('dm.dashboard');
                 }
                 flash()->addError('Invalid credentials');
-            }else{
+            } else {
                 flash()->addError('Your account has been disabled. Please contact support.');
             }
-        }else{
+        } else {
             flash()->addError('District Manager Not Found');
         }
         return redirect()->route('district_manager.login');
-        
-        
     }
 
     public function logout()

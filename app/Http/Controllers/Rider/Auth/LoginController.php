@@ -28,26 +28,25 @@ class LoginController extends Controller
         $credentials = $request->only('phone', 'password');
 
         $check = Rider::where('phone', $request->phone)->first();
-        if(isset($check)){
-            if($check->status == 1){
+        if ($check) {
+            if ($check->status == 1) {
                 if (Auth::guard('rider')->attempt($credentials)) {
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');
                     return redirect()->route('rider.dashboard');
                 }
                 flash()->addError('Invalid credentials');
-            }else{
+            } else {
                 flash()->addError('Your account has been disabled. Please contact support.');
             }
-        }else{
+        } else {
             flash()->addError('Local Area Manager Not Found');
         }
         return redirect()->route('rider.login');
     }
 
     public function logout()
-        {
-            Auth::guard('rider')->logout();
-            return redirect()->route('rider.login');
-        }
-
+    {
+        Auth::guard('rider')->logout();
+        return redirect()->route('rider.login');
+    }
 }
