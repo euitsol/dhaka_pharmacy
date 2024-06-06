@@ -24,7 +24,7 @@ class SingleProductController extends Controller
             ->reject(function ($p) use ($data) {
                 return $p->id == $data['single_product']->id;
             })->shuffle()->each(function ($product) {
-                $product = $this->transformProduct($product, 30);
+                $product = $this->transformProduct($product, 26);
                 $product->units = $this->getSortedUnits($product->unit);
                 return $product;
             });

@@ -20,6 +20,10 @@
     <link href="{{ asset('white') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
+    <!--======== toastr css ========-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('lam/css/custom.css') }}" rel="stylesheet">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -54,6 +58,10 @@
     <script src="{{ asset('white') }}/js/white-dashboard.min.js?v=1.0.0"></script>
     <script src="{{ asset('white') }}/js/theme.js"></script>
     <script src="{{ asset('white') }}/js/color_change.js"></script>
+    <!--======== toastr script ========-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('admin/js/custom.js') }}"></script>
     <script src="{{ asset('lam/js/custom.js') }}"></script>
     @stack('js_link')

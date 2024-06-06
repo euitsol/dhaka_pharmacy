@@ -24,6 +24,7 @@ class WishlistController extends Controller
     {
         $pid = decrypt($pid);
         $wishlist = WishList::where('user_id', user()->id)->where('product_id', $pid)->first();
+
         if ($wishlist) {
             $status = ($wishlist->status == 1) ? 0 : 1;
             $wishlist->status = $status;
@@ -32,12 +33,11 @@ class WishlistController extends Controller
         } else {
             $wishlist = new WishList();
             $wishlist->user_id = user()->id;
-            $wishlist->pid = $pid;
+            $wishlist->product_id = $pid;
+            $wishlist->status = 1;
             $wishlist->created_at = Carbon::now();
-            $wishlist->update();
+            $wishlist->save();
         }
-
-
         $data['status'] = $wishlist->status;
         if ($wishlist->status == 1) {
             $data['message'] = 'The item has been successfully added to your wishlist.';

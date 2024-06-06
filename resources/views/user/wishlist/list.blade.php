@@ -47,7 +47,7 @@
 @section('content')
     <section class="my-order-section">
         <div class="container">
-            <div class="order_wrap">
+            <div class="order_wrap" id="order_wrap">
                 @forelse ($wishes as $wish)
                     <div class="order-row">
                         <div class="row">

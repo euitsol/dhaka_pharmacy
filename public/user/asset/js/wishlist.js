@@ -16,11 +16,15 @@ $(document).ready(function () {
                     toastr.warning(response.message);
                     element.removeClass("fa-solid").addClass("fa-regular");
                 }
-                if (element.parent(".favorite").hasClass("wishlist_item")) {
-                    element
-                        .parent(".wishlist_item")
-                        .closest(".order-row")
-                        .remove();
+                setTimeout(function () {
+                    if (element.parent(".favorite").hasClass("wishlist_item")) {
+                        element.closest(".order-row").remove(); // More efficient parent traversal
+                    }
+                }, 500);
+                if ($(".order-row").length < 2) {
+                    $("#order_wrap").html(
+                        `<h3 class="my-5 text-danger text-center">Wish Item Not Found</h3>`
+                    );
                 }
             },
             error: function (xhr, status, error) {
