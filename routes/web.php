@@ -41,6 +41,7 @@ use App\Http\Controllers\Admin\RiderManagement\RiderKycController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
 use App\Http\Controllers\Admin\SiteSettingsController;
+use App\Http\Controllers\Admin\OrderByPrescriptionController as AdminOrderByPrescriptionController;
 
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
@@ -70,22 +71,24 @@ use App\Http\Controllers\Pharmacy\KYC\KycVerificationController as PharmacyKycVe
 use App\Http\Controllers\Pharmacy\OperationalAreaController as PharmacyOperationalAreaController;
 use App\Http\Controllers\Pharmacy\OrderManagementController as PharmacyOrderManagementController;
 
-use App\Http\Controllers\User\UserProfileController;
-use App\Http\Controllers\User\CheckoutController;
-use App\Http\Controllers\User\PaymentGateway\SslCommerzController;
-use App\Http\Controllers\Auth\LoginController as UserLoginController;
-use App\Http\Controllers\Auth\RegisterController as UserRegisterController;
-use App\Http\Controllers\Auth\ForgotPasswordController as UserForgotPasswordController;
-use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductSearchController;
+
+use App\Http\Controllers\Auth\LoginController as UserLoginController;
+use App\Http\Controllers\Auth\RegisterController as UserRegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController as UserForgotPasswordController;
+use App\Http\Controllers\User\UserProfileController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
 use App\Http\Controllers\User\AddToCartController;
-use App\Http\Controllers\User\OrderPrescriptionController;
+use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
 use App\Http\Controllers\User\UserOrderController;
+
+use App\Http\Controllers\FileUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -575,6 +578,11 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
     });
+
+    Route::controller(AdminOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('obp.')->group(function () {
+        Route::get('/list', 'list')->name('obp_list');
+        Route::get('/details/{id}', 'details')->name('obp_details');
+    });
 });
 
 
@@ -771,7 +779,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
 
 
     //Order By Prescription
-    Route::controller(OrderPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
+    Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
         Route::post('/upload-prescription', 'prescription_upload')->name('up');
     });
 

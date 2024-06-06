@@ -554,6 +554,17 @@
                 </li>
             @endif
 
+            {{-- Order By Prescription --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'ubp',
+                        'routeName' => 'obp.obp_list',
+                        'iconClass' => 'fa-solid fa-book',
+                        'label' => 'Order By Prescription',
+                    ],
+                ],
+            ])
             {{-- Distributed Order  --}}
             @if (mainMenuCheck([
                     'prefixes' => ['do.'],
