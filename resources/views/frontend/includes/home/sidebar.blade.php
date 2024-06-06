@@ -1,3 +1,4 @@
+@include('frontend.includes.upload_prescription')
 <section class="col-md-3 col-lg-2 sidebar-cat-section">
     <div class="col sticky-col pb-4">
         <div class="upload_prescription mb-2">
@@ -19,4 +20,3 @@
         </div>
     </div>
 </section>
-@include('frontend.includes.upload_prescription')
