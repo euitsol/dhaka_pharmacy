@@ -76,7 +76,7 @@ use App\Http\Controllers\User\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\Auth\LoginController as UserLoginController;
 use App\Http\Controllers\Auth\RegisterController as UserRegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController as UserForgotPasswordController;
-
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
@@ -84,6 +84,7 @@ use App\Http\Controllers\Frontend\ProductSearchController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
 use App\Http\Controllers\User\AddToCartController;
+use App\Http\Controllers\User\OrderPrescriptionController;
 use App\Http\Controllers\User\UserOrderController;
 
 /*
@@ -103,6 +104,8 @@ use App\Http\Controllers\User\UserOrderController;
 
 
 Auth::routes();
+//File pond file upload
+Route::post('/file-upload/uploads', [FileUploadController::class, 'uploads'])->name('file.upload');
 // Admin Login Routes
 Route::controller(AdminLoginController::class)->prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', 'adminLogin')->name('login');
@@ -254,7 +257,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::controller(UserKycSettingsController::class)->prefix('settings')->group(function () {
                 Route::get('/', 'kycSettings')->name('user_kyc_settings');
                 Route::post('/', 'kycSettingsUpdate')->name('user_kyc_settings');
-            }); 
+            });
         });
     });
 
@@ -290,7 +293,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::controller(PharmacyKycSettingsController::class)->prefix('settings')->group(function () {
                 Route::get('/', 'kycSettings')->name('pharmacy_kyc_settings');
                 Route::post('/', 'kycSettingsUpdate')->name('pharmacy_kyc_settings');
-            }); 
+            });
         });
     });
     //Admin District Manager Management Routes
@@ -351,7 +354,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::controller(DmKycSettingsController::class)->prefix('settings')->group(function () {
                 Route::get('/', 'kycSettings')->name('district_manager_kyc_settings');
                 Route::post('/', 'kycSettingsUpdate')->name('district_manager_kyc_settings');
-            }); 
+            });
         });
     });
 
@@ -381,12 +384,11 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
                 Route::get('accept/{id}', 'accept')->name('accept.local_area_manager_kyc_status');
                 Route::put('declained/{id}', 'declained')->name('declined.local_area_manager_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('local_area_manager_kyc_delete');
-
             });
             Route::controller(LamKycSettingsController::class)->prefix('settings')->group(function () {
                 Route::get('/', 'kycSettings')->name('local_area_manager_kyc_settings');
                 Route::post('/', 'kycSettingsUpdate')->name('local_area_manager_kyc_settings');
-            }); 
+            });
         });
     });
 
@@ -420,7 +422,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::controller(RiderKycSettingsController::class)->prefix('settings')->group(function () {
                 Route::get('/', 'kycSettings')->name('rider_kyc_settings');
                 Route::post('/', 'kycSettingsUpdate')->name('rider_kyc_settings');
-            }); 
+            });
         });
     });
 
@@ -542,7 +544,6 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('/order-distribution/{id}', 'order_distribution')->name('order_distribution');
             Route::post('/order-distribution/{order_id}', 'order_distribution_store')->name('order_distribution');
         });
-
     });
 
     // Admin Distributed Order
@@ -564,7 +565,6 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('/{status}', 'index')->name('payment_list');
             Route::get('/details/{id}', 'details')->name('payment_details');
         });
-
     });
 
     // Site Settings
@@ -575,14 +575,13 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
     });
-
 });
 
 
 
 
 // Pharmacy Auth Routes
-Route::group(['middleware' => 'pharmacy','as' => 'pharmacy.', 'prefix' => 'pharmacy'], function () {
+Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'pharmacy'], function () {
     Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('profile');
 
 
@@ -710,8 +709,6 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::get('status/{id}', 'status')->name('status.edit');
         Route::get('delete/{id}', 'delete')->name('delete');
     });
-
-
 });
 // Rider Auth Routes
 Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], function () {
@@ -744,7 +741,7 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
 
 
 // User Routes
-Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'], function () {
+Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user'], function () {
     Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
 
@@ -753,12 +750,12 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
         Route::get('/add', 'add_to_cart')->name('product.add_to_cart');
         Route::get('/remove', 'remove_to_cart')->name('product.remove_to_cart');
         Route::get('/clear/{uid}', 'clearCart')->name('product.clear_cart');
-    
+
         Route::get('/item/check/{id}', 'itemCheck')->name('cart.item.check');
         Route::get('/item/quantity/{id}/{type}', 'itemQuantity')->name('cart.item.quantity');
         Route::get('/item/unit/{unit_id}/{cart_id}', 'itemUnit')->name('cart.item.unit');
     });
-    
+
 
     // Checkout Routes
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
@@ -773,6 +770,13 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
     });
 
 
+    //Order By Prescription
+    Route::controller(OrderPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
+        Route::post('/upload-prescription', 'prescription_upload')->name('up');
+    });
+
+
+
     //SSL Commerz Routes
 
     Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {
@@ -785,7 +789,7 @@ Route::group(['middleware' => ['auth','user_phone_verify'], 'prefix' => 'user'],
         Route::post('/cancel', 'cancel')->name('cancel');
         Route::post('/ipn', 'ipn')->name('ipn');
     });
-    
+
 
 
     //Address
@@ -822,4 +826,3 @@ Route::controller(HomePageController::class)->group(function () {
 Route::get('/product-search/{search_value}/{category}', [ProductSearchController::class, 'productSearch'])->name('home.product.search');
 Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
-
