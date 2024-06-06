@@ -19,13 +19,13 @@ class OrderPrescription extends BaseModel
     {
         switch ($this->status) {
             case 0:
-                return 'badge badge-danger';
+                return 'badge badge-info';
             case 1:
-                return 'badge bg-info';
+                return 'badge bg-success';
             case 2:
-                return 'badge badge-primary';
+                return 'badge badge-warning';
             case 3:
-                return 'badge badge-dark';
+                return 'badge badge-danger';
         }
     }
     public function statusTitle()
