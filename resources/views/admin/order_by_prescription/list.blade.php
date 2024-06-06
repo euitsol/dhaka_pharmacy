@@ -1,4 +1,7 @@
 @extends('admin.layouts.master', ['pageSlug' => 'ubp'])
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -28,7 +31,12 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $up->customer->name }}</td>
                                     <td>
-                                        <img src="{{ storage_url($up->image) }}" width="60px" height="60px">
+                                        <div id="lightbox" class="lightbox">
+                                            <div class="lightbox-content">
+                                                <img src="{{ storage_url($up->image) }}" class="lightbox_image">
+                                            </div>
+                                            <div class="close_button fa-beat">X</div>
+                                        </div>
                                     </td>
                                     <td><span class="{{ $up->statusBg() }}">{{ $up->statusTitle() }}</span></td>
                                     <td>{{ timeFormate($up->created_at) }}</td>
@@ -58,3 +66,6 @@
     </div>
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4]])
+@push('js')
+    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
+@endpush

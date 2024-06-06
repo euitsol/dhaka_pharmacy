@@ -560,7 +560,7 @@
                     [
                         'pageSlug' => 'ubp',
                         'routeName' => 'obp.obp_list',
-                        'iconClass' => 'fa-solid fa-book',
+                        'iconClass' => 'fa-regular fa-newspaper',
                         'label' => 'Order By Prescription',
                     ],
                 ],
