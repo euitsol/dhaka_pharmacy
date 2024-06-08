@@ -38,7 +38,7 @@ class AuthenticationController extends BaseController
             return sendResponse(false, 'Invalid phone number', null, 401);
         }
     }
-    public function otp_login(SendOtpRequest $request): JsonResponse
+    public function send_otp(SendOtpRequest $request): JsonResponse
     {
 
         $phone = $request->phone;
@@ -50,8 +50,7 @@ class AuthenticationController extends BaseController
                 $user->otp = otp();
                 $user->phone_verified_at = Carbon::now();
                 $user->save();
-                $token = $user->createToken('appToken')->accessToken;
-                return sendResponse(true, 'The verification code has been sent successfully.', $user->only('id',), 200, ['token' => $token]);
+                return sendResponse(true, 'The verification code has been sent successfully.', $user->only('id'));
             }
         } else {
             return sendResponse(false, 'Phone number didn\'t match.', null, 401);
@@ -68,7 +67,7 @@ class AuthenticationController extends BaseController
                 $user->is_verify = 1;
                 $user->update();
                 $token = $user->createToken('appToken')->accessToken;
-                return sendResponse(true, 'Successfully logged in', $user->only('id', 'name', 'phone',), 200, ['token' => $token]);
+                return sendResponse(true, 'OTP verified successfully and logged in.', $user->only('id', 'name', 'phone',), 200, ['token' => $token]);
             } else {
                 return sendResponse(false, 'OTP didn\'t match. Please try again', null, 401);
             }
@@ -91,39 +90,8 @@ class AuthenticationController extends BaseController
         $user->password = $password;
         $user->otp = otp();
         $user->save();
-        $token = $user->createToken('appToken')->accessToken;
-        return sendResponse(true, 'Your registration was successful, and a verification code has been sent to your phone.', $user->only('id'), 200, ['token' => $token]);
+        return sendResponse(true, 'Your registration was successful, and a verification code has been sent to your phone.', $user->only('id'), 200);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private function check_throttle($user)
