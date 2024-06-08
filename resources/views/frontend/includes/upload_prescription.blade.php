@@ -32,5 +32,6 @@
     <script>
         file_upload(["#prescription"], "uploadfile");
         const auth = "{{ Auth::guard('web')->check() }}";
+        const login_route = "{{ route('login') }}";
     </script>
 @endpush
