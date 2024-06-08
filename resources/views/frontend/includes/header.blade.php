@@ -77,17 +77,7 @@
                             <i class="fa-solid fa-heart me-1"></i>
                             <span>{{ __('Wish List') }}</span>
                         </button>
-                        <div class="offcanvas offcanvas-end" tabindex="-1" id="wishlist"
-                            aria-labelledby="offcanvasRightLabel">
-                            <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('Wish List') }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="offcanvas-body">
-                                <!--========= wishlist content here ========-->
-                            </div>
-                        </div>
+                        @include('frontend.includes.wishlist_slide')
                     </div>
                     <div class="item">
                         <button class="cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"

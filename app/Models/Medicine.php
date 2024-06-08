@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Medicine extends BaseModel
 {
@@ -33,10 +34,12 @@ class Medicine extends BaseModel
         return $this->hasMany(Discount::class, 'pro_id', 'id');
     }
 
-    public function wish(): HasOne
+    public function wish()
     {
-        return $this->hasOne(WishList::class, 'product_id', 'id')
-            ->where('user_id', user()->id);
+        if (Auth::guard('web')->check()) {
+            return $this->hasOne(WishList::class, 'product_id', 'id')
+                ->where('user_id', user()->id);
+        }
     }
     // public function medicine_cat()
     // {

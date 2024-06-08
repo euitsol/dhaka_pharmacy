@@ -57,7 +57,7 @@
                                             </li>
                                         </ul>
                                         <div class="favorite">
-                                            <i class="{{ $single_product->wish && $single_product->wish->status == 1 ? 'fa-solid' : 'fa-regular' }} fa-heart wish_update"
+                                            <i class="{{ $single_product->wish() && $single_product->wish->status == 1 ? 'fa-solid' : 'fa-regular' }} fa-heart wish_update"
                                                 data-pid="{{ encrypt($single_product->id) }}"></i>
                                         </div>
                                     </div>
@@ -535,12 +535,6 @@
     <script type="text/javascript" src="{{ asset('frontend/plugin/xzoom/xzoom.min.js') }}"></script>
 @endpush
 @push('js')
-    <script src="{{ asset('user/asset/js/wishlist.js') }}"></script>
-    <script>
-        const data = {
-            wishlist_url: `{{ route('u.wishlist.update', 'param') }}`,
-        };
-    </script>
     <script>
         // XZoom 
         $(document).ready(function() {

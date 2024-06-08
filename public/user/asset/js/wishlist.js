@@ -17,18 +17,18 @@ $(document).ready(function () {
                     element.removeClass("fa-solid").addClass("fa-regular");
                 }
                 setTimeout(function () {
-                    if (element.parent(".favorite").hasClass("wishlist_item")) {
-                        element.closest(".order-row").remove(); // More efficient parent traversal
+                    if (element.parent().hasClass("wishlist_item")) {
+                        element.closest(".wish_item").remove(); // More efficient parent traversal
                     }
                 }, 500);
-                if ($(".order-row").length < 2) {
-                    $("#order_wrap").html(
+                if ($(".wish_item").length < 2) {
+                    $("#wish_wrap").html(
                         `<h3 class="my-5 text-danger text-center">Wish Item Not Found</h3>`
                     );
                 }
             },
             error: function (xhr, status, error) {
-                toastr.error("Something is wrong!");
+                window.location.href = data.login_url;
                 console.error("Error fetching search data:", error);
             },
         });

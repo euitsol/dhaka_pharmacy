@@ -130,6 +130,9 @@ header{
     object-fit: cover;
     width: 100%;
   }
+  .header-section .right-col .offcanvas .add_to_cart_item .product_details .info{
+    z-index: 9;
+  }
   .header-section .right-col .offcanvas .add_to_cart_item .product_details .info .product_title {
       font-family: "Rubik", sans-serif;
       margin-bottom: .4rem;
@@ -358,6 +361,90 @@ header{
                                               transparent)
   }
 
+
+
+  /* Wish List CSS  */
+  .wish_empty_alert {
+    color: var(--nav-text-gray);
+    
+  }
+  .header-section .right-col .offcanvas .wishes .product_details {
+    position: relative;
+  }
+  .header-section .right-col .offcanvas .wishes .product_details .image img {
+    height: 60px;
+    object-fit: cover;
+    width: 100%;
+  }
+  .header-section .right-col .offcanvas .wishes .product_details .info{
+    z-index: 9;
+  }
+  .header-section .right-col .offcanvas .wishes .product_details .info .product_title {
+      font-family: "Rubik", sans-serif;
+      margin-bottom: .4rem;
+      line-height: 12px;
+  }
+  .header-section .right-col .offcanvas .wishes .product_details .info .product_title a{
+      font-size: 14px;
+      color: var(--text-color-black);
+      transition:.4s;
+  }
+  .header-section .right-col .offcanvas .wishes .product_details .info .product_title a:hover{
+      color: var(--asent-color);
+  }
+  .header-section .right-col .offcanvas .wishes .product_details .info p a{
+      font-family: "Rubik", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 14px;
+      color: var(--text-color-gray);
+      display: block;
+      padding: 0px;
+      margin: 0px;
+  }
+
+  .header-section .right-col .offcanvas .wishes .details .price {
+    color: var(--nav-asent-color);
+    font-size: .9rem;
+    padding: 0;
+    margin: 0;
+  }
+  .header-section .right-col .offcanvas .wishes .details .wish_remove_btn{
+    font-size: 15px;
+    border: 1px solid var(--nav-text-gray);
+    border-radius: 5px;
+    padding: 7px 10px;
+    cursor: pointer;
+    transition: .4s;
+  }
+  .header-section .right-col .offcanvas .wishes .details .wish_remove_btn:hover{
+    border: 1px solid red;
+  }
+
+  .header-section .right-col .offcanvas .wishes .details .details_btn, 
+  .header-section .right-col .offcanvas .wishes .details .order_btn {
+    font-size: 13px;
+    border: 1px solid var(--border-2);
+    display: block;
+    text-align: center;
+    padding: 5px 0px;
+    border-radius: 5px;
+    color: var(--nav-asent-color);
+    transition: .4s;
+  }
+  .header-section .right-col .offcanvas .wishes .details .order_btn {
+    background-color: var(--nav-asent-color);
+    color: var(--nav-text-color);
+    width: 100%;
+  }
+  .header-section .right-col .offcanvas .wishes .details .details_btn:hover{
+    background-color: var(--nav-asent-color);
+    color: var(--nav-text-color);
+  }
+  .header-section .right-col .offcanvas .wishes .details .order_btn:hover {
+    background-color: transparent;
+    color: var(--nav-asent-color);
+  }
   /* New CSS  */
   .header-section .suggestion-box .search_item{
     transition: .4s;

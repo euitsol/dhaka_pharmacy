@@ -2,54 +2,14 @@
 
 @section('title', 'Wish List')
 @push('css')
-    <style>
-        .my-order-section .order-row .order-status .btns .button {
-            height: 60px;
-            width: 185px;
-            border: 2px solid #000;
-            border-radius: 10px;
-            color: var(--text);
-            text-decoration: none;
-            font-size: 24px;
-            font-weight: 400;
-            line-height: 60px;
-            display: inline-block;
-            transition: 0.4s;
-            text-align: center
-        }
-
-        .my-order-section .order-row .order-status .btns .button:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            ;
-        }
-
-        .my-order-section .order-row .order-status .btns {
-            display: flex;
-            gap: 15px;
-            transition: .4s;
-        }
-
-        .my-order-section .order-row .order-status .btns:hover a {
-            color: var(--bs-btn-hover-color);
-            background-color: var(--bs-btn-hover-bg);
-            border-color: var(--bs-btn-hover-border-color);
-        }
-
-        .my-order-section .order-row .order-status .total {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            justify-content: space-between;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('user/asset/css/wishlist.css') }}">
 @endpush
 @section('content')
     <section class="my-order-section">
         <div class="container">
-            <div class="order_wrap" id="order_wrap">
+            <div class="order_wrap" id="wish_wrap">
                 @forelse ($wishes as $wish)
-                    <div class="order-row">
+                    <div class="order-row wish_item">
                         <div class="row">
                             <div class="col-8">
                                 <div class="row">
@@ -85,7 +45,7 @@
                                             @endif
                                         </p>
                                         <div class="favorite wishlist_item me-3 text-danger">
-                                            <i class="{{ $wish->product->wish && $wish->product->wish->status == 1 ? 'fa-solid' : 'fa-regular' }} fa-heart wish_update"
+                                            <i class="fa-solid fa-trash-can wish_update wish_remove_btn"
                                                 data-pid="{{ encrypt($wish->product->id) }}"></i>
                                         </div>
                                     </div>
@@ -106,7 +66,7 @@
 
                     </div>
                 @empty
-                    <h3 class="my-5 text-danger text-center">{{ __('Wish Item Not Found') }}</h3>
+                    <h5 class="text-center wish_empty_alert">{{ __('Wish Item Not Found') }}</h5>
                 @endforelse
             </div>
             <div class="paginate mt-3">
@@ -116,10 +76,5 @@
     </section>
 @endsection
 @push('js')
-    <script src="{{ asset('user/asset/js/wishlist.js') }}"></script>
-    <script>
-        const data = {
-            wishlist_url: `{{ route('u.wishlist.update', 'param') }}`,
-        };
-    </script>
+    @include('frontend.includes.wishlist_js')
 @endpush

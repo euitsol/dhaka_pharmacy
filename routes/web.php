@@ -782,6 +782,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
 
     Route::controller(UserWishlistController::class)->prefix('wishlist')->name('u.wishlist.')->group(function () {
         Route::get('/update/{pid}', 'update')->name('update');
+        Route::get('/refresh', 'refresh')->name('refresh');
         Route::get('/list', 'list')->name('list');
     });
 });

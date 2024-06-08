@@ -1,0 +1,50 @@
+.my-order-section .order-row .order-status .btns .button {
+    height: 60px;
+    width: 185px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 60px;
+    display: inline-block;
+    transition: 0.4s;
+    text-align: center
+}
+
+.my-order-section .order-row .order-status .btns .button:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    ;
+}
+
+.my-order-section .order-row .order-status .btns {
+    display: flex;
+    gap: 15px;
+    transition: .4s;
+}
+
+.my-order-section .order-row .order-status .btns:hover a {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+}
+
+.my-order-section .order-row .order-status .total {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+}
+.my-order-section .order-row .wish_remove_btn{
+    font-size: 15px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 7px 10px;
+    cursor: pointer;
+    transition: .4s;
+  }
+  .my-order-section .order-row .wish_remove_btn:hover{
+    border: 1px solid red;
+  }
