@@ -65,36 +65,46 @@ function get_location(id, target) {
     }
 }
 
-
-function refreshDeliveryFee(e =false){
+function refreshDeliveryFee(e = false) {
     var delivery_fee;
-    if(e == false){
-        $(document).ready(function(){
-            setTimeout(function() {
-                delivery_fee = $('.address:checked').next('label').find('.charge').text().replace(',','');
-                $('.delivery_fee').text(numberFormat(Math.ceil(parseInt(delivery_fee))));
-                $('.delivery_input').val(Math.ceil(parseInt(delivery_fee)));
-                var  total_price = (parseInt($('.total_price').data('total_price'))+parseInt(delivery_fee));
+    if (e == false) {
+        $(document).ready(function () {
+            setTimeout(function () {
+                delivery_fee = $(".address:checked")
+                    .next("label")
+                    .find(".charge")
+                    .text()
+                    .replace(",", "");
+                $(".delivery_fee").text(
+                    numberFormat(Math.ceil(parseInt(delivery_fee)))
+                );
+                $(".delivery_input").val(Math.ceil(parseInt(delivery_fee)));
+                var total_price =
+                    parseInt($(".total_price").data("total_price")) +
+                    parseInt(delivery_fee);
                 total_price = numberFormat(Math.ceil(total_price));
-                $('.total_price').text(total_price);
-    
-                $('.confirm_button').prop('disabled',false);
+                $(".total_price").text(total_price);
+
+                $(".confirm_button").prop("disabled", false);
             }, 1500);
-        }) 
-    }else{
-        delivery_fee = e.next('label').find('.charge').text().replace(',','');
-        $('.delivery_fee').text(numberFormat(Math.ceil(parseInt(delivery_fee))));
-        $('.delivery_input').val(Math.ceil(parseInt(delivery_fee)));
-        var  total_price = (parseInt($('.total_price').data('total_price'))+parseInt(delivery_fee));
+        });
+    } else {
+        delivery_fee = e.next("label").find(".charge").text().replace(",", "");
+        $(".delivery_fee").text(
+            numberFormat(Math.ceil(parseInt(delivery_fee)))
+        );
+        $(".delivery_input").val(Math.ceil(parseInt(delivery_fee)));
+        var total_price =
+            parseInt($(".total_price").data("total_price")) +
+            parseInt(delivery_fee);
         total_price = numberFormat(Math.ceil(total_price));
-        $('.total_price').text(total_price);
+        $(".total_price").text(total_price);
     }
 }
 refreshDeliveryFee();
 
-$(document).ready(function(){
-    $('.address').on('change',function(){
+$(document).ready(function () {
+    $(".address").on("change", function () {
         refreshDeliveryFee($(this));
     });
 });
-
