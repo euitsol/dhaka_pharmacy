@@ -19,6 +19,7 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Customer Name') }}</th>
+                                <th>{{ __('Delivery Address') }}</th>
                                 <th>{{ __('Prescription Image') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Order date') }}</th>
@@ -30,6 +31,7 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $up->customer->name }}</td>
+                                    <td>{{ str_limit($up->address->address, 30) }}</td>
                                     <td>
                                         <div id="lightbox" class="lightbox">
                                             <div class="lightbox-content">
