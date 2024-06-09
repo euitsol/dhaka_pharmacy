@@ -48,3 +48,7 @@
   .my-order-section .order-row .wish_remove_btn:hover{
     border: 1px solid red;
   }
+  .my-order-section .order_wrap .wish_empty_alert {
+    color: rgba(0, 0, 0, .5);
+    
+  }

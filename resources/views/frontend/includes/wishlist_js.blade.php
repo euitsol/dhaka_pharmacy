@@ -18,18 +18,11 @@
                         toastr.warning(response.message);
                         element.removeClass("fa-solid").addClass("fa-regular");
                     }
-                    setTimeout(function() {
-                        if (element.parent().hasClass("wishlist_item")) {
-                            element.closest(".wish_item")
-                                .remove(); // More efficient parent traversal
-                        }
-                    }, 500);
-                    refreshWishlist();
-                    if ($(".wish_item").length < 2) {
-                        $("#wish_wrap").html(
-                            `<h5 class="text-center wish_empty_alert">{{ __('Wish Item Not Found') }}</h5>`
-                        );
+                    if (element.parent().hasClass("wishlist_item")) {
+                        element.closest(".wish_item")
+                            .remove(); // More efficient parent traversal
                     }
+                    refreshWishlist();
                 },
                 error: function(xhr, status, error) {
                     window.location.href = login_url;

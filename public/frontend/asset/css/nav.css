@@ -364,7 +364,7 @@ header{
 
 
   /* Wish List CSS  */
-  .wish_empty_alert {
+  .header-section .right-col .offcanvas .wishes .wish_empty_alert {
     color: var(--nav-text-gray);
     
   }
