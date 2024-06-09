@@ -1,4 +1,6 @@
-@include('frontend.includes.upload_prescription')
+@if (Auth::guard('web')->check())
+    @include('frontend.includes.upload_prescription')
+@endif
 <section class="col-md-3 col-lg-2 sidebar-cat-section">
     <div class="col sticky-col pb-4">
         <div class="upload_prescription mb-2">

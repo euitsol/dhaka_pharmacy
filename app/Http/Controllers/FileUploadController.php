@@ -23,11 +23,30 @@ class FileUploadController extends Controller
             $save->path = $path;
             $save->filename = $filename;
             $save->created_at = Carbon::now()->toDateTimeString();
-            $save->created_by = user()->id;
+            $creater = $this->getCreator($request->creatorType);
+            $save->creater()->associate($creater);
             $save->save();
-
             return $save->id;
         }
         return $request->name;
+    }
+
+
+    private function getCreator($creatorType)
+    {
+        switch ($creatorType) {
+            case 'user':
+                return user();
+            case 'admin':
+                return admin();
+            case 'pharmacy':
+                return pharmacy();
+            case 'rider':
+                return rider();
+            case 'lam':
+                return lam();
+            case 'dm':
+                return dm();
+        }
     }
 }

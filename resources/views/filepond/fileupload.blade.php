@@ -4,7 +4,7 @@
 @endpush
 @push('js')
     <script>
-        function file_upload(selectors, name) {
+        function file_upload(selectors, name, creatorType) {
             $.each(selectors.reverse(), function(index, selector) {
                 FilePond.registerPlugin(FilePondPluginImagePreview);
                 FilePond.registerPlugin(FilePondPluginFileValidateSize);
@@ -33,6 +33,7 @@
                             },
                             ondata: (formData) => {
                                 formData.append("name", name);
+                                formData.append("creatorType", creatorType);
                                 return formData;
                             },
                         },

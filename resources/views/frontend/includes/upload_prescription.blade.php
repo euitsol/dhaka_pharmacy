@@ -11,15 +11,25 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('u.obp.up') }}" method="POST" enctype="multipart/form-data">
+                <form class="up_form" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="prescription">{{ __('Prescription Image') }}</label>
                         <input type="file" name="uploadfile" data-actualName="image" class="form-control"
                             id="prescription" accept="image/*">
                     </div>
+                    <div class="form-group">
+                        <label for="address">{{ __('Delivery Address') }}</label>
+                        <select name="address_id" id="address" class="form-control">
+                            <option value="">{{ __('Select Delivery Address') }}</option>
+                            @foreach (user()->address as $address)
+                                <option value="{{ $address->id }}" {{ $address->is_default == 1 ? 'selected' : '' }}>
+                                    {{ str_limit($address->address, 90) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group text-end mt-3">
-                        <input type="submit" class="btn btn-success" value="Submit">
+                        <a href="javascript:void(0)" class="btn btn-success up_submit_btn">{{ __('Submit') }}</a>
                     </div>
                 </form>
             </div>
@@ -30,8 +40,11 @@
 @push('js')
     <script src="{{ asset('user/asset/js/up.js') }}"></script>
     <script>
-        file_upload(["#prescription"], "uploadfile");
-        const auth = "{{ Auth::guard('web')->check() }}";
-        const login_route = "{{ route('login') }}";
+        file_upload(["#prescription"], "uploadfile", "user");
+        const data = {
+            'auth': `{{ Auth::guard('web')->check() }}`,
+            'login_route': `{{ route('login') }}`,
+            'upload_route': `{{ route('u.obp.up') }}`,
+        };
     </script>
 @endpush

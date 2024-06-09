@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text("filename");
             $table->timestamps();
             $table->softDeletes();
-            $this->addAuditColumns($table);
+            $this->addMorphedAuditColumns($table);
         });
     }
 
