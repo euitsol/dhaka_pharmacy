@@ -20,9 +20,12 @@ class OrderByPrescriptionController extends Controller
     {
         return $this->middleware('admin');
     }
-    public function list(): View
+    public function list($status): View
     {
-        $data['ups'] = OrderPrescription::with(['customer', 'address'])->orderBy('status', 'asc')->get();
+        $data['status'] = $status;
+        $status = $this->status($status);
+        $data['statusBg'] = $this->statusBg($status);
+        $data['ups'] = OrderPrescription::with(['customer', 'address'])->where('status', $status)->latest()->get();
         return view('admin.order_by_prescription.list', $data);
     }
     public function details($id): View
@@ -84,5 +87,34 @@ class OrderByPrescriptionController extends Controller
         $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order'], $data['order_items']);
         $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order'], $data['order_items']);
         return view('admin.order_by_prescription.order_details', $data);
+    }
+
+
+
+    private function statusBg($status)
+    {
+        switch ($status) {
+            case 0:
+                return 'badge badge-info';
+            case 1:
+                return 'badge bg-success';
+            case 2:
+                return 'badge badge-warning';
+            case 3:
+                return 'badge badge-danger';
+        }
+    }
+    private function status($status)
+    {
+        switch ($status) {
+            case 'pending':
+                return 0;
+            case 'ordered':
+                return 1;
+            case 'disclosed':
+                return 2;
+            case 'cancel':
+                return 3;
+        }
     }
 }

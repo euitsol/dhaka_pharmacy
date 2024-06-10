@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'ubp'])
+@extends('admin.layouts.master', ['pageSlug' => "ubp_$status"])
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 @endpush
@@ -10,6 +10,9 @@
                     <div class="row">
                         <div class="col-8">
                             <h4 class="card-title">{{ __('Order By Prescription List') }}</h4>
+                        </div>
+                        <div class="col-4 text-end">
+                            <span class="{{ $statusBg }}">{{ $status }}</span>
                         </div>
                     </div>
                 </div>

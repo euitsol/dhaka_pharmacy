@@ -580,7 +580,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
     });
 
     Route::controller(AdminOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('obp.')->group(function () {
-        Route::get('/list', 'list')->name('obp_list');
+        Route::get('/list/{status}', 'list')->name('obp_list');
         Route::get('/details/{id}', 'details')->name('obp_details');
         Route::get('/details/order/{order_id}', 'orderDetails')->name('order.obp_details');
         Route::get('/get-unit/{mid}', 'getUnit')->name('get_unit.obp_details');

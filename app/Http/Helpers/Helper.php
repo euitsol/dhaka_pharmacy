@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Crypt;
 //This will retun the route prefix of the routes for permission check
 function get_permission_routes()
 {
-  return [
-            'am.','um.','pm.','om.','rm.','opa.','do.','pym.','push.','settings.','dm_management.','lam_management','product.','payment_gateway.'
-        ];
+    return [
+        'am.', 'um.', 'pm.', 'om.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management', 'product.', 'payment_gateway.', 'obp.'
+    ];
 }
 
 //This will check the permission of the given route name. Can be used for buttons
@@ -26,9 +26,8 @@ function check_access_by_route_name($routeName = null): bool
 
 
 
-    if($routeName == null){
+    if ($routeName == null) {
         $routeName = Route::currentRouteName();
-
     }
     $allowedPrefixes = get_permission_routes();
 
@@ -76,72 +75,81 @@ function createCSV($filename = 'permissions.csv'): string
     return public_path('csv/' . $filename);
 }
 
-function storage_url($urlOrArray){
+function storage_url($urlOrArray)
+{
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
         $result = '';
         $count = 0;
         $itemCount = count($urlOrArray);
         foreach ($urlOrArray as $index => $url) {
 
-            $result .= $url ? asset('storage/'.$url) : asset('frontend\default\cat_img.png');
+            $result .= $url ? asset('storage/' . $url) : asset('frontend\default\cat_img.png');
 
-            if($count === $itemCount - 1) {
+            if ($count === $itemCount - 1) {
                 $result .= '';
-            }else{
+            } else {
                 $result .= ', ';
             }
             $count++;
         }
         return $result;
     } else {
-        return $urlOrArray ? asset('storage/'.$urlOrArray) : asset('frontend\default\cat_img.png');
+        return $urlOrArray ? asset('storage/' . $urlOrArray) : asset('frontend\default\cat_img.png');
     }
 }
 
-function timeFormate($time){
+function timeFormate($time)
+{
     $dateFormat = env('DATE_FORMAT', 'd-M-Y');
     $timeFormat = env('TIME_FORMAT', 'H:i A');
-    return date($dateFormat." ".$timeFormat, strtotime($time));
+    return date($dateFormat . " " . $timeFormat, strtotime($time));
 }
 
-function user(){
+function user()
+{
     return auth()->guard('web')->user();
 }
-function admin(){
+function admin()
+{
     return auth()->guard('admin')->user();
 }
-function pharmacy(){
+function pharmacy()
+{
     return auth()->guard('pharmacy')->user();
 }
-function dm(){
+function dm()
+{
     return auth()->guard('dm')->user();
 }
-function lam(){
+function lam()
+{
     return auth()->guard('lam')->user();
 }
-function rider(){
+function rider()
+{
     return auth()->guard('rider')->user();
 }
 
-function mainMenuCheck($array){
+function mainMenuCheck($array)
+{
     $check = false;
 
     $allowedPrefixes = get_permission_routes();
-    foreach($array['prefixes'] as $prefix){
-        if(in_array($prefix, $allowedPrefixes)){
-            foreach($array['routes'] as $route){
+    foreach ($array['prefixes'] as $prefix) {
+        if (in_array($prefix, $allowedPrefixes)) {
+            foreach ($array['routes'] as $route) {
                 if (auth()->user()->can($route)) {
                     $check = true;
                     break;
                 }
             }
         }
-
     }
     return $check;
 }
 
-function availableTimezones(){
+function availableTimezones()
+{
     $timezones = [];
     $timezoneIdentifiers = DateTimeZone::listIdentifiers();
 
@@ -159,24 +167,27 @@ function availableTimezones(){
 
     return $timezones;
 }
-function settings($key){
-    $setting = SiteSetting::where('key',$key)->where('deleted_at', null)->first();
-    if($setting){
+function settings($key)
+{
+    $setting = SiteSetting::where('key', $key)->where('deleted_at', null)->first();
+    if ($setting) {
         return $setting->value;
     }
 }
 
 
-function file_name_from_url($url = null){
-    if($url){
+function file_name_from_url($url = null)
+{
+    if ($url) {
         $fileNameWithExtension = basename($url);
         return $fileNameWithExtension;
     }
 }
 
 
-function file_title_from_url($url = null){
-    if($url){
+function file_title_from_url($url = null)
+{
+    if ($url) {
         $fileTitle = pathinfo($url, PATHINFO_FILENAME);
         return $fileTitle;
     }
@@ -186,11 +197,13 @@ function removeHttpProtocol($url)
     return str_replace(['http://', 'https://'], '', $url);
 }
 
-function str_limit($data, $limit = 20, $end = '...'){
+function str_limit($data, $limit = 20, $end = '...')
+{
     return Str::limit($data, $limit, $end);
 }
 
-function generateOrderId() {
+function generateOrderId()
+{
     // $alphaPart = strtoupper(Str::random(3)); // Generates 3 random uppercase letters
     $numericPart = mt_rand(100000, 999999); // Generates 5 random alphanumeric characters
 
@@ -198,28 +211,30 @@ function generateOrderId() {
     $date = date('d'); // Generates 5 random alphanumeric characters
 
 
-    return $alphaPart.$date.$numericPart;
+    return $alphaPart . $date . $numericPart;
 }
-function generateTranId() {
+function generateTranId()
+{
     $prefix = 'SSL'; // Specify the prefix
     $numericPart = mt_rand(100000, 999999); // Generates 5 random alphanumeric characters
     $date = date('d'); // Generates 5 random alphanumeric characters
 
-    return $prefix.$date.$numericPart;
+    return $prefix . $date . $numericPart;
 }
 
-function calculateProductDiscount($product, $isPercent = false) {
+function calculateProductDiscount($product, $isPercent = false)
+{
     $discount = $product->discounts->where('status', 1)->first();
-    if($discount){
-        if($isPercent){
+    if ($discount) {
+        if ($isPercent) {
             if (!empty($discount->discount_amount)) {
-                return ($discount->discount_amount/$product->price)*100;
+                return ($discount->discount_amount / $product->price) * 100;
             } elseif (!empty($discount->discount_percentage)) {
                 return $discount->discount_percentage;
             } else {
                 return 0; // No discount
             }
-        }else{
+        } else {
             if (!empty($discount->discount_amount)) {
                 return $discount->discount_amount;
             } elseif (!empty($discount->discount_percentage)) {
@@ -229,61 +244,62 @@ function calculateProductDiscount($product, $isPercent = false) {
             }
         }
     }
-    
-    
 }
 
 function cartItemRegPrice($cart)
 {
     $unit = $cart->unit ? $cart->unit->quantity : 1;
-    return  ($cart->product->price*$unit* $cart->quantity);
+    return ($cart->product->price * $unit * $cart->quantity);
 }
 function cartItemPrice($cart)
 {
-    $product_discount = proDisPrice($cart->product->price,$cart->product->discounts);
+    $product_discount = proDisPrice($cart->product->price, $cart->product->discounts);
     $unit = $cart->unit ? $cart->unit->quantity : 1;
-    return ($product_discount*$unit* $cart->quantity);
-   
+    return ($product_discount * $unit * $cart->quantity);
 }
 
 function proDisPrice($price, $pro_discounts)
-    {
-        $discount = $pro_discounts->where('status',1)->first();
-        if($discount){
-            if(!empty($discount->discount_amount)){
-                return ($price - $discount->discount_amount);
-            }
-            else if(!empty($discount->discount_percentage)){
-                return ($price - (($price/100)*$discount->discount_percentage));
-            }
+{
+    $discount = $pro_discounts->where('status', 1)->first();
+    if ($discount) {
+        if (!empty($discount->discount_amount)) {
+            return ($price - $discount->discount_amount);
+        } else if (!empty($discount->discount_percentage)) {
+            return ($price - (($price / 100) * $discount->discount_percentage));
         }
-        return $price;
-        
     }
-function formatPercentageNumber($number) {
-    $formattedNumber = rtrim(rtrim(number_format($number,2), '0'), '.');
+    return $price;
+}
+function formatPercentageNumber($number)
+{
+    $formattedNumber = rtrim(rtrim(number_format($number, 2), '0'), '.');
     return $formattedNumber;
 }
 
-function otp(){
+function otp()
+{
     // $otp =  mt_rand(100000, 999999);
     $otp =  '000000';
     return $otp;
 }
 
-function get_taka_icon(){
+function get_taka_icon()
+{
     return '&#2547; ';
 }
 
 
-function c_user_name($user){
+function c_user_name($user)
+{
     return $user->name ?? 'System';
 }
-function u_user_name($user){
+function u_user_name($user)
+{
     return $user->name ?? '--';
 }
 
-function readablePrepTime($start_time, $end_time){
+function readablePrepTime($start_time, $end_time)
+{
     $duration = Carbon::parse($end_time)->diff(Carbon::parse($start_time));
     $formattedDuration = '';
     if ($duration->h > 0) {
@@ -295,45 +311,51 @@ function readablePrepTime($start_time, $end_time){
     return $formattedDuration;
 }
 
-function prepTotalSeconds($start_time, $end_time){
+function prepTotalSeconds($start_time, $end_time)
+{
     $duration = Carbon::parse($end_time)->diff(Carbon::parse($start_time));
     $totalSeconds = $duration->s + ($duration->i * 60) + ($duration->h * 3600) + ($duration->days * 86400);
     return $totalSeconds;
 }
 
 
-function formatOperationArea($pharmacy) {
+function formatOperationArea($pharmacy)
+{
     return $pharmacy->operation_area ? '(' . $pharmacy->operation_area->name . ($pharmacy->operation_sub_area ? ' - ' : ')') : '';
 }
-function sendResponse($success, $message, $data = null, $statusCode = 200, $additional = null){
-        $responseData = [
-            'success' => $success,
-            'message' => $message,
-            'data' => $data
-        ];
-        if (!empty($additional) && is_array($additional)) {
-            $responseData = array_merge($responseData, $additional);
-        }
+function sendResponse($success, $message, $data = null, $statusCode = 200, $additional = null)
+{
+    $responseData = [
+        'success' => $success,
+        'message' => $message,
+        'data' => $data
+    ];
+    if (!empty($additional) && is_array($additional)) {
+        $responseData = array_merge($responseData, $additional);
+    }
 
-        return response()->json($responseData, $statusCode);
+    return response()->json($responseData, $statusCode);
 }
 
-function formatOperationSubArea($pharmacy) {
+function formatOperationSubArea($pharmacy)
+{
     return $pharmacy->operation_sub_area ? ($pharmacy->operation_area ? $pharmacy->operation_sub_area->name . ' )' : '( ' . $pharmacy->operation_sub_area->name . ' )') : '';
 }
 
-function formatPharmacyOption($pharmacy) {
+function formatPharmacyOption($pharmacy)
+{
     $area = formatOperationArea($pharmacy);
     $sub_area = formatOperationSubArea($pharmacy);
     return $pharmacy->name . $area . $sub_area;
 }
 
-function abbreviateName($name) {
+function abbreviateName($name)
+{
     $words = explode(' ', $name);
     if (count($words) == 1) {
         return $name;
     }
-    $abbreviated = array_map(function($word) {
+    $abbreviated = array_map(function ($word) {
         return strtoupper(substr($word, 0, 1));
     }, array_slice($words, 0, -1));
     $abbreviated[] = end($words);
