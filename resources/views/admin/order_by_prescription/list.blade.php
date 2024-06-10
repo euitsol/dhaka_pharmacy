@@ -20,6 +20,7 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Customer Name') }}</th>
                                 <th>{{ __('Delivery Address') }}</th>
+                                <th>{{ __('Delivery Type') }}</th>
                                 <th>{{ __('Prescription Image') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Order date') }}</th>
@@ -32,6 +33,7 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $up->customer->name }}</td>
                                     <td>{{ str_limit($up->address->address, 30) }}</td>
+                                    <td>{{ ucwords($up->delivery_type) }}</td>
                                     <td>
                                         <div id="lightbox" class="lightbox">
                                             <div class="lightbox-content">
@@ -43,15 +45,27 @@
                                     <td><span class="{{ $up->statusBg() }}">{{ $up->statusTitle() }}</span></td>
                                     <td>{{ timeFormate($up->created_at) }}</td>
                                     <td>
-                                        @include('admin.partials.action_buttons', [
-                                            'menuItems' => [
-                                                [
-                                                    'routeName' => 'obp.obp_details',
-                                                    'params' => [encrypt($up->id)],
-                                                    'label' => 'Details',
+                                        @if ($up->status == 1)
+                                            @include('admin.partials.action_buttons', [
+                                                'menuItems' => [
+                                                    [
+                                                        'routeName' => 'obp.order.obp_details',
+                                                        'params' => [encrypt($up->order_id)],
+                                                        'label' => 'Details',
+                                                    ],
                                                 ],
-                                            ],
-                                        ])
+                                            ])
+                                        @else
+                                            @include('admin.partials.action_buttons', [
+                                                'menuItems' => [
+                                                    [
+                                                        'routeName' => 'obp.obp_details',
+                                                        'params' => [encrypt($up->id)],
+                                                        'label' => 'Details',
+                                                    ],
+                                                ],
+                                            ])
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

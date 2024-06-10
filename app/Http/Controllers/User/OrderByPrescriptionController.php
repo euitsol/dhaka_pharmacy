@@ -31,6 +31,7 @@ class OrderByPrescriptionController extends Controller
                 Storage::deleteDirectory($temp_file->path);
                 $up->image = $to_path;
                 $up->address_id = $request->address_id;
+                $up->delivery_type = $request->delivery_type;
                 $up->user_id = user()->id;
                 $up->save();
                 $temp_file->delete();

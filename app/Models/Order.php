@@ -13,8 +13,6 @@ class Order extends BaseModel
     protected $fillable = [
         'status',
         'address_id',
-        'customer_id',
-        'customer_type',
         'ref_user',
         'carts',
         'status',
@@ -25,24 +23,29 @@ class Order extends BaseModel
         'delivery_type',
     ];
 
-    public function address(){
+    public function address()
+    {
         return $this->belongsTo(Address::class, 'address_id');
     }
 
-    public function customer(){
+    public function customer()
+    {
         return $this->morphTo();
     }
-    public function payments(){
-        return $this->hasMany(Payment::class, 'order_id','id');
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'order_id', 'id');
     }
 
-    public function ref_user(){
+    public function ref_user()
+    {
         return $this->belongsTo(User::class, 'ref_user');
     }
 
-    public function scopeStatus($query, $status){
+    public function scopeStatus($query, $status)
+    {
         $db_status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
-        return $query->where('status',$db_status);
+        return $query->where('status', $db_status);
     }
 
     public function od(): HasOne
@@ -51,7 +54,8 @@ class Order extends BaseModel
     }
 
 
-    public function statusBg() {
+    public function statusBg()
+    {
         switch ($this->status) {
             case 0:
                 return 'badge badge-secondary';
@@ -69,8 +73,9 @@ class Order extends BaseModel
                 return 'badge badge-primary';
         }
     }
-    
-    public function statusTitle() {
+
+    public function statusTitle()
+    {
         switch ($this->status) {
             case 0:
                 return 'Initiated';

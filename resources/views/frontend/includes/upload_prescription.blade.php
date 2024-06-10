@@ -13,13 +13,14 @@
             <div class="modal-body">
                 <form class="up_form" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group">
-                        <label for="prescription">{{ __('Prescription Image') }}</label>
-                        <input type="file" name="uploadfile" data-actualName="image" class="form-control"
+                    <div class="form-group mb-3">
+                        <label for="prescription">{{ __('Prescription Image') }}<span
+                                class="text-danger">*</span></label>
+                        <input type="file" name="uploadfile" data-actualName="image" class="form-control filepond"
                             id="prescription" accept="image/*">
                     </div>
-                    <div class="form-group">
-                        <label for="address">{{ __('Delivery Address') }}</label>
+                    <div class="form-group mb-3">
+                        <label for="address">{{ __('Delivery Address') }}<span class="text-danger">*</span></label>
                         <select name="address_id" id="address" class="form-control">
                             <option value="">{{ __('Select Delivery Address') }}</option>
                             @if (user())
@@ -29,6 +30,14 @@
                                         {{ str_limit($address->address, 90) }}</option>
                                 @endforeach
                             @endif
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>{{ __('Shipping') }}<span class="text-danger">*</span></label>
+                        <select name="delivery_type" class="form-control" id="delivery_type">
+                            <option value="">{{ __('Select Delivery Type') }} </option>
+                            <option value="normal">{{ __('Normal-Delivery') }} </option>
+                            <option value="standard">{{ __('Standard-Delivery') }} </option>
                         </select>
                     </div>
                     <div class="form-group text-end mt-3">

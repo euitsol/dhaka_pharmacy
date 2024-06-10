@@ -43,6 +43,18 @@
                 });
             });
         }
+
+        function resetForm(form) {
+            form[0].reset();
+            const filePondSelectors = Array.from(form.find('.filepond--browser'));
+            filePondSelectors.forEach((selector) => {
+                const pond = FilePond.find(selector);
+                if (pond) {
+                    pond.removeFiles();
+                    pond.destroy();
+                }
+            });
+        }
     </script>
 @endpush
 @push('js_link')

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UploadPrescriptionRequest extends FormRequest
+class PrescriptionOrderCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class UploadPrescriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'uploadfile' => 'required|image|mimes:jpeg,png,gif,jpg,webp',
-            'address_id' => 'required|exists:addresses,id',
-            'delivery_type' => 'required',
+            'item.*.medicine' => 'required|exists:medicines,id',
+            'item.*.unit' => 'required|exists:medicine_units,id',
+            'item.*.quantity' => 'required|numeric',
         ];
     }
 }
