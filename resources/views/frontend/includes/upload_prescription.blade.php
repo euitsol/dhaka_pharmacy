@@ -22,10 +22,13 @@
                         <label for="address">{{ __('Delivery Address') }}</label>
                         <select name="address_id" id="address" class="form-control">
                             <option value="">{{ __('Select Delivery Address') }}</option>
-                            @foreach (user()->address as $address)
-                                <option value="{{ $address->id }}" {{ $address->is_default == 1 ? 'selected' : '' }}>
-                                    {{ str_limit($address->address, 90) }}</option>
-                            @endforeach
+                            @if (user())
+                                @foreach (user()->address as $address)
+                                    <option value="{{ $address->id }}"
+                                        {{ $address->is_default == 1 ? 'selected' : '' }}>
+                                        {{ str_limit($address->address, 90) }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                     <div class="form-group text-end mt-3">
