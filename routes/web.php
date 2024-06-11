@@ -108,7 +108,12 @@ use App\Http\Controllers\FileUploadController;
 
 Auth::routes();
 //File pond file upload
-Route::post('/file-upload/uploads', [FileUploadController::class, 'uploads'])->name('file.upload');
+Route::controller(FileUploadController::class)->prefix('file-upload')->name('file.')->group(function () {
+    Route::post('/uploads', 'uploads')->name('upload');
+    Route::delete('/delete-temp-file', 'deleteTempFile')->name('delete');
+    Route::post('/reset', 'resetFilePond')->name('reset');
+});
+
 // Admin Login Routes
 Route::controller(AdminLoginController::class)->prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', 'adminLogin')->name('login');

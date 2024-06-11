@@ -37,24 +37,53 @@
                                 return formData;
                             },
                         },
+                        revert: {
+                            url: "/delete-temp-file",
+                            method: "DELETE",
+                            headers: {
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                            },
+                            onerror: (response_data) => {
+                                console.log(response_data);
+                            },
+                        },
                         fetch: null,
-                        revert: null,
                     },
                 });
             });
         }
 
-        function resetForm(form) {
-            form[0].reset();
-            const filePondSelectors = Array.from(form.find('.filepond--browser'));
-            filePondSelectors.forEach((selector) => {
-                const pond = FilePond.find(selector);
-                if (pond) {
-                    pond.removeFiles();
-                    pond.destroy();
-                }
-            });
-        }
+        // function fp_modal_close(selectors) {
+        //     // Iterate through each selector
+        //     $.each(selectors, function(index, selector) {
+        //         let inputElement = document.querySelector(selector);
+        //         let pond = FilePond.create(inputElement);
+        //         pondFiles = pond.getFiles();
+        //         pondFiles.forEach(fileItem => {
+        //             let indexOfLessThan = fileItem.source.indexOf('<');
+        //             if (indexOfLessThan !== -1) {
+        //                 let filed_id = fileItem.source.substring(0, indexOfLessThan);
+        //                 $.ajax({
+        //                     url: "{{ route('file.reset') }}", // Replace with your endpoint URL
+        //                     method: 'POST',
+        //                     headers: {
+        //                         "X-CSRF-TOKEN": "{{ csrf_token() }}",
+        //                     },
+        //                     data: {
+        //                         filed_id: filed_id
+        //                     },
+        //                     success: function(response) {
+        //                         console.log('Success:', response);
+        //                     },
+        //                     error: function(xhr, status, error) {
+        //                         console.error('Error:', error);
+        //                     }
+        //                 });
+        //             }
+        //         });
+
+        //     });
+        // }
     </script>
 @endpush
 @push('js_link')

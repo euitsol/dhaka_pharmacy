@@ -22,7 +22,6 @@ class UploadPrescriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'uploadfile' => 'required|image|mimes:jpeg,png,gif,jpg,webp',
             'address_id' => 'required|exists:addresses,id',
             'delivery_type' => 'required',
         ];

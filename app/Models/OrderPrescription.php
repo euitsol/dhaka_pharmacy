@@ -10,14 +10,6 @@ class OrderPrescription extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'user_id',
-        'address_id',
-        'order_id',
-        'status',
-        'delivery_type',
-    ];
-
     public function customer()
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -53,6 +53,9 @@
     <script src="{{ asset('user/asset/js/up.js') }}"></script>
     <script>
         file_upload(["#prescription"], "uploadfile", "user");
+        // $('.up_modal').on('hide.bs.modal', () => {
+        //     fp_modal_close(["#prescription"])
+        // });
         const data = {
             'auth': `{{ Auth::guard('web')->check() }}`,
             'login_route': `{{ route('login') }}`,

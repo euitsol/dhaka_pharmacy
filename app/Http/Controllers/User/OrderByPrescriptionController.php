@@ -20,28 +20,29 @@ class OrderByPrescriptionController extends Controller
     }
     public function prescription_upload(UploadPrescriptionRequest $request): JsonResponse
     {
-        $data = [];
+
         try {
+            $data = [];
             $up = new OrderPrescription();
             $temp_file = TempFile::findOrFail($request->image);
             if ($temp_file) {
-                $from_path = $temp_file->path . '/' . $temp_file->filename;
-                $to_path = 'prescription/' . user()->name . '_' . time() . '/' . $temp_file->filename;
+                $from_path = 'public/' . $temp_file->path . '/' . $temp_file->filename;
+                $to_path = 'prescription/' . str_replace(' ', '-', user()->name) . '/' . time() . '/' . $temp_file->filename;
                 Storage::move($from_path, 'public/' . $to_path);
-                Storage::deleteDirectory($temp_file->path);
                 $up->image = $to_path;
                 $up->address_id = $request->address_id;
                 $up->delivery_type = $request->delivery_type;
                 $up->user_id = user()->id;
                 $up->save();
-                $temp_file->delete();
+                Storage::deleteDirectory('public/' . $temp_file->path);
+                $temp_file->forceDelete();
                 $data['message'] = 'Order by prescription successfully done';
             } else {
                 $data['message'] = 'Something is wrong, please try again';
             }
             return response()->json($data);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Somethings is wrong, please try again'], 500);
+            return response()->json(['message' => 'Somethings is wrong'], 500);
         }
     }
 }

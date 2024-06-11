@@ -18,7 +18,6 @@ $(document).ready(function () {
             data: form.serialize(),
             success: function (response) {
                 $(".invalid-feedback").remove();
-                resetForm(form);
                 $(".up_modal").modal("hide");
                 toastr.success(response.message);
             },

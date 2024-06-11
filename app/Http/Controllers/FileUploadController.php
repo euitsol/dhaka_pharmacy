@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TempFile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 
 class FileUploadController extends Controller
 {
@@ -15,9 +15,8 @@ class FileUploadController extends Controller
             $file = $request->file($request->name);
             $filename = $file->getClientOriginalName();
             $folder = uniqid();
-            $file->storeAs('file/tmp/' . $folder, $filename);
+            $file->storeAs('file/tmp/' . $folder, $filename, 'public');
             $path = "file/tmp/" . $folder;
-            // $url = "file/tmp/" . $folder . "/" . $filename;
 
             $save = new TempFile();
             $save->path = $path;
@@ -30,6 +29,29 @@ class FileUploadController extends Controller
         }
         return $request->name;
     }
+
+    public function deleteTempFile()
+    {
+
+        $temp_file = TempFile::findOrFail(request()->getContent());
+        if ($temp_file) {
+            Storage::deleteDirectory('public/' . $temp_file->path);
+            $temp_file->forceDelete();
+            return response()->json(['message' => 'Revert success']);
+        }
+    }
+
+    // public function resetFilePond(Request $request)
+    // {
+    //     $fileId = $request->input('fileId');
+    //     dd($fileId);
+    //     $temp_file = TempFile::findOrFail($fileId);
+    //     if ($temp_file) {
+    //         Storage::deleteDirectory('public/' . $temp_file->path);
+    //         $temp_file->forceDelete();
+    //         return response()->json(['message' => 'Revert success']);
+    //     }
+    // }
 
 
     private function getCreator($creatorType)
