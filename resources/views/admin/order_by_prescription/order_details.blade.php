@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'ubp'])
+@extends('admin.layouts.master', ['pageSlug' => 'ubp_' . $up->statusTitle()])
 @push('css')
     <link rel="stylesheet" href="{{ asset('admin/css/ordermanagement.css') }}">
 @endpush
@@ -96,6 +96,7 @@
                                                 @include('admin.partials.button', [
                                                     'routeName' => 'obp.obp_list',
                                                     'className' => 'btn-primary',
+                                                    'params' => $up->statusTitle(),
                                                     'label' => 'Back',
                                                 ])
                                             </div>

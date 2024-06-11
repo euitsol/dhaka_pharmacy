@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderPrescription extends BaseModel
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = [
+        'status',
+    ];
 
     public function customer()
     {
@@ -40,13 +43,13 @@ class OrderPrescription extends BaseModel
     {
         switch ($this->status) {
             case 0:
-                return 'Pending';
+                return 'pending';
             case 1:
-                return 'Ordered';
+                return 'ordered';
             case 2:
-                return 'Disclosed';
+                return 'disclosed';
             case 3:
-                return 'Cancel';
+                return 'cancel';
         }
     }
 }

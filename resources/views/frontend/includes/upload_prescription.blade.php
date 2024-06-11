@@ -54,7 +54,7 @@
     <script>
         file_upload(["#prescription"], "uploadfile", "user");
         // $('.up_modal').on('hide.bs.modal', () => {
-        //     fp_modal_close(["#prescription"])
+        //     fp_modal_close(["#prescription"]);
         // });
         const data = {
             'auth': `{{ Auth::guard('web')->check() }}`,

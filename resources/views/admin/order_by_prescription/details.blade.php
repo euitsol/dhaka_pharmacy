@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'ubp'])
+@extends('admin.layouts.master', ['pageSlug' => 'ubp_' . $up->statusTitle()])
 @section('content')
     <div class="row">
         <div class="col-md-6">
@@ -84,6 +84,24 @@
                         <div class="col-8">
                             <h4 class="card-title">{{ __('Order By Prescription Details') }}</h4>
                         </div>
+                        @if ($up->status == 0)
+                            <div class="col-4">
+                                <div class="buttons text-end">
+                                    @include('admin.partials.button', [
+                                        'routeName' => 'obp.status_update',
+                                        'className' => 'btn-primary',
+                                        'params' => ['status' => 'disclosed', 'id' => Crypt::encrypt($up->id)],
+                                        'label' => 'Disclosed',
+                                    ])
+                                    @include('admin.partials.button', [
+                                        'routeName' => 'obp.status_update',
+                                        'className' => 'btn-primary',
+                                        'params' => ['status' => 'cancel', 'id' => Crypt::encrypt($up->id)],
+                                        'label' => 'Cancel',
+                                    ])
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">

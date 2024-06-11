@@ -52,7 +52,6 @@
                 });
             });
         }
-
         // function fp_modal_close(selectors) {
         //     // Iterate through each selector
         //     $.each(selectors, function(index, selector) {

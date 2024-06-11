@@ -88,6 +88,13 @@ class OrderByPrescriptionController extends Controller
         $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order'], $data['order_items']);
         return view('admin.order_by_prescription.order_details', $data);
     }
+    public function statusUpdate($status, $id)
+    {
+        $id = decrypt($id);
+        $statusN = $this->status($status);
+        OrderPrescription::findOrFail($id)->update(['status' => $statusN]);
+        return redirect()->route('obp.obp_list', $status);
+    }
 
 
 
