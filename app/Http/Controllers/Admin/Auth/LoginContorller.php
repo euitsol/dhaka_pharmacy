@@ -27,7 +27,7 @@ class LoginContorller extends Controller
     {
         $credentials = $request->only('email', 'password');
         $check = Admin::where('email', $request->email)->first();
-        if (isset($check)) {
+        if ($check) {
             if ($check->status == 1) {
                 if (Auth::guard('admin')->attempt($credentials)) {
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');

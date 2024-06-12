@@ -17,12 +17,10 @@
             ])
 
             {{-- Admin Management --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['am.'],
-                    'routes'=>['admin_list','role_list','permission_list']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['am.'],
+                    'routes' => ['admin_list', 'role_list', 'permission_list'],
+                ]))
                 <li>
                     <a class="@if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') @else collapsed @endif" data-toggle="collapse"
                         href="#admin-management"
@@ -62,12 +60,10 @@
             @endif
 
             {{-- User Management --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['um.'],
-                    'routes'=>['user_list','user_kyc_list','user_kyc_settings']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['um.'],
+                    'routes' => ['user_list', 'user_kyc_list', 'user_kyc_settings'],
+                ]))
                 <li>
                     <a class="@if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'user_kyc_list' || $pageSlug == 'user_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#user-management"
@@ -109,12 +105,10 @@
             @endif
 
             {{-- Pharmacy Management --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['pm.'],
-                    'routes'=>['pharmacy_list','pharmacy_kyc_list','pharmacy_kyc_settings']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['pm.'],
+                    'routes' => ['pharmacy_list', 'pharmacy_kyc_list', 'pharmacy_kyc_settings'],
+                ]))
                 <li>
                     <a class="@if (
                         $pageSlug == 'pharmacy' ||
@@ -172,31 +166,20 @@
             @endif
 
             {{-- DM Management --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['dm_management.'],
-                    'routes'=>['district_manager_list','district_manager_kyc_list','district_manager_kyc_settings']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['dm_management.'],
+                    'routes' => ['district_manager_list', 'district_manager_kyc_list', 'district_manager_kyc_settings'],
+                ]))
                 <li>
-                    <a class="@if (
-                        $pageSlug == 'district_manager' ||
-                            $pageSlug == 'dm_kyc_list' ||
-                            $pageSlug == 'dm_kyc_settings') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'district_manager' || $pageSlug == 'dm_kyc_list' || $pageSlug == 'dm_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#district_manager"
-                        @if (
-                            $pageSlug == 'district_manager' ||
-                                $pageSlug == 'dm_kyc_list' ||
-                                $pageSlug == 'dm_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'district_manager' || $pageSlug == 'dm_kyc_list' || $pageSlug == 'dm_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-map-location-dot"></i>
                         <span class="nav-link-text">{{ __('DM Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if (
-                        $pageSlug == 'district_manager' ||
-                            $pageSlug == 'dm_kyc_list' ||
-                            $pageSlug == 'dm_kyc_settings') show @endif" id="district_manager">
+                    <div class="collapse @if ($pageSlug == 'district_manager' || $pageSlug == 'dm_kyc_list' || $pageSlug == 'dm_kyc_settings') show @endif" id="district_manager">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -233,12 +216,10 @@
             @endif
 
             {{-- LAM Management --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['lam_management.'],
-                    'routes'=>['local_area_manager_list','local_area_manager_kyc_list','local_area_manager_kyc_settings']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['lam_management.'],
+                    'routes' => ['local_area_manager_list', 'local_area_manager_kyc_list', 'local_area_manager_kyc_settings'],
+                ]))
                 <li>
                     <a class="@if ($pageSlug == 'local_area_manager' || $pageSlug == 'lam_kyc_list' || $pageSlug == 'lam_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#local_area_manager"
@@ -285,12 +266,10 @@
             @endif
 
             {{-- Rider Management --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['rm.'],
-                    'routes'=>['rider_list','rider_kyc_list','rider_kyc_settings']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['rm.'],
+                    'routes' => ['rider_list', 'rider_kyc_list', 'rider_kyc_settings'],
+                ]))
                 <li>
                     <a class="@if ($pageSlug == 'rider' || $pageSlug == 'rider_kyc_list' || $pageSlug == 'rider_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#rider"
@@ -317,14 +296,12 @@
                                         'subMenu' => [
                                             [
                                                 'subLabel' => 'KYC List',
-                                                'subRouteName' =>
-                                                    'rm.rider_kyc.kyc_list.rider_kyc_list',
+                                                'subRouteName' => 'rm.rider_kyc.kyc_list.rider_kyc_list',
                                                 'subPageSlug' => 'rider_kyc_list',
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
-                                                'subRouteName' =>
-                                                    'rm.rider_kyc.rider_kyc_settings',
+                                                'subRouteName' => 'rm.rider_kyc.rider_kyc_settings',
                                                 'subPageSlug' => 'rider_kyc_settings',
                                             ],
                                         ],
@@ -337,28 +314,20 @@
             @endif
 
             {{-- Operational Area Management --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['opa.'],
-                    'routes'=>['operation_area_list','operation_sub_area_list']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['opa.'],
+                    'routes' => ['operation_area_list', 'operation_sub_area_list'],
+                ]))
                 <li>
-                    <a class="@if (
-                            $pageSlug == 'operation_area' ||
-                            $pageSlug == 'operation_sub_area') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'operation_area' || $pageSlug == 'operation_sub_area') @else collapsed @endif" data-toggle="collapse"
                         href="#opa"
-                        @if (
-                                $pageSlug == 'operation_area' ||
-                                $pageSlug == 'operation_sub_area') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'operation_area' || $pageSlug == 'operation_sub_area') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-earth-americas"></i>
                         <span class="nav-link-text">{{ __('Operational Areas') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if (
-                            $pageSlug == 'operation_area' ||
-                            $pageSlug == 'operation_sub_area') show @endif" id="opa">
+                    <div class="collapse @if ($pageSlug == 'operation_area' || $pageSlug == 'operation_sub_area') show @endif" id="opa">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -380,12 +349,18 @@
             @endif
 
             {{-- Product Management --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['product.'],
-                    'routes'=>['medicine_list','product_category_list','product_sub_category_list','generic_name_list','company_name_list','medicine_strength_list','medicine_unit_list']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['product.'],
+                    'routes' => [
+                        'medicine_list',
+                        'product_category_list',
+                        'product_sub_category_list',
+                        'generic_name_list',
+                        'company_name_list',
+                        'medicine_strength_list',
+                        'medicine_unit_list',
+                    ],
+                ]))
                 <li>
                     <a class="@if (
                         $pageSlug == 'medicine_generic_name' ||
@@ -471,12 +446,10 @@
             @endif
 
             {{-- Notifications --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['push.'],
-                    'routes'=>['ns']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['push.'],
+                    'routes' => ['ns'],
+                ]))
                 <li>
                     <a class="@if ($pageSlug == 'push_notification') @else collapsed @endif" data-toggle="collapse"
                         href="#notification"
@@ -504,22 +477,38 @@
             @endif
 
             {{-- Order Managements --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['om.'],
-                    'routes'=>['order_list']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['om.'],
+                    'routes' => ['order_list'],
+                ]))
                 <li>
-                    <a class="@if ($pageSlug == 'order_Success' || $pageSlug == 'order_details' || $pageSlug == 'order_Failed' || $pageSlug == 'order_Cancel' || $pageSlug == 'order_Pending' || $pageSlug == 'order_Initiated') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if (
+                        $pageSlug == 'order_Success' ||
+                            $pageSlug == 'order_details' ||
+                            $pageSlug == 'order_Failed' ||
+                            $pageSlug == 'order_Cancel' ||
+                            $pageSlug == 'order_Pending' ||
+                            $pageSlug == 'order_Initiated') @else collapsed @endif" data-toggle="collapse"
                         href="#order_management"
-                        @if ($pageSlug == 'order_Success' || $pageSlug == 'order_details' || $pageSlug == 'order_Failed' || $pageSlug == 'order_Cancel' || $pageSlug == 'order_Pending' || $pageSlug == 'order_Initiated') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if (
+                            $pageSlug == 'order_Success' ||
+                                $pageSlug == 'order_details' ||
+                                $pageSlug == 'order_Failed' ||
+                                $pageSlug == 'order_Cancel' ||
+                                $pageSlug == 'order_Pending' ||
+                                $pageSlug == 'order_Initiated') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-truck-fast"></i>
                         <span class="nav-link-text">{{ __('Order Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'order_Success' || $pageSlug == 'order_details' || $pageSlug == 'order_Failed' || $pageSlug == 'order_Cancel' || $pageSlug == 'order_Pending' || $pageSlug == 'order_Initiated') show @endif" id="order_management">
+                    <div class="collapse @if (
+                        $pageSlug == 'order_Success' ||
+                            $pageSlug == 'order_details' ||
+                            $pageSlug == 'order_Failed' ||
+                            $pageSlug == 'order_Cancel' ||
+                            $pageSlug == 'order_Pending' ||
+                            $pageSlug == 'order_Initiated') show @endif" id="order_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -566,22 +555,50 @@
             @endif
 
             {{-- Distributed Order  --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['do.'],
-                    'routes'=>['do_list']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['do.'],
+                    'routes' => ['do_list'],
+                ]))
                 <li>
-                    <a class="@if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders'|| $pageSlug == 'order_dispute' || $pageSlug == 'order_cancel' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_delivered' || $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if (
+                        $pageSlug == 'order_pending' ||
+                            $pageSlug == 'order_preparing' ||
+                            $pageSlug == 'dispute_orders' ||
+                            $pageSlug == 'order_dispute' ||
+                            $pageSlug == 'order_cancel' ||
+                            $pageSlug == 'order_waiting-for-pickup' ||
+                            $pageSlug == 'order_waiting-for-rider' ||
+                            $pageSlug == 'order_picked-up' ||
+                            $pageSlug == 'order_delivered' ||
+                            $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
                         href="#distributed_order"
-                        @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders'|| $pageSlug == 'order_dispute' || $pageSlug == 'order_cancel'  || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_delivered' || $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if (
+                            $pageSlug == 'order_pending' ||
+                                $pageSlug == 'order_preparing' ||
+                                $pageSlug == 'dispute_orders' ||
+                                $pageSlug == 'order_dispute' ||
+                                $pageSlug == 'order_cancel' ||
+                                $pageSlug == 'order_waiting-for-pickup' ||
+                                $pageSlug == 'order_waiting-for-rider' ||
+                                $pageSlug == 'order_picked-up' ||
+                                $pageSlug == 'order_delivered' ||
+                                $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-network-wired"></i>
                         <span class="nav-link-text">{{ __('Distributed Orders') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders'|| $pageSlug == 'order_dispute' || $pageSlug == 'order_cancel'  || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_delivered' || $pageSlug == 'order_finish') show @endif" id="distributed_order">
+                    <div class="collapse @if (
+                        $pageSlug == 'order_pending' ||
+                            $pageSlug == 'order_preparing' ||
+                            $pageSlug == 'dispute_orders' ||
+                            $pageSlug == 'order_dispute' ||
+                            $pageSlug == 'order_cancel' ||
+                            $pageSlug == 'order_waiting-for-pickup' ||
+                            $pageSlug == 'order_waiting-for-rider' ||
+                            $pageSlug == 'order_picked-up' ||
+                            $pageSlug == 'order_delivered' ||
+                            $pageSlug == 'order_finish') show @endif" id="distributed_order">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -643,7 +660,7 @@
                                     ],
                                     [
                                         'pageSlug' => 'order_cancel',
-                                        'routeName' => 'do.dispute.do_list',
+                                        'routeName' => 'do.do_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'cancel',
                                         'label' => 'Cancel Orders',
@@ -655,22 +672,38 @@
                 </li>
             @endif
             {{-- Payment Management  --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['pym.'],
-                    'routes'=>['payment_list']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['pym.'],
+                    'routes' => ['payment_list'],
+                ]))
                 <li>
-                    <a class="@if ($pageSlug == 'payment_Success' || $pageSlug == 'payment_details' || $pageSlug == 'payment_Failed' || $pageSlug == 'payment_Cancel' || $pageSlug == 'payment_Pending' || $pageSlug == 'payment_Processing') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if (
+                        $pageSlug == 'payment_Success' ||
+                            $pageSlug == 'payment_details' ||
+                            $pageSlug == 'payment_Failed' ||
+                            $pageSlug == 'payment_Cancel' ||
+                            $pageSlug == 'payment_Pending' ||
+                            $pageSlug == 'payment_Processing') @else collapsed @endif" data-toggle="collapse"
                         href="#payment_management"
-                        @if ($pageSlug == 'payment_Success' || $pageSlug == 'payment_details' || $pageSlug == 'payment_Failed' || $pageSlug == 'payment_Cancel' || $pageSlug == 'payment_Pending' || $pageSlug == 'payment_Processing') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if (
+                            $pageSlug == 'payment_Success' ||
+                                $pageSlug == 'payment_details' ||
+                                $pageSlug == 'payment_Failed' ||
+                                $pageSlug == 'payment_Cancel' ||
+                                $pageSlug == 'payment_Pending' ||
+                                $pageSlug == 'payment_Processing') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-credit-card"></i>
                         <span class="nav-link-text">{{ __('Payment Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'payment_Success' || $pageSlug == 'payment_details' || $pageSlug == 'payment_Failed' || $pageSlug == 'payment_Cancel' || $pageSlug == 'payment_Pending' || $pageSlug == 'payment_Processing') show @endif" id="payment_management">
+                    <div class="collapse @if (
+                        $pageSlug == 'payment_Success' ||
+                            $pageSlug == 'payment_details' ||
+                            $pageSlug == 'payment_Failed' ||
+                            $pageSlug == 'payment_Cancel' ||
+                            $pageSlug == 'payment_Pending' ||
+                            $pageSlug == 'payment_Processing') show @endif" id="payment_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -715,15 +748,13 @@
                     </div>
                 </li>
             @endif
-            
+
 
             {{-- Payment Gateways --}}
-            @if(mainMenuCheck(
-                [
-                    'prefixes'=>['payment_gateway.'],
-                    'routes'=>['pg_ssl_commerz']
-                ]
-            ))
+            @if (mainMenuCheck([
+                    'prefixes' => ['payment_gateway.'],
+                    'routes' => ['pg_ssl_commerz'],
+                ]))
                 <li>
                     <a class="@if ($pageSlug == 'ssl_commerz') @else collapsed @endif" data-toggle="collapse"
                         href="#payment_gateway"

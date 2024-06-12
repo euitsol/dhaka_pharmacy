@@ -32,17 +32,17 @@ class LoginController extends Controller
         $credentials = $request->only('phone', 'password');
 
         $check = LocalAreaManager::where('phone', $request->phone)->first();
-        if(isset($check)){
-            if($check->status == 1){
+        if ($check) {
+            if ($check->status == 1) {
                 if (Auth::guard('lam')->attempt($credentials)) {
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');
                     return redirect()->route('lam.dashboard');
                 }
                 flash()->addError('Invalid credentials');
-            }else{
+            } else {
                 flash()->addError('Your account has been disabled. Please contact support.');
             }
-        }else{
+        } else {
             flash()->addError('Local Area Manager Not Found');
         }
         return redirect()->route('local_area_manager.login');
@@ -63,21 +63,19 @@ class LoginController extends Controller
             'password' => Hash::make($request->password),
             'dm_id' => $request->dm_id,
         ]);
-        $credentials = $request->only('phone', 'password','dm_id');
+        $credentials = $request->only('phone', 'password', 'dm_id');
         Auth::guard('lam')->attempt($credentials);
 
         return redirect()->route('local_area_manager.login');
-        
-        
     }
 
-    function reference($id){
-        $data = DistrictManager::where('id',$id)->first();
-        if(!$data){
-            return response()->json(['status'=>false]);
+    function reference($id)
+    {
+        $data = DistrictManager::where('id', $id)->first();
+        if (!$data) {
+            return response()->json(['status' => false]);
         }
-        return response()->json(['status'=>true]);
-        
+        return response()->json(['status' => true]);
     }
     public function logout()
     {

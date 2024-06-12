@@ -12,6 +12,17 @@ class Order extends BaseModel
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'status',
+        'address_id',
+        'customer_id',
+        'customer_type',
+        'ref_user',
+        'carts',
+        'status',
+        'payment_getway',
+        'order_id',
+        'promo_code',
+        'delivery_fee',
+        'delivery_type',
     ];
 
     public function address(){

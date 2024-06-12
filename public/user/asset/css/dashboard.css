@@ -1,5 +1,6 @@
 .dashboard-main-section{
     padding-top: 25px;
+    min-height: calc(100vh - 189px);
 }
 .dashboard-main-section .col-left .single-box{
     padding: 30px 20px;
@@ -369,13 +370,13 @@ width: 50px;
     font-size: 19px;
     line-height: 23px;
     font-weight: 600;
-    padding-bottom: 30px;
+    padding: 30px 0;
 }
 
 /*================= My Order page ===================*/
 .my-order-section{
-    padding-top: 70px;
-    padding-bottom: 70px;
+    /* padding-top: 70px; */
+    /* padding-bottom: 70px; */
 }
 .my-order-section .page-title h3{
     font-size: 24px;

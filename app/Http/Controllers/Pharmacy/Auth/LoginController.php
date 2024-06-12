@@ -27,17 +27,17 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         $check = Pharmacy::where('email', $request->email)->first();
-        if(isset($check)){
-            if($check->status == 1){
+        if ($check) {
+            if ($check->status == 1) {
                 if (Auth::guard('pharmacy')->attempt($credentials)) {
                     flash()->addSuccess('Welcome to Dhaka Pharmacy');
                     return redirect()->route('pharmacy.dashboard');
                 }
                 flash()->addError('Invalid credentials');
-            }else{
+            } else {
                 flash()->addError('Your account has been disabled. Please contact support.');
             }
-        }else{
+        } else {
             flash()->addError('Pharmacy User Not Found');
         }
         return redirect()->route('pharmacy.login');

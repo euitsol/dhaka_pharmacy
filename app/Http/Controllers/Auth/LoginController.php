@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SendOtpRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
@@ -31,19 +32,9 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
+    private $otpResentTime = 1;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
@@ -163,17 +154,17 @@ class LoginController extends Controller
     {
         $credentials = $request->only('phone', 'password');
         $check = User::where('phone', $request->phone)->first();
-        if(isset($check)){
-            if($check->status == 1){
+        if ($check) {
+            if ($check->status == 1) {
                 if (Auth::guard('web')->attempt($credentials)) {
                     Session::forget('data');
                     return redirect()->route('user.dashboard');
                 }
                 flash()->addError('Invalid credentials');
-            }else{
+            } else {
                 flash()->addError('Your account has been disabled. Please contact support.');
             }
-        }else{
+        } else {
             flash()->addError('User Not Found');
         }
         return redirect()->route('login');
@@ -192,21 +183,29 @@ class LoginController extends Controller
         return redirect()->route('login');
     }
 
-    public function send_otp(SendOtpRequest $req) {
+    public function send_otp(SendOtpRequest $req)
+    {
         try {
-            $user = User::where('phone',$req->phone)->first();
-            $data['user']=$user;
-            if($user){
-                $user->otp = otp();
-                $user->save();
-                $data['success'] = true;
-                $data['message'] = 'The verification code has been sent successfully.';
-                $data['url'] = route('use.send_otp');
+            $user = User::where('phone', $req->phone)->first();
+            $data['user'] = $user;
+            if ($user) {
+                if ($this->check_throttle($user)) {
+                    $data['success'] = false;
+                    $data['error'] = '';
+                    $data['message'] = $this->check_throttle($user);
+                } else {
+                    $user->otp = otp();
+                    $user->phone_verified_at = Carbon::now();
+                    $user->save();
+                    $data['success'] = true;
+                    $data['message'] = 'The verification code has been sent successfully.';
+                    $data['url'] = route('use.send_otp');
 
-                $s['uid'] = encrypt($data['user']->id);
-                $s['otp'] = true;
-                Session::put('data', $s);
-            }else{
+                    $s['uid'] = encrypt($data['user']->id);
+                    $s['otp'] = true;
+                    Session::put('data', $s);
+                }
+            } else {
                 $data['success'] = false;
                 $data['error'] = 'Phone number didn\'t match.';
                 $data['message'] = 'User Not Found';
@@ -217,51 +216,74 @@ class LoginController extends Controller
             return response()->json(['message' => 'An error occurred'], 500);
         }
     }
-    public function verify(){
-        $data=[];
-        if(isset(Session::get('data')['uid'])){
-            $data['uid']=decrypt(Session::get('data')['uid']);
+
+    public function check_throttle($user)
+    {
+        if ($user->phone_verified_at !== null) {
+            $timeSinceLastOtp = now()->diffInMinutes($user->phone_verified_at);
+            if ($timeSinceLastOtp < $this->otpResentTime) {
+                return 'Please wait before requesting another verification otp as one has already been sent recently';
+            }
         }
-        if(isset(Session::get('data')['message'])){
+        return false;
+    }
+
+    public function verify()
+    {
+        $data = [];
+        if (isset(Session::get('data')['uid'])) {
+            $data['uid'] = decrypt(Session::get('data')['uid']);
+        }
+        if (isset(Session::get('data')['message'])) {
             flash()->addSuccess(Session::get('data')['message']);
         }
         $session = Session::get('data');
         unset($session['message']);
         Session::put('data', $session);
 
-        if(isset(Session::get('data')['otp'])){
+        if (isset(Session::get('data')['otp'])) {
             $data['otp'] = Session::get('data')['otp'];
-            return view('auth.login',$data);
+            return view('auth.login', $data);
         }
         return redirect()->route('login');
     }
-    public function send_otp_again() {
-            $uid = Session::get('data')['uid'];
-            $user = User::findOrFail(decrypt($uid));
+    public function send_otp_again()
+    {
+        $uid = Session::get('data')['uid'];
+        $user = User::findOrFail(decrypt($uid));
+        if ($this->check_throttle($user)) {
+            $data['success'] = false;
+            $data['message'] = $this->check_throttle($user);
+        } else {
             $user->otp = otp();
+            $user->phone_verified_at = Carbon::now();
             $user->save();
+            $data['success'] = true;
             $data['message'] = 'The verification code has been sent successfully.';
-            return response()->json($data);
+        }
+
+        return response()->json($data);
     }
-    public function otp_verify(Request $req) {
-            $uid = Session::get('data')['uid'];
-            $user = User::where('id',decrypt($uid))->first();
-            $otp = implode('', $req->otp);
-            if($user){
-                if($user->otp == $otp){
-                    $user->is_verify = 1;
-                    $user->update();
-                    if(isset(Session::get('data')['forgot'])){
-                        return redirect()->route('user.reset.password');
-                    }
-                    Session::forget('data');
-                    Auth::guard('web')->login($user);
-                }else{
-                    flash()->addSuccess('OTP didn\'t match. Please try again');
+    public function otp_verify(Request $req)
+    {
+        $uid = Session::get('data')['uid'];
+        $user = User::where('id', decrypt($uid))->first();
+        $otp = implode('', $req->otp);
+        if ($user) {
+            if ($user->otp == $otp) {
+                $user->is_verify = 1;
+                $user->update();
+                if (isset(Session::get('data')['forgot'])) {
+                    return redirect()->route('user.reset.password');
                 }
-            }else{
-                flash()->addSuccess('Something is wrong! please try again.');
+                Session::forget('data');
+                Auth::guard('web')->login($user);
+            } else {
+                flash()->addSuccess('OTP didn\'t match. Please try again');
             }
-            return redirect()->back();
+        } else {
+            flash()->addSuccess('Something is wrong! please try again.');
+        }
+        return redirect()->back();
     }
 }

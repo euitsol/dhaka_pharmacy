@@ -11,11 +11,11 @@
                 <div class="nav-menu ps-5">
                     <ul class="navbar-nav flex-row">
                         <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'dashboard') active @endif"
-                                href="{{ route('user.dashboard') }}">Dashboard</a></li>
+                                href="{{ route('user.dashboard') }}">{{ __('Dashboard') }}</a></li>
                         <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'address') active @endif"
-                                href="{{ route('u.as.list') }}">Address</a></li>
+                                href="{{ route('u.as.list') }}">{{ __('Address') }}</a></li>
                         <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'order') active @endif"
-                                href="{{ route('u.order.list') }}">Order</a></li>
+                                href="{{ route('u.order.list') }}">{{ __('Orders') }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     </a>
                 </div>
                 <div class="name me-3">
-                    <a href="#">{{abbreviateName('Al Kafi Sohag')}}</a>
+                    <a href="#">{{ abbreviateName('Al Kafi Sohag') }}</a>
                 </div>
                 <div class="profile">
                     <a href="javascript:void(0)" class="nav-link dropdown-toggle" type="button" data-toggle="dropdown"
@@ -44,21 +44,21 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" href="#"><img
                                     src="{{ asset('user/asset/img/manage-account.png') }}" alt="">
-                                <span>Manage My Account</span></a></li>
-                        <li><a class="dropdown-item" href="#"><img src="{{ asset('user/asset/img/setting.png') }}"
-                                    alt=""><span>My
-                                    Orders</span></a></li>
+                                <span>{{ __('Manage My Account') }}</span></a></li>
+                        <li><a class="dropdown-item" href="{{ route('u.order.list') }}"><img
+                                    src="{{ asset('user/asset/img/setting.png') }}"
+                                    alt=""><span>{{ __('My Orders') }}</span></a></li>
                         <li><a class="dropdown-item" href="#"><img
-                                    src="{{ asset('user/asset/img/wishlist.png') }}" alt=""><span>My
-                                    Wishlist</span></a></li>
+                                    src="{{ asset('user/asset/img/wishlist.png') }}"
+                                    alt=""><span>{{ __('My Wishlist') }}</span></a></li>
                         <li><a class="dropdown-item" href="#"><img
-                                    src="{{ asset('user/asset/img/reviews.png') }}" alt=""><span>My
-                                    Reviews</span></a></li>
+                                    src="{{ asset('user/asset/img/reviews.png') }}"
+                                    alt=""><span>{{ __('My Reviews') }}</span></a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)"
                                 onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"><img
                                     src="{{ asset('user/asset/img/logout.png') }}"
-                                    alt=""><span>Logout</span></a></li>
+                                    alt=""><span>{{ __('Logout') }}</span></a></li>
                     </ul>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf

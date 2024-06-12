@@ -8,7 +8,8 @@
             let url = ("{{ route('product.add_to_cart', ['product' => 'product_slug']) }}");
             if (unit_id) {
                 url = (
-                    "{{ route('product.add_to_cart', ['product' => 'product_slug', 'unit' => 'unit_id']) }}");
+                    "{{ route('product.add_to_cart', ['product' => 'product_slug', 'unit' => 'unit_id']) }}"
+                );
                 url = url.replace('unit_id', unit_id);
             }
             let _url = url.replace('product_slug', product_slug);
@@ -25,14 +26,15 @@
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    
+
 
 
 
                     if (data.atc) {
                         let regular_price = '';
-                        if(data.atc.product.discount){
-                            regular_price = `<h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!}  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_price,2)}</span></del></h4>`;
+                        if (data.atc.product.discount) {
+                            regular_price =
+                                `<h4 class="text-end"> <del class="text-danger"> {!! get_taka_icon() !!}  <span class="item_count_regular_price">${numberFormat(data.atc.product.data_item_price,2)}</span></del></h4>`;
                         }
                         var count = data.count;
                         var result = `
@@ -66,7 +68,7 @@
 
 
                                                 <div class="row align-items-center atc_functionality">
-                                                    <div class="item_units col-7">
+                                                    <div class="item_units col-8">
                                                         <div class="form-group my-1 boxed">
                         `;
                         var random_num1 = Math.floor(100000 + Math.random() * 900000);
@@ -87,7 +89,7 @@
                                             <img src="${unit.image}">
                                         </label>
                                     `;
-                                    random_num1++;   
+                            random_num1++;
                         });
                         result += `
                                             </div>
@@ -95,7 +97,7 @@
 
 
                                         {{-- Plus Minus  --}}
-                                        <div class="plus_minus col-5 ps-md-4 d-flex align-items-center justify-between">
+                                        <div class="plus_minus col-4 ps-md-4 d-flex align-items-center justify-between">
                                             <div class="form-group">
                                                 <div class="input-group" role="group">
                                                     <a href="javascript:void(0)" data-id="${data.atc.id}" class="btn btn-sm minus_btn "><i class="fa-solid fa-minus"></i></a>
@@ -109,19 +111,19 @@
                                 </div>
                             </div>
                         `;
-                        item_append.prepend(result);
+                        item_append.append(result);
                         cart_empty_alert.remove();
                         atc_total.html(plus_atc_total);
                         toastr.success(data.alert);
                         $('.order_button').removeClass('disabled');
-                        
+
                         refreshSubtotal();
                     } else {
                         toastr.error(data.alert);
                     }
                 },
                 error: function(xhr, status, error) {
-                    var loginUrl = '{{ route("login") }}';
+                    var loginUrl = '{{ route('login') }}';
                     window.location.href = loginUrl;
                     console.error('Error add to cart data:', error);
                 }
@@ -165,8 +167,8 @@
 
         $(document).on('click', '.cart_clear_btn', function() {
             let uid = $(this).data('uid');
-            let url = "{{ route('product.clear_cart',['uid'=>'id']) }}";
-            let _url = url.replace('id',uid);
+            let url = "{{ route('product.clear_cart', ['uid' => 'id']) }}";
+            let _url = url.replace('id', uid);
             let cartItemContainer = $(this).parent('.offcanvas-header').next('.add_to_carts');
             let atc_total = $('#cart_btn_quantity strong');
             var text = "<h5 class='text-center cart_empty_alert'>{{ __('Add some product') }}</h5>";
@@ -198,7 +200,7 @@
     //Price Calculation 
     ////////////////////////////////////////////////////
 
-    
+
 
     // Price Refresh Function 
     function updateItemPrice(element) {
@@ -210,8 +212,8 @@
         var total_regular_price = itemRegularPrice * currentVal;
 
         var itemContainer = element.closest('.add_to_cart_item');
-        itemContainer.find('.item_count_price').html(numberFormat(total_price,2));
-        itemContainer.find('.item_count_regular_price').html(numberFormat(total_regular_price,2));
+        itemContainer.find('.item_count_price').html(numberFormat(total_price, 2));
+        itemContainer.find('.item_count_regular_price').html(numberFormat(total_regular_price, 2));
         refreshSubtotal();
     }
 
@@ -222,7 +224,7 @@
         $('.add_to_carts').find('.add_to_cart_item').each(function() {
             var check_item_price = $(this).closest('.add_to_cart_item').find('.item_count_price')
                 .html();
-            check_item_price = check_item_price.replace(',','');
+            check_item_price = check_item_price.replace(',', '');
             check_item_price = parseFloat(check_item_price);
             total_price += check_item_price;
         });
@@ -235,21 +237,21 @@
         var quantityInput = element.siblings('.plus_minus_quantity');
         var currentVal = parseInt(quantityInput.val()) || 0;
         element.parent('.input-group').find('.minus_btn').removeClass('disabled');
-        
-        if(currentVal < 3 && increment == false){
+
+        if (currentVal < 3 && increment == false) {
             element.addClass('disabled')
         }
         if (!isNaN(currentVal) && (increment || currentVal > 1)) {
-            
-            
+
+
             quantityInput.val(increment ? currentVal + 1 : currentVal - 1);
             updateItemPrice(element);
 
             let type = (increment ? 'plus' : 'minus');
             let id = element.data('id');
-            let url = "{{ route('cart.item.quantity',['id'=>'itemId', 'type'=>'quantityType']) }}";
-            let _url = url.replace('itemId',id);
-            let __url = _url.replace('quantityType',type);
+            let url = "{{ route('cart.item.quantity', ['id' => 'itemId', 'type' => 'quantityType']) }}";
+            let _url = url.replace('itemId', id);
+            let __url = _url.replace('quantityType', type);
 
             $.ajax({
                 url: __url,
@@ -275,13 +277,13 @@
     $(document).on('click', '.minus_btn', function() {
         changeQuantity($(this), false);
     });
-    
-    $('.plus_minus_quantity').each(function(){
-        if($(this).val() == 1){
+
+    $('.plus_minus_quantity').each(function() {
+        if ($(this).val() == 1) {
             $(this).prev('.minus_btn').addClass('disabled');
         }
     });
-    
+
 
     // Unit Change JS 
     $(document).on('change', '.unit_quantity', function() {
@@ -302,9 +304,9 @@
             console.log(totalItemPrice);
             console.log(totalItemRegularPrice);
 
-            let url = "{{ route('cart.item.unit',['unit_id'=>'unitId', 'cart_id'=>'cartId']) }}";
-            let _url = url.replace('unitId',unit_id);
-            let __url = _url.replace('cartId',cart_id);
+            let url = "{{ route('cart.item.unit', ['unit_id' => 'unitId', 'cart_id' => 'cartId']) }}";
+            let _url = url.replace('unitId', unit_id);
+            let __url = _url.replace('cartId', cart_id);
             $.ajax({
                 url: __url,
                 method: 'GET',
@@ -312,14 +314,15 @@
                 success: function(data) {
                     console.log(data.alert);
                     itemContainer.find('.item_count_price').html(numberFormat(totalItemPrice, 2));
-                    itemContainer.find('.item_count_regular_price').html(numberFormat(totalItemRegularPrice, 2));
+                    itemContainer.find('.item_count_regular_price').html(numberFormat(
+                        totalItemRegularPrice, 2));
                     refreshSubtotal();
                 },
                 error: function(xhr, status, error) {
                     console.error('Error clearing cart data:', error);
                 }
             });
-            
+
         }
     });
 
@@ -330,7 +333,8 @@
         var check = $(this).prop('checked');
         var subtotal_price = $('.subtotal_price');
         var formatted_subtotal_price = parseFloat(subtotal_price.html());
-        var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price').html());
+        var check_item_price = parseFloat($(this).closest('.add_to_cart_item').find('.item_count_price')
+            .html());
         var total_check_item = $('.total_check_item');
         var summation = 0;
         if (check == true) {
@@ -344,8 +348,8 @@
 
 
         let id = $(this).data('id');
-        let url = "{{ route('cart.item.check',['id'=>'itemId']) }}";
-        let _url = url.replace('itemId',id);
+        let url = "{{ route('cart.item.check', ['id' => 'itemId']) }}";
+        let _url = url.replace('itemId', id);
 
         $.ajax({
             url: _url,
@@ -360,6 +364,6 @@
         });
 
 
-        
+
     });
 </script>
