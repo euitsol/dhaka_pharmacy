@@ -4,6 +4,7 @@
     <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
         type="text/css" />
+    <link rel="stylesheet" href="{{ asset('user/asset/css/address.css') }}">
 @endpush
 <div class="modal up_modal fade" style="z-index: 99999999999999;" id="exampleModal" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -11,7 +12,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{{ __('Order By Prescription') }}</h5>
-                <button type="button" class="close  px-2 border-1 border-danger rounded-1 text-danger"
+                <button type="button" class="close  px-2 py-1 border-1 border-danger rounded-1 text-white bg-danger"
                     data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -41,9 +42,11 @@
                                     </label>
                                 </div>
                             @empty
-                                <p class="text-warning">
-                                    {{ __('Please ensure that you have set your delivery address in your profile before placing this order.') }}
-                                </p>
+                                <div class="address_add_btn">
+                                    <a href="javascript:void(0)" class="btn btn-outline-success mt-2 address_btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#address_add_modal">{{ __('Add Address') }}</a>
+                                </div>
                             @endforelse
                             <input type="hidden" name="delivery_fee" class="user_delivery_input"
                                 value="{{ ceil($default_delivery_fee) }}">
@@ -79,9 +82,6 @@
     <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
     <script>
         file_upload(["#prescription"], "uploadfile", "user");
-        // $('.up_modal').on('hide.bs.modal', () => {
-        //     fp_modal_close(["#prescription"]);
-        // });
         const data = {
             'auth': `{{ Auth::guard('web')->check() }}`,
             'login_route': `{{ route('login') }}`,

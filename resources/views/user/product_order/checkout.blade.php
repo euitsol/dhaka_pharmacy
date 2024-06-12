@@ -8,6 +8,7 @@
     <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
         type="text/css" />
+    <link rel="stylesheet" href="{{ asset('user/asset/css/address.css') }}">
 @endpush
 
 @section('content')
@@ -144,8 +145,8 @@
                                         </label>
                                     </div>
                                 @empty
-                                    <a href="javascript:void(0)" class="btn btn-success address_btn" data-toggle="modal"
-                                        data-target="#address_add_modal">{{ __('Add Address') }}</a>
+                                    <a href="javascript:void(0)" class="btn btn-success address_btn" data-bs-toggle="modal"
+                                        data-bs-target="#address_add_modal">{{ __('Add Address') }}</a>
                                 @endforelse
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
@@ -224,15 +225,15 @@
 @endsection
 
 @push('js_link')
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 @endpush
 
 @push('js')
-    <script src="{{ asset('frontend/js/checkbox.js') }}"></script>
     <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
+    <script src="{{ asset('frontend/js/checkbox.js') }}"></script>
     <script>
         const data = {
             'details_url': `{{ route('u.ck.address', ['param']) }}`,
