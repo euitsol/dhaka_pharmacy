@@ -590,6 +590,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('/details/{id}', 'details')->name('obp_details');
         Route::get('/details/order/{order_id}', 'orderDetails')->name('order.obp_details');
         Route::get('/get-unit/{mid}', 'getUnit')->name('get_unit.obp_details');
+        Route::get('/get-select-medicine', 'getSelectMedicine')->name('get_select_medicine.obp_details');
         Route::post('/order/create/{up_id}', 'order_create')->name('obp_order_create');
         Route::get('/status-update/{status}/{id}', 'statusUpdate')->name('status_update');
     });

@@ -12,6 +12,7 @@ use App\Http\Traits\TransformProductTrait;
 use App\Models\AddToCart;
 use App\Models\Order;
 use App\Http\Traits\TransformOrderItemTrait;
+use Illuminate\Http\Request;
 
 class OrderByPrescriptionController extends Controller
 {
@@ -32,7 +33,7 @@ class OrderByPrescriptionController extends Controller
     {
         $id = decrypt($id);
         $data['up'] = OrderPrescription::with(['customer', 'address'])->findOrFail($id);
-        $data['medicines'] = Medicine::activated()->orderBy('name', 'asc')->get();
+        $data['medicines'] = Medicine::activated()->orderBy('name', 'asc')->take(10)->get();
         return view('admin.order_by_prescription.details', $data);
     }
     public function getUnit($id): JsonResponse
@@ -90,6 +91,29 @@ class OrderByPrescriptionController extends Controller
         $statusN = $this->status($status);
         OrderPrescription::findOrFail($id)->update(['status' => $statusN]);
         return redirect()->route('obp.obp_list', $status);
+    }
+
+
+    public function getSelectMedicine(Request $request)
+    {
+        $query = $request->input('q');
+        $medicines = Medicine::activated()
+            ->where('name', 'like', '%' . $query . '%')
+            ->orderBy('name', 'asc')
+            ->take(10)
+            ->get();
+
+        $results = [];
+        foreach ($medicines as $medicine) {
+            $results[] = [
+                'id' => $medicine->id,
+                'name' => $medicine->name
+            ];
+        }
+
+        return response()->json([
+            'items' => $results
+        ]);
     }
 
 

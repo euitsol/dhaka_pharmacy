@@ -135,4 +135,43 @@
 @endsection
 @push('js')
     @include('admin.order_by_prescription.order_by_presc_js')
+
+    <script>
+        $(document).ready(function() {
+            $('.select2-ajax').select2({
+                theme: 'bootstrap4',
+                placeholder: "{{ __('Select Medicine') }}",
+                ajax: {
+                    url: `{{ route('obp.get_select_medicine.obp_details') }}`,
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term // search term
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.items
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 1,
+                templateResult: formatMedicine,
+                templateSelection: formatMedicineSelection
+            });
+
+            function formatMedicine(medicine) {
+                if (medicine.loading) {
+                    return medicine.text;
+                }
+                return medicine.name;
+            }
+
+            function formatMedicineSelection(medicine) {
+                return medicine.name || medicine.text;
+            }
+        });
+    </script>
 @endpush
