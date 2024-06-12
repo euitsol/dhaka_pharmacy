@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                     <label for="medicine">Medicine</label>
                                     <select name="item[${count}][medicine]" id="medicine"
-                                        class="form-control {{ $errors->has('item.*.medicine') ? ' is-invalid' : '' }} medicine" >
+                                        class="form-control {{ $errors->has('item.*.medicine') ? ' is-invalid' : '' }} medicine select-${count}" >
                                         <option value="" selected hidden>Select Medicine</option>
                                         @foreach ($medicines as $medicine)
                                             <option value="{{ $medicine->id }}">
@@ -69,6 +69,7 @@
                         </div>
                         `;
             $('#my_product').append(result);
+            $('.select-' + count).select2();
         });
 
         $(document).on('click', '.item_delete_btn', function() {
@@ -100,6 +101,7 @@
                     });
                     element.parent().next('.form-group').find('.unit').prop('disabled', false)
                     element.parent().next('.form-group').find('.unit').html(result);
+                    element.parent().next('.form-group').find('.unit').select2();
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching unit data:', error);
