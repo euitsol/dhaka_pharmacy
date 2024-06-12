@@ -62,6 +62,7 @@ class CheckoutController extends Controller
     public function checkout($order_id)
     {
         $customer_id = user()->id;
+        $data['default_delivery_fee'] = 60;
         $data['order_id'] = decrypt($order_id);
         $atcs = AddToCart::with(['product.pro_cat', 'product.generic', 'product.pro_sub_cat', 'product.company', 'product.discounts', 'unit'])->check()->where('status', 0)->where('customer_id', $customer_id)->orderBy('created_at', 'asc')->get();
         foreach ($atcs as $key => $atc) {
