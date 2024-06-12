@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\OrderByPrescription;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PrescriptionOrderCreateRequest;
@@ -67,10 +67,11 @@ class OrderByPrescriptionController extends Controller
         $order->order_id = generateOrderId();
         $order->delivery_type = $delivery_type;
         $order->delivery_fee = 100;
+        $order->obp_id = $up_id;
         $order->carts = json_encode($cart_ids);
         $order->creater()->associate(admin());
         $order->save();
-        OrderPrescription::findOrFail($up_id)->update(['status' => 1, 'order_id' => $order->id]);
+        OrderPrescription::findOrFail($up_id)->update(['status' => 1]);
         flash()->addSuccess('Prescription Item Order Created Successfully.');
         return redirect()->route('obp.obp_list', 'pending');
     }

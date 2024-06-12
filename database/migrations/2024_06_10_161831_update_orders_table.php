@@ -17,7 +17,9 @@ return new class extends Migration
             $table->dropForeign(['deleted_by']);
 
             $table->dropColumn(['created_by', 'updated_by', 'deleted_by']);
+            $table->unsignedBigInteger('obp_id')->nullable()->after('order_id');
             $this->addMorphedAuditColumns($table);
+            $table->foreign('obp_id')->references('id')->on('order_prescriptions')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

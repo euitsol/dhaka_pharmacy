@@ -41,7 +41,7 @@ use App\Http\Controllers\Admin\RiderManagement\RiderKycController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
 use App\Http\Controllers\Admin\SiteSettingsController;
-use App\Http\Controllers\Admin\OrderByPrescriptionController as AdminOrderByPrescriptionController;
+use App\Http\Controllers\Admin\OrderByPrescription\OrderByPrescriptionController as AdminOrderByPrescriptionController;
 
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
