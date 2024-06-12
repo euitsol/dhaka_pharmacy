@@ -72,7 +72,7 @@ class OrderByPrescriptionController extends Controller
         $order->save();
         OrderPrescription::findOrFail($up_id)->update(['status' => 1, 'order_id' => $order->id]);
         flash()->addSuccess('Prescription Item Order Created Successfully.');
-        return redirect()->route('obp.obp_list');
+        return redirect()->route('obp.obp_list', 'pending');
     }
 
     public function orderDetails($order_id)
