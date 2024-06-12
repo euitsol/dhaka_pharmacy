@@ -5,7 +5,8 @@ namespace App\Http\Traits;
 use App\Models\MedicineUnit;
 use Illuminate\Support\Str;
 
-trait TransformProductTrait{
+trait TransformProductTrait
+{
 
     private function transformProduct($product, $limit)
     {
@@ -23,7 +24,7 @@ trait TransformProductTrait{
     private function getSortedUnits($unitJson)
     {
         $unitIds = (array) json_decode($unitJson, true);
-        $units = MedicineUnit::whereIn('id', $unitIds)->get()->each(function($unit){
+        $units = MedicineUnit::whereIn('id', $unitIds)->get()->each(function ($unit) {
             $unit->image = storage_url($unit->image);
             return $unit;
         })->sortBy('quantity')->values()->all();

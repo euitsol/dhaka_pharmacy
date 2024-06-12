@@ -1,6 +1,6 @@
 @extends('user.layouts.master', ['pageSlug' => 'order'])
 
-@section('title', 'Dashboard')
+@section('title', 'Order List')
 @section('content')
     <section class="my-order-section">
         <div class="container">

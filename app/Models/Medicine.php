@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Medicine extends BaseModel
 {
@@ -29,7 +31,15 @@ class Medicine extends BaseModel
     }
     public function discounts()
     {
-        return $this->hasMany(Discount::class, 'pro_id','id');
+        return $this->hasMany(Discount::class, 'pro_id', 'id');
+    }
+
+    public function wish()
+    {
+        if (Auth::guard('web')->check()) {
+            return $this->hasOne(WishList::class, 'product_id', 'id')
+                ->where('user_id', user()->id);
+        }
     }
     // public function medicine_cat()
     // {
@@ -73,8 +83,8 @@ class Medicine extends BaseModel
             return 'badge badge-info';
         }
     }
-    public function scopeBestSelling($query){
-        return $query->where('is_best_selling',1);
+    public function scopeBestSelling($query)
+    {
+        return $query->where('is_best_selling', 1);
     }
-
 }
