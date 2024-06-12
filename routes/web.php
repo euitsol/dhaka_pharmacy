@@ -41,6 +41,7 @@ use App\Http\Controllers\Admin\RiderManagement\RiderKycController;
 use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
 use App\Http\Controllers\Admin\SiteSettingsController;
+use App\Http\Controllers\Admin\OrderByPrescriptionController as AdminOrderByPrescriptionController;
 
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
@@ -81,12 +82,14 @@ use App\Http\Controllers\User\AddressController as UserAddressController;
 use App\Http\Controllers\User\AddToCartController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\WishlistController as UserWishlistController;
+use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
 
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductSearchController;
 
+use App\Http\Controllers\FileUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +108,13 @@ use App\Http\Controllers\Frontend\ProductSearchController;
 
 
 Auth::routes();
+//File pond file upload
+Route::controller(FileUploadController::class)->prefix('file-upload')->name('file.')->group(function () {
+    Route::post('/uploads', 'uploads')->name('upload');
+    Route::delete('/delete-temp-file', 'deleteTempFile')->name('delete');
+    Route::post('/reset', 'resetFilePond')->name('reset');
+});
+
 // Admin Login Routes
 Route::controller(AdminLoginController::class)->prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', 'adminLogin')->name('login');
@@ -574,6 +584,15 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
     });
+
+    Route::controller(AdminOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('obp.')->group(function () {
+        Route::get('/list/{status}', 'list')->name('obp_list');
+        Route::get('/details/{id}', 'details')->name('obp_details');
+        Route::get('/details/order/{order_id}', 'orderDetails')->name('order.obp_details');
+        Route::get('/get-unit/{mid}', 'getUnit')->name('get_unit.obp_details');
+        Route::post('/order/create/{uid}', 'order_create')->name('obp_order_create');
+        Route::get('/status-update/{status}/{id}', 'statusUpdate')->name('status_update');
+    });
 });
 
 
@@ -767,6 +786,15 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
         Route::get('/order/failed/{order_id}', 'order_failed')->name('product.order.failed');
         Route::get('/order/cancel/{order_id}', 'order_cancel')->name('product.order.cancel');
     });
+
+
+    //Order By Prescription
+    Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
+        Route::post('/upload-prescription', 'prescription_upload')->name('up');
+    });
+
+
+
     //Address
     Route::controller(UserAddressController::class)->prefix('address')->name('u.as.')->group(function () {
         Route::get('list', 'list')->name('list');

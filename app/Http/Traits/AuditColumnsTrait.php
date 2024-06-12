@@ -4,7 +4,8 @@ namespace App\Http\Traits;
 
 use Illuminate\Database\Schema\Blueprint;
 
-trait AuditColumnsTrait{
+trait AuditColumnsTrait
+{
 
     public function addAuditColumns(Blueprint $table): void
     {

@@ -554,6 +554,66 @@
                 </li>
             @endif
 
+            {{-- Order By Prescription --}}
+            @if (mainMenuCheck([
+                    'prefixes' => ['obp.'],
+                    'routes' => ['obp_list'],
+                ]))
+                <li>
+                    <a class="@if (
+                        $pageSlug == 'ubp_pending' ||
+                            $pageSlug == 'ubp_ordered' ||
+                            $pageSlug == 'ubp_disclosed' ||
+                            $pageSlug == 'ubp_cancel') @else collapsed @endif" data-toggle="collapse"
+                        href="#ubp"
+                        @if (
+                            $pageSlug == 'ubp_pending' ||
+                                $pageSlug == 'ubp_ordered' ||
+                                $pageSlug == 'ubp_disclosed' ||
+                                $pageSlug == 'ubp_cancel') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-regular fa-newspaper"></i>
+                        <span class="nav-link-text">{{ __('Order By Prescription') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if (
+                        $pageSlug == 'ubp_pending' ||
+                            $pageSlug == 'ubp_ordered' ||
+                            $pageSlug == 'ubp_disclosed' ||
+                            $pageSlug == 'ubp_cancel') show @endif" id="ubp">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'ubp_pending',
+                                        'routeName' => 'obp.obp_list',
+                                        'params' => 'pending',
+                                        'label' => 'Pending',
+                                    ],
+                                    [
+                                        'pageSlug' => 'ubp_ordered',
+                                        'routeName' => 'obp.obp_list',
+                                        'params' => 'ordered',
+                                        'label' => 'Ordered',
+                                    ],
+                                    [
+                                        'pageSlug' => 'ubp_disclosed',
+                                        'routeName' => 'obp.obp_list',
+                                        'params' => 'disclosed',
+                                        'label' => 'Disclosed',
+                                    ],
+                                    [
+                                        'pageSlug' => 'ubp_cancel',
+                                        'routeName' => 'obp.obp_list',
+                                        'params' => 'cancel',
+                                        'label' => 'Cancel',
+                                    ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
             {{-- Distributed Order  --}}
             @if (mainMenuCheck([
                     'prefixes' => ['do.'],
