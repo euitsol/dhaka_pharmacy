@@ -11,17 +11,17 @@ use App\Http\Traits\TransformProductTrait;
 class ProductSearchController extends Controller
 {
     use TransformProductTrait;
-    public function productSearch($search_value, $category):JsonResponse
+    public function productSearch($search_value, $category): JsonResponse
     {
-        $filter = Medicine::with(['pro_sub_cat','generic','company','strength','discounts']);
-        if($category !== 'all'){
-            $filter = $filter->where('pro_cat_id',$category);
+        $filter = Medicine::with(['pro_sub_cat', 'generic', 'company', 'strength', 'discounts']);
+        if ($category !== 'all') {
+            $filter = $filter->where('pro_cat_id', $category);
         }
         $data['products'] = $filter->where(function ($query) use ($search_value) {
             $query->whereHas('generic', function ($query) use ($search_value) {
-                    $query->where('name', 'like', '%' . $search_value . '%')
-                        ->activated();
-                })
+                $query->where('name', 'like', '%' . $search_value . '%')
+                    ->activated();
+            })
                 ->orWhereHas('company', function ($query) use ($search_value) {
                     $query->where('name', 'like', '%' . $search_value . '%')
                         ->activated();
@@ -31,8 +31,7 @@ class ProductSearchController extends Controller
                         ->activated();
                 })
                 ->orWhere('name', 'like', '%' . $search_value . '%');
-        })
-        ->get()->map(function ($product) {
+        })->get()->each(function ($product) {
             return $this->transformProduct($product, 30);
         });
         return response()->json($data);

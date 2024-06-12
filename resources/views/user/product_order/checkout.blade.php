@@ -3,6 +3,13 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('frontend\asset\css\checkout.css') }}">
 @endpush
+@push('css_link')
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
+        type="text/css" />
+@endpush
+
 @section('content')
     <div class="row py-5 my-5 main_checkout_wrap">
         <div class="col-md-10 mx-auto">
@@ -29,8 +36,8 @@
                             @foreach ($checkItems as $key => $cartItem)
                                 <div class="row order-item">
                                     <div class="row main align-items-center py-2 px-0">
-                                        <div class="col-2"><img class="img-fluid"
-                                                src="{{ $cartItem['product']->image }}"></div>
+                                        <div class="col-2"><img class="img-fluid" src="{{ $cartItem['product']->image }}">
+                                        </div>
                                         <div class="col-6">
                                             <div class="row" title="{{ $cartItem['product']->attr_title }}">
                                                 {{ $cartItem['product']->name }}</div>
@@ -65,11 +72,12 @@
                                         </div>
                                         <div class="col-2 text-end">
                                             @php
-                                                $proDisPrice = proDisPrice($cartItem['product']->price, $cartItem['product']->discounts);
+                                                $proDisPrice = proDisPrice(
+                                                    $cartItem['product']->price,
+                                                    $cartItem['product']->discounts,
+                                                );
                                                 $single_total_price =
-                                                    $proDisPrice *
-                                                    $cartItem['unit']->quantity *
-                                                    $cartItem['quantity'];
+                                                    $proDisPrice * $cartItem['unit']->quantity * $cartItem['quantity'];
                                                 $single_regular_price =
                                                     $cartItem['product']->price *
                                                     $cartItem['unit']->quantity *
@@ -124,7 +132,7 @@
                                     <input id="code" placeholder="Enter your code"> --}}
                                 <p class="p-0">{{ __('Address') }}</p>
 
-                                @foreach ($customer->address as $key => $address)
+                                @forelse ($customer->address as $key => $address)
                                     <div class="form-check ms-2">
                                         <input class="form-check-input address" value="{{ $address->id }}"
                                             style="width: 1em" type="radio" name="address_id"
@@ -135,7 +143,10 @@
                                             <span class="charge" data-charge=""></span>)
                                         </label>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <a href="javascript:void(0)" class="btn btn-success address_btn" data-toggle="modal"
+                                        data-target="#address_add_modal">Add Address</a>
+                                @endforelse
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Total Price') }}</div>
@@ -146,7 +157,7 @@
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Discount') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
-                                    <span>{{ number_format($total_discount,2) }}</span>
+                                    <span>{{ number_format($total_discount, 2) }}</span>
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
@@ -159,13 +170,15 @@
                                 <div class="col ps-0">{{ __('Delivery Fee') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
                                     <span class="delivery_fee">{{ number_format(ceil($default_delivery_fee)) }}</span>
-                                    <input type="hidden" name="delivery_fee" class="delivery_input" value="{{ ceil($default_delivery_fee) }}">
+                                    <input type="hidden" name="delivery_fee" class="delivery_input"
+                                        value="{{ ceil($default_delivery_fee) }}">
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Payable Amount') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
-                                    <span class="total_price" data-total_price="{{ceil($total_price)}}">{{ number_format(ceil($total_price+$default_delivery_fee)) }}</span>
+                                    <span class="total_price"
+                                        data-total_price="{{ ceil($total_price) }}">{{ number_format(ceil($total_price + $default_delivery_fee)) }}</span>
                                 </div>
                             </div>
 
@@ -198,7 +211,8 @@
                                         </label>
                                     </div>
                                 </div>
-                                <button class="btn confirm_button" disabled type="submit">{{ __('CONFIRM ORDER') }}</button>
+                                <button class="btn confirm_button" disabled
+                                    type="submit">{{ __('CONFIRM ORDER') }}</button>
                             </div>
                         </div>
                     </div>
@@ -206,6 +220,7 @@
             </div>
         </div>
     </div>
+    @include('user.address.add_address')
 @endsection
 
 @push('js_link')
@@ -213,10 +228,11 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
     </script>
-    <script src="{{ asset('frontend/js/checkbox.js') }}"></script>
 @endpush
 
 @push('js')
+    <script src="{{ asset('frontend/js/checkbox.js') }}"></script>
+    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
     <script>
         const data = {
             'details_url': `{{ route('u.ck.address', ['param']) }}`,

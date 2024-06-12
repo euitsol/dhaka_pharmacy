@@ -16,8 +16,8 @@ class SingleOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'unit_id'=>'required|exists:medicine_units,id',
-            'slug'=>'required|exists:medicines,slug'
+            'unit_id' => 'required|exists:medicine_units,id',
+            'slug' => 'required|exists:medicines,slug'
         ];
     }
 }

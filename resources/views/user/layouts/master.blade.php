@@ -15,19 +15,23 @@
     <!------- Font-Awesome-CDN --------->
     <script src="https://kit.fontawesome.com/db6820c2b5.js" crossorigin="anonymous"></script>
 
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!--======== toastr css ========-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!------ Custom-CSS ------->
     <link rel="stylesheet" href="{{ asset('user/asset/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('user/asset/css/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('user/asset/css/dashboard.css') }}">
 
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <link rel="stylesheet" href="{{ asset('user/asset/css/style.css') }}">
-
-    @stack('css')
     @stack('css_link')
+    @stack('css')
+
 
     <script>
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
@@ -57,6 +61,10 @@
     <script src="{{ asset('white') }}/js/core/bootstrap.min.js"></script>
     <script src="{{ asset('white') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script>
     <script src="{{ asset('white') }}/js/plugins/bootstrap-notify.js"></script>
+    <!--======== toastr script ========-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @stack('js_link')
     @stack('js')
 </body>

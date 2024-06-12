@@ -71,11 +71,6 @@ use App\Http\Controllers\Pharmacy\KYC\KycVerificationController as PharmacyKycVe
 use App\Http\Controllers\Pharmacy\OperationalAreaController as PharmacyOperationalAreaController;
 use App\Http\Controllers\Pharmacy\OrderManagementController as PharmacyOrderManagementController;
 
-use App\Http\Controllers\Frontend\HomePageController;
-use App\Http\Controllers\Frontend\Product\SingleProductController;
-use App\Http\Controllers\Frontend\Product\ProductPageController;
-use App\Http\Controllers\Frontend\ProductSearchController;
-
 use App\Http\Controllers\Auth\LoginController as UserLoginController;
 use App\Http\Controllers\Auth\RegisterController as UserRegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController as UserForgotPasswordController;
@@ -85,8 +80,14 @@ use App\Http\Controllers\User\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
 use App\Http\Controllers\User\AddToCartController;
-use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
 use App\Http\Controllers\User\UserOrderController;
+use App\Http\Controllers\User\WishlistController as UserWishlistController;
+use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
+
+use App\Http\Controllers\Frontend\HomePageController;
+use App\Http\Controllers\Frontend\Product\SingleProductController;
+use App\Http\Controllers\Frontend\Product\ProductPageController;
+use App\Http\Controllers\Frontend\ProductSearchController;
 
 use App\Http\Controllers\FileUploadController;
 
@@ -794,21 +795,6 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
 
 
 
-    //SSL Commerz Routes
-
-    Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {
-        // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
-        // Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
-        Route::get('/ssl/{order_id}', 'index')->name('index');
-        // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
-        Route::post('/success', 'success')->name('success');
-        Route::post('/fail', 'fail')->name('failed');
-        Route::post('/cancel', 'cancel')->name('cancel');
-        Route::post('/ipn', 'ipn')->name('ipn');
-    });
-
-
-
     //Address
     Route::controller(UserAddressController::class)->prefix('address')->name('u.as.')->group(function () {
         Route::get('list', 'list')->name('list');
@@ -820,6 +806,12 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
     });
     Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
         Route::get('list', 'order_list')->name('list');
+    });
+
+    Route::controller(UserWishlistController::class)->prefix('wishlist')->name('u.wishlist.')->group(function () {
+        Route::get('/update/{pid}', 'update')->name('update');
+        Route::get('/refresh', 'refresh')->name('refresh');
+        Route::get('/list', 'list')->name('list');
     });
 });
 Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {

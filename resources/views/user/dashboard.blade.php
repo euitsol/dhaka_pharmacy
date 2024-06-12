@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a href="#">
+                        <a href="{{ route('u.wishlist.list') }}">
                             <div class="single  d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
                                     <img src="{{ asset('user/asset/img/wishtlist2.png') }}" alt="">

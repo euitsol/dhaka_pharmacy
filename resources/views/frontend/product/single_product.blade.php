@@ -21,6 +21,7 @@
         .product_content .product_price .boxed input[type="radio"]:checked+label {
             border: solid 2px green;
         }
+
         .product_content .product_price .boxed img {
             height: 70px;
             width: 100%;
@@ -49,14 +50,15 @@
                                         <ul class="breadcrumb wizard">
                                             <li class="completed"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
                                             <li class="completed"><a
-                                                    href="{{route('category.products',['category'=>$single_product->pro_cat->slug])}}">{{ __($single_product->pro_cat->name) }}</a>
+                                                    href="{{ route('category.products', ['category' => $single_product->pro_cat->slug]) }}">{{ __($single_product->pro_cat->name) }}</a>
                                             </li>
                                             <li><a
-                                                    href="{{route('category.products',['category'=>$single_product->pro_cat->slug,'sub-category'=>$single_product->pro_sub_cat->slug])}}">{{ __($single_product->pro_sub_cat->name) }}</a>
+                                                    href="{{ route('category.products', ['category' => $single_product->pro_cat->slug, 'sub-category' => $single_product->pro_sub_cat->slug]) }}">{{ __($single_product->pro_sub_cat->name) }}</a>
                                             </li>
                                         </ul>
                                         <div class="favorite">
-                                            <i class="fa-regular fa-heart"></i>
+                                            <i class="{{ $single_product->wish && $single_product->wish->status == 1 ? 'fa-solid' : 'fa-regular' }} fa-heart wish_update"
+                                                data-pid="{{ encrypt($single_product->id) }}"></i>
                                         </div>
                                     </div>
 
@@ -66,22 +68,25 @@
                                                 <div class="card-body">
                                                     <div class="product_image xzoom-container">
                                                         @php
-                                                            $singleProDisPrice = proDisPrice($single_product->price, $single_product->discounts);
+                                                            $singleProDisPrice = proDisPrice(
+                                                                $single_product->price,
+                                                                $single_product->discounts,
+                                                            );
                                                         @endphp
                                                         @if ($singleProDisPrice != $single_product->price)
-                                                        <span class="discount_tag">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span>
+                                                            <span
+                                                                class="discount_tag">{{ formatPercentageNumber($single_product->discount_percentage) . '% 0ff' }}</span>
                                                         @endif
                                                         <img class="xzoom" id="xzoom-default"
-                                                            src="{{  $single_product->image }}"
-                                                            xoriginal="{{  $single_product->image }}">
+                                                            src="{{ $single_product->image }}"
+                                                            xoriginal="{{ $single_product->image }}">
 
                                                         <!-- Thumbnails -->
                                                         <div class="xzoom-thumbs">
-                                                            <a
-                                                                href="{{  $single_product->image }}">
+                                                            <a href="{{ $single_product->image }}">
                                                                 <img class="xzoom-gallery xactive" width="80"
-                                                                    src="{{  $single_product->image }}"
-                                                                    xpreview="{{  $single_product->image }}">
+                                                                    src="{{ $single_product->image }}"
+                                                                    xpreview="{{ $single_product->image }}">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -89,48 +94,60 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <form action="{{route('u.ck.product.single_order')}}" method="POST">
+                                            <form action="{{ route('u.ck.product.single_order') }}" method="POST">
                                                 @csrf
-                                            <div class="product_content">
-                                                <h1>{{ __($single_product->name) }} </h1>
-                                                <input type="hidden" name="slug" value="{{$single_product->slug}}">
-                                                <p>{{ __($single_product->pro_sub_cat->name) }}</p>
-                                                <p>{{ __($single_product->generic->name) }}</p>
-                                                <p>{{ __($single_product->company->name) }}</p>
-                                            
-                                                
+                                                <div class="product_content">
+                                                    <h1>{{ __($single_product->name) }} </h1>
+                                                    <input type="hidden" name="slug"
+                                                        value="{{ $single_product->slug }}">
+                                                    <p>{{ __($single_product->pro_sub_cat->name) }}</p>
+                                                    <p>{{ __($single_product->generic->name) }}</p>
+                                                    <p>{{ __($single_product->company->name) }}</p>
+
+
                                                     <div class="product_price mt-4">
                                                         @if ($singleProDisPrice != $single_product->price)
-                                                            <p><del class="text-danger">{{ __('MRP Tk') }} <span class="total_regular_price">{{ __(number_format($single_product->price, 2)) }}</span></del> <span class="badge bg-danger">{{  formatPercentageNumber($single_product->discount_percentage)."% 0ff"}}</span></p>
+                                                            <p><del class="text-danger">{{ __('MRP Tk') }} <span
+                                                                        class="total_regular_price">{{ __(number_format($single_product->price, 2)) }}</span></del>
+                                                                <span
+                                                                    class="badge bg-danger">{{ formatPercentageNumber($single_product->discount_percentage) . '% 0ff' }}</span>
+                                                            </p>
                                                         @endif
                                                         <p><strong>{{ __('Price: Tk') }} <span
                                                                     class="total_price">{{ __(number_format($singleProDisPrice, 2)) }}
-                                                                </span></strong> /<span class="unit_name">{{ __('piece') }}</span> </p>
+                                                                </span></strong> /<span
+                                                                class="unit_name">{{ __('piece') }}</span> </p>
                                                         <div class="form-group my-4 boxed">
                                                             @foreach ($units as $key => $unit)
-                                                                <input type="radio" value="{{$unit->id}}" name="unit_id" data-id="{{$unit->id}}" data-name="{{$unit->name}}"
+                                                                <input type="radio" value="{{ $unit->id }}"
+                                                                    name="unit_id" data-id="{{ $unit->id }}"
+                                                                    data-name="{{ $unit->name }}"
                                                                     @if ($key == 0) checked @endif
                                                                     class="item_quantity" id="android-{{ $key }}"
                                                                     name="data"
-                                                                    data-total_price="{{ $singleProDisPrice * $unit->quantity }}" data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
+                                                                    data-total_price="{{ $singleProDisPrice * $unit->quantity }}"
+                                                                    data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
-                                                                    <img src="{{$unit->image}}">
+                                                                    <img src="{{ $unit->image }}">
                                                                 </label>
                                                             @endforeach
                                                         </div>
                                                     </div>
                                                     <div class="add_to_card">
-                                                        <a class="cart-btn" href="javascript:void(0)" data-product_slug="{{ $single_product->slug }}" data-unit_id="{{$units[0]['id']}}" >
+                                                        <a class="cart-btn" href="javascript:void(0)"
+                                                            data-product_slug="{{ $single_product->slug }}"
+                                                            data-unit_id="{{ $units[0]['id'] }}">
                                                             <i class="fa-solid fa-cart-plus"></i>
                                                             {{ __('Add to Cart') }}</a>
                                                     </div>
                                                     <div class="order_button mt-4">
-                                                        <button class="order-btn" type="submit" >{{ __('Order Now') }}</button>
+                                                        <button class="order-btn"
+                                                            type="submit">{{ __('Order Now') }}</button>
                                                     </div>
-                                                
 
-                                            </div>
-                                        </form>
+
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -188,12 +205,12 @@
                                                                 <td>{{ __(strtoupper('Company Name')) }}</td>
                                                                 <td>{{ __($single_product->company->name) }}</td>
                                                             </tr>
-                                                            @if($single_product->strength_id)
-                                                            <tr>
-                                                                <td>{{ __(strtoupper('Product Strength')) }}</td>
-                                                                <td>{{ __($single_product->strength->quantity . ' ' . $single_product->strength->unit) }}
-                                                                </td>
-                                                            </tr>
+                                                            @if ($single_product->strength_id)
+                                                                <tr>
+                                                                    <td>{{ __(strtoupper('Product Strength')) }}</td>
+                                                                    <td>{{ __($single_product->strength->quantity . ' ' . $single_product->strength->unit) }}
+                                                                    </td>
+                                                                </tr>
                                                             @endif
                                                         </table>
                                                     </div>
@@ -381,7 +398,10 @@
                                             <div class="row px-3">
                                                 @foreach ($similar_products as $product)
                                                     @php
-                                                        $ProDisPrice = proDisPrice($product->price, $product->discounts);
+                                                        $ProDisPrice = proDisPrice(
+                                                            $product->price,
+                                                            $product->discounts,
+                                                        );
                                                     @endphp
                                                     <div class="col-12 single-item">
                                                         <div class="row align-items-center">
@@ -396,22 +416,23 @@
                                                             </div>
                                                             <div class="col-8 content">
 
-                                                                <h3 class="pdct-title" title="{{$product->attr_title}}"><a
-                                                                        href="{{ route('product.single_product', $product->slug) }}">{{$product->name}}
+                                                                <h3 class="pdct-title"
+                                                                    title="{{ $product->attr_title }}"><a
+                                                                        href="{{ route('product.single_product', $product->slug) }}">{{ $product->name }}
                                                                     </a></h3>
-                                                                <p><a
-                                                                        href="">{{ $product->pro_sub_cat->name }}</a>
+                                                                <p><a href="">{{ $product->pro_sub_cat->name }}</a>
                                                                 </p>
 
-                                                                <p><a
-                                                                        href="">{{ $product->generic->name }}</a>
+                                                                <p><a href="">{{ $product->generic->name }}</a>
                                                                 </p>
-                                                                <p><a
-                                                                        href="">{{ $product->company->name }}</a>
+                                                                <p><a href="">{{ $product->company->name }}</a>
                                                                 </p>
-                                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!} {{ number_format($ProDisPrice,2) }}</span>
+                                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
+                                                                        {{ number_format($ProDisPrice, 2) }}</span>
                                                                     @if ($ProDisPrice != $product->price)
-                                                                     <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
+                                                                        <span class="regular_price">
+                                                                            <del>{!! get_taka_icon() !!}
+                                                                                {{ number_format($product->price, 2) }}</del></span>
                                                                     @endif
                                                                 </h4>
                                                             </div>
@@ -441,51 +462,60 @@
                                     <div class="col-md-12">
                                         <div id="related-product-slider" class="owl-carousel">
                                             @foreach ($similar_products as $product)
-                                                    @php
-                                                        $similarProDisPrice = proDisPrice($product->price, $product->discounts);
-                                                    @endphp
-                                                    <div class="px-2 py-1">
-                                                        <div class="single-pdct">
-                                                            <a href="{{ route('product.single_product', $product->slug) }}">
-                                                                <div class="pdct-img">
-                                                                    @if ($similarProDisPrice != $product->price)
-                                                                        <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% off"}}</span>
-                                                                    @endif
-                                                                    <img class="w-100"
-                                                                        src="{{ $product->image }}"
-                                                                        alt="Product Image">
-                                                                </div>
-                                                            </a>
-                                                            <div class="pdct-info">
-                                                                <a href="#" class="generic-name">
-                                                                    {{ $product->generic->name}}
-                                                                </a>
-                                                                <a href="#" class="company-name">
-                                                                    {{ $product->company->name}}
-                                                                </a>
-                                                                <div class="product_title">
-                                                                    <a href="{{ route('product.single_product', $product->slug) }}">
-                                                                        <h3 class="fw-bold" title="{{$product->attr_title}}">
-                                                                            {{ $product->name }}
-                                                                        </h3>
-                                                                    </a>
-                                                                </div>
-                                                                
-                                                                    <h4> <span> {!! get_taka_icon() !!} {{ number_format($similarProDisPrice ,2) }}</span> 
-                                                                        @if ($similarProDisPrice != $product->price)
-                                                                            <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
-                                                                        @endif
-                                                                    </h4>
-                                                              
-                                                                <div class="add_to_card">
-                                                                    <a class="cart-btn" href="javascript:void(0)" data-product_slug="{{ $product->slug }}" >
-                                                                        <i class="fa-solid fa-cart-plus"></i>
-                                                                    </a>
-                                                                </div>
+                                                @php
+                                                    $similarProDisPrice = proDisPrice(
+                                                        $product->price,
+                                                        $product->discounts,
+                                                    );
+                                                @endphp
+                                                <div class="px-2 py-1">
+                                                    <div class="single-pdct">
+                                                        <a href="{{ route('product.single_product', $product->slug) }}">
+                                                            <div class="pdct-img">
+                                                                @if ($similarProDisPrice != $product->price)
+                                                                    <span
+                                                                        class="discount_tag">{{ formatPercentageNumber($product->discount_percentage) . '% off' }}</span>
+                                                                @endif
+                                                                <img class="w-100" src="{{ $product->image }}"
+                                                                    alt="Product Image">
                                                             </div>
-                
+                                                        </a>
+                                                        <div class="pdct-info">
+                                                            <a href="#" class="generic-name">
+                                                                {{ $product->generic->name }}
+                                                            </a>
+                                                            <a href="#" class="company-name">
+                                                                {{ $product->company->name }}
+                                                            </a>
+                                                            <div class="product_title">
+                                                                <a
+                                                                    href="{{ route('product.single_product', $product->slug) }}">
+                                                                    <h3 class="fw-bold"
+                                                                        title="{{ $product->attr_title }}">
+                                                                        {{ $product->name }}
+                                                                    </h3>
+                                                                </a>
+                                                            </div>
+
+                                                            <h4> <span> {!! get_taka_icon() !!}
+                                                                    {{ number_format($similarProDisPrice, 2) }}</span>
+                                                                @if ($similarProDisPrice != $product->price)
+                                                                    <span class="regular_price">
+                                                                        <del>{!! get_taka_icon() !!}
+                                                                            {{ number_format($product->price, 2) }}</del></span>
+                                                                @endif
+                                                            </h4>
+
+                                                            <div class="add_to_card">
+                                                                <a class="cart-btn" href="javascript:void(0)"
+                                                                    data-product_slug="{{ $product->slug }}">
+                                                                    <i class="fa-solid fa-cart-plus"></i>
+                                                                </a>
+                                                            </div>
                                                         </div>
+
                                                     </div>
+                                                </div>
                                             @endforeach
                                         </div>
                                     </div>
@@ -554,7 +584,7 @@
             $('.product_price .item_quantity').on('change', function() {
                 var name = $(this).data('name');
                 var id = $(this).data('id');
-                $(this).closest('.product_content').find('.cart-btn').attr('data-unit_id',id);
+                $(this).closest('.product_content').find('.cart-btn').attr('data-unit_id', id);
 
                 var TotalPrice = numberFormat($(this).data('total_price'), 2);
                 var TotalRegularPrice = numberFormat($(this).data('total_regular_price'), 2);
@@ -571,14 +601,7 @@
 
 
 
-            //Breadcrumb Jquery
-            $('.breadcrumb_wrap .favorite i').on('click', function() {
-                if ($(this).hasClass('fa-regular')) {
-                    $(this).removeClass('fa-regular').addClass('fa-solid');
-                } else {
-                    $(this).removeClass('fa-solid').addClass('fa-regular');
-                }
-            });
+
 
 
 

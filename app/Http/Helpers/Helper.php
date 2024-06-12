@@ -56,7 +56,7 @@ function createCSV($filename = 'permissions.csv'): string
 {
     $permissions = Permission::all();
 
-    $data = $permissions->map(function ($permission) {
+    $data = $permissions->each(function ($permission) {
         return [
             'name' => $permission->name,
             'guard_name' => $permission->guard_name,
