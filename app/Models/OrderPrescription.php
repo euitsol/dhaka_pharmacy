@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderPrescription extends BaseModel
@@ -22,9 +23,9 @@ class OrderPrescription extends BaseModel
     {
         return $this->belongsTo(Address::class, 'address_id');
     }
-    public function order()
+    public function order(): HasOne
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->hasOne(Order::class, 'obp_id');
     }
 
     public function statusBg()
@@ -35,8 +36,6 @@ class OrderPrescription extends BaseModel
             case 1:
                 return 'badge bg-success';
             case 2:
-                return 'badge badge-warning';
-            case 3:
                 return 'badge badge-danger';
         }
     }
@@ -48,8 +47,6 @@ class OrderPrescription extends BaseModel
             case 1:
                 return 'ordered';
             case 2:
-                return 'disclosed';
-            case 3:
                 return 'cancel';
         }
     }

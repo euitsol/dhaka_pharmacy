@@ -41,6 +41,10 @@ class Order extends BaseModel
     {
         return $this->belongsTo(User::class, 'ref_user');
     }
+    public function obp()
+    {
+        return $this->belongsTo(OrderPrescription::class, 'obp_id');
+    }
 
     public function scopeStatus($query, $status)
     {

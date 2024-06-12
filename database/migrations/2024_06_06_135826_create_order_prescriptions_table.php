@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('address_id');
-            $table->tinyInteger('status')->default(0)->comment('0=pending, 1=ordered, 2=disclosed, 3=cancel');
+            $table->tinyInteger('status')->default(0)->comment('0=pending, 1=ordered, 2=cancel');
             $table->string('image');
             $table->string('delivery_type')->nullable();
             $table->timestamps();
