@@ -53,7 +53,7 @@
                                                 'menuItems' => [
                                                     [
                                                         'routeName' => 'obp.order.obp_details',
-                                                        'params' => [encrypt($up->order_id)],
+                                                        'params' => [encrypt($up->order->id)],
                                                         'label' => 'Details',
                                                     ],
                                                 ],

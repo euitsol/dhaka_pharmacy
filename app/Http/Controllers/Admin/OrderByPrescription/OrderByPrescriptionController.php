@@ -81,8 +81,6 @@ class OrderByPrescriptionController extends Controller
         $id = decrypt($order_id);
         $data['order'] = Order::findOrFail($id);
         $data['order_items'] = $this->getOrderItems($data['order']);
-
-
         $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order'], $data['order_items']);
         $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order'], $data['order_items']);
         $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order'], $data['order_items']);
@@ -107,8 +105,6 @@ class OrderByPrescriptionController extends Controller
             case 1:
                 return 'badge bg-success';
             case 2:
-                return 'badge badge-warning';
-            case 3:
                 return 'badge badge-danger';
         }
     }
@@ -119,10 +115,8 @@ class OrderByPrescriptionController extends Controller
                 return 0;
             case 'ordered':
                 return 1;
-            case 'disclosed':
-                return 2;
             case 'cancel':
-                return 3;
+                return 2;
         }
     }
 }
