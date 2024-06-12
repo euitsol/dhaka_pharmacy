@@ -97,4 +97,8 @@ class Order extends BaseModel
                 return 'Processing';
         }
     }
+    public function orderType()
+    {
+        return $this->obp_id != null ? 'Order By Prescription' : 'Manual Order';
+    }
 }

@@ -21,7 +21,8 @@ return new class extends Migration
             $table->unsignedBigInteger('address_id');
             $table->tinyInteger('status')->default(0)->comment('0=pending, 1=ordered, 2=cancel');
             $table->string('image');
-            $table->string('delivery_type')->nullable();
+            $table->string('delivery_type');
+            $table->string('delivery_fee');
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);

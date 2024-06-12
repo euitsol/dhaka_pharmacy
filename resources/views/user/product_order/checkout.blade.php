@@ -145,7 +145,7 @@
                                     </div>
                                 @empty
                                     <a href="javascript:void(0)" class="btn btn-success address_btn" data-toggle="modal"
-                                        data-target="#address_add_modal">Add Address</a>
+                                        data-target="#address_add_modal">{{ __('Add Address') }}</a>
                                 @endforelse
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">

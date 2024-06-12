@@ -15,11 +15,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('obp.obp_order_create', encrypt($up->customer->id)) }}" method="POST">
+                    <form action="{{ route('obp.obp_order_create', encrypt($up->id)) }}" method="POST">
                         @csrf
-                        <input type="hidden" name="aid" value="{{ encrypt($up->address->id) }}">
-                        <input type="hidden" name="delivery_type" value="{{ encrypt($up->delivery_type) }}">
-                        <input type="hidden" name="up_id" value="{{ encrypt($up->id) }}">
                         <div id="my_product">
                             <div class="card item_card">
                                 <div class="card-header">
@@ -54,15 +51,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label>{{ __('Quantity') }}</label>
-                                        <select name="item[1][quantity]"
-                                            class="form-control {{ $errors->has('item.1.quantity') ? ' is-invalid' : '' }}">
-                                            <option value="" selected hidden>{{ __('Select Quantity') }}</option>
-                                            @for ($i = 1; $i < 1000; $i++)
-                                                <option value="{{ $i }}"
-                                                    {{ old('item.1.quantity' == $i ? 'selected' : '') }}>
-                                                    {{ $i }}</option>
-                                            @endfor
-                                        </select>
+                                        <input type="text" name="item[1][quantity]"
+                                            class="form-control {{ $errors->has('item.1.quantity') ? ' is-invalid' : '' }}"
+                                            placeholder="Enter item quantity">
                                         @include('alerts.feedback', ['field' => 'item.1.quantity'])
                                     </div>
                                 </div>
@@ -121,6 +112,11 @@
                                 <th>{{ __('Delivery Address') }}</th>
                                 <th>:</th>
                                 <td>{{ $up->address->address }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ __('Delivery Fee') }}</th>
+                                <th>:</th>
+                                <td>{!! get_taka_icon() !!}{{ number_format(ceil($up->delivery_fee)) }}</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Delivery Type') }}</th>

@@ -590,7 +590,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('/details/{id}', 'details')->name('obp_details');
         Route::get('/details/order/{order_id}', 'orderDetails')->name('order.obp_details');
         Route::get('/get-unit/{mid}', 'getUnit')->name('get_unit.obp_details');
-        Route::post('/order/create/{uid}', 'order_create')->name('obp_order_create');
+        Route::post('/order/create/{up_id}', 'order_create')->name('obp_order_create');
         Route::get('/status-update/{status}/{id}', 'statusUpdate')->name('status_update');
     });
 });
@@ -791,6 +791,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
     //Order By Prescription
     Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
         Route::post('/upload-prescription', 'prescription_upload')->name('up');
+        Route::get('/address/{id}', 'address')->name('address');
     });
 
 
