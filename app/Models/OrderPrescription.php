@@ -12,7 +12,6 @@ class OrderPrescription extends BaseModel
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'status',
-        'order_id',
     ];
 
     public function customer()

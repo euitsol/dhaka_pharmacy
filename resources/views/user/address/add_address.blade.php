@@ -1,4 +1,4 @@
-<div class="modal fade address-modal" id="address_add_modal" tabindex="-1" role="dialog"
+<div class="modal fade address-modal" id="address_add_modal" style="z-index: 999999;" tabindex="-1" role="dialog"
     aria-labelledby="address_add_modal" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

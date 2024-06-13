@@ -66,7 +66,7 @@
 
                     </div>
                 @empty
-                    <h5 class="text-center wish_empty_alert">{{ __('Wish Item Not Found') }}</h5>
+                    <h5 class="text-center wish_empty_alert">{{ __('Wished Item Not Found') }}</h5>
                 @endforelse
             </div>
             <div class="paginate mt-3">

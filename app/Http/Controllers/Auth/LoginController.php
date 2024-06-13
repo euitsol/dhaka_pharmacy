@@ -143,9 +143,12 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         Session::forget('data');
+        Session::put('previous_url', url()->previous());
 
         if (Auth::guard('web')->check()) {
-            return redirect()->route('user.dashboard');
+            $url = Session::get('previous_url', route('user.dashboard'));
+            Session::forget('previous_url');
+            return redirect($url);
         }
         return view('auth.login');
     }
@@ -158,7 +161,9 @@ class LoginController extends Controller
             if ($check->status == 1) {
                 if (Auth::guard('web')->attempt($credentials)) {
                     Session::forget('data');
-                    return redirect()->route('user.dashboard');
+                    $url = Session::get('previous_url', route('user.dashboard'));
+                    Session::forget('previous_url');
+                    return redirect($url);
                 }
                 flash()->addError('Invalid credentials');
             } else {
@@ -278,12 +283,15 @@ class LoginController extends Controller
                 }
                 Session::forget('data');
                 Auth::guard('web')->login($user);
+                $url = Session::get('previous_url', route('user.dashboard'));
+                Session::forget('previous_url');
+                return redirect($url);
             } else {
                 flash()->addSuccess('OTP didn\'t match. Please try again');
             }
         } else {
             flash()->addSuccess('Something is wrong! please try again.');
         }
-        return redirect()->back();
+        return redirect()->route('login');
     }
 }

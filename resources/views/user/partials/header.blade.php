@@ -16,6 +16,8 @@
                                 href="{{ route('u.as.list') }}">{{ __('Address') }}</a></li>
                         <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'order') active @endif"
                                 href="{{ route('u.order.list') }}">{{ __('Orders') }}</a></li>
+                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'wishlist') active @endif"
+                                href="{{ route('u.wishlist.list') }}">{{ __('Wishlists') }}</a></li>
                     </ul>
                 </div>
             </div>

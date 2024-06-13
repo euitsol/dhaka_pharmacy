@@ -102,7 +102,7 @@
                             <div class="single  d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
                                     <img src="{{ asset('user/asset/img/wishtlist2.png') }}" alt="">
-                                    <h2>{{ __('Wishlist') }}</h2>
+                                    <h2>{{ __('Wishlists') }}</h2>
                                 </div>
                             </div>
                         </a>

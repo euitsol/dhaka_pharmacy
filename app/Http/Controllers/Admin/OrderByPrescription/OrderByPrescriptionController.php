@@ -12,6 +12,7 @@ use App\Http\Traits\TransformProductTrait;
 use App\Models\AddToCart;
 use App\Models\Order;
 use App\Http\Traits\TransformOrderItemTrait;
+use Illuminate\Http\Request;
 
 class OrderByPrescriptionController extends Controller
 {
@@ -32,7 +33,7 @@ class OrderByPrescriptionController extends Controller
     {
         $id = decrypt($id);
         $data['up'] = OrderPrescription::with(['customer', 'address'])->findOrFail($id);
-        $data['medicines'] = Medicine::activated()->orderBy('name', 'asc')->get();
+        $data['medicines'] = Medicine::activated()->orderBy('name', 'asc')->take(10)->get();
         return view('admin.order_by_prescription.details', $data);
     }
     public function getUnit($id): JsonResponse
@@ -41,37 +42,34 @@ class OrderByPrescriptionController extends Controller
         $data['units'] = $this->getSortedUnits($medicine->unit);
         return response()->json($data);
     }
-    public function order_create(PrescriptionOrderCreateRequest $request, $uid)
+    public function order_create(PrescriptionOrderCreateRequest $request, $up_id)
     {
-        $uid = decrypt($uid);
-        $aid = decrypt($request->aid);
-        $delivery_type = decrypt($request->delivery_type);
-        $up_id = decrypt($request->up_id);
+        $up_id = decrypt($up_id);
+        $up = OrderPrescription::findOrFail($up_id);
         $cart_ids = [];
         foreach ($request->item as $item) {
             $cart_item = new AddToCart();
             $cart_item->product_id = $item['medicine'];
             $cart_item->unit_id = $item['unit'];
             $cart_item->quantity = $item['quantity'];
-            $cart_item->customer_id = $uid;
+            $cart_item->customer_id = $up->user_id;
             $cart_item->status = -1;
             $cart_item->creater()->associate(admin());
             $cart_item->save();
             array_push($cart_ids, $cart_item->id);
         }
         $order = new Order();
-        $order->customer_id = $uid;
-        $order->customer_type = 'App\Models\User';
-        $order->address_id = $aid;
+        $order->customer()->associate($up->customer);
+        $order->address_id = $up->address_id;
         $order->status = 1;
         $order->order_id = generateOrderId();
-        $order->delivery_type = $delivery_type;
-        $order->delivery_fee = 100;
+        $order->delivery_type = $up->delivery_type;
+        $order->delivery_fee = $up->delivery_fee;
         $order->obp_id = $up_id;
         $order->carts = json_encode($cart_ids);
         $order->creater()->associate(admin());
         $order->save();
-        OrderPrescription::findOrFail($up_id)->update(['status' => 1]);
+        $up->update(['status' => 1]);
         flash()->addSuccess('Prescription Item Order Created Successfully.');
         return redirect()->route('obp.obp_list', 'pending');
     }
@@ -93,6 +91,16 @@ class OrderByPrescriptionController extends Controller
         $statusN = $this->status($status);
         OrderPrescription::findOrFail($id)->update(['status' => $statusN]);
         return redirect()->route('obp.obp_list', $status);
+    }
+
+
+    public function getSelectMedicine(Request $request)
+    {
+        $param = $request->input('param');
+        $medicines = Medicine::activated()->select('id', 'name')->where('name', 'like', '%' . $param . '%')->orderBy('name', 'asc')->latest()->take(10)->get();
+        return response()->json([
+            'items' => $medicines
+        ]);
     }
 
 

@@ -29,6 +29,7 @@ class FrontendDataShareServiceProvider extends ServiceProvider
         view()->composer(['frontend.*'], function ($view) {
 
             $data = [];
+            $data['default_delivery_fee'] = 60;
             $query = ProductCategory::activated()->orderBy('name')->get();
             $data['categories'] = $query;
             $data['menuItems'] = $query->where('is_menu', 1);
