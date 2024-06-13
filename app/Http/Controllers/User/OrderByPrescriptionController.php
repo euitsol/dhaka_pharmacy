@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UploadPrescriptionRequest;
+use App\Models\Address;
 use App\Models\OrderPrescription;
 use App\Models\TempFile;
 use Illuminate\Http\JsonResponse;
@@ -32,6 +33,7 @@ class OrderByPrescriptionController extends Controller
                 $up->image = $to_path;
                 $up->address_id = $request->address_id;
                 $up->delivery_type = $request->delivery_type;
+                $up->delivery_fee = $request->delivery_fee;
                 $up->user_id = user()->id;
                 $up->save();
                 Storage::deleteDirectory('public/' . $temp_file->path);
@@ -44,5 +46,10 @@ class OrderByPrescriptionController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => 'Somethings is wrong'], 500);
         }
+    }
+    public function address($id): JsonResponse
+    {
+        $data = Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->where('id', $id)->get()->first();
+        return response()->json($data);
     }
 }

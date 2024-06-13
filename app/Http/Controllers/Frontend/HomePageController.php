@@ -15,50 +15,48 @@ class HomePageController extends Controller
 {
 
     use OrderNotificationTrait, TransformProductTrait;
-    public function home():View
+    public function home(): View
     {
 
         //test
         // $order = Order::findOrFail(1);
         // $this->order_notification($order, 'order_initialized');
 
-        $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated();
-        $data['products'] = $products->featured()->latest()->get()->shuffle()->take(8)->each(function($product){
-            $product = $this->transformProduct($product,30);
+        $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts'])->activated();
+        $data['products'] = (clone $products)->featured()->latest()->get()->shuffle()->take(8)->each(function ($product) {
+            $product = $this->transformProduct($product, 30);
             $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
-        $data['bsItems'] = $products->bestSelling()->latest()->get()->shuffle()->take(8)->each(function($product){
-            $product = $this->transformProduct($product,30);
+        $data['bsItems'] = (clone $products)->bestSelling()->latest()->get()->shuffle()->take(8)->each(function ($product) {
+            $product = $this->transformProduct($product, 30);
             $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
         $data['featuredItems'] = ProductCategory::activated()->featured()->orderBy('name')->get();
 
-        return view('frontend.home',$data);
+        return view('frontend.home', $data);
     }
 
-    public function updateFeaturedProducts():JsonResponse
+    public function updateFeaturedProducts(): JsonResponse
     {
         $category_slug = request('category');
         $currentUrl = URL::current();
         $data['url'] = $currentUrl . "?category=all";
 
         $products = '';
-        if($category_slug == 'all'){
-            $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated()->latest()->get();
-        }else{
-            $data['product_cat'] = ProductCategory::activated()->where('slug',$category_slug)->first();
-            $data['url'] = $currentUrl . "?category=".$data['product_cat']->slug;
-            $products = Medicine::with(['pro_cat','pro_sub_cat','generic','company','strength','discounts'])->activated()->featured()->where('pro_cat_id',$data['product_cat']->id)->latest()->get();
+        if ($category_slug == 'all') {
+            $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts'])->activated()->latest()->get();
+        } else {
+            $data['product_cat'] = ProductCategory::activated()->where('slug', $category_slug)->first();
+            $data['url'] = $currentUrl . "?category=" . $data['product_cat']->slug;
+            $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts'])->activated()->featured()->where('pro_cat_id', $data['product_cat']->id)->latest()->get();
         }
-        $data['products'] = $products->shuffle()->take(8)->each(function($product){
-            $product = $this->transformProduct($product,30);
+        $data['products'] = $products->shuffle()->take(8)->each(function ($product) {
+            $product = $this->transformProduct($product, 30);
             $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
         return response()->json($data);
     }
-
-
 }

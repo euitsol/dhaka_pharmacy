@@ -55,14 +55,15 @@ class CheckoutController extends Controller
         $order->carts = json_encode($atcs);
         $order->status = 0; //Order initiated
         $order->order_id = $orderId;
+        $order->creater()->associate(user());
         $order->save();
         return redirect()->route('u.ck.product.checkout', encrypt($order->id));
     }
     public function checkout($order_id)
     {
         $customer_id = user()->id;
-        $data['order_id'] = decrypt($order_id);
         $data['default_delivery_fee'] = 60;
+        $data['order_id'] = decrypt($order_id);
         $atcs = AddToCart::with(['product.pro_cat', 'product.generic', 'product.pro_sub_cat', 'product.company', 'product.discounts', 'unit'])->check()->where('status', 0)->where('customer_id', $customer_id)->orderBy('created_at', 'asc')->get();
         foreach ($atcs as $key => $atc) {
             $data['unit'] = $atc->unit;
