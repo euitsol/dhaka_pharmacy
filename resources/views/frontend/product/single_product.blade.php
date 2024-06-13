@@ -57,7 +57,7 @@
                                             </li>
                                         </ul>
                                         <div class="favorite">
-                                            <i class="{{ !empty($single_product->wish()) && $single_product->wish->status == 1 ? 'fa-solid' : 'fa-regular' }} fa-heart wish_update"
+                                            <i class="{{ !empty($single_product->wish()) && !empty($single_product->wish->status) && $single_product->wish->status == 1 ? 'fa-solid' : 'fa-regular' }} fa-heart wish_update"
                                                 data-pid="{{ encrypt($single_product->id) }}"></i>
                                         </div>
                                     </div>

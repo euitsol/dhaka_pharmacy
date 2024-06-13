@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use App\Http\Traits\TransformProductTrait;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class WishlistController extends Controller
 {
@@ -45,23 +46,43 @@ class WishlistController extends Controller
         }
         return response()->json($data);
     }
-    public function list(): View
+    public function list(Request $request)
     {
-        $wishes = WishList::activated()->where('user_id', user()->id)->with([
+        $data['pageNumber'] = $request->query('page', 1);
+
+        $filter_val = $request->get('filter') ?? request('filter');
+        $data['filterValue'] = $filter_val;
+        $query = WishList::activated()->where('user_id', user()->id)->with([
             'product.pro_cat',
             'product.pro_sub_cat',
             'product.generic',
             'product.company',
             'product.strength',
             'product.discounts'
-        ])->orderBy('updated_at', 'asc')->paginate(10);
+        ])->orderBy('updated_at', 'asc');
+        $perPage = 10;
+        if ($filter_val && $filter_val != 'all') {
+            if ($filter_val == 5) {
+                $perPage = 5;
+            } else {
+                $query->where('updated_at', '>=', Carbon::now()->subDays($filter_val));
+            }
+        }
+        $wishes =  $query->paginate($perPage)->withQueryString();
+
         $wishes->getCollection()->each(function ($wish) {
             $wish->product = $this->transformProduct($wish->product, 30);
+            $wish->product->pid = encrypt($wish->product->id);
             $wish->product->units = $this->getSortedUnits($wish->product->unit);
             return $wish;
         });
         $data['wishes'] = $wishes;
-        return view('user.wishlist.list', $data);
+        $data['pagination'] = $wishes->links('vendor.pagination.bootstrap-5')->render();
+        if (request()->ajax()) {
+            return response()->json($data);
+        } else {
+            return view('user.wishlist.list', $data);
+        }
     }
     public function refresh(): JsonResponse
     {
