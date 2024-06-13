@@ -50,7 +50,7 @@
                         <li><a class="dropdown-item" href="{{ route('u.order.list') }}"><img
                                     src="{{ asset('user/asset/img/setting.png') }}"
                                     alt=""><span>{{ __('My Orders') }}</span></a></li>
-                        <li><a class="dropdown-item" href="#"><img
+                        <li><a class="dropdown-item" href="{{ route('u.wishlist.list') }}"><img
                                     src="{{ asset('user/asset/img/wishlist.png') }}"
                                     alt=""><span>{{ __('My Wishlist') }}</span></a></li>
                         <li><a class="dropdown-item" href="#"><img
