@@ -12,6 +12,29 @@
         });
         count = $('.item_card').length;
     }
+
+    function getDefault() {
+        let medicines = @json($medicines);
+        let defaultOptions = medicines.map(function(medicine) {
+            return {
+                id: medicine.id,
+                text: medicine.name
+            };
+        });
+        return defaultOptions;
+    }
+
+    function formatMedicine(medicine) {
+        if (medicine.loading) {
+            return medicine.text;
+        }
+        return medicine.name;
+    }
+
+    function formatMedicineSelection(medicine) {
+        return medicine.name || medicine.text;
+    }
+
     $(document).ready(function() {
         renumberItems();
         $(document).on('click', '.item_add_btn', function() {
@@ -33,12 +56,8 @@
                                 <div class="form-group">
                                     <label for="medicine">Medicine</label>
                                     <select name="item[${count}][medicine]" id="medicine"
-                                        class="form-control {{ $errors->has('item.*.medicine') ? ' is-invalid' : '' }} medicine select-${count}" >
+                                        class="form-control medicine select-${count}" >
                                         <option value="" selected hidden>Select Medicine</option>
-                                        @foreach ($medicines as $medicine)
-                                            <option value="{{ $medicine->id }}">
-                                                {{ $medicine->name }}</option>
-                                        @endforeach
                                     </select>
                                     @include('alerts.feedback', [
                                         'field' => 'item.*.medicine',
@@ -47,29 +66,45 @@
                                 <div class="form-group">
                                     <label for="unit">Unit</label>
                                     <select name="item[${count}][unit]" id="unit"
-                                        class="form-control {{ $errors->has('item.*.unit') ? ' is-invalid' : '' }} unit" disabled>
+                                        class="form-control unit" disabled>
                                         <option value="" selected hidden>Select Unit</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'item.*.unit'])
                                 </div>
                                 <div class="form-group">
                                     <label for="quantity">Quantity</label>
-                                    <select name="item[${count}][quantity]" id="quantity"
-                                        class="form-control {{ $errors->has('item.*.quantity') ? ' is-invalid' : '' }}">
-                                        <option value="" selected hidden>Select Quantity</option>
-                                        @for ($i = 1; $i < 1000; $i++)
-                                            <option value="{{ $i }}"
-                                                {{ old('item.*.quantity' == $i ? 'selected' : '') }}>
-                                                {{ $i }}</option>
-                                        @endfor
-                                    </select>
+                                    <input type="text" name="item[${count}][quantity]"
+                                            class="form-control"
+                                            placeholder="Enter item quantity">
                                     @include('alerts.feedback', ['field' => 'item.*.quantity'])
                                 </div>
                             </div>
                         </div>
                         `;
             $('#my_product').append(result);
-            $('.select-' + count).select2();
+            $('.invalid-feedback').remove();
+            $('.select-' + count).select2({
+                data: getDefault(),
+                ajax: {
+                    url: `{{ route('obp.get_select_medicine.obp_details') }}`,
+                    dataType: 'json',
+                    delay: 100,
+                    data: function(params) {
+                        return {
+                            param: params.term // search term
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.items
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 1,
+                templateResult: formatMedicine,
+                templateSelection: formatMedicineSelection
+            });
         });
 
         $(document).on('click', '.item_delete_btn', function() {
@@ -101,12 +136,37 @@
                     });
                     element.parent().next('.form-group').find('.unit').prop('disabled', false)
                     element.parent().next('.form-group').find('.unit').html(result);
-                    element.parent().next('.form-group').find('.unit').select2();
+                    element.parent().next('.form-group').find('.unit').select2({});
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching unit data:', error);
                 }
             });
         }
+    });
+
+    $(document).ready(function() {
+        $('.medicine').select2({
+            data: getDefault(),
+            ajax: {
+                url: `{{ route('obp.get_select_medicine.obp_details') }}`,
+                dataType: 'json',
+                delay: 100,
+                data: function(params) {
+                    return {
+                        param: params.term // search term
+                    };
+                },
+                processResults: function(data) {
+                    return {
+                        results: data.items
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            templateResult: formatMedicine,
+            templateSelection: formatMedicineSelection
+        });
     });
 </script>

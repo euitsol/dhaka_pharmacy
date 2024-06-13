@@ -29,32 +29,23 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label>{{ __('Medicine') }}</label>
-                                        <select name="item[1][medicine]"
-                                            class="form-control {{ $errors->has('item.1.medicine') ? ' is-invalid' : '' }} medicine">
+                                        <select name="item[1][medicine]" class="form-control medicine">
                                             <option value="" selected hidden>{{ __('Select Medicine') }}</option>
-                                            @foreach ($medicines as $medicine)
-                                                <option value="{{ $medicine->id }}"
-                                                    {{ old('item.1.medicine') == $medicine->id ? 'selected' : '' }}>
-                                                    {{ $medicine->name }}</option>
-                                            @endforeach
                                         </select>
-                                        @include('alerts.feedback', ['field' => 'item.1.medicine'])
+                                        @include('alerts.feedback', ['field' => 'item.*.medicine'])
                                     </div>
                                     <div class="form-group">
                                         <label>{{ __('Unit') }}</label>
-                                        <select name="item[1][unit]"
-                                            class="form-control {{ $errors->has('item.1.unit') ? ' is-invalid' : '' }} unit"
-                                            disabled>
+                                        <select name="item[1][unit]" class="form-control unit" disabled>
                                             <option value="" selected hidden>{{ __('Select Unit') }}</option>
                                         </select>
-                                        @include('alerts.feedback', ['field' => 'item.1.unit'])
+                                        @include('alerts.feedback', ['field' => 'item.*.unit'])
                                     </div>
                                     <div class="form-group">
                                         <label>{{ __('Quantity') }}</label>
-                                        <input type="text" name="item[1][quantity]"
-                                            class="form-control {{ $errors->has('item.1.quantity') ? ' is-invalid' : '' }}"
+                                        <input type="text" name="item[1][quantity]" class="form-control"
                                             placeholder="Enter item quantity">
-                                        @include('alerts.feedback', ['field' => 'item.1.quantity'])
+                                        @include('alerts.feedback', ['field' => 'item.*.quantity'])
                                     </div>
                                 </div>
                             </div>
@@ -135,43 +126,4 @@
 @endsection
 @push('js')
     @include('admin.order_by_prescription.order_by_presc_js')
-
-    <script>
-        $(document).ready(function() {
-            $('.select2-ajax').select2({
-                theme: 'bootstrap4',
-                placeholder: "{{ __('Select Medicine') }}",
-                ajax: {
-                    url: `{{ route('obp.get_select_medicine.obp_details') }}`,
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            q: params.term // search term
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.items
-                        };
-                    },
-                    cache: true
-                },
-                minimumInputLength: 1,
-                templateResult: formatMedicine,
-                templateSelection: formatMedicineSelection
-            });
-
-            function formatMedicine(medicine) {
-                if (medicine.loading) {
-                    return medicine.text;
-                }
-                return medicine.name;
-            }
-
-            function formatMedicineSelection(medicine) {
-                return medicine.name || medicine.text;
-            }
-        });
-    </script>
 @endpush

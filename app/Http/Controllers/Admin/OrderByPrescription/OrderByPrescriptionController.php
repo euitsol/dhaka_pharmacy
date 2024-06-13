@@ -96,23 +96,10 @@ class OrderByPrescriptionController extends Controller
 
     public function getSelectMedicine(Request $request)
     {
-        $query = $request->input('q');
-        $medicines = Medicine::activated()
-            ->where('name', 'like', '%' . $query . '%')
-            ->orderBy('name', 'asc')
-            ->take(10)
-            ->get();
-
-        $results = [];
-        foreach ($medicines as $medicine) {
-            $results[] = [
-                'id' => $medicine->id,
-                'name' => $medicine->name
-            ];
-        }
-
+        $param = $request->input('param');
+        $medicines = Medicine::activated()->select('id', 'name')->where('name', 'like', '%' . $param . '%')->orderBy('name', 'asc')->latest()->take(10)->get();
         return response()->json([
-            'items' => $results
+            'items' => $medicines
         ]);
     }
 
