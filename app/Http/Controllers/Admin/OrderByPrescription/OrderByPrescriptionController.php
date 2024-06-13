@@ -71,7 +71,7 @@ class OrderByPrescriptionController extends Controller
         $order->save();
         $up->update(['status' => 1]);
         flash()->addSuccess('Prescription Item Order Created Successfully.');
-        return redirect()->route('obp.obp_list', 'pending');
+        return redirect()->route('obp.obp_list', 'ordered');
     }
 
     public function orderDetails($order_id)

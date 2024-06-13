@@ -9,7 +9,7 @@ use App\Models\Permission;
 use App\Models\SiteSetting;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\File;
 
 
 //This will retun the route prefix of the routes for permission check
@@ -52,27 +52,49 @@ function check_access_by_route_name($routeName = null): bool
 }
 
 //This will export the permissions as csv for seeders
+// function createCSV($filename = 'permissions.csv'): string
+// {
+//     $permissions = Permission::all();
+
+//     $data = $permissions->each(function ($permission) {
+//         return [
+//             'name' => $permission->name,
+//             'guard_name' => $permission->guard_name,
+//             'prefix' => $permission->prefix,
+//         ];
+//     });
+
+//     $csv = Writer::createFromPath(public_path('csv/' . $filename), 'w+');
+
+//     $csv->insertOne(array_keys($data->first()));
+
+//     foreach ($data as $record) {
+//         $csv->insertOne($record);
+//     }
+
+//     return public_path('csv/' . $filename);
+// }
+
 function createCSV($filename = 'permissions.csv'): string
 {
-    $permissions = Permission::all();
+    $permissions = Permission::all(['name', 'guard_name', 'prefix']);
 
-    $data = $permissions->each(function ($permission) {
-        return [
-            'name' => $permission->name,
-            'guard_name' => $permission->guard_name,
-            'prefix' => $permission->prefix,
-        ];
-    });
-
-    $csv = Writer::createFromPath(public_path('csv/' . $filename), 'w+');
-
-    $csv->insertOne(array_keys($data->first()));
-
-    foreach ($data as $record) {
-        $csv->insertOne($record);
+    $csvPath = public_path('csv/' . $filename);
+    // Ensure the directory exists
+    File::ensureDirectoryExists(dirname($csvPath));
+    // Create the CSV writer
+    $csv = Writer::createFromPath($csvPath, 'w+');
+    // Insert header
+    $csv->insertOne(['name', 'guard_name', 'prefix']);
+    // Insert records
+    foreach ($permissions as $permission) {
+        $csv->insertOne([
+            $permission->name,
+            $permission->guard_name,
+            $permission->prefix,
+        ]);
     }
-
-    return public_path('csv/' . $filename);
+    return $csvPath;
 }
 
 function storage_url($urlOrArray)
