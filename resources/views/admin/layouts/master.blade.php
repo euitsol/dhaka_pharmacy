@@ -29,7 +29,9 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     @stack('css')
-
+    <script>
+        const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
+    </script>
 </head>
 
 <body class="white-content dark {{ $class ?? '' }}">
