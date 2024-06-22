@@ -99,13 +99,14 @@ function createCSV($filename = 'permissions.csv'): string
 
 function storage_url($urlOrArray)
 {
+    $image = asset('frontend\default\cat_img.png');
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
         $result = '';
         $count = 0;
         $itemCount = count($urlOrArray);
         foreach ($urlOrArray as $index => $url) {
 
-            $result .= $url ? asset('storage/' . $url) : asset('frontend\default\cat_img.png');
+            $result .= $url ? asset('storage/' . $url) : $image;
 
             if ($count === $itemCount - 1) {
                 $result .= '';
@@ -116,7 +117,37 @@ function storage_url($urlOrArray)
         }
         return $result;
     } else {
-        return $urlOrArray ? asset('storage/' . $urlOrArray) : asset('frontend\default\cat_img.png');
+        return $urlOrArray ? asset('storage/' . $urlOrArray) : $image;
+    }
+}
+
+function auth_storage_url($urlOrArray, $gender)
+{
+    $image = asset('default_img\other-student.png');
+    if ($gender == 'Male') {
+        $image = asset('default_img\male-student.png');
+    } elseif ($gender == 'Male') {
+        $image = asset('default_img\female-student.png');
+    }
+
+    if (is_array($urlOrArray) || is_object($urlOrArray)) {
+        $result = '';
+        $count = 0;
+        $itemCount = count($urlOrArray);
+        foreach ($urlOrArray as $index => $url) {
+
+            $result .= $url ? asset('storage/' . $url) : $image;
+
+            if ($count === $itemCount - 1) {
+                $result .= '';
+            } else {
+                $result .= ', ';
+            }
+            $count++;
+        }
+        return $result;
+    } else {
+        return $urlOrArray ? asset('storage/' . $urlOrArray) : $image;
     }
 }
 

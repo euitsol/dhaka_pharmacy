@@ -6,7 +6,7 @@ $(document).ready(function () {
         $(this).css("border-color", "#fff");
     });
 
-    $(".lightbox").click(function (event) {
+    $(document).on("click", ".lightbox", function (event) {
         if ($(event.target).hasClass("lightbox")) {
             $(this)
                 .find(".new-lightbox-content")
@@ -16,7 +16,7 @@ $(document).ready(function () {
             $(this).find("img").css("border-color", "#000");
         }
     });
-    $(".close_button").click(function (event) {
+    $(document).on("click", ".close_button", function (event) {
         if ($(this).parent().hasClass("lightbox")) {
             $(this)
                 .parent()
