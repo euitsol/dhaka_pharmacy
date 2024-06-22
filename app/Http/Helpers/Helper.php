@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\Discount;
-use App\Models\Medicine;
-use App\Models\MedicineUnit;
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
@@ -16,7 +13,7 @@ use Illuminate\Support\Facades\File;
 function get_permission_routes()
 {
     return [
-        'am.', 'um.', 'pm.', 'om.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management', 'product.', 'payment_gateway.', 'obp.'
+        'am.', 'um.', 'pm.', 'om.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.'
     ];
 }
 

@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('District Manager List')}}</h4>
+                            <h4 class="card-title">{{ __('District Manager List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -49,15 +49,48 @@
                                     <td> {{ c_user_name($dm->created_user) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'dm_management.district_manager.login_as.district_manager_profile',   'params' => [$dm->id], 'label' => 'Login As', 'target'=>'_blank'],
-                                                    ['routeName' => 'dm_management.district_manager.district_manager_profile',   'params' => [$dm->id], 'label' => 'Profile'],
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$dm->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $dm->id ],
-                                                    ['routeName' => 'dm_management.district_manager.district_manager_edit',   'params' => [$dm->id], 'label' => 'Update'],
-                                                    ['routeName' => 'dm_management.district_manager.status.district_manager_edit',   'params' => [$dm->id], 'label' => $dm->getBtnStatus()],
-                                                    ['routeName' => 'dm_management.district_manager.district_manager_delete', 'params' => [$dm->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' =>
+                                                        'dm_management.district_manager.login_as.district_manager_profile',
+                                                    'params' => [$dm->id],
+                                                    'label' => 'Login As',
+                                                    'target' => '_blank',
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'dm_management.district_manager.district_manager_profile',
+                                                    'params' => [$dm->id],
+                                                    'label' => 'Profile',
+                                                ],
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$dm->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $dm->id,
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'dm_management.district_manager.district_manager_edit',
+                                                    'params' => [$dm->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'dm_management.district_manager.status.district_manager_edit',
+                                                    'params' => [$dm->id],
+                                                    'label' => $dm->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'dm_management.district_manager.district_manager_delete',
+                                                    'params' => [$dm->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -74,7 +107,8 @@
     </div>
 
     {{-- District Manager Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -95,7 +129,9 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('dm_management.district_manager.details.district_manager_list', ['id']) }}");
+                let url = (
+                    "{{ route('dm_management.district_manager.details.district_manager_list', ['id']) }}"
+                );
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -120,7 +156,7 @@
                                     <tr>
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
-                                        <td>${data.email ?? 'N/A'}</td>
+                                        <td>${data.email ?? '--'}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Operation Area</th>
