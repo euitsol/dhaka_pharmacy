@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -41,6 +42,17 @@ class UserController extends Controller
     {
         $data['user'] = User::with(['creater', 'updater'])->findOrFail($id);
         return view('admin.user_management.user.profile', $data);
+    }
+    public function loginAs($id)
+    {
+        $user = User::findOrFail($id);
+        if ($user) {
+            Auth::guard('web')->login($user);
+            return redirect()->route('user.dashboard');
+        } else {
+            flash()->addError('User not found');
+            return redirect()->back();
+        }
     }
     public function create(): View
     {

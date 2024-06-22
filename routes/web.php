@@ -241,6 +241,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::controller(AdminUserController::class)->prefix('user')->name('user.')->group(function () {
             Route::get('index', 'index')->name('user_list');
             Route::get('details/{id}', 'details')->name('details.user_list');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.user_profile');
             Route::get('profile/{id}', 'profile')->name('user_profile');
             Route::get('create', 'create')->name('user_create');
             Route::post('create', 'store')->name('user_create');

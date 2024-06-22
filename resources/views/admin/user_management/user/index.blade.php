@@ -65,8 +65,8 @@
 
                                     <td> {{ c_user_name($user->creater) }} </td>
                                     <td>
-                                        @include('admin.partials.action_buttons', [
-                                            'menuItems' => [
+                                        @php
+                                            $actions = [
                                                 [
                                                     'routeName' => 'um.user.user_profile',
                                                     'params' => [$user->id],
@@ -95,7 +95,19 @@
                                                     'label' => 'Delete',
                                                     'delete' => true,
                                                 ],
-                                            ],
+                                            ];
+                                            if ($user->is_verify == 1) {
+                                                array_unshift($actions, [
+                                                    'routeName' => 'um.user.login_as.user_profile',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Login As',
+                                                    'target' => '_blank',
+                                                ]);
+                                            }
+                                        @endphp
+
+                                        @include('admin.partials.action_buttons', [
+                                            'menuItems' => $actions,
                                         ])
                                     </td>
                                 </tr>
