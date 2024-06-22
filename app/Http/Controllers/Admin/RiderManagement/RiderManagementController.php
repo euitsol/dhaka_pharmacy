@@ -10,30 +10,29 @@ use App\Models\OperationSubArea;
 use App\Models\Rider;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class RiderManagementController extends Controller
 {
-    public function __construct() {
+    use DetailsCommonDataTrait;
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
 
     public function index(): View
     {
-        $data['riders'] = Rider::with(['operation_area','operation_sub_area','creater'])->latest()->get();
-        return view('admin.rider_management.rider.index',$data);
+        $data['riders'] = Rider::with(['operation_area', 'operation_sub_area', 'creater'])->latest()->get();
+        return view('admin.rider_management.rider.index', $data);
     }
     public function details($id): JsonResponse
     {
-        $data = Rider::with(['operation_area','creater','operation_sub_area','updater'])->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->creater);
-        $data->updated_by = u_user_name($data->updater);
+        $data = Rider::with(['operation_area', 'creater', 'operation_sub_area', 'updater'])->findOrFail($id);
+        $this->morphColumnData($data);
         return response()->json($data);
     }
 
@@ -51,16 +50,16 @@ class RiderManagementController extends Controller
 
     public function profile($id): View
     {
-        $data['rider'] = Rider::with(['creater','operation_area','operation_sub_area','updater'])->findOrFail($id);
-        return view('admin.rider_management.rider.profile',$data);
+        $data['rider'] = Rider::with(['creater', 'operation_area', 'operation_sub_area', 'updater'])->findOrFail($id);
+        return view('admin.rider_management.rider.profile', $data);
     }
 
 
     public function create(): View
     {
         $data['operational_areas'] = OperationArea::activated()->latest()->get();
-        $data['document'] = Documentation::where('module_key','rider')->first();
-        return view('admin.rider_management.rider.create',$data);
+        $data['document'] = Documentation::where('module_key', 'rider')->first();
+        return view('admin.rider_management.rider.create', $data);
     }
     public function store(RiderRequest $req): RedirectResponse
     {
@@ -72,7 +71,7 @@ class RiderManagementController extends Controller
         $rider->password = Hash::make($req->password);
         $rider->creater()->associate(admin());
         $rider->save();
-        flash()->addSuccess('Rider '.$rider->name.' created successfully.');
+        flash()->addSuccess('Rider ' . $rider->name . ' created successfully.');
         return redirect()->route('rm.rider.rider_list');
     }
     public function edit($id): View
@@ -80,8 +79,8 @@ class RiderManagementController extends Controller
         $data['rider'] = Rider::findOrFail($id);
         $data['operation_areas'] = OperationArea::activated()->latest()->get();
         $data['operation_sub_areas'] = OperationSubArea::activated()->latest()->get();
-        $data['document'] = Documentation::where('module_key','rider')->first();
-        return view('admin.rider_management.rider.edit',$data);
+        $data['document'] = Documentation::where('module_key', 'rider')->first();
+        return view('admin.rider_management.rider.edit', $data);
     }
     public function update(RiderRequest $req, $id): RedirectResponse
     {
@@ -90,37 +89,35 @@ class RiderManagementController extends Controller
         $rider->phone = $req->phone;
         $rider->oa_id = $req->oa_id;
         $rider->osa_id = $req->osa_id;
-        if($req->password){
+        if ($req->password) {
             $rider->password = Hash::make($req->password);
         }
         $rider->updater()->associate(admin());
         $rider->update();
 
-        flash()->addSuccess('Rider '.$rider->name.' updated successfully.');
+        flash()->addSuccess('Rider ' . $rider->name . ' updated successfully.');
         return redirect()->route('rm.rider.rider_list');
     }
     public function status($id): RedirectResponse
     {
         $rider = Rider::findOrFail($id);
         $this->statusChange($rider);
-        flash()->addSuccess('Rider '.$rider->name.' status updated successfully.');
+        flash()->addSuccess('Rider ' . $rider->name . ' status updated successfully.');
         return redirect()->route('rm.rider.rider_list');
     }
     public function delete($id): RedirectResponse
     {
         $rider = Rider::findOrFail($id);
         $rider->delete();
-        flash()->addSuccess('Rider '.$rider->name.' deleted successfully.');
+        flash()->addSuccess('Rider ' . $rider->name . ' deleted successfully.');
         return redirect()->route('rm.rider.rider_list');
-
     }
 
 
-    
+
     public function get_operational_sub_area($oa_id): JsonResponse
     {
         $data['operation_area'] = OperationArea::with('operation_sub_areas')->activated()->findOrFail($oa_id);
         return response()->json($data);
-
     }
 }

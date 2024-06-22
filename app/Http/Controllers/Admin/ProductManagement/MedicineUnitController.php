@@ -8,14 +8,13 @@ use App\Models\Documentation;
 use App\Models\MedicineUnit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class MedicineUnitController extends Controller
 {
-    //
-
+    use DetailsCommonDataTrait;
     public function __construct()
     {
         return $this->middleware('admin');
@@ -30,10 +29,7 @@ class MedicineUnitController extends Controller
     {
         $data = MedicineUnit::with(['created_user', 'updated_user'])->findOrFail($id);
         $data->image = storage_url($data->image);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->created_user);
-        $data->updated_by = u_user_name($data->updated_user);
+        $this->simpleColumnData($data);
         return response()->json($data);
     }
     public function create(): View
@@ -73,7 +69,7 @@ class MedicineUnitController extends Controller
             $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'products/images';
             $path = $image->storeAs($folderName, $imageName, 'public');
-            if(!empty($medicine_unit->image)){
+            if (!empty($medicine_unit->image)) {
                 $this->fileDelete($medicine_unit->image);
             }
             $medicine_unit->image = $path;

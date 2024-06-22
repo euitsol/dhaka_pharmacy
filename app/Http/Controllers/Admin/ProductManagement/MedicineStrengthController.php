@@ -8,13 +8,13 @@ use App\Models\Documentation;
 use App\Models\MedicineStrength;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class MedicineStrengthController extends Controller
 {
-    //
+    use DetailsCommonDataTrait;
 
     public function __construct()
     {
@@ -29,10 +29,7 @@ class MedicineStrengthController extends Controller
     public function details($id): JsonResponse
     {
         $data = MedicineStrength::with(['created_user', 'updated_user'])->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->created_user);
-        $data->updated_by = u_user_name($data->updated_user);
+        $this->simpleColumnData($data);
         return response()->json($data);
     }
     public function create(): View

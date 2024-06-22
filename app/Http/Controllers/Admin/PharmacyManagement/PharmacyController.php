@@ -8,18 +8,17 @@ use App\Http\Requests\PharmacyRequest;
 use App\Models\Documentation;
 use App\Models\Pharmacy;
 use App\Models\PharmacyDiscount;
-use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class PharmacyController extends Controller
 {
-    //
+    use DetailsCommonDataTrait;
 
     public function __construct()
     {
@@ -34,10 +33,7 @@ class PharmacyController extends Controller
     public function details($id): JsonResponse
     {
         $data = Pharmacy::with(['creater', 'updater'])->findOrFail(decrypt($id));
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->creater);
-        $data->updated_by = u_user_name($data->updater);
+        $this->morphColumnData($data);
         return response()->json($data);
     }
     public function profile($id): View

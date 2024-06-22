@@ -8,15 +8,14 @@ use App\Models\Documentation;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class UserController extends Controller
 {
-    //
+    use DetailsCommonDataTrait;
 
     public function __construct()
     {
@@ -31,10 +30,7 @@ class UserController extends Controller
     public function details($id): JsonResponse
     {
         $data = User::with(['creater', 'updater'])->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->creater);
-        $data->updated_by = u_user_name($data->updater);
+        $this->morphColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
     }
