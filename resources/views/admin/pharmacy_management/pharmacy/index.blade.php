@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">Pharmacy List</h4>
+                            <h4 class="card-title">{{ __('Pharmacy List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -49,10 +49,11 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'pm.pharmacy.login_as.pharmacy_profile',   
-                                                    'params' => [encrypt($pharmacy->id)], 
+                                                    'routeName' => 'pm.pharmacy.login_as.pharmacy_profile',
+                                                    'params' => [encrypt($pharmacy->id)],
                                                     'label' => 'Login As',
-                                                    'target'=>'_blank'],
+                                                    'target' => '_blank',
+                                                ],
                                                 [
                                                     'routeName' => 'pm.pharmacy.pharmacy_profile',
                                                     'params' => [encrypt($pharmacy->id)],
@@ -132,8 +133,8 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
+                        let status = data.status == 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status == 1 ? 'badge-success' :
                             'badge-warning';
                         var result = `
                                 <table class="table table-striped">
