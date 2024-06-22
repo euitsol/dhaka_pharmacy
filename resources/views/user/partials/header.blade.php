@@ -36,12 +36,13 @@
                     </a>
                 </div>
                 <div class="name me-3">
-                    <a href="#">{{ abbreviateName('Al Kafi Sohag') }}</a>
+                    <a href="{{ route('user.dashboard') }}">{{ abbreviateName(user()->name) }}</a>
                 </div>
                 <div class="profile">
                     <a href="javascript:void(0)" class="nav-link dropdown-toggle" type="button" data-toggle="dropdown"
                         aria-expanded="false" id="dropdownMenuButton">
-                        <img src="{{ asset('user/asset/img/user.png') }}" alt="">
+                        <img src="{{ user()->image ? storage_url(user()->image) : asset('user/asset/img/user.png') }}"
+                            alt="">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" href="#"><img

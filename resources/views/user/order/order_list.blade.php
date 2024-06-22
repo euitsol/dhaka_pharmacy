@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col">
                     <div class="page-title">
-                        <h3>{{ __('My Orders') }}</h3>
+                        <h3>{{ __(isset($status) ? str_replace('-', ' ', str($status)->title()) : 'My Orders') }}</h3>
                     </div>
                     <div class="show-order d-flex align-items-center">
                         <h4 class="me-2">{{ __('Show:') }}</h4>
