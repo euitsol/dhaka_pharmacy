@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Frontend\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\AuthenticationController;
@@ -17,5 +18,11 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 
     Route::controller(UserController::class)->middleware('auth:api-user')->prefix('info')->name('info')->group(function () {
         Route::get('', 'info');
+    });
+});
+
+Route::group(['as' => 'f.', 'prefix' => 'frontend'], function () {
+    Route::controller(CategoryController::class)->prefix('categories')->name('cats.')->group(function () {
+        Route::get('/{is_featured?}', 'categories')->name('list');
     });
 });
