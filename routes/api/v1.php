@@ -17,8 +17,9 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::post('registration', 'registration')->name('reg');
     });
 
-    Route::controller(UserController::class)->middleware('auth:api-user')->prefix('info')->name('info')->group(function () {
-        Route::get('', 'info');
+    Route::controller(UserController::class)->middleware('auth:api-user')->prefix('profile')->name('p')->group(function () {
+        Route::get('/info', 'info')->name('info');
+        Route::post('/update', 'update')->name('update');
     });
     Route::controller(AddressController::class)->middleware('auth:api-user')->prefix('address')->name('address')->group(function () {
         Route::post('/store', 'store')->name('store');
