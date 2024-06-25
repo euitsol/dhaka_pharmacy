@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Requests\API\PasswordUpdateRequest;
 use App\Http\Requests\API\UserRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -52,6 +53,17 @@ class UserController extends BaseController
             return sendResponse(true, 'User profile updated successfully.');
         } else {
             return sendResponse(false, 'Invalid User', null);
+        }
+    }
+    public function pass_update(PasswordUpdateRequest $request): JsonResponse
+    {
+        $user = $request->user();
+        if ($user) {
+            $user->password = $request->new_password;
+            $user->update();
+            return sendResponse(true, 'Password updated successfully');
+        } else {
+            return sendResponse(false, 'User is invalid', null);
         }
     }
 }
