@@ -101,7 +101,7 @@
             </li>
             <li @if ($pageSlug == 'feedback') class="active" @endif>
                 <a href="{{ route('rider.fdk.index') }}">
-                    <i class="fa-solid fa-shield-alt @if ($pageSlug == 'feedback') fa-beat-fade @endif"></i>
+                    <i class="fa-regular fa-thumbs-up @if ($pageSlug == 'feedback') fa-beat-fade @endif"></i>
                     <p>{{ 'Feedback' }}</p>
                 </a>
             </li>
