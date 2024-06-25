@@ -92,6 +92,7 @@ use App\Http\Controllers\Frontend\ProductSearchController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\Pharmacy\FeedbackController as PharmacyFeedbackController;
 use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
+use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -636,7 +637,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
         Route::get('index', 'index')->name('list');
     });
 
-    //User Feedback
+    //Pharmacy Feedback
     Route::controller(PharmacyFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
@@ -697,6 +698,12 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::post('create', 'store')->name('create');
         Route::get('edit/{slug}', 'edit')->name('edit');
         Route::put('edit/{id}', 'update')->name('edit');
+    });
+
+    //DM Feedback
+    Route::controller(DmFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
     });
 });
 

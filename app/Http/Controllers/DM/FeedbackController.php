@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Pharmacy;
+namespace App\Http\Controllers\DM;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FeedbackRequest;
@@ -13,8 +13,6 @@ use Illuminate\View\View;
 
 class FeedbackController extends Controller
 {
-    //
-
     public function __construct()
     {
         return $this->middleware('pharmacy');
@@ -22,7 +20,7 @@ class FeedbackController extends Controller
 
     public function index(): View
     {
-        return view('pharmacy.feedback.index');
+        return view('district_manager.feedback.index');
     }
     public function store(FeedbackRequest $req): RedirectResponse
     {
@@ -32,7 +30,7 @@ class FeedbackController extends Controller
             $temp_file = TempFile::findOrFail($file);
             if ($temp_file) {
                 $from_path = 'public/' . $temp_file->path . '/' . $temp_file->filename;
-                $to_path = 'feedback/pharmacy/' . str_replace(' ', '-', pharmacy()->name) . '/' . time() . '/' . $temp_file->filename;
+                $to_path = 'feedback/district_manager/' . str_replace(' ', '-', dm()->name) . '/' . time() . '/' . $temp_file->filename;
                 Storage::move($from_path, 'public/' . $to_path);
                 array_push($files, $to_path);
                 Storage::deleteDirectory('public/' . $temp_file->path);
@@ -42,7 +40,7 @@ class FeedbackController extends Controller
         $fdk->files = json_encode($files);
         $fdk->subject = $req->subject;
         $fdk->description = $req->description;
-        $fdk->creater()->associate(pharmacy());
+        $fdk->creater()->associate(dm());
         $fdk->save();
         flash()->addSuccess('Your feedback is submitted successfully. Thanks for being with us!');
         return redirect()->back();
