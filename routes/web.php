@@ -93,6 +93,7 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\Pharmacy\FeedbackController as PharmacyFeedbackController;
 use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
 use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
+use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -742,6 +743,11 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::put('edit/{id}', 'update')->name('edit');
         Route::get('status/{id}', 'status')->name('status.edit');
         Route::get('delete/{id}', 'delete')->name('delete');
+    });
+    //LAM Feedback
+    Route::controller(LamFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
     });
 });
 // Rider Auth Routes

@@ -20,7 +20,7 @@
             </li>
 
             <li @if ($pageSlug == 'kyc_verification') class="active" @endif>
-                <a href="{{route('lam.kyc.verification')}}">
+                <a href="{{ route('lam.kyc.verification') }}">
                     <i class="fa-solid fa-minus @if ($pageSlug == 'kyc_verification') fa-beat-fade @endif"></i>
                     <p>{{ 'KYC Verification Center' }}</p>
                 </a>
@@ -37,35 +37,12 @@
                     <p>{{ 'Operation Areas' }}</p>
                 </a>
             </li>
-            {{--
-            <li @if ($pageSlug == 'lam') class="active" @endif>
-                <a href="{{ route('dm.lam.list') }}">
-                    <i class="fa-solid fa-minus @if ($pageSlug == 'lam') fa-beat-fade @endif"></i>
-                    <p>{{ 'Local Area Manager' }}</p>
+            <li @if ($pageSlug == 'feedback') class="active" @endif>
+                <a href="{{ route('lam.fdk.index') }}">
+                    <i class="fa-solid fa-minus @if ($pageSlug == 'feedback') fa-beat-fade @endif"></i>
+                    <p>{{ 'Feedback' }}</p>
                 </a>
             </li>
-            --}}
-            {{-- <li>
-                <a class="@if ($pageSlug == 'district_manager') @else collapsed @endif" data-toggle="collapse"
-                    href="#district_manager"
-                    @if ($pageSlug == 'district_manager') aria-expanded="true" @else aria-expanded="false" @endif>
-                    <i class="fa-solid fa-users-gear"></i>
-                    <span class="nav-link-text">{{ __('District Manager') }}</span>
-                    <b class="caret mt-1"></b>
-                </a>
-
-                <div class="collapse @if ($pageSlug == 'district_manager') show @endif" id="district_manager">
-                    <ul class="nav pl-2">
-                        <li @if ($pageSlug == 'district_manager') class="active" @endif>
-                            <a href="">
-                                <i class="fa-solid fa-minus @if ($pageSlug == 'district_manager') fa-beat-fade @endif"></i>
-                                <p>{{ 'District Manager' }}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li> --}}
-
         </ul>
     </div>
 </div>
