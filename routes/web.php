@@ -94,6 +94,7 @@ use App\Http\Controllers\Pharmacy\FeedbackController as PharmacyFeedbackControll
 use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
 use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
 use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
+use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -775,6 +776,11 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::post('/update/image', 'updateImage')->name('update.image');
 
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
+    });
+    //Rider Feedback
+    Route::controller(RiderFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
     });
 });
 
