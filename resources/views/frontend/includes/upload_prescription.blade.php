@@ -61,8 +61,7 @@
                         </select>
                     </div>
                     <div class="form-group text-end mt-3">
-                        <a href="javascript:void(0)"
-                            class="btn btn-success up_submit_btn disabled">{{ __('Submit') }}</a>
+                        <a href="javascript:void(0)" class="btn btn-success up_submit_btn">{{ __('Submit') }}</a>
                     </div>
                 </form>
             </div>

@@ -90,6 +90,7 @@ use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductSearchController;
 
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\User\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -805,6 +806,11 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
         Route::put('update', 'update')->name('update');
 
         Route::get('delete/{id}', 'delete')->name('delete');
+    });
+    //Feedback
+    Route::controller(FeedbackController::class)->prefix('feedback')->name('u.fdk.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
     });
     Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
         Route::get('list', 'order_list')->name('list');
