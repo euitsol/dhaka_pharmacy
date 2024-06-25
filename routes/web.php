@@ -90,7 +90,8 @@ use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductSearchController;
 
 use App\Http\Controllers\FileUploadController;
-use App\Http\Controllers\User\FeedbackController;
+use App\Http\Controllers\Pharmacy\FeedbackController as PharmacyFeedbackController;
+use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -634,6 +635,12 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     Route::controller(PharmacyOperationalAreaController::class)->prefix('operational-area')->name('operational_area.')->group(function () {
         Route::get('index', 'index')->name('list');
     });
+
+    //User Feedback
+    Route::controller(PharmacyFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+    });
 });
 
 
@@ -807,8 +814,8 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
 
         Route::get('delete/{id}', 'delete')->name('delete');
     });
-    //Feedback
-    Route::controller(FeedbackController::class)->prefix('feedback')->name('u.fdk.')->group(function () {
+    //User Feedback
+    Route::controller(UserFeedbackController::class)->prefix('feedback')->name('u.fdk.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
     });
