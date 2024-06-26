@@ -57,7 +57,7 @@
 
 .new-lightbox img {
     width: 48% !important;
-    height: auto;
+    height: auto !important;
     object-fit: cover;
     transition: .4s;
 }

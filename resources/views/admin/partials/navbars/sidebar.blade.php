@@ -312,6 +312,17 @@
                     </div>
                 </li>
             @endif
+            {{-- Latest Offer --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'latest_offer',
+                        'routeName' => 'latest_offer.lf_list',
+                        'iconClass' => 'fa-solid fa-bullhorn',
+                        'label' => 'Latest Offer',
+                    ],
+                ],
+            ])
 
             {{-- Operational Area Management --}}
             @if (mainMenuCheck([

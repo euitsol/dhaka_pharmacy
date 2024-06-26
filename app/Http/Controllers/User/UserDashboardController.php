@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\LatestOffer;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -37,6 +38,7 @@ class UserDashboardController extends Controller
         $data['total_cancel_orders'] = (clone $query)->whereHas('od', function ($q) {
             $q->where('status', 7);
         })->count();
+        $data['latest_offers'] = LatestOffer::activated()->latest()->get();
 
         return view('user.dashboard', $data);
     }

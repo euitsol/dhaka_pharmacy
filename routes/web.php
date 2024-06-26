@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\DM_Management\DmKycSettingsController;
 use App\Http\Controllers\Admin\LAM_Management\LamKycController;
 use App\Http\Controllers\Admin\LAM_Management\LamKycSettingsController;
 use App\Http\Controllers\Admin\LAM_Management\LocalAreaManagerController;
+use App\Http\Controllers\Admin\LatestOffer\LatestOfferController;
 use App\Http\Controllers\Admin\UserManagement\UserKycSettingsController;
 use App\Http\Controllers\Admin\UserManagement\UserKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
@@ -593,6 +594,18 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('/get-select-medicine', 'getSelectMedicine')->name('get_select_medicine.obp_details');
         Route::post('/order/create/{up_id}', 'order_create')->name('obp_order_create');
         Route::get('/status-update/{status}/{id}', 'statusUpdate')->name('status_update');
+    });
+
+    // Admin Payment Management
+    Route::controller(LatestOfferController::class)->prefix('latest-offer')->name('latest_offer.')->group(function () {
+        Route::get('index', 'index')->name('lf_list');
+        Route::get('details/{id}', 'details')->name('details.lf_list');
+        Route::get('create', 'create')->name('lf_create');
+        Route::post('create', 'store')->name('lf_create');
+        Route::get('edit/{id}', 'edit')->name('lf_edit');
+        Route::put('edit/{id}', 'update')->name('lf_edit');
+        Route::get('status/{id}', 'status')->name('status.lf_edit');
+        Route::get('delete/{id}', 'delete')->name('lf_delete');
     });
 });
 
