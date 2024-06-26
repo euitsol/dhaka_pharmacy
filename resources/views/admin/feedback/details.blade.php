@@ -1,5 +1,7 @@
 @extends('admin.layouts.master', ['pageSlug' => 'feedback'])
-
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -38,16 +40,6 @@
                                 <td>{{ $feedback->description }}</td>
                             </tr>
                             <tr>
-                                <th>{{ __('Files') }}</th>
-                                <th>:</th>
-                                <td>
-                                    @foreach (json_decode($feedback->files, true) as $file)
-                                        <a href="{{ route('feedback.download.fdk_details', encrypt($file)) }}"
-                                            class="btn btn-info me-2 text-white"><i class="fa-solid fa-download"></i></a>
-                                    @endforeach
-                                </td>
-                            </tr>
-                            <tr>
                                 <th>{{ __('Opened By') }}</th>
                                 <th>:</th>
                                 <td>{{ $feedback->openedBy->name }}</td>
@@ -74,8 +66,36 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="files d-flex align-items-center gap-3">
+                        @foreach (json_decode($feedback->files, true) as $file)
+                            @if (getFileType($file) == 'image')
+                                <div id="lightbox" class="lightbox">
+                                    <div class="lightbox-content">
+                                        <img src="{{ storage_url($file) }}" class="lightbox_image"
+                                            style="height: 300px; width:350px">
+                                    </div>
+                                    <div class="close_button fa-beat">X</div>
+                                </div>
+                            @elseif(getFileType($file) == 'video')
+                                <div class="video" style="height: 300px; width:350px">
+                                    <video controls width="100%" height="100%"
+                                        style="object-fit: cover; border-radius:5px;">
+                                        <source src="{{ storage_url($file) }}">
+                                    </video>
+                                </div>
+                            @elseif(getFileType($file) == 'pdf')
+                                <iframe src ="{{ pdf_storage_url($file) }}" width="350px" height="300px"></iframe>
+                            @else
+                                <a href="{{ route('feedback.download.fdk_details', encrypt($file)) }}"
+                                    class="btn btn-info me-2 text-white"><i class="fa-solid fa-download"></i></a>
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+@push('js')
+    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
+@endpush

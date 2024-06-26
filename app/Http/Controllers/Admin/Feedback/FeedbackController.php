@@ -22,7 +22,7 @@ class FeedbackController extends Controller
 
     public function list(): View
     {
-        $data['feedbacks'] = Feedback::with('openedBy')->orderBy('status', 'desc')->get();
+        $data['feedbacks'] = Feedback::with('openedBy')->orderBy('status', 'desc')->latest()->get();
         return view('admin.feedback.list', $data);
     }
     public function details($id): View

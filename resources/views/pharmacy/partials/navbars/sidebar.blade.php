@@ -117,7 +117,7 @@
             </li>
             <li @if ($pageSlug == 'feedback') class="active" @endif>
                 <a href="{{ route('pharmacy.fdk.index') }}">
-                    <i class="fa-solid fa-earth-americas @if ($pageSlug == 'feedback') fa-beat-fade @endif"></i>
+                    <i class="fa-regular fa-thumbs-up @if ($pageSlug == 'feedback') fa-beat-fade @endif"></i>
                     <p>{{ 'Feedback' }}</p>
                 </a>
             </li>
