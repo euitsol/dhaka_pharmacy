@@ -37,7 +37,7 @@
                             <tr>
                                 <th>{{ __('Description') }}</th>
                                 <th>:</th>
-                                <td>{{ $feedback->description }}</td>
+                                <td>{!! $feedback->description !!}</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Opened By') }}</th>
@@ -66,30 +66,61 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="files d-flex align-items-center gap-3">
-                        @foreach (json_decode($feedback->files, true) as $file)
-                            @if (getFileType($file) == 'image')
-                                <div id="lightbox" class="lightbox">
-                                    <div class="lightbox-content">
-                                        <img src="{{ storage_url($file) }}" class="lightbox_image"
-                                            style="height: 300px; width:350px">
-                                    </div>
-                                    <div class="close_button fa-beat">X</div>
-                                </div>
-                            @elseif(getFileType($file) == 'video')
-                                <div class="video" style="height: 300px; width:350px">
-                                    <video controls width="100%" height="100%"
-                                        style="object-fit: cover; border-radius:5px;">
-                                        <source src="{{ storage_url($file) }}">
-                                    </video>
-                                </div>
-                            @elseif(getFileType($file) == 'pdf')
-                                <iframe src ="{{ pdf_storage_url($file) }}" width="350px" height="300px"></iframe>
-                            @else
-                                <a href="{{ route('feedback.download.fdk_details', encrypt($file)) }}"
-                                    class="btn btn-info me-2 text-white"><i class="fa-solid fa-download"></i></a>
-                            @endif
-                        @endforeach
+                    @php
+                        $imageHtml = '';
+                        $videoHtml = '';
+                        $pdfHtml = '';
+                        $otherHtml = '';
+
+                        foreach (json_decode($feedback->files, true) as $file) {
+                            $fileType = getFileType($file);
+                            if ($fileType == 'image') {
+                                $imageHtml .=
+                                    '<div id="lightbox" class="lightbox">
+                                        <div class="lightbox-content">
+                                            <img src="' .
+                                    storage_url($file) .
+                                    '" class="lightbox_image" style="height: 300px; width:350px">
+                                        </div>
+                                        <div class="close_button fa-beat">X</div>
+                                    </div>';
+                            } elseif ($fileType == 'video') {
+                                $videoHtml .=
+                                    '<div class="video" style="height: 300px; width:350px">
+                                        <video controls width="100%" height="100%" style="object-fit: cover; border-radius:5px;">
+                                            <source src="' .
+                                    storage_url($file) .
+                                    '">
+                                        </video>
+                                    </div>';
+                            } elseif ($fileType == 'pdf') {
+                                $pdfHtml .=
+                                    '<div class="pdf">
+                                        <iframe src="' .
+                                    pdf_storage_url($file) .
+                                    '" width="350px" height="300px"></iframe>
+                                    </div>';
+                            } else {
+                                $otherHtml .=
+                                    '<a href="' .
+                                    route('feedback.download.fdk_details', encrypt($file)) .
+                                    '" title="' .
+                                    ucfirst(str_replace('-', ' ', basename($file))) .
+                                    '" class="btn btn-info me-2 text-white">
+                                        <i class="fa-solid fa-download"></i>
+                                    </a>';
+                            }
+                        }
+                    @endphp
+
+                    <div class="view-files d-flex align-items-center gap-3 flex-wrap">
+                        {!! $imageHtml !!}
+                        {!! $videoHtml !!}
+                        {!! $pdfHtml !!}
+                    </div>
+                    <!-- Other Files -->
+                    <div id="other-files d-flex align-items-center gap-3">
+                        {!! $otherHtml !!}
                     </div>
                 </div>
             </div>

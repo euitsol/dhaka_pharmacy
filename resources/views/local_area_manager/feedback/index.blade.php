@@ -19,14 +19,14 @@
                             <label>{{ __('Subject') }}</label>
                             <input type="text" name="subject"
                                 class="form-control {{ $errors->has('subject') ? ' is-invalid' : '' }}"
-                                placeholder="Your Subject:">
+                                placeholder="Topic of your feedback">
                             @include('alerts.feedback', ['field' => 'subject'])
                         </div>
 
                         <div class="form-group">
                             <label>{{ __('Description') }}</label>
                             <textarea name="description" class="form-control  {{ $errors->has('description') ? ' is-invalid' : '' }}"
-                                placeholder="Your Feedback Here:"></textarea>
+                                placeholder="Share your detailed feedback here"></textarea>
                             @include('alerts.feedback', ['field' => 'description'])
                         </div>
                         <div class="form-group">

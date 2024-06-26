@@ -171,10 +171,9 @@
                     <h2>{{ __('FEEDBACK') }}</h2>
                     <form action="{{ route('u.fdk.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" value="To: Dhaka Pharmacy" disabled>
-                        <input type="text" name="subject" placeholder="Your Subject:">
+                        <input type="text" name="subject" placeholder="Topic of your feedback">
                         @include('alerts.feedback', ['field' => 'subject'])
-                        <textarea name="description" placeholder="Your Feedback Here:"></textarea>
+                        <textarea name="description" placeholder="Share your detailed feedback here"></textarea>
                         @include('alerts.feedback', ['field' => 'description'])
                         <input type="file" name="uploadfiles" data-actualName="files[]" class="form-control filepond"
                             id="files" multiple>
