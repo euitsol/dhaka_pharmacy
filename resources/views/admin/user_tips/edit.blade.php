@@ -50,7 +50,7 @@
                         </div>
                     </div>
 
-                    <div class="card-footer">
+                    <div class="card-footer  text-end">
                         <button type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
                     </div>
                 </form>
