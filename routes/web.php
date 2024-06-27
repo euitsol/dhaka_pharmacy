@@ -614,6 +614,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::put('edit/{id}', 'update')->name('lf_edit');
         Route::get('status/{id}', 'status')->name('status.lf_edit');
         Route::get('delete/{id}', 'delete')->name('lf_delete');
+    });
 
     // Feedback
     Route::controller(AdminFeedbackController::class)->prefix('feedback')->name('feedback.')->group(function () {

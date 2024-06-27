@@ -76,7 +76,7 @@
             <div class="col-6">
                 <div class="col-mid">
                     <div class="tips">
-                        <h2>{{ __('Our Latest Offers') }}</h2>
+                        <h2>{{ __('Tips of The Day') }}</h2>
                         <div class="single-tips d-flex align-items-center justify-content-between">
                             <img src="{{ asset('user/asset/img/tips-img.png') }}" alt="">
                             <p>Helps you <span>track if you have missed any medication and aboid taking them too
