@@ -90,6 +90,12 @@ use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductSearchController;
 
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\Pharmacy\FeedbackController as PharmacyFeedbackController;
+use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
+use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
+use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
+use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
+use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -193,7 +199,7 @@ Route::controller(UserForgotPasswordController::class)->prefix('user')->group(fu
     Route::get('/reset/password', 'resetPassword')->name('user.reset.password');
     Route::post('/reset/password', 'resetPasswordStore')->name('user.reset.password');
 });
-
+//Admin Auth Routes
 Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -586,6 +592,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
     });
 
+    // Order by Prescription
     Route::controller(AdminOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('obp.')->group(function () {
         Route::get('/list/{status}', 'list')->name('obp_list');
         Route::get('/details/{id}', 'details')->name('obp_details');
@@ -594,6 +601,14 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('/get-select-medicine', 'getSelectMedicine')->name('get_select_medicine.obp_details');
         Route::post('/order/create/{up_id}', 'order_create')->name('obp_order_create');
         Route::get('/status-update/{status}/{id}', 'statusUpdate')->name('status_update');
+    });
+
+
+    // Feedback
+    Route::controller(AdminFeedbackController::class)->prefix('feedback')->name('feedback.')->group(function () {
+        Route::get('/list', 'list')->name('fdk_list');
+        Route::get('/details/{id}', 'details')->name('fdk_details');
+        Route::get('file-download/{url}', 'view_or_download')->name('download.fdk_details');
     });
 });
 
@@ -633,6 +648,12 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
 
     Route::controller(PharmacyOperationalAreaController::class)->prefix('operational-area')->name('operational_area.')->group(function () {
         Route::get('index', 'index')->name('list');
+    });
+
+    //Pharmacy Feedback
+    Route::controller(PharmacyFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
     });
 });
 
@@ -691,6 +712,12 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::get('edit/{slug}', 'edit')->name('edit');
         Route::put('edit/{id}', 'update')->name('edit');
     });
+
+    //DM Feedback
+    Route::controller(DmFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+    });
 });
 
 
@@ -729,6 +756,11 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::get('status/{id}', 'status')->name('status.edit');
         Route::get('delete/{id}', 'delete')->name('delete');
     });
+    //LAM Feedback
+    Route::controller(LamFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+    });
 });
 // Rider Auth Routes
 Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], function () {
@@ -755,6 +787,11 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::post('/update/image', 'updateImage')->name('update.image');
 
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
+    });
+    //Rider Feedback
+    Route::controller(RiderFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
     });
 });
 
@@ -806,6 +843,11 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
         Route::put('update', 'update')->name('update');
 
         Route::get('delete/{id}', 'delete')->name('delete');
+    });
+    //User Feedback
+    Route::controller(UserFeedbackController::class)->prefix('feedback')->name('u.fdk.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
     });
     Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
         Route::get('list', 'order_list')->name('list');

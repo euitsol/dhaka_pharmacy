@@ -4,7 +4,7 @@
 @endpush
 @push('js')
     <script>
-        function file_upload(selectors, name, creatorType) {
+        function file_upload(selectors, name, creatorType, multipleFile = false) {
             $.each(selectors.reverse(), function(index, selector) {
                 FilePond.registerPlugin(FilePondPluginImagePreview);
                 FilePond.registerPlugin(FilePondPluginFileValidateSize);
@@ -15,6 +15,7 @@
                 const inputElement = document.querySelector(selector);
                 const pond = FilePond.create(inputElement);
                 pond.setOptions({
+                    allowMultiple: multipleFile,
                     server: {
                         url: "/file-upload",
                         process: {

@@ -411,3 +411,45 @@ function abbreviateName($name)
     $abbreviated[] = end($words);
     return implode(' ', $abbreviated);
 }
+
+function getFileType($filename)
+{
+    $path = storage_path('app/public/' . $filename);
+    if (!file_exists($path)) {
+        return NULL;
+    }
+    $fileMimeType = mime_content_type($path);
+    switch ($fileMimeType) {
+        case strpos($fileMimeType, 'image/') === 0:
+            return 'image';
+        case 'application/pdf':
+            return 'pdf';
+        case strpos($fileMimeType, 'video/') === 0:
+            return 'video';
+        default:
+            return 'others';
+    }
+}
+
+function pdf_storage_url($urlOrArray)
+{
+    if (is_array($urlOrArray) || is_object($urlOrArray)) {
+        $result = '';
+        $count = 0;
+        $itemCount = count($urlOrArray);
+        foreach ($urlOrArray as $index => $url) {
+
+            $result .= asset('/laraview/#../storage/' . $url);
+
+            if ($count === $itemCount - 1) {
+                $result .= '';
+            } else {
+                $result .= ', ';
+            }
+            $count++;
+        }
+        return $result;
+    } else {
+        return asset('/laraview/#../storage/' . $urlOrArray);
+    }
+}

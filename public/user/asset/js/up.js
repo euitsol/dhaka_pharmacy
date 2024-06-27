@@ -137,9 +137,9 @@ function refreshDeliveryFee(e = false) {
                 $(".user_delivery_input").val(
                     Math.ceil(parseInt(delivery_fee))
                 );
-                if ($(".user_address").is(":checked")) {
-                    $(".up_submit_btn").removeClass("disabled");
-                }
+                // if ($(".user_address").is(":checked")) {
+                //     $(".up_submit_btn").removeClass("disabled");
+                // }
             }, 1500);
         });
     } else {
