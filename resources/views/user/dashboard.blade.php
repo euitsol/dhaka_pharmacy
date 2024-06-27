@@ -77,21 +77,14 @@
                 <div class="col-mid">
                     <div class="tips">
                         <h2>{{ __('Tips of The Day') }}</h2>
-                        <div class="single-tips d-flex align-items-center justify-content-between">
-                            <img src="{{ asset('user/asset/img/tips-img.png') }}" alt="">
-                            <p>Helps you <span>track if you have missed any medication and aboid taking them too
-                                    many times</span> accidentally.</p>
-                            <h2>Chek of a <br>
-                                <span>Calender</span>
-                            </h2>
-                        </div>
-                        <div class="single-tips d-flex align-items-center justify-content-between">
-                            <img src="{{ asset('user/asset/img/tips-img.png') }}" alt="">
-                            <p>Helps you <span>track if you have missed any medication and aboid taking them too
-                                    many times</span> accidentally.</p>
-                            <h2>Chek of a <br>
-                                <span>Calender</span>
-                            </h2>
+                        <div class="single-tips d-flex align-items-center justify-content-start">
+                            <div class="tips_image">
+                                <img src="{{ asset('user/asset/img/tips-img.png') }}" alt="">
+                            </div>
+                            <div class="tips_details">
+                                <p>{{ str_limit('Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally.', 250) }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                     <div class="order-cart-wish d-flex justify-content-center">
