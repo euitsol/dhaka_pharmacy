@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Create') }}</button>
+                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
                     </div>
                 </form>
             </div>

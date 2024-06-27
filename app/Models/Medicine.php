@@ -87,4 +87,9 @@ class Medicine extends BaseModel
     {
         return $query->where('is_best_selling', 1);
     }
+
+    function tipses()
+    {
+        return $this->hasMany(ProductTips::class, 'product_id');
+    }
 }

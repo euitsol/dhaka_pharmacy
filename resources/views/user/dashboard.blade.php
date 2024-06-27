@@ -86,21 +86,23 @@
                 <div class="col-mid">
                     <div class="tips">
                         <h2>{{ __('Tips of The Day') }}</h2>
-                        <div class="single-tips d-flex align-items-center justify-content-start gap-3">
-                            <div class="tips_image">
-                                <div id="lightbox" class="lightbox tips_image">
-                                    <div class="lightbox-content">
-                                        <img src="{{ asset('user/asset/img/tips-img.png') }}" class="lightbox_image">
+                        @foreach ($user_tips as $tips)
+                            <div class="single-tips d-flex align-items-center justify-content-start gap-3">
+                                <div class="tips_image">
+                                    <div id="lightbox" class="lightbox tips_image">
+                                        <div class="lightbox-content">
+                                            <img src="{{ storage_url($tips->image) }}" class="lightbox_image">
+                                        </div>
+                                        <div class="close_button fa-beat">X</div>
                                     </div>
-                                    <div class="close_button fa-beat">X</div>
+                                    {{-- <img src="{{ asset('user/asset/img/tips-img.png') }}" alt=""> --}}
                                 </div>
-                                {{-- <img src="{{ asset('user/asset/img/tips-img.png') }}" alt=""> --}}
+                                <div class="tips_details">
+                                    <p>{{ str_limit(html_entity_decode($tips->description), 270) }}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="tips_details">
-                                <p>{{ str_limit('Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally.', 270) }}
-                                </p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                     <div class="order-cart-wish d-flex justify-content-center">
                         <a href="{{ route('u.order.list') }}">

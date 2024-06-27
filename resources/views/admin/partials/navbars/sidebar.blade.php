@@ -324,6 +324,18 @@
                 ],
             ])
 
+            {{-- User Tips --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'user_tips',
+                        'routeName' => 'user_tips.tips_list',
+                        'iconClass' => 'fa-regular fa-lightbulb',
+                        'label' => 'User Tips',
+                    ],
+                ],
+            ])
+
             {{-- Operational Area Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['opa.'],

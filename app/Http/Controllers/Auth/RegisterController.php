@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRegistrationRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
-    public function register(): View
+    public function register()
     {
         Session::forget('data');
+        if (Auth::guard('web')->check()) {
+            return redirect(route('user.dashboard'));
+        }
         return view('auth.register');
     }
     protected function rStore(UserRegistrationRequest $req)
