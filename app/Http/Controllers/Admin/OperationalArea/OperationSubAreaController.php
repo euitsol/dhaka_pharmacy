@@ -9,12 +9,13 @@ use App\Models\OperationArea;
 use App\Models\OperationSubArea;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class OperationSubAreaController extends Controller
 {
+    use DetailsCommonDataTrait;
     public function __construct()
     {
         return $this->middleware('admin');
@@ -28,10 +29,7 @@ class OperationSubAreaController extends Controller
     public function details($id): JsonResponse
     {
         $data = OperationSubArea::with('operation_area')->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->creater);
-        $data->updated_by = u_user_name($data->updater);
+        $this->morphColumnData($data);
         return response()->json($data);
     }
     public function create(): View
@@ -53,7 +51,7 @@ class OperationSubAreaController extends Controller
     }
     public function edit($slug): View
     {
-        $data['operation_sub_area'] = OperationSubArea::where('slug',$slug)->first();
+        $data['operation_sub_area'] = OperationSubArea::where('slug', $slug)->first();
         $data['operation_areas'] = OperationArea::activated()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'operation-sub-area')->first();
         return view('admin.operational_area.operation_sub_area.edit', $data);
@@ -73,11 +71,11 @@ class OperationSubAreaController extends Controller
     public function status($id, $status): RedirectResponse
     {
         $operation_sub_area = OperationSubArea::findOrFail($id);
-        if($status == 'accept'){
+        if ($status == 'accept') {
             $operation_sub_area->status = '1';
             $operation_sub_area->save();
             flash()->addSuccess('Operation Sub Area ' . $operation_sub_area->name . ' accepted successfully.');
-        }elseif($status == 'declined'){
+        } elseif ($status == 'declined') {
             $operation_sub_area->status = '-1';
             $operation_sub_area->save();
             flash()->addSuccess('Operation Sub Area ' . $operation_sub_area->name . ' declined successfully.');

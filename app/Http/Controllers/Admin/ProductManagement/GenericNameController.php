@@ -8,35 +8,33 @@ use App\Models\Documentation;
 use App\Models\GenericName;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class GenericNameController extends Controller
 {
-    //
+    use DetailsCommonDataTrait;
 
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
     public function index(): View
     {
         $data['generic_names'] = GenericName::with(['created_user'])->orderBy('name')->get();
-        return view('admin.product_management.generic_name.index',$data);
+        return view('admin.product_management.generic_name.index', $data);
     }
     public function details($id): JsonResponse
     {
-        $data = GenericName::with(['created_user','updated_user'])->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->created_user);
-        $data->updated_by = u_user_name($data->updated_user);
+        $data = GenericName::with(['created_user', 'updated_user'])->findOrFail($id);
+        $this->simpleColumnData($data);
         return response()->json($data);
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key','generic_name')->first();
-        return view('admin.product_management.generic_name.create',$data);
+        $data['document'] = Documentation::where('module_key', 'generic_name')->first();
+        return view('admin.product_management.generic_name.create', $data);
     }
     public function store(GenericNameRequest $req): RedirectResponse
     {
@@ -45,14 +43,14 @@ class GenericNameController extends Controller
         $generic_name->slug = $req->slug;
         $generic_name->created_by = admin()->id;
         $generic_name->save();
-        flash()->addSuccess('Medicine generic name '.$generic_name->name.' created successfully.');
+        flash()->addSuccess('Medicine generic name ' . $generic_name->name . ' created successfully.');
         return redirect()->route('product.generic_name.generic_name_list');
     }
     public function edit($slug): View
     {
-        $data['generic_name'] = GenericName::where('slug',$slug)->first();
-        $data['document'] = Documentation::where('module_key','generic_name')->first();
-        return view('admin.product_management.generic_name.edit',$data);
+        $data['generic_name'] = GenericName::where('slug', $slug)->first();
+        $data['document'] = Documentation::where('module_key', 'generic_name')->first();
+        return view('admin.product_management.generic_name.edit', $data);
     }
     public function update(GenericNameRequest $req, $id): RedirectResponse
     {
@@ -61,7 +59,7 @@ class GenericNameController extends Controller
         $generic_name->slug = $req->slug;
         $generic_name->updated_by = admin()->id;
         $generic_name->update();
-        flash()->addSuccess('Medicine generic name '.$generic_name->name.' updated successfully.');
+        flash()->addSuccess('Medicine generic name ' . $generic_name->name . ' updated successfully.');
         return redirect()->route('product.generic_name.generic_name_list');
     }
     public function status($id): RedirectResponse
@@ -76,10 +74,7 @@ class GenericNameController extends Controller
     {
         $generic_name = GenericName::findOrFail($id);
         $generic_name->delete();
-        flash()->addSuccess('Medicine generic name '.$generic_name->name.' deleted successfully.');
+        flash()->addSuccess('Medicine generic name ' . $generic_name->name . ' deleted successfully.');
         return redirect()->route('product.generic_name.generic_name_list');
-
     }
-
-
 }

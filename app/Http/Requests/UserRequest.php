@@ -28,22 +28,22 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|min:4',
 
-            'age'=>'nullable|numeric|digits:2',
+            'age' => 'nullable|numeric|digits:2',
             'identification_type' => 'nullable|in:NID,DOB,Passport',
-            'identification_no'=>'nullable|numeric',
-            'present_address'=>'nullbale',
+            'identification_no' => 'nullable|numeric',
+            'present_address' => 'nullbale',
 
 
-            'gender'=>'nullable|in:Male,Female,Others',
-            'dob'=>'nullable|date|before:today',
-            'father_name'=>'nullable|min:6',
-            'mother_name'=>'nullable|min:6',
-            'permanent_address'=>'nullable',
+            'gender' => 'nullable|in:Male,Female,Others',
+            'dob' => 'nullable|date|before:today',
+            'father_name' => 'nullable|min:6',
+            'mother_name' => 'nullable|min:6',
+            'permanent_address' => 'nullable',
 
 
         ]
-        +
-        ($this->isMethod('POST') ? $this->store() : $this->update());
+            +
+            ($this->isMethod('POST') ? $this->store() : $this->update());
     }
 
     protected function store(): array
@@ -51,7 +51,7 @@ class UserRequest extends FormRequest
         return [
             'email' => 'nullable|unique:users,email',
             'phone' => 'required|numeric|digits:11|unique:users,phone',
-            'password' => 'required|min:6|confirmed',
+            // 'password' => 'required|min:6|confirmed',
         ];
     }
 
@@ -60,7 +60,7 @@ class UserRequest extends FormRequest
         return [
             'email' => 'nullable|unique:users,email,' . $this->route('id'),
             'phone' => 'required|numeric|digits:11|unique:users,phone,' . $this->route('id'),
-            'password' => 'nullable|min:6|confirmed',
+            // 'password' => 'nullable|min:6|confirmed',
         ];
     }
 }

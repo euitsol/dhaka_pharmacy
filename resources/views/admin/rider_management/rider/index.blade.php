@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Rider List')}}</h4>
+                            <h4 class="card-title">{{ __('Rider List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -39,9 +39,9 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $rider->name }} </td>
                                     <td> {{ $rider->phone }} </td>
-                                    
-                                    <td> 
-                                        @if($rider->operation_area)
+
+                                    <td>
+                                        @if ($rider->operation_area)
                                             {{ $rider->operation_area->name }}
                                         @else
                                             <span class="badge badge-warning">{{ __('Area not allocated') }}</span>
@@ -50,23 +50,50 @@
                                     </td>
                                     <td> {{ $rider->operation_sub_area ? $rider->operation_sub_area->name : '--' }} </td>
                                     <td>
-                                        <span
-                                            class="{{ $rider->getStatusBadgeClass() }}">{{ $rider->getStatus() }}</span>
+                                        <span class="{{ $rider->getStatusBadgeClass() }}">{{ $rider->getStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($rider->created_at) }}</td>
 
                                     <td> {{ c_user_name($rider->creater) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'rm.rider.login_as.rider_profile',   'params' => [$rider->id], 'label' => 'Login As','target'=>'_blank'],
-                                                    ['routeName' => 'rm.rider.rider_profile',   'params' => [$rider->id], 'label' => 'Profile'],
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$rider->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $rider->id ],
-                                                    ['routeName' => 'rm.rider.rider_edit',   'params' => [$rider->id], 'label' => 'Update'],
-                                                    ['routeName' => 'rm.rider.status.rider_edit',   'params' => [$rider->id], 'label' => $rider->getBtnStatus()],
-                                                    ['routeName' => 'rm.rider.rider_delete', 'params' => [$rider->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'rm.rider.login_as.rider_profile',
+                                                    'params' => [$rider->id],
+                                                    'label' => 'Login As',
+                                                    'target' => '_blank',
+                                                ],
+                                                [
+                                                    'routeName' => 'rm.rider.rider_profile',
+                                                    'params' => [$rider->id],
+                                                    'label' => 'Profile',
+                                                ],
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$rider->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $rider->id,
+                                                ],
+                                                [
+                                                    'routeName' => 'rm.rider.rider_edit',
+                                                    'params' => [$rider->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'rm.rider.status.rider_edit',
+                                                    'params' => [$rider->id],
+                                                    'label' => $rider->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'rm.rider.rider_delete',
+                                                    'params' => [$rider->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -83,7 +110,8 @@
     </div>
 
     {{-- Rider Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -113,7 +141,8 @@
                     success: function(data) {
                         let status = data.status = 1 ? 'Active' : 'Deactive';
                         let statusClass = data.status = 1 ? 'badge-success' : 'badge-warning';
-                        let oa = data.operation_area ? data.operation_area.name : '<span class="badge badge-warning">{{ __("Area not allocated") }}</span>';
+                        let oa = data.operation_area ? data.operation_area.name :
+                            '<span class="badge badge-warning">{{ __('Area not allocated') }}</span>';
                         let osa = data.operation_sub_area ? data.operation_sub_area.name : '--';
                         var result = `
                                 <table class="table table-striped">
@@ -130,7 +159,7 @@
                                     <tr>
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
-                                        <td>${data.email ?? 'N/A'}</td>
+                                        <td>${data.email ?? '--'}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Operation Area</th>

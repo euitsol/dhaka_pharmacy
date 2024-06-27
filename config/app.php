@@ -171,6 +171,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\FrontendDataShareServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        Davcpas1234\LaravelPdfViewer\LaravelPdfViewerServiceProvider::class,
     ])->toArray(),
 
     /*

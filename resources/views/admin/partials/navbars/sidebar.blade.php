@@ -802,7 +802,17 @@
                     </div>
                 </li>
             @endif
-
+            {{-- Feedback --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'feedback',
+                        'routeName' => 'feedback.fdk_list',
+                        'iconClass' => 'fa-regular fa-thumbs-up',
+                        'label' => 'Feedback',
+                    ],
+                ],
+            ])
 
             {{-- Payment Gateways --}}
             @if (mainMenuCheck([

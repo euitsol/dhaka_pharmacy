@@ -8,15 +8,13 @@ use App\Models\Documentation;
 use App\Models\OperationArea;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class OperationAreaController extends Controller
 {
-    //
-
+    use DetailsCommonDataTrait;
     public function __construct()
     {
         return $this->middleware('admin');
@@ -30,10 +28,7 @@ class OperationAreaController extends Controller
     public function details($id): JsonResponse
     {
         $data = OperationArea::findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->created_user);
-        $data->updated_by = u_user_name($data->updated_user);
+        $this->simpleColumnData($data);
         return response()->json($data);
     }
     public function create(): view

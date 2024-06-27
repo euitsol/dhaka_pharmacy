@@ -8,14 +8,13 @@ use App\Models\CompanyName;
 use App\Models\Documentation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class CompanyNameController extends Controller
 {
-    //
-
+    use DetailsCommonDataTrait;
     public function __construct()
     {
         return $this->middleware('admin');
@@ -28,13 +27,10 @@ class CompanyNameController extends Controller
     }
     public function details($id): JsonResponse
     {
-        $data = CompanyName::wth(['created_user','updated_user'])->findOrFail($id);
+        $data = CompanyName::wth(['created_user', 'updated_user'])->findOrFail($id);
         $data->address = html_entity_decode($data->address);
         $data->note = html_entity_decode($data->note);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->created_user);
-        $data->updated_by = u_user_name($data->updated_user);
+        $this->simpleColumnData($data);
         return response()->json($data);
     }
     public function create(): View
@@ -56,7 +52,7 @@ class CompanyNameController extends Controller
     }
     public function edit($slug): View
     {
-        $data['company_name'] = CompanyName::where('slug',$slug)->first();
+        $data['company_name'] = CompanyName::where('slug', $slug)->first();
         $data['document'] = Documentation::where('module_key', 'company_name')->first();
         return view('admin.product_management.company_name.edit', $data);
     }

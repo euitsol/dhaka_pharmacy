@@ -161,7 +161,7 @@
                                 <h3 class="m-0">{{ __('My Payment') }}</h3>
                             </div>
                         </a>
-                        <a href="#" class="single">
+                        <a href="{{ route('u.fdk.index') }}" class="single">
                             <div class="feedback d-flex align-items-center justify-content-center">
                                 <div class="img">
                                     <img src="{{ asset('user/asset/img/feedback.png') }}" alt="">
