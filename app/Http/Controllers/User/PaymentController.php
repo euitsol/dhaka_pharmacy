@@ -45,7 +45,10 @@ class PaymentController extends Controller
             }
         }
         $payments =  $query->paginate($perPage)->withQueryString();
-        $this->prepareOrderData($payments);
+        $payments->getCollection()->each(function ($payment) {
+            $payment->date = date('d M Y h:m:s', strtotime($payment->created_at));
+            return $payment;
+        });
 
         $data['payments'] = $payments;
         $data['pagination'] = $payments->links('vendor.pagination.bootstrap-5')->render();
@@ -54,20 +57,5 @@ class PaymentController extends Controller
         } else {
             return view('user.payment.payment_list', $data);
         }
-    }
-
-
-    private function prepareOrderData($payments)
-    {
-        $payments->getCollection()->each(function ($payment) {
-            $payment->date = date('d M Y h:m:s', strtotime($payment->created_at));
-            $payment->order->order_items = $this->getOrderItems($payment->order);
-            $payment->order->order_items->each(function ($item) {
-                $item->product = $this->transformProduct($item->product, 30);
-                return $item;
-            });
-
-            return $payment;
-        });
     }
 }

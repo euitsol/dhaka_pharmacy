@@ -1,5 +1,13 @@
 @extends('user.layouts.master', ['pageSlug' => 'payment'])
 
+@push('css')
+    <style>
+        .my-order-section .order-row .order-status .total {
+            font-size: 18px;
+            font-weight: 500;
+        }
+    </style>
+@endpush
 @section('title', 'Payment List')
 @section('content')
     <section class="my-order-section">
@@ -30,62 +38,51 @@
                 @forelse ($payments as $payment)
                     <div class="order-row">
                         <div class="order-id-row">
-                            <div class="row">
-                                <div class="col-10">
+                            <div class="row align-items-center">
+                                <div class="col-4">
                                     <h3 class="order-num">
                                         {{ __('Transaction ID: ') }}<span>{{ $payment->transaction_id }}</span>
                                     </h3>
+                                    <p class="date-time mb-0">
+                                        {{ __('Order ID: ') }}<span>{{ $payment->order->order_id }}</span>
+                                    </p>
                                     <p class="date-time">{{ __('Payment Date: ') }}<span>{{ $payment->date }}</span></p>
                                 </div>
-                                <div class="col-2 text-end">
-                                    <span
-                                        class="{{ $payment->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $payment->statusTitle())))) }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-9">
-                                @forelse ($payment->order->order_items as $item)
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="row py-3 px-4">
-                                                <div class="col-3">
-                                                    <div class="img">
-                                                        <img class="w-100" src="{{ $item->product->image }}"
-                                                            alt="">
-                                                    </div>
+                                <div class="col-8">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 text-center">
+                                            <div class="order-status pe-0">
+                                                <div class="total">
+                                                    <p class="total text-start">
+                                                        {{ __('Payment Type: ') }}<span>{{ __('Bkash') }}</span>
+                                                    </p>
                                                 </div>
-                                                <div class="col-6">
-                                                    <div class="product-info">
-                                                        <h2 class="name" title="{{ $item->product->attr_title }}">
-                                                            {{ $item->product->name }}</h2>
-                                                        <h3 class="cat">{{ $item->product->pro_sub_cat->name }}</h3>
-                                                        <h3 class="cat">{{ $item->product->pro_cat->name }}</h3>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="order-status pe-0">
+                                                <div class="total">
+                                                    <p class="total text-start">
+                                                        {{ __('Total: ') }}<span>{{ number_format(ceil($payment->amount)) }}</span>tk
+                                                    </p>
                                                 </div>
-                                                <div class="col-3">
-                                                    <p class="qty">Qty: <span>{{ $item->quantity }}</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 text-center">
+                                            <span
+                                                class="{{ $payment->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $payment->statusTitle())))) }}</span>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <div class="order-status">
+                                                <div class="btn">
+                                                    <a href="#">{{ __('Details') }}</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                @empty
-                                @endforelse
-                            </div>
-                            <div class="col-3 d-flex justify-content-end align-items-center py-3 px-4">
-                                <div class="order-status">
-                                    <div class="btn">
-                                        <a href="#">{{ __('Details') }}</a>
-                                    </div>
-                                    <div class="total">
-                                        <p class="total text-center">
-                                            {{ __('Total: ') }}<span>{{ number_format(ceil($payment->amount)) }}</span>tk
-                                        </p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 @empty
                     <h3 class="my-5 text-danger text-center">{{ __('Payment Not Found') }}</h3>
@@ -130,75 +127,68 @@
             }
         }
 
+        function numberFormat(value, decimals) {
+            if (decimals != null && decimals >= 0) {
+                value = parseFloat(value).toFixed(decimals);
+            } else {
+                value = Math.round(parseFloat(value)).toString();
+            }
+            return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
         function getHtml(payments) {
             var result = '';
             payments.forEach(function(payment) {
                 result +=
-                    `
-                                <div class="order-row">
-                                    <div class="order-id-row">
-                                        <div class="row">
-                                            <div class="col-10">
-                                                <h3 class="order-num">Transaction ID: <span>${payment.transaction_id}</span></h3>
-                                                <p class="date-time">Payment Date: <span>${payment.date}</span></p>
-                                            </div>
-                                            <div class="col-2 text-end"> 
-                                            <span class="${statusBg(payment.status)}">${statusTitle(payment.status)}</span>`;
-
-                result += `
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-9">
-                                `;
-
-
-                payment.order.order_items.forEach(function(item) {
-                    result += `
-                                                <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="row py-3 px-4">
-                                                                <div class="col-3">
-                                                                    <div class="img">
-                                                                        <img class="w-100" src="${item.product.image}" alt="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="product-info">
-                                                                        <h2 class="name" title="${item.product.attr_title}">${item.product.name}</h2>
-                                                                        <h3 class="cat">${item.product.pro_sub_cat.name}</h3>
-                                                                        <h3 class="cat">${item.product.pro_cat.name}</h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-3">
-                                                                    <p class="qty">Qty: <span>${item.quantity}</span></p>
-                                                                </div> 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                `;
-                })
-
-                result += `
-                                            </div>
-                                                <div class="col-3 d-flex justify-content-end align-items-center py-3 px-4">
-                                                    <div class="order-status">
-                                                        <div class="btn">
-                                                            <a href="#">{{ __('Details') }}</a>
-                                        `;
-                result += `
-                                                            
-                                                        </div>
-                                                        <div class="total">
-                                                            <p class="total">Total: <span>${numberFormat(Math.ceil(parseInt(payment.amount)))}</span>tk</p>
-                                                        </div>
-                                                    </div>
+                    `<div class="order-row">
+                        <div class="order-id-row">
+                            <div class="row align-items-center">
+                                <div class="col-4">
+                                    <h3 class="order-num">
+                                        {{ __('Transaction ID: ') }}<span>${payment.transaction_id}</span>
+                                    </h3>
+                                    <p class="date-time mb-0">
+                                        {{ __('Order ID: ') }}<span>${ payment.order.order_id }</span>
+                                    </p>
+                                    <p class="date-time">{{ __('Payment Date: ') }}<span>${ payment.date }</span></p>
+                                </div>
+                                <div class="col-8">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 text-center">
+                                            <div class="order-status pe-0">
+                                                <div class="total">
+                                                    <p class="total text-start">
+                                                        {{ __('Payment Type: ') }}<span>{{ __('Bkash') }}</span>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
-                                        `;
-
+                                        <div class="col-3">
+                                            <div class="order-status pe-0">
+                                                <div class="total">
+                                                    <p class="total text-start">
+                                                        {{ __('Total: ') }}<span>${numberFormat(Math.ceil(parseInt(payment.amount)))}</span>tk
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 text-center">
+                                            <span
+                                                class="${statusBg(payment.status)}">${statusTitle(payment.status)}</span>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <div class="order-status">
+                                                <div class="btn">
+                                                    <a href="#">{{ __('Details') }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
             })
             return result;
         }
