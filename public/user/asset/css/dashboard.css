@@ -198,6 +198,7 @@ margin: 0;
     color: var(--text);
     margin-bottom: 0;
     line-height: 19px;
+    text-align: justify;
 }
 .dashboard-main-section .col-mid .tips .single-tips{
     padding: 15px 20px;

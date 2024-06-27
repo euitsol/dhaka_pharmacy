@@ -12,9 +12,18 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
     <style>
-        .lightbox img {
+        .offer_image img {
             height: 120px;
             width: 159.5px;
+            border: 2px solid var(--btn_bg) !important;
+            padding: 5px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .tips_image img {
+            height: 100px;
+            width: 120px;
             border: 2px solid var(--btn_bg) !important;
             padding: 5px;
             object-fit: cover;
@@ -77,12 +86,18 @@
                 <div class="col-mid">
                     <div class="tips">
                         <h2>{{ __('Tips of The Day') }}</h2>
-                        <div class="single-tips d-flex align-items-center justify-content-start">
+                        <div class="single-tips d-flex align-items-center justify-content-start gap-3">
                             <div class="tips_image">
-                                <img src="{{ asset('user/asset/img/tips-img.png') }}" alt="">
+                                <div id="lightbox" class="lightbox tips_image">
+                                    <div class="lightbox-content">
+                                        <img src="{{ asset('user/asset/img/tips-img.png') }}" class="lightbox_image">
+                                    </div>
+                                    <div class="close_button fa-beat">X</div>
+                                </div>
+                                {{-- <img src="{{ asset('user/asset/img/tips-img.png') }}" alt=""> --}}
                             </div>
                             <div class="tips_details">
-                                <p>{{ str_limit('Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally.', 250) }}
+                                <p>{{ str_limit('Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally. Helps you track if you have missed any medication and aboid taking them too many times accidentally.', 270) }}
                                 </p>
                             </div>
                         </div>
@@ -191,7 +206,7 @@
                                                     @foreach ($lfs as $lf)
                                                         <div class="img-col w-100">
                                                             <a href="#">
-                                                                <div id="lightbox" class="lightbox">
+                                                                <div id="lightbox" class="lightbox offer_image">
                                                                     <div class="lightbox-content">
                                                                         <img src="{{ storage_url($lf->image) }}"
                                                                             class="lightbox_image">
