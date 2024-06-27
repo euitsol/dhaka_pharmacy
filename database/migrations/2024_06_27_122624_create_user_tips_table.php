@@ -15,10 +15,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('latest_offers', function (Blueprint $table) {
+        Schema::create('user_tips', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
             $table->string('image');
+            $table->longText('description');
             $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('latest_offers');
+        Schema::dropIfExists('user_tips');
     }
 };

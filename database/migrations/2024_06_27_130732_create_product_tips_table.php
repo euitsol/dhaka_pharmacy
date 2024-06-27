@@ -15,14 +15,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('latest_offers', function (Blueprint $table) {
+        Schema::create('product_tips', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('image');
-            $table->boolean('status')->default(1);
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('tips_id');
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);
+
+            $table->foreign('product_id')->references('id')->on('medicines')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('tips_id')->references('id')->on('user_tips')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('latest_offers');
+        Schema::dropIfExists('product_tips');
     }
 };

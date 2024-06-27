@@ -97,6 +97,8 @@ use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
 use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\Admin\UserTips\UserTipsController;
+use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -604,7 +606,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('/status-update/{status}/{id}', 'statusUpdate')->name('status_update');
     });
 
-    // Admin Payment Management
+    // Latest Offer
     Route::controller(LatestOfferController::class)->prefix('latest-offer')->name('latest_offer.')->group(function () {
         Route::get('index', 'index')->name('lf_list');
         Route::get('details/{id}', 'details')->name('details.lf_list');
@@ -614,6 +616,18 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::put('edit/{id}', 'update')->name('lf_edit');
         Route::get('status/{id}', 'status')->name('status.lf_edit');
         Route::get('delete/{id}', 'delete')->name('lf_delete');
+    });
+    // User Tips
+    Route::controller(UserTipsController::class)->prefix('user-tips')->name('user_tips.')->group(function () {
+        Route::get('index', 'index')->name('tips_list');
+        Route::get('details/{id}', 'details')->name('details.tips_list');
+        Route::get('create', 'create')->name('tips_create');
+        Route::post('create', 'store')->name('tips_create');
+        Route::get('edit/{id}', 'edit')->name('tips_edit');
+        Route::put('edit/{id}', 'update')->name('tips_edit');
+        Route::get('status/{id}', 'status')->name('status.tips_edit');
+        Route::get('delete/{id}', 'delete')->name('tips_delete');
+    });
 
     // Feedback
     Route::controller(AdminFeedbackController::class)->prefix('feedback')->name('feedback.')->group(function () {
@@ -862,6 +876,9 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
     });
     Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
         Route::get('list', 'order_list')->name('list');
+    });
+    Route::controller(UserPaymentController::class)->prefix('payment')->name('u.payment.')->group(function () {
+        Route::get('list', 'payment_list')->name('list');
     });
 
     Route::controller(UserWishlistController::class)->prefix('wishlist')->name('u.wishlist.')->group(function () {

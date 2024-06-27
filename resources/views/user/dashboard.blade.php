@@ -12,9 +12,18 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
     <style>
-        .lightbox img {
+        .offer_image img {
             height: 120px;
             width: 159.5px;
+            border: 2px solid var(--btn_bg) !important;
+            padding: 5px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .tips_image img {
+            height: 100px;
+            width: 120px;
             border: 2px solid var(--btn_bg) !important;
             padding: 5px;
             object-fit: cover;
@@ -75,26 +84,29 @@
             </div>
             <div class="col-6">
                 <div class="col-mid">
-                    <div class="tips">
-                        <h2>{{ __('Our Latest Offers') }}</h2>
-                        <div class="single-tips d-flex align-items-center justify-content-between">
-                            <img src="{{ asset('user/asset/img/tips-img.png') }}" alt="">
-                            <p>Helps you <span>track if you have missed any medication and aboid taking them too
-                                    many times</span> accidentally.</p>
-                            <h2>Chek of a <br>
-                                <span>Calender</span>
-                            </h2>
+                    @if ($user_tips->isNotEmpty())
+                        <div class="tips">
+                            <h2>{{ __('Tips of The Day') }}</h2>
+                            @foreach ($user_tips as $tips)
+                                <div class="single-tips d-flex align-items-center justify-content-start gap-3">
+                                    <div class="tips_image">
+                                        <div id="lightbox" class="lightbox tips_image">
+                                            <div class="lightbox-content">
+                                                <img src="{{ storage_url($tips->image) }}" class="lightbox_image">
+                                            </div>
+                                            <div class="close_button fa-beat">X</div>
+                                        </div>
+                                        {{-- <img src="{{ asset('user/asset/img/tips-img.png') }}" alt=""> --}}
+                                    </div>
+                                    <div class="tips_details">
+                                        <p>{{ str_limit(html_entity_decode($tips->description), 270) }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                        <div class="single-tips d-flex align-items-center justify-content-between">
-                            <img src="{{ asset('user/asset/img/tips-img.png') }}" alt="">
-                            <p>Helps you <span>track if you have missed any medication and aboid taking them too
-                                    many times</span> accidentally.</p>
-                            <h2>Chek of a <br>
-                                <span>Calender</span>
-                            </h2>
-                        </div>
-                    </div>
-                    <div class="order-cart-wish d-flex justify-content-center">
+                    @endif
+                    <div class="order-cart-wish d-flex justify-content-center mt-5">
                         <a href="{{ route('u.order.list') }}">
                             <div class="single d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
@@ -158,7 +170,7 @@
                                 <div class="img">
                                     <img src="{{ asset('user/asset/img/my-payment.png') }}" alt="">
                                 </div>
-                                <h3 class="m-0">{{ __('My Payment') }}</h3>
+                                <h3 class="m-0">{{ __('My Payments') }}</h3>
                             </div>
                         </a>
                         <a href="{{ route('u.fdk.index') }}" class="single">
@@ -198,7 +210,7 @@
                                                     @foreach ($lfs as $lf)
                                                         <div class="img-col w-100">
                                                             <a href="#">
-                                                                <div id="lightbox" class="lightbox">
+                                                                <div id="lightbox" class="lightbox offer_image">
                                                                     <div class="lightbox-content">
                                                                         <img src="{{ storage_url($lf->image) }}"
                                                                             class="lightbox_image">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\LatestOffer;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\UserTips;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class UserDashboardController extends Controller
             $q->where('status', 7);
         })->count();
         $data['latest_offers'] = LatestOffer::activated()->latest()->get();
+        $data['user_tips'] = UserTips::activated()->latest()->get()->shuffle()->take(1);
 
         return view('user.dashboard', $data);
     }
