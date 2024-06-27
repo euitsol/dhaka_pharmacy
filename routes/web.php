@@ -98,6 +98,7 @@ use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\UserTips\UserTipsController;
+use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -875,6 +876,9 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
     });
     Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
         Route::get('list', 'order_list')->name('list');
+    });
+    Route::controller(UserPaymentController::class)->prefix('payment')->name('u.payment.')->group(function () {
+        Route::get('list', 'payment_list')->name('list');
     });
 
     Route::controller(UserWishlistController::class)->prefix('wishlist')->name('u.wishlist.')->group(function () {

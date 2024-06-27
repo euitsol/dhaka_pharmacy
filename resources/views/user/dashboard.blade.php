@@ -170,7 +170,7 @@
                                 <div class="img">
                                     <img src="{{ asset('user/asset/img/my-payment.png') }}" alt="">
                                 </div>
-                                <h3 class="m-0">{{ __('My Payment') }}</h3>
+                                <h3 class="m-0">{{ __('My Payments') }}</h3>
                             </div>
                         </a>
                         <a href="{{ route('u.fdk.index') }}" class="single">

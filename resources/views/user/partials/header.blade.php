@@ -18,8 +18,8 @@
                                 href="{{ route('u.order.list') }}">{{ __('Orders') }}</a></li>
                         <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'wishlist') active @endif"
                                 href="{{ route('u.wishlist.list') }}">{{ __('Wishlists') }}</a></li>
-                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'feedback') active @endif"
-                                href="{{ route('u.fdk.index') }}">{{ __('Feedback') }}</a></li>
+                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'payment') active @endif"
+                                href="{{ route('u.payment.list') }}">{{ __('Payment') }}</a></li>
                     </ul>
                 </div>
             </div>
