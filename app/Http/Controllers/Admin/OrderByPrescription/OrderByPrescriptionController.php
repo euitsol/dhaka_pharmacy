@@ -38,7 +38,9 @@ class OrderByPrescriptionController extends Controller
     }
     public function getUnit($id): JsonResponse
     {
-        $medicine = Medicine::with('units')->findOrFail($id);
+        $medicine = Medicine::with(['units' => function ($q) {
+            $q->orderBy('quantity', 'asc');
+        }])->findOrFail($id);
         // $data['units'] = $this->getSortedUnits($medicine->unit);
         $data['units'] = $medicine->units;
         return response()->json($data);
