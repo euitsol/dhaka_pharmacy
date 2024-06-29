@@ -191,6 +191,39 @@
                         alt="{{ $medicine->name }}">
                 </div>
             </div>
+
+            {{-- Product Precaution Card  --}}
+            @if ($precaution)
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="card-title">{{ __('Product Precaution') }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>{{ __('Precaution') }}</small></th>
+                                    <th>{{ __(':') }}</th>
+                                    <td> {!! $precaution->description !!} </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ __('Status') }} </th>
+                                    <th>{{ __(':') }}</th>
+                                    <td><span
+                                            class="{{ $precaution->getStatusBadgeClass() }}">{{ $precaution->getStatus() }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endif
+
+
         </div>
     </div>
 @endsection

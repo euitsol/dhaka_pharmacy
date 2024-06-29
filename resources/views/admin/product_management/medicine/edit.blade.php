@@ -297,6 +297,49 @@
                         </div>
                     </div>
                 </div>
+
+
+                {{-- Product Precaution  --}}
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="card-title">{{ __('Product Precaution') }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label>{{ __('Precaution') }}</label>
+                                <textarea name="precaution" placeholder="Enter product precaution"
+                                    class="form-control {{ $errors->has('precaution') ? ' is-invalid' : '' }}">{{ $precaution ? $precaution->description : old('precaution') }}</textarea>
+                                @include('alerts.feedback', ['field' => 'precaution'])
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>{{ __('Status') }}</label>
+                                <div class="form-check form-check-radio">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="precaution_status"
+                                            id="precaution1" value="1"
+                                            {{ ($precaution && $precaution->status == 1) || !$precaution ? 'checked' : '' }}>
+                                        {{ __('Active') }}
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                    <label class="form-check-label ms-5">
+                                        <input class="form-check-input" type="radio" name="precaution_status"
+                                            id="precaution2" value="0"
+                                            {{ $precaution && $precaution->status == 0 ? 'checked' : '' }}>
+                                        {{ __('Deactive') }}
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
             </form>
         </div>

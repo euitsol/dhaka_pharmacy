@@ -14,6 +14,7 @@ use App\Models\MedicineStrength;
 use App\Models\MedicineUnit;
 use App\Models\MedicineUnitBkdn;
 use App\Models\ProductCategory;
+use App\Models\ProductPrecaution;
 use App\Models\ProductSubCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -40,6 +41,7 @@ class MedicineController extends Controller
         $data['medicine'] = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'created_user', 'updated_user', 'discounts', 'units' => function ($q) {
             $q->orderBy('quantity', 'asc');
         }])->where('slug', $slug)->first();
+        $data['precaution'] = ProductPrecaution::where('product_id', $data['medicine']->id)->first();
         return view('admin.product_management.medicine.details', $data);
     }
 
@@ -81,7 +83,6 @@ class MedicineController extends Controller
         $medicine->max_quantity = $req->max_quantity;
         $medicine->created_by = admin()->id;
         $medicine->save();
-
         //medicine unit bkdn
         foreach ($req->unit as $unit) {
             MedicineUnitBkdn::create([
@@ -89,13 +90,21 @@ class MedicineController extends Controller
                 'unit_id' => $unit
             ]);
         }
-
         $discount = new Discount();
         $discount->pro_id = $medicine->id;
         $discount->discount_amount = $req->discount_amount;
         $discount->discount_percentage = $req->discount_percentage;
         $discount->created_by = admin()->id;
         $discount->save();
+
+        if ($req->precaution) {
+            ProductPrecaution::create([
+                'description' => $req->precaution,
+                'status' => $req->precaution_status ?? 0,
+                'product_id' => $medicine->id,
+                'created_by' => admin()->id,
+            ]);
+        }
 
         flash()->addSuccess('Medicine ' . $medicine->name . ' created successfully.');
         return redirect()->route('product.medicine.medicine_list');
@@ -117,6 +126,7 @@ class MedicineController extends Controller
         $data['units'] = MedicineUnit::activated()->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key', 'medicine')->first();
         $data['discounts'] = $data['medicine']->discounts->where('status', 0) ?? [];
+        $data['precaution'] = ProductPrecaution::where('product_id', $data['medicine']->id)->first();
 
         return view('admin.product_management.medicine.edit', $data);
     }
@@ -174,6 +184,23 @@ class MedicineController extends Controller
             $discount->discount_percentage = $req->discount_percentage;
             $discount->updated_by = admin()->id;
             $discount->save();
+        }
+        if ($req->precaution) {
+            $check = ProductPrecaution::where('product_id', $medicine->id)->first();
+            if ($check) {
+                $check->update([
+                    'description' => $req->precaution,
+                    'status' => $req->precaution_status ?? 0,
+                    'updated_by' => admin()->id,
+                ]);
+            } else {
+                ProductPrecaution::create([
+                    'product_id' => $medicine->id,
+                    'description' => $req->precaution,
+                    'status' => $req->precaution_status ?? 0,
+                    'created_by' => admin()->id,
+                ]);
+            }
         }
         flash()->addSuccess('Medicine ' . $medicine->name . ' updated successfully.');
         return redirect()->route('product.medicine.medicine_list');
