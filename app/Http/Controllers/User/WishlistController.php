@@ -59,7 +59,9 @@ class WishlistController extends Controller
             'product.company',
             'product.strength',
             'product.discounts',
-            'product.units'
+            'product.units' => function ($q) {
+                $q->orderBy('quantity', 'asc');
+            }
         ])->orderBy('updated_at', 'asc');
         $perPage = 10;
         if ($filter_val && $filter_val != 'all') {
@@ -94,7 +96,10 @@ class WishlistController extends Controller
             'product.company',
             'product.strength',
             'product.discounts',
-            'product.units'
+            'unit',
+            'product.units' => function ($q) {
+                $q->orderBy('quantity', 'asc');
+            }
         ])->orderBy('updated_at', 'asc')->get()->each(function ($wish) {
             $wish->product = $this->transformProduct($wish->product, 30);
             $wish->product->pid = encrypt($wish->product->id);

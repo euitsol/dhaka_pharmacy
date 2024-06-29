@@ -69,8 +69,10 @@ class CartAjaxController extends Controller
             'product.pro_sub_cat',
             'product.company',
             'product.discounts',
-            'product.units',
             'unit',
+            'product.units' => function ($q) {
+                $q->orderBy('quantity', 'asc');
+            },
         ])->where('customer_id', $customer_id)->get();
 
         $products = $atc->each(function (&$atc) {
@@ -91,7 +93,10 @@ class CartAjaxController extends Controller
             'product.pro_sub_cat',
             'product.company',
             'product.discounts',
-            'product.units',
+            'unit',
+            'product.units' => function ($q) {
+                $q->orderBy('quantity', 'asc');
+            },
         ])->where('id', $request->cart)->first();
         if (!empty($atc)) {
             $atc->unit_id = $request->unit ? $request->unit : $atc->unit_id;
