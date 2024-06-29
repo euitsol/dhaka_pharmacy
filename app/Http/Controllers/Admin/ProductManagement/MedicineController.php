@@ -116,6 +116,7 @@ class MedicineController extends Controller
         $data['strengths'] = MedicineStrength::activated()->orderBy('quantity')->get();
         $data['units'] = MedicineUnit::activated()->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key', 'medicine')->first();
+        $data['discounts'] = $data['medicine']->discounts->where('status', 0) ?? [];
 
         return view('admin.product_management.medicine.edit', $data);
     }
