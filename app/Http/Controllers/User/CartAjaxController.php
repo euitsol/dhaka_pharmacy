@@ -19,8 +19,8 @@ class CartAjaxController extends Controller
 {
     use TransformProductTrait;
 
-    public function __construct() {
-
+    public function __construct()
+    {
     }
 
     public function add(AddToCartRequest $request): JsonResponse
@@ -36,7 +36,7 @@ class CartAjaxController extends Controller
         $customer_id = user()->id;
 
         $product = Medicine::activated()->where('slug', $request->slug)->first();
-        if(!empty($product)){
+        if (!empty($product)) {
             $atc = new AddToCart();
             $atc->product_id = $product->id;
             $atc->customer_id = $customer_id;
@@ -46,10 +46,9 @@ class CartAjaxController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' =>   $atc->product->name. ' has been added to your cart!',
+                'message' =>   $atc->product->name . ' has been added to your cart!',
             ]);
         }
-
     }
 
     public function products(): JsonResponse
@@ -94,7 +93,7 @@ class CartAjaxController extends Controller
             'product.discounts',
             'product.units',
         ])->where('id', $request->cart)->first();
-        if(!empty($atc)){
+        if (!empty($atc)) {
             $atc->unit_id = $request->unit ? $request->unit : $atc->unit_id;
             $atc->quantity = $request->quantity ? $request->quantity : $atc->quantity;
             $atc->save();
@@ -105,20 +104,19 @@ class CartAjaxController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $atc,
-                'message' => ($request->unit ? 'Unit' :'Quantity').' has been updated successfully!',
+                'message' => ($request->unit ? 'Unit' : 'Quantity') . ' has been updated successfully!',
             ]);
         }
     }
 
     public function delete(CartDeleteRequest $request): JsonResponse
     {
-        foreach($request->carts as $cart){
+        foreach ($request->carts as $cart) {
             AddToCart::where('id', $cart)->first()->delete();
         }
         return response()->json([
             'success' => true,
             'message' => 'Item has been deleted successfully!',
         ]);
-
     }
 }

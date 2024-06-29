@@ -33,7 +33,7 @@ trait TransformProductTrait
     // }
 
 
-private function transformProduct($product, $limit = 30)
+    private function transformProduct($product, $limit = 30)
     {
         $this->setProductImage($product);
         $this->setStrengthInfo($product);
@@ -51,7 +51,6 @@ private function transformProduct($product, $limit = 30)
     private function setStrengthInfo(&$product)
     {
         $product->strength_info = $product->strength ? ' (' . $product->strength->quantity . ' ' . $product->strength->unit . ')' : '';
-
     }
 
     private function setProductNames(&$product, $limit)

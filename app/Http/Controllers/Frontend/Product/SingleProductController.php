@@ -18,14 +18,15 @@ class SingleProductController extends Controller
         $data['single_product']->discount_amount = calculateProductDiscount($data['single_product'], false);
         $data['single_product']->discount_percentage = calculateProductDiscount($data['single_product'], true);
         $data['single_product']->image = storage_url($data['single_product']->image);
-        $data['units'] = $this->getSortedUnits($data['single_product']->unit);
+        // $data['units'] = $this->getSortedUnits($data['single_product']->unit);
+        $data['units'] = $data['single_product']->units;
 
-        $data['similar_products'] = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts'])->activated()->latest()->where('generic_id', ($data['single_product']->generic_id))->get()
+        $data['similar_products'] = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'units'])->activated()->latest()->where('generic_id', ($data['single_product']->generic_id))->get()
             ->reject(function ($p) use ($data) {
                 return $p->id == $data['single_product']->id;
             })->shuffle()->each(function ($product) {
                 $product = $this->transformProduct($product, 26);
-                $product->units = $this->getSortedUnits($product->unit);
+                // $product->units = $this->getSortedUnits($product->unit);
                 return $product;
             });
         return view('frontend.product.single_product', $data);

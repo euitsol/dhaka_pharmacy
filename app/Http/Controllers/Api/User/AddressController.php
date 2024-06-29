@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\API\AddressRequest;
 use App\Models\Address;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class AddressController extends BaseController
 {
@@ -60,6 +61,17 @@ class AddressController extends BaseController
             $save->updater()->associate($user);
             $save->update();
             return sendResponse(true, 'Address updated successfully.');
+        } else {
+            return sendResponse(false, 'Invalid User', null);
+        }
+    }
+
+    public function list(Request $request)
+    {
+        $user = $request->user();
+        if ($user) {
+            $address_list = Address::where('creater_id', $user->id)->where('creater_type', get_class($user))->orderBy('is_default', 'desc')->get();
+            return sendResponse(true, $user->name . ' address list retrived successfully', $address_list);
         } else {
             return sendResponse(false, 'Invalid User', null);
         }
