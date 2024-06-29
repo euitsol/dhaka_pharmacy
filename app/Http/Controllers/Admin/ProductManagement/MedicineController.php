@@ -37,7 +37,9 @@ class MedicineController extends Controller
     }
     public function details($slug): View
     {
-        $data['medicine'] = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'created_user', 'updated_user', 'discounts', 'units'])->where('slug', $slug)->first();
+        $data['medicine'] = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'created_user', 'updated_user', 'discounts', 'units' => function ($q) {
+            $q->orderBy('quantity', 'asc');
+        }])->where('slug', $slug)->first();
         return view('admin.product_management.medicine.details', $data);
     }
 
@@ -100,7 +102,9 @@ class MedicineController extends Controller
     }
     public function edit($slug): View
     {
-        $data['medicine'] = Medicine::with(['discounts', 'units'])->where('slug', $slug)->first();
+        $data['medicine'] = Medicine::with(['discounts', 'units' => function ($q) {
+            $q->orderBy('quantity', 'asc');
+        }])->where('slug', $slug)->first();
         if ($data['medicine']->discounts) {
             $data['discount'] = $data['medicine']->discounts->where('status', 1)->first();
         }

@@ -21,7 +21,9 @@ class HomePageController extends Controller
         // $order = Order::findOrFail(1);
         // $this->order_notification($order, 'order_initialized');
 
-        $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'units'])->activated();
+        $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'units' => function ($q) {
+            $q->orderBy('quantity', 'asc');
+        }])->activated();
         $data['products'] = (clone $products)->featured()->latest()->get()->shuffle()->take(8)->each(function (&$product) {
             $product = $this->transformProduct($product);
         });
@@ -44,10 +46,11 @@ class HomePageController extends Controller
         } else {
             $data['product_cat'] = ProductCategory::activated()->where('slug', $category_slug)->first();
 
-            if(!empty($data['product_cat'])){
-                $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'units'])->activated()->featured()->where('pro_cat_id', $data['product_cat']->id)->latest()->get();
+            if (!empty($data['product_cat'])) {
+                $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'units' => function ($q) {
+                    $q->orderBy('quantity', 'asc');
+                }])->activated()->featured()->where('pro_cat_id', $data['product_cat']->id)->latest()->get();
             }
-
         }
         $data['products'] = $products->shuffle()->take(8)->each(function ($product) {
             $product = $this->transformProduct($product);

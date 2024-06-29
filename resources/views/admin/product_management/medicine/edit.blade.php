@@ -228,7 +228,7 @@
                                     <input type="text" name="price"
                                         class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
                                         placeholder="Enter price"
-                                        value="{{ proDisPrice($medicine->price, $medicine->discounts) }}">
+                                        value="{{ number_format(proDisPrice($medicine->price, $medicine->discounts), 2) }}">
                                     <span class="bdt_button">BDT</span>
                                 </div>
                                 @include('alerts.feedback', ['field' => 'price'])
