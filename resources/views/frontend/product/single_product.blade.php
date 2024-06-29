@@ -128,7 +128,8 @@
                                                                     data-total_price="{{ $singleProDisPrice * $unit->quantity }}"
                                                                     data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
-                                                                    <img src="{{ $unit->image }}">
+                                                                    <img src="{{ storage_url($unit->image) }}"
+                                                                        title="{{ $unit->name }}">
                                                                 </label>
                                                             @endforeach
                                                         </div>
@@ -579,8 +580,10 @@
     </script>
     <script>
         $(document).ready(function() {
-
-
+            let checkUnit = $('.item_quantity:checked');
+            $('.unit_name').html(checkUnit.data('name'));
+            $('.total_price').html(numberFormat(checkUnit.data('total_price'), 2));
+            $('.total_regular_price').html(numberFormat(checkUnit.data('total_regular_price'), 2));
             $('.product_price .item_quantity').on('change', function() {
                 var name = $(this).data('name');
                 var id = $(this).data('id');
