@@ -33,20 +33,8 @@ class FrontendDataShareServiceProvider extends ServiceProvider
             $query = ProductCategory::activated()->orderBy('name')->get();
             $data['categories'] = $query;
             $data['menuItems'] = $query->where('is_menu', 1);
-            $data['atcs'] = [];
             $data['wishes'] = [];
             if (Auth::guard('web')->check()) {
-                $query = AddToCart::activated()->where('customer_id', user()->id);
-                $data['atcs'] = $query->with(['product.pro_cat', 'product.generic', 'product.pro_sub_cat', 'product.company', 'product.discounts', 'customer'])->orderBy('created_at', 'asc')->get()
-                    ->each(function ($atc) {
-                        if ($atc->product) {
-                            $atc->product = $this->transformProduct($atc->product, 45);
-                            $atc->product->units = $this->getSortedUnits($atc->product->unit);
-                        }
-                        return $atc;
-                    });
-                $data['total_cart_item'] = $query->count();
-
                 $wishes = WishList::activated()->where('user_id', user()->id)->with([
                     'product.pro_cat',
                     'product.pro_sub_cat',
@@ -56,7 +44,6 @@ class FrontendDataShareServiceProvider extends ServiceProvider
                     'product.discounts'
                 ])->orderBy('updated_at', 'asc')->get()->each(function ($wish) {
                     $wish->product = $this->transformProduct($wish->product, 30);
-                    $wish->product->units = $this->getSortedUnits($wish->product->unit);
                     return $wish;
                 });
                 $data['wishes'] = $wishes;

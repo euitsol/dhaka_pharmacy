@@ -41,10 +41,10 @@ class Medicine extends BaseModel
                 ->where('user_id', user()->id);
         }
     }
-    // public function medicine_cat()
-    // {
-    //     return $this->belongsTo(MedicineCategory::class, 'medicine_cat_id');
-    // }
+    public function units()
+    {
+        return $this->belongsToMany(MedicineUnit::class, 'medicine_unit_bkdns', 'medicine_id', 'unit_id');
+    }
     public function strength()
     {
         return $this->belongsTo(MedicineStrength::class, 'strength_id');

@@ -122,7 +122,7 @@
                                 <label>{{ __('Medicine Strength') }}</label>
                                 <select name="strength_id"
                                     class="form-control {{ $errors->has('strength_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select medicine strength') }}</option>
+                                    <option selected hidden value="">{{ __('Select medicine strength') }}</option>
                                     @foreach ($strengths as $strength)
                                         <option value="{{ $strength->id }}"
                                             {{ $strength->id == $medicine->strength_id ? 'selected' : '' }}>
@@ -138,9 +138,10 @@
                                     multiple="multiple">
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}"
-                                            {{ in_array($unit->id, (array) json_decode($medicine->unit, true)) ? 'selected' : '' }}>
+                                            {{ in_array($unit->id, $medicine->units->pluck('id')->toArray()) ? 'selected' : '' }}>
                                             {{ $unit->name }}
-                                            <small>({{ $unit->quantity }})</small><small>{{ $unit->type ? '-' . $unit->type : '' }}</small>
+                                            <small>({{ $unit->quantity }})</small>
+                                            <small>{{ $unit->type ? '-' . $unit->type : '' }}</small>
                                         </option>
                                     @endforeach
                                 </select>

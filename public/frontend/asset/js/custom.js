@@ -43,9 +43,7 @@
 //     });
 // });
 
-
-
-// New JS Code 
+// New JS Code
 
 // $(document).ready(function() {
 //     var searchInput = $('#searchInput');
@@ -53,9 +51,8 @@
 //     var suggestionBox = $('#suggestionBox');
 
 //     $(document).on('input',searchInput, function() {
-      
 //       searchFunction()
-      
+
 //     });
 //     $(document).on('change',categorySelect, function(){
 //       searchFunction()
@@ -67,7 +64,7 @@
 //         suggestionBox.hide();
 //       }else{
 //         suggestionBox.show();
-      
+
 //         var url = "{{ route('home.product.search', ['search_value' => ':search', 'category' => ':category']) }}";
 //         var _url = url.replace(':search', search_value).replace(':category', category);
 
@@ -83,27 +80,28 @@
 //           }
 //         });
 
-
 //       }
 // }
 // });
 
-
-
 // Homepage top slider
-const myCarouselElement = document.querySelector('#carouselExampleCaptions')
+const myCarouselElement = document.querySelector("#carouselExampleCaptions");
 
 const carousel = new bootstrap.Carousel(myCarouselElement, {
-  interval: 4000,
-  ride : true
-})
+    interval: 4000,
+    ride: true,
+});
 
 function numberFormat(value, decimals) {
-  if (decimals != null && decimals >= 0) {
-      value = parseFloat(value).toFixed(decimals);
-  } else {
-      value = Math.round(parseFloat(value)).toString();
-  }
-  return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    if (decimals != null && decimals >= 0) {
+        value = parseFloat(value).toFixed(decimals);
+    } else {
+        value = Math.round(parseFloat(value)).toString();
+    }
+
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function getCsrfToken() {
+    return $("#csrf-token").val();
+}

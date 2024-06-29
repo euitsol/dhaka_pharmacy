@@ -12,6 +12,7 @@ use App\Models\Medicine;
 use App\Models\MedicineCategory;
 use App\Models\MedicineStrength;
 use App\Models\MedicineUnit;
+use App\Models\MedicineUnitBkdn;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Http\JsonResponse;
@@ -36,12 +37,7 @@ class MedicineController extends Controller
     }
     public function details($slug): View
     {
-        $data['medicine'] = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'created_user', 'updated_user', 'discounts'])->where('slug', $slug)->first();
-
-        $data['medicine']->units = collect(json_decode($data['medicine']->unit, true))->each(function ($unit) {
-            $medicineUnit = MedicineUnit::findOrFail($unit);
-            return $medicineUnit->name . " ($medicineUnit->quantity)";
-        })->implode(' | ');
+        $data['medicine'] = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'created_user', 'updated_user', 'discounts', 'units'])->where('slug', $slug)->first();
         return view('admin.product_management.medicine.details', $data);
     }
 
@@ -76,7 +72,6 @@ class MedicineController extends Controller
         $medicine->company_id = $req->company_id;
         // $medicine->medicine_cat_id = $req->medicine_cat_id;
         $medicine->strength_id = $req->strength_id;
-        $medicine->unit = json_encode($req->unit);
         $medicine->price = $req->price;
         $medicine->description = $req->description;
         $medicine->prescription_required = $req->prescription_required;
@@ -84,6 +79,14 @@ class MedicineController extends Controller
         $medicine->max_quantity = $req->max_quantity;
         $medicine->created_by = admin()->id;
         $medicine->save();
+
+        //medicine unit bkdn
+        foreach ($req->unit as $unit) {
+            MedicineUnitBkdn::create([
+                'medicine_id' => $medicine->id,
+                'unit_id' => $unit
+            ]);
+        }
 
         $discount = new Discount();
         $discount->pro_id = $medicine->id;
@@ -97,7 +100,7 @@ class MedicineController extends Controller
     }
     public function edit($slug): View
     {
-        $data['medicine'] = Medicine::with('discounts')->where('slug', $slug)->first();
+        $data['medicine'] = Medicine::with(['discounts', 'units'])->where('slug', $slug)->first();
         if ($data['medicine']->discounts) {
             $data['discount'] = $data['medicine']->discounts->where('status', 1)->first();
         }
@@ -109,7 +112,7 @@ class MedicineController extends Controller
         $data['strengths'] = MedicineStrength::activated()->orderBy('quantity')->get();
         $data['units'] = MedicineUnit::activated()->orderBy('name')->get();
         $data['document'] = Documentation::where('module_key', 'medicine')->first();
-        $data['discounts'] = $data['medicine']->discounts->where('status', 0) ?? [];
+
         return view('admin.product_management.medicine.edit', $data);
     }
     public function update(MedicineRequest $req, $id): RedirectResponse
@@ -118,8 +121,8 @@ class MedicineController extends Controller
 
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'products/' . $req->name;
+            $imageName = $req->slug . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $folderName = 'products/' . $req->slug;
             $path = $image->storeAs($folderName, $imageName, 'public');
             if (!empty($medicine->image)) {
                 $this->fileDelete($medicine->image);
@@ -134,7 +137,7 @@ class MedicineController extends Controller
         $medicine->company_id = $req->company_id;
         // $medicine->medicine_cat_id = $req->medicine_cat_id;
         $medicine->strength_id = $req->strength_id;
-        $medicine->unit = json_encode($req->unit);
+
         $medicine->price = $req->price;
         $medicine->description = $req->description;
         $medicine->prescription_required = $req->prescription_required;
@@ -142,6 +145,16 @@ class MedicineController extends Controller
         $medicine->max_quantity = $req->max_quantity;
         $medicine->updated_by = admin()->id;
         $medicine->save();
+
+        //medicine unit bkdn
+        MedicineUnitBkdn::where('medicine_id', $medicine->id)->forceDelete();
+        foreach ($req->unit as $unit) {
+            MedicineUnitBkdn::create([
+                'medicine_id' => $medicine->id,
+                'unit_id' => $unit
+            ]);
+        }
+
         $check = Discount::activated()
             ->where('pro_id', $id)
             ->where('discount_amount', $req->discount_amount)
@@ -157,11 +170,6 @@ class MedicineController extends Controller
             $discount->updated_by = admin()->id;
             $discount->save();
         }
-
-
-
-
-
         flash()->addSuccess('Medicine ' . $medicine->name . ' updated successfully.');
         return redirect()->route('product.medicine.medicine_list');
     }
