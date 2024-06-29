@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
 
     <title> @yield('title', 'Dhakha Pharmacy') - Dhakha Pharmacy </title>
     <!-- Favicon -->
@@ -46,41 +46,27 @@
     @stack('css')
     <script>
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
+        const routes = {
+            'cart_products': `{{ route('cart.products') }}`,
+            'cart_add': `{{ route('cart.add') }}`,
+            'cart_update': `{{ route('cart.update') }}`,
+            'cart_delete': `{{ route('cart.delete') }}`,
+            'login': `{{ route('login') }}`,
+        };
     </script>
 </head>
 
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
-<!--------- Header-section-Start ----------->
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 <header>
     @include('frontend.includes.header')
 </header>
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
-<!---------  Header-section-End  ----------->
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 
-
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
-<!------- Main Cotent Area Start  -------->
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 <main>
     <div class="container-fluid">
         @yield('content')
     </div>
 </main>
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
-<!-------  Main Cotent Area End  --------->
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 
-
-
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
-<!--------- Footer-secion-Start ---------->
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 @include('frontend.includes.footer')
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
-<!---------  Footer-secion-End  ---------->
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 
 <!--========= jquery-cdn ===========-->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -102,6 +88,11 @@
 @include('frontend.includes.add_to_cart_js')
 @include('frontend.includes.search_js')
 @include('frontend.includes.wishlist_js')
+<script>
+    $(document).ready(function() {
+        refreshCart();
+    });
+</script>
 {{-- @livewireScripts <!-- Include Livewire scripts here --> --}}
 @stack('js')
 </body>

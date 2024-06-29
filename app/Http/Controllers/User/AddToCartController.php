@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Frontend\AddToCartRequest;
 use App\Models\AddToCart;
 use App\Models\Medicine;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use App\Http\Traits\TransformProductTrait;
+use Illuminate\Http\Request;
 
 
 class AddToCartController extends Controller
@@ -19,45 +21,39 @@ class AddToCartController extends Controller
         return $this->middleware('auth');
     }
 
-    public function add_to_cart(): JsonResponse
+    public function add_to_cart(Request $request)
     {
-        $product_slug = request('product');
-        $unit_id = request('unit');
+        // $product_slug = $request->product;
+        // $unit_id = $request->unit ?? null;
 
+        // $customer_id = user()->id;
 
+        // $product = Medicine::activated()->where('slug', $product_slug)->first();
+        // if(!empty($product)){
+        //     $atc = new AddToCart();
+        //     $atc->product_id = $product->id;
+        //     $atc->customer_id = $customer_id;
+        //     $atc->unit_id = $unit_id;
+        //     $atc->quantity = 1;
+        //     $atc->save();
+        // }
 
-        $product = Medicine::activated()->where('slug', $product_slug)->first();
-        $customer_id = user()->id;
-        $carts = AddToCart::where('customer_id', $customer_id)->latest()->get();
-        $data['count'] = $carts->count();
-        $atc = $carts->where('product_id', $product->id)->where('status', 1)->first();
-        if ($atc) {
-            $data['alert'] = "The item has already been added to the cart";
-            return response()->json($data);
-        } else {
-            $atc = new AddToCart();
-            $atc->product_id = $product->id;
-            $atc->customer_id = $customer_id;
-            $atc->unit_id = $unit_id;
-            $atc->quantity = 1;
-            $atc->save();
-        }
 
 
 
 
         $data['alert'] = "The item has been successfully added to your cart";
-        $data['atc'] = AddToCart::with(['product.pro_cat', 'product.generic', 'product.pro_sub_cat', 'product.company', 'product.discounts'])->where('product_id', $atc->product_id)->where('customer_id', $atc->customer_id)->first();
-        $activatedProduct = $data['atc']->product;
+        // $data['atc'] = AddToCart::with(['product.pro_cat', 'product.generic', 'product.pro_sub_cat', 'product.company', 'product.discounts'])->where('product_id', $atc->product_id)->where('customer_id', $atc->customer_id)->first();
+        // $activatedProduct = $data['atc']->product;
 
-        if ($activatedProduct) {
-            $activatedProduct = $this->transformProduct($activatedProduct, 45);
+        // if ($activatedProduct) {
+        //     $activatedProduct = $this->transformProduct($activatedProduct, 45);
 
-            $activatedProduct->data_item_price = cartItemRegPrice($data['atc']);
-            $activatedProduct->data_item_discount_price = cartItemPrice($data['atc']);
-            $activatedProduct->discount = ($activatedProduct->data_item_price != $activatedProduct->data_item_discount_price) ? true : false;
-            $activatedProduct->units = $this->getSortedUnits($activatedProduct->unit);
-        }
+        //     $activatedProduct->data_item_price = cartItemRegPrice($data['atc']);
+        //     $activatedProduct->data_item_discount_price = cartItemPrice($data['atc']);
+        //     $activatedProduct->discount = ($activatedProduct->data_item_price != $activatedProduct->data_item_discount_price) ? true : false;
+        //     $activatedProduct->units = $this->getSortedUnits($activatedProduct->unit);
+        // }
         return response()->json($data);
     }
 

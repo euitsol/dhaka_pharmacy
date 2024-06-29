@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 
 class BaseRequest extends FormRequest
 {
-    protected function failedValidation(Validator $validator)
+    protected function failedValidation(Validator $validator): void
     {
         $errors = $validator->errors();
         $response = response()->json([
