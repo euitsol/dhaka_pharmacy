@@ -312,6 +312,29 @@
                     </div>
                 </li>
             @endif
+            {{-- Latest Offer --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'latest_offer',
+                        'routeName' => 'latest_offer.lf_list',
+                        'iconClass' => 'fa-solid fa-bullhorn',
+                        'label' => 'Latest Offer',
+                    ],
+                ],
+            ])
+
+            {{-- User Tips --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'user_tips',
+                        'routeName' => 'user_tips.tips_list',
+                        'iconClass' => 'fa-regular fa-lightbulb',
+                        'label' => 'User Tips',
+                    ],
+                ],
+            ])
 
             {{-- Operational Area Management --}}
             @if (mainMenuCheck([
@@ -791,7 +814,17 @@
                     </div>
                 </li>
             @endif
-
+            {{-- Feedback --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'feedback',
+                        'routeName' => 'feedback.fdk_list',
+                        'iconClass' => 'fa-regular fa-thumbs-up',
+                        'label' => 'Feedback',
+                    ],
+                ],
+            ])
 
             {{-- Payment Gateways --}}
             @if (mainMenuCheck([

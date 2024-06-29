@@ -196,9 +196,9 @@ margin: 0;
     font-size: 15px;
     font-weight: 600;
     color: var(--text);
-    max-width: 230px;
     margin-bottom: 0;
     line-height: 19px;
+    text-align: justify;
 }
 .dashboard-main-section .col-mid .tips .single-tips{
     padding: 15px 20px;
@@ -208,12 +208,6 @@ margin: 0;
 }
 .dashboard-main-section .col-mid .tips p span{
     color: var(--btn_bg);
-}
-.dashboard-main-section .col-mid .tips .single-tips h2{
-    font-size: 24px;
-    line-height: 27px;
-    font-weight: 600;
-    text-transform: uppercase;
 }
 .dashboard-main-section .col-mid .tips h2 span{
     color: var(--btn_bg);

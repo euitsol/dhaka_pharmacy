@@ -9,12 +9,13 @@ use App\Models\OperationArea;
 use App\Models\OperationSubArea;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class OparetionalAreaController extends Controller
 {
+    use DetailsCommonDataTrait;
     public function __construct()
     {
         return $this->middleware('dm');
@@ -28,10 +29,7 @@ class OparetionalAreaController extends Controller
     public function details($id): JsonResponse
     {
         $data = OperationSubArea::with('operation_area')->findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->creater);
-        $data->updated_by = u_user_name($data->updater);
+        $this->morphColumnData($data);
         return response()->json($data);
     }
     public function create(): View
@@ -53,7 +51,7 @@ class OparetionalAreaController extends Controller
     }
     public function edit($slug): View
     {
-        $data['lam_area'] = OperationSubArea::where('slug',$slug)->first();
+        $data['lam_area'] = OperationSubArea::where('slug', $slug)->first();
         $data['document'] = Documentation::where('module_key', 'operation-sub-area')->first();
         return view('district_manager.lam_management.operational_areas.edit', $data);
     }
@@ -69,5 +67,4 @@ class OparetionalAreaController extends Controller
         flash()->addSuccess('Operation Sub Area ' . $lam_area->name . ' updated successfully.');
         return redirect()->route('dm.lam_area.list');
     }
-    
 }
