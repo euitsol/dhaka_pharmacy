@@ -25,6 +25,7 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
     Route::controller(AddressController::class)->middleware('auth:api-user')->prefix('address')->name('address')->group(function () {
         Route::post('/store', 'store')->name('store');
         Route::post('/update', 'update')->name('update');
+        Route::get('/list', 'list')->name('list');
     });
     // Cart API 
     Route::controller(CartAjaxController::class)->middleware('auth:api-user')->prefix('cart')->name('cart.')->group(function () {
