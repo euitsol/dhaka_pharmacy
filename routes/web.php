@@ -81,6 +81,7 @@ use App\Http\Controllers\User\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
 use App\Http\Controllers\User\AddToCartController;
+use App\Http\Controllers\User\CartAjaxController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\WishlistController as UserWishlistController;
 use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
@@ -115,6 +116,12 @@ use App\Http\Controllers\User\PaymentController as UserPaymentController;
 //     return redirect()->route('admin.login');
 // });
 
+Route::controller(CartAjaxController::class)->prefix('cart')->name('cart.')->group(function () {
+    Route::post('add', 'add')->name('add');
+    Route::get('products', 'products')->name('products');
+    Route::post('update', 'update')->name('update');
+    Route::post('delete', 'delete')->name('delete');
+});
 
 Auth::routes();
 //File pond file upload
@@ -183,8 +190,8 @@ Route::get('/auth/facebook/callback', [UserLoginController::class, 'facebookCall
 Route::controller(UserLoginController::class)->prefix('user')->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login');
-    Route::post('/otp-varify', 'send_otp')->name('use.send_otp');
-    Route::get('/otp-varify', 'verify')->name('use.send_otp');
+    Route::post('/otp-verify', 'send_otp')->name('use.send_otp');
+    Route::get('/otp-verify', 'verify')->name('use.send_otp');
     Route::get('/send-otp/again', 'send_otp_again')->name('use.send_otp.again');
     Route::post('/otp/verify', 'otp_verify')->name('use.otp.verify');
 });
@@ -205,12 +212,6 @@ Route::controller(UserForgotPasswordController::class)->prefix('user')->group(fu
 //Admin Auth Routes
 Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
-
-    Route::get('/export-permissions', function () {
-        $filename = 'permissions.csv';
-        $filePath = createCSV($filename);
-        return Response::download($filePath, $filename);
-    })->name('export.permissions');
 
     // Admin Management Routes
     Route::group(['as' => 'am.', 'prefix' => 'admin-management'], function () {
@@ -821,7 +822,6 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
 });
 
 
-
 // User Routes
 Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user'], function () {
     Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
@@ -829,7 +829,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
 
     // Add To Cart Routes
     Route::controller(AddToCartController::class)->prefix('cart')->group(function () {
-        Route::get('/add', 'add_to_cart')->name('product.add_to_cart');
+
         Route::get('/remove', 'remove_to_cart')->name('product.remove_to_cart');
         Route::get('/clear/{uid}', 'clearCart')->name('product.clear_cart');
 
@@ -908,3 +908,15 @@ Route::controller(HomePageController::class)->group(function () {
 Route::get('/product-search/{search_value}/{category}', [ProductSearchController::class, 'productSearch'])->name('home.product.search');
 Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
+
+
+
+
+
+
+//Developer Routes
+Route::get('/export-permissions', function () {
+    $filename = 'permissions.csv';
+    $filePath = createCSV($filename);
+    return Response::download($filePath, $filename);
+})->name('export.permissions');

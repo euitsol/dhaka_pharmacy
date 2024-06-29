@@ -148,6 +148,15 @@ function auth_storage_url($urlOrArray, $gender)
     }
 }
 
+function product_image($url)
+{
+    return $url ? asset('storage/' . $url) : asset('frontend/default/product.png');
+}
+
+function unit_image($url)
+{
+    return $url ? asset('storage/' . $url) : asset('frontend/default/default.png');
+}
 function timeFormate($time)
 {
     $dateFormat = env('DATE_FORMAT', 'd-M-Y');
