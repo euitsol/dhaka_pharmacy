@@ -94,6 +94,7 @@ class MedicineController extends Controller
         $discount->pro_id = $medicine->id;
         $discount->discount_amount = $req->discount_amount;
         $discount->discount_percentage = $req->discount_percentage;
+        $discount->created_by = admin()->id;
         $discount->save();
 
         flash()->addSuccess('Medicine ' . $medicine->name . ' created successfully.');
@@ -170,6 +171,7 @@ class MedicineController extends Controller
             $discount->pro_id = $id;
             $discount->discount_amount = $req->discount_amount;
             $discount->discount_percentage = $req->discount_percentage;
+            $discount->updated_by = admin()->id;
             $discount->save();
         }
         flash()->addSuccess('Medicine ' . $medicine->name . ' updated successfully.');

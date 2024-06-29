@@ -207,9 +207,17 @@
                 <div class="card medicine_price_card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-8">
                                 <h4 class="card-title">{{ __('Product Pricing') }}</h4>
                             </div>
+                            @if ($discounts->isNotEmpty())
+                                <div class="col-4 text-end">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        title="Discount History" data-target="#discount_modal">
+                                        <i class="fa-solid fa-info"></i>
+                                    </button>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -289,15 +297,65 @@
                         </div>
                     </div>
                 </div>
-
-
-
                 <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
             </form>
         </div>
+
+
+        {{-- Old Discount Modal  --}}
+        <div class="modal discount_modal fade" id="discount_modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Discount Histories') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body modal_data">
+                        <table class="table table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('SL') }}</th>
+                                    <th>{{ __('Discount Amount') }}</th>
+                                    <th>{{ __('Discount Percentage') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th>{{ __('Creation date') }}</th>
+                                    <th>{{ __('Created by') }}</th>
+                                    <th>{{ __('Updated date') }}</th>
+                                    <th>{{ __('Updated by') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($discounts as $discount)
+                                    <tr>
+                                        <td> {{ $loop->iteration }} </td>
+                                        <td> {{ $discount->discount_amount }} </td>
+                                        <td> {{ $discount->discount_percentage }} </td>
+                                        <td>
+                                            <span
+                                                class="{{ $discount->getStatusBadgeClass() }}">{{ $discount->getStatus() }}</span>
+                                        </td>
+                                        <td>{{ timeFormate($discount->created_at) }}</td>
+                                        <td> {{ c_user_name($discount->created_user) }} </td>
+                                        <td>{{ timeFormate($discount->updated_at) }}</td>
+                                        <td> {{ c_user_name($discount->updated_user) }} </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5], 'length' => 10])
 @push('js')
     <script>
         $(document).ready(function() {
