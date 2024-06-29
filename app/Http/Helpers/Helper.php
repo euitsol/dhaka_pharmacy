@@ -105,7 +105,7 @@ function storage_url($urlOrArray)
         $itemCount = count($urlOrArray);
         foreach ($urlOrArray as $index => $url) {
 
-            $result .= $url ? asset('storage/' . $url) : asset('frontend\default\cat_img.png');
+            $result .= $url ? asset('storage/' . $url) : asset('frontend/default/cat_img.png');
 
             if ($count === $itemCount - 1) {
                 $result .= '';
@@ -116,10 +116,17 @@ function storage_url($urlOrArray)
         }
         return $result;
     } else {
-        return $urlOrArray ? asset('storage/' . $urlOrArray) : asset('frontend\default\cat_img.png');
+        return $urlOrArray ? asset('storage/' . $urlOrArray) : asset('frontend/default/cat_img.png');
     }
 }
 
+function product_image($url){
+    return $url ? asset('storage/' . $url) : asset('frontend/default/product.png');
+}
+
+function unit_image($url){
+    return $url ? asset('storage/' . $url) : asset('frontend/default/default.png');
+}
 function timeFormate($time)
 {
     $dateFormat = env('DATE_FORMAT', 'd-M-Y');

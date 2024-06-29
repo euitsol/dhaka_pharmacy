@@ -21,17 +21,17 @@ class MedicineSeeder extends Seeder
             'generic_id' => 1,
             'company_id' => 1,
             'strength_id' => 1,
-            'unit' => json_encode(["1","2",'3']),
+
             'price' => 1.08,
             'description' => "Indications of Napa 500 mg
             Napa 500 mg is indicated for fever, common cold and influenza, headache, toothache, earache, bodyache, myalgia, neuralgia, dysmenorrhoea, sprains, colic pain, back pain, post-operative pain, postpartum pain, inflammatory pain and post vaccination pain in children. It is also indicated for rheumatic & osteoarthritic pain and stiffness of joints.
-            
+
             Theropeutic Class
             Non opioid analgesics
-            
+
             Pharmacology
             Napa 500 mg has analgesic and antipyretic properties with weak anti-inflammatory activity. Napa 500 mg (Acetaminophen) is thought to act primarily in the CNS, increasing the pain threshold by inhibiting both isoforms of cyclooxygenase, COX-1, COX-2, and COX-3 enzymes involved in prostaglandin (PG) synthesis. Napa 500 mg is a para aminophenol derivative, has analgesic and antipyretic properties with weak anti-inflammatory activity. Napa 500 mg is one of the most widely used, safest and fast acting analgesic. It is well tolerated and free from various side effects of aspirin.
-            
+
             Dosage & Administration of Napa 500 mg
             Tablet:
             Adult: 1-2 tablets every 4 to 6 hours up to a maximum of 4 gm (8 tablets) daily.
@@ -58,31 +58,31 @@ class MedicineSeeder extends Seeder
             Children (7 to 11 years): Take ½-1 Tablet every four to six hours as needed. Do not take more than 4 caplets in 24 hours. Not recommended in children under 7 years.
             Interaction of Napa 500 mg
             Patients who have taken barbiturates, tricyclic antidepressants and alcohol may show diminished ability to metabolise large doses of Napa 500 mg. Alcohol can increase the hepatotoxicity of Napa 500 mg overdosage. Chronic ingestion of anticonvulsants or oral steroid contraceptives induce liver enzymes and may prevent attainment of therapeutic Napa 500 mg levels by increasing first-pass metabolism or clearance.
-            
+
             Contraindications
             It is contraindicated in known hypersensitivity to Napa 500 mg.
-            
+
             Side Effects of Napa 500 mg
             Side effects of Napa 500 mg are usually mild, though haematological reactions including thrombocytopenia, leucopenia, pancytopenia, neutropenia, and agranulocytosis have been reported. Pancreatitis, skin rashes, and other allergic reactions occur occasionally.
-            
+
             Pregnancy & Lactation
             Pregnancy category B according to USFDA. This drug should be used during pregnancy only if clearly needed
-            
+
             Precautions & Warnings
             Napa 500 mg should be given with caution to patients with impaired kidney or liver function. Napa 500 mg should be given with care to patients taking other drugs that affect the liver.
-            
+
             Overdose Effects of Napa 500 mg
             Symptoms of Napa 500 mg overdose in the first 24 hours are pallor, nausea, vomiting, anorexia and abdominal pain. Liver damage may become apparent 12-48 hours after ingestion. Abnormalities of glucose metabolism and metabolic acidosis may occur.
-            
+
             Storage Conditions
             Keep in a dry place away from light and heat. Keep out of the reach of children.
-            
+
             Drug Classes
             Non opioid analgesics
-            
+
             Mode Of Action
             Napa 500 mg has analgesic and antipyretic properties with weak anti-inflammatory activity. Napa 500 mg (Acetaminophen) is thought to act primarily in the CNS, increasing the pain threshold by inhibiting both isoforms of cyclooxygenase, COX-1, COX-2, and COX-3 enzymes involved in prostaglandin (PG) synthesis. Napa 500 mg is a para aminophenol derivative, has analgesic and antipyretic properties with weak anti-inflammatory activity. Napa 500 mg is one of the most widely used, safest and fast acting analgesic. It is well tolerated and free from various side effects of aspirin.
-            
+
             Pregnancy
             Pregnancy category B according to USFDA. This drug should be used during pregnancy only if clearly needed.  Napa 500 mg is excreted in breast milk. Maternal ingestion of Napa 500 mg in normal therapeutic doses does not appear to present a risk to the nursing infant.",
             'prescription_required' => NULL,
@@ -91,6 +91,6 @@ class MedicineSeeder extends Seeder
             'status' => 1,
             'is_best_selling' => 1,
         ]);
-        
+
     }
 }
