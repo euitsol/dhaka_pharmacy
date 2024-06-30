@@ -67,6 +67,9 @@
 
     @stack('js')
 
+    <script src="{{ asset('plugin/ckeditor/build/ckeditor.js') }}"></script>
+    <script src="{{ asset('plugin/ckeditor/ckeditor.js') }}"></script>
+
 
 
 </body>
