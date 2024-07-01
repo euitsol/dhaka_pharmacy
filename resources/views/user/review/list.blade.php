@@ -1,5 +1,5 @@
 @extends('user.layouts.master', ['pageSlug' => 'review'])
-@section('title', 'Pending Reviews')
+@section('title', 'All Reviews')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
     <style>
@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col">
                     <div class="page-title">
-                        <h3>{{ __('Pending Reviews') }}</h3>
+                        <h3>{{ __('All Reviews') }}</h3>
                     </div>
                     <div class="show-order d-flex align-items-center">
                         <h4 class="me-2">{{ __('Show:') }}</h4>
