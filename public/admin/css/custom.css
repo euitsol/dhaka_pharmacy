@@ -97,6 +97,10 @@
 .toggle.android .toggle-handle {
     border-radius: 0px;
 }
+
+textarea.form-control {
+    min-height: 20vh !important;
+}
 /*=============================================================
                 End Overwrite CSS
  =============================================================*/

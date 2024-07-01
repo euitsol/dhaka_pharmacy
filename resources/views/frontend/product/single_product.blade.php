@@ -171,13 +171,16 @@
                                                                 class="fa-regular fa-file-lines"></i>
                                                             {{ __('Description') }}</a>
                                                     </li>
-
+                                                    @php
+                                                        $reviews = $single_product->reviews->where('status', 1);
+                                                    @endphp
                                                     <li class="nav-item" role="presentation">
                                                         <a class="nav-link" id="review-tab" data-bs-toggle="tab"
                                                             data-bs-target="#review" type="button" role="tab"
                                                             aria-controls="review" aria-selected="false"><i
                                                                 class="fa-regular fa-star-half-stroke"></i>
-                                                            {{ __('Review') }}</a>
+                                                            {{ __('Review') }}
+                                                            <sup class="badge bg-success">{{ $reviews->count() }}</sup></a>
                                                     </li>
                                                 </ul>
 

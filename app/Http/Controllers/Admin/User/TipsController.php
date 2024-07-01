@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\UserTips;
+namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserTipsRequest;
@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class UserTipsController extends Controller
+class TipsController extends Controller
 {
     use DetailsCommonDataTrait;
     public function __construct()

@@ -14,6 +14,10 @@ class Review extends BaseModel
         'description',
         'status',
         'customer_id',
+        'creater_id',
+        'creater_type',
+        'updater_id',
+        'updater_type',
     ];
 
     public function customer()
