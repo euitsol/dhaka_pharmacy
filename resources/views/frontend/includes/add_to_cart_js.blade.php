@@ -129,8 +129,18 @@
             var cart_id = $(this).data('cart_id');
             updateCart(cart_id, unit_id);
         });
+
+        $('#checkoutBtn').on('click', function(e) {
+            e.preventDefault();
+            if (checkoutValidation()) {
+                $('#checkoutForm').submit();
+            }
+        });
     });
 
+    function checkoutValidation() {
+        return true;
+    }
 
     function handleLoginRequirement() {
         window.location.href = routes.login;
@@ -350,6 +360,7 @@
             },
             success: function(response) {
                 if (response.success) {
+                    console.log(response.data.unit.quantity);
                     toastr.success(response.message);
                     var item = $('.item_' + response.data.id);
                     cardBody = item.closest('.card-body');

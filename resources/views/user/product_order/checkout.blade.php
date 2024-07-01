@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Checkout')
 @push('css')
-    <link rel="stylesheet" href="{{ asset('frontend\asset\css\checkout.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/asset/css/checkout.css') }}">
 @endpush
 @push('css_link')
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
@@ -12,12 +12,16 @@
 @endpush
 
 @section('content')
+    @php
+        $totalPrice = 0;
+        $totalDiscountedPrice = 0;
+    @endphp
     <div class="row py-5 my-5 main_checkout_wrap">
         <div class="col-md-10 mx-auto">
             <div class="card">
-                <form action="{{ route('u.ck.product.order.confirm', encrypt($order_id)) }}" method="POST">
+                <form action="{{ route('u.ck.product.order.confirm', encrypt($order->id)) }}" method="POST">
                     @csrf
-                    <input type="hidden" name="order_id" value="{{ encrypt($order_id) }}">
+                    <input type="hidden" name="order_id" value="{{ encrypt($order->id) }}">
                     <div class="row">
                         <div class="col-md-8 cart">
                             <div class="title">
@@ -26,72 +30,44 @@
                                         <h4><b>{{ __('Your Products') }}</b></h4>
                                     </div>
                                     <div class="col align-self-center text-end text-muted">
-                                        {{ collect($checkItems)->count() }} {{ __('items') }}</div>
+                                        {{ $order->products->count() }} {{ __('items') }}</div>
                                 </div>
                             </div>
-                            @php
-                                $total_price = 0;
-                                $total_regular_price = 0;
-                                $total_discount = 0;
-                            @endphp
-                            @foreach ($checkItems as $key => $cartItem)
+
+                            @foreach ($order->products as $key => $product)
                                 <div class="row order-item">
                                     <div class="row main align-items-center py-2 px-0">
-                                        <div class="col-2"><img class="img-fluid" src="{{ $cartItem['product']->image }}">
+                                        <div class="col-2"><img class="img-fluid" src="{{ $product->image }}">
                                         </div>
                                         <div class="col-6">
-                                            <div class="row" title="{{ $cartItem['product']->attr_title }}">
-                                                {{ $cartItem['product']->name }}</div>
-                                            <div class="row text-muted">{{ $cartItem['product']->pro_sub_cat->name }}</div>
-                                            <div class="row text-muted">{{ $cartItem['product']->generic->name }}</div>
-                                            <div class="row text-muted">{{ $cartItem['product']->company->name }}</div>
+                                            <div class="row" title="{{ $product->attr_title }}">
+                                                {{ $product->name }}</div>
+                                            <div class="row text-muted">{{ $product->pro_sub_cat->name }}</div>
+                                            <div class="row text-muted">{{ $product->generic->name }}</div>
+                                            <div class="row text-muted">{{ $product->company->name }}</div>
                                         </div>
                                         <div class="col-2">
-                                            @if (isset($cartItem['status']))
-                                                @php
-                                                    $total_discount +=
-                                                        $cartItem['quantity'] *
-                                                        number_format(
-                                                            $cartItem['product']->discount_amount *
-                                                                $cartItem['unit']->quantity,
-                                                            2,
-                                                        );
-                                                @endphp
-                                                <span>1 X {{ $cartItem['name'] }}</span>
-                                            @else
-                                                <span>{{ $cartItem['quantity'] }} X {{ $cartItem['name'] }}</span>
-                                                @php
-                                                    $total_discount +=
-                                                        $cartItem['quantity'] *
-                                                        number_format(
-                                                            $cartItem['product']->discount_amount *
-                                                                $cartItem['unit']->quantity,
-                                                            2,
-                                                        );
-                                                @endphp
-                                            @endif
+                                            <span>{{ $product->pivot->quantity }} X
+                                                {{ $product->pivot->unit->name }}</span>
                                         </div>
+
+                                        @php
+                                            $totalPrice +=
+                                                $product->pivot->quantity *
+                                                $product->pivot->unit->quantity *
+                                                $product->price;
+                                            $totalDiscountedPrice +=
+                                                $product->pivot->quantity *
+                                                $product->pivot->unit->quantity *
+                                                $product->discounted_price;
+                                        @endphp
                                         <div class="col-2 text-end">
-                                            @php
-                                                $proDisPrice = proDisPrice(
-                                                    $cartItem['product']->price,
-                                                    $cartItem['product']->discounts,
-                                                );
-                                                $single_total_price =
-                                                    $proDisPrice * $cartItem['unit']->quantity * $cartItem['quantity'];
-                                                $single_regular_price =
-                                                    $cartItem['product']->price *
-                                                    $cartItem['unit']->quantity *
-                                                    $cartItem['quantity'];
-                                                $total_price += $single_total_price;
-                                                $total_regular_price += $single_regular_price;
-                                            @endphp
-                                            @if ($proDisPrice != $cartItem['product']->price)
+                                            @if ($product->discounted_price != $product->price)
                                                 <span class="text-danger me-2"><del>{!! get_taka_icon() !!}
-                                                        {{ number_format($single_regular_price, 2) }}</del></span>
+                                                        {{ number_format($product->pivot->quantity * $product->pivot->unit->quantity * $product->price, 2) }}</del></span>
                                             @endif
                                             <span> {!! get_taka_icon() !!}
-                                            </span><span>{{ number_format($single_total_price, 2) }}</span>
+                                            </span><span>{{ number_format($product->pivot->quantity * $product->pivot->unit->quantity * $product->discounted_price, 2) }}</span>
 
                                         </div>
                                     </div>
@@ -99,14 +75,17 @@
                             @endforeach
                             <div class="row order-item">
                                 <div class="row main align-items-center py-2 px-0">
-                                    <div class="col mb-2">{{ __('Total Item') }} ( {{ count($checkItems) }} )</div>
+                                    <div class="col mb-2">{{ __('Total Item') }} ( {{ $order->products->count() }} )</div>
                                     <div class="col text-end">
                                         <span>{{ __('Sub-total  ') }}</span>
-                                        @if ($total_regular_price !== $total_price)
+
+
+                                        @if ($totalPrice !== $totalDiscountedPrice)
                                             <span class="text-danger mx-2"><del>{!! get_taka_icon() !!}
-                                                    {{ number_format(ceil($total_regular_price)) }}</del></span>
+                                                    {{ number_format(ceil($totalPrice)) }}</del></span>
                                         @endif
-                                        <span>{!! get_taka_icon() !!} {{ number_format(ceil($total_price)) }}</span>
+                                        <span>{!! get_taka_icon() !!}
+                                            {{ number_format(ceil($totalDiscountedPrice)) }}</span>
 
                                     </div>
                                 </div>
@@ -152,34 +131,33 @@
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Total Price') }}</div>
                                 <div class="col text-end ">
-                                    <span> {!! get_taka_icon() !!} {{ number_format(ceil($total_regular_price)) }}</span>
+                                    <span> {!! get_taka_icon() !!} {{ number_format(ceil($totalPrice)) }}</span>
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Discount') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
-                                    <span>{{ number_format($total_discount, 2) }}</span>
+                                    <span>{{ number_format($totalPrice - $totalDiscountedPrice, 2) }}</span>
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Sub-total') }}</div>
                                 <div class="col text-end ">
-                                    <span> {!! get_taka_icon() !!} {{ number_format(ceil($total_price)) }}</span>
+                                    <span> {!! get_taka_icon() !!} {{ number_format(ceil($totalDiscountedPrice)) }}</span>
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Delivery Fee') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
-                                    <span class="delivery_fee">{{ number_format(ceil($default_delivery_fee)) }}</span>
-                                    <input type="hidden" name="delivery_fee" class="delivery_input"
-                                        value="{{ ceil($default_delivery_fee) }}">
+                                    <span class="delivery_fee">0</span>
+                                    <input type="hidden" name="delivery_fee" class="delivery_input" value="0">
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Payable Amount') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
                                     <span class="total_price"
-                                        data-total_price="{{ ceil($total_price) }}">{{ number_format(ceil($total_price + $default_delivery_fee)) }}</span>
+                                        data-total_price="{{ ceil($totalPrice) }}">{{ number_format(ceil($totalDiscountedPrice)) }}</span>
                                 </div>
                             </div>
 
