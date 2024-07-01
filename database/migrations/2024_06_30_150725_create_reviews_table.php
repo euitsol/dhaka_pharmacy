@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('customer_id');
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->longText('description');
             $table->timestamps();
             $table->softDeletes();

@@ -1,0 +1,129 @@
+@extends('user.layouts.master', ['pageSlug' => 'review'])
+@section('title', 'Pending Reviews')
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+    <style>
+        .review_wrap .review_submit {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 19px;
+            text-decoration: none;
+            color: var(--white);
+            background: var(--btn_bg);
+            padding: 7px 11px;
+            border-radius: 5px;
+            border: 1px solid var(--btn_bg);
+            transition: 0.4s;
+
+        }
+
+        .review_wrap .review_submit:hover {
+            background: transparent;
+            color: var(--btn_bg);
+        }
+    </style>
+@endpush
+@section('content')
+    <section class="my-order-section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="page-title">
+                        <h3>{{ __('Pending Reviews') }}</h3>
+                    </div>
+                    <div class="show-order d-flex align-items-center">
+                        <h4 class="me-2">{{ __('Show:') }}</h4>
+                        <select class="form-select order_filter" aria-label="Default select example">
+                            <option value="all" {{ $filterValue == 'all' ? 'selected' : '' }}>{{ __('All') }}
+                            </option>
+                            <option value="0" {{ $filterValue == '0' ? 'selected' : '' }}>
+                                {{ __('Pending Reviews') }}
+                            </option>
+                            <option value="1" {{ $filterValue == '1' ? 'selected' : '' }}>{{ __('My Reviews') }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="review_wrap">
+                @forelse ($products as $product)
+                    <div class="order-row">
+                        <div class="row align-items-center py-4">
+                            <div class="col-1">
+                                <div class="img w-100 text-center">
+                                    <div id="lightbox" class="lightbox tips_image">
+                                        <div class="lightbox-content">
+                                            <img src="{{ product_image($product->image) }}" class="lightbox_image">
+                                        </div>
+                                        <div class="close_button fa-beat">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="product-info">
+                                    <h5 class="mb-0" title="{{ $product->attr_title }}">
+                                        {{ $product->name }}</h5>
+                                    <p class="mb-0">{{ $product->pro_sub_cat->name }}</p>
+                                    <p class="mb-0">{{ $product->pro_cat->name }}</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="product-info">
+                                    <p class="mb-0">
+                                        <strong>{{ __('Generic Name: ') }}</strong>{{ $product->generic->name }}
+                                    </p>
+                                    <p class="mb-0">
+                                        <strong>{{ __('Company: ') }}</strong>{{ $product->company->name }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="product-info text-center">
+                                    <p class="mb-0">
+                                        <strong>{{ __('Strength: ') }}</strong>{{ $product->strength->quantity . '-' . Str::upper($product->strength->unit) }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                @php
+                                    $discount_price = proDisPrice($product->price, $product->discounts);
+                                @endphp
+                                <div class="product-info text-center">
+                                    <p class="mb-0">
+                                        <strong>{{ __('Price: ') }}</strong>
+                                        <span>{{ number_format($discount_price, 2) }}</span><sup
+                                            class="text-danger"><del>{{ $discount_price != $product->price ? number_format($product->price, 2) : '' }}</del></sup>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pb-4">
+                            <div class="col-12">
+                                @if ($product->reviewed)
+                                    <div class="review px-3">
+                                        <p class="mb-0" style="text-align: justify">
+                                            <strong>{{ __('Your Review: ') }}</strong>{{ $product->review }}
+                                        </p>
+                                    </div>
+                                @else
+                                    <form action="{{ route('u.review.store') }}" method="POST" class="px-3">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <textarea name="description" class="w-100 p-2" placeholder="Tell us about your experience..."></textarea>
+                                        @include('alerts.feedback', ['field' => 'description'])
+                                        <input type="submit" class="btn review_submit float-end" value="Submit">
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <h3 class="my-5 text-danger text-center">{{ __('Product Not Found For Review') }}</h3>
+                @endforelse
+            </div>
+        </div>
+    </section>
+@endsection
+@push('js')
+    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
+@endpush

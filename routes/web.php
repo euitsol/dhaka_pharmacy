@@ -84,6 +84,7 @@ use App\Http\Controllers\User\AddToCartController;
 use App\Http\Controllers\User\CartAjaxController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\WishlistController as UserWishlistController;
+use App\Http\Controllers\User\ReviewController as UserReviewController;
 use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
 
 use App\Http\Controllers\Frontend\HomePageController;
@@ -885,6 +886,10 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
         Route::get('/update/{pid}', 'update')->name('update');
         Route::get('/refresh', 'refresh')->name('refresh');
         Route::get('/list', 'list')->name('list');
+    });
+    Route::controller(UserReviewController::class)->prefix('review')->name('u.review.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::post('/store', 'store')->name('store');
     });
 });
 Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {

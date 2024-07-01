@@ -132,7 +132,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a href="{{ route('u.wishlist.list') }}">
+                        <a href="{{ route('u.review.list') }}">
                             <div class="single  d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
                                     <img src="{{ asset('user/asset/img/star-half.png') }}" alt="">
