@@ -139,7 +139,15 @@
     });
 
     function checkoutValidation() {
-        return true;
+        let isValid = true;
+        $('.add_to_cart_item').each(function() {
+            if (!$(this).find('.item_units .unit_quantity:checked').length) {
+                toastr.error('Plese select item unit');
+                isValid = false;
+                return false;
+            }
+        });
+        return isValid;
     }
 
     function handleLoginRequirement() {
