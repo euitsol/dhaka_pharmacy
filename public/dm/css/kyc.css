@@ -1,0 +1,32 @@
+.form-group .form-control,
+.input .input-group .form-control {
+    padding: 8px 0px 8px 18px;
+}
+
+.input .input-group .form-control:first-child,
+.input .input-group-btn:first-child>.dropdown-toggle,
+.input .input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle) {
+    border-right: 1px solid rgba(29, 37, 59, 0.5);
+}
+
+.input .input-group .form-control:not(:first-child):not(:last-child),
+.input .input-group-btn:not(:first-child):not(:last-child) {
+    border-radius: 0;
+    border-right: 0;
+}
+
+.single_page_image {
+    position: relative;
+}
+
+.single_page_image .image_delete {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.single_page_image .image_delete span {
+    font-size: 20px;
+    padding: 5px 10px;
+    width: auto;
+}

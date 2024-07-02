@@ -233,7 +233,7 @@
 
 @push('js')
     <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
-    <script src="{{ asset('frontend/js/checkbox.js') }}"></script>
+    <script src="{{ asset('frontend/asset/js/checkbox.js') }}"></script>
     <script>
         const data = {
             'details_url': `{{ route('u.ck.address', ['param']) }}`,
