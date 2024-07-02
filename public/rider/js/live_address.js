@@ -7,8 +7,8 @@ if (!mapboxgl.supported()) {
 
 // const style = "mapbox://styles/qwaszx342432/clwjxz6ta007c01pogy8u4y4t";
 const style = "mapbox://styles/mapbox/streets-v9";
-const dlng = 90.36861933352624;
-const dlat = 23.807125501395834;
+// const dlng = 90.36861933352624;
+// const dlat = 23.807125501395834;
 
 function initializeMap(container, style, center, zoom) {
     return new mapboxgl.Map({
@@ -51,16 +51,15 @@ function addNavigationControl(map) {
     map.addControl(new mapboxgl.NavigationControl(), "top-left");
 }
 
-$(document).ready(function () {
-    if (dlat && dlng) {
-        const map = initializeMap("map", style, [dlng, dlat], 15);
-        addMarker(map, [dlng, dlat]);
-        addGeolocateControl(map);
-        addNavigationControl(map);
-
-        $("#mapDropdown").on("shown.bs.dropdown", function () {
-            map.resize();
-            console.log("open");
-        });
-    }
-});
+// $(document).ready(function () {
+//     // if (dlat && dlng) {
+//     $("#mapDropdown").on("shown.bs.dropdown", function () {
+//         const map = initializeMap("map", style, [dlng, dlat], 15);
+//         addMarker(map, [dlng, dlat]);
+//         addGeolocateControl(map);
+//         addNavigationControl(map);
+//         map.resize();
+//         console.log("open");
+//     });
+//     // }
+// });

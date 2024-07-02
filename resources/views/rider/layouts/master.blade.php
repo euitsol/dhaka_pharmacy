@@ -26,7 +26,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('rider/css/custom.css') }}" rel="stylesheet">
-    <link href='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css' rel='stylesheet' />
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
         type="text/css" />
@@ -72,7 +72,7 @@
     <script src="{{ asset('admin/js/custom.js') }}"></script>
     <script src="{{ asset('rider/js/custom.js') }}"></script>
 
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
     </script>
     <script src="{{ asset('rider/js/map.js') }}"></script>
