@@ -835,7 +835,7 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
 
 
 // User Routes
-Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user'], function () {
+Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'customer'], function () {
     Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
 
@@ -856,11 +856,16 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
         Route::get('/address/{id}', 'address')->name('address');
         Route::post('/single-order', 'single_order')->name('product.single_order');
         Route::get('/order/intermediate/{multiple?}', 'int_order')->name('product.int');
-        Route::get('/{order_id}', 'checkout')->name('product.checkout');
+        // Route::get('/{order_id}', 'checkout')->name('product.checkout');
         Route::post('/order/confirm/{order_id}', 'order_confirm')->name('product.order.confirm');
         Route::get('/order/success/{order_id}', 'order_success')->name('product.order.success');
         Route::get('/order/failed/{order_id}', 'order_failed')->name('product.order.failed');
         Route::get('/order/cancel/{order_id}', 'order_cancel')->name('product.order.cancel');
+    });
+
+    Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
+        Route::post('init', 'a_checkout')->name('init');
+        Route::get('order/{o_id}', 'checkout')->name('index');
     });
 
 

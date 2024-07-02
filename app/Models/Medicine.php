@@ -96,4 +96,9 @@ class Medicine extends BaseModel
     {
         return $this->hasMany(TipProduct::class, 'product_id');
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_products', 'medicine_id', 'order_id')->withPivot('unit_id', 'quantity');
+    }
 }
