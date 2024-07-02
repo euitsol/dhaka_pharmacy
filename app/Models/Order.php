@@ -110,4 +110,9 @@ class Order extends BaseModel
     public function scopeInitiated($query){
         return $query->where('status', 0);
     }
+
+    public function scopeSelf($query){
+        return $query->where('creater_type', User::class)
+        ->where('creater_id', user()->id);
+    }
 }
