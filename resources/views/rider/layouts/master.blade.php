@@ -26,10 +26,16 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('rider/css/custom.css') }}" rel="stylesheet">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
+        type="text/css" />
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     @stack('css')
-
+    <script>
+        const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
+    </script>
 </head>
 
 <body class="white-content dark {{ $class ?? '' }}">
@@ -49,6 +55,7 @@
         @csrf
     </form>
 
+    @include('rider.partials.map')
 
     <script src="{{ asset('white') }}/js/core/jquery.min.js"></script>
     <script src="{{ asset('white') }}/js/core/popper.min.js"></script>
@@ -62,12 +69,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('admin/js/custom.js') }}"></script>
     <script src="{{ asset('rider/js/custom.js') }}"></script>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
+    </script>
     @stack('js_link')
     @stack('js')
 
 
+    <script src="{{ asset('rider/js/map.js') }}"></script>
 
 </body>
 
