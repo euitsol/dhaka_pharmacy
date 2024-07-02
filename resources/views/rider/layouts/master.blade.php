@@ -75,11 +75,11 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
     </script>
-    <script src="{{ asset('rider/js/map.js') }}"></script>
     @stack('js_link')
     @stack('js')
 
 
+    <script src="{{ asset('rider/js/map.js') }}"></script>
 
 </body>
 
