@@ -17,7 +17,7 @@ use App\Http\Controllers\Admin\DM_Management\DmKycSettingsController;
 use App\Http\Controllers\Admin\LAM_Management\LamKycController;
 use App\Http\Controllers\Admin\LAM_Management\LamKycSettingsController;
 use App\Http\Controllers\Admin\LAM_Management\LocalAreaManagerController;
-use App\Http\Controllers\Admin\LatestOffer\LatestOfferController;
+use App\Http\Controllers\Admin\User\LatestOfferController;
 use App\Http\Controllers\Admin\UserManagement\UserKycSettingsController;
 use App\Http\Controllers\Admin\UserManagement\UserKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
@@ -43,6 +43,7 @@ use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
 use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\Admin\OrderByPrescription\OrderByPrescriptionController as AdminOrderByPrescriptionController;
+use App\Http\Controllers\Admin\User\ReviewController as AdminReviewController;
 
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
@@ -84,6 +85,7 @@ use App\Http\Controllers\User\AddToCartController;
 use App\Http\Controllers\User\CartAjaxController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\WishlistController as UserWishlistController;
+use App\Http\Controllers\User\ReviewController as UserReviewController;
 use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
 
 use App\Http\Controllers\Frontend\HomePageController;
@@ -98,7 +100,7 @@ use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
 use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
-use App\Http\Controllers\Admin\UserTips\UserTipsController;
+use App\Http\Controllers\Admin\User\TipsController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 /*
@@ -619,7 +621,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('delete/{id}', 'delete')->name('lf_delete');
     });
     // User Tips
-    Route::controller(UserTipsController::class)->prefix('user-tips')->name('user_tips.')->group(function () {
+    Route::controller(TipsController::class)->prefix('user-tips')->name('user_tips.')->group(function () {
         Route::get('index', 'index')->name('tips_list');
         Route::get('details/{id}', 'details')->name('details.tips_list');
         Route::get('create', 'create')->name('tips_create');
@@ -635,6 +637,16 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('/list', 'list')->name('fdk_list');
         Route::get('/details/{id}', 'details')->name('fdk_details');
         Route::get('file-download/{url}', 'view_or_download')->name('download.fdk_details');
+    });
+    // Review
+    Route::controller(AdminReviewController::class)->prefix('review')->name('review.')->group(function () {
+        Route::get('/products', 'products')->name('review_products');
+        Route::get('/list/{slug}', 'list')->name('review_list');
+        Route::get('/details/{id}', 'details')->name('details.review_list');
+        Route::get('/edit/{id}', 'edit')->name('review_edit');
+        Route::put('/edit/{id}', 'update')->name('review_edit');
+        Route::get('/status/{id}', 'status')->name('status.review_edit');
+        Route::get('/delete/{id}', 'delete')->name('review_delete');
     });
 });
 
@@ -890,6 +902,10 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
         Route::get('/update/{pid}', 'update')->name('update');
         Route::get('/refresh', 'refresh')->name('refresh');
         Route::get('/list', 'list')->name('list');
+    });
+    Route::controller(UserReviewController::class)->prefix('review')->name('u.review.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::post('/store', 'store')->name('store');
     });
 });
 Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {

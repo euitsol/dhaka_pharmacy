@@ -235,7 +235,8 @@ margin: 0;
     font-weight: 600;
     margin-top: 8px;
 }
-.dashboard-main-section .col-mid .order-cart-wish a:nth-child(2) .single{
+.dashboard-main-section .col-mid .order-cart-wish a:nth-child(2) .single,
+.dashboard-main-section .col-mid .order-cart-wish a:nth-child(4) .single{
     background-color: #C2E7FC;
 }
 .dashboard-main-section .col-mid .medicine-slider{

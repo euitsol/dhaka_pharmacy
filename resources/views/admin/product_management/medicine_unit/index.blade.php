@@ -38,7 +38,8 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $medicine_unit->name }} </td>
-                                    <td> <img height="60px" width="60px" style="object-fit: cover" src="{{storage_url($medicine_unit->image)}}" alt=""> </td>
+                                    <td> <img height="60px" width="60px" style="object-fit: cover"
+                                            src="{{ storage_url($medicine_unit->image) }}" alt=""> </td>
                                     <td> {{ $medicine_unit->quantity }} </td>
                                     <td> {{ $medicine_unit->type ? $medicine_unit->type : '-' }} </td>
                                     <td>
@@ -122,8 +123,8 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
+                        let status = data.status == 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status == 1 ? 'badge-success' :
                             'badge-warning';
                         var result = `
                                 <table class="table table-striped">

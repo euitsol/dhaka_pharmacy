@@ -29,21 +29,29 @@
                                                 <ul class="uk-slider-items cat-list">
                                                     @foreach ($sub_categories as $key => $sub_cats)
                                                         @foreach ($sub_cats as $sub_cat)
-                                                        <li
-                                                            class="sub_cat_item {{ $key == 0 ? 'uk-slide-active active' : '' }}">
-                                                            <a href="javascript:void(0)" class="sub_cat_link"
-                                                                data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
-                                                                data-sub_cat_slug="{{ $sub_cat->slug }}">
-                                                                <div
-                                                                    class="card {{ isset($sub_category) && $sub_category->id == $sub_cat->id ? ' active' : '' }}">
-                                                                    <img class="sub_cat_img"
-                                                                        src="{{ storage_url($sub_cat->image) }}"
-                                                                        alt="{{ $sub_cat->name }}">
-                                                                    <div class="category_name" title="{{$sub_cat->pro_cat->name}}"><h3>{{str_limit($sub_cat->pro_cat->name,12,'..')}}</h3></div>
-                                                                    <div class="sub_category_name" title="{{$sub_cat->name}}"><h3>{{str_limit($sub_cat->name,12,'..')}}</h3></div>
-                                                                </div>
-                                                            </a>
-                                                        </li>
+                                                            <li
+                                                                class="sub_cat_item {{ $key == 0 ? 'uk-slide-active active' : '' }}">
+                                                                <a href="javascript:void(0)" class="sub_cat_link"
+                                                                    data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
+                                                                    data-sub_cat_slug="{{ $sub_cat->slug }}">
+                                                                    <div
+                                                                        class="card {{ isset($sub_category) && $sub_category->id == $sub_cat->id ? ' active' : '' }}">
+                                                                        <img class="sub_cat_img"
+                                                                            src="{{ storage_url($sub_cat->image) }}"
+                                                                            alt="{{ $sub_cat->name }}">
+                                                                        <div class="category_name"
+                                                                            title="{{ $sub_cat->pro_cat->name }}">
+                                                                            <h3>{{ str_limit($sub_cat->pro_cat->name, 12, '..') }}
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div class="sub_category_name"
+                                                                            title="{{ $sub_cat->name }}">
+                                                                            <h3>{{ str_limit($sub_cat->name, 12, '..') }}
+                                                                            </h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
                                                         @endforeach
                                                     @endforeach
                                                 </ul>
@@ -79,10 +87,10 @@
                                         <a href="{{ route('product.single_product', $product->slug) }}">
                                             <div class="pdct-img">
                                                 @if ($proDisPrice != $product->price)
-                                                    <span class="discount_tag">{{  formatPercentageNumber($product->discount_percentage)."% 0ff"}}</span>
+                                                    <span
+                                                        class="discount_tag">{{ formatPercentageNumber($product->discount_percentage) . '% 0ff' }}</span>
                                                 @endif
-                                                <img class="w-100" src="{{ $product->image }}"
-                                                    alt="Product Image">
+                                                <img class="w-100" src="{{ $product->image }}" alt="Product Image">
                                             </div>
                                         </a>
                                         <div class="pdct-info">
@@ -95,18 +103,20 @@
 
                                             <div class="product_title">
                                                 <a href="{{ route('product.single_product', $product->slug) }}">
-                                                    <h3 class="fw-bold" title="{{$product->attr_title}}">
+                                                    <h3 class="fw-bold" title="{{ $product->attr_title }}">
                                                         {{ $product->name }}
                                                     </h3>
                                                 </a>
                                             </div>
-                                            <h4> <span> {!! get_taka_icon() !!} {{ number_format($proDisPrice,2) }}</span>
+                                            <h4> <span> {!! get_taka_icon() !!} {{ number_format($proDisPrice, 2) }}</span>
                                                 @if ($proDisPrice != $product->price)
-                                                 <span class="regular_price"> <del>{!! get_taka_icon() !!} {{ number_format($product->price,2) }}</del></span> 
+                                                    <span class="regular_price"> <del>{!! get_taka_icon() !!}
+                                                            {{ number_format($product->price, 2) }}</del></span>
                                                 @endif
                                             </h4>
                                             <div class="add_to_card">
-                                                <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id="{{$product->units[0]['id']}}"
+                                                <a class="cart-btn" data-product_slug="{{ $product->slug }}"
+                                                    data-unit_id="{{ $product->units[0]['id'] }}"
                                                     href="javascript:void(0)">
                                                     <i class="fa-solid fa-cart-plus"></i>
                                                 </a>
@@ -119,9 +129,10 @@
                         </div>
                         @if (count($products) >= 1)
                             <div class="row show-more mt-5">
-                                <a class="all-pdct-btn text-center more" data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
-                                    data-sub_cat_slug="{{ isset($sub_category) ? $sub_category->slug : '' }}" data-offset="1"
-                                    href="javascript:void(0)">{{ __('SEE MORE') }}</a>
+                                <a class="all-pdct-btn text-center more"
+                                    data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
+                                    data-sub_cat_slug="{{ isset($sub_category) ? $sub_category->slug : '' }}"
+                                    data-offset="1" href="javascript:void(0)">{{ __('SEE MORE') }}</a>
                             </div>
                         @endif
                     </div>
@@ -135,112 +146,12 @@
 @endsection
 @push('js')
     <script>
-        function formatPercentageNumber(number) {
-            var formattedNumber = number.toString();
-            formattedNumber = formattedNumber.includes('.') ? parseFloat(formattedNumber).toFixed(2).replace(/\.?0+$/, '') : formattedNumber;
-            return formattedNumber;
-        }
-        $(document).ready(function() {
-            function renderProducts(products) {
-                return products.map(function(product) {
-                    let route = "{{ route('product.single_product', ['slug']) }}";
-                    let _route = route.replace('slug', product.slug);
-
-                    let discount_percentage = '';
-                    let discount_amount = '';
-                    if(product.discount_percentage){
-                        discount_percentage = `<span class="discount_tag">${formatPercentageNumber(product.discount_percentage)}% 0ff</span>`
-                    }
-                    
-                    if(product.discount_percentage){
-                        discount_amount = `<span class="regular_price"> <del>{!! get_taka_icon() !!} ${numberFormat(product.price,2)}</del></span>`
-                    }
-    
-                    return `
-                        <div class="col-2 px-2 single-pdct-wrapper">
-                            <div class="single-pdct">
-                                <a href="${_route}">
-                                    <div class="pdct-img">
-                                        ${discount_percentage}
-                                        <img class="w-100" src="${product.image}" alt="Product Image">
-                                    </div>
-                                </a>
-                                <div class="pdct-info">
-                                    <a href="#" class="generic-name">${product.generic.name}</a>
-                                    <a href="#" class="company-name">${product.company.name}</a>
-                                    <div class="product_title">
-                                        <a href="${_route}">
-                                            <h3 class="fw-bold">
-                                                ${product.name}
-                                            </h3>
-                                        </a>
-                                    </div>
-                                    <h4><span>{!! get_taka_icon() !!} ${numberFormat(product.discountPrice,2)}</span>  ${discount_amount}</h4>
-                                    <div class="add_to_card">
-                                        <a class="cart-btn" data-unit_id="${product.units[0]['id']}" href="javascript:void(0)" data-product_slug="${product.slug}">
-                                            <i class="fa-solid fa-cart-plus"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-    
-            function fetchData(url, successCallback, errorCallback) {
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    dataType: 'json',
-                    success: successCallback,
-                    error: errorCallback,
-                });
-            }
-    
-            $('.sub_cat_link').on('click', function() {
-                $('.sub_cat_link .card').removeClass('active');
-                $(this).find('.card').addClass('active');
-    
-                let cat_slug = $(this).data('cat_slug');
-                let sub_cat_slug = $(this).data('sub_cat_slug');
-                $('.more').attr('data-offset', 1);
-                $('.more').attr('data-sub_cat_slug', sub_cat_slug);
-
-                let url = `{{ route('category.products', ['category' => 'cat_slug', 'sub-category' => 'sub_cat_slug']) }}`;
-                let dynamicUrl = url.replace('cat_slug', cat_slug).replace('sub_cat_slug', sub_cat_slug);
-                dynamicUrl = dynamicUrl;
-                dynamicUrl = dynamicUrl.replace(/&amp;/g, '&');
-    
-                fetchData(dynamicUrl, function(data) {
-                    window.history.pushState({path: data.url}, '', data.url);
-                    
-                    let result = renderProducts(data.products);
-                    $('.all-products').html(result);
-                    $('.show-more').toggle(data.products.length >= 1);
-                }, function(xhr, status, error) {
-                    console.error('Error fetching products:', error);
-                });
-            });
-    
-            $('.more').on('click', function() {
-                let limit = 1;
-                let offset = parseInt($(this).attr('data-offset'));
-                let cat_slug = $(this).attr('data-cat_slug');
-                let sub_cat_slug = $(this).attr('data-sub_cat_slug');
-                let url = `{{ route('category.products', ['category' => 'cat_slug','offset'=>'_offset', 'sub-category' => 'sub_cat_slug']) }}`;
-                let dynamicUrl = url.replace('cat_slug', cat_slug).replace('_offset', offset).replace('sub_cat_slug', sub_cat_slug);
-                dynamicUrl = dynamicUrl.replace(/&amp;/g, '&');
-    
-                fetchData(dynamicUrl, function(data) {
-                    $('.more').attr('data-offset', offset + limit);
-                    let result = renderProducts(data.products);
-                    $('.all-products').append(result);
-                    $('.more').parent().toggle(data.products.length >= limit);
-                }, function(xhr, status, error) {
-                    console.error('Error fetching products:', error);
-                });
-            });
-        });
+        const datas = {
+            'single_product': `{{ route('product.single_product', ['slug']) }}`,
+            'cat_products': `{{ route('category.products', ['category' => 'cat_slug', 'sub-category' => 'sub_cat_slug']) }}`,
+            'more_products': `{{ route('category.products', ['category' => 'cat_slug', 'offset' => '_offset', 'sub-category' => 'sub_cat_slug']) }}`,
+        };
+        const taka_icon = `{!! get_taka_icon() !!}`;
     </script>
+    <script src="{{ asset('frontend/asset/js/products.js') }}"></script>
 @endpush
