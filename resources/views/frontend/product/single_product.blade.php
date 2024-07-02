@@ -180,7 +180,8 @@
                                                             aria-controls="review" aria-selected="false"><i
                                                                 class="fa-regular fa-star-half-stroke"></i>
                                                             {{ __('Review') }}
-                                                            <sup class="badge bg-success">{{ $reviews->count() }}</sup></a>
+                                                            <sup
+                                                                class="badge bg-success">{{ $reviews->count() }}</sup></a>
                                                     </li>
                                                 </ul>
 
@@ -230,150 +231,23 @@
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         <div id="testimonial-slider" class="owl-carousel">
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
+                                                                            @foreach ($reviews->take(2) as $review)
+                                                                                <div class="testimonial">
+                                                                                    <div class="testimonial-content">
+                                                                                        <div class="testimonial-icon">
+                                                                                            <i
+                                                                                                class="fa fa-quote-left"></i>
+                                                                                        </div>
+                                                                                        <p class="description">
+                                                                                            {{ str_limit(html_entity_decode($review->description), 200) }}
+                                                                                        </p>
                                                                                     </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipisit nisi vehicula.
-                                                                                    </p>
+                                                                                    <h3 class="title">
+                                                                                        {{ $review->customer->name }}</h3>
+                                                                                    <span
+                                                                                        class="post">{{ optional($review->customer)->designation }}</span>
                                                                                 </div>
-                                                                                <h3 class="title">John</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Kelle</h3>
-                                                                                <span class="post">Web Designer</span>
-                                                                            </div>
-
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Steven</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
+                                                                            @endforeach
                                                                         </div>
                                                                     </div>
                                                                 </div>
