@@ -4,6 +4,7 @@
     --primary-bg-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
     --secondary-bg-image: linear-gradient(15deg, #80d0c7 0%, #13547a 100%);
   }
+
   .sidebar {
     background-color:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
@@ -13,12 +14,15 @@
     background-color:var(--secondary-color) !important;
     background-image:var(--secondary-bg-image) !important;
 }
+
 .white-content .footer .copyright a{
     color:var(--primary-color) !important;
 }
+
 .white-content .footer .copyright a:hover{
     color:var(--secondary-color) !important;
 }
+
 .main-panel {
     border-top: 2px solid var(--primary-color) !important;
     /* background-color:var(--primary-color) !important; */
@@ -29,20 +33,28 @@
     background:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
 }
+
 .form-control:focus {
     border-color: var(--primary-color) !important;
 }
+
 .form-group input[type=file] {
     height: auto !important;
 }
+
 .form-check input[type="checkbox"]:checked+.form-check-sign::before, .form-check input[type="checkbox"]:checked+.form-check-sign::before {
     background-color: var(--primary-color) !important;
 }
+
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:focus, .btn-primary.active:hover {
     background:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
 }
+
 /*=============================================================
                 Site Settings CSS
  =============================================================*/
 
+ .map-modal #map{
+    height: 300px;
+ }
