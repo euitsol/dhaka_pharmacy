@@ -9,21 +9,7 @@ trait TransformOrderItemTrait
 
     private function getOrderItems($order)
     {
-        $cart_items =  AddToCart::with([
-            'product.pro_cat',
-            'product.pro_sub_cat',
-            'product.generic',
-            'product.company',
-            'product.strength',
-            'customer',
-            'unit',
-            'product.discounts'
-        ])
-            ->whereIn('id', json_decode($order->carts))
-            ->orderBy('created_at', 'asc')
-            ->get()->each(function ($cart_item) {
-                return $this->transformOrderItemPrice($cart_item);
-            });
+        $cart_items =  $order->products;
         return $cart_items;
     }
     private function transformOrderItemPrice($cart_item)

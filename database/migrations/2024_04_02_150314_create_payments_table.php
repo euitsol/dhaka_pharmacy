@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
-    use AuditColumnsTrait,SoftDeletes;
+    use AuditColumnsTrait, SoftDeletes;
 
     /**
      * Run the migrations.

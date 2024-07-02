@@ -81,7 +81,6 @@ use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
-use App\Http\Controllers\User\AddToCartController;
 use App\Http\Controllers\User\CartAjaxController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\WishlistController as UserWishlistController;
@@ -838,34 +837,23 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
 Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'customer'], function () {
     Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
-
-    // Add To Cart Routes
-    Route::controller(AddToCartController::class)->prefix('cart')->group(function () {
-
-        Route::get('/remove', 'remove_to_cart')->name('product.remove_to_cart');
-        Route::get('/clear/{uid}', 'clearCart')->name('product.clear_cart');
-
-        Route::get('/item/check/{id}', 'itemCheck')->name('cart.item.check');
-        Route::get('/item/quantity/{id}/{type}', 'itemQuantity')->name('cart.item.quantity');
-        Route::get('/item/unit/{unit_id}/{cart_id}', 'itemUnit')->name('cart.item.unit');
-    });
-
-
     // Checkout Routes
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
-        Route::get('/address/{id}', 'address')->name('address');
         Route::post('/single-order', 'single_order')->name('product.single_order');
-        Route::get('/order/intermediate/{multiple?}', 'int_order')->name('product.int');
+        // Route::get('/order/intermediate/{multiple?}', 'int_order')->name('product.int');
         // Route::get('/{order_id}', 'checkout')->name('product.checkout');
-        Route::post('/order/confirm/{order_id}', 'order_confirm')->name('product.order.confirm');
+
         Route::get('/order/success/{order_id}', 'order_success')->name('product.order.success');
         Route::get('/order/failed/{order_id}', 'order_failed')->name('product.order.failed');
         Route::get('/order/cancel/{order_id}', 'order_cancel')->name('product.order.cancel');
     });
 
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
-        Route::post('init', 'a_checkout')->name('init');
+        Route::post('init', 'int_order')->name('init');
         Route::get('order/{o_id}', 'checkout')->name('index');
+        Route::get('/address/{id}', 'address')->name('address');
+        Route::post('/order/confirm/{order_id}', 'order_confirm')->name('product.order.confirm');
+        Route::get('/order/payment/intermediate/{payment_id}', 'int_payment')->name('product.order.payment.int');
     });
 
 
