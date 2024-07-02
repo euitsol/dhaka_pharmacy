@@ -33,6 +33,10 @@ class Medicine extends BaseModel
     {
         return $this->hasMany(Discount::class, 'pro_id', 'id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'product_id', 'id');
+    }
 
     public function wish()
     {

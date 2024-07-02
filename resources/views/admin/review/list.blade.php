@@ -1,5 +1,5 @@
-@extends('admin.layouts.master', ['pageSlug' => 'local_area_manager'])
-
+@extends('admin.layouts.master', ['pageSlug' => 'review'])
+@section('title', 'Review List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -7,94 +7,71 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Local Area Manager List') }}</h4>
+                            <h4 class="card-title">{{ __('Review List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'lam_management.local_area_manager.local_area_manager_create',
+                                'routeName' => 'review.review_products',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new local area manager',
+                                'label' => 'Back',
                             ])
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
+
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Name') }}</th>
-                                <th>{{ __('Phone') }}</th>
-                                <th>{{ __('District Manager') }}</th>
-                                <th>{{ __('Operation Area') }}</th>
-                                <th>{{ __('Operation Sub Area') }}</th>
+                                <th>{{ __('Customer') }}</th>
+                                <th>{{ __('Review') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
+                                <th>{{ __('Updated date') }}</th>
+                                <th>{{ __('Updated by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($lams as $lam)
+                            @foreach ($reviews as $review)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $lam->name }} </td>
-                                    <td> {{ $lam->phone }} </td>
-                                    <td> {{ $lam->dm->name }} </td>
-                                    <td> {{ $lam->dm->operation_area->name }} </td>
+                                    <td> {{ $review->customer->name }} </td>
+                                    <td> {{ str_limit(html_entity_decode($review->description), 50) }} </td>
                                     <td>
-                                        @if ($lam->operation_sub_area)
-                                            {{ $lam->operation_sub_area->name }}
-                                        @else
-                                            <span class="badge badge-warning">{{ __('Area not allocated') }}</span>
-                                        @endif
-
+                                        <span
+                                            class="{{ $review->getStatusBadgeClass() }}">{{ $review->getStatus() }}</span>
                                     </td>
-                                    <td>
-                                        <span class="{{ $lam->getStatusBadgeClass() }}">{{ $lam->getStatus() }}</span>
+                                    <td>{{ timeFormate($review->created_at) }}</td>
+                                    <td> {{ c_user_name($review->creater) }} </td>
+                                    <td>{{ $review->created_at != $review->updated_at ? timeFormate($review->updated_at) : '--' }}
                                     </td>
-                                    <td>{{ timeFormate($lam->created_at) }}</td>
-
-                                    <td> {{ c_user_name($lam->creater) }} </td>
+                                    <td> {{ u_user_name($review->updater) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' =>
-                                                        'lam_management.local_area_manager.login_as.local_area_manager_profile',
-                                                    'params' => [$lam->id],
-                                                    'label' => 'Login As',
-                                                    'target' => '_blank',
-                                                ],
-                                                [
-                                                    'routeName' =>
-                                                        'lam_management.local_area_manager.local_area_manager_profile',
-                                                    'params' => [$lam->id],
-                                                    'label' => 'Profile',
-                                                ],
-                                                [
                                                     'routeName' => 'javascript:void(0)',
-                                                    'params' => [$lam->id],
+                                                    'params' => [$review->id],
                                                     'label' => 'View Details',
                                                     'className' => 'view',
-                                                    'data-id' => $lam->id,
+                                                    'data-id' => $review->id,
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'lam_management.local_area_manager.local_area_manager_edit',
-                                                    'params' => [$lam->id],
+                                                    'routeName' => 'review.review_edit',
+                                                    'params' => [$review->id],
                                                     'label' => 'Update',
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'lam_management.local_area_manager.status.local_area_manager_edit',
-                                                    'params' => [$lam->id],
-                                                    'label' => $lam->getBtnStatus(),
+                                                    'routeName' => 'review.status.review_edit',
+                                                    'params' => [$review->id],
+                                                    'label' => $review->getBtnStatus(),
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'lam_management.local_area_manager.local_area_manager_delete',
-                                                    'params' => [$lam->id],
+                                                    'routeName' => 'review.review_delete',
+                                                    'params' => [$review->id],
                                                     'label' => 'Delete',
                                                     'delete' => true,
                                                 ],
@@ -107,21 +84,17 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer py-4">
-                    <nav class="d-flex justify-content-end" aria-label="...">
-                    </nav>
-                </div>
             </div>
         </div>
     </div>
 
-    {{-- Local Area Manager Details Modal  --}}
+    {{-- Review Details Modal  --}}
     <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Local Area Manager Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Review Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -138,9 +111,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = (
-                    "{{ route('lam_management.local_area_manager.details.local_area_manager_list', ['id']) }}"
-                );
+                let url = ("{{ route('review.details.review_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -148,41 +119,24 @@
                     dataType: 'json',
                     success: function(data) {
                         let status = data.status == 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status == 1 ? 'badge-success' : 'badge-warning';
-                        let lam_area = data.operation_sub_area ? data.operation_sub_area.name :
-                            '<span class="badge badge-warning">{{ __('Area not allocated') }}</span>';
+                        let statusClass = data.status == 1 ? 'badge-success' :
+                            'badge-warning';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
-                                        <th class="text-nowrap">Name</th>
+                                        <th class="text-nowrap">Customer</th>
                                         <th>:</th>
-                                        <td>${data.name}</td>
+                                        <td>${data.customer.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Phone</th>
+                                        <th class="text-nowrap">Product</th>
                                         <th>:</th>
-                                        <td>${data.phone}</td>
+                                        <td>${data.product.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Email</th>
+                                        <th class="text-nowrap">Review</th>
                                         <th>:</th>
-                                        <td>${data.email ?? '--'}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">District Manager</th>
-                                        <th>:</th>
-                                        <td>${data.dm.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Operation Area</th>
-                                        <th>:</th>
-                                        <td>${data.dm.operation_area.name}</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <th class="text-nowrap">Operation Sub Area</th>
-                                        <th>:</th>
-                                        <td>${lam_area}</td>
+                                        <td class="text-justify">${data.description}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
@@ -215,7 +169,7 @@
                         $('.view_modal').modal('show');
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error fetching local area manager data:', error);
+                        console.error('Error fetching review data:', error);
                     }
                 });
             });

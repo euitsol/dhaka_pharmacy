@@ -138,7 +138,7 @@
                                         <input class="form-check-input address" value="{{ $address->id }}"
                                             style="width: 1em" type="radio" name="address_id"
                                             id="address{{ $key }}"
-                                            @if ($address->is_default == true) checked @endif>
+                                            @if ($address->is_default == true || count($customer->address)) checked @endif>
                                         <label class="form-check-label ms-2" for="address{{ $key }}">
                                             {{ str_limit($address->address, 80) }} (<span> {!! get_taka_icon() !!} </span>
                                             <span class="charge" data-charge=""></span>)
@@ -186,25 +186,25 @@
                             <div class="row align-items-center atc_functionality">
                                 <div class="item_units col">
                                     <div class="form-group my-1 boxed">
-                                        <input type="radio" class="unit_quantity" id="android-1" name="payment_method"
+                                        <input type="radio" class="unit_qnt" id="android-1" name="payment_method"
                                             value="bkash" checked>
                                         <label for="android-1">
                                             <img style="object-fit: cover"
                                                 src="{{ asset('frontend/asset/img/bkash.png') }}">
                                         </label>
-                                        <input type="radio" class="unit_quantity" id="android-2" name="payment_method"
+                                        <input type="radio" class="unit_qnt" id="android-2" name="payment_method"
                                             value="nogod">
                                         <label for="android-2">
                                             <img style="object-fit: cover"
                                                 src="{{ asset('frontend/asset/img/nogod.png') }}">
                                         </label>
-                                        <input type="radio" class="unit_quantity" id="android-3" name="payment_method"
+                                        <input type="radio" class="unit_qnt" id="android-3" name="payment_method"
                                             value="roket">
                                         <label for="android-3">
                                             <img style="object-fit: cover"
                                                 src="{{ asset('frontend/asset/img/roket.png') }}">
                                         </label>
-                                        <input type="radio" class="unit_quantity" id="android-4" name="payment_method"
+                                        <input type="radio" class="unit_qnt" id="android-4" name="payment_method"
                                             value="ssl">
                                         <label for="android-4">
                                             <img src="{{ asset('frontend/asset/img/ssl.jpg') }}"
@@ -233,7 +233,7 @@
 
 @push('js')
     <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
-    <script src="{{ asset('frontend/js/checkbox.js') }}"></script>
+    <script src="{{ asset('frontend/asset/js/checkbox.js') }}"></script>
     <script>
         const data = {
             'details_url': `{{ route('u.ck.address', ['param']) }}`,

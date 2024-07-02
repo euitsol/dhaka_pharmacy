@@ -105,3 +105,13 @@ function numberFormat(value, decimals) {
 function getCsrfToken() {
     return $("#csrf-token").val();
 }
+
+function formatPercentageNumber(number) {
+    var formattedNumber = number.toString();
+    formattedNumber = formattedNumber.includes(".")
+        ? parseFloat(formattedNumber)
+              .toFixed(2)
+              .replace(/\.?0+$/, "")
+        : formattedNumber;
+    return formattedNumber;
+}
