@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderProduct extends Pivot
 {
+
     use HasFactory, SoftDeletes;
-    public function unit(){
-        return $this->belongsTo(MedicineUnit::class,'unit_id');
+    public function unit()
+    {
+        return $this->belongsTo(MedicineUnit::class, 'unit_id');
     }
 }

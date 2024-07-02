@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ProductTips extends BaseModel
+class TipProduct extends BaseModel
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [

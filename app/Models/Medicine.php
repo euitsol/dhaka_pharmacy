@@ -90,7 +90,7 @@ class Medicine extends BaseModel
 
     function tipses()
     {
-        return $this->hasMany(ProductTips::class, 'product_id');
+        return $this->hasMany(TipProduct::class, 'product_id');
     }
 
     public function orders()
