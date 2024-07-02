@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends AuthenticateBaseModel
 {
-    use HasRoles,HasApiTokens;
+    use HasRoles, HasApiTokens;
     protected $fillable = [
         'name',
         'email',
@@ -34,5 +34,38 @@ class User extends AuthenticateBaseModel
     public function address()
     {
         return $this->morphMany(Address::class, 'creater');
+    }
+
+    public function getKycStatus()
+    {
+        if ($this->kyc_status == 1) {
+            return 'Complete';
+        } else {
+            return 'Pending';
+        }
+    }
+    public function getKycStatusClass()
+    {
+        if ($this->kyc_status == 1) {
+            return 'badge badge-info';
+        } else {
+            return 'badge badge-warning';
+        }
+    }
+    public function getPhoneVerifyStatus()
+    {
+        if ($this->is_verify == 1) {
+            return 'Success';
+        } else {
+            return 'Pending';
+        }
+    }
+    public function getPhoneVerifyClass()
+    {
+        if ($this->is_verify == 1) {
+            return 'badge badge-primary';
+        } else {
+            return 'badge badge-dark';
+        }
     }
 }

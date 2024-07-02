@@ -8,14 +8,13 @@ use App\Models\Documentation;
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class ProductCategoryController extends Controller
 {
-    //
-
+    use DetailsCommonDataTrait;
     public function __construct()
     {
         return $this->middleware('admin');
@@ -31,10 +30,7 @@ class ProductCategoryController extends Controller
     {
         $data = ProductCategory::findOrFail($id);
         $data->image = storage_url($data->image);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->created_user);
-        $data->updated_by = u_user_name($data->updated_user);
+        $this->simpleColumnData($data);
         return response()->json($data);
     }
     public function create(): View
@@ -63,7 +59,7 @@ class ProductCategoryController extends Controller
     }
     public function edit($slug): View
     {
-        $data['product_category'] = ProductCategory::where('slug',$slug)->first();
+        $data['product_category'] = ProductCategory::where('slug', $slug)->first();
         $data['document'] = Documentation::where('module_key', 'product_category')->first();
         return view('admin.product_management.product_category.edit', $data);
     }
@@ -75,7 +71,7 @@ class ProductCategoryController extends Controller
             $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'product_category/';
             $path = $image->storeAs($folderName, $imageName, 'public');
-            if(!empty($product_category->image)){
+            if (!empty($product_category->image)) {
                 $this->fileDelete($product_category->image);
             }
             $product_category->image = $path;
@@ -106,13 +102,13 @@ class ProductCategoryController extends Controller
     {
         $product_category = ProductCategory::findOrFail($id);
         $activeCount = ProductCategory::menu()->activated()->count();
-        if($product_category->is_menu == 1){
+        if ($product_category->is_menu == 1) {
             $product_category->is_menu = 0;
-        }else{
-            if($activeCount >= 10){
+        } else {
+            if ($activeCount >= 10) {
                 flash()->addWarning('You have already added 10 categories to the menu.');
                 return redirect()->route('product.product_category.product_category_list');
-            }else{
+            } else {
                 $product_category->is_menu = 1;
             }
         }

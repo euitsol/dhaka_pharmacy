@@ -41,12 +41,9 @@
                                                     </p>
                                                     <p><a href="">{{ $item->generic->name }}</a></p>
                                                     <p><a href="">{{ $item->company->name }}</a></p>
-                                                    @php
-                                                        $disPrice = proDisPrice($item->price, $item->discounts);
-                                                    @endphp
                                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                            {{ number_format($disPrice, 2) }}</span>
-                                                        @if ($disPrice != $item->price)
+                                                            {{ number_format($item->discounted_price, 2) }}</span>
+                                                        @if ($item->discounted_price != $item->price)
                                                             <span class="regular_price"> <del>{!! get_taka_icon() !!}
                                                                     {{ number_format($item->price, 2) }}</del></span>
                                                         @endif
@@ -60,7 +57,7 @@
                             </div>
                         </div>
                     @endif
-                    @if ($featuredItems->isNotEmpty())
+                    @if ($featuredCategories->isNotEmpty())
                         <div class="col-9">
                             <div class="row cat-filter-row gx-4">
                                 <div class="col-3">
@@ -74,12 +71,12 @@
                                                 <ul
                                                     class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
                                                     <li class="text-right active" style="text-align: right;">
-                                                        <a href="javascript:void(0)" class="featured_item"
-                                                            data-slug="{{ __('all') }}">{{ _('All') }}</a>
+                                                        <a href="javascript:void(0)" class="featured_category"
+                                                            data-slug="all">{{ _('All') }}</a>
                                                     </li>
-                                                    @foreach ($featuredItems as $item)
-                                                        <li><a href="javascript:void(0)" class="featured_item"
-                                                                data-slug="{{ $item->slug }}">{{ __($item->name) }}</a>
+                                                    @foreach ($featuredCategories as $category)
+                                                        <li><a href="javascript:void(0)" class="featured_category"
+                                                                data-slug="{{ $category->slug }}">{{ __($category->name) }}</a>
                                                         </li>
                                                     @endforeach
                                                 </ul>
@@ -107,19 +104,15 @@ btn-arrow">
                             </div>
                             <div class="row all-products mt-3">
                                 @foreach ($products as $product)
-                                    @php
-                                        $prodDisPrice = proDisPrice($product->price, $product->discounts);
-                                    @endphp
                                     <div class="col-3 px-2 single-pdct-wrapper">
                                         <div class="single-pdct">
                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                 <div class="pdct-img">
-                                                    @if ($prodDisPrice != $product->price)
+                                                    @if ($product->discounted_price != $product->price)
                                                         <span
                                                             class="discount_tag">{{ formatPercentageNumber($product->discount_percentage) . '% 0ff' }}</span>
                                                     @endif
-                                                    <img class="w-100" src="{{ $product->image }}"
-                                                        alt="Product Image">
+                                                    <img class="w-100" src="{{ $product->image }}" alt="Product Image">
                                                 </div>
                                             </a>
                                             <div class="pdct-info">
@@ -139,8 +132,8 @@ btn-arrow">
                                                 </div>
 
                                                 <h4> <span> {!! get_taka_icon() !!}
-                                                        {{ number_format($prodDisPrice, 2) }}</span>
-                                                    @if ($prodDisPrice != $product->price)
+                                                        {{ number_format($product->discounted_price, 2) }}</span>
+                                                    @if ($product->discounted_price != $product->price)
                                                         <span class="regular_price"> <del>{!! get_taka_icon() !!}
                                                                 {{ number_format($product->price, 2) }}</del></span>
                                                     @endif
@@ -148,8 +141,7 @@ btn-arrow">
 
                                                 <div class="add_to_card">
                                                     <a class="cart-btn" data-product_slug="{{ $product->slug }}"
-                                                        data-unit_id="{{ $product->units[0]['id'] }}"
-                                                        href="javascript:void(0)">
+                                                        data-unit_id="" href="javascript:void(0)">
                                                         <i class="fa-solid fa-cart-plus"></i>
                                                     </a>
                                                 </div>
@@ -159,12 +151,11 @@ btn-arrow">
                                     </div>
                                 @endforeach
                             </div>
-                            @if (count($products) >= 8)
-                                <div class="row show-more mt-5">
-                                    <a class="all-pdct-btn text-center"
-                                        href="{{ route('category.products', ['category' => 'all']) }}">{{ __('All Products') }}</a>
-                                </div>
-                            @endif
+
+                            <div class="row show-more mt-5" @if (count($products) < 8) style="display:none;" @endif>
+                                <a class="all-pdct-btn text-center"
+                                    href="{{ route('category.products', ['category' => 'all']) }}">{{ __('All Products') }}</a>
+                            </div>
                         </div>
                     @endif
                 </div>
@@ -218,103 +209,12 @@ btn-arrow">
 @endsection
 @push('js')
     <script>
-        function formatPercentageNumber(number) {
-            var formattedNumber = number.toString();
-            formattedNumber = formattedNumber.includes('.') ? parseFloat(formattedNumber).toFixed(2).replace(/\.?0+$/, '') :
-                formattedNumber;
-            return formattedNumber;
-        }
-        $(document).ready(function() {
-            $('.featured_item').on('click', function() {
-                $('.cat-list li').removeClass('active');
-                $('.cat-list li').removeClass('uk-slide-active');
-                $(this).parent('li').addClass('active');
-                let slug = $(this).data('slug');
-                let url = ("{{ route('home.featured_products', ['category' => 'slug']) }}");
-                let _url = url.replace('slug', slug);
-
-                $.ajax({
-                    url: _url,
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        let slug = data.product_cat ? data.product_cat.slug : 'all';
-                        let all_product_route = (
-                            "{{ route('category.products', ['category' => 'slug']) }}");
-                        let _all_product_route = all_product_route.replace('slug', slug);
-                        $('.all-pdct-btn').attr('href', _all_product_route);
-
-
-                        var result = '';
-                        data.products.forEach(function(product) {
-                            let discount_percentage = '';
-                            let discount_amount = '';
-
-                            if (product.discount_percentage) {
-                                discount_percentage =
-                                    `<span class="discount_tag">${formatPercentageNumber(product.discount_percentage)}% 0ff</span>`;
-                            }
-
-                            if (product.discount_percentage) {
-                                discount_amount =
-                                    `<span class="regular_price"> <del>{!! get_taka_icon() !!} ${numberFormat(product.price,2)}</del></span>`
-                            }
-                            let route = (
-                                "{{ route('product.single_product', ['slug']) }}");
-                            let _route = route.replace('slug', product.slug);
-                            result += `
-                                <div class="col-3 px-2">
-                                    <div class="single-pdct">
-                                            <a href="${_route}">
-                                                <div class="pdct-img">
-                                                    ${discount_percentage}
-                                                    <img class="w-100"
-                                                        src="${product.image}"
-                                                        alt="Product Image">
-                                                </div>
-                                            </a>
-                                            <div class="pdct-info">
-                                                <a href="#" class="generic-name">
-                                                    ${product.generic.name}
-                                                </a>
-                                                <a href="#" class="company-name">
-                                                    ${product.company.name}
-                                                </a>
-
-                                                <div class="product_title">
-                                                    <a href="${_route}">
-                                                    <h3 class="fw-bold">
-                                                        ${product.name}
-                                                    </h3>
-                                                </a>
-                                                </div>
-                                                <h4> <span> {!! get_taka_icon() !!} ${numberFormat(product.discountPrice,2)}</span>  ${discount_amount}</h4>
-                                                <div class="add_to_card">
-                                                    <a class="cart-btn" data-product_slug="${product.slug}" data-unit_id="${product.units[0]['id']}" href="javascript:void(0)">
-                                                        <i class="fa-solid fa-cart-plus"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                </div>
-                            `;
-                        });
-                        $('.all-products').html(result);
-                        if (data.products.length >= 8) {
-                            $('.show-more').show();
-                        } else {
-                            $('.show-more').hide();
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching local area manager data:', error);
-                    }
-                });
-            });
-
-            var featured_pro_height = $('.all-products').height();
-            $('.best-selling-products').height(featured_pro_height + "px")
-        });
+        const datas = {
+            'featured_products': `{{ route('home.featured_products', ['category' => 'slug']) }}`,
+            'all_products': `{{ route('category.products', ['category' => 'slug']) }}`,
+            'single_product': `{{ route('product.single_product', ['slug']) }}`,
+        };
+        const taka_icon = `{!! get_taka_icon() !!}`;
     </script>
+    <script src="{{ asset('frontend/asset/js/home.js') }}"></script>
 @endpush

@@ -42,8 +42,8 @@
                                     <td> {{ $lam->phone }} </td>
                                     <td> {{ $lam->dm->name }} </td>
                                     <td> {{ $lam->dm->operation_area->name }} </td>
-                                    <td> 
-                                        @if($lam->operation_sub_area)
+                                    <td>
+                                        @if ($lam->operation_sub_area)
                                             {{ $lam->operation_sub_area->name }}
                                         @else
                                             <span class="badge badge-warning">{{ __('Area not allocated') }}</span>
@@ -58,19 +58,27 @@
                                     <td> {{ c_user_name($lam->creater) }} </td>
                                     <td>
                                         <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)"
+                                                role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="{{route('dm.lam.profile',$lam->id)}}">{{ __("Profile") }}</a>
-                                                    <a class="dropdown-item view" href="javascript:void(0)" data-id="{{$lam->id}}">{{ __('View Details') }}</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('dm.lam.profile', $lam->id) }}">{{ __('Profile') }}</a>
+                                                <a class="dropdown-item view" href="javascript:void(0)"
+                                                    data-id="{{ $lam->id }}">{{ __('View Details') }}</a>
 
 
-                                                    <a class="dropdown-item" href="{{route('dm.lam.edit',$lam->id)}}">{{ __("Update") }}</a>
-                                                    <a class="dropdown-item" href="{{route('dm.lam.status.edit',$lam->id)}}">{{ __("Status") }}</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('dm.lam.edit', $lam->id) }}">{{ __('Update') }}</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('dm.lam.status.edit', $lam->id) }}">{{ __('Status') }}</a>
 
 
-                                                    <a class="dropdown-item action-delete" onclick="return confirm('Are you sure?')" href="{{route('dm.lam.delete',$lam->id)}}">{{ __('Delete') }}</a>
+                                                <a class="dropdown-item action-delete"
+                                                    onclick="return confirm('Are you sure?')"
+                                                    href="{{ route('dm.lam.delete', $lam->id) }}">{{ __('Delete') }}</a>
 
                                             </div>
                                         </div>
@@ -119,9 +127,10 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' : 'badge-warning';
-                        let lam_area = data.operation_sub_area ? data.operation_sub_area.name : '-';
+                        let status = data.status == 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status == 1 ? 'badge-success' : 'badge-warning';
+                        let lam_area = data.operation_sub_area ? data.operation_sub_area.name :
+                            '-';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>

@@ -7,34 +7,32 @@ use App\Http\Requests\DistrictManagerRequest;
 use App\Models\DistrictManager;
 use App\Models\Documentation;
 use App\Models\OperationArea;
-use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class DistrictManagerController extends Controller
 {
-    public function __construct() {
+    use DetailsCommonDataTrait;
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
 
     public function index(): View
     {
-        $data['dms'] = DistrictManager::with(['lams','operation_area','created_user'])->latest()->get();
-        return view('admin.dm_management.district_manager.index',$data);
+        $data['dms'] = DistrictManager::with(['lams', 'operation_area', 'created_user'])->latest()->get();
+        return view('admin.dm_management.district_manager.index', $data);
     }
     public function details($id): JsonResponse
     {
         $data = DistrictManager::with('operation_area')->findOrFail($id);
         $data->total_lams = count($data->lams);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->created_user);
-        $data->updated_by = u_user_name($data->updated_user);
+        $this->simpleColumnData($data);
         return response()->json($data);
     }
 
@@ -52,17 +50,17 @@ class DistrictManagerController extends Controller
 
 
 
-    
+
     public function profile($id): View
     {
-        $data['dm'] = DistrictManager::with(['lams','operation_area','created_user','updated_user'])->findOrFail($id);
-        return view('admin.dm_management.district_manager.profile',$data);
+        $data['dm'] = DistrictManager::with(['lams', 'operation_area', 'created_user', 'updated_user'])->findOrFail($id);
+        return view('admin.dm_management.district_manager.profile', $data);
     }
     public function create(): View
     {
         $data['operation_areas'] = OperationArea::activated()->orderBy('name')->get();
-        $data['document'] = Documentation::where('module_key','district_manager')->first();
-        return view('admin.dm_management.district_manager.create',$data);
+        $data['document'] = Documentation::where('module_key', 'district_manager')->first();
+        return view('admin.dm_management.district_manager.create', $data);
     }
     public function store(DistrictManagerRequest $req): RedirectResponse
     {
@@ -73,15 +71,15 @@ class DistrictManagerController extends Controller
         $dm->password = Hash::make($req->password);
         $dm->created_by = admin()->id;
         $dm->save();
-        flash()->addSuccess('District Manager '.$dm->name.' created successfully.');
+        flash()->addSuccess('District Manager ' . $dm->name . ' created successfully.');
         return redirect()->route('dm_management.district_manager.district_manager_list');
     }
     public function edit($id): View
     {
         $data['dm'] = DistrictManager::findOrFail($id);
         $data['operation_areas'] = OperationArea::activated()->orderBy('name')->get();
-        $data['document'] = Documentation::where('module_key','district_manager')->first();
-        return view('admin.dm_management.district_manager.edit',$data);
+        $data['document'] = Documentation::where('module_key', 'district_manager')->first();
+        return view('admin.dm_management.district_manager.edit', $data);
     }
     public function update(DistrictManagerRequest $req, $id): RedirectResponse
     {
@@ -89,29 +87,26 @@ class DistrictManagerController extends Controller
         $dm->name = $req->name;
         $dm->phone = $req->phone;
         $dm->oa_id = $req->oa_id;
-        if($req->password){
+        if ($req->password) {
             $dm->password = Hash::make($req->password);
         }
         $dm->updated_by = admin()->id;
         $dm->update();
-        flash()->addSuccess('District Manager '.$dm->name.' updated successfully.');
+        flash()->addSuccess('District Manager ' . $dm->name . ' updated successfully.');
         return redirect()->route('dm_management.district_manager.district_manager_list');
     }
     public function status($id): RedirectResponse
     {
         $dm = DistrictManager::findOrFail($id);
         $this->statusChange($dm);
-        flash()->addSuccess('District Manager '.$dm->name.' status updated successfully.');
+        flash()->addSuccess('District Manager ' . $dm->name . ' status updated successfully.');
         return redirect()->route('dm_management.district_manager.district_manager_list');
     }
     public function delete($id): RedirectResponse
     {
         $dm = DistrictManager::findOrFail($id);
         $dm->delete();
-        flash()->addSuccess('District Manager '.$dm->name.' deleted successfully.');
+        flash()->addSuccess('District Manager ' . $dm->name . ' deleted successfully.');
         return redirect()->route('dm_management.district_manager.district_manager_list');
-
     }
-
-
 }

@@ -1,11 +1,9 @@
 <?php
 
-use App\Models\Discount;
-use App\Models\Medicine;
-use App\Models\MedicineUnit;
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
+use App\Models\Review;
 use App\Models\SiteSetting;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -16,7 +14,7 @@ use Illuminate\Support\Facades\File;
 function get_permission_routes()
 {
     return [
-        'am.', 'um.', 'pm.', 'om.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management', 'product.', 'payment_gateway.', 'obp.'
+        'am.', 'um.', 'pm.', 'om.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.'
     ];
 }
 
@@ -99,13 +97,14 @@ function createCSV($filename = 'permissions.csv'): string
 
 function storage_url($urlOrArray)
 {
+    $image = asset('frontend\default\cat_img.png');
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
         $result = '';
         $count = 0;
         $itemCount = count($urlOrArray);
         foreach ($urlOrArray as $index => $url) {
 
-            $result .= $url ? asset('storage/' . $url) : asset('frontend\default\cat_img.png');
+            $result .= $url ? asset('storage/' . $url) : $image;
 
             if ($count === $itemCount - 1) {
                 $result .= '';
@@ -116,10 +115,49 @@ function storage_url($urlOrArray)
         }
         return $result;
     } else {
-        return $urlOrArray ? asset('storage/' . $urlOrArray) : asset('frontend\default\cat_img.png');
+        return $urlOrArray ? asset('storage/' . $urlOrArray) : $image;
     }
 }
 
+function auth_storage_url($urlOrArray, $gender)
+{
+    $image = asset('default_img\other-student.png');
+    if ($gender == 'Male') {
+        $image = asset('default_img\male-student.png');
+    } elseif ($gender == 'Male') {
+        $image = asset('default_img\female-student.png');
+    }
+
+    if (is_array($urlOrArray) || is_object($urlOrArray)) {
+        $result = '';
+        $count = 0;
+        $itemCount = count($urlOrArray);
+        foreach ($urlOrArray as $index => $url) {
+
+            $result .= $url ? asset('storage/' . $url) : $image;
+
+            if ($count === $itemCount - 1) {
+                $result .= '';
+            } else {
+                $result .= ', ';
+            }
+            $count++;
+        }
+        return $result;
+    } else {
+        return $urlOrArray ? asset('storage/' . $urlOrArray) : $image;
+    }
+}
+
+function product_image($url)
+{
+    return $url ? asset('storage/' . $url) : asset('frontend/default/product.png');
+}
+
+function unit_image($url)
+{
+    return $url ? asset('storage/' . $url) : asset('frontend/default/default.png');
+}
 function timeFormate($time)
 {
     $dateFormat = env('DATE_FORMAT', 'd-M-Y');
@@ -224,16 +262,22 @@ function str_limit($data, $limit = 20, $end = '...')
     return Str::limit($data, $limit, $end);
 }
 
-function generateOrderId()
+function generateOrderId($type = 'web')
 {
-    // $alphaPart = strtoupper(Str::random(3)); // Generates 3 random uppercase letters
-    $numericPart = mt_rand(100000, 999999); // Generates 5 random alphanumeric characters
+    if($type == 'web'){
+        $prefix = 'DPW';
+    }elseif($type == 'api'){
+        $prefix = 'DPA';
+    }else{
+        $prefix = 'DP';
+    }
 
-    $alphaPart = 'DP';
-    $date = date('d'); // Generates 5 random alphanumeric characters
+    $microseconds = explode(' ', microtime(true))[0];
 
+    $date = date('ymd');
+    $time = date('is');
 
-    return $alphaPart . $date . $numericPart;
+    return $prefix. $date . $time . mt_rand(10000, 99999);
 }
 function generateTranId()
 {
@@ -382,4 +426,46 @@ function abbreviateName($name)
     }, array_slice($words, 0, -1));
     $abbreviated[] = end($words);
     return implode(' ', $abbreviated);
+}
+
+function getFileType($filename)
+{
+    $path = storage_path('app/public/' . $filename);
+    if (!file_exists($path)) {
+        return NULL;
+    }
+    $fileMimeType = mime_content_type($path);
+    switch ($fileMimeType) {
+        case strpos($fileMimeType, 'image/') === 0:
+            return 'image';
+        case 'application/pdf':
+            return 'pdf';
+        case strpos($fileMimeType, 'video/') === 0:
+            return 'video';
+        default:
+            return 'others';
+    }
+}
+
+function pdf_storage_url($urlOrArray)
+{
+    if (is_array($urlOrArray) || is_object($urlOrArray)) {
+        $result = '';
+        $count = 0;
+        $itemCount = count($urlOrArray);
+        foreach ($urlOrArray as $index => $url) {
+
+            $result .= asset('/laraview/#../storage/' . $url);
+
+            if ($count === $itemCount - 1) {
+                $result .= '';
+            } else {
+                $result .= ', ';
+            }
+            $count++;
+        }
+        return $result;
+    } else {
+        return asset('/laraview/#../storage/' . $urlOrArray);
+    }
 }

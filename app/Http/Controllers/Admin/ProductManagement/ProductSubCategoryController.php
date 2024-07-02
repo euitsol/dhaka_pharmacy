@@ -9,12 +9,13 @@ use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class ProductSubCategoryController extends Controller
 {
+    use DetailsCommonDataTrait;
     public function __construct()
     {
         return $this->middleware('admin');
@@ -22,7 +23,7 @@ class ProductSubCategoryController extends Controller
 
     public function index(): View
     {
-        $data['product_categories'] = ProductSubCategory::with(['created_user','pro_cat'])->orderBy('name')->get();
+        $data['product_categories'] = ProductSubCategory::with(['created_user', 'pro_cat'])->orderBy('name')->get();
         $data['menuItemsCount'] = ProductSubCategory::menu()->activated()->count();
         return view('admin.product_management.product_sub_category.index', $data);
     }
@@ -30,10 +31,7 @@ class ProductSubCategoryController extends Controller
     {
         $data = ProductSubCategory::with('pro_cat')->findOrFail($id);
         $data->image = storage_url($data->image);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = timeFormate($data->updated_at);
-        $data->created_by = c_user_name($data->created_user);
-        $data->updated_by = u_user_name($data->updated_user);
+        $this->simpleColumnData($data);
         return response()->json($data);
     }
     public function create(): View
@@ -62,7 +60,7 @@ class ProductSubCategoryController extends Controller
     }
     public function edit($slug): View
     {
-        $data['product_sub_category'] = ProductSubCategory::with('pro_cat')->where('slug',$slug)->first();
+        $data['product_sub_category'] = ProductSubCategory::with('pro_cat')->where('slug', $slug)->first();
         $data['pro_cats'] = ProductCategory::activated()->latest()->get();
         $data['document'] = Documentation::where('module_key', 'product_sub_category')->first();
         return view('admin.product_management.product_sub_category.edit', $data);
@@ -75,7 +73,7 @@ class ProductSubCategoryController extends Controller
             $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'product_sub_category/';
             $path = $image->storeAs($folderName, $imageName, 'public');
-            if(!empty($product_sub_category->image)){
+            if (!empty($product_sub_category->image)) {
                 $this->fileDelete($product_sub_category->image);
             }
             $product_sub_category->image = $path;
@@ -100,13 +98,13 @@ class ProductSubCategoryController extends Controller
     {
         $product_sub_category = ProductSubCategory::findOrFail($id);
         $activeCount = ProductSubCategory::menu()->activated()->count();
-        if($product_sub_category->is_menu == 1){
+        if ($product_sub_category->is_menu == 1) {
             $product_sub_category->is_menu = 0;
-        }else{
-            if($activeCount >= 10){
+        } else {
+            if ($activeCount >= 10) {
                 flash()->addWarning('You have already added 10 categories to the menu.');
                 return redirect()->route('product.product_sub_category.product_sub_category_list');
-            }else{
+            } else {
                 $product_sub_category->is_menu = 1;
             }
         }

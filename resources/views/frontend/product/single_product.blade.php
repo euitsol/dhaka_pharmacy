@@ -5,29 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/plugin/xzoom/xzoom.min.css') }}" media="all" />
 @endpush
 @push('css')
-    <style>
-        .product_content .product_price .boxed label {
-            display: inline-block;
-            width: 100px;
-            padding: 10px;
-            border: solid 2px #ccc;
-            transition: all 0.3s;
-        }
-
-        .product_content .product_price .boxed input[type="radio"] {
-            display: none;
-        }
-
-        .product_content .product_price .boxed input[type="radio"]:checked+label {
-            border: solid 2px green;
-        }
-
-        .product_content .product_price .boxed img {
-            height: 70px;
-            width: 100%;
-            object-fit: cover;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('frontend/asset/css/single_product.css') }}">
 @endpush
 @section('content')
     <div class="row pt-4">
@@ -128,7 +106,8 @@
                                                                     data-total_price="{{ $singleProDisPrice * $unit->quantity }}"
                                                                     data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
                                                                 <label for="android-{{ $key }}">
-                                                                    <img src="{{ $unit->image }}">
+                                                                    <img src="{{ storage_url($unit->image) }}"
+                                                                        title="{{ $unit->name }}">
                                                                 </label>
                                                             @endforeach
                                                         </div>
@@ -170,13 +149,17 @@
                                                                 class="fa-regular fa-file-lines"></i>
                                                             {{ __('Description') }}</a>
                                                     </li>
-
+                                                    @php
+                                                        $reviews = $single_product->reviews->where('status', 1);
+                                                    @endphp
                                                     <li class="nav-item" role="presentation">
                                                         <a class="nav-link" id="review-tab" data-bs-toggle="tab"
                                                             data-bs-target="#review" type="button" role="tab"
                                                             aria-controls="review" aria-selected="false"><i
                                                                 class="fa-regular fa-star-half-stroke"></i>
-                                                            {{ __('Review') }}</a>
+                                                            {{ __('Review') }}
+                                                            <sup
+                                                                class="badge bg-success">{{ $reviews->count() }}</sup></a>
                                                     </li>
                                                 </ul>
 
@@ -226,150 +209,28 @@
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         <div id="testimonial-slider" class="owl-carousel">
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
+                                                                            @foreach ($reviews->take(2) as $review)
+                                                                                <div class="testimonial">
+                                                                                    <div class="testimonial-content">
+                                                                                        <div class="testimonial-icon">
+                                                                                            <i
+                                                                                                class="fa fa-quote-left"></i>
+                                                                                        </div>
+                                                                                        <p class="description"
+                                                                                            style="text-align: justify">
+                                                                                            {{ str_limit(html_entity_decode($review->description), 180) }}
+                                                                                            <a class="float-end review_read"
+                                                                                                data-content="{!! $review->description !!}"
+                                                                                                data-author="{{ $review->customer->name }}"
+                                                                                                href="javascript:void(0)">{{ __('Read More') }}</a>
+                                                                                        </p>
+                                                                                        <p
+                                                                                            class="description text-end mt-2">
+                                                                                            <strong>{{ $review->customer->name }}</strong>
+                                                                                        </p>
                                                                                     </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipisit nisi vehicula.
-                                                                                    </p>
                                                                                 </div>
-                                                                                <h3 class="title">John</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Kelle</h3>
-                                                                                <span class="post">Web Designer</span>
-                                                                            </div>
-
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Steven</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
-                                                                            <div class="testimonial">
-                                                                                <div class="testimonial-content">
-                                                                                    <div class="testimonial-icon">
-                                                                                        <i class="fa fa-quote-left"></i>
-                                                                                    </div>
-                                                                                    <p class="description">
-                                                                                        Lorem ipsum dolor sit amet,
-                                                                                        consectetur adipiscing elit.
-                                                                                        Praesent bibendum dolor sit
-                                                                                        amet eros imperdiet, sit amet
-                                                                                        hendrerit nisi vehicula.
-                                                                                    </p>
-                                                                                </div>
-                                                                                <h3 class="title">Peter</h3>
-                                                                                <span class="post">Web Developer</span>
-                                                                            </div>
+                                                                            @endforeach
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -528,6 +389,21 @@
         </div>
         <!--=========== Main Content Section End ==============-->
     </div>
+
+    <!-- Review Details Modal -->
+    <div class="modal fade" id="review_modal" tabindex="-1" aria-labelledby="review_modal_Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="review_modal_Label">{{ __('Review Details') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body review_details">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('js_link')
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js">
@@ -535,102 +411,5 @@
     <script type="text/javascript" src="{{ asset('frontend/plugin/xzoom/xzoom.min.js') }}"></script>
 @endpush
 @push('js')
-    <script>
-        // XZoom 
-        $(document).ready(function() {
-            $('.xzoom, .xzoom-gallery').xzoom({
-                zoomWidth: 400,
-                title: true,
-                tint: '#333',
-                Xoffset: 15
-            });
-        });
-        // Xzoom 
-
-        //testimonial-slider
-        $(document).ready(function() {
-            $("#testimonial-slider").owlCarousel({
-                items: 3,
-                itemsDesktop: [1000, 3],
-                itemsDesktopSmall: [980, 2],
-                itemsTablet: [768, 2],
-                itemsMobile: [650, 1],
-                pagination: true,
-                navigation: false,
-                slideSpeed: 1000,
-                autoPlay: 2000
-            });
-        });
-        //related product
-        $(document).ready(function() {
-            $("#related-product-slider").owlCarousel({
-                items: 5,
-                itemsDesktop: [1000, 5],
-                itemsDesktopSmall: [980, 4],
-                itemsTablet: [768, 3],
-                itemsMobile: [650, 2],
-                itemsMobile: [480, 1],
-                pagination: true,
-                navigation: false,
-                slideSpeed: 1000,
-                autoPlay: 2000
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-
-
-            $('.product_price .item_quantity').on('change', function() {
-                var name = $(this).data('name');
-                var id = $(this).data('id');
-                $(this).closest('.product_content').find('.cart-btn').attr('data-unit_id', id);
-
-                var TotalPrice = numberFormat($(this).data('total_price'), 2);
-                var TotalRegularPrice = numberFormat($(this).data('total_regular_price'), 2);
-                $('.total_price').html(TotalPrice);
-                $('.total_regular_price').html(TotalRegularPrice);
-                $('.unit_name').html(name);
-            });
-
-
-            //Height Control Jquery
-            var single_product_height = $('.single_product_card').height();
-            $('.similar_products_card').css('max-height', single_product_height + 'px')
-
-
-
-
-
-
-
-
-            //Product Description Jquery
-            $(".single_product_section .product_details .nav-tabs a").on('click', function() {
-                var single_product_height = $('.single_product_card').height();
-                $('.similar_products_card').css('max-height', single_product_height + 'px');
-
-                var position = $(this).parent().position();
-                var width = $(this).parent().width();
-                $(".single_product_section .product_details .slider").css({
-                    "left": +position.left,
-                    "width": width
-                });
-                $('.product_details .nav-tabs li a').removeClass('active');
-                $(this).addClass('active');
-            });
-            var actWidth = $(".single_product_section .product_details .nav-tabs").find(".active").parent("li")
-                .width();
-            var actPosition = $(".single_product_section .product_details .nav-tabs .active").position();
-            $(".single_product_section .product_details .slider").css({
-                "left": +actPosition.left,
-                "width": actWidth
-            });
-
-
-
-
-
-        });
-    </script>
+    <script src="{{ asset('frontend/asset/js/single_product.js') }}"></script>
 @endpush

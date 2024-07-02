@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\DM_Management\DmKycSettingsController;
 use App\Http\Controllers\Admin\LAM_Management\LamKycController;
 use App\Http\Controllers\Admin\LAM_Management\LamKycSettingsController;
 use App\Http\Controllers\Admin\LAM_Management\LocalAreaManagerController;
+use App\Http\Controllers\Admin\User\LatestOfferController;
 use App\Http\Controllers\Admin\UserManagement\UserKycSettingsController;
 use App\Http\Controllers\Admin\UserManagement\UserKycController;
 use App\Http\Controllers\Admin\UserManagement\UserController as AdminUserController;
@@ -42,6 +43,7 @@ use App\Http\Controllers\Admin\RiderManagement\RiderKycSettingsController;
 use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
 use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\Admin\OrderByPrescription\OrderByPrescriptionController as AdminOrderByPrescriptionController;
+use App\Http\Controllers\Admin\User\ReviewController as AdminReviewController;
 
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
@@ -80,8 +82,10 @@ use App\Http\Controllers\User\PaymentGateway\SslCommerzController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
 use App\Http\Controllers\User\AddToCartController;
+use App\Http\Controllers\User\CartAjaxController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\WishlistController as UserWishlistController;
+use App\Http\Controllers\User\ReviewController as UserReviewController;
 use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
 
 use App\Http\Controllers\Frontend\HomePageController;
@@ -90,6 +94,14 @@ use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductSearchController;
 
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\Pharmacy\FeedbackController as PharmacyFeedbackController;
+use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
+use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
+use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
+use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
+use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\Admin\User\TipsController;
+use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,6 +118,12 @@ use App\Http\Controllers\FileUploadController;
 //     return redirect()->route('admin.login');
 // });
 
+Route::controller(CartAjaxController::class)->prefix('cart')->name('cart.')->group(function () {
+    Route::post('add', 'add')->name('add');
+    Route::get('products', 'products')->name('products');
+    Route::post('update', 'update')->name('update');
+    Route::post('delete', 'delete')->name('delete');
+});
 
 Auth::routes();
 //File pond file upload
@@ -174,8 +192,8 @@ Route::get('/auth/facebook/callback', [UserLoginController::class, 'facebookCall
 Route::controller(UserLoginController::class)->prefix('user')->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login');
-    Route::post('/otp-varify', 'send_otp')->name('use.send_otp');
-    Route::get('/otp-varify', 'verify')->name('use.send_otp');
+    Route::post('/otp-verify', 'send_otp')->name('use.send_otp');
+    Route::get('/otp-verify', 'verify')->name('use.send_otp');
     Route::get('/send-otp/again', 'send_otp_again')->name('use.send_otp.again');
     Route::post('/otp/verify', 'otp_verify')->name('use.otp.verify');
 });
@@ -193,15 +211,9 @@ Route::controller(UserForgotPasswordController::class)->prefix('user')->group(fu
     Route::get('/reset/password', 'resetPassword')->name('user.reset.password');
     Route::post('/reset/password', 'resetPasswordStore')->name('user.reset.password');
 });
-
+//Admin Auth Routes
 Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
-
-    Route::get('/export-permissions', function () {
-        $filename = 'permissions.csv';
-        $filePath = createCSV($filename);
-        return Response::download($filePath, $filename);
-    })->name('export.permissions');
 
     // Admin Management Routes
     Route::group(['as' => 'am.', 'prefix' => 'admin-management'], function () {
@@ -241,6 +253,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::controller(AdminUserController::class)->prefix('user')->name('user.')->group(function () {
             Route::get('index', 'index')->name('user_list');
             Route::get('details/{id}', 'details')->name('details.user_list');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.user_profile');
             Route::get('profile/{id}', 'profile')->name('user_profile');
             Route::get('create', 'create')->name('user_create');
             Route::post('create', 'store')->name('user_create');
@@ -585,6 +598,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
     });
 
+    // Order by Prescription
     Route::controller(AdminOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('obp.')->group(function () {
         Route::get('/list/{status}', 'list')->name('obp_list');
         Route::get('/details/{id}', 'details')->name('obp_details');
@@ -593,6 +607,46 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::get('/get-select-medicine', 'getSelectMedicine')->name('get_select_medicine.obp_details');
         Route::post('/order/create/{up_id}', 'order_create')->name('obp_order_create');
         Route::get('/status-update/{status}/{id}', 'statusUpdate')->name('status_update');
+    });
+
+    // Latest Offer
+    Route::controller(LatestOfferController::class)->prefix('latest-offer')->name('latest_offer.')->group(function () {
+        Route::get('index', 'index')->name('lf_list');
+        Route::get('details/{id}', 'details')->name('details.lf_list');
+        Route::get('create', 'create')->name('lf_create');
+        Route::post('create', 'store')->name('lf_create');
+        Route::get('edit/{id}', 'edit')->name('lf_edit');
+        Route::put('edit/{id}', 'update')->name('lf_edit');
+        Route::get('status/{id}', 'status')->name('status.lf_edit');
+        Route::get('delete/{id}', 'delete')->name('lf_delete');
+    });
+    // User Tips
+    Route::controller(TipsController::class)->prefix('user-tips')->name('user_tips.')->group(function () {
+        Route::get('index', 'index')->name('tips_list');
+        Route::get('details/{id}', 'details')->name('details.tips_list');
+        Route::get('create', 'create')->name('tips_create');
+        Route::post('create', 'store')->name('tips_create');
+        Route::get('edit/{id}', 'edit')->name('tips_edit');
+        Route::put('edit/{id}', 'update')->name('tips_edit');
+        Route::get('status/{id}', 'status')->name('status.tips_edit');
+        Route::get('delete/{id}', 'delete')->name('tips_delete');
+    });
+
+    // Feedback
+    Route::controller(AdminFeedbackController::class)->prefix('feedback')->name('feedback.')->group(function () {
+        Route::get('/list', 'list')->name('fdk_list');
+        Route::get('/details/{id}', 'details')->name('fdk_details');
+        Route::get('file-download/{url}', 'view_or_download')->name('download.fdk_details');
+    });
+    // Review
+    Route::controller(AdminReviewController::class)->prefix('review')->name('review.')->group(function () {
+        Route::get('/products', 'products')->name('review_products');
+        Route::get('/list/{slug}', 'list')->name('review_list');
+        Route::get('/details/{id}', 'details')->name('details.review_list');
+        Route::get('/edit/{id}', 'edit')->name('review_edit');
+        Route::put('/edit/{id}', 'update')->name('review_edit');
+        Route::get('/status/{id}', 'status')->name('status.review_edit');
+        Route::get('/delete/{id}', 'delete')->name('review_delete');
     });
 });
 
@@ -632,6 +686,12 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
 
     Route::controller(PharmacyOperationalAreaController::class)->prefix('operational-area')->name('operational_area.')->group(function () {
         Route::get('index', 'index')->name('list');
+    });
+
+    //Pharmacy Feedback
+    Route::controller(PharmacyFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
     });
 });
 
@@ -690,6 +750,12 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::get('edit/{slug}', 'edit')->name('edit');
         Route::put('edit/{id}', 'update')->name('edit');
     });
+
+    //DM Feedback
+    Route::controller(DmFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+    });
 });
 
 
@@ -728,6 +794,11 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::get('status/{id}', 'status')->name('status.edit');
         Route::get('delete/{id}', 'delete')->name('delete');
     });
+    //LAM Feedback
+    Route::controller(LamFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+    });
 });
 // Rider Auth Routes
 Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], function () {
@@ -755,18 +826,22 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
 
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });
+    //Rider Feedback
+    Route::controller(RiderFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+    });
 });
 
 
-
 // User Routes
-Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user'], function () {
+Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'customer'], function () {
     Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
 
     // Add To Cart Routes
     Route::controller(AddToCartController::class)->prefix('cart')->group(function () {
-        Route::get('/add', 'add_to_cart')->name('product.add_to_cart');
+
         Route::get('/remove', 'remove_to_cart')->name('product.remove_to_cart');
         Route::get('/clear/{uid}', 'clearCart')->name('product.clear_cart');
 
@@ -781,11 +856,16 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
         Route::get('/address/{id}', 'address')->name('address');
         Route::post('/single-order', 'single_order')->name('product.single_order');
         Route::get('/order/intermediate/{multiple?}', 'int_order')->name('product.int');
-        Route::get('/{order_id}', 'checkout')->name('product.checkout');
+        // Route::get('/{order_id}', 'checkout')->name('product.checkout');
         Route::post('/order/confirm/{order_id}', 'order_confirm')->name('product.order.confirm');
         Route::get('/order/success/{order_id}', 'order_success')->name('product.order.success');
         Route::get('/order/failed/{order_id}', 'order_failed')->name('product.order.failed');
         Route::get('/order/cancel/{order_id}', 'order_cancel')->name('product.order.cancel');
+    });
+
+    Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
+        Route::post('init', 'a_checkout')->name('init');
+        Route::get('order/{o_id}', 'checkout')->name('index');
     });
 
 
@@ -806,14 +886,26 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'user']
 
         Route::get('delete/{id}', 'delete')->name('delete');
     });
+    //User Feedback
+    Route::controller(UserFeedbackController::class)->prefix('feedback')->name('u.fdk.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+    });
     Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
         Route::get('list', 'order_list')->name('list');
+    });
+    Route::controller(UserPaymentController::class)->prefix('payment')->name('u.payment.')->group(function () {
+        Route::get('list', 'payment_list')->name('list');
     });
 
     Route::controller(UserWishlistController::class)->prefix('wishlist')->name('u.wishlist.')->group(function () {
         Route::get('/update/{pid}', 'update')->name('update');
         Route::get('/refresh', 'refresh')->name('refresh');
         Route::get('/list', 'list')->name('list');
+    });
+    Route::controller(UserReviewController::class)->prefix('review')->name('u.review.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::post('/store', 'store')->name('store');
     });
 });
 Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {
@@ -837,3 +929,15 @@ Route::controller(HomePageController::class)->group(function () {
 Route::get('/product-search/{search_value}/{category}', [ProductSearchController::class, 'productSearch'])->name('home.product.search');
 Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
+
+
+
+
+
+
+//Developer Routes
+Route::get('/export-permissions', function () {
+    $filename = 'permissions.csv';
+    $filePath = createCSV($filename);
+    return Response::download($filePath, $filename);
+})->name('export.permissions');

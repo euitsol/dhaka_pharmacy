@@ -19,14 +19,15 @@
         $(document).ready(function() {
             $('.datatable').each(function() {
                 var columnsToShow = {!! json_encode($columns_to_show ?? []) !!};
-                // var order = {{ $order ?? 'ASC' }};
+                var order = {!! json_encode($order ?? 'asc') !!};
+                var length = {!! json_encode($length ?? 50) !!};
                 $(this).DataTable({
                     dom: 'Bfrtip',
                     responsive: true,
-                    iDisplayLength: 50,
-                    // order: [
-                    //     [0, order]
-                    // ],
+                    iDisplayLength: length,
+                    order: [
+                        [0, order]
+                    ],
                     buttons: [{
                             extend: 'pdfHtml5',
                             download: 'open',

@@ -13,7 +13,7 @@ class AddToCart extends BaseModel
         'unit_id',
         'quantity',
     ];
-    
+
 
     public function product(){
         return $this->belongsTo(Medicine::class,'product_id');
@@ -29,5 +29,14 @@ class AddToCart extends BaseModel
     }
     public function scopeCheck($query){
         return $query->where('is_check',1);
+    }
+
+    public function scopeCurrentCart($query){
+        if (user()) {
+            return $query->where('customer_id', user()->id)
+                ->where('status', 1);
+        }
+
+        return $query;
     }
 }

@@ -83,8 +83,7 @@
                         <button class="cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"
                             aria-controls="offcanvasRight">
                             <i class="fa-solid fa-cart-shopping me-1"></i>
-                            <span>{{ __('Cart') }}</span><sup
-                                id="cart_btn_quantity"><strong>{{ $total_cart_item ?? '' }}</strong></sup>
+                            <span>{{ __('Cart') }}</span><sup><strong id="cart_btn_quantity"></strong></sup>
                         </button>
                         @include('frontend.includes.add_to_cart_slide')
                     </div>

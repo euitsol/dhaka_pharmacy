@@ -9,6 +9,28 @@
         type="text/css" />
     <link rel="stylesheet" href="{{ asset('user/asset/css/address.css') }}">
 @endpush
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+    <style>
+        .offer_image img {
+            height: 120px;
+            width: 159.5px;
+            border: 2px solid var(--btn_bg) !important;
+            padding: 5px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .tips_image img {
+            height: 100px;
+            width: 120px;
+            border: 2px solid var(--btn_bg) !important;
+            padding: 5px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+    </style>
+@endpush
 
 @section('content')
     <div class="container">
@@ -62,26 +84,29 @@
             </div>
             <div class="col-6">
                 <div class="col-mid">
-                    <div class="tips">
-                        <h2>{{ __('Our Latest Offers') }}</h2>
-                        <div class="single-tips d-flex align-items-center justify-content-between">
-                            <img src="{{ asset('user/asset/img/tips-img.png') }}" alt="">
-                            <p>Helps you <span>track if you have missed any medication and aboid taking them too
-                                    many times</span> accidentally.</p>
-                            <h2>Chek of a <br>
-                                <span>Calender</span>
-                            </h2>
+                    @if ($user_tips->isNotEmpty())
+                        <div class="tips">
+                            <h2>{{ __('Tips of The Day') }}</h2>
+                            @foreach ($user_tips as $tips)
+                                <div class="single-tips d-flex align-items-center justify-content-start gap-3">
+                                    <div class="tips_image">
+                                        <div id="lightbox" class="lightbox tips_image">
+                                            <div class="lightbox-content">
+                                                <img src="{{ storage_url($tips->image) }}" class="lightbox_image">
+                                            </div>
+                                            <div class="close_button fa-beat">X</div>
+                                        </div>
+                                        {{-- <img src="{{ asset('user/asset/img/tips-img.png') }}" alt=""> --}}
+                                    </div>
+                                    <div class="tips_details">
+                                        <p>{{ str_limit(html_entity_decode($tips->description), 270) }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                        <div class="single-tips d-flex align-items-center justify-content-between">
-                            <img src="{{ asset('user/asset/img/tips-img.png') }}" alt="">
-                            <p>Helps you <span>track if you have missed any medication and aboid taking them too
-                                    many times</span> accidentally.</p>
-                            <h2>Chek of a <br>
-                                <span>Calender</span>
-                            </h2>
-                        </div>
-                    </div>
-                    <div class="order-cart-wish d-flex justify-content-center">
+                    @endif
+                    <div class="order-cart-wish d-flex justify-content-center mt-5">
                         <a href="{{ route('u.order.list') }}">
                             <div class="single d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
@@ -97,12 +122,21 @@
                                     <h2>{{ __('My Cart') }}</h2>
                                 </div>
                             </div>
+
                         </a>
                         <a href="{{ route('u.wishlist.list') }}">
                             <div class="single  d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
                                     <img src="{{ asset('user/asset/img/wishtlist2.png') }}" alt="">
                                     <h2>{{ __('Wishlists') }}</h2>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('u.review.list') }}">
+                            <div class="single  d-flex align-items-center justify-content-center">
+                                <div class="content text-center">
+                                    <img src="{{ asset('user/asset/img/star-half.png') }}" alt="">
+                                    <h2>{{ __('Reviews') }}</h2>
                                 </div>
                             </div>
                         </a>
@@ -145,10 +179,10 @@
                                 <div class="img">
                                     <img src="{{ asset('user/asset/img/my-payment.png') }}" alt="">
                                 </div>
-                                <h3 class="m-0">{{ __('My Payment') }}</h3>
+                                <h3 class="m-0">{{ __('My Payments') }}</h3>
                             </div>
                         </a>
-                        <a href="#" class="single">
+                        <a href="{{ route('u.fdk.index') }}" class="single">
                             <div class="feedback d-flex align-items-center justify-content-center">
                                 <div class="img">
                                     <img src="{{ asset('user/asset/img/feedback.png') }}" alt="">
@@ -161,51 +195,51 @@
             </div>
             <div class="col-3">
                 <div class="col-right">
-                    <div class="latest-offer">
-                        <h2>{{ __('Our Latest Offers') }}</h2>
-                        <div class="slider">
-                            <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-                                <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
-                                        class="active" aria-current="true" aria-label="Slide 1"></button>
-                                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
-                                        aria-label="Slide 2"></button>
-                                </div>
-
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <div class="items d-flex">
-                                            <div class="img-col">
-                                                <a href="#"><img
-                                                        src="{{ asset('user/asset/img/offer-img01') }}.png"
-                                                        class="d-block w-100" alt="..."></a>
-                                            </div>
-                                            <div class="img-col">
-                                                <a href="#"><img
-                                                        src="{{ asset('user/asset/img/offter-img02.png') }}"
-                                                        class="d-block w-100" alt="..."></a>
-                                            </div>
-                                        </div>
+                    @if ($latest_offers->isNotEmpty())
+                        <div class="latest-offer">
+                            <h2>{{ __('Our Latest Offers') }}</h2>
+                            <div class="slider">
+                                <div id="carouselExampleDark" class="carousel carousel-dark slide"
+                                    data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                        @if ($latest_offers->count() > 2)
+                                            @foreach ($latest_offers->chunk(2) as $key => $lf)
+                                                <button type="button" data-bs-target="#carouselExampleDark"
+                                                    data-bs-slide-to="{{ $key }}"
+                                                    class="{{ $key == 0 ? 'active' : '' }}" aria-current="true"
+                                                    aria-label="Slide {{ $key + 1 }}"></button>
+                                            @endforeach
+                                        @endif
                                     </div>
-                                    <div class="carousel-item">
-                                        <div class="items d-flex">
-                                            <div class="img-col">
-                                                <a href="#"><img
-                                                        src="{{ asset('user/asset/img/offer-img01') }}.png"
-                                                        class="d-block w-100" alt="..."></a>
+
+                                    <div class="carousel-inner">
+                                        @foreach ($latest_offers->chunk(2) as $key => $lfs)
+                                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                <div class="items d-flex">
+                                                    @foreach ($lfs as $lf)
+                                                        <div class="img-col w-100">
+                                                            <a href="#">
+                                                                <div id="lightbox" class="lightbox offer_image">
+                                                                    <div class="lightbox-content">
+                                                                        <img src="{{ storage_url($lf->image) }}"
+                                                                            class="lightbox_image">
+                                                                    </div>
+                                                                    <div class="close_button fa-beat">X</div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
                                             </div>
-                                            <div class="img-col">
-                                                <a href="#"><img
-                                                        src="{{ asset('user/asset/img/offter-img02.png') }}"
-                                                        class="d-block w-100" alt="..."></a>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="google-map">
+                    @else
+                        <h2>{{ __('Address') }}</h2>
+                    @endif
+                    <div class="google-map" @if ($latest_offers->isEmpty()) style="margin-top:20px" @endif>
                         <div class="address d-flex  align-items-center justify-content-between">
                             <div class="title">
                                 <h3>{{ __('Address') }}</h3>
@@ -268,4 +302,5 @@
 
 @push('js')
     <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
+    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
 @endpush

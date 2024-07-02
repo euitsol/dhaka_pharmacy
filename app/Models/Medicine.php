@@ -33,6 +33,10 @@ class Medicine extends BaseModel
     {
         return $this->hasMany(Discount::class, 'pro_id', 'id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'product_id', 'id');
+    }
 
     public function wish()
     {
@@ -41,10 +45,10 @@ class Medicine extends BaseModel
                 ->where('user_id', user()->id);
         }
     }
-    // public function medicine_cat()
-    // {
-    //     return $this->belongsTo(MedicineCategory::class, 'medicine_cat_id');
-    // }
+    public function units()
+    {
+        return $this->belongsToMany(MedicineUnit::class, 'medicine_unit_bkdns', 'medicine_id', 'unit_id');
+    }
     public function strength()
     {
         return $this->belongsTo(MedicineStrength::class, 'strength_id');
@@ -86,5 +90,15 @@ class Medicine extends BaseModel
     public function scopeBestSelling($query)
     {
         return $query->where('is_best_selling', 1);
+    }
+
+    function tipses()
+    {
+        return $this->hasMany(TipProduct::class, 'product_id');
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_products', 'medicine_id', 'order_id')->withPivot('unit_id', 'quantity');
     }
 }

@@ -58,7 +58,10 @@ class WishlistController extends Controller
             'product.generic',
             'product.company',
             'product.strength',
-            'product.discounts'
+            'product.discounts',
+            'product.units' => function ($q) {
+                $q->orderBy('quantity', 'asc');
+            }
         ])->orderBy('updated_at', 'asc');
         $perPage = 10;
         if ($filter_val && $filter_val != 'all') {
@@ -73,7 +76,7 @@ class WishlistController extends Controller
         $wishes->getCollection()->each(function ($wish) {
             $wish->product = $this->transformProduct($wish->product, 30);
             $wish->product->pid = encrypt($wish->product->id);
-            $wish->product->units = $this->getSortedUnits($wish->product->unit);
+            // $wish->product->units = $this->getSortedUnits($wish->product->unit);
             return $wish;
         });
         $data['wishes'] = $wishes;
@@ -92,11 +95,15 @@ class WishlistController extends Controller
             'product.generic',
             'product.company',
             'product.strength',
-            'product.discounts'
+            'product.discounts',
+            'unit',
+            'product.units' => function ($q) {
+                $q->orderBy('quantity', 'asc');
+            }
         ])->orderBy('updated_at', 'asc')->get()->each(function ($wish) {
             $wish->product = $this->transformProduct($wish->product, 30);
             $wish->product->pid = encrypt($wish->product->id);
-            $wish->product->units = $this->getSortedUnits($wish->product->unit);
+            // $wish->product->units = $this->getSortedUnits($wish->product->unit);
             return $wish;
         });
         return response()->json($data);
