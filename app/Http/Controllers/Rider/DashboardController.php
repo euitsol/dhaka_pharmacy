@@ -19,6 +19,7 @@ class DashboardController extends Controller
 
     public function dashboard(): View
     {
-        return view('rider.dashboard.dashboard');
+        $data['a'] = 0;
+        return view('rider.dashboard.dashboard', $data);
     }
 }

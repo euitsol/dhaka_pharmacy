@@ -81,6 +81,8 @@ $(document).ready(function () {
             ];
             directions.setOrigin(userLocation);
         });
+
+        geolocate.trigger();
     });
 
     // $(document).on("shown.bs.modal", ".map-modal", function () {
