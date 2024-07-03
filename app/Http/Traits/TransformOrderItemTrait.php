@@ -18,6 +18,15 @@ trait TransformOrderItemTrait
             $product->totalDiscountPrice = $product->pivot->quantity * $product->pivot->unit->quantity * $product->discounted_price;
         });
     }
+    private function OrderItemPrice($item_product)
+    {
+        return $item_product->quantity * $item_product->unit->quantity * $item_product->product->price;
+    }
+    private function OrderItemDiscountPrice($item_product)
+    {
+        $this->setDiscountInformation($item_product->product);
+        return $item_product->quantity * $item_product->unit->quantity * $item_product->product->discounted_price;
+    }
     // private function calculateOrderTotalRegularPrice($order)
     // {
     //     $order_items = $this->transformOrderItemPrice($order->products);

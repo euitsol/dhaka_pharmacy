@@ -33,14 +33,13 @@ class DistributedOrderController extends Controller
         }
         $data['status'] = $status;
         $data['statusBg'] = $this->statusBg($this->getStatus($status));
-        $data['dos'] = OrderDistribution::with(['order', 'odps'])
+        $data['dos'] = OrderDistribution::with(['order.products', 'odps'])
             ->withCount(['odps' => function ($query) {
                 $query->where('status', '!=', -1);
             }])
             ->where('status', $this->getStatus($status))->latest()->get()
-            ->each(function ($do) {
-                $do->order->totalPrice = $this->calculateOrderTotalPrice($do->order);
-                return $do;
+            ->each(function (&$do) {
+                $this->calculateOrderTotalDiscountPrice($do->order);
             });
         return view('admin.distributed_order.index', $data);
     }
@@ -54,9 +53,8 @@ class DistributedOrderController extends Controller
                 $query->where('status', '!=', -1);
             }])
             ->get()
-            ->each(function ($do) {
-                $do->order->totalPrice = $this->calculateOrderTotalPrice($do->order);
-                return $do;
+            ->each(function (&$do) {
+                $this->calculateOrderTotalPrice($do->order);
             })->filter(function ($do) {
                 return $do->odps->where('status', 3)->isNotEmpty();
             });
@@ -65,7 +63,7 @@ class DistributedOrderController extends Controller
 
     public function details($do_id): View
     {
-        $query = OrderDistribution::with(['order', 'odrs.rider', 'odps' => function ($query) {
+        $query = OrderDistribution::with(['order.customer', 'odrs.rider', 'odps' => function ($query) {
             $query->where('status', '!=', -1);
         }])
             ->withCount(['odps' => function ($query) {
@@ -74,8 +72,7 @@ class DistributedOrderController extends Controller
             ->findOrFail(decrypt($do_id));
 
         $data['do'] = $query;
-        $data['totalPrice'] = $this->calculateOrderTotalPrice($query->order);
-
+        $this->calculateOrderTotalDiscountPrice($query->order);
         if ($query->status == 2) {
             $data['riders'] = Rider::activated()->kycVerified()->latest()->get();
         }
