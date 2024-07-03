@@ -30,7 +30,7 @@ class UserOrderController extends Controller
 
         $query = $this->buildOrderQuery($status);
         $perPage = 10;
-        $query->with(['address', 'customer', 'payments', 'ref_user', 'od']);
+        $query->with(['address', 'customer', 'payments', 'ref_user', 'od', 'products']);
         if ($filter_val && $filter_val != 'all') {
             if ($filter_val == 5) {
                 $query->latest();
@@ -83,10 +83,10 @@ class UserOrderController extends Controller
     {
         $orders->getCollection()->each(function ($order) {
             $order->place_date = date('d M Y h:m:s', strtotime($order->created_at));
-            $order->order_items = $this->getOrderItems($order);
-            $order->totalPrice = $this->calculateOrderTotalPrice($order, $order->order_items);
-            $order->totalRegularPrice = $this->calculateOrderTotalRegularPrice($order, $order->order_items);
-            $order->totalDiscount = $this->calculateOrderTotalDiscount($order, $order->order_items);
+            $order->order_items = $order->products;
+            $order->totalPrice = $this->calculateOrderTotalPrice($order);
+            $order->totalRegularPrice = $this->calculateOrderTotalRegularPrice($order);
+            $order->totalDiscount = $this->calculateOrderTotalDiscount($order);
 
             $order->order_items->each(function ($item) {
                 $item->product = $this->transformProduct($item->product, 30);

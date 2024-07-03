@@ -21,52 +21,55 @@ class OrderManagementController extends Controller
 {
     use TransformOrderItemTrait;
 
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
     public function index($status): View
     {
         $data['orders'] = Order::status($status)->latest()->get()
-                        ->each(function ($order) {
-                            $order->totalPrice = $this->calculateOrderTotalPrice($order);
-                            return $order;
-                        });
+            ->each(function ($order) {
+                $order->totalPrice = $this->calculateOrderTotalPrice($order);
+                return $order;
+            });
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getOrderStatusBgColor($status);
-        return view('admin.order_management.index',$data);
+        return view('admin.order_management.index', $data);
     }
     public function details($id): View
     {
-        $data['order'] = Order::findOrFail(decrypt($id));
-        $data['order_items'] = $this->getOrderItems($data['order']);
+        $data['order'] = Order::with('products')->findOrFail(decrypt($id));
+        $data['order_items'] = $data['order']->products;
 
 
-        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order'], $data['order_items']);
-        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order'], $data['order_items']);
-        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order'], $data['order_items']);
-        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order'], $data['order_items']);
-        return view('admin.order_management.details',$data);
+        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order']);
+        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order']);
+        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order']);
+        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order']);
+        return view('admin.order_management.details', $data);
     }
 
-    public function order_distribution($id){
-        $data['order'] = Order::with(['address','od.odps.cart','od.odps.pharmacy'])->findOrFail(decrypt($id));
-        $data['order_items'] = $this->getOrderItems($data['order']);
+    public function order_distribution($id)
+    {
+        $data['order'] = Order::with(['address', 'od.odps.cart', 'od.odps.pharmacy', 'products'])->findOrFail(decrypt($id));
+        $data['order_items'] = $data['order']->products;
 
-        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order'], $data['order_items']);
-        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order'], $data['order_items']);
-        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order'], $data['order_items']);
-        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order'], $data['order_items']);
+        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order']);
+        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order']);
+        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order']);
+        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order']);
 
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
-        if($data['order']->od){
-            $data['order_distribution'] = $data['order']->od->where('status',0)->first();
+        if ($data['order']->od) {
+            $data['order_distribution'] = $data['order']->od->where('status', 0)->first();
         }
-        return view('admin.order_management.order_distribution',$data);
+        return view('admin.order_management.order_distribution', $data);
     }
 
-    public function order_distribution_store(OrderDistributionRequest $req, $order_id){
+    public function order_distribution_store(OrderDistributionRequest $req, $order_id)
+    {
         $order_id = decrypt($order_id);
-        Order::findOrFail($order_id)->update(['status'=>-3]);
+        Order::findOrFail($order_id)->update(['status' => -3]);
         $od = new OrderDistribution();
         $od->order_id = $order_id;
         $od->payment_type = $req->payment_type;
@@ -85,8 +88,8 @@ class OrderManagementController extends Controller
             $odp->creater()->associate(admin());
             $odp->save();
 
-            $check = DistributionOtp::where('order_distribution_id',$od->id)->where('otp_author_id', $odp->pharmacy->id)->where('otp_author_type', get_class($odp->pharmacy))->first();
-            if(!$check){
+            $check = DistributionOtp::where('order_distribution_id', $od->id)->where('otp_author_id', $odp->pharmacy->id)->where('otp_author_type', get_class($odp->pharmacy))->first();
+            if (!$check) {
                 $PVotp = new DistributionOtp();
                 $PVotp->order_distribution_id = $od->id;
                 $PVotp->otp_author()->associate($odp->pharmacy);
@@ -96,15 +99,13 @@ class OrderManagementController extends Controller
             }
         }
         flash()->addSuccess('Order Distributed Successfully.');
-        return redirect()->route('om.order.order_list','pending');
+        return redirect()->route('om.order.order_list', 'pending');
     }
 
 
-    protected function getOrderStatusBgColor($status){
+    protected function getOrderStatusBgColor($status)
+    {
         $statusBgColor = ($status == 'success') ? 'badge badge-success' : (($status == 'pending') ? 'badge badge-info' : (($status == 'failed') ? 'badge badge-danger' : (($status == 'cancel') ? 'badge badge-warning' : 'badge badge-primary')));
         return $statusBgColor;
     }
-
-
-
 }
