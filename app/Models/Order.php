@@ -104,15 +104,17 @@ class Order extends BaseModel
 
     public function products()
     {
-        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')->withPivot('unit_id', 'quantity')->using(OrderProduct::class);
+        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')->withPivot('id', 'unit_id', 'quantity')->using(OrderProduct::class);
     }
 
-    public function scopeInitiated($query){
+    public function scopeInitiated($query)
+    {
         return $query->where('status', 0);
     }
 
-    public function scopeSelf($query){
+    public function scopeSelf($query)
+    {
         return $query->where('creater_type', User::class)
-        ->where('creater_id', user()->id);
+            ->where('creater_id', user()->id);
     }
 }

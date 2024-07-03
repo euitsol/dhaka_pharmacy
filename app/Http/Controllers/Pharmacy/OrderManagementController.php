@@ -12,11 +12,12 @@ use App\Models\Pharmacy;
 use App\Models\PharmacyDiscount;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Http\Traits\TransformOrderItemTrait;
 
 
 class OrderManagementController extends Controller
 {
-    //
+    use TransformOrderItemTrait;
 
     public function __construct()
     {
@@ -34,7 +35,7 @@ class OrderManagementController extends Controller
         } else {
             $data['rider'] = true;
         }
-        $query = OrderDistributionPharmacy::with(['cart', 'pharmacy', 'od'])->where('pharmacy_id', pharmacy()->id);
+        $query = OrderDistributionPharmacy::with(['order_product.product', 'pharmacy', 'od.order'])->where('pharmacy_id', pharmacy()->id);
         $query->where('status', $this->getStatus($status));
         if ($this->getStatus($status) == 3) {
             $query->orWhere('status', -1);
@@ -56,7 +57,7 @@ class OrderManagementController extends Controller
             $dop->statusTitle = $this->statusTitle($this->getStatus($status));
             $dop->statusBg = $this->statusBg($this->getStatus($status));
             $dop->each(function ($dp) use ($dop, $pharmacy_discount) {
-                $dp->price = cartItemPrice($dp->cart);
+                $dp->price = $this->OrderItemDiscountPrice($dp->order_product);
                 if ($dop->od->payment_type == 0 && $pharmacy_discount) {
                     $dp->price -= (($dp->price / 100) * $pharmacy_discount->discount_percent);
                 }
@@ -75,8 +76,9 @@ class OrderManagementController extends Controller
             $data['prep_time'] = true;
         }
         $data['pharmacy_discount'] = PharmacyDiscount::activated()->where('pharmacy_id', pharmacy()->id)->first();
+
         $data['do'] = OrderDistribution::with(['order', 'odr', 'odps' => function ($query) use ($status) {
-            $query->where('status', $this->getStatus($status));
+            $query->with('order_product')->where('status', $this->getStatus($status));
             if ($this->getStatus($status) == 3) {
                 $query->orWhere('status', -1);
             }
@@ -89,12 +91,11 @@ class OrderManagementController extends Controller
                 $data['do']->update(['status' => 1]);
             }
         }
-
         $data['do']->prep_time = readablePrepTime($data['do']->created_at, $data['do']->prep_time);
         $data['do']->pharmacy = Pharmacy::findOrFail(pharmacy()->id);
         $data['do']['dops'] = $data['do']->odps
             ->where('pharmacy_id', pharmacy()->id)->each(function ($dop) use ($data) {
-                $dop->totalPrice = cartItemPrice($dop->cart);
+                $dop->totalPrice = $this->OrderItemDiscountPrice($dop->order_product);
                 if ($data['do']->payment_type == 0 && $data['pharmacy_discount']) {
                     $dop->totalPrice -= (($dop->totalPrice / 100) * $data['pharmacy_discount']->discount_percent);
                     $dop->discount = $data['pharmacy_discount']->discount_percent;

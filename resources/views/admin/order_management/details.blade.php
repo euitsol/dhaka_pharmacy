@@ -22,46 +22,36 @@
                                 <div class="card-body order_items">
 
                                     <div class="row">
-                                        @foreach ($order_items as $item)
+                                        @foreach ($order->products as $product)
                                             <div class="col-12">
                                                 <div class="card card-2">
                                                     <div class="card-body">
                                                         <div class="media">
                                                             <div class="sq align-self-center "> <img
                                                                     class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
-                                                                    src="{{ storage_url($item->product->image) }}"
-                                                                    width="135" height="135" /> </div>
+                                                                    src="{{ storage_url($product->image) }}" width="135"
+                                                                    height="135" /> </div>
                                                             <div class="media-body my-auto text-center">
                                                                 <div class="row  my-auto flex-column flex-md-row px-3">
                                                                     <div class="col my-auto">
                                                                         <h6 class="mb-0 text-start">
-                                                                            {{ $item->product->name }}</h6>
+                                                                            {{ $product->name }}</h6>
                                                                     </div>
                                                                     <div class="col-auto my-auto">
-                                                                        <small>{{ $item->product->pro_cat->name }} </small>
+                                                                        <small>{{ $product->pro_cat->name }} </small>
                                                                     </div>
                                                                     <div class="col my-auto"> <small>{{ __('Qty :') }}
-                                                                            {{ $item->quantity }}</small></div>
+                                                                            {{ $product->pivot->quantity }}</small></div>
                                                                     <div class="col my-auto"> <small>{{ __('Pack :') }}
-                                                                            {{ $item->unit->name ?? 'Piece' }}</small>
+                                                                            {{ $product->pivot->unit->name ?? 'Piece' }}</small>
                                                                     </div>
                                                                     <div class="col my-auto">
-                                                                        @php
-                                                                            $cartItemRegPrice = number_format(
-                                                                                cartItemRegPrice($item),
-                                                                                2,
-                                                                            );
-                                                                            $cartItemPrice = number_format(
-                                                                                cartItemPrice($item),
-                                                                                2,
-                                                                            );
-                                                                        @endphp
-                                                                        @if ($cartItemRegPrice != $cartItemPrice)
+                                                                        @if ($product->totalPrice != $product->totalDiscountPrice)
                                                                             <h6 class="mb-0 text-end">
                                                                                 <span class="text-danger">
                                                                                     <del>
                                                                                         {!! get_taka_icon() !!}
-                                                                                        {{ $cartItemRegPrice }}
+                                                                                        {{ $product->totalPrice }}
                                                                                     </del>
                                                                                 </span>
                                                                             </h6>
@@ -69,7 +59,7 @@
                                                                         <h6 class="mb-0 text-end">
                                                                             <span>
                                                                                 {!! get_taka_icon() !!}
-                                                                                {{ $cartItemPrice }}
+                                                                                {{ $product->totalDiscountPrice }}
                                                                             </span>
                                                                         </h6>
                                                                     </div>
@@ -144,19 +134,23 @@
                                                     <th>{{ __('Total Price') }}</th>
                                                     <td>:</td>
                                                     <td>
-                                                        <span>{!! get_taka_icon() !!} {{ $totalRegularPrice }}</span>
+                                                        <span>{!! get_taka_icon() !!}
+                                                            {{ number_format(ceil($order->totalPrice)) }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>{{ __('Discount') }}</th>
                                                     <td>:</td>
-                                                    <td><span>{!! get_taka_icon() !!} {{ $totalDiscount }}</span></td>
+                                                    <td><span>{!! get_taka_icon() !!}
+                                                            {{ number_format(ceil($order->totalPrice - $order->totalDiscountPrice)) }}</span>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>{{ __('Sub Total') }}</th>
                                                     <td>:</td>
                                                     <td>
-                                                        <span>{!! get_taka_icon() !!} {{ $subTotalPrice }}</span>
+                                                        <span>{!! get_taka_icon() !!}
+                                                            {{ number_format(ceil($order->totalDiscountPrice)) }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -168,7 +162,9 @@
                                                 <tr>
                                                     <th>{{ __('Payable Amount') }}</th>
                                                     <td>:</td>
-                                                    <th><span>{!! get_taka_icon() !!} </span>{{ $totalPrice }}</th>
+                                                    <th><span>{!! get_taka_icon() !!}
+                                                        </span>{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}
+                                                    </th>
                                                 </tr>
                                             </table>
                                         </div>
@@ -185,7 +181,8 @@
                                 <h2 class="mb-0 font-weight-bold">{{ __('TOTAL AMOUNT') }}</h2>
                             </div>
                             <div class="col-auto my-auto ml-auto">
-                                <h1 class="display-3 ">{!! get_taka_icon() !!} {{ $totalPrice }}</h1>
+                                <h1 class="display-3 ">{!! get_taka_icon() !!}
+                                    {{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}</h1>
                             </div>
                         </div>
                     </div>

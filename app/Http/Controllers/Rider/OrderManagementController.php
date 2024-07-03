@@ -46,7 +46,7 @@ class OrderManagementController extends Controller
     {
         $data['dor'] = OrderDistributionRider::with(['od.odps', 'od.order.address', 'rider'])->findORFail(decrypt($dor_id));
         $data['dor']->pharmacy = $data['dor']->od->odps->pluck('pharmacy')->unique()->values();
-        $data['dor']->totalPrice = $this->calculateOrderTotalPrice($data['dor']->od->order);
+        $this->calculateOrderTotalDiscountPrice($data['dor']->od->order);
         return view('rider.orders.details', $data);
     }
 
@@ -124,17 +124,18 @@ class OrderManagementController extends Controller
             ['order_distribution_id', $od_id],
             ['otp_author_id', $od->order->customer->id],
             ['otp_author_type', get_class($od->order->customer)],
-            ['otp', $req->delivered_otp]])->first();
+            ['otp', $req->delivered_otp]
+        ])->first();
         if ($check) {
             $check->status = 1;
             $check->rider_id = rider()->id;
             $check->update();
 
-            OrderDistributionRider::where([['rider_id', rider()->id],['order_distribution_id', $od_id],['status', 2]])
-                                    ->update(['status' => 3]);
+            OrderDistributionRider::where([['rider_id', rider()->id], ['order_distribution_id', $od_id], ['status', 2]])
+                ->update(['status' => 3]);
             $od->update(['status' => 5]);
 
-            OrderDistributionPharmacy::where([['order_distribution_id', $od_id],['status', 4]])->update(['status' => 5]);
+            OrderDistributionPharmacy::where([['order_distribution_id', $od_id], ['status', 4]])->update(['status' => 5]);
             flash()->addSuccess('Order delivered successfully.');
         } else {
             flash()->addError('Something is wrong please try again.');
@@ -144,8 +145,8 @@ class OrderManagementController extends Controller
     public function dispute(RiderDisputeRequest $req, $od_id)
     {
         OrderDistribution::findOrFail(decrypt($od_id))->update(['status' => 2]);
-        OrderDistributionRider::where([['rider_id', rider()->id],['order_distribution_id', decrypt($od_id)],['status', 1]])
-                                ->update(['status' => 0, 'dispute_note' => $req->dispute_reason]);
+        OrderDistributionRider::where([['rider_id', rider()->id], ['order_distribution_id', decrypt($od_id)], ['status', 1]])
+            ->update(['status' => 0, 'dispute_note' => $req->dispute_reason]);
         flash()->addSuccess('Order disputed successfully.');
         return redirect()->back();
     }

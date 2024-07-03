@@ -10,18 +10,22 @@ class Payment extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    public function customer(){
+    public function customer()
+    {
         return $this->morphTo();
     }
-    public function order(){
+    public function order()
+    {
         return $this->belongsTo(Order::class, 'order_id');
     }
-    public function scopeStatus($query, $status){
+    public function scopeStatus($query, $status)
+    {
         $db_status = ($status == 'success') ? 1 : (($status == 'pending') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 2)));
-        return $query->where('status',$db_status);
-    } 
+        return $query->where('status', $db_status);
+    }
 
-    public function statusBg() {
+    public function statusBg()
+    {
         switch ($this->status) {
             case 0:
                 return 'badge bg-info';
@@ -35,7 +39,8 @@ class Payment extends BaseModel
                 return 'badge bg-primary';
         }
     }
-    public function statusTitle() {
+    public function statusTitle()
+    {
         switch ($this->status) {
             case 0:
                 return 'Pending';
@@ -49,5 +54,4 @@ class Payment extends BaseModel
                 return 'Processing';
         }
     }
-
 }

@@ -11,21 +11,25 @@ class OrderDistributionPharmacy extends BaseModel
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'order_distribution_id',
-        'cart_id',
+        'op_id',
         'pharmacy_id',
         'status'
     ];
 
-    public function od(){
-        return $this->belongsTo(OrderDistribution::class,'order_distribution_id');
+    public function od()
+    {
+        return $this->belongsTo(OrderDistribution::class, 'order_distribution_id');
     }
-    public function cart(){
-        return $this->belongsTo(AddToCart::class,'cart_id');
+    public function order_product()
+    {
+        return $this->belongsTo(OrderProduct::class, 'op_id');
     }
-    public function pharmacy(){
-        return $this->belongsTo(Pharmacy::class,'pharmacy_id');
-    } 
-    public function statusBg() {
+    public function pharmacy()
+    {
+        return $this->belongsTo(Pharmacy::class, 'pharmacy_id');
+    }
+    public function statusBg()
+    {
         switch ($this->status) {
             case 0:
                 return 'badge badge-info';
@@ -45,9 +49,10 @@ class OrderDistributionPharmacy extends BaseModel
                 return 'badge badge-danger';
         }
     }
-    
 
-    public function statusTitle() {
+
+    public function statusTitle()
+    {
         switch ($this->status) {
             case 0:
                 return 'Pending';

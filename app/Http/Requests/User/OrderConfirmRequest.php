@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DisputeOrderRequest extends FormRequest
+class OrderConfirmRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,10 @@ class DisputeOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'note' => 'nullable',
-            'datas.*.op_id' => 'required|exists:order_products,id',
-            'datas.*.pharmacy_id' => 'required|exists:pharmacies,id',
-            'datas.*.dop_id' => 'required|exists:order_distribution_pharmacies,id',
+            'address' => 'required|exists:addresses,id',
+            'delivery_type' => 'required',
+            'delivery_fee' => 'required|numeric',
+            'payment_method' => 'required',
         ];
     }
 }
