@@ -13,35 +13,34 @@ use App\Http\Traits\TransformOrderItemTrait;
 class SslCommerzController extends Controller
 {
     use TransformOrderItemTrait;
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('auth');
     }
-    public function index($order_id)
+    public function index($payment_id)
     {
-        $order = Order::with(['customer','address','ref_user'])->findOrFail(decrypt($order_id));
-        $data['cart_items'] = $this->getOrderItems($order);
-        $total_price = $this->calculateOrderTotalPrice($order, $data['cart_items']);
-        $total_price = str_replace(',','',$total_price);
+        $payment_id = decrypt($payment_id);
+        $payment = Payment::with('order')->findOrFail($payment_id);
         # Here you have to receive all the order data to initate the payment.
         # Let's say, your oder transaction informations are saving in a table called "orders"
         # In "orders" table, order unique identity is "transaction_id". "status" field contain status of the transaction, "amount" is the order amount to be paid and "currency" is for storing Site Currency which will be checked with paid currency.
 
         $post_data = array();
-        $post_data['total_amount'] = $total_price; # You cant not pay less than 10
+        $post_data['total_amount'] = $payment->amount; # You cant not pay less than 10
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = generateTranId(); // tran_id must be unique
 
         # CUSTOMER INFORMATION
-        $post_data['cus_name'] = $order->customer->name;
-        $post_data['cus_email'] = $order->customer->email ? $order->customer->email : 'user@dp.com';
-        $post_data['cus_add1'] = $order->address ? $order->address->name :'Mirpur, Dhaka';
-        $post_data['cus_add2'] = $order->address ? $order->address->name :'Mirpur, Dhaka';//optional
-        $post_data['cus_city'] = $order->address ? $order->address->city : "Dhaka";//optional
-        $post_data['cus_state'] = "Dhaka";//optional
-        $post_data['cus_postcode'] = "1255";//optional
+        $post_data['cus_name'] = $payment->order->customer->name;
+        $post_data['cus_email'] = $payment->order->customer->email ? $payment->order->customer->email : 'user@dp.com';
+        $post_data['cus_add1'] = $payment->order->address ? $payment->order->address->name : 'Mirpur, Dhaka';
+        $post_data['cus_add2'] = $payment->order->address ? $payment->order->address->name : 'Mirpur, Dhaka'; //optional
+        $post_data['cus_city'] = $payment->order->address ? $payment->order->address->city : "Dhaka"; //optional
+        $post_data['cus_state'] = "Dhaka"; //optional
+        $post_data['cus_postcode'] = "1255"; //optional
         $post_data['cus_country'] = "Bangladesh";
-        $post_data['cus_phone'] = $order->customer ? $order->customer->phone : '01700000000';
-        $post_data['cus_fax'] = "null";//optional
+        $post_data['cus_phone'] = $payment->order->customer ? $payment->order->customer->phone : '01700000000';
+        $post_data['cus_fax'] = "null"; //optional
 
         # SHIPMENT INFORMATION
         $post_data['ship_name'] = "Store Test";
@@ -50,7 +49,7 @@ class SslCommerzController extends Controller
         $post_data['ship_city'] = "Dhaka";
         $post_data['ship_state'] = "Dhaka";
         $post_data['ship_postcode'] = "1000";
-        $post_data['ship_phone'] = "01792980503";
+        $post_data['ship_phone'] = "01000000000";
         $post_data['ship_country'] = "Bangladesh";
 
         $post_data['shipping_method'] = "NO";
@@ -59,25 +58,15 @@ class SslCommerzController extends Controller
         $post_data['product_profile'] = "physical-goods";
 
         # OPTIONAL PARAMETERS
-        $post_data['value_a'] = $order_id;
+        $post_data['value_a'] = $payment->order->id;
         $post_data['value_b'] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
 
         #Before  going to initiate the payment order status need to insert or update as Pending.
-        $update_product = Payment::where('transaction_id', $post_data['tran_id'])
-            ->updateOrInsert([
-                // 'customer_id' => admin()->id, // Assuming 'admin()' returns the ID of the related model
-                // 'customer_type' => admin()->getMorphClass(),
-                'customer_id' => 1, //for test
-                'customer_type' =>  "App\Models\User",//for test
-                'amount' => $post_data['total_amount'],
-                'order_id' => decrypt($post_data['value_a']),
-                'status' => '0', //Pending
-                // 'address' => $post_data['cus_add1'],
-                'transaction_id' => $post_data['tran_id'],
-                'currency' => $post_data['currency']
-            ]);
+        $payment->transaction_id = $post_data['tran_id'];
+        $payment->currency = $post_data['currency'];
+        $payment->update();
 
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
@@ -87,7 +76,6 @@ class SslCommerzController extends Controller
             print_r($payment_options);
             $payment_options = array();
         }
-
     }
     public function success(Request $request)
     {
@@ -115,8 +103,8 @@ class SslCommerzController extends Controller
                 */
                 $update_product = Payment::where('transaction_id', $tran_id)
                     ->update(['status' => 2]); //Status 2 , Processing
-                Order::where('id', decrypt($request->value_a))
-                    ->update(['status' => 1]);
+                // Order::where('id', decrypt($request->value_a))
+                //     ->update(['status' => 1]);
                 flash()->addSuccess('Transaction is successfully Completed');
             }
         } else if ($order_details->status == 2 || $order_details->status == 1) { //Status 1 , Complete
@@ -128,13 +116,10 @@ class SslCommerzController extends Controller
             #That means something wrong happened. You can redirect customer to your product page.
             flash()->addSuccess('Transaction is successfully Completed');
         }
-        if($request->value_a){
-            return redirect()->route('u.ck.product.order.success',['order_id'=>$request->value_a]);
+        if ($request->value_a) {
+            return redirect()->route('u.payment.payment_success', encrypt($payment->id));
         }
         return redirect()->route('home');
-
-
-
     }
 
     public function fail(Request $request)
@@ -150,8 +135,8 @@ class SslCommerzController extends Controller
         if ($order_details->status == 0) {
             $update_product = Payment::where('transaction_id', $tran_id)
                 ->update(['status' => -1]);  //Status -1 , Failed
-            Order::where('id', decrypt($request->value_a))
-                ->update(['status' => -1]);
+            // Order::where('id', decrypt($request->value_a))
+            //     ->update(['status' => -1]);
             flash()->addError('Transaction is Falied');
         } else if ($order_details->status == 2 || $order_details->status == 1) {
             flash()->addWarning('Transaction is already Successful');
@@ -159,13 +144,10 @@ class SslCommerzController extends Controller
             flash()->addError('Transaction is Invalid');
         }
 
-        if($request->value_a){
-            return redirect()->route('u.ck.product.order.failed',['order_id'=>$request->value_a]);
+        if ($request->value_a) {
+            return redirect()->route('u.payment.payment_failed', encrypt($payment->id));
         }
-            return redirect()->route('home');
-
-
-
+        return redirect()->route('home');
     }
 
     public function cancel(Request $request)
@@ -181,20 +163,18 @@ class SslCommerzController extends Controller
         if ($order_details->status == 0) {
             $update_product = Payment::where('transaction_id', $tran_id)
                 ->update(['status' => -2]); //Status -2 Canceled
-            Order::where('id', decrypt($request->value_a))
-                ->update(['status' => -2]);
+            // Order::where('id', decrypt($request->value_a))
+            //     ->update(['status' => -2]);
             flash()->addError('Transaction is Cancel');
         } else if ($order_details->status == 2 || $order_details->status == 1) {
             flash()->addWarning('Transaction is already Successful');
         } else {
             flash()->addError('Transaction is Invalid');
         }
-        if($request->value_a){
-            return redirect()->route('u.ck.product.order.cancel',['order_id'=>$request->value_a]);
+        if ($request->value_a) {
+            return redirect()->route('u.payment.payment_cancel', encrypt($payment->id));
         }
         return redirect()->route('home');
-
-
     }
 
     public function ipn(Request $request)

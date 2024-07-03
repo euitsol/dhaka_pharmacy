@@ -115,9 +115,9 @@
                                 @forelse ($customer->address as $key => $address)
                                     <div class="form-check ms-2">
                                         <input class="form-check-input address" value="{{ $address->id }}"
-                                            style="width: 1em" type="radio" name="address_id"
+                                            style="width: 1em" type="radio" name="address"
                                             id="address{{ $key }}"
-                                            @if ($address->is_default == true || count($customer->address)) checked @endif>
+                                            @if ($address->is_default == true) checked @endif>
                                         <label class="form-check-label ms-2" for="address{{ $key }}">
                                             {{ str_limit($address->address, 80) }} (<span> {!! get_taka_icon() !!} </span>
                                             <span class="charge" data-charge=""></span>)
@@ -157,7 +157,7 @@
                                 <div class="col ps-0">{{ __('Payable Amount') }}</div>
                                 <div class="col text-end "><span> {!! get_taka_icon() !!} </span>
                                     <span class="total_price"
-                                        data-total_price="{{ ceil($totalPrice) }}">{{ number_format(ceil($totalDiscountedPrice)) }}</span>
+                                        data-total_price="{{ ceil($totalDiscountedPrice) }}">{{ number_format(ceil($totalDiscountedPrice)) }}</span>
                                 </div>
                             </div>
 
@@ -210,8 +210,13 @@
 @endpush
 
 @push('js')
+    <script>
+        if (`{{ $errors->any() }}`) {
+            toastr.error(`{{ $errors->first() }}`);
+        }
+    </script>
     <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
-    <script src="{{ asset('frontend/asset/js/checkbox.js') }}"></script>
+    <script src="{{ asset('frontend/asset/js/checkout.js') }}"></script>
     <script>
         const data = {
             'details_url': `{{ route('u.ck.address', ['param']) }}`,

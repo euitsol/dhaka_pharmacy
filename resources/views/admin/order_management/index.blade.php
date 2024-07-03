@@ -31,8 +31,9 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $order->order_id }}</td>
-                                    <td>{{ count(json_decode($order->carts, true)) }}</td>
-                                    <td>{!! get_taka_icon() !!}{{ $order->totalPrice }}</td>
+                                    <td>{{ $order->products->count() }}</td>
+                                    <td>{!! get_taka_icon() !!}{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}
+                                    </td>
                                     <td><span class="{{ $statusBgColor }}">{{ $status }}</span></td>
                                     <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>

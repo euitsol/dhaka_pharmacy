@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\TransformOrderItemTrait;
 use App\Http\Traits\TransformProductTrait;
+use App\Models\Order;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -57,5 +58,37 @@ class PaymentController extends Controller
         } else {
             return view('user.payment.payment_list', $data);
         }
+    }
+
+    public function int_payment($payment_id)
+    {
+        $payment_id = decrypt($payment_id);
+        $payment = Payment::with('order')->findOrFail($payment_id);
+        if ($payment->payment_method == 'ssl') {
+            return redirect()->route('u.payment.index', encrypt($payment_id));
+        } else {
+            flash()->addWarning('Selected payment gateway not implement yet!');
+            Order::findOrFail($payment->order->id)->update(['status' => 0]);
+            return redirect()->route('u.ck.index', encrypt($payment->order->id));
+        }
+    }
+
+    public function success($payment_id)
+    {
+        $payment = Payment::with('order')->findOrFail(decrypt($payment_id));
+        $data['order_id'] = $payment->order->order_id;
+        return view("user.payment.success", $data);
+    }
+    public function failed($payment_id)
+    {
+        $payment = Payment::with('order')->findOrFail(decrypt($payment_id));
+        $data['order_id'] = $payment->order->order_id;
+        return view("user.payment.failed", $data);
+    }
+    public function cancel($payment_id)
+    {
+        $payment = Payment::with('order')->findOrFail(decrypt($payment_id));
+        $data['order_id'] = $payment->order->order_id;
+        return view("user.payment.cancel", $data);
     }
 }
