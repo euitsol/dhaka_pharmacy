@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Frontend\CategoryController;
+use App\Http\Controllers\Api\Frontend\ProductController;
 use App\Http\Controllers\Api\User\AddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,5 +43,9 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 Route::group(['as' => 'f.', 'prefix' => 'frontend'], function () {
     Route::controller(CategoryController::class)->prefix('categories')->name('cats.')->group(function () {
         Route::get('/{is_featured?}', 'categories')->name('list');
+    });
+    Route::controller(ProductController::class)->name('product.')->group(function () {
+        Route::get('products/{cat_slug}/{offset}/{sub_cat_slug?}', 'products')->name('multiple');
+        Route::get('product/{slug}', 'singleProduct')->name('details');
     });
 });
