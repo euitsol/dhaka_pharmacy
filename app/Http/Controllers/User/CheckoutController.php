@@ -74,14 +74,12 @@ class CheckoutController extends Controller
         $order->delivery_type = $req->delivery_type;
         $order->delivery_fee = $req->delivery_fee;
         $order->save();
-
-        $total_price = $this->calculateOrderTotalPrice($order);
-        $total_price = str_replace(',', '', $total_price);
+        $this->calculateOrderTotalDiscountPrice($order);
 
         $payment = new Payment();
         $payment->customer()->associate(user());
         $payment->payment_method = $req->payment_method;
-        $payment->amount = $total_price;
+        $payment->amount = $order->totalDiscountPrice + $order->delivery_fee;
         $payment->order_id = $order->id;
         $payment->status = 0; //Initialize 
         $payment->creater()->associate(user());

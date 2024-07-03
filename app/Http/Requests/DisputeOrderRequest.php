@@ -22,10 +22,10 @@ class DisputeOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'note'=>'nullable',
-            'datas.*.cart_id'=>'required|exists:add_to_carts,id',
-            'datas.*.pharmacy_id'=>'required|exists:pharmacies,id',
-            'datas.*.dop_id'=>'required|exists:order_distribution_pharmacies,id',
+            'note' => 'nullable',
+            'datas.*.op_id' => 'required|exists:order_products,id',
+            'datas.*.pharmacy_id' => 'required|exists:pharmacies,id',
+            'datas.*.dop_id' => 'required|exists:order_distribution_pharmacies,id',
         ];
     }
 }

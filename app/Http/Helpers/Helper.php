@@ -264,11 +264,11 @@ function str_limit($data, $limit = 20, $end = '...')
 
 function generateOrderId($type = 'web')
 {
-    if($type == 'web'){
+    if ($type == 'web') {
         $prefix = 'DPW';
-    }elseif($type == 'api'){
+    } elseif ($type == 'api') {
         $prefix = 'DPA';
-    }else{
+    } else {
         $prefix = 'DP';
     }
 
@@ -277,7 +277,7 @@ function generateOrderId($type = 'web')
     $date = date('ymd');
     $time = date('is');
 
-    return $prefix. $date . $time . mt_rand(10000, 99999);
+    return $prefix . $date . $time . mt_rand(10000, 99999);
 }
 function generateTranId()
 {
@@ -312,16 +312,16 @@ function calculateProductDiscount($product, $isPercent = false)
     }
 }
 
-function cartItemRegPrice($cart)
+function cartItemRegPrice($item)
 {
-    $unit = $cart->unit ? $cart->unit->quantity : 1;
-    return ($cart->product->price * $unit * $cart->quantity);
+    $unit = $item->unit ? $item->unit->quantity : 1;
+    return ($item->product->price * $unit * $item->quantity);
 }
-function cartItemPrice($cart)
+function cartItemPrice($item)
 {
-    $product_discount = proDisPrice($cart->product->price, $cart->product->discounts);
-    $unit = $cart->unit ? $cart->unit->quantity : 1;
-    return ($product_discount * $unit * $cart->quantity);
+    $product_discount = proDisPrice($item->product->price, $item->product->discounts);
+    $unit = $item->unit ? $item->unit->quantity : 1;
+    return ($product_discount * $unit * $item->quantity);
 }
 
 function proDisPrice($price, $pro_discounts)

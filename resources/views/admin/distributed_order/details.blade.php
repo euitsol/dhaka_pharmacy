@@ -279,11 +279,11 @@
                                                                 <div class="col my-auto">
                                                                     @php
                                                                         $cartItemRegPrice = number_format(
-                                                                            cartItemRegPrice($dop->cart),
+                                                                            cartItemRegPrice($dop->order_product),
                                                                             2,
                                                                         );
                                                                         $cartItemPrice = number_format(
-                                                                            cartItemPrice($dop->cart),
+                                                                            cartItemPrice($dop->order_product),
                                                                             2,
                                                                         );
                                                                     @endphp
@@ -313,8 +313,8 @@
 
                                                 <div class="col-3">
                                                     @if ($dop->status == 3)
-                                                        <input type="hidden" name="datas[{{ $key }}][cart_id]"
-                                                            value="{{ $dop->cart->id }}">
+                                                        <input type="hidden" name="datas[{{ $key }}][op_id]"
+                                                            value="{{ $dop->order_product->id }}">
                                                         <input type="hidden" name="datas[{{ $key }}][dop_id]"
                                                             value="{{ $dop->id }}">
                                                         <div class="form-group">

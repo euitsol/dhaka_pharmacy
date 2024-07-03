@@ -27,10 +27,9 @@ class OrderManagementController extends Controller
     }
     public function index($status): View
     {
-        $data['orders'] = Order::status($status)->latest()->get()
-            ->each(function ($order) {
-                $order->totalPrice = $this->calculateOrderTotalPrice($order);
-                return $order;
+        $data['orders'] = Order::with('products')->status($status)->latest()->get()
+            ->each(function (&$order) {
+                $this->calculateOrderTotalDiscountPrice($order);
             });
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getOrderStatusBgColor($status);
@@ -39,25 +38,16 @@ class OrderManagementController extends Controller
     public function details($id): View
     {
         $data['order'] = Order::with('products')->findOrFail(decrypt($id));
-        $data['order_items'] = $data['order']->products;
-
-
-        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order']);
-        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order']);
-        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order']);
-        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order']);
+        $this->calculateOrderTotalPrice($data['order']);
+        $this->calculateOrderTotalDiscountPrice($data['order']);
         return view('admin.order_management.details', $data);
     }
 
     public function order_distribution($id)
     {
         $data['order'] = Order::with(['address', 'od.odps.cart', 'od.odps.pharmacy', 'products'])->findOrFail(decrypt($id));
-        $data['order_items'] = $data['order']->products;
-
-        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order']);
-        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order']);
-        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order']);
-        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order']);
+        $this->calculateOrderTotalPrice($data['order']);
+        $this->calculateOrderTotalDiscountPrice($data['order']);
 
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
         if ($data['order']->od) {
@@ -83,7 +73,7 @@ class OrderManagementController extends Controller
         foreach ($req->datas as $data) {
             $odp = new OrderDistributionPharmacy();
             $odp->order_distribution_id = $od->id;
-            $odp->cart_id = $data['cart_id'];
+            $odp->op_id = $data['op_id'];
             $odp->pharmacy_id = $data['pharmacy_id'];
             $odp->creater()->associate(admin());
             $odp->save();

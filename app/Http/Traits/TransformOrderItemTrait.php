@@ -3,38 +3,50 @@
 namespace App\Http\Traits;
 
 use App\Models\AddToCart;
+use App\Http\Traits\TransformProductTrait;
 
 trait TransformOrderItemTrait
 {
 
-    private function transformOrderItemPrice($products)
+    use TransformProductTrait;
+
+    private function transformOrderItemPrice(&$order)
     {
-        $items = $products->each(function ($product) {
-            $product->price = cartItemRegPrice($product);
-            $product->discount_price = cartItemPrice($product);
-            $product->discount = ($product->price - $product->discount_price);
-            return $product;
+        $order->products->each(function ($product) {
+            $this->setDiscountInformation($product);
+            $product->totalPrice = $product->pivot->quantity * $product->pivot->unit->quantity * $product->price;
+            $product->totalDiscountPrice = $product->pivot->quantity * $product->pivot->unit->quantity * $product->discounted_price;
         });
-        return $items;
     }
-    private function calculateOrderTotalRegularPrice($order)
+    // private function calculateOrderTotalRegularPrice($order)
+    // {
+    //     $order_items = $this->transformOrderItemPrice($order->products);
+    //     return number_format(ceil($order_items->sum('price')));
+    // }
+    // private function calculateOrderTotalDiscount($order)
+    // {
+    //     $order->products->each(function ($product) {
+    //         $this->setDiscountInformation($product);
+    //         $product->DiscountAmount = $product->pivot->quantity * $product->pivot->unit->quantity * $product->discounted_amount;
+    //     });
+    //     $order->totalDiscount = $order->products->sum('DiscountAmount');
+    // }
+    // private function calculateOrderSubTotalPrice(&$order)
+    // {
+    //     $order->products->each(function ($product) {
+    //         $this->setDiscountInformation($product);
+    //         $product->totalDiscountedPrice = $product->pivot->quantity * $product->pivot->unit->quantity * $product->discounted_price;
+    //     });
+    //     $order->subTotalPrice = $order->products->sum('totalDiscountedPrice');
+    // }
+    private function calculateOrderTotalPrice(&$order)
     {
-        $order_items = $this->transformOrderItemPrice($order->products);
-        return number_format(ceil($order_items->sum('price')));
+        $this->transformOrderItemPrice($order);
+        $order->totalPrice = $order->products->sum('totalPrice');
     }
-    private function calculateOrderTotalDiscount($order)
+    private function calculateOrderTotalDiscountPrice(&$order)
     {
-        $order_items = $this->transformOrderItemPrice($order->products);
-        return number_format($order_items->sum('discount'), 2);
-    }
-    private function calculateOrderSubTotalPrice($order)
-    {
-        $order_items = $this->transformOrderItemPrice($order->products);
-        return number_format(ceil($order_items->sum('discount_price')));
-    }
-    private function calculateOrderTotalPrice($order)
-    {
-        $order_items = $this->transformOrderItemPrice($order->products);
-        return number_format(ceil($order_items->sum('discount_price') + $order->delivery_fee));
+        $this->transformOrderItemPrice($order);
+        $order->totalDiscountPrice = $order->products->sum('totalDiscountPrice');
     }
 }
