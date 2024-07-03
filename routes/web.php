@@ -840,12 +840,6 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     // Checkout Routes
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
         Route::post('/single-order', 'single_order')->name('product.single_order');
-        // Route::get('/order/intermediate/{multiple?}', 'int_order')->name('product.int');
-        // Route::get('/{order_id}', 'checkout')->name('product.checkout');
-
-        Route::get('/order/success/{order_id}', 'order_success')->name('product.order.success');
-        Route::get('/order/failed/{order_id}', 'order_failed')->name('product.order.failed');
-        Route::get('/order/cancel/{order_id}', 'order_cancel')->name('product.order.cancel');
     });
 
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
@@ -853,7 +847,15 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
         Route::get('order/{o_id}', 'checkout')->name('index');
         Route::get('/address/{id}', 'address')->name('address');
         Route::post('/order/confirm/{order_id}', 'order_confirm')->name('product.order.confirm');
-        Route::get('/order/payment/intermediate/{payment_id}', 'int_payment')->name('product.order.payment.int');
+    });
+
+    Route::controller(UserPaymentController::class)->prefix('payment')->name('u.payment.')->group(function () {
+        Route::get('list', 'payment_list')->name('list');
+
+        Route::get('/intermediate/{payment_id}', 'int_payment')->name('int');
+        Route::get('/success/{payment_id}', 'success')->name('payment_success');
+        Route::get('/failed/{payment_id}', 'failed')->name('payment_failed');
+        Route::get('/cancel/{payment_id}', 'cancel')->name('payment_cancel');
     });
 
 
@@ -881,9 +883,6 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     });
     Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
         Route::get('list', 'order_list')->name('list');
-    });
-    Route::controller(UserPaymentController::class)->prefix('payment')->name('u.payment.')->group(function () {
-        Route::get('list', 'payment_list')->name('list');
     });
 
     Route::controller(UserWishlistController::class)->prefix('wishlist')->name('u.wishlist.')->group(function () {

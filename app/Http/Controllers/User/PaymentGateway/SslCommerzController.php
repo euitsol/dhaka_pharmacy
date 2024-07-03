@@ -64,19 +64,9 @@ class SslCommerzController extends Controller
         $post_data['value_d'] = "ref004";
 
         #Before  going to initiate the payment order status need to insert or update as Pending.
-        // $update_product = Payment::where('transaction_id', $post_data['tran_id'])
-        //     ->updateOrInsert([
-        //         // 'customer_id' => admin()->id, // Assuming 'admin()' returns the ID of the related model
-        //         // 'customer_type' => admin()->getMorphClass(),
-        //         'customer_id' => 1, //for test
-        //         'customer_type' =>  "App\Models\User", //for test
-        //         'amount' => $post_data['total_amount'],
-        //         'order_id' => decrypt($post_data['value_a']),
-        //         'status' => '0', //Pending
-        //         // 'address' => $post_data['cus_add1'],
-        //         'transaction_id' => $post_data['tran_id'],
-        //         'currency' => $post_data['currency']
-        //     ]);
+        $payment->transaction_id = $post_data['tran_id'];
+        $payment->currency = $post_data['currency'];
+        $payment->update();
 
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
@@ -113,8 +103,8 @@ class SslCommerzController extends Controller
                 */
                 $update_product = Payment::where('transaction_id', $tran_id)
                     ->update(['status' => 2]); //Status 2 , Processing
-                Order::where('id', decrypt($request->value_a))
-                    ->update(['status' => 1]);
+                // Order::where('id', decrypt($request->value_a))
+                //     ->update(['status' => 1]);
                 flash()->addSuccess('Transaction is successfully Completed');
             }
         } else if ($order_details->status == 2 || $order_details->status == 1) { //Status 1 , Complete
@@ -127,7 +117,7 @@ class SslCommerzController extends Controller
             flash()->addSuccess('Transaction is successfully Completed');
         }
         if ($request->value_a) {
-            return redirect()->route('u.ck.product.order.success', ['order_id' => $request->value_a]);
+            return redirect()->route('u.payment.payment_success', encrypt($payment->id));
         }
         return redirect()->route('home');
     }
@@ -145,8 +135,8 @@ class SslCommerzController extends Controller
         if ($order_details->status == 0) {
             $update_product = Payment::where('transaction_id', $tran_id)
                 ->update(['status' => -1]);  //Status -1 , Failed
-            Order::where('id', decrypt($request->value_a))
-                ->update(['status' => -1]);
+            // Order::where('id', decrypt($request->value_a))
+            //     ->update(['status' => -1]);
             flash()->addError('Transaction is Falied');
         } else if ($order_details->status == 2 || $order_details->status == 1) {
             flash()->addWarning('Transaction is already Successful');
@@ -155,7 +145,7 @@ class SslCommerzController extends Controller
         }
 
         if ($request->value_a) {
-            return redirect()->route('u.ck.product.order.failed', ['order_id' => $request->value_a]);
+            return redirect()->route('u.payment.payment_failed', encrypt($payment->id));
         }
         return redirect()->route('home');
     }
@@ -173,8 +163,8 @@ class SslCommerzController extends Controller
         if ($order_details->status == 0) {
             $update_product = Payment::where('transaction_id', $tran_id)
                 ->update(['status' => -2]); //Status -2 Canceled
-            Order::where('id', decrypt($request->value_a))
-                ->update(['status' => -2]);
+            // Order::where('id', decrypt($request->value_a))
+            //     ->update(['status' => -2]);
             flash()->addError('Transaction is Cancel');
         } else if ($order_details->status == 2 || $order_details->status == 1) {
             flash()->addWarning('Transaction is already Successful');
@@ -182,7 +172,7 @@ class SslCommerzController extends Controller
             flash()->addError('Transaction is Invalid');
         }
         if ($request->value_a) {
-            return redirect()->route('u.ck.product.order.cancel', ['order_id' => $request->value_a]);
+            return redirect()->route('u.payment.payment_cancel', encrypt($payment->id));
         }
         return redirect()->route('home');
     }
