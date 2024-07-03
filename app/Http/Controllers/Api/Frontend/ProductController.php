@@ -123,6 +123,10 @@ class ProductController extends BaseController
             }
         }
 
+        // By Name
+        if ($request->has('name') && !empty($request->name)) {
+            $query->whereLike('name', "%{$request->name}%");
+        }
 
         $data = $query->get()->shuffle()->each(function ($product) {
             $product = $this->transformProduct($product, 30);
