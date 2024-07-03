@@ -58,3 +58,25 @@
  .map-modal #map{
     height: 300px;
  }
+
+ .mapboxgl-ctrl-top-left .directions-control .mapbox-directions-origin,
+ .mapboxgl-ctrl-top-left .directions-control .mapbox-directions-destination {
+     display: none;
+ }
+
+ .mapboxgl-ctrl-top-left .mapbox-directions-steps .mapbox-directions-step-maneuver,
+ .mapbox-directions-route-summary h1 {
+     color: #fff;
+ }
+
+ .mapbox-directions-steps ol li:first-child {
+    display: block;
+  }
+
+  .mapbox-directions-steps ol li:not(:first-child) {
+    display: none;
+  }
+
+  .mapbox-directions-instructions{
+    max-height: 5rem;
+  }

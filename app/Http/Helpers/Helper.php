@@ -469,3 +469,33 @@ function pdf_storage_url($urlOrArray)
         return asset('/laraview/#../storage/' . $urlOrArray);
     }
 }
+
+function getFormattedCountdown($pastDate) {
+    if (!($pastDate instanceof Carbon)) {
+      $pastDate = Carbon::parse($pastDate);
+    }
+
+    $now = Carbon::now();
+    // Check if the past date has passed
+    if ($pastDate->gt($now)) {
+      $years = $pastDate->diffInYears($now);
+      $weeks = $pastDate->diffInWeeks($now) % 52;
+      $days = $pastDate->diffInDays($now) % 7;
+      $hours = $pastDate->diffInHours($now) % 24;
+      $minutes = $pastDate->diffInMinutes($now) % 60;
+      $seconds = $pastDate->diffInSeconds($now) % 60;
+    } else {
+      $years = $weeks = $days = $hours = $minutes = $seconds = 0;
+    }
+
+    $countdown = [
+      'years' => $years,
+      'weeks' => $weeks,
+      'days' => $days,
+      'hours' => $hours,
+      'minutes' => $minutes,
+      'seconds' => $seconds,
+    ];
+
+    return $countdown;
+}
