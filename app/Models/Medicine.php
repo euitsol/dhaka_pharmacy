@@ -101,4 +101,16 @@ class Medicine extends BaseModel
     {
         return $this->belongsToMany(Order::class, 'order_products', 'medicine_id', 'order_id')->withPivot('unit_id', 'quantity');
     }
+
+    public function scopeByCategory($query, $categoryId)
+    {
+        return $query->where('pro_cat_id', $categoryId);
+    }
+
+
+    public function scopeBySubCategory($query, $scategoryId)
+    {
+        return $query->where('pro_sub_cat_id', $scategoryId);
+    }
+
 }

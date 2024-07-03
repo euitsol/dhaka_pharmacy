@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Frontend\CategoryController;
+use App\Http\Controllers\Api\Frontend\ProductController;
 use App\Http\Controllers\Api\User\AddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,7 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::post('/update', 'update')->name('update');
         Route::get('/list', 'list')->name('list');
     });
-    // Cart API 
+    // Cart API
     Route::controller(CartAjaxController::class)->middleware('auth:api-user')->prefix('cart')->name('cart.')->group(function () {
         Route::post('add', 'add')->name('add');
         Route::get('products', 'products')->name('products');
@@ -39,8 +40,12 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 
 
 
-Route::group(['as' => 'f.', 'prefix' => 'frontend'], function () {
+Route::group(['as' => 'f.', 'prefix' => ''], function () {
     Route::controller(CategoryController::class)->prefix('categories')->name('cats.')->group(function () {
-        Route::get('/{is_featured?}', 'categories')->name('list');
+        Route::get('', 'categories')->name('list');
+    });
+    Route::controller(ProductController::class)->name('product.')->group(function () {
+        Route::get('products', 'products')->name('multiple');
+        Route::get('product/{slug}', 'product')->name('details');
     });
 });
