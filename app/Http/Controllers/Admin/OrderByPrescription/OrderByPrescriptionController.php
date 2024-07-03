@@ -89,11 +89,14 @@ class OrderByPrescriptionController extends Controller
     {
         $id = decrypt($order_id);
         $data['order'] = Order::with('products')->findOrFail($id);
-        $data['order_items'] = $data['order']->products;
-        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order']);
-        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order']);
-        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order']);
-        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order']);
+        $this->calculateOrderTotalPrice($data['order']);
+        $this->calculateOrderTotalDiscountPrice($data['order']);
+
+        // $data['order_items'] = $data['order']->products;
+        // $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order']);
+        // $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order']);
+        // $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order']);
+        // $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order']);
         return view('admin.order_by_prescription.order_details', $data);
     }
     public function statusUpdate($status, $id)

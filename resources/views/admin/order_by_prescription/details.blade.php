@@ -31,7 +31,7 @@
                                         <div class="form-group">
                                             <label>{{ __('Medicine') }}</label>
                                             <select name="item[1][medicine]" class="form-control medicine">
-                                                <option value="" selected hidden>{{ __('Select Medicine') }}</option>
+                                                <option value=" " selected hidden>{{ __('Select Medicine') }}</option>
                                             </select>
                                             @include('alerts.feedback', ['field' => 'item.*.medicine'])
                                         </div>

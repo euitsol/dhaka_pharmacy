@@ -311,19 +311,6 @@ function calculateProductDiscount($product, $isPercent = false)
         }
     }
 }
-
-function cartItemRegPrice($item)
-{
-    $unit = $item->unit ? $item->unit->quantity : 1;
-    return ($item->product->price * $unit * $item->quantity);
-}
-function cartItemPrice($item)
-{
-    $product_discount = proDisPrice($item->product->price, $item->product->discounts);
-    $unit = $item->unit ? $item->unit->quantity : 1;
-    return ($product_discount * $unit * $item->quantity);
-}
-
 function proDisPrice($price, $pro_discounts)
 {
     $discount = $pro_discounts->where('status', 1)->first();
@@ -470,31 +457,32 @@ function pdf_storage_url($urlOrArray)
     }
 }
 
-function getFormattedCountdown($pastDate) {
+function getFormattedCountdown($pastDate)
+{
     if (!($pastDate instanceof Carbon)) {
-      $pastDate = Carbon::parse($pastDate);
+        $pastDate = Carbon::parse($pastDate);
     }
 
     $now = Carbon::now();
     // Check if the past date has passed
     if ($pastDate->gt($now)) {
-      $years = $pastDate->diffInYears($now);
-      $weeks = $pastDate->diffInWeeks($now) % 52;
-      $days = $pastDate->diffInDays($now) % 7;
-      $hours = $pastDate->diffInHours($now) % 24;
-      $minutes = $pastDate->diffInMinutes($now) % 60;
-      $seconds = $pastDate->diffInSeconds($now) % 60;
+        $years = $pastDate->diffInYears($now);
+        $weeks = $pastDate->diffInWeeks($now) % 52;
+        $days = $pastDate->diffInDays($now) % 7;
+        $hours = $pastDate->diffInHours($now) % 24;
+        $minutes = $pastDate->diffInMinutes($now) % 60;
+        $seconds = $pastDate->diffInSeconds($now) % 60;
     } else {
-      $years = $weeks = $days = $hours = $minutes = $seconds = 0;
+        $years = $weeks = $days = $hours = $minutes = $seconds = 0;
     }
 
     $countdown = [
-      'years' => $years,
-      'weeks' => $weeks,
-      'days' => $days,
-      'hours' => $hours,
-      'minutes' => $minutes,
-      'seconds' => $seconds,
+        'years' => $years,
+        'weeks' => $weeks,
+        'days' => $days,
+        'hours' => $hours,
+        'minutes' => $minutes,
+        'seconds' => $seconds,
     ];
 
     return $countdown;

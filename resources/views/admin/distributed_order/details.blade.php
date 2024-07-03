@@ -277,29 +277,20 @@
                                                                         {{ $dop->order_product->unit->name ?? 'Piece' }}</small>
                                                                 </div>
                                                                 <div class="col my-auto">
-                                                                    @php
-                                                                        $cartItemRegPrice = number_format(
-                                                                            cartItemRegPrice($dop->order_product),
-                                                                            2,
-                                                                        );
-                                                                        $cartItemPrice = number_format(
-                                                                            cartItemPrice($dop->order_product),
-                                                                            2,
-                                                                        );
-                                                                    @endphp
-                                                                    @if ($cartItemRegPrice != $cartItemPrice)
+                                                                    @if ($dop->totalPrice != $dop->totalDiscountPrice)
                                                                         <h6 class="mb-0 text-end">
                                                                             <span class="text-danger">
                                                                                 <del>
                                                                                     {!! get_taka_icon() !!}
-                                                                                    {{ $cartItemRegPrice }}
+                                                                                    {{ number_format(ceil($dop->totalPrice)) }}
                                                                                 </del>
                                                                             </span>
                                                                         </h6>
                                                                     @endif
                                                                     <h6 class="mb-0 text-end">
                                                                         <span>
-                                                                            {!! get_taka_icon() !!} {{ $cartItemPrice }}
+                                                                            {!! get_taka_icon() !!}
+                                                                            {{ number_format(ceil($dop->totalDiscountPrice)) }}
                                                                         </span>
                                                                     </h6>
                                                                 </div>

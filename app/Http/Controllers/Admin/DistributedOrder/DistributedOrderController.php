@@ -64,12 +64,16 @@ class DistributedOrderController extends Controller
     public function details($do_id): View
     {
         $query = OrderDistribution::with(['order.customer', 'odrs.rider', 'odps' => function ($query) {
-            $query->where('status', '!=', -1);
+            $query->with('order_product.product')->where('status', '!=', -1);
         }])
             ->withCount(['odps' => function ($query) {
                 $query->where('status', '!=', -1);
             }])
             ->findOrFail(decrypt($do_id));
+        $query->odps->each(function (&$odp) {
+            $odp->totalDiscountPrice = $this->OrderItemDiscountPrice($odp->order_product);
+            $odp->totalPrice = $this->OrderItemPrice($odp->order_product);
+        });
 
         $data['do'] = $query;
         $this->calculateOrderTotalDiscountPrice($query->order);
