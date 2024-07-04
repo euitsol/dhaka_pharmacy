@@ -52,7 +52,15 @@ class AuthenticationController extends BaseController
                 $user->otp = otp();
                 $user->phone_verified_at = Carbon::now();
                 $user->save();
-                return sendResponse(true, 'The verification code has been sent successfully.', $user->only('id'));
+
+                $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
+                $result = $this->sms_send($user->phone, $verification_sms);
+
+                if ($result == true) {
+                    return sendResponse(true, 'The verification code has been sent successfully.', $user->only('id'));
+                } else {
+                    return sendResponse(false, 'Oops! Something went wrong. Please try again.', null);
+                }
             }
         } else {
             return sendResponse(false, 'Phone number didn\'t match.', null, 401);
@@ -105,7 +113,15 @@ class AuthenticationController extends BaseController
             } else {
                 $user->otp = otp();
                 $user->save();
-                return sendResponse(true, 'The verification code has been sent to your phone.', $user->only('id'), 200);
+
+                $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
+                $result = $this->sms_send($user->phone, $verification_sms);
+
+                if ($result == true) {
+                    return sendResponse(true, 'The verification code has been sent to your phone.', $user->only('id'), 200);
+                } else {
+                    return sendResponse(false, 'Oops! Something went wrong. Please try again.', null);
+                }
             }
         } else {
             return sendResponse(false, 'User not found.', null, 401);

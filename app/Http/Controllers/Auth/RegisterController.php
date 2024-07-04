@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use App\Http\Traits\SmsTrait;
 
 class RegisterController extends Controller
 {
+
+    use SmsTrait;
     public function register()
     {
         Session::forget('data');
@@ -29,6 +32,11 @@ class RegisterController extends Controller
         $user->password = Hash::make($req->password);
         $user->otp = otp();
         $user->save();
+
+        // SMS SEND
+        $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
+        $result = $this->sms_send($user->phone, $verification_sms);
+
 
         $s['uid'] = encrypt($user->id);
         $s['otp'] = true;
