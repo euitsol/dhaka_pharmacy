@@ -46,7 +46,7 @@ class ProductController extends BaseController
                 $product = $this->transformProduct($product, 26);
             });
 
-        $data['single_product'] = $sp;
+        $data['product_details'] = $sp;
         $data['similar_products'] = $simps;
 
         $message = "Product details retrieved successfully";
