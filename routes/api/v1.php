@@ -49,6 +49,6 @@ Route::group(['as' => 'f.', 'prefix' => ''], function () {
     });
     Route::controller(ProductController::class)->name('product.')->group(function () {
         Route::get('products', 'products')->name('multiple');
-        Route::get('product/{slug}', 'product')->name('details');
+        Route::get('product', 'product')->name('details');
     });
 });

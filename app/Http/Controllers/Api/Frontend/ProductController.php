@@ -19,38 +19,43 @@ class ProductController extends BaseController
 
     use TransformProductTrait;
 
-    public function product($slug): JsonResponse
+    public function product(Request $request): JsonResponse
     {
-        $sp = Medicine::with([
-            'pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
-                $q->orderBy('quantity', 'asc');
-            }
-        ])->activated()->where('slug', $slug)->first();
+        if ($request->has('slug') && !empty($request->slug)) {
+            $sp = Medicine::with([
+                'pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
+                    $q->orderBy('quantity', 'asc');
+                }
+            ])->activated()->where('slug', $request->slug)->first();
 
-        if (!$sp) {
-            $message = "Invalid slug. Product not found";
+            if (!$sp) {
+                $message = "Invalid slug. Product not found";
+                return sendResponse(false, $message, null);
+            }
+            $sp = $this->transformProduct($sp, 100);
+
+            $simps = Medicine::with([
+                'pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
+                    $q->orderBy('quantity', 'asc');
+                }
+            ])->activated()->where('generic_id', $sp->generic_id)
+                ->where('id', '!=', $sp->id)
+                ->latest()
+                ->get()
+                ->shuffle()
+                ->each(function (&$product) {
+                    $product = $this->transformProduct($product, 26);
+                });
+
+            $data['product_details'] = $sp;
+            $data['similar_products'] = $simps;
+
+            $message = "Product details retrieved successfully";
+            return sendResponse(true, $message, $data);
+        } else {
+            $message = "Please send the product slug.";
             return sendResponse(false, $message, null);
         }
-        $sp = $this->transformProduct($sp, 100);
-
-        $simps = Medicine::with([
-            'pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
-                $q->orderBy('quantity', 'asc');
-            }
-        ])->activated()->where('generic_id', $sp->generic_id)
-            ->where('id', '!=', $sp->id)
-            ->latest()
-            ->get()
-            ->shuffle()
-            ->each(function (&$product) {
-                $product = $this->transformProduct($product, 26);
-            });
-
-        $data['product_details'] = $sp;
-        $data['similar_products'] = $simps;
-
-        $message = "Product details retrieved successfully";
-        return sendResponse(true, $message, $data);
     }
     public function products(Request $request): JsonResponse
     {
