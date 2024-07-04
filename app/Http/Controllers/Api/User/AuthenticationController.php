@@ -13,10 +13,12 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Traits\SmsTrait;
 
 
 class AuthenticationController extends BaseController
 {
+    use SmsTrait;
     private $otpResentTime = 1;
 
     public function pass_login(LoginRequest $request): JsonResponse
