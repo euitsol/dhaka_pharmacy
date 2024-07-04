@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::table('order_distribution_pharmacies', function (Blueprint $table) {
             $table->dropForeign(['cart_id']);
             $table->dropColumn(['cart_id']);
-            $table->unsignedBigInteger('op_id');
+            $table->unsignedBigInteger('op_id')->nullable();
             $table->foreign('op_id')->references('id')->on('order_products')->onDelete('cascade')->onUpdate('cascade');
         });
     }
