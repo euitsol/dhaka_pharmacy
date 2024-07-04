@@ -96,7 +96,7 @@ function createCSV($filename = 'permissions.csv'): string
 
 function storage_url($urlOrArray)
 {
-    $image = asset('frontend\default\cat_img.png');
+    $image = asset('frontend/default/default.png');
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
         $result = '';
         $count = 0;

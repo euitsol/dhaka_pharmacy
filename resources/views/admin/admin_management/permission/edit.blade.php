@@ -18,9 +18,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('am.permission.permission_edit', $permission->id) }}">
-                        @csrf
+                <form method="POST" action="{{ route('am.permission.permission_edit', $permission->id) }}">
+                    @csrf
+                    <div class="card-body">
                         @method('PUT')
                         <div class="form-group">
                             <label>{{ __('Name') }}</label>
@@ -34,12 +34,13 @@
                                 value="{{ $permission->prefix }}">
                             @include('alerts.feedback', ['field' => 'prefix'])
                         </div>
-
+                    </div>
+                    <div class="card-footer text-end">
                         <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
-        @include('admin.partials.documentation',['document'=>$document])
+        @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection

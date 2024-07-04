@@ -18,10 +18,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('pm.pharmacy.pharmacy_edit', $pharmacy->id) }}">
-                        @csrf
-                        @method('PUT')
+                <form method="POST" action="{{ route('pm.pharmacy.pharmacy_edit', $pharmacy->id) }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="card-body">
                         <div class="form-group">
                             <label>{{ __('Name') }}</label>
                             <input type="text" name="name" class="form-control" placeholder="Enter name"
@@ -44,9 +44,11 @@
                             <input type="password" name="password_confirmation" class="form-control"
                                 placeholder="Confirm password">
                         </div>
+                    </div>
+                    <div class="card-footer text-end">
                         <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
         @include('admin.partials.documentation', ['document' => $document])
