@@ -10,10 +10,6 @@
 
     --btn-bg-color: #263148;
     --btn-bg-image: linear-gradient(to bottom left, #344675, #263148, #344675) !important;
-    
-
-    
-
 }
 
 .brand-link .brand-image {
@@ -25,6 +21,7 @@
     width: 100%;
     object-fit: cover;
 }
+
 .sidebar {
     background-color:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
@@ -34,12 +31,15 @@
     background-color:var(--secondary-color) !important;
     background-image:var(--secondary-bg-image) !important;
 }
+
 .white-content .footer .copyright a{
     color:var(--primary-color) !important;
 }
+
 .white-content .footer .copyright a:hover{
     color:var(--secondary-color) !important;
 }
+
 .main-panel {
     border-top: 2px solid var(--primary-color) !important;
     /* background-color:var(--primary-color) !important; */
@@ -50,34 +50,33 @@
     background:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
 }
+
 .form-control:focus {
     border-color: var(--primary-color) !important;
 }
+
 .form-group input[type=file] {
     height: auto !important;
 }
+
 .form-check input[type="checkbox"]:checked+.form-check-sign::before, .form-check input[type="checkbox"]:checked+.form-check-sign::before {
     background-color: var(--primary-color) !important;
 }
+
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:focus, .btn-primary.active:hover {
     background:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
 }
 
-
-
-
 .white-content .btn:not([data-action]):hover {
     box-shadow: none !important;
 }
+
 .btn:not([data-action]):hover, .navbar .navbar-nav>a.btn:not([data-action]):hover {
     box-shadow: none !important;
     transform: none !important;
     -webkit-transform: none !important;
 }
-
-
-
 
 /* Circle  */
 .toggle.ios,
@@ -85,15 +84,16 @@
 .toggle-off.ios {
     border-radius: 20rem;
 }
+
 .toggle.ios .toggle-handle {
     border-radius: 20rem;
 }
-
 
 /* Squer */
 .toggle.android {
     border-radius: 0px;
 }
+
 .toggle.android .toggle-handle {
     border-radius: 0px;
 }
@@ -101,6 +101,7 @@
 textarea.form-control {
     min-height: 20vh !important;
 }
+
 /*=============================================================
                 End Overwrite CSS
  =============================================================*/
@@ -130,7 +131,6 @@ textarea.form-control {
     border: 5px solid #2b3553;
     border-bottom-color: transparent;
     position: relative;
-
 }
 
 .profile-section .profile_image .overly::before {
@@ -146,12 +146,12 @@ textarea.form-control {
     opacity: .5;
     transition: .4s;
     z-index: 99;
-
 }
 
 .div_animation {
     animation: round 5s linear infinite;
 }
+
 .image_animation {
     animation: rounds 5s linear infinite reverse;
 }
@@ -184,7 +184,6 @@ textarea.form-control {
                 Start Site Settings CSS
  =============================================================*/
  .site_settings .tab {
-
     border-radius: 5px 0 0 5px;
     border: 1px solid #ccc;
     min-height: 80vh;
@@ -229,7 +228,6 @@ textarea.form-control {
     }
 }
 
-
 /*=============================================================
                 End Site Settings CSS
  =============================================================*/
@@ -263,10 +261,12 @@ textarea.form-control {
 .select2-container--default .select2-selection--multiple .select2-selection__arrow {
     top: 16% !important;
 }
+
 .select2-container .select2-selection--single .select2-selection__rendered ,
 .select2-container .select2-selection--multiple .select2-selection__rendered {
     margin: 0;
 }
+
 /*=============================================================
                 End Select2 CSS
  =============================================================*/
@@ -296,6 +296,7 @@ textarea.form-control {
     top: 10%;
     cursor: pointer;
 }
+
 /*=============================================================
                 End Image Upload CSS
  =============================================================*/
@@ -316,3 +317,6 @@ textarea.form-control {
                 End Product Management CSS
  =============================================================*/
 
+ .badge.badge-secondary{
+    color: #000;
+ }

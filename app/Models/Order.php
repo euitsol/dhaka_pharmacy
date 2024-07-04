@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 class Order extends BaseModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, EagerLoadPivotTrait;
     protected $fillable = [
         'status',
         'address_id',
@@ -48,8 +48,20 @@ class Order extends BaseModel
 
     public function scopeStatus($query, $status)
     {
-        $db_status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
-        return $query->where('status', $db_status);
+        // $status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
+
+        switch ($status) {
+            case 'initiated':
+                $status = 0;
+                break;
+            case 'submitted':
+                $status = 1;
+                break;
+            default:
+                $status =  'Unknown';
+                break;
+        }
+        return $query->where('status', $status);
     }
 
     public function od(): HasOne
@@ -84,7 +96,7 @@ class Order extends BaseModel
             case 0:
                 return 'Initiated';
             case 1:
-                return 'Pending';
+                return 'Submitted';
             case 2:
                 return 'Success';
             case -1:
@@ -104,7 +116,9 @@ class Order extends BaseModel
 
     public function products()
     {
-        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')->withPivot('id', 'unit_id', 'quantity')->using(OrderProduct::class);
+        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
+                    ->using(OrderProduct::class)
+                    ->withPivot('id', 'unit_id', 'quantity');
     }
 
     public function scopeInitiated($query)
@@ -116,5 +130,18 @@ class Order extends BaseModel
     {
         return $query->where('creater_type', User::class)
             ->where('creater_id', user()->id);
+    }
+
+    /**
+     * Scope to filter orders where at least one payment is paid.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePaid($query)
+    {
+        return $query->whereHas('payments', function ($subQuery) {
+            $subQuery->where('status', 1);
+        });
     }
 }

@@ -68,7 +68,7 @@ class CheckoutController extends Controller
     }
     public function order_confirm(OrderConfirmRequest $req, $order_id)
     {
-        $order = Order::with(['customer', 'address', 'ref_user', 'products'])->findOrFail(decrypt($order_id));
+        $order = Order::with(['products'])->self()->findOrFail(decrypt($order_id));
         $order->address_id = $req->address;
         $order->status = 1; //Order Submit
         $order->delivery_type = $req->delivery_type;
@@ -81,7 +81,7 @@ class CheckoutController extends Controller
         $payment->payment_method = $req->payment_method;
         $payment->amount = $order->totalDiscountPrice + $order->delivery_fee;
         $payment->order_id = $order->id;
-        $payment->status = 0; //Initialize 
+        $payment->status = 0; //Initialize
         $payment->creater()->associate(user());
         $payment->save();
 

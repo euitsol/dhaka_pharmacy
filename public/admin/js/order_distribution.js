@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
     const location = filter_address($(".user-location").attr("data-location"));
+    console.log(location);
     if (location) {
         modifyOptions(location);
     }
@@ -38,6 +39,7 @@ function modifyOptions(userLocation) {
         if (location && userLocation) {
             addedText = get_distance(location, userLocation);
 
+            $(this).attr("data-distance", addedText.toFixed(2));
             const modifiedText =
                 originalText + " (" + addedText.toFixed(2) + " km )";
             $(this).text(modifiedText);
