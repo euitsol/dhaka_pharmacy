@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\URL;
+use App\Http\Traits\SmsTrait;
 
 use function PHPUnit\Framework\isNull;
 
@@ -31,7 +32,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers, SmsTrait;
     protected $redirectTo = RouteServiceProvider::HOME;
     private $otpResentTime = 1;
 
@@ -202,13 +203,23 @@ class LoginController extends Controller
                     $user->otp = otp();
                     $user->phone_verified_at = Carbon::now();
                     $user->save();
-                    $data['success'] = true;
-                    $data['message'] = 'The verification code has been sent successfully.';
-                    $data['url'] = route('use.send_otp');
 
-                    $s['uid'] = encrypt($data['user']->id);
-                    $s['otp'] = true;
-                    Session::put('data', $s);
+                    // SMS SEND
+                    $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
+                    $result = $this->sms_send($user->phone, $verification_sms);
+
+                    if ($result == true) {
+                        $data['success'] = true;
+                        $data['message'] = 'The verification code has been sent successfully.';
+                        $data['url'] = route('use.send_otp');
+                        $s['uid'] = encrypt($data['user']->id);
+                        $s['otp'] = true;
+                        Session::put('data', $s);
+                    } else {
+                        $data['success'] = false;
+                        $data['error'] = '';
+                        $data['message'] = 'Oops! Something went wrong. Please try again.';
+                    }
                 }
             } else {
                 $data['success'] = false;
@@ -263,10 +274,19 @@ class LoginController extends Controller
             $user->otp = otp();
             $user->phone_verified_at = Carbon::now();
             $user->save();
-            $data['success'] = true;
-            $data['message'] = 'The verification code has been sent successfully.';
-        }
 
+            // SMS SEND
+            $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
+            $result = $this->sms_send($user->phone, $verification_sms);
+
+            if ($result == true) {
+                $data['success'] = true;
+                $data['message'] = 'The verification code has been sent successfully.';
+            } else {
+                $data['success'] = false;
+                $data['message'] = ' Oops! Something went wrong. Please try again.';
+            }
+        }
         return response()->json($data);
     }
     public function otp_verify(Request $req)
