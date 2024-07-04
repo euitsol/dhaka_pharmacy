@@ -96,7 +96,7 @@
                                                                 </span></strong> /<span
                                                                 class="unit_name">{{ __('piece') }}</span> </p>
                                                         <div class="form-group my-4 boxed">
-                                                            @foreach ($units as $key => $unit)
+                                                            @foreach ($single_product->units as $key => $unit)
                                                                 <input type="radio" value="{{ $unit->id }}"
                                                                     name="unit_id" data-id="{{ $unit->id }}"
                                                                     data-name="{{ $unit->name }}"
@@ -115,7 +115,7 @@
                                                     <div class="add_to_card">
                                                         <a class="cart-btn" href="javascript:void(0)"
                                                             data-product_slug="{{ $single_product->slug }}"
-                                                            data-unit_id="{{ $units[0]['id'] }}">
+                                                            data-unit_id="{{ $single_product->units[0]['id'] }}">
                                                             <i class="fa-solid fa-cart-plus"></i>
                                                             {{ __('Add to Cart') }}</a>
                                                     </div>
