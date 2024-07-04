@@ -16,6 +16,9 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::post('send-otp', 'send_otp')->name('s.o');
         Route::post('verify-otp', 'otp_verify')->name('v.o');
         Route::post('registration', 'registration')->name('reg');
+        Route::post('forgot-password/phone-check', 'fp_phone_check')->name('fp.pc');
+        Route::post('forgot-password/verify-otp', 'fp_verify_otp')->name('fp.v.o');
+        Route::post('forgot-password/update', 'fp_update')->name('fp.u');
     });
 
     Route::controller(UserController::class)->middleware('auth:api-user')->prefix('profile')->name('p')->group(function () {
@@ -46,6 +49,6 @@ Route::group(['as' => 'f.', 'prefix' => ''], function () {
     });
     Route::controller(ProductController::class)->name('product.')->group(function () {
         Route::get('products', 'products')->name('multiple');
-        Route::get('product/{slug}', 'product')->name('details');
+        Route::get('product', 'product')->name('details');
     });
 });
