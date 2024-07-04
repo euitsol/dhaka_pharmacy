@@ -41,7 +41,12 @@ class RegisterController extends Controller
         $s['uid'] = encrypt($user->id);
         $s['otp'] = true;
         $s['title'] = "VERIFY YOUR PHONE NUMBER";
-        $s['message'] = 'Your registration was successful, and a verification code has been sent to your phone.';
+        if ($result == true) {
+            $s['message'] = 'Your registration was successful, and a verification code has been sent to your phone.';
+        } else {
+            $s['message'] = 'Oops! Something went wrong. Please try again.';
+        }
+
         Session::put('data', $s);
         return redirect()->route('use.send_otp');
     }
