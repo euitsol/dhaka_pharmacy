@@ -121,11 +121,11 @@ function storage_url($urlOrArray)
 
 function auth_storage_url($urlOrArray, $gender)
 {
-    $image = asset('default_img\other-student.png');
+    $image = asset('default_img/other-student.png');
     if ($gender == 'Male') {
-        $image = asset('default_img\male-student.png');
+        $image = asset('default_img/male-student.png');
     } elseif ($gender == 'Male') {
-        $image = asset('default_img\female-student.png');
+        $image = asset('default_img/female-student.png');
     }
 
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
@@ -487,3 +487,13 @@ function getFormattedCountdown($pastDate)
 
     return $countdown;
 }
+
+    //This function will check the if the given route is a route name or full url
+    function is_valid_route($routeOrUrl)
+    {
+        if (!empty($routeOrUrl) && (Route::has($routeOrUrl))) {
+            return true;
+        }else{
+            return false;
+        }
+    }

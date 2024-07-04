@@ -34,7 +34,7 @@
                                     <td>{{ $order->products->count() }}</td>
                                     <td>{!! get_taka_icon() !!}{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}
                                     </td>
-                                    <td><span class="{{ $statusBgColor }}">{{ $status }}</span></td>
+                                    <td><span class="{{ $order->statusBg() }}">{{ $order->statusTitle() }}</span></td>
                                     <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>
                                         @if ($order->status == 1)
@@ -78,4 +78,4 @@
         </div>
     </div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4], 'order' => 'asc'])
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5], 'order' => 'asc'])

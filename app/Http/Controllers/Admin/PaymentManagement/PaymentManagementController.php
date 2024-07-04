@@ -29,10 +29,15 @@ class PaymentManagementController extends Controller
         $data['payment'] = Payment::with(['customer', 'order.products'])->findOrFail(decrypt($id));
         $data['payment_items'] = $data['payment']->order->products;
 
-        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['payment']->order);
-        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['payment']->order);
-        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['payment']->order);
-        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['payment']->order);
+        // $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['payment']->order);
+        // $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['payment']->order);
+        // $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['payment']->order);
+        // $data['totalPrice'] = $this->calculateOrderTotalPrice($data['payment']->order);
+
+        $data['totalRegularPrice'] = 10;
+        $data['totalDiscount'] = 20;
+        $data['subTotalPrice'] = 30;
+        $data['totalPrice'] = 40;
 
         return view('admin.payment_management.details', $data);
     }

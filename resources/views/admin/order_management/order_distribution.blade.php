@@ -15,9 +15,8 @@
                                         <div class="col-12 d-flex justify-content-between align-items-center">
                                             <h4 class="color-1 mb-0">{{ __('Order Details') }}</h4>
                                             @include('admin.partials.button', [
-                                                'routeName' => 'om.order.order_list',
+                                                'routeName' => URL::previous(),
                                                 'className' => 'btn-primary',
-                                                'params' => 'pending',
                                                 'label' => 'Back',
                                             ])
                                         </div>
@@ -71,7 +70,9 @@
                                                 <tr>
                                                     <th>{{ __('Delivery Address') }}</th>
                                                     <td>:</td>
-                                                    <td colspan="4">{!! optional($order->address)->address !!}</td>
+                                                    <td colspan="4" class="user-location"
+                                                        data-location="[{{ optional($order->address)->latitude }},{{ optional($order->address)->longitude }} ]">
+                                                        {!! optional($order->address)->address !!}</td>
                                                 </tr>
                                             </table>
                                         </div>

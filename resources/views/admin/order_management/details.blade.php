@@ -83,12 +83,16 @@
                                         <div class="col-12 d-flex justify-content-between align-items-center">
                                             <h4 class="color-1 mb-0">{{ __('Order Details') }}</h4>
                                             <div class="buttons">
-                                                @include('admin.partials.button', [
-                                                    'routeName' => 'om.order.order_distribution',
-                                                    'className' => 'btn-primary',
-                                                    'params' => encrypt($order->id),
-                                                    'label' => 'Distribute',
-                                                ])
+
+                                                @if ($order->status == 1)
+                                                    @include('admin.partials.button', [
+                                                        'routeName' => 'om.order.order_distribution',
+                                                        'className' => 'btn-primary',
+                                                        'params' => encrypt($order->id),
+                                                        'label' => 'Distribute',
+                                                    ])
+                                                @endif
+
                                                 @include('admin.partials.button', [
                                                     'routeName' => 'om.order.order_list',
                                                     'className' => 'btn-primary',

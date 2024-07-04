@@ -27,12 +27,14 @@ class OrderManagementController extends Controller
     }
     public function index($status): View
     {
-        $data['orders'] = Order::with('products')->status($status)->latest()->get()
-            ->each(function (&$order) {
-                $this->calculateOrderTotalDiscountPrice($order);
-            });
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getOrderStatusBgColor($status);
+
+        $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit')->status($status)->latest()->get()
+            ->each(function (&$order) {
+                $this->calculateOrderTotalDiscountPrice($order);
+            }
+        );
         return view('admin.order_management.index', $data);
     }
     public function details($id): View
@@ -45,15 +47,21 @@ class OrderManagementController extends Controller
 
     public function order_distribution($id)
     {
-        $data['order'] = Order::with(['address', 'od.odps.cart', 'od.odps.pharmacy', 'products'])->findOrFail(decrypt($id));
-        $this->calculateOrderTotalPrice($data['order']);
-        $this->calculateOrderTotalDiscountPrice($data['order']);
+        $data['order'] = Order::with(['address', 'od.odps.cart', 'od.odps.pharmacy', 'products', 'products.pivot.unit', 'payments'])->paid()->find(decrypt($id));
+        if(!empty($data['order'])){
+            $this->calculateOrderTotalPrice($data['order']);
+            $this->calculateOrderTotalDiscountPrice($data['order']);
 
-        $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
-        if ($data['order']->od) {
-            $data['order_distribution'] = $data['order']->od->where('status', 0)->first();
+            $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
+            if ($data['order']->od) {
+                $data['order_distribution'] = $data['order']->od->where('status', 0)->first();
+            }
+            return view('admin.order_management.order_distribution', $data);
+        }else{
+            flash()->addError('Cannot distribute this order');
+            return redirect()->back();
         }
-        return view('admin.order_management.order_distribution', $data);
+
     }
 
     public function order_distribution_store(OrderDistributionRequest $req, $order_id)
@@ -92,10 +100,25 @@ class OrderManagementController extends Controller
         return redirect()->route('om.order.order_list', 'pending');
     }
 
-
     protected function getOrderStatusBgColor($status)
     {
-        $statusBgColor = ($status == 'success') ? 'badge badge-success' : (($status == 'pending') ? 'badge badge-info' : (($status == 'failed') ? 'badge badge-danger' : (($status == 'cancel') ? 'badge badge-warning' : 'badge badge-primary')));
-        return $statusBgColor;
+        // $statusBgColor = ($status == 'success') ? 'badge badge-success' : (($status == 'pending') ? 'badge badge-info' : (($status == 'failed') ? 'badge badge-danger' : (($status == 'cancel') ? 'badge badge-warning' : 'badge badge-primary')));
+
+        switch ($status) {
+            case 'initiated':
+                return 'badge badge-secondary';
+            case 'submitted':
+                return 'badge badge-info';
+            case 2:
+                return 'badge badge-success';
+            case -1:
+                return 'badge badge-danger';
+            case -2:
+                return 'badge badge-warning';
+            case -3:
+                return 'badge badge-dark';
+            default:
+                return 'badge badge-primary';
+        }
     }
 }
