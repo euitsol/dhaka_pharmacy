@@ -304,7 +304,7 @@
 
 
 
-                <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                <button type="submit" class="btn btn-primary float-end">{{ __('Create') }}</button>
             </form>
         </div>
         @include('admin.partials.documentation', ['document' => $document])

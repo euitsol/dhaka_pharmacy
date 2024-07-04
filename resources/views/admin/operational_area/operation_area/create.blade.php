@@ -18,26 +18,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('opa.operation_area.operation_area_create') }}">
-                        @csrf
+                <form method="POST" action="{{ route('opa.operation_area.operation_area_create') }}">
+                    @csrf
+                    <div class="card-body">
                         <div class="form-group">
 
-                            <label>{{__('Name')}}</label>
-                            <input type="text" id="title" name="name" class="form-control" placeholder="Enter name"
-                                value="{{ old('name') }}">
+                            <label>{{ __('Name') }}</label>
+                            <input type="text" id="title" name="name" class="form-control"
+                                placeholder="Enter name" value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
                             <label>{{ _('Slug') }}</label>
-                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" value="{{old('slug')}}" name="slug" placeholder="{{ __('Enter Slug (must be use - on white speace)') }}">
+                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}"
+                                id="slug" value="{{ old('slug') }}" name="slug"
+                                placeholder="{{ __('Enter Slug (must be use - on white speace)') }}">
                             @include('alerts.feedback', ['field' => 'slug'])
                         </div>
-                        <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="card-footer text-end">
+                        <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                    </div>
+                </form>
             </div>
         </div>
-        @include('admin.partials.documentation',['document'=>$document])
+        @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection

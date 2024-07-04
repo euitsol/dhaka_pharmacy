@@ -19,19 +19,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('review.review_edit', $review->id) }}">
-                        @csrf
-                        @method('PUT')
+                <form method="POST" action="{{ route('review.review_edit', $review->id) }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="card-body">
                         <input type="hidden" name="product_id" value="{{ $review->product_id }}">
                         <div class="form-group">
                             <label>{{ __('Review') }}</label>
                             <textarea name="description" class="form-control" placeholder="Tell us about your experience...">{!! $review->description !!}</textarea>
                             @include('alerts.feedback', ['field' => 'description'])
                         </div>
-                        <button type="submit" class="btn btn-primary float-end">{{ __('Update') }}</button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="card-footer text-end">
+                        <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                    </div>
+                </form>
             </div>
         </div>
         @include('admin.partials.documentation', ['document' => $document])
