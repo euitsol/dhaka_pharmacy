@@ -70,11 +70,15 @@ function refreshDeliveryFee(e = false) {
     if (e == false) {
         $(document).ready(function () {
             setTimeout(function () {
-                delivery_fee = $(".address:checked")
-                    .next("label")
-                    .find(".charge")
-                    .text()
-                    .replace(",", "");
+                delivery_fee = $(".address:checked").length
+                    ? $(".address:checked")
+                          .next("label")
+                          .find(".charge")
+                          .text()
+                          .replace(",", "")
+                    : 0;
+
+                console.log(delivery_fee);
                 $(".delivery_fee").text(
                     numberFormat(Math.ceil(parseInt(delivery_fee)))
                 );

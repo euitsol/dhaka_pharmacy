@@ -825,6 +825,17 @@
                     ],
                 ],
             ])
+            {{-- Feedback --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'review',
+                        'routeName' => 'review.review_products',
+                        'iconClass' => 'fa-regular fa-star-half-alt',
+                        'label' => 'Review',
+                    ],
+                ],
+            ])
 
             {{-- Payment Gateways --}}
             @if (mainMenuCheck([

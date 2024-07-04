@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'guard' => 'web',
+    'guard' => 'api-user',
 
     /*
     |--------------------------------------------------------------------------
@@ -29,19 +29,6 @@ return [
     'private_key' => env('PASSPORT_PRIVATE_KEY'),
 
     'public_key' => env('PASSPORT_PUBLIC_KEY'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Passport Database Connection
-    |--------------------------------------------------------------------------
-    |
-    | By default, Passport's models will utilize your application's default
-    | database connection. If you wish to use a different connection you
-    | may specify the configured name of the database connection here.
-    |
-    */
-
-    'connection' => env('PASSPORT_CONNECTION'),
 
     /*
     |--------------------------------------------------------------------------

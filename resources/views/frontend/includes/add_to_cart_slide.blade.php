@@ -23,9 +23,15 @@
                 <h3><span> {!! get_taka_icon() !!} </span> <span class="subtotal_price">0.00</span></h3>
             </div>
             <div class="col-12">
-                <a href="{{ route('u.ck.product.int', 'cart-order') }}"
-                    class="btn order_button w-100 disabled">{{ __('Proceed To Checkout') }}</a>
+                <a href="javascript:void(0)" class="btn order_button w-100"
+                    id="checkoutBtn">{{ __('Proceed To Checkout') }}</a>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<form action="{{ route('u.ck.init') }}" method="POST" id="checkoutForm">
+    @csrf
+</form>

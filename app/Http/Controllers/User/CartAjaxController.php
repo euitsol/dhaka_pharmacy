@@ -73,7 +73,7 @@ class CartAjaxController extends Controller
             'product.units' => function ($q) {
                 $q->orderBy('quantity', 'asc');
             },
-        ])->where('customer_id', $customer_id)->get();
+        ])->currentCart()->get();
 
         $products = $atc->each(function (&$atc) {
             $atc->product = $this->transformProduct($atc->product);
@@ -103,8 +103,9 @@ class CartAjaxController extends Controller
             $atc->quantity = $request->quantity ? $request->quantity : $atc->quantity;
             $atc->save();
 
+            $atc->load('unit');
             $atc->product = $this->transformProduct($atc->product);
-            $atc->unit = $atc->unit;
+
 
             return response()->json([
                 'success' => true,

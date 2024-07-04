@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin\UserTips;
+namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserTipsRequest;
 use App\Http\Traits\DetailsCommonDataTrait;
 use App\Models\Documentation;
 use App\Models\Medicine;
-use App\Models\ProductTips;
+use App\Models\TipProduct;
 use App\Models\UserTips;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class UserTipsController extends Controller
+class TipsController extends Controller
 {
     use DetailsCommonDataTrait;
     public function __construct()
@@ -55,7 +55,7 @@ class UserTipsController extends Controller
         $tips->save();
 
         foreach ($req->products as $product_id) {
-            $pro_tips = new ProductTips();
+            $pro_tips = new TipProduct();
             $pro_tips->tips_id = $tips->id;
             $pro_tips->product_id = $product_id;
             $pro_tips->created_by = admin()->id;
@@ -68,7 +68,7 @@ class UserTipsController extends Controller
     {
         $data['user_tips'] = UserTips::findOrFail($id);
         $data['products'] = Medicine::orderBy('name', 'asc')->get();
-        $data['tip_product_ids'] = ProductTips::where('tips_id', $id)->pluck('product_id')->toArray();
+        $data['tip_product_ids'] = TipProduct::where('tips_id', $id)->pluck('product_id')->toArray();
         $data['document'] = Documentation::where('module_key', 'user_tips')->first();
         return view('admin.user_tips.edit', $data);
     }
@@ -90,7 +90,7 @@ class UserTipsController extends Controller
         $tips->updated_by = admin()->id;
         $tips->save();
 
-        $tip_products = ProductTips::where('tips_id', $tips->id)->pluck('product_id')->toArray();
+        $tip_products = TipProduct::where('tips_id', $tips->id)->pluck('product_id')->toArray();
         $product_ids = $req->products;
 
         // Find product_ids that are in the database but not in the request
@@ -99,17 +99,17 @@ class UserTipsController extends Controller
         // Find product_ids that are in the request but not in the database
         $product_ids_to_add = array_diff($product_ids, $tip_products);
 
-        // Remove the ProductTips records
+        // Remove the TipProducts records
         if (!empty($product_ids_to_remove)) {
-            ProductTips::where('tips_id', $tips->id)
+            TipProduct::where('tips_id', $tips->id)
                 ->whereIn('product_id', $product_ids_to_remove)
                 ->forceDelete();
         }
 
-        // Add the new ProductTips records
+        // Add the new TipProducts records
         if (!empty($product_ids_to_add)) {
             collect($product_ids_to_add)->each(function ($product_id) use ($tips) {
-                ProductTips::create([
+                TipProduct::create([
                     'tips_id' => $tips->id,
                     'product_id' => $product_id,
                     'created_by' => admin()->id,

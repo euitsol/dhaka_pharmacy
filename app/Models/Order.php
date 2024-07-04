@@ -101,4 +101,20 @@ class Order extends BaseModel
     {
         return $this->obp_id != null ? 'Order By Prescription' : 'Manual Order';
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')->withPivot('id', 'unit_id', 'quantity')->using(OrderProduct::class);
+    }
+
+    public function scopeInitiated($query)
+    {
+        return $query->where('status', 0);
+    }
+
+    public function scopeSelf($query)
+    {
+        return $query->where('creater_type', User::class)
+            ->where('creater_id', user()->id);
+    }
 }

@@ -21,6 +21,7 @@
                 text: medicine.name
             };
         });
+        console.log(defaultOptions);
         return defaultOptions;
     }
 

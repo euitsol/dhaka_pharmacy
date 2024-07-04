@@ -12,7 +12,6 @@ use Illuminate\View\View;
 class UserProfileController extends Controller
 {
     public function __construct() {
-        parent::__construct();
         return $this->middleware('auth');
     }
 

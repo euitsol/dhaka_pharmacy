@@ -12,6 +12,7 @@ use App\Http\Traits\TransformProductTrait;
 use App\Models\AddToCart;
 use App\Models\Order;
 use App\Http\Traits\TransformOrderItemTrait;
+use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 
 class OrderByPrescriptionController extends Controller
@@ -41,7 +42,6 @@ class OrderByPrescriptionController extends Controller
         $medicine = Medicine::with(['units' => function ($q) {
             $q->orderBy('quantity', 'asc');
         }])->findOrFail($id);
-        // $data['units'] = $this->getSortedUnits($medicine->unit);
         $data['units'] = $medicine->units;
         return response()->json($data);
     }
@@ -49,18 +49,18 @@ class OrderByPrescriptionController extends Controller
     {
         $up_id = decrypt($up_id);
         $up = OrderPrescription::findOrFail($up_id);
-        $cart_ids = [];
-        foreach ($request->item as $item) {
-            $cart_item = new AddToCart();
-            $cart_item->product_id = $item['medicine'];
-            $cart_item->unit_id = $item['unit'];
-            $cart_item->quantity = $item['quantity'];
-            $cart_item->customer_id = $up->user_id;
-            $cart_item->status = -1;
-            $cart_item->creater()->associate(admin());
-            $cart_item->save();
-            array_push($cart_ids, $cart_item->id);
-        }
+        // $cart_ids = [];
+        // foreach ($request->item as $item) {
+        //     $cart_item = new AddToCart();
+        //     $cart_item->product_id = $item['medicine'];
+        //     $cart_item->unit_id = $item['unit'];
+        //     $cart_item->quantity = $item['quantity'];
+        //     $cart_item->customer_id = $up->user_id;
+        //     $cart_item->status = -1;
+        //     $cart_item->creater()->associate(admin());
+        //     $cart_item->save();
+        //     array_push($cart_ids, $cart_item->id);
+        // }
         $order = new Order();
         $order->customer()->associate($up->customer);
         $order->address_id = $up->address_id;
@@ -69,9 +69,17 @@ class OrderByPrescriptionController extends Controller
         $order->delivery_type = $up->delivery_type;
         $order->delivery_fee = $up->delivery_fee;
         $order->obp_id = $up_id;
-        $order->carts = json_encode($cart_ids);
+        // $order->carts = json_encode($cart_ids);
         $order->creater()->associate(admin());
         $order->save();
+        foreach ($request->item as $item) {
+            $op = new OrderProduct();
+            $op->order_id = $order->id;
+            $op->product_id = $item['medicine'];
+            $op->unit_id = $item['unit'];
+            $op->quantity = $item['quantity'];
+            $op->save();
+        }
         $up->update(['status' => 1]);
         flash()->addSuccess('Prescription Item Order Created Successfully.');
         return redirect()->route('obp.obp_list', 'ordered');
@@ -80,12 +88,15 @@ class OrderByPrescriptionController extends Controller
     public function orderDetails($order_id)
     {
         $id = decrypt($order_id);
-        $data['order'] = Order::findOrFail($id);
-        $data['order_items'] = $this->getOrderItems($data['order']);
-        $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order'], $data['order_items']);
-        $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order'], $data['order_items']);
-        $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order'], $data['order_items']);
-        $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order'], $data['order_items']);
+        $data['order'] = Order::with('products')->findOrFail($id);
+        $this->calculateOrderTotalPrice($data['order']);
+        $this->calculateOrderTotalDiscountPrice($data['order']);
+
+        // $data['order_items'] = $data['order']->products;
+        // $data['totalRegularPrice'] = $this->calculateOrderTotalRegularPrice($data['order']);
+        // $data['totalDiscount'] = $this->calculateOrderTotalDiscount($data['order']);
+        // $data['subTotalPrice'] = $this->calculateOrderSubTotalPrice($data['order']);
+        // $data['totalPrice'] = $this->calculateOrderTotalPrice($data['order']);
         return view('admin.order_by_prescription.order_details', $data);
     }
     public function statusUpdate($status, $id)

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
+use App\Models\Review;
 use App\Models\SiteSetting;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -261,16 +262,22 @@ function str_limit($data, $limit = 20, $end = '...')
     return Str::limit($data, $limit, $end);
 }
 
-function generateOrderId()
+function generateOrderId($type = 'web')
 {
-    // $alphaPart = strtoupper(Str::random(3)); // Generates 3 random uppercase letters
-    $numericPart = mt_rand(100000, 999999); // Generates 5 random alphanumeric characters
+    if ($type == 'web') {
+        $prefix = 'DPW';
+    } elseif ($type == 'api') {
+        $prefix = 'DPA';
+    } else {
+        $prefix = 'DP';
+    }
 
-    $alphaPart = 'DP';
-    $date = date('d'); // Generates 5 random alphanumeric characters
+    $microseconds = explode(' ', microtime(true))[0];
 
+    $date = date('ymd');
+    $time = date('is');
 
-    return $alphaPart . $date . $numericPart;
+    return $prefix . $date . $time . mt_rand(10000, 99999);
 }
 function generateTranId()
 {
@@ -304,19 +311,6 @@ function calculateProductDiscount($product, $isPercent = false)
         }
     }
 }
-
-function cartItemRegPrice($cart)
-{
-    $unit = $cart->unit ? $cart->unit->quantity : 1;
-    return ($cart->product->price * $unit * $cart->quantity);
-}
-function cartItemPrice($cart)
-{
-    $product_discount = proDisPrice($cart->product->price, $cart->product->discounts);
-    $unit = $cart->unit ? $cart->unit->quantity : 1;
-    return ($product_discount * $unit * $cart->quantity);
-}
-
 function proDisPrice($price, $pro_discounts)
 {
     $discount = $pro_discounts->where('status', 1)->first();
@@ -461,4 +455,35 @@ function pdf_storage_url($urlOrArray)
     } else {
         return asset('/laraview/#../storage/' . $urlOrArray);
     }
+}
+
+function getFormattedCountdown($pastDate)
+{
+    if (!($pastDate instanceof Carbon)) {
+        $pastDate = Carbon::parse($pastDate);
+    }
+
+    $now = Carbon::now();
+    // Check if the past date has passed
+    if ($pastDate->gt($now)) {
+        $years = $pastDate->diffInYears($now);
+        $weeks = $pastDate->diffInWeeks($now) % 52;
+        $days = $pastDate->diffInDays($now) % 7;
+        $hours = $pastDate->diffInHours($now) % 24;
+        $minutes = $pastDate->diffInMinutes($now) % 60;
+        $seconds = $pastDate->diffInSeconds($now) % 60;
+    } else {
+        $years = $weeks = $days = $hours = $minutes = $seconds = 0;
+    }
+
+    $countdown = [
+        'years' => $years,
+        'weeks' => $weeks,
+        'days' => $days,
+        'hours' => $hours,
+        'minutes' => $minutes,
+        'seconds' => $seconds,
+    ];
+
+    return $countdown;
 }
