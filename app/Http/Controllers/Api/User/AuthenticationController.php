@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Requests\API\ForgotPasswordRequest;
+use App\Http\Requests\API\ForgotPasswordUpdateRequest;
 use App\Http\Requests\API\LoginRequest;
 use App\Http\Requests\API\OtpVerifyRequest;
 use App\Http\Requests\API\RegistrationRequest;
@@ -91,6 +93,54 @@ class AuthenticationController extends BaseController
         $user->otp = otp();
         $user->save();
         return sendResponse(true, 'Your registration was successful, and a verification code has been sent to your phone.', $user->only('id'), 200);
+    }
+    public function fp_phone_check(ForgotPasswordRequest $request)
+    {
+        $phone = $request->phone;
+
+        $user = User::wherephone($phone)->get()->first();
+        if ($user) {
+            if ($this->check_throttle($user)) {
+                return sendResponse(false, $this->check_throttle($user), null, 403);
+            } else {
+                $user->otp = otp();
+                $user->save();
+                return sendResponse(true, 'The verification code has been sent to your phone.', $user->only('id'), 200);
+            }
+        } else {
+            return sendResponse(false, 'User not found.', null, 401);
+        }
+    }
+    public function fp_verify_otp(OtpVerifyRequest $request)
+    {
+        $otp = $request->otp;
+        $id = $request->id;
+        $user = User::whereid($id)->get()->first();
+        if ($user) {
+            if ($user->otp == $otp) {
+                $user->is_verify = 1;
+                $user->update();
+                return sendResponse(true, 'OTP verified successfully. Please update your new password', $user->only('id'), 200);
+            } else {
+                return sendResponse(false, 'OTP didn\'t match. Please try again', null, 401);
+            }
+        } else {
+            return sendResponse(false, 'Something is wrong! please try again.', null, 401);
+        }
+    }
+    public function fp_update(ForgotPasswordUpdateRequest $request)
+    {
+        $id = $request->id;
+        $password = $request->password;
+
+        $user = User::whereid($id)->get()->first();
+        if ($user) {
+            $user->password = $password;
+            $user->save();
+            return sendResponse(true, 'Your password has been successfully reset. Please log in to your account.', null, 200);
+        } else {
+            return sendResponse(false, 'Something is wrong! please try again.', null, 401);
+        }
     }
 
 
