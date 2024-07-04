@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SendOtpRequest;
+use App\Http\Requests\User\ResetPaswordRequest;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -69,7 +70,7 @@ class ForgotPasswordController extends Controller
         return redirect()->route('login');
     }
 
-    public function resetPasswordStore(Request $req)
+    public function resetPasswordStore(ResetPaswordRequest $req)
     {
         $user = User::findOrFail(decrypt(Session::get('data')['uid']));
         $user->password = $req->password;
