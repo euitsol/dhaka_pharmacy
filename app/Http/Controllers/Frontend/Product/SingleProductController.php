@@ -15,14 +15,14 @@ class SingleProductController extends Controller
     public function singleProduct($slug): View
     {
 
-        $query =  Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
+        $data['single_product'] = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
             $q->orderBy('quantity', 'asc');
-        }])->activated();
-
-        $data['single_product'] = clone $query->where('slug', $slug)->first();
+        }])->activated()->where('slug', $slug)->first();
         $data['single_product'] = $this->transformProduct($data['single_product'], 100);
 
-        $data['similar_products'] = $query->latest()->where('generic_id', ($data['single_product']->generic_id))->get()
+        $data['similar_products'] = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
+            $q->orderBy('quantity', 'asc');
+        }])->activated()->latest()->where('generic_id', ($data['single_product']->generic_id))->get()
             ->reject(function ($p) use ($data) {
                 return $p->id == $data['single_product']->id;
             })->shuffle()->each(function ($product) {
