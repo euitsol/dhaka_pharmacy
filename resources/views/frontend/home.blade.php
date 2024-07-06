@@ -1,6 +1,8 @@
 @extends('frontend.layouts.master')
 @section('title', 'Home')
-
+@push('css')
+<link rel="stylesheet" href="{{asset('')}}">
+@endpush
 @section('content')
     <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->

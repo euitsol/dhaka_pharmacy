@@ -28,8 +28,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="search-filter col-8 m-auto">
+            <div class="col-5 middle-col">
+                <div class="search-filter col-9 ms-auto">
                     <form class="d-flex" action="">
                         <input class="col-7" type="text" id="searchInput" placeholder="Search...">
                         <select class="col-4" name="pro_cat_id" id="categorySelect">
@@ -48,7 +48,7 @@
 
                 </div>
             </div>
-            <div class="col-3 ps-0 right-col">
+            <div class="col-4 ps-0 right-col">
                 <div class="row align-items-center justify-content-end">
                     @if (!Auth::guard('web')->check())
                         <div class="item">
