@@ -1,6 +1,7 @@
 <?php
-
 namespace App\Http\Traits;
+
+use Illuminate\Support\Facades\Log;
 
 trait SmsTrait
 {
@@ -10,7 +11,6 @@ trait SmsTrait
         $api_key = "ocd8ExRE1Nzet2xhsxXz";
         $senderid = "8809617612436";
         $number = $mobile;
-        $message = $message;
 
         $data = [
             "api_key" => $api_key,
@@ -27,7 +27,11 @@ trait SmsTrait
         $response = curl_exec($ch);
         curl_close($ch);
         // return $response;
+
         $get = (json_decode($response, true));
+
+        Log::info($get);
+
         $result = $get['response_code'];
 
         if ($result == 202) {
