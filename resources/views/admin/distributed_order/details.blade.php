@@ -399,3 +399,6 @@
     </div>
 
 @endsection
+@push('js_link')
+    <script src="{{ asset('admin/js/remaining.js') }}"></script>
+@endpush

@@ -98,28 +98,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-@endpush
 
-@push('js')
-    <script>
-        $(document).ready(function() {
-            function updateRemainingTime() {
-                var now = moment();
-                var endTime = moment($('.prep_time').data('end-time'));
-                var diff = endTime.diff(now);
-
-                if (diff > 0) {
-                    var duration = moment.duration(diff);
-                    var timeString = duration.hours() + 'h ' + duration.minutes() + 'm ' + duration.seconds() +
-                        's remaining';
-                    $('.prep_time').text(timeString).removeClass('red').addClass('green');
-                } else {
-                    $('.prep_time').text('Delayed').removeClass('green').addClass('red');
-                }
-            }
-
-            updateRemainingTime();
-            setInterval(updateRemainingTime, 1000);
-        });
-    </script>
+    <script src="{{ asset('admin/js/remaining.js') }}"></script>
 @endpush
