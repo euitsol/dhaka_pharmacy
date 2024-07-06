@@ -212,6 +212,7 @@
                             <thead>
                                 <tr>
                                     <th>{{ __('SL') }}</th>
+                                    <th>{{ __('Type') }}</th>
                                     <th>{{ __('Transaction ID') }}</th>
                                     <th>{{ __('Total Amount') }}</th>
                                     <th>{{ __('Status') }}</th>
@@ -246,6 +247,7 @@
                                     @endphp
                                     <tr>
                                         <td> {{ $loop->iteration }} </td>
+                                        <td>{{ $payment->payment_method }}</td>
                                         <td>{{ $payment->transaction_id }}</td>
                                         <td><span>{!! get_taka_icon() !!}
                                             </span>{{ number_format(ceil($payment->amount)) }}</td>

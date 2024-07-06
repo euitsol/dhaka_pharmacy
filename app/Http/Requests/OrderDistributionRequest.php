@@ -18,7 +18,7 @@ class OrderDistributionRequest extends FormRequest
         return [
             'payment_type' => 'required|numeric',
             'distribution_type' => 'required|numeric',
-            'prep_time' => 'required|date',
+            'prep_time' => 'required|numeric',
             'note' => 'nullable',
             'datas.*.op_id' => 'required|exists:order_products,id',
             'datas.*.pharmacy_id' => 'required|exists:pharmacies,id',

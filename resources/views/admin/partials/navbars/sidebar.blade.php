@@ -548,15 +548,15 @@
                     'routes' => ['order_list'],
                 ]))
                 <li>
-                    <a class="@if ($pageSlug == 'order_Initiated' || $pageSlug == 'order_Submitted') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'order_Initiated' || $pageSlug == 'order_Submitted' || $pageSlug == 'order_Processed') @else collapsed @endif" data-toggle="collapse"
                         href="#order_management"
-                        @if ($pageSlug == 'order_Initiated' || $pageSlug == 'order_Submitted') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'order_Initiated' || $pageSlug == 'order_Submitted' || $pageSlug == 'order_Processed') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-truck-fast"></i>
                         <span class="nav-link-text">{{ __('Order Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'order_Initiated' || $pageSlug == 'order_Submitted') show @endif" id="order_management">
+                    <div class="collapse @if ($pageSlug == 'order_Initiated' || $pageSlug == 'order_Submitted' || $pageSlug == 'order_Processed') show @endif" id="order_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -575,11 +575,11 @@
                                         'label' => 'Submitted Orders',
                                     ],
                                     [
-                                        'pageSlug' => 'order_Success',
+                                        'pageSlug' => 'order_Processed',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'success',
-                                        'label' => 'Order List (Success)',
+                                        'params' => 'processed',
+                                        'label' => 'Processed Orders',
                                     ],
                                     [
                                         'pageSlug' => 'order_Failed',

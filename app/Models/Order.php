@@ -57,6 +57,9 @@ class Order extends BaseModel
             case 'submitted':
                 $status = 1;
                 break;
+            case 'processed':
+                $status = 2;
+                break;
             default:
                 $status =  'Unknown';
                 break;
@@ -98,7 +101,7 @@ class Order extends BaseModel
             case 1:
                 return 'Submitted';
             case 2:
-                return 'Success';
+                return 'Processed';
             case -1:
                 return 'Failed';
             case -2:
@@ -141,7 +144,7 @@ class Order extends BaseModel
     public function scopePaid($query)
     {
         return $query->whereHas('payments', function ($subQuery) {
-            $subQuery->where('status', 1);
+            $subQuery->where('status', 1)->orWhere('payment_method', 'cod');
         });
     }
 }
