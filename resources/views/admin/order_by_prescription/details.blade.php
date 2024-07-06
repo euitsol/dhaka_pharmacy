@@ -38,7 +38,7 @@
                                         <div class="form-group">
                                             <label>{{ __('Unit') }}</label>
                                             <select name="item[1][unit]" class="form-control unit" disabled>
-                                                <option value="" selected hidden>{{ __('Select Unit') }}</option>
+                                                <option value=" " selected hidden>{{ __('Select Unit') }}</option>
                                             </select>
                                             @include('alerts.feedback', ['field' => 'item.*.unit'])
                                         </div>

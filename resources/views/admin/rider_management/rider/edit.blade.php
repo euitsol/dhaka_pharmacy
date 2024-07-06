@@ -37,7 +37,7 @@
                         <div class="form-group {{ $errors->has('oa_id') ? ' has-danger' : '' }}">
                             <label>{{ __('Operation Area') }}</label>
                             <select name="oa_id" class="form-control oa {{ $errors->has('oa_id') ? ' is-invalid' : '' }}">
-                                <option selected hidden>{{ __('Select Operation Area') }}</option>
+                                <option selected hidden value=" ">{{ __('Select Operation Area') }}</option>
                                 @foreach ($operation_areas as $oa)
                                     <option {{ $rider->oa_id == $oa->id ? 'selected' : '' }} value="{{ $oa->id }}">
                                         {{ $oa->name }}</option>
@@ -49,7 +49,7 @@
                             <label>{{ __('Operation Sub Area') }}</label>
                             <select name="osa_id"
                                 class="form-control osa {{ $errors->has('osa_id') ? ' is-invalid' : '' }}"{{ $rider->osa_id ? '' : 'disabled' }}>
-                                <option selected hidden>{{ __('Select Operation Sub Area') }}</option>
+                                <option selected hidden value=" ">{{ __('Select Operation Sub Area') }}</option>
                                 @foreach ($operation_sub_areas as $osa)
                                     <option {{ $rider->osa_id == $osa->id ? 'selected' : '' }}
                                         value="{{ $osa->id }}">
@@ -98,7 +98,7 @@
                         var result = '';
                         data.operation_area.operation_sub_areas.forEach(function(area) {
                             result +=
-                            `<option value="${area.id}">${area.name}</option>`;
+                                `<option value="${area.id}">${area.name}</option>`;
                         });
                         osa.html(result);
                     },

@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label>{{ __('Role') }}</label>
                             <select name="role" class="form-control {{ $errors->has('role') ? ' is-invalid' : '' }}">
-                                <option selected hidden>{{ __('Select Role') }}</option>
+                                <option selected hidden value=" ">{{ __('Select Role') }}</option>
                                 @foreach ($roles as $role)
                                     <option {{ old('role') == $role->id ? 'selected' : '' }} value="{{ $role->id }}">
                                         {{ $role->name }}</option>

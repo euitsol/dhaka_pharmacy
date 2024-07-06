@@ -201,7 +201,7 @@
                                                                             <select
                                                                                 name="datas[{{ $key }}][pharmacy_id]"
                                                                                 class="form-control {{ $errors->has('datas.' . $key . '.pharmacy_id') ? ' is-invalid' : '' }} pharmacies">
-                                                                                <option selected hidden>
+                                                                                <option selected hidden value=" ">
                                                                                     {{ __('Select Pharmacy') }}</option>
                                                                                 @foreach ($pharmacies as $pharmacy)
                                                                                     @php
@@ -265,7 +265,8 @@
                                                         @else
                                                             <select name="payment_type"
                                                                 class="form-control {{ $errors->has('payment_type') ? ' is-invalid' : '' }}">
-                                                                <option selected hidden>{{ __('Select Payment Type') }}
+                                                                <option selected hidden value=" ">
+                                                                    {{ __('Select Payment Type') }}
                                                                 </option>
                                                                 <option value="0"
                                                                     {{ old('payment_type') == 0 ? 'selected' : '' }}>
@@ -289,7 +290,7 @@
                                                         @else
                                                             <select name="distribution_type"
                                                                 class="form-control {{ $errors->has('distribution_type') ? ' is-invalid' : '' }}">
-                                                                <option selected hidden>
+                                                                <option selected hidden value=" ">
                                                                     {{ __('Select Distribution Type') }}</option>
                                                                 <option value="0"
                                                                     {{ old('distribution_type') == 0 ? 'selected' : '' }}>

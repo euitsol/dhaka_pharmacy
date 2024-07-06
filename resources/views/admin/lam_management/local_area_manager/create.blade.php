@@ -37,7 +37,7 @@
                         <div class="form-group {{ $errors->has('dm_id') ? ' has-danger' : '' }}">
                             <label>{{ __('District Manager') }}</label>
                             <select name="dm_id" class="form-control dm {{ $errors->has('dm_id') ? ' is-invalid' : '' }}">
-                                <option selected hidden>{{ __('Select District Manager') }}</option>
+                                <option selected hidden value=" ">{{ __('Select District Manager') }}</option>
                                 @foreach ($dms as $dm)
                                     <option {{ old('dm_id') == $dm->id ? 'selected' : '' }} value="{{ $dm->id }}">
                                         {{ $dm->name }}</option>
@@ -53,7 +53,7 @@
                             <label>{{ __('Local Area Manager Area') }}</label>
                             <select name="osa_id"
                                 class="form-control lam_area {{ $errors->has('osa_id') ? ' is-invalid' : '' }}" disabled>
-                                <option selected hidden>{{ __('Select Local Area Manager Area') }}</option>
+                                <option selected hidden value=" ">{{ __('Select Local Area Manager Area') }}</option>
                             </select>
                             @include('alerts.feedback', ['field' => 'osa_id'])
                         </div>
@@ -89,7 +89,7 @@
 
                 let url = (
                     "{{ route('lam_management.local_area_manager.operation_area.local_area_manager_list', ['dm_id']) }}"
-                    );
+                );
                 let _url = url.replace('dm_id', dm_id);
 
                 $.ajax({
@@ -102,7 +102,7 @@
                         var result = '';
                         data.operation_sub_areas.forEach(function(area) {
                             result +=
-                            `<option value="${area.id}">${area.name}</option>`;
+                                `<option value="${area.id}">${area.name}</option>`;
                         });
                         lam_area.html(result);
                     },

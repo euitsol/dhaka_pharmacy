@@ -117,7 +117,7 @@
                                             <div class="form-group col-md-6">
                                                 <label>{{ __('Rider') }}</label>
                                                 <select name="rider_id" class="form-control">
-                                                    <option selected hidden value="">{{ __('Select Rider') }}
+                                                    <option selected hidden value=" ">{{ __('Select Rider') }}
                                                     </option>
                                                     @foreach ($riders as $rider)
                                                         @php
@@ -143,7 +143,7 @@
                                             <div class="form-group col-md-6">
                                                 <label>{{ __('Priority') }}</label>
                                                 <select name="priority" class="form-control">
-                                                    <option selected hidden value="">{{ __('Select Priority') }}
+                                                    <option selected hidden value=" ">{{ __('Select Priority') }}
                                                     </option>
                                                     <option value="0">{{ __('Normal') }}</option>
                                                     <option value="1">{{ __('Medium') }}</option>
@@ -310,7 +310,8 @@
                                                         <div class="form-group">
                                                             <select name="datas[{{ $key }}][pharmacy_id]"
                                                                 class="form-control {{ $errors->has('datas.' . $key . '.pharmacy_id') ? ' is-invalid' : '' }}">
-                                                                <option selected hidden>{{ __('Select Pharmacy') }}
+                                                                <option selected hidden value=" ">
+                                                                    {{ __('Select Pharmacy') }}
                                                                 </option>
                                                                 @foreach ($pharmacies as $pharmacy)
                                                                     @php

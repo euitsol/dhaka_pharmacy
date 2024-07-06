@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Traits;
 
 use Illuminate\Support\Facades\Log;
@@ -7,37 +8,47 @@ trait SmsTrait
 {
     function sms_send($mobile, $message)
     {
-        $url = "http://bulksmsbd.net/api/smsapi";
-        $api_key = "ocd8ExRE1Nzet2xhsxXz";
-        $senderid = "8809617612436";
-        $number = $mobile;
+        try {
+            $url = "http://bulksmsbd.net/api/smsapi";
+            $api_key = "ocd8ExRE1Nzet2xhsxXz";
+            $senderid = "8809617612436";
+            $number = $mobile;
+            $message = $message;
 
-        $data = [
-            "api_key" => $api_key,
-            "senderid" => $senderid,
-            "number" => $number,
-            "message" => $message
-        ];
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        // return $response;
+            $data = [
+                "api_key" => $api_key,
+                "senderid" => $senderid,
+                "number" => $number,
+                "message" => $message
+            ];
 
-        $get = (json_decode($response, true));
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            if (curl_errno($ch)) {
+                $error_msg = curl_error($ch);
+                throw new \Exception("cURL Error: $error_msg");
+            }
+            if ($response === false) {
+                throw new \Exception("cURL request failed. $response");
+            }
+            $get = json_decode($response, true);
+            $result = $get['response_code'] ?? null;
 
-        Log::info($get);
-
-        $result = $get['response_code'];
-
-        if ($result == 202) {
+            if ($result == 202) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            // Log the exception message
+            Log::info("Exception caught: " . $e->getMessage());
             return true;
-        } else {
-            return false;
         }
 
         // elseif ($result == '1002') {

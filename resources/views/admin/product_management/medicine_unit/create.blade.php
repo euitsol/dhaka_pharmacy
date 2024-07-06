@@ -46,7 +46,7 @@
                             <div class="form-group col-md-6">
                                 <label>{{ __('Type') }}</label>
                                 <select name="type" class="form-control">
-                                    <option selected hidden value="">{{ __('Select type') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select type') }}</option>
                                     <option value="tablet" {{ old('type') == 'tablet' ? 'selected' : '' }}>
                                         {{ __('Tablet') }}</option>
                                     <option value="capsul" {{ old('type') == 'capsul' ? 'selected' : '' }}>
