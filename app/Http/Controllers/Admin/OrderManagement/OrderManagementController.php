@@ -32,8 +32,6 @@ class OrderManagementController extends Controller
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getOrderStatusBgColor($status);
 
-
-
         switch ($status) {
             case 'initiated':
                 $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od')->status($status)->latest()->get()
@@ -108,7 +106,7 @@ class OrderManagementController extends Controller
         $od->distribution_type = $req->distribution_type;
 
         //prepare the time
-        $od->pharmacy_prep_time = Carbon::now()->addMinutes($req->prep_time)->toDateString();
+        $od->pharmacy_prep_time = Carbon::now()->addMinutes($req->prep_time)->toDateTimeString();
 
         $od->note = $req->note;
         $od->creater()->associate(admin());
