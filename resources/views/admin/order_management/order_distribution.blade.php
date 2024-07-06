@@ -71,7 +71,7 @@
                                                     <th>{{ __('Delivery Address') }}</th>
                                                     <td>:</td>
                                                     <td colspan="4" class="user-location"
-                                                        data-location="[{{ optional($order->address)->latitude }},{{ optional($order->address)->longitude }} ]">
+                                                        data-location="[{{ optional($order->address)->longitude }},{{ optional($order->address)->latitude }} ]">
                                                         {!! optional($order->address)->address !!}</td>
                                                 </tr>
                                             </table>
@@ -256,7 +256,8 @@
                                             <div class="col-12">
                                                 <div class="row mt-3">
                                                     <div class="form-group col-md-4">
-                                                        <label>{{ __('Payment Type') }}</label>
+                                                        <label>{{ __('Payment Type') }}<span
+                                                                class="text-danger">*</span></label>
                                                         @if (isset($order_distribution) && $order_distribution->status == 0)
                                                             <input type="text"
                                                                 value="{{ $order_distribution->payment_type == 0 ? 'Fixed Payment' : ($order_distribution->payment_type == 1 ? 'Open Payment' : '') }}"
@@ -279,7 +280,8 @@
                                                         ])
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <label>{{ __('Distribution Type') }}</label>
+                                                        <label>{{ __('Distribution Type') }}<span
+                                                                class="text-danger">*</span></label>
                                                         @if (isset($order_distribution) && $order_distribution->status == 0)
                                                             <input type="text"
                                                                 value="{{ $order_distribution->distribution_type == 0 ? 'Normal Distribution' : ($order_distribution->distribution_type == 1 ? 'Priority Distribution' : '') }}"
@@ -302,12 +304,23 @@
                                                         ])
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <label>{{ __('Prepare Time') }}</label>
-                                                        <input type="datetime-local"
+                                                        <label for="preparation-time">{{ __('Preparation Time') }}<span
+                                                                class="text-danger">*</span></label>
+                                                        <select id="preparation-time" class="form-control" name="prep_time">
+                                                            <option value="5">5 minutes</option>
+                                                            <option value="10">10 minutes</option>
+                                                            <option value="15">15 minutes</option>
+                                                            <option value="30">30 minutes</option>
+                                                            <option value="45">45 minutes</option>
+                                                            <option value="60">1 hour</option>
+                                                            <option value="90">1.5 hours</option>
+                                                            <option value="120">2 hours</option>
+                                                        </select>
+                                                        {{-- <input type="datetime-local"
                                                             @if (isset($order_distribution) && $order_distribution->status == 0) disabled @endif
                                                             name="prep_time"
                                                             value="{{ isset($order_distribution->prep_time) ? $order_distribution->prep_time : old('prep_time') }}"
-                                                            class="form-control {{ $errors->has('prep_time') ? ' is-invalid' : '' }}">
+                                                            class="form-control {{ $errors->has('prep_time') ? ' is-invalid' : '' }}"> --}}
                                                         @include('alerts.feedback', [
                                                             'field' => 'prep_time',
                                                         ])

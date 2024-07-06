@@ -6,7 +6,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Order List') }}</h4>
+                            <h4 class="card-title">{{ __("$status Order List") }}</h4>
                         </div>
                         <div class="col-4 text-end">
                             <span class="{{ $statusBgColor }}">{{ $status }}</span>
@@ -23,6 +23,9 @@
                                 <th>{{ __('Total Price') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Order date') }}</th>
+                                @if ($status == 'Processed')
+                                    <th>{{ __('Processed By') }}</th>
+                                @endif
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -36,6 +39,9 @@
                                     </td>
                                     <td><span class="{{ $order->statusBg() }}">{{ $order->statusTitle() }}</span></td>
                                     <td>{{ timeFormate($order->created_at) }}</td>
+                                    @if ($status == 'Processed')
+                                        <td>{{ $order->od->creater->name ?? 'System' }}</td>
+                                    @endif
                                     <td>
                                         @if ($order->status == 1)
                                             @include('admin.partials.action_buttons', [
