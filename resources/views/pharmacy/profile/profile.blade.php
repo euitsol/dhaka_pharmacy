@@ -147,7 +147,8 @@
                                     <label>{{ __('Operation Area') }}</label>
                                     @if (empty($pharmacy->oa_id))
                                         <select name="oa_id" class="form-control operation_area">
-                                            <option selected hidden>{{ __('Select Operation Area') }}</option>
+                                            <option selected hidden value=" ">{{ __('Select Operation Area') }}
+                                            </option>
                                             @foreach ($operation_areas as $area)
                                                 <option value="{{ $area->id }}">{{ $area->name }}</option>
                                             @endforeach
