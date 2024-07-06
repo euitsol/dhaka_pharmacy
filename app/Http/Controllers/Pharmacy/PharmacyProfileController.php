@@ -20,7 +20,8 @@ class PharmacyProfileController extends Controller
 {
     //
 
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('pharmacy');
     }
 
@@ -37,9 +38,9 @@ class PharmacyProfileController extends Controller
     public function address(AddressRequest $request): RedirectResponse
     {
         $address = Address::where('creater_id', pharmacy()->id)->where('creater_type', get_class(pharmacy()))->get();
-        if($address->count() > 0){
+        if ($address->count() > 0) {
             $save = $address->first();
-        }else{
+        } else {
             $save = new Address;
         }
 
@@ -64,7 +65,7 @@ class PharmacyProfileController extends Controller
         $pharmacy = Pharmacy::findOrFail(pharmacy()->id);
         $validator = $request->validate([
             'name' => 'required|min:4',
-            'phone' => 'required|numeric|digits:11|unique:pharmacies,phone,' . pharmacy()->id,
+            'phone' => 'nullable|numeric|digits:11|unique:pharmacies,phone,' . pharmacy()->id,
             'email' => 'required|email|unique:pharmacies,email,' . pharmacy()->id,
             'age' => 'nullable|numeric|digits:2',
             'identification_type' => 'nullable|in:NID,DOB,Passport',
@@ -93,10 +94,10 @@ class PharmacyProfileController extends Controller
         }
 
 
-        if(empty($pharmacy->oa_id)){
+        if (empty($pharmacy->oa_id)) {
             $pharmacy->oa_id = $request->oa_id;
         }
-        if(empty($pharmacy->osa_id)){
+        if (empty($pharmacy->osa_id)) {
             $pharmacy->osa_id = $request->osa_id;
         }
         $pharmacy->name = $request->name;
@@ -169,14 +170,13 @@ class PharmacyProfileController extends Controller
         return response()->json(['message' => 'Image not uploaded'], 400);
     }
 
-    public function get_osa($oa_id){
+    public function get_osa($oa_id)
+    {
         $operation_area = OperationArea::with('operation_sub_areas')->findOrFail($oa_id);
 
         $data['operation_sub_areas'] = $operation_area->operation_sub_areas->filter(function ($sub_area) {
             return $sub_area->status == 1;
         });
         return response()->json($data);
-
     }
-
 }
