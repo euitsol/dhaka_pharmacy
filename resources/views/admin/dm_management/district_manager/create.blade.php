@@ -37,10 +37,10 @@
                         <div class="form-group">
                             <label>{{ __('Operation Area') }}</label>
                             <select name="oa_id" class="form-control">
-                                <option selected hidden>{{ __('Select Operation Area') }}</option>
+                                <option selected hidden value=" ">{{ __('Select Operation Area') }}</option>
                                 @foreach ($operation_areas as $area)
-                                    <option value="{{ $area->id }}"
-                                        {{ old('oa_id') == $area->id ? 'selected' : '' }}>{{ __($area->name) }}</option>
+                                    <option value="{{ $area->id }}" {{ old('oa_id') == $area->id ? 'selected' : '' }}>
+                                        {{ __($area->name) }}</option>
                                 @endforeach
                             </select>
                             @include('alerts.feedback', ['field' => 'oa_id'])

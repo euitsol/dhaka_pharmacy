@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label>{{ __('Operation Area') }}</label>
                             <select name="oa_id" class="form-control">
-                                <option selected hidden>{{ __('Select Operation Area') }}</option>
+                                <option selected hidden value=" ">{{ __('Select Operation Area') }}</option>
                                 @foreach ($op_areas as $area)
                                     <option value="{{ $area->id }}" {{ old('oa_id') == $area->id ? 'selected' : '' }}>
                                         {{ $area->name }}</option>

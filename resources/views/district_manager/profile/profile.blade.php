@@ -1,6 +1,8 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'district_manager_profile'])
 @push('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 @section('content')
     <div class="profile-section">
@@ -57,8 +59,7 @@
                                         <div class="profile_image">
                                             <div class="img mx-auto mt-4 rounded-circle">
                                                 <img class="avatar mb-0 rounded-circle w-100 h-100" id="previewImage"
-                                                    src="{{ storage_url($dm->image) }}"
-                                                    alt="">
+                                                    src="{{ storage_url($dm->image) }}" alt="">
                                                 <label for="imageInput" class="camera-icon text-center rounded-circle">
                                                     <i class="fa-solid fa-camera-retro" style="cursor: pointer;"></i>
                                                     <input type="file" id="imageInput" name="image" accept="image/*"
@@ -73,14 +74,15 @@
                             <div class="row">
 
                                 <div class="form-group col-md-4">
-                                    <label>{{__('Operation Area')}}</label>
-                                    <input type="text" class="form-control" value="{{$dm->operation_area->name}}" disabled>
+                                    <label>{{ __('Operation Area') }}</label>
+                                    <input type="text" class="form-control" value="{{ $dm->operation_area->name }}"
+                                        disabled>
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
-                                        <option selected hidden>{{ __('Select Genger') }}</option>
+                                        <option selected hidden value=" ">{{ __('Select Genger') }}</option>
                                         <option value="Male" {{ $dm->gender == 'Male' ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
                                         <option value="Female" {{ $dm->gender == 'Female' ? 'selected' : '' }}>
@@ -110,7 +112,8 @@
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification Type') }}</label>
                                     <select name="identification_type" id="identification_type" class="form-control">
-                                        <option selected hidden>{{ __('Select Identification Type') }}</option>
+                                        <option selected hidden value=" ">{{ __('Select Identification Type') }}
+                                        </option>
                                         <option value="NID" {{ $dm->identification_type == 'NID' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
                                         <option value="DOB" {{ $dm->identification_type == 'DOB' ? 'selected' : '' }}>
@@ -193,10 +196,18 @@
     </div>
 @endsection
 @push('js_link')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endpush
 @push('js')
     <script>
+        function handleErrors(response) {
+            var errors = response.errors;
+            for (var field in errors) {
+                toastr.error(errors[field][0]);
+            }
+        }
         $(document).ready(function() {
             var form = $('#updateForm');
             $('#imageInput').change(function() {
@@ -223,7 +234,6 @@
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             var formData = new FormData();
             formData.append('image', $("#imageInput")[0].files[0]);
-            console.log(formData);
             var _url = "{{ route('dm.profile.update.image') }}";
 
             $.ajax({
@@ -252,38 +262,43 @@
                                 'X-CSRF-TOKEN': csrfToken
                             },
                             success: function(response) {
-                                console.log('Image uploaded successfully');
+                                if (!response.success) {
+                                    $('.profile_image .img').removeClass(
+                                        'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src',
+                                        "{{ storage_url($dm->image) }}");
+                                    handleErrors(response);
+                                }
+
                             },
                             complete: function(response) {
-                                // Remove animation classes after AJAX request is complete
-                                $('.profile_image .img').removeClass(
-                                    'div_animation overly');
-                                $('.profile_image .img img.avatar').removeClass(
-                                    'image_animation');
-                                $('.profile_image .camera-icon').css('display', 'block');
-                                toastr.success(response.responseJSON.message);
+                                if (response.responseJSON.message) {
+                                    $('.profile_image .img').removeClass(
+                                        'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src', response.responseJSON
+                                        .image);
+                                    toastr.success(response.responseJSON.message);
+                                }
                             },
                             error: function(xhr) {
                                 if (xhr.status === 422) {
                                     $('.profile_image .img').removeClass(
-                                    'div_animation overly');
+                                        'div_animation overly');
                                     $('.profile_image .img img.avatar').removeClass(
                                         'image_animation');
-                                    $('.profile_image .camera-icon').css('display', 'block');
-                                    $('#previewImage').attr('src', "{{ storage_url($dm->image)}}");
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src',
+                                        "{{ storage_url($dm->image) }}");
                                     toastr.error('Something is wrong!');
-
-                                    var errors = xhr.responseJSON.errors;
-                                    $.each(errors, function(field, messages) {
-                                        var errorHtml = '';
-                                        $.each(messages, function(index, message) {
-                                            errorHtml +=
-                                                '<span class="invalid-feedback mt-4 d-block" role="alert">' +
-                                                message + '</span>';
-                                        });
-                                        $('.profile_image img').after(
-                                            errorHtml);
-                                    });
                                 } else {
                                     console.log('An error occurred.');
                                 }

@@ -34,7 +34,7 @@
                                 <div class="unit">
                                     <label>{{ __('Unit') }}</label>
                                     <select name="unit" class="form-control">
-                                        <option selected hidden>{{ __('Select unit') }}</option>
+                                        <option selected hidden value=" ">{{ __('Select unit') }}</option>
                                         <option value="mg" {{ $medicine_strength->unit == 'mg' ? 'selected' : '' }}>
                                             {{ __('MG') }}</option>
                                         <option value="ml" {{ $medicine_strength->unit == 'ml' ? 'selected' : '' }}>

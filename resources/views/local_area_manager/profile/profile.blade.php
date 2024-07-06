@@ -73,11 +73,12 @@
                             </div>
                             <div class="row">
 
-                                
+
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification Type') }}</label>
                                     <select name="identification_type" id="identification_type" class="form-control">
-                                        <option selected hidden value="">{{ __('Select Identification Type') }}</option>
+                                        <option selected hidden value=" ">{{ __('Select Identification Type') }}
+                                        </option>
                                         <option value="NID" {{ $lam->identification_type == 'NID' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
                                         <option value="DOB" {{ $lam->identification_type == 'DOB' ? 'selected' : '' }}>
@@ -100,35 +101,34 @@
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Assigned District Manager') }}</label>
-                                    <input type="text" value="{{ $lam->dm->name }}"
-                                        class="form-control" disabled>
+                                    <input type="text" value="{{ $lam->dm->name }}" class="form-control" disabled>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operation Area') }}</label>
-                                    <input type="text" value="{{ $lam->dm->operation_area->name }}"
-                                        class="form-control" disabled>
+                                    <input type="text" value="{{ $lam->dm->operation_area->name }}" class="form-control"
+                                        disabled>
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operation Sub Area') }}</label>
-                                    @if(empty($lam->osa_id))
+                                    @if (empty($lam->osa_id))
                                         <select name="osa_id" class="form-control">
-                                            <option selected hidden>{{ __('Select Your Area') }}</option>
+                                            <option selected hidden value=" ">{{ __('Select Your Area') }}</option>
                                             @foreach ($lam->dm->operation_area->operation_sub_areas as $area)
-                                                <option value="{{$area->id}}">{{ $area->name }}</option>
+                                                <option value="{{ $area->id }}">{{ $area->name }}</option>
                                             @endforeach
                                         </select>
                                         @include('alerts.feedback', ['field' => 'osa_id'])
                                     @else
                                         <input type="text" value="{{ $lam->operation_sub_area->name }}"
-                                        class="form-control" disabled>
+                                            class="form-control" disabled>
                                     @endif
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
-                                        <option selected hidden value="">{{ __('Select Genger') }}</option>
+                                        <option selected hidden value=" ">{{ __('Select Genger') }}</option>
                                         <option value="Male" {{ $lam->gender == 'Male' ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
                                         <option value="Female" {{ $lam->gender == 'Female' ? 'selected' : '' }}>
@@ -148,24 +148,25 @@
                                 </div>
 
 
-                                
+
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Date of Birth') }}</label>
-                                    <input type="date" name="dob" value="{{ $lam->dob ? $lam->dob : old('dob') }}"
-                                        class="form-control">
+                                    <input type="date" name="dob"
+                                        value="{{ $lam->dob ? $lam->dob : old('dob') }}" class="form-control">
                                     @include('alerts.feedback', ['field' => 'dob'])
                                 </div>
-                                
-                                
-                                
-                                
+
+
+
+
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Age') }}</label>
-                                    <input type="text" name="age" value="{{ $lam->age ? $lam->age : old('age') }}"
-                                        class="form-control" placeholder="Enter age">
+                                    <input type="text" name="age"
+                                        value="{{ $lam->age ? $lam->age : old('age') }}" class="form-control"
+                                        placeholder="Enter age">
                                     @include('alerts.feedback', ['field' => 'age'])
                                 </div>
-                                
+
 
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Present Address') }}</label>
@@ -227,6 +228,12 @@
 @endpush
 @push('js')
     <script>
+        function handleErrors(response) {
+            var errors = response.errors;
+            for (var field in errors) {
+                toastr.error(errors[field][0]);
+            }
+        }
         $(document).ready(function() {
             var form = $('#updateForm');
             $('#imageInput').change(function() {
@@ -282,37 +289,43 @@
                                 'X-CSRF-TOKEN': csrfToken
                             },
                             success: function(response) {
-                                console.log('Image uploaded successfully');
+                                if (!response.success) {
+                                    $('.profile_image .img').removeClass(
+                                        'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src',
+                                        "{{ storage_url($lam->image) }}");
+                                    handleErrors(response);
+                                }
+
                             },
                             complete: function(response) {
-                                // Remove animation classes after AJAX request is complete
-                                $('.profile_image .img').removeClass(
-                                    'div_animation overly');
-                                $('.profile_image .img img.avatar').removeClass(
-                                    'image_animation');
-                                $('.profile_image .camera-icon').css('display', 'block');
-                                toastr.success(response.responseJSON.message);
+                                if (response.responseJSON.message) {
+                                    $('.profile_image .img').removeClass(
+                                        'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src', response.responseJSON
+                                        .image);
+                                    toastr.success(response.responseJSON.message);
+                                }
                             },
                             error: function(xhr) {
                                 if (xhr.status === 422) {
                                     $('.profile_image .img').removeClass(
-                                    'div_animation overly');
+                                        'div_animation overly');
                                     $('.profile_image .img img.avatar').removeClass(
                                         'image_animation');
-                                    $('.profile_image .camera-icon').css('display', 'block');
-                                    $('#previewImage').attr('src', "{{ $lam->image ? storage_url($lam->image) : asset('no_img/no_img.jpg') }}");
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src',
+                                        "{{ storage_url($lam->image) }}");
                                     toastr.error('Something is wrong!');
-                                    var errors = xhr.responseJSON.errors;
-                                    $.each(errors, function(field, messages) {
-                                        var errorHtml = '';
-                                        $.each(messages, function(index, message) {
-                                            errorHtml +=
-                                                '<span class="invalid-feedback mt-4 d-block" role="alert">' +
-                                                message + '</span>';
-                                        });
-                                        $('.profile_image img').after(
-                                            errorHtml);
-                                    });
                                 } else {
                                     console.log('An error occurred.');
                                 }

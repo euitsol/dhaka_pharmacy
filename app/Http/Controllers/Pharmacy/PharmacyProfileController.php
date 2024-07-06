@@ -8,6 +8,9 @@ use App\Models\Address;
 use App\Models\Documentation;
 use App\Models\OperationArea;
 use App\Models\OperationSubArea;
+use App\Http\Requests\Pharmacy\ProfileUpdateRequest;
+use App\Http\Requests\Pharmacy\PasswordUpdateRequest;
+use App\Http\Requests\Pharmacy\ImageUpdateRequest;
 use App\Models\Pharmacy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -59,29 +62,10 @@ class PharmacyProfileController extends Controller
         return redirect()->back();
     }
 
-    public function update(Request $request)
+    public function update(ProfileUpdateRequest $request)
     {
 
         $pharmacy = Pharmacy::findOrFail(pharmacy()->id);
-        $validator = $request->validate([
-            'name' => 'required|min:4',
-            'phone' => 'nullable|numeric|digits:11|unique:pharmacies,phone,' . pharmacy()->id,
-            'email' => 'required|email|unique:pharmacies,email,' . pharmacy()->id,
-            'age' => 'nullable|numeric|digits:2',
-            'identification_type' => 'nullable|in:NID,DOB,Passport',
-            'identification_no' => 'nullable|numeric',
-            'present_address' => 'nullable',
-            'cv' => 'nullable|file|mimes:pdf',
-
-            'gender' => 'nullable|in:Male,Female,Others',
-            'dob' => 'nullable|date|before:today',
-            'father_name' => 'nullable|min:6',
-            'mother_name' => 'nullable|min:6',
-            'permanent_address' => 'nullable',
-            'emergency_phone' => 'nullable|numeric|digits:11',
-            'oa_id' => 'nullable|exists:operation_areas,id',
-            'osa_id' => 'nullable|exists:operation_sub_areas,id',
-        ]);
         if ($request->hasFile('cv')) {
             $file = $request->file('cv');
             $fileName = pharmacy()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
@@ -114,49 +98,21 @@ class PharmacyProfileController extends Controller
         $pharmacy->permanent_address = $request->permanent_address;
         $pharmacy->emergency_phone = $request->emergency_phone;
         $pharmacy->update();
-
-        if ($validator) {
-            flash()->addSuccess('Profile updated successfully.');
-        }
+        flash()->addSuccess('Profile updated successfully.');
         return redirect()->back();
     }
-    public function updatePassword(Request $request)
+    public function updatePassword(PasswordUpdateRequest $request)
     {
 
         $pharmacy = Pharmacy::findOrFail(pharmacy()->id);
-        $validator = $request->validate([
-            'old_password' => [
-                'required',
-                'min:4',
-                function ($attribute, $value, $fail) {
-                    // Check if the old_password matches the current password
-                    if (!\Hash::check($value, pharmacy()->password)) {
-                        $fail("The $attribute doesn't match the current password.");
-                    }
-                },
-            ],
-            'password' => 'required|min:6|confirmed',
-        ]);
         $pharmacy->password = $request->password;
         $pharmacy->update();
-
-        if ($validator) {
-            flash()->addSuccess('Password updated successfully.');
-        }
+        flash()->addSuccess('Password updated successfully.');
         return redirect()->back();
     }
-    public function updateImage(Request $request)
+    public function updateImage(ImageUpdateRequest $request)
     {
-
-        $validator = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
         $pharmacy = Pharmacy::findOrFail(pharmacy()->id);
-
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = pharmacy()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
@@ -164,9 +120,8 @@ class PharmacyProfileController extends Controller
             $path = $image->storeAs($folderName, $imageName, 'public');
             $pharmacy->image = $path;
             $pharmacy->save();
-            return response()->json(['message' => 'Image uploaded successfully'], 200);
+            return response()->json(['message' => 'Image uploaded successfully', 'image' => storage_url($pharmacy->image)], 200);
         }
-
         return response()->json(['message' => 'Image not uploaded'], 400);
     }
 
