@@ -228,6 +228,12 @@
 @endpush
 @push('js')
     <script>
+        function handleErrors(response) {
+            var errors = response.errors;
+            for (var field in errors) {
+                toastr.error(errors[field][0]);
+            }
+        }
         $(document).ready(function() {
             var form = $('#updateForm');
             $('#imageInput').change(function() {
@@ -283,16 +289,31 @@
                                 'X-CSRF-TOKEN': csrfToken
                             },
                             success: function(response) {
-                                console.log('Image uploaded successfully');
+                                if (!response.success) {
+                                    $('.profile_image .img').removeClass(
+                                        'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src',
+                                        "{{ storage_url($lam->image) }}");
+                                    handleErrors(response);
+                                }
+
                             },
                             complete: function(response) {
-                                // Remove animation classes after AJAX request is complete
-                                $('.profile_image .img').removeClass(
-                                    'div_animation overly');
-                                $('.profile_image .img img.avatar').removeClass(
-                                    'image_animation');
-                                $('.profile_image .camera-icon').css('display', 'block');
-                                toastr.success(response.responseJSON.message);
+                                if (response.responseJSON.message) {
+                                    $('.profile_image .img').removeClass(
+                                        'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src', response.responseJSON
+                                        .image);
+                                    toastr.success(response.responseJSON.message);
+                                }
                             },
                             error: function(xhr) {
                                 if (xhr.status === 422) {
@@ -303,20 +324,8 @@
                                     $('.profile_image .camera-icon').css('display',
                                         'block');
                                     $('#previewImage').attr('src',
-                                        "{{ $lam->image ? storage_url($lam->image) : asset('no_img/no_img.jpg') }}"
-                                    );
+                                        "{{ storage_url($lam->image) }}");
                                     toastr.error('Something is wrong!');
-                                    var errors = xhr.responseJSON.errors;
-                                    $.each(errors, function(field, messages) {
-                                        var errorHtml = '';
-                                        $.each(messages, function(index, message) {
-                                            errorHtml +=
-                                                '<span class="invalid-feedback mt-4 d-block" role="alert">' +
-                                                message + '</span>';
-                                        });
-                                        $('.profile_image img').after(
-                                            errorHtml);
-                                    });
                                 } else {
                                     console.log('An error occurred.');
                                 }

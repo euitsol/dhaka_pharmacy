@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Rider;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Rider\ImageUpdateRequest;
+use App\Http\Requests\Rider\PasswordUpdateRequest;
+use App\Http\Requests\Rider\ProfileUpdateRequest;
 use App\Models\Documentation;
 use App\Models\OperationArea;
 use App\Models\OperationSubArea;
@@ -31,28 +34,10 @@ class RiderProfileController extends Controller
         return view('rider.profile.profile', $data);
     }
 
-    public function update(Request $request)
+    public function update(ProfileUpdateRequest $request)
     {
 
         $rider = Rider::findOrFail(rider()->id);
-        $validator = $request->validate([
-            'name' => 'required|min:4',
-            'phone' => 'required|numeric|digits:11|unique:riders,phone,' . rider()->id,
-            'age' => 'nullable|numeric|digits:2',
-            'identification_type' => 'nullable|in:NID,DOB,Passport',
-            'identification_no' => 'nullable|numeric',
-            'present_address' => 'nullable',
-            'cv' => 'nullable|file|mimes:pdf',
-
-            'gender' => 'nullable|in:Male,Female,Others',
-            'dob' => 'nullable|date|before:today',
-            'father_name' => 'nullable|min:6',
-            'mother_name' => 'nullable|min:6',
-            'permanent_address' => 'nullable',
-            'emergency_phone' => 'nullable|numeric|digits:11',
-            'oa_id' => 'nullable|exists:operation_areas,id',
-            'osa_id' => 'nullable|exists:operation_sub_areas,id',
-        ]);
         if ($request->hasFile('cv')) {
             $file = $request->file('cv');
             $fileName = rider()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
@@ -64,11 +49,11 @@ class RiderProfileController extends Controller
             $rider->cv = $path;
         }
 
-        
-        if(empty($rider->oa_id)){
+
+        if (empty($rider->oa_id)) {
             $rider->oa_id = $request->oa_id;
         }
-        if(empty($rider->osa_id)){
+        if (empty($rider->osa_id)) {
             $rider->osa_id = $request->osa_id;
         }
         $rider->name = $request->name;
@@ -84,47 +69,20 @@ class RiderProfileController extends Controller
         $rider->permanent_address = $request->permanent_address;
         $rider->emergency_phone = $request->emergency_phone;
         $rider->update();
-
-        if ($validator) {
-            flash()->addSuccess('Profile updated successfully.');
-        }
+        flash()->addSuccess('Profile updated successfully.');
         return redirect()->back();
     }
-    public function updatePassword(Request $request)
+    public function updatePassword(PasswordUpdateRequest $request)
     {
 
         $rider = Rider::findOrFail(rider()->id);
-        $validator = $request->validate([
-            'old_password' => [
-                'required',
-                'min:4',
-                function ($attribute, $value, $fail) {
-                    // Check if the old_password matches the current password
-                    if (!\Hash::check($value, rider()->password)) {
-                        $fail("The $attribute doesn't match the current password.");
-                    }
-                },
-            ],
-            'password' => 'required|min:6|confirmed',
-        ]);
         $rider->password = $request->password;
         $rider->update();
-
-        if ($validator) {
-            flash()->addSuccess('Password updated successfully.');
-        }
+        flash()->addSuccess('Password updated successfully.');
         return redirect()->back();
     }
-    public function updateImage(Request $request)
+    public function updateImage(ImageUpdateRequest $request)
     {
-
-        $validator = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
         $rider = Rider::findOrFail(rider()->id);
 
         if ($request->hasFile('image')) {
@@ -134,19 +92,18 @@ class RiderProfileController extends Controller
             $path = $image->storeAs($folderName, $imageName, 'public');
             $rider->image = $path;
             $rider->save();
-            return response()->json(['message' => 'Image uploaded successfully'], 200);
+            return response()->json(['message' => 'Image uploaded successfully', 'image' => storage_url($rider->image)], 200);
         }
-
         return response()->json(['message' => 'Image not uploaded'], 400);
     }
 
-    public function get_osa($oa_id){
+    public function get_osa($oa_id)
+    {
         $operation_area = OperationArea::with('operation_sub_areas')->findOrFail($oa_id);
 
         $data['operation_sub_areas'] = $operation_area->operation_sub_areas->filter(function ($sub_area) {
             return $sub_area->status == 1;
         });
         return response()->json($data);
-
     }
 }

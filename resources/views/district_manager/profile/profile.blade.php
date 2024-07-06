@@ -283,6 +283,8 @@
                                         'image_animation');
                                     $('.profile_image .camera-icon').css('display',
                                         'block');
+                                    $('#previewImage').attr('src', response.responseJSON
+                                        .image);
                                     toastr.success(response.responseJSON.message);
                                 }
                             },
