@@ -564,6 +564,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('/details/{id}', 'details')->name('order_details');
             Route::get('/order-distribution/{id}', 'order_distribution')->name('order_distribution');
             Route::post('/order-distribution/{order_id}', 'order_distribution_store')->name('order_distribution');
+            Route::get('/distribution/details/{do_id}', 'distribution_details')->name('details.order_distribution');
         });
     });
 
@@ -571,7 +572,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
     Route::controller(DistributedOrderController::class)->prefix('distributed-order')->name('do.')->group(function () {
         Route::get('/{status}', 'index')->name('do_list');
         Route::get('/{status}/orders', 'dispute')->name('dispute.do_list');
-        Route::get('/details/{do_id}', 'details')->name('do_details');
+        // Route::get('/details/{do_id}', 'details')->name('do_details');
         Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
         Route::post('/update', 'update')->name('do_update');
 

@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Traits\TransformOrderItemTrait;
+use App\Models\Rider;
 
 class OrderManagementController extends Controller
 {
@@ -36,17 +37,19 @@ class OrderManagementController extends Controller
         switch ($status) {
             case 'initiated':
                 $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od')->status($status)->latest()->get()
-                    ->each(function (&$order) {
-                        $this->calculateOrderTotalDiscountPrice($order);
-                    }
-                );
+                    ->each(
+                        function (&$order) {
+                            $this->calculateOrderTotalDiscountPrice($order);
+                        }
+                    );
                 return view('admin.order_management.index', $data);
             case 'submitted':
                 $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od')->status($status)->latest()->get()
-                    ->each(function (&$order) {
-                        $this->calculateOrderTotalDiscountPrice($order);
-                    }
-                );
+                    ->each(
+                        function (&$order) {
+                            $this->calculateOrderTotalDiscountPrice($order);
+                        }
+                    );
                 return view('admin.order_management.index', $data);
             case 'processed':
 
@@ -76,8 +79,8 @@ class OrderManagementController extends Controller
 
     public function order_distribution($id)
     {
-        $data['order'] = Order::with(['address', 'od.odps.cart', 'od.odps.pharmacy', 'products', 'products.pivot.unit', 'payments'])->paid()->find(decrypt($id));
-        if(!empty($data['order'])){
+        $data['order'] = Order::with(['address', 'od.odps.order_product', 'od.odps.pharmacy', 'products', 'products.pivot.unit', 'payments'])->paid()->find(decrypt($id));
+        if (!empty($data['order'])) {
             $this->calculateOrderTotalPrice($data['order']);
             $this->calculateOrderTotalDiscountPrice($data['order']);
 
@@ -86,11 +89,10 @@ class OrderManagementController extends Controller
                 $data['order_distribution'] = $data['order']->od->where('status', 0)->first();
             }
             return view('admin.order_management.order_distribution', $data);
-        }else{
+        } else {
             flash()->addError('Cannot distribute this order');
             return redirect()->back();
         }
-
     }
 
     public function order_distribution_store(OrderDistributionRequest $req, $order_id): RedirectResponse
@@ -124,7 +126,34 @@ class OrderManagementController extends Controller
             $this->createDistributionOTP($od, $odp);
         }
         flash()->addSuccess('Order Distributed Successfully.');
-        return redirect()->route('om.order.order_list', 'pending');
+        return redirect()->route('om.order.order_list', 'processed');
+    }
+
+
+    public function distribution_details($do_id): View
+    {
+        $query = OrderDistribution::with(['order.customer', 'odrs.rider', 'odps' => function ($query) {
+            $query->with('order_product.product')->where('status', '!=', -1);
+        }])
+            ->withCount(['odps' => function ($query) {
+                $query->where('status', '!=', -1);
+            }])
+            ->findOrFail(decrypt($do_id));
+        $query->odps->each(function (&$odp) {
+            $odp->totalDiscountPrice = $this->OrderItemDiscountPrice($odp->order_product);
+            $odp->totalPrice = $this->OrderItemPrice($odp->order_product);
+        });
+        $this->calculateOrderTotalDiscountPrice($query->order);
+        if ($query->status == 2) {
+            $data['riders'] = Rider::activated()->kycVerified()->latest()->get();
+        }
+        $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
+        if ($query->odrs) {
+            $data['do_rider'] = $query->odrs->where('status', '!=', 0)->where('status', '!=', -1)->first();
+            $data['dispute_do_riders'] = $query->odrs()->where('status', 0)->orWhere('status', -1)->latest()->get();
+        }
+        $data['do'] = $query;
+        return view('admin.distributed_order.details', $data);
     }
 
     protected function getOrderStatusBgColor($status): string
@@ -152,13 +181,13 @@ class OrderManagementController extends Controller
     protected function createDistributionOTP($od, $odp): Void
     {
         $check = DistributionOtp::where('order_distribution_id', $od->id)->where('otp_author_id', $odp->pharmacy->id)->where('otp_author_type', get_class($odp->pharmacy))->first();
-            if (!$check) {
-                $PVotp = new DistributionOtp();
-                $PVotp->order_distribution_id = $od->id;
-                $PVotp->otp_author()->associate($odp->pharmacy);
-                $PVotp->otp = otp();
-                $PVotp->created_by = admin()->id;
-                $PVotp->save();
-            }
+        if (!$check) {
+            $PVotp = new DistributionOtp();
+            $PVotp->order_distribution_id = $od->id;
+            $PVotp->otp_author()->associate($odp->pharmacy);
+            $PVotp->otp = otp();
+            $PVotp->created_by = admin()->id;
+            $PVotp->save();
+        }
     }
 }

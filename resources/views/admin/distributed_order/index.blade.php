@@ -25,11 +25,9 @@
                                 @if ($status == 'Processed')
                                     <th>{{ __('Total Pending') }}</th>
                                     <th>{{ __('Total Preparing') }}</th>
+                                    <th>{{ __('Total Prepared') }}</th>
                                     <th>{{ __('Total Dispute') }}</th>
                                 @endif
-                                {{-- @if ($pp_count || $status == 'waiting-for-rider')
-                                    <th>{{ __('Total Accepted') }}</th>
-                                @endif --}}
                                 <th>{{ __('Total Price') }}</th>
                                 <th>{{ __('Payment Type') }}</th>
                                 <th>{{ __('Distribution Type') }}</th>
@@ -53,10 +51,13 @@
                                                 class="{{ $do->odps->where('status', 1)->count() > 0 ? 'badge badge-warning' : '' }}">{{ $do->odps->where('status', 1)->count() }}</span>
                                         </td>
                                         <td><span
+                                                class="{{ $do->odps->where('status', 2)->count() > 0 ? 'badge badge-warning' : '' }}">{{ $do->odps->where('status', 2)->count() }}</span>
+                                        </td>
+                                        <td><span
                                                 class="{{ $do->odps->where('status', 3)->count() > 0 ? 'badge badge-danger' : '' }}">{{ $do->odps->where('status', 3)->count() }}</span>
                                         </td>
                                     @endif
-                                    {{-- @if ($pp_count || $status == 'waiting-for-rider')
+                                    {{-- @if ($status == 'waiting-for-rider')
                                         <td><span
                                                 class="{{ $do->odps->where('status', 2)->count() > 0 ? 'badge badge-success' : '' }}">{{ $do->odps->where('status', 2)->count() }}</span>
                                         </td>
@@ -70,7 +71,7 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'do.do_details',
+                                                    'routeName' => 'om.order.details.order_distribution',
                                                     'params' => [encrypt($do->id)],
                                                     'label' => 'Details',
                                                 ],

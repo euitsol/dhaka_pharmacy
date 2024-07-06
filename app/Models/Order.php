@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
+
 class Order extends BaseModel
 {
     use HasFactory, SoftDeletes, EagerLoadPivotTrait;
@@ -120,8 +121,8 @@ class Order extends BaseModel
     public function products()
     {
         return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
-                    ->using(OrderProduct::class)
-                    ->withPivot('id', 'unit_id', 'quantity');
+            ->using(OrderProduct::class)
+            ->withPivot('id', 'unit_id', 'quantity');
     }
 
     public function scopeInitiated($query)

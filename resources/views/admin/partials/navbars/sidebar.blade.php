@@ -727,19 +727,17 @@
                 <li>
                     <a class="@if (
                         $pageSlug == 'payment_Success' ||
-                            $pageSlug == 'payment_details' ||
                             $pageSlug == 'payment_Failed' ||
                             $pageSlug == 'payment_Cancel' ||
-                            $pageSlug == 'payment_Pending' ||
-                            $pageSlug == 'payment_Processing') @else collapsed @endif" data-toggle="collapse"
+                            $pageSlug == 'payment_Initiated' ||
+                            $pageSlug == 'payment_Unkhown') @else collapsed @endif" data-toggle="collapse"
                         href="#payment_management"
                         @if (
                             $pageSlug == 'payment_Success' ||
-                                $pageSlug == 'payment_details' ||
                                 $pageSlug == 'payment_Failed' ||
                                 $pageSlug == 'payment_Cancel' ||
-                                $pageSlug == 'payment_Pending' ||
-                                $pageSlug == 'payment_Processing') aria-expanded="true" @else aria-expanded="false" @endif>
+                                $pageSlug == 'payment_Initiated' ||
+                                $pageSlug == 'payment_Unkhown') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-credit-card"></i>
                         <span class="nav-link-text">{{ __('Payment Management') }}</span>
                         <b class="caret mt-1"></b>
@@ -747,20 +745,19 @@
 
                     <div class="collapse @if (
                         $pageSlug == 'payment_Success' ||
-                            $pageSlug == 'payment_details' ||
                             $pageSlug == 'payment_Failed' ||
                             $pageSlug == 'payment_Cancel' ||
-                            $pageSlug == 'payment_Pending' ||
-                            $pageSlug == 'payment_Processing') show @endif" id="payment_management">
+                            $pageSlug == 'payment_Initiated' ||
+                            $pageSlug == 'payment_Unkhown') show @endif" id="payment_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
                                     [
-                                        'pageSlug' => 'payment_Pending',
+                                        'pageSlug' => 'payment_Initiated',
                                         'routeName' => 'pym.payment.payment_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'pending',
-                                        'label' => 'Payment List (Pending)',
+                                        'params' => 'initiated',
+                                        'label' => 'Payment List (Initiated)',
                                     ],
                                     [
                                         'pageSlug' => 'payment_Success',
@@ -784,11 +781,11 @@
                                         'label' => 'Payment List (Cancel)',
                                     ],
                                     [
-                                        'pageSlug' => 'payment_Processing',
+                                        'pageSlug' => 'payment_Unkhown',
                                         'routeName' => 'pym.payment.payment_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'processing',
-                                        'label' => 'Payment List (Processing)',
+                                        'params' => 'unkhown',
+                                        'label' => 'Payment List (Unkhown)',
                                     ],
                                 ],
                             ])
