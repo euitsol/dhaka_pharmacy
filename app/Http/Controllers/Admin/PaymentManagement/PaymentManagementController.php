@@ -44,7 +44,7 @@ class PaymentManagementController extends Controller
 
     protected function getPaymentStatusBgColor($status)
     {
-        $statusBgColor = ($status == 'success') ? 'badge badge-success' : (($status == 'pending') ? 'badge badge-info' : (($status == 'failed') ? 'badge badge-danger' : (($status == 'cancel') ? 'badge badge-warning' : 'badge badge-primary')));
+        $statusBgColor = ($status == 'success') ? 'badge badge-success' : (($status == 'initiated') ? 'badge badge-info' : (($status == 'failed') ? 'badge badge-danger' : (($status == 'cancel') ? 'badge badge-warning' : 'badge badge-primary')));
         return $statusBgColor;
     }
 }

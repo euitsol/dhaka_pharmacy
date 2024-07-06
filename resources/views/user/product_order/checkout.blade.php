@@ -131,7 +131,7 @@
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
                                 <div class="col ps-0">{{ __('Total Price') }}</div>
                                 <div class="col text-end ">
-                                    <span> {!! get_taka_icon() !!} {{ number_format(ceil($totalPrice)) }}</span>
+                                    <span> {!! get_taka_icon() !!} {{ number_format($totalPrice, 2) }}</span>
                                 </div>
                             </div>
                             <div class="row py-2 px-0" style="border-top: 1px solid rgba(0,0,0,.1);">
