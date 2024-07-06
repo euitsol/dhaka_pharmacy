@@ -331,8 +331,8 @@ function formatPercentageNumber($number)
 
 function otp()
 {
-    $otp =  mt_rand(100000, 999999);
-    // $otp =  '000000';
+    // $otp =  mt_rand(100000, 999999);
+    $otp =  '000000';
     return $otp;
 }
 
@@ -488,12 +488,12 @@ function getFormattedCountdown($pastDate)
     return $countdown;
 }
 
-    //This function will check the if the given route is a route name or full url
-    function is_valid_route($routeOrUrl)
-    {
-        if (!empty($routeOrUrl) && (Route::has($routeOrUrl))) {
-            return true;
-        }else{
-            return false;
-        }
+//This function will check the if the given route is a route name or full url
+function is_valid_route($routeOrUrl)
+{
+    if (!empty($routeOrUrl) && (Route::has($routeOrUrl))) {
+        return true;
+    } else {
+        return false;
     }
+}
