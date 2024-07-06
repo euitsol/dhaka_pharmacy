@@ -47,5 +47,12 @@ return [
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         'redirect'      => env('FACEBOOK_REDIRECT_URL')
     ],
+    'sms_api' => [
+        'url'     => env('SMS_API_URL'),
+        'key' => env('SMS_API_KEY'),
+        'secret'      => env('SMS_API_SECRET'),
+        'sender_id'      => env('SMS_API_SENDER_ID'),
+        'status'      => env('SMS_API_STATUS'),
+    ],
 
 ];
