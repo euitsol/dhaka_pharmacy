@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label>{{ __('Local Area Manager Area') }}</label>
                             <select name="osa_id" class="form-control {{ $errors->has('osa_id') ? ' is-invalid' : '' }}">
-                                <option selected hidden value="">{{ __('Select Local Area Manager Area') }}</option>
+                                <option selected hidden value=" ">{{ __('Select Local Area Manager Area') }}</option>
                                 @foreach (dm()->operation_area->operation_sub_areas as $area)
                                     <option value="{{$area->id}}" {{($area->id==old('osa_id'))? 'selected' : ''}}>{{ $area->name }}</option>
                                 @endforeach

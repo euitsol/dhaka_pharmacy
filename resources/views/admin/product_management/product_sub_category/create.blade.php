@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label>{{ __('Product Category') }}</label>
                             <select name="pro_cat_id" class="form-control">
-                                <option selected hidden>{{ __('Select Product Category') }}</option>
+                                <option selected hidden value=" ">{{ __('Select Product Category') }}</option>
                                 @foreach ($pro_cats as $cat)
                                     <option value="{{ $cat->id }}"
                                         {{ old('pro_cat_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>

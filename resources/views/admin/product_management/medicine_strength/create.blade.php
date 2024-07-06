@@ -32,7 +32,7 @@
                                 <div class="unit">
                                     <label>{{ __('Unit') }}</label>
                                     <select name="unit" class="form-control">
-                                        <option selected hidden>{{ __('Select unit') }}</option>
+                                        <option selected hidden value=" ">{{ __('Select unit') }}</option>
                                         <option value="mg" {{ old('unit') == 'mg' ? 'selected' : '' }}>
                                             {{ __('MG') }}</option>
                                         <option value="ml" {{ old('unit') == 'ml' ? 'selected' : '' }}>

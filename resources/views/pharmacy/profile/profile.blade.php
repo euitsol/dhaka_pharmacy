@@ -105,7 +105,7 @@
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification Type') }}</label>
                                     <select name="identification_type" id="identification_type" class="form-control">
-                                        <option selected hidden value="">{{ __('Select Identification Type') }}
+                                        <option selected hidden value=" ">{{ __('Select Identification Type') }}
                                         </option>
                                         <option value="NID"
                                             {{ $pharmacy->identification_type == 'NID' ? 'selected' : '' }}>
@@ -131,7 +131,7 @@
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
-                                        <option selected hidden value="">{{ __('Select Genger') }}</option>
+                                        <option selected hidden value=" ">{{ __('Select Genger') }}</option>
                                         <option value="Male" {{ $pharmacy->gender == 'Male' ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
                                         <option value="Female" {{ $pharmacy->gender == 'Female' ? 'selected' : '' }}>
@@ -153,7 +153,7 @@
                                                 <option value="{{ $area->id }}">{{ $area->name }}</option>
                                             @endforeach
                                         </select>
-                                        @include('alerts.feedback', ['field' => 'osa_id'])
+                                        @include('alerts.feedback', ['field' => 'oa_id'])
                                     @else
                                         <input type="text" value="{{ $pharmacy->operation_area->name }}"
                                             class="form-control" disabled>
@@ -164,7 +164,7 @@
                                     <label>{{ __('Operation Sub Area') }}</label>
                                     @if (empty($pharmacy->osa_id))
                                         <select name="osa_id" class="form-control operation_sub_area" disabled>
-                                            <option selected hidden>{{ __('Select Operation Sub Area') }}</option>
+                                            <option selected hidden value=" ">{{ __('Select Operation Sub Area') }}</option>
                                         </select>
                                         @include('alerts.feedback', ['field' => 'osa_id'])
                                     @else
