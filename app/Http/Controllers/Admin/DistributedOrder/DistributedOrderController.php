@@ -27,21 +27,22 @@ class DistributedOrderController extends Controller
 
     public function index($status): View
     {
-        $data['pp_count'] = false;
-        if ($this->getStatus($status) == 0 || $this->getStatus($status) == 1) {
-            $data['pp_count'] = true;
-        }
-        $data['status'] = $status;
-        $data['statusBg'] = $this->statusBg($this->getStatus($status));
-        $data['dos'] = OrderDistribution::with(['order.products', 'odps'])
-            ->withCount(['odps' => function ($query) {
-                $query->where('status', '!=', -1);
-            }])
-            ->where('status', $this->getStatus($status))->latest()->get()
-            ->each(function (&$do) {
-                $this->calculateOrderTotalDiscountPrice($do->order);
-            });
-        return view('admin.distributed_order.index', $data);
+        // $data['pp_count'] = false;
+        // if ($this->getStatus($status) == 0 || $this->getStatus($status) == 1) {
+        //     $data['pp_count'] = true;
+        // }
+        // $data['status'] = $status;
+        // $data['statusBg'] = $this->statusBg($this->getStatus($status));
+
+        // $data['dos'] = OrderDistribution::with(['order.products', 'odps'])
+        //     ->withCount(['odps' => function ($query) {
+        //         $query->where('status', '!=', -1);
+        //     }])
+        //     ->where('status', $this->getStatus($status))->latest()->get()
+        //     ->each(function (&$do) {
+        //         $this->calculateOrderTotalDiscountPrice($do->order);
+        //     });
+        // return view('admin.distributed_order.index', $data);
     }
     public function dispute($status): View
     {

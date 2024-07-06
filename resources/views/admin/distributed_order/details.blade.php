@@ -23,9 +23,8 @@
                         </div>
                         <div class="col-6 text-end">
                             @include('admin.partials.button', [
-                                'routeName' => 'do.do_list',
+                                'routeName' => URL::previous(),
                                 'className' => 'btn-primary',
-                                'params' => strtolower($do->statusTitle()),
                                 'label' => 'Back',
                             ])
                         </div>
@@ -68,7 +67,7 @@
                                 <td>|</td>
                                 <th>{{ __('Preparation Time') }}</th>
                                 <td>:</td>
-                                <th>{{ readablePrepTime($do->created_at, $do->prep_time) }}</th>
+                                <th>{!! remainingTime($do->pharmacy_prep_time, true) !!}</th>
                             </tr>
                             <tr>
                                 <th>{{ __('Order Type') }}</th>
@@ -400,3 +399,6 @@
     </div>
 
 @endsection
+@push('js_link')
+    <script src="{{ asset('admin/js/remaining.js') }}"></script>
+@endpush
