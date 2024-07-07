@@ -350,34 +350,35 @@ function u_user_name($user)
 {
     return $user->name ?? '--';
 }
-    /**
-     * Calculate the remaining time until the end time.
-     *
-     * @param string $endTime The end time.
-     * @param bool $html Whether to return HTML formatted string.
-     * @return string
-     */
-    function remainingTime($endTime, $html = false)
-    {
-        $end = Carbon::parse($endTime);
-        $now = Carbon::now();
-        $difference = $now->diffForHumans($end, [
-            'parts' => 2,
-            'join' => ', ',
-            'syntax' => Carbon::DIFF_ABSOLUTE,
-            'short' => true,
-        ]);
+/**
+ * Calculate the remaining time until the end time.
+ *
+ * @param string $endTime The end time.
+ * @param bool $html Whether to return HTML formatted string.
+ * @return string
+ */
+function remainingTime($endTime, $html = false)
+{
+    $end = Carbon::parse($endTime);
+    $now = Carbon::now();
+    $difference = $now->diffForHumans($end, [
+        'parts' => 2,
+        'join' => ', ',
+        'syntax' => Carbon::DIFF_ABSOLUTE,
+        'short' => true,
+    ]);
 
-        if ($now->lessThan($end)) {
-            $result = $html ? "<span class='prep_time' data-end-time='$endTime' style='color: green;'>$difference remaining</span>" : "$difference remaining";
-        } else {
-            $result = $html ? "<span class='prep_time' data-end-time='$endTime' style='color: red;'>Delayed</span>" : 0;
-        }
-
-        return $result;
+    if ($now->lessThan($end)) {
+        $result = $html ? "<span class='prep_time' data-end-time='$endTime' style='color: green;'>$difference remaining</span>" : "$difference remaining";
+    } else {
+        $result = $html ? "<span class='prep_time' data-end-time='$endTime' style='color: red;'>Delayed</span>" : 0;
     }
 
-function prepTimeConverter($end_time){
+    return $result;
+}
+
+function prepTimeConverter($end_time)
+{
     $duration = Carbon::now()->diff(Carbon::parse($end_time));
 }
 
@@ -513,4 +514,9 @@ function is_valid_route($routeOrUrl)
     } else {
         return false;
     }
+}
+
+function slugToTitle($slug)
+{
+    return ucwords(strtolower(str_replace('-', ' ', $slug)));
 }

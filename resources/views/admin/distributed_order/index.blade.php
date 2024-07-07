@@ -6,12 +6,11 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __(ucwords(strtolower(str_replace('-', ' ', $status))) . ' Orders') }}
+                            <h4 class="card-title">{{ __(slugToTitle($status) . ' Orders') }}
                             </h4>
                         </div>
                         <div class="col-4 text-end">
-                            <span
-                                class="{{ $statusBgColor }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $status)))) }}</span>
+                            <span class="{{ $statusBgColor }}">{{ __(slugToTitle($status)) }}</span>
                         </div>
                     </div>
                 </div>
@@ -27,11 +26,16 @@
                                     <th>{{ __('Total Preparing') }}</th>
                                     <th>{{ __('Total Prepared') }}</th>
                                     <th>{{ __('Total Dispute') }}</th>
+                                    <th>{{ __('Preparation Time Left') }}</th>
+                                @elseif ($status == 'Assigned')
+                                    <th>{{ __('Assined Rider') }}</th>
+                                    <th>{{ __('Status') }}</th>
                                 @endif
                                 <th>{{ __('Total Price') }}</th>
-                                <th>{{ __('Payment Type') }}</th>
-                                <th>{{ __('Distribution Type') }}</th>
-                                <th>{{ __('Preparation Time Left') }}</th>
+                                <th>{{ __('Processed By') }}</th>
+                                {{-- <th>{{ __('Payment Type') }}</th>
+                                <th>{{ __('Distribution Type') }}</th> --}}
+
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -56,17 +60,22 @@
                                         <td><span
                                                 class="{{ $do->odps->where('status', 3)->count() > 0 ? 'badge badge-danger' : '' }}">{{ $do->odps->where('status', 3)->count() }}</span>
                                         </td>
-                                    @endif
-                                    {{-- @if ($status == 'waiting-for-rider')
+                                        <td>{!! remainingTime($do->pharmacy_prep_time, true) !!}</td>
+                                    @elseif ($status == 'Assigned')
+                                        @php
+                                            $odr = $do->odrs->where('status', 1)->first();
+                                        @endphp
+                                        <td>{{ $odr->rider->name }}</td>
                                         <td><span
-                                                class="{{ $do->odps->where('status', 2)->count() > 0 ? 'badge badge-success' : '' }}">{{ $do->odps->where('status', 2)->count() }}</span>
+                                                class="{{ $odr->statusBg() }}">{{ slugToTitle($odr->statusTitle()) }}</span>
                                         </td>
-                                    @endif --}}
+                                    @endif
                                     <td>{!! get_taka_icon() !!}{{ number_format(ceil($do->order->totalDiscountPrice + $do->order->delivery_fee)) }}
                                     </td>
-                                    <td>{{ $do->paymentType() }}</td>
-                                    <td>{{ $do->distributionType() }}</td>
-                                    <td>{!! remainingTime($do->pharmacy_prep_time, true) !!}</td>
+                                    <td>{{ $do->creater->name ?? 'System' }}</td>
+
+                                    {{-- <td>{{ $do->paymentType() }}</td>
+                                    <td>{{ $do->distributionType() }}</td> --}}
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

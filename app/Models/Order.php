@@ -61,6 +61,12 @@ class Order extends BaseModel
             case 'processed':
                 $status = 2;
                 break;
+            case 'waiting-for-rider':
+                $status = 3;
+                break;
+            case 'assigned':
+                $status = 4;
+                break;
             default:
                 $status =  'Unknown';
                 break;
@@ -82,13 +88,11 @@ class Order extends BaseModel
             case 1:
                 return 'badge badge-info';
             case 2:
-                return 'badge badge-success';
-            case -1:
-                return 'badge badge-danger';
-            case -2:
                 return 'badge badge-warning';
-            case -3:
-                return 'badge badge-dark';
+            case 3:
+                return 'badge badge-danger';
+            case 4:
+                return 'badge badge-success';
             default:
                 return 'badge badge-primary';
         }
@@ -103,6 +107,10 @@ class Order extends BaseModel
                 return 'Submitted';
             case 2:
                 return 'Processed';
+            case 3:
+                return 'Waiting-for-rider';
+            case 4:
+                return 'Assigned';
             case -1:
                 return 'Failed';
             case -2:

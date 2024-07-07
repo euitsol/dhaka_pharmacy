@@ -9,14 +9,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderDistributionRider extends BaseModel
 {
     use HasFactory, SoftDeletes;
-    public function od(){
-        return $this->belongsTo(OrderDistribution::class,'order_distribution_id');
+    public function od()
+    {
+        return $this->belongsTo(OrderDistribution::class, 'order_distribution_id');
     }
-    public function rider(){
-        return $this->belongsTo(Rider::class,'rider_id');
+    public function rider()
+    {
+        return $this->belongsTo(Rider::class, 'rider_id');
     }
-    public function priority(){
-        switch($this->priority){
+    public function priority()
+    {
+        switch ($this->priority) {
             case 0:
                 return "Normal";
             case 1:
@@ -25,39 +28,40 @@ class OrderDistributionRider extends BaseModel
                 return "High";
         }
     }
-    public function statusBg() {
+    public function statusBg()
+    {
         switch ($this->status) {
             case 0:
             case -1:
                 return 'badge badge-danger';
             case 1:
-                return 'badge bg-info';
+                return 'badge bg-warning';
             case 2:
                 return 'badge badge-primary';
             case 3:
                 return 'badge badge-dark';
             case 4:
-                return 'badge badge-success';
+                return 'badge badge-info';
             case 5:
-                return 'badge badge-danger';
+                return 'badge badge-success';
         }
     }
-    public function statusTitle() {
+    public function statusTitle()
+    {
         switch ($this->status) {
             case 0:
             case -1:
                 return 'dispute';
             case 1:
-                return 'waiting-for-pickup';
+                return 'assigned';
             case 2:
-                return 'picked-up';
+                return 'picking-up';
             case 3:
-                return 'delivered';
+                return 'picked-up';
             case 4:
-                return 'finish';
+                return 'delivering';
             case 5:
-                return 'cancel';
+                return 'delivered';
         }
     }
-
 }
