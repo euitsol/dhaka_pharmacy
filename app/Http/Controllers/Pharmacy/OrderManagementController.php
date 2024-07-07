@@ -40,11 +40,11 @@ class OrderManagementController extends Controller
                         });
                 break;
 
-            case 'waiting-for-rider':
+            case 'prepared':
 
                 $query =  OrderDistribution::with(['order', 'odps', 'odrs', 'order.products.discounts', 'order.products.pivot','order.products.pivot.unit'])->whereHas('odps', function ($query) use($pharmacy_id) {
                     $query->where('pharmacy_id', $pharmacy_id);
-                });
+                })->where('status', 2);
                 break;
 
             default:
@@ -125,18 +125,16 @@ class OrderManagementController extends Controller
             $dop->note = $data['note'];
             $dop->save();
         }
-        $do = OrderDistribution::findOrFail(decrypt($do_id));
-        $odpsArray = $do->odps->toArray(); // Convert the collection to an array
-        $statuses = array_column($odpsArray, 'status');
-        $allValid = array_reduce($statuses, function ($carry, $status) {
-            return $carry && ($status == 2 || $status == -1);
-        }, true);
 
-        if ($allValid) {
-            $do->update(['status' => 2]);
+        //Update OD status if everything is prepared
+        $od = OrderDistribution::with(['odps'])->findOrFail(decrypt($do_id));
+        if($od->odps->where('status', '!=', '2')->count() == 0){
+            $od->status = 2;
+            $od->save();
         }
-        flash()->addSuccess('Order distributed successfully.');
-        return redirect()->route('pharmacy.order_management.index', 'waiting-for-rider');
+
+        flash()->addSuccess('Order prepared successfully.');
+        return redirect()->route('pharmacy.order_management.index', 'prepared');
     }
 
     protected function getStatus($status)

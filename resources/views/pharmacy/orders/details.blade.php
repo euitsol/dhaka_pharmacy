@@ -69,7 +69,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    {{-- @include('pharmacy.orders.partial.otp-verify') --}}
+                    @include('pharmacy.orders.partial.otp-verify')
                     <form action="{{ route('pharmacy.order_management.update', encrypt($do->id)) }}" method="POST">
                         @csrf
                         <div class="row mb-3">
@@ -112,8 +112,7 @@
                                                             <div class="input-group">
                                                                 <input type="text"
                                                                     name="data[{{ $key }}][open_amount]"
-                                                                    class="form-control"
-                                                                    placeholder="Enter your product price">
+                                                                    class="form-control" placeholder="Enter product price">
                                                             </div>
                                                         @endif
                                                     </div>
@@ -126,7 +125,7 @@
                                                         </div>
                                                     @endif
                                                     @if ($do->status == 0 || $do->status == 1)
-                                                        <div class="col my-auto">
+                                                        <div class="col my-auto mt-3">
                                                             <div class="card mb-0">
                                                                 <div class="card-body">
                                                                     <input type="hidden"
@@ -165,7 +164,7 @@
                                     </div>
                                 </div>
                                 @if ($do->status == 0 || $do->status == 1)
-                                    <div class="form-group status_note" style="display: none">
+                                    <div class="form-group status_note mt-3" style="display: none">
                                         <textarea name="data[{{ $key }}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
                                     </div>
                                     @include('alerts.feedback', ['field' => 'data.' . $key . '.note'])

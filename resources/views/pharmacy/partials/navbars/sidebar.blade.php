@@ -33,14 +33,14 @@
             </li>
 
             <li>
-                <a class="@if ($pageSlug == 'assigned_orders' || $pageSlug == 'waiting-for-rider_orders') @else collapsed @endif" data-toggle="collapse"
+                <a class="@if ($pageSlug == 'assigned_orders' || $pageSlug == 'prepared_orders') @else collapsed @endif" data-toggle="collapse"
                     href="#order_managements"
-                    @if ($pageSlug == 'assigned_orders' || $pageSlug == 'waiting-for-rider_orders') aria-expanded="true" @else aria-expanded="false" @endif>
+                    @if ($pageSlug == 'assigned_orders' || $pageSlug == 'prepared_orders') aria-expanded="true" @else aria-expanded="false" @endif>
                     <i class="fa-solid fa-network-wired"></i>
                     <span class="nav-link-text">{{ __('Order Managements') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
-                <div class="collapse @if ($pageSlug == 'assigned_orders' || $pageSlug == 'waiting-for-rider_orders') show @endif" id="order_managements">
+                <div class="collapse @if ($pageSlug == 'assigned_orders' || $pageSlug == 'prepared_orders') show @endif" id="order_managements">
                     <ul class="nav pl-2">
                         <li @if ($pageSlug == 'assigned_orders') class="active" @endif>
                             <a href="{{ route('pharmacy.order_management.index', 'assigned') }}">
@@ -49,11 +49,11 @@
                                 <p>{{ 'Assigned Orders' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'waiting-for-rider_orders') class="active" @endif>
-                            <a href="{{ route('pharmacy.order_management.index', 'waiting-for-rider') }}">
+                        <li @if ($pageSlug == 'prepared_orders') class="active" @endif>
+                            <a href="{{ route('pharmacy.order_management.index', 'prepared') }}">
                                 <i
-                                    class="fa-solid fa-minus @if ($pageSlug == 'waiting-for-rider_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Waiting for Riders' }}</p>
+                                    class="fa-solid fa-minus @if ($pageSlug == 'prepared_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Prepared Orders' }}</p>
                             </a>
                         </li>
                         {{-- <li @if ($pageSlug == 'waiting-for-rider_orders') class="active" @endif>
