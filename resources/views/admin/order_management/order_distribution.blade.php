@@ -88,10 +88,10 @@
                                     <div class="card-header">
                                         <div class="row justify-content-between mb-3">
                                             <div class="col-auto">
-                                                <h4 class="color-1 mb-0">{{ __('Order Distribution') }}</h4>
+                                                <h4 class="color-1 mb-0">{{ __('Order Process') }}</h4>
                                             </div>
-                                            <div class="col-auto  ">{{ __(' Distribution Status :') }} <span
-                                                    class="{{ isset($order_distribution) ? $order_distribution->statusBg() : 'badge badge-danger' }}">{{ isset($order_distribution) ? 'Distributed' : 'Not Distributed' }}</span>
+                                            <div class="col-auto  ">{{ __(' Process Status :') }} <span
+                                                    class="{{ isset($order_distribution) ? $order_distribution->statusBg() : 'badge badge-danger' }}">{{ isset($order_distribution) ? 'Distributed' : 'None' }}</span>
                                             </div>
                                         </div>
                                     </div>

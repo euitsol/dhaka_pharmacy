@@ -548,15 +548,30 @@
                     'routes' => ['order_list'],
                 ]))
                 <li>
-                    <a class="@if ($pageSlug == 'order_Initiated' || $pageSlug == 'order_Submitted' || $pageSlug == 'order_Processed') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if (
+                        $pageSlug == 'order_Initiated' ||
+                            $pageSlug == 'order_Submitted' ||
+                            $pageSlug == 'order_Processed' ||
+                            $pageSlug == 'order_Waiting-for-rider' ||
+                            $pageSlug == 'order_Assigned') @else collapsed @endif" data-toggle="collapse"
                         href="#order_management"
-                        @if ($pageSlug == 'order_Initiated' || $pageSlug == 'order_Submitted' || $pageSlug == 'order_Processed') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if (
+                            $pageSlug == 'order_Initiated' ||
+                                $pageSlug == 'order_Submitted' ||
+                                $pageSlug == 'order_Processed' ||
+                                $pageSlug == 'order_Waiting-for-rider' ||
+                                $pageSlug == 'order_Assigned') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-truck-fast"></i>
                         <span class="nav-link-text">{{ __('Order Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'order_Initiated' || $pageSlug == 'order_Submitted' || $pageSlug == 'order_Processed') show @endif" id="order_management">
+                    <div class="collapse @if (
+                        $pageSlug == 'order_Initiated' ||
+                            $pageSlug == 'order_Submitted' ||
+                            $pageSlug == 'order_Processed' ||
+                            $pageSlug == 'order_Waiting-for-rider' ||
+                            $pageSlug == 'order_Assigned') show @endif" id="order_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -582,6 +597,20 @@
                                         'label' => 'Processed Orders',
                                     ],
                                     [
+                                        'pageSlug' => 'order_Waiting-for-rider',
+                                        'routeName' => 'om.order.order_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'waiting-for-rider',
+                                        'label' => 'Waiting For Rider',
+                                    ],
+                                    [
+                                        'pageSlug' => 'order_Assigned',
+                                        'routeName' => 'om.order.order_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'assigned',
+                                        'label' => 'Assigned',
+                                    ],
+                                    [
                                         'pageSlug' => 'order_Failed',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
@@ -603,50 +632,20 @@
             @endif
 
             {{-- Distributed Order  --}}
-            @if (mainMenuCheck([
-                    'prefixes' => ['do.'],
-                    'routes' => ['do_list'],
-                ]))
+            {{-- @if (mainMenuCheck([
+        'prefixes' => ['do.'],
+        'routes' => ['do_list'],
+    ]))
                 <li>
-                    <a class="@if (
-                        $pageSlug == 'order_pending' ||
-                            $pageSlug == 'order_preparing' ||
-                            $pageSlug == 'dispute_orders' ||
-                            $pageSlug == 'order_dispute' ||
-                            $pageSlug == 'order_cancel' ||
-                            $pageSlug == 'order_waiting-for-pickup' ||
-                            $pageSlug == 'order_waiting-for-rider' ||
-                            $pageSlug == 'order_picked-up' ||
-                            $pageSlug == 'order_delivered' ||
-                            $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders' || $pageSlug == 'order_dispute' || $pageSlug == 'order_cancel' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_delivered' || $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
                         href="#distributed_order"
-                        @if (
-                            $pageSlug == 'order_pending' ||
-                                $pageSlug == 'order_preparing' ||
-                                $pageSlug == 'dispute_orders' ||
-                                $pageSlug == 'order_dispute' ||
-                                $pageSlug == 'order_cancel' ||
-                                $pageSlug == 'order_waiting-for-pickup' ||
-                                $pageSlug == 'order_waiting-for-rider' ||
-                                $pageSlug == 'order_picked-up' ||
-                                $pageSlug == 'order_delivered' ||
-                                $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders' || $pageSlug == 'order_dispute' || $pageSlug == 'order_cancel' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_delivered' || $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-network-wired"></i>
                         <span class="nav-link-text">{{ __('Distributed Orders') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if (
-                        $pageSlug == 'order_pending' ||
-                            $pageSlug == 'order_preparing' ||
-                            $pageSlug == 'dispute_orders' ||
-                            $pageSlug == 'order_dispute' ||
-                            $pageSlug == 'order_cancel' ||
-                            $pageSlug == 'order_waiting-for-pickup' ||
-                            $pageSlug == 'order_waiting-for-rider' ||
-                            $pageSlug == 'order_picked-up' ||
-                            $pageSlug == 'order_delivered' ||
-                            $pageSlug == 'order_finish') show @endif" id="distributed_order">
+                    <div class="collapse @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders' || $pageSlug == 'order_dispute' || $pageSlug == 'order_cancel' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_delivered' || $pageSlug == 'order_finish') show @endif" id="distributed_order">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -718,7 +717,9 @@
                         </ul>
                     </div>
                 </li>
-            @endif
+            @endif --}}
+
+
             {{-- Payment Management  --}}
             @if (mainMenuCheck([
                     'prefixes' => ['pym.'],

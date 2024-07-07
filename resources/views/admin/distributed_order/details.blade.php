@@ -19,7 +19,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-6">
-                            <h4 class="card-title">{{ __('Distributed Order Details') }}</h4>
+                            <h4 class="card-title">{{ __('Processed Order Details') }}</h4>
                         </div>
                         <div class="col-6 text-end">
                             @include('admin.partials.button', [
@@ -52,7 +52,7 @@
                                 <td>{{ $do->paymentType() }}</td>
                             </tr>
                             <tr>
-                                <td class="fw-bold">{{ __('Distribution Type') }}</td>
+                                <td class="fw-bold">{{ __('Processed Type') }}</td>
                                 <td>:</td>
                                 <td>{{ $do->distributionType() }}</td>
                                 <td>|</td>
@@ -70,7 +70,7 @@
                                 <td>{{ $do->order->orderType() }}</td>
                             </tr>
                             <tr>
-                                <td class="fw-bold">{{ __('Order Process By') }}</td>
+                                <td class="fw-bold">{{ __('Order Processed By') }}</td>
                                 <td>:</td>
                                 <td colspan="5">{{ isset($do->creater) ? $do->creater->name : '--' }}</td>
                             </tr>
@@ -84,29 +84,25 @@
                 </div>
                 <div class="card-footer">
                     @if ($do->status != 0 && $do->status != 1)
-                        @if (count($dispute_do_riders) > 0)
+                        @if (count($dispute_riders) > 0)
                             <h4>{{ __('Rider Dispute Reasons:') }}</h4>
                         @endif
-                        @foreach ($dispute_do_riders as $ddor)
+                        @foreach ($dispute_riders as $ddor)
                             <p class="m-0 mb-1"><b class="fw-bold">{{ $ddor->rider->name . ' : ' }}</b><span
                                     class="text-danger">{{ $ddor->dispute_note }}</span></p>
                         @endforeach
 
-                        @if (auth()->user()->can('do_rider') && !$do_rider)
+                        @if (auth()->user()->can('assign_order') && !$assigned_rider)
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-6">
                                             <h4 class="card-title">{{ __('Rider Management') }}</h4>
                                         </div>
-                                        <div class="col-6 text-end">
-                                            <span
-                                                class="{{ $do->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $do->statusTitle())))) }}</span>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('do.do_rider', encrypt($do->id)) }}" method="POST">
+                                    <form action="{{ route('om.order.assign_order', encrypt($do->id)) }}" method="POST">
                                         @csrf
                                         <div class="row">
                                             <div class="form-group col-md-6">
@@ -148,7 +144,7 @@
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label>{{ __('Instraction') }}</label>
-                                                <textarea name="instraction" class="form-control" placeholder="Write delivery instration here">{{ optional($do_rider)->instraction }}</textarea>
+                                                <textarea name="instraction" class="form-control" placeholder="Write delivery instration here">{{ optional($assigned_rider)->instraction }}</textarea>
                                                 @include('alerts.feedback', ['field' => 'instraction'])
                                             </div>
                                             <div class="form-group text-end">
@@ -158,7 +154,7 @@
                                     </form>
                                 </div>
                             </div>
-                        @elseif($do_rider)
+                        @elseif($assigned_rider)
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
@@ -167,7 +163,7 @@
                                         </div>
                                         <div class="col-6 text-end">
                                             <span
-                                                class="{{ $do->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $do->statusTitle())))) }}</span>
+                                                class="{{ $assigned_rider->statusBg() }}">{{ __(slugToTitle($assigned_rider->statusTitle())) }}</span>
                                         </div>
                                     </div>
 
@@ -179,12 +175,12 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="rider_image">
-                                                        <img src="{{ storage_url($do_rider->rider->image) }}"
+                                                        <img src="{{ storage_url($assigned_rider->rider->image) }}"
                                                             alt="">
                                                     </div>
                                                 </div>
                                                 <div class="card-footer bg-secondary">
-                                                    <h3 class="text-white m-0">{{ $do_rider->rider->name }}</h3>
+                                                    <h3 class="text-white m-0">{{ $assigned_rider->rider->name }}</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -194,39 +190,41 @@
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Rider Name') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $do_rider->rider->name }}</td>
+                                                        <td class="fw-bold">{{ $assigned_rider->rider->name }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Rider Gender') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $do_rider->rider->gender }}</td>
+                                                        <td class="fw-bold">{{ $assigned_rider->rider->gender }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Rider Contact') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $do_rider->rider->phone }}</td>
+                                                        <td class="fw-bold">{{ $assigned_rider->rider->phone }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Rider Age') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $do_rider->rider->age }}</td>
+                                                        <td class="fw-bold">{{ $assigned_rider->rider->age }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Delivery Priority') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $do_rider->priority() }}</td>
+                                                        <td class="fw-bold">{{ $assigned_rider->priority() }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Operational Area') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $do_rider->rider->operation_area->name }}
+                                                        <td class="fw-bold">
+                                                            {{ $assigned_rider->rider->operation_area->name }}
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Operational Sub Area') }}</td>
                                                         <td>:</td>
                                                         <td class="fw-bold">
-                                                            {{ optional($do_rider->rider->operation_sub_area)->name }}</td>
+                                                            {{ optional($assigned_rider->rider->operation_sub_area)->name }}
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -236,10 +234,10 @@
                             </div>
                         @endif
                     @endif
-                    <form action="{{ route('do.do_update') }}" method="POST" class="px-0">
+                    <form action="{{ route('om.order.dispute_update') }}" method="POST" class="px-0">
                         @csrf
                         @php
-                            $dop_status = '';
+                            $dop_status = null;
                         @endphp
                         @foreach ($do->odps as $key => $dop)
                             @php
@@ -291,7 +289,7 @@
                                                                     </h6>
                                                                 </div>
                                                                 <div class="col my-auto text-end"><span
-                                                                        class="{{ $dop->statusBg() }}">{{ $dop->statusTitle() }}</span>
+                                                                        class="{{ $dop->statusBg() }}">{{ slugToTitle($dop->statusTitle()) }}</span>
                                                                 </div>
                                                             </div>
                                                         </div>

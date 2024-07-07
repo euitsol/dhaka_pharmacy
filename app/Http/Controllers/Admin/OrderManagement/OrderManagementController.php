@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin\OrderManagement;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DisputeOrderRequest;
 use App\Http\Requests\OrderDistributionRequest;
+use App\Http\Requests\OrderDistributionRiderRequest;
 use App\Models\AddToCart;
 use App\Models\DistributionOtp;
 use App\Models\Order;
@@ -17,6 +19,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Traits\TransformOrderItemTrait;
+use App\Models\OrderDistributionRider;
 use App\Models\Rider;
 
 class OrderManagementController extends Controller
@@ -31,7 +34,6 @@ class OrderManagementController extends Controller
     {
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getOrderStatusBgColor($status);
-
         switch ($status) {
             case 'initiated':
                 $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od')->status($status)->latest()->get()
@@ -50,13 +52,39 @@ class OrderManagementController extends Controller
                     );
                 return view('admin.order_management.index', $data);
             case 'processed':
-
                 $data['dos'] = OrderDistribution::with(['order.products', 'odps'])
                     ->withCount(['odps' => function ($query) {
                         $query->where('status', '!=', -1);
                     }])
                     ->where('status', 1)
                     ->orWhere('status', 0)
+                    ->latest()->get()
+                    ->each(function (&$do) {
+                        $this->calculateOrderTotalDiscountPrice($do->order);
+                    });
+                return view('admin.distributed_order.index', $data);
+            case 'waiting-for-rider':
+                $data['dos'] = OrderDistribution::with(['order.products', 'odps'])
+                    ->withCount(['odps' => function ($query) {
+                        $query->where('status', '!=', -1);
+                    }])
+                    ->whereHas('order', function ($query) {
+                        $query->where('status', 3);
+                    })
+                    ->where('status', 2)
+                    ->latest()->get()
+                    ->each(function (&$do) {
+                        $this->calculateOrderTotalDiscountPrice($do->order);
+                    });
+                return view('admin.distributed_order.index', $data);
+            case 'assigned':
+                $data['dos'] = OrderDistribution::with(['order.products', 'odps', 'odrs.rider'])
+                    ->withCount(['odps' => function ($query) {
+                        $query->where('status', '!=', -1);
+                    }])
+                    ->whereHas('order', function ($query) {
+                        $query->where('status', 4);
+                    })
                     ->latest()->get()
                     ->each(function (&$do) {
                         $this->calculateOrderTotalDiscountPrice($do->order);
@@ -147,11 +175,54 @@ class OrderManagementController extends Controller
         }
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
         if ($query->odrs) {
-            $data['do_rider'] = $query->odrs->where('status', '!=', 0)->where('status', '!=', -1)->first();
-            $data['dispute_do_riders'] = $query->odrs()->where('status', 0)->orWhere('status', -1)->latest()->get();
+            $data['assigned_rider'] = $query->odrs->where('status', '!=', 0)->where('status', '!=', -1)->first();
+            $data['dispute_riders'] = $query->odrs()->where('status', 0)->orWhere('status', -1)->latest()->get();
         }
         $data['do'] = $query;
         return view('admin.distributed_order.details', $data);
+    }
+
+    public function assign_order(OrderDistributionRiderRequest $req, $do_id): RedirectResponse
+    {
+        $do_id = decrypt($do_id);
+        OrderDistributionRider::where('status', 0)->where('order_distribution_id', $do_id)->update(['status' => -1]);
+        $do_rider = new OrderDistributionRider();
+        $do_rider->rider_id = $req->rider_id;
+        $do_rider->order_distribution_id = $do_id;
+        $do_rider->priority = $req->priority;
+        $do_rider->instraction = $req->instraction;
+        $do_rider->save();
+        $do = OrderDistribution::with('order', 'odps')->findOrFail($do_id);
+        $do->update(['status' => 3]);
+        $do->order->update(['status' => 4]);
+        flash()->addSuccess('Rider ' . $do_rider->rider->name . ' assigned succesfully.');
+        return redirect()->back();
+    }
+
+    public function disputeUpdate(DisputeOrderRequest $req): RedirectResponse
+    {
+        foreach ($req->datas as $data) {
+            $old_dop = OrderDistributionPharmacy::findOrFail($data['dop_id']);
+            if ($old_dop->pharmacy_id !== $data['pharmacy_id']) {
+                $old_dop->status = -1;
+                $old_dop->updater()->associate(admin());
+                $old_dop->update();
+
+                $new = new OrderDistributionPharmacy();
+                $new->order_distribution_id = $old_dop->order_distribution_id;
+                $new->op_id = $data['op_id'];
+                $new->pharmacy_id = $data['pharmacy_id'];
+                $new->creater()->associate(admin());
+                $new->save();
+
+                $PVotp = DistributionOtp::where('order_distribution_id', $old_dop->order_distribution_id)->where('otp_author_id', $old_dop->pharmacy->id)->where('otp_author_type', get_class($old_dop->pharmacy))->first();
+                $PVotp->otp_author()->associate($new->pharmacy);
+                $PVotp->updated_by = admin()->id;
+                $PVotp->update();
+            }
+        }
+        flash()->addSuccess('Dispute Order Updated Successfully.');
+        return redirect()->back();
     }
 
     protected function getOrderStatusBgColor($status): string
@@ -165,6 +236,8 @@ class OrderManagementController extends Controller
                 return 'badge badge-info';
             case 'processed':
                 return 'badge badge-success';
+            case 'waiting-for-rider':
+                return 'badge badge-warning';
             case -1:
                 return 'badge badge-danger';
             case -2:
