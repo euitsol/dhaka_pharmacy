@@ -92,7 +92,7 @@
                                     class="text-danger">{{ $ddor->dispute_note }}</span></p>
                         @endforeach
 
-                        @if (auth()->user()->can('assigned_rider') && !$assigned_rider)
+                        @if (auth()->user()->can('assign_order') && !$assigned_rider)
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
@@ -102,7 +102,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('om.order.assign_rider', encrypt($do->id)) }}" method="POST">
+                                    <form action="{{ route('om.order.assign_order', encrypt($do->id)) }}" method="POST">
                                         @csrf
                                         <div class="row">
                                             <div class="form-group col-md-6">
@@ -163,7 +163,7 @@
                                         </div>
                                         <div class="col-6 text-end">
                                             <span
-                                                class="{{ $do->order->statusBg() }}">{{ __(slugToTitle($do->order->statusTitle())) }}</span>
+                                                class="{{ $assigned_rider->statusBg() }}">{{ __(slugToTitle($assigned_rider->statusTitle())) }}</span>
                                         </div>
                                     </div>
 

@@ -566,7 +566,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::post('/order-distribution/{order_id}', 'order_distribution_store')->name('order_distribution');
             Route::get('/distribution/details/{do_id}', 'distribution_details')->name('details.order_distribution');
             Route::get('/distribution/details/{do_id}', 'distribution_details')->name('details.order_distribution');
-            Route::post('/distribution/assign-rider/{do_id}', 'assign_rider')->name('assign_rider');
+            Route::post('/distribution/assign-order/{do_id}', 'assign_order')->name('assign_order');
             Route::post('/distribution/dispute-update', 'disputeUpdate')->name('dispute_update');
         });
     });

@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderDistributionRider extends BaseModel
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = [
+        'status',
+    ];
     public function od()
     {
         return $this->belongsTo(OrderDistribution::class, 'order_distribution_id');
@@ -27,6 +30,40 @@ class OrderDistributionRider extends BaseModel
             case 2:
                 return "High";
         }
+    }
+
+    public function scopeStatus($query, $status)
+    {
+        // $status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
+
+        switch ($status) {
+            case 'dispute':
+                $status = 0;
+                break;
+            case 'assigned':
+                $status = 1;
+                break;
+            case 'picking-up':
+                $status = 2;
+                break;
+            case 'picked-up':
+                $status = 3;
+                break;
+            case 'delivering':
+                $status = 4;
+                break;
+            case 'delivered':
+                $status = 5;
+                break;
+            default:
+                $status =  'Unknown';
+                break;
+        }
+        $query->where('status', $status);
+        if ($status == 0) {
+            $query->orWhere('status', -1);
+        }
+        return $query;
     }
     public function statusBg()
     {

@@ -182,7 +182,7 @@ class OrderManagementController extends Controller
         return view('admin.distributed_order.details', $data);
     }
 
-    public function assign_rider(OrderDistributionRiderRequest $req, $do_id): RedirectResponse
+    public function assign_order(OrderDistributionRiderRequest $req, $do_id): RedirectResponse
     {
         $do_id = decrypt($do_id);
         OrderDistributionRider::where('status', 0)->where('order_distribution_id', $do_id)->update(['status' => -1]);

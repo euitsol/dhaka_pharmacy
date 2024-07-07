@@ -63,7 +63,10 @@
                                         <td>{!! remainingTime($do->pharmacy_prep_time, true) !!}</td>
                                     @elseif ($status == 'Assigned')
                                         @php
-                                            $odr = $do->odrs->where('status', 1)->first();
+                                            $odr = $do->odrs
+                                                ->where('status', '!=', 0)
+                                                ->where('status', '!=', -1)
+                                                ->first();
                                         @endphp
                                         <td>{{ $odr->rider->name }}</td>
                                         <td><span
