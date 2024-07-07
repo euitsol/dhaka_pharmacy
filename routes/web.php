@@ -565,19 +565,22 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('/order-distribution/{id}', 'order_distribution')->name('order_distribution');
             Route::post('/order-distribution/{order_id}', 'order_distribution_store')->name('order_distribution');
             Route::get('/distribution/details/{do_id}', 'distribution_details')->name('details.order_distribution');
+            Route::get('/distribution/details/{do_id}', 'distribution_details')->name('details.order_distribution');
+            Route::post('/distribution/assign-order/{do_id}', 'assign_order')->name('assign_order');
+            Route::post('/distribution/dispute-update', 'disputeUpdate')->name('dispute_update');
         });
     });
 
     // Admin Distributed Order
-    Route::controller(DistributedOrderController::class)->prefix('distributed-order')->name('do.')->group(function () {
-        Route::get('/{status}', 'index')->name('do_list');
-        Route::get('/{status}/orders', 'dispute')->name('dispute.do_list');
-        // Route::get('/details/{do_id}', 'details')->name('do_details');
-        Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
-        Route::post('/update', 'update')->name('do_update');
+    // Route::controller(DistributedOrderController::class)->prefix('distributed-order')->name('do.')->group(function () {
+    //     Route::get('/{status}', 'index')->name('do_list');
+    //     Route::get('/{status}/orders', 'dispute')->name('dispute.do_list');
+    //     // Route::get('/details/{do_id}', 'details')->name('do_details');
+    //     Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
+    //     Route::post('/update', 'update')->name('do_update');
 
-        Route::post('/rider/{do_id}', 'do_rider')->name('do_rider');
-    });
+    //     Route::post('/rider/{do_id}', 'do_rider')->name('do_rider');
+    // });
 
 
 

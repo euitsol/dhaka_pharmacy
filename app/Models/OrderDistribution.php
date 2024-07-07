@@ -19,20 +19,25 @@ class OrderDistribution extends BaseModel
         'status'
     ];
 
-    public function order(){
-        return $this->belongsTo(Order::class,'order_id');
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
     }
-    public function odps(){
-        return $this->hasMany(OrderDistributionPharmacy::class,'order_distribution_id','id');
+    public function odps()
+    {
+        return $this->hasMany(OrderDistributionPharmacy::class, 'order_distribution_id', 'id');
     }
-    public function odrs(){
-        return $this->hasMany(OrderDistributionRider::class,'order_distribution_id','id');
+    public function odrs()
+    {
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id', 'id');
     }
-    public function odr(){
-        return $this->hasMany(OrderDistributionRider::class,'order_distribution_id','id')->whereNotIn('status', [0, -1]);
+    public function odr()
+    {
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id', 'id')->whereNotIn('status', [0, -1]);
     }
 
-    public function statusBg() {
+    public function statusBg()
+    {
         switch ($this->status) {
             case 0:
                 return 'badge bg-info';
@@ -72,9 +77,11 @@ class OrderDistribution extends BaseModel
                 return 'Finish';
             case 7:
                 return 'Cancel';
-        }
+            }
     }
-    public function paymentType() {
+
+    public function paymentType()
+    {
         switch ($this->payment_type) {
             case 0:
                 return 'Fixed Payment';
@@ -82,7 +89,8 @@ class OrderDistribution extends BaseModel
                 return 'Open Payment';
         }
     }
-    public function distributionType() {
+    public function distributionType()
+    {
         switch ($this->distribution_type) {
             case 0:
                 return 'Normal Distribution';
@@ -90,5 +98,4 @@ class OrderDistribution extends BaseModel
                 return 'Priority Distribution';
         }
     }
-
 }

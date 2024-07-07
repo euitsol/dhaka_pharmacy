@@ -29,22 +29,25 @@ class OrderManagementController extends Controller
     public function index($status): View
     {
         $data['status'] = $status;
-        $query = OrderDistributionRider::with(['od.odps.pharmacy', 'od.order.address', 'rider'])->where('rider_id', rider()->id);
-        $query->where('status', $this->getStatus($status));
-        if ($this->getStatus($status) == 0) {
-            $query->orWhere('status', -1);
-        }
-        $data['dors'] = $query->orderBy('priority', 'desc')->latest()->get()->each(function ($dor) {
-            $dor->pharmacy = $dor->od->odps->pluck('pharmacy')->unique()->values();
-            $dor->totalPrice = $this->calculateOrderTotalPrice($dor->od->order);
-            return $dor;
-        });
+        $data['dors'] = OrderDistributionRider::with(['od.odps.pharmacy', 'od.order.address', 'rider'])
+            ->where('rider_id', rider()->id)
+            ->status($status)
+            ->orderBy('priority', 'desc')
+            ->latest()->get()
+            ->each(function ($dor) {
+                $dor->pharmacy = $dor->od->odps->pluck('pharmacy')->unique()->values();
+                $dor->totalPrice = $this->calculateOrderTotalPrice($dor->od->order);
+                return $dor;
+            });
         return view('rider.orders.index', $data);
     }
 
     public function details($dor_id)
     {
         $data['dor'] = OrderDistributionRider::with(['od.odps', 'od.order.address', 'rider'])->findORFail(decrypt($dor_id));
+        if ($data['dor']->status == 1) {
+            $data['dor']->update(['status' => 2]);
+        }
         $data['dor']->pharmacy = $data['dor']->od->odps->pluck('pharmacy')->unique()->values();
         $this->calculateOrderTotalDiscountPrice($data['dor']->od->order);
         return view('rider.orders.details', $data);
@@ -100,9 +103,7 @@ class OrderManagementController extends Controller
                 ['rider_id', rider()->id],
                 ['order_distribution_id', $od_id],
                 ['status', 1]
-            ])->update(['status' => 2]);
-
-            OrderDistribution::where('id', $od_id)->update(['status' => 4]);
+            ])->update(['status' => 3]);
 
             $od = OrderDistribution::with('order.customer')->findOrFail($od_id);
             $customer = $od->order->customer;
