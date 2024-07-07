@@ -95,36 +95,44 @@ class OrderManagementController extends Controller
 
     public function order_distribution_store(OrderDistributionRequest $req, $order_id): RedirectResponse
     {
-        //Update order status to distributed
         $order_id = decrypt($order_id);
-        Order::findOrFail($order_id)->update(['status' => 2]);
+        $order = Order::findOrFail($order_id);
 
-        //Create new order distribution
-        $od = new OrderDistribution();
-        $od->order_id = $order_id;
-        $od->payment_type = $req->payment_type;
-        $od->distribution_type = $req->distribution_type;
+        if($order->status == 1){
+            //Update order status to distributed
+            $order->status = 2;
+            $order->save();
 
-        //prepare the time
-        $od->pharmacy_prep_time = Carbon::now()->addMinutes($req->prep_time)->toDateString();
+            //Create new order distribution
+            $od = new OrderDistribution();
+            $od->order_id = $order_id;
+            $od->payment_type = $req->payment_type;
+            $od->distribution_type = $req->distribution_type;
 
-        $od->note = $req->note;
-        $od->creater()->associate(admin());
-        $od->save();
+            //prepare the time
+            $od->pharmacy_prep_time = Carbon::now()->addMinutes($req->prep_time)->toDateTimeString();
 
-        // Iterate through the datas and create OrderDistributionPharmacy entries
-        foreach ($req->datas as $data) {
-            $odp = new OrderDistributionPharmacy();
-            $odp->order_distribution_id = $od->id;
-            $odp->op_id = $data['op_id'];
-            $odp->pharmacy_id = $data['pharmacy_id'];
-            $odp->creater()->associate(admin());
-            $odp->save();
+            $od->note = $req->note;
+            $od->creater()->associate(admin());
+            $od->save();
 
-            $this->createDistributionOTP($od, $odp);
+            // Iterate through the datas and create OrderDistributionPharmacy entries
+            foreach ($req->datas as $data) {
+                $odp = new OrderDistributionPharmacy();
+                $odp->order_distribution_id = $od->id;
+                $odp->op_id = $data['op_id'];
+                $odp->pharmacy_id = $data['pharmacy_id'];
+                $odp->creater()->associate(admin());
+                $odp->save();
+
+                $this->createDistributionOTP($od, $odp);
+            }
+            flash()->addSuccess('Order Processed Successfully.');
+            return redirect()->route('om.order.order_list', 'processed');
+        }else{
+            flash()->addSuccess('Cannot process this order');
+            return redirect()->route('om.order.order_list', 'submitted');
         }
-        flash()->addSuccess('Order Distributed Successfully.');
-        return redirect()->route('om.order.order_list', 'pending');
     }
 
     protected function getOrderStatusBgColor($status): string

@@ -369,9 +369,9 @@ function u_user_name($user)
         ]);
 
         if ($now->lessThan($end)) {
-            $result = $html ? "<span class='prep_time' data-end-time='$endTime' style='color: green;'>$difference remaining</span>" : "$difference remaining";
+            $result = $html ? "<span class='prep_time text-success' data-end-time='$endTime'>$difference remaining</span>" : "$difference remaining";
         } else {
-            $result = $html ? "<span class='prep_time' data-end-time='$endTime' style='color: red;'>Delayed</span>" : 0;
+            $result = $html ? "<span class='prep_time text-danger' data-end-time='$endTime'>Delayed</span>" : 0;
         }
 
         return $result;

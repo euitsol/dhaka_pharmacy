@@ -50,10 +50,10 @@ class OrderDistribution extends BaseModel
                 return 'badge bg-success';
             case 7:
                 return 'badge bg-danger';
-                
+
         }
     }
-    
+
     public function statusTitle() {
         switch ($this->status) {
             case 0:
@@ -61,7 +61,7 @@ class OrderDistribution extends BaseModel
             case 1:
                 return 'Preparing';
             case 2:
-                return 'Waiting-for-rider';
+                return 'Prepared';
             case 3:
                 return 'Waiting-for-pickup';
             case 4:
@@ -90,5 +90,5 @@ class OrderDistribution extends BaseModel
                 return 'Priority Distribution';
         }
     }
-    
+
 }
