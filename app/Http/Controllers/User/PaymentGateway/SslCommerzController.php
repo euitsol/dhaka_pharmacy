@@ -102,7 +102,7 @@ class SslCommerzController extends Controller
                 Here you can also sent sms or email for successfull transaction to customer
                 */
                 $update_product = Payment::where('transaction_id', $tran_id)
-                    ->update(['status' => 2]); //Status 2 , Processing
+                    ->update(['status' => 1]); //Status 1 , Success
                 // Order::where('id', decrypt($request->value_a))
                 //     ->update(['status' => 1]);
                 flash()->addSuccess('Transaction is successfully Completed');

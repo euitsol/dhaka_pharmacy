@@ -8,10 +8,11 @@ trait SmsTrait
 {
     function sms_send($mobile, $message)
     {
+        // config('services.sms_api.secret');
         try {
-            $url = "http://bulksmsbd.net/api/smsapi";
-            $api_key = "ocd8ExRE1Nzet2xhsxXz";
-            $senderid = "8809617612436";
+            $url = config('services.sms_api.url');
+            $api_key = config('services.sms_api.key');
+            $senderid = config('services.sms_api.sender_id');
             $number = $mobile;
             $message = $message;
 
@@ -40,7 +41,7 @@ trait SmsTrait
             $get = json_decode($response, true);
             $result = $get['response_code'] ?? null;
 
-            if ($result == 202) {
+            if ($result == config('services.sms_api.status')) {
                 return true;
             } else {
                 return false;
