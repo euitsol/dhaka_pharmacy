@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmailTemplateRequest;
+use App\Http\Requests\PointSettingRequest;
 use App\Http\Requests\SmsSettingUpdateRequest;
 use App\Models\Documentation;
 use App\Models\EmailTemplate;
+use App\Models\PointHistory;
+use App\Models\PointSetting;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,12 +26,15 @@ class SiteSettingsController extends Controller
     {
         $data['email_templates'] = EmailTemplate::where('deleted_at', null)->latest()->get();
         $data['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
+        $data['point_settings'] = PointSetting::pluck('value', 'key')->all();
+        $data['point_histories'] = PointHistory::latest()->get();
         $data['documents'] = Documentation::where('module_key', 'general_settings')
             ->orWhere('module_key', 'email_settings')
             ->orWhere('module_key', 'database_settings')
             ->orWhere('module_key', 'sms_settings')
             ->orWhere('module_key', 'notification_settings')
             ->orWhere('module_key', 'email_templates')
+            ->orWhere('module_key', 'point_settings')
             ->get();
         $data['availableTimezones'] = availableTimezones();
         return view('admin.site_settings.index', $data);
@@ -148,6 +154,25 @@ class SiteSettingsController extends Controller
         } catch (\Exception $e) {
             flash()->addError('Somethings is wrong.');
             return response()->json(['message' => 'An error occurred'], 500);
+        }
+    }
+    public function ps_update(PointSettingRequest $request)
+    {
+        $data = $request->except('_token');
+        try {
+            foreach ($data as $key => $value) {
+                PointSetting::updateOrCreate(['key' => $key], ['value' => $value]);
+            }
+            $ph = PointHistory::activated()->where('eq_amount', $request->equivalent_amount)->first();
+            if (!$ph) {
+                PointHistory::activated()->update(['status' => 0, 'updated_by' => admin()->id]);
+                PointHistory::create(['eq_amount' => $request->equivalent_amount, 'created_by' => admin()->id]);
+            }
+            flash()->addSuccess('Point settings added successfully.');
+            return redirect()->route('settings.site_settings');
+        } catch (\Exception $e) {
+            flash()->addError('Something is wrong.');
+            return redirect()->route('settings.site_settings');
         }
     }
 }
