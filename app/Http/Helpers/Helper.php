@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
+use App\Models\PointSetting;
 use App\Models\Review;
 use App\Models\SiteSetting;
 use Illuminate\Support\Str;
@@ -559,4 +560,9 @@ function activatedTime($startTime, $endTime)
     }
 
     return rtrim($string, ', ') . $active;
+}
+
+function getPointName()
+{
+    return PointSetting::where('key', 'point_name')->first()->value;
 }
