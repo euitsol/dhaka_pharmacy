@@ -56,7 +56,7 @@ class EarningController extends Controller
             ->whereDate('created_at', '<=', $request->to_date)
             ->get();
         // dd($earnings);
-        flash()->addSuccess('Email send successfully');
+        flash()->addSuccess('The email has been sent successfully.');
         return redirect()->back();
     }
 }
