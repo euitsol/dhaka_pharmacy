@@ -100,6 +100,7 @@ use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\User\TipsController;
+use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
@@ -810,6 +811,11 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
     Route::controller(LamFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
+    });
+    //LAM Earning
+    Route::controller(LamEarningContorller::class)->prefix('my-earning')->name('earning.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/report', 'report')->name('report');
     });
 });
 // Rider Auth Routes

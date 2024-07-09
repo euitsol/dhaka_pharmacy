@@ -1,4 +1,4 @@
-@extends('rider.layouts.master', ['pageSlug' => 'earning'])
+@extends('local_area_manager.layouts.master', ['pageSlug' => 'earning'])
 @section('title', 'My Earnings')
 @push('css_link')
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -24,11 +24,11 @@
                     <div class="tab-content py-4" id="nav-tabContent" style="min-height:77vh;">
                         <div class="myContent tab-pane fade show active" id="nav-overview" role="tabpanel"
                             aria-labelledby="nav-overview-tab">
-                            @include('rider.earning.overview')
+                            @include('local_area_manager.earning.overview')
                         </div>
                         <div class="myContent tab-pane fade" id="nav-financial" role="tabpanel"
                             aria-labelledby="nav-financial-tab">
-                            @include('rider.earning.finance')
+                            @include('local_area_manager.earning.finance')
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
 @endpush
 @push('js')
     <script>
-        const myRoute = `{{ route('rider.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`;
+        const myRoute = `{{ route('lam.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`;
     </script>
     <script src="{{ asset('earning/earning.js') }}"></script>
 @endpush
