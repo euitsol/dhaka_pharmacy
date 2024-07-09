@@ -135,7 +135,7 @@
                                                     </td>
                                                 </tr> --}}
                                                 <tr>
-                                                    <td class="fw-bolder">{{ __('Total Price') }}</td>
+                                                    <td class="fw-bolder">{{ __('Total Amount') }}</td>
                                                     <td>:</td>
                                                     <td>
                                                         <span>{!! get_taka_icon() !!}
@@ -154,7 +154,7 @@
                                                     <td>:</td>
                                                     <td>
                                                         <span>{!! get_taka_icon() !!}
-                                                            {{ number_format(ceil($order->totalDiscountPrice)) }}</span>
+                                                            {{ number_format($order->totalDiscountPrice) }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -164,7 +164,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="fw-bolder">{{ __('Payable Amount') }}</td>
+                                                    <td class="fw-bolder">{{ __('Total Payable Amount') }}</td>
                                                     <td>:</td>
                                                     <td class="fw-bolder"><span>{!! get_taka_icon() !!}
                                                         </span>{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}

@@ -33,7 +33,7 @@ class OrderDistribution extends BaseModel
     }
     public function odr()
     {
-        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id', 'id')->whereNotIn('status', [0, -1]);
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id', 'id')->where('status', 1);
     }
 
     public function statusBg()

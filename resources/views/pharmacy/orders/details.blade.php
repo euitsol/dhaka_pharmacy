@@ -36,10 +36,19 @@
                                 <td>:</td>
                                 <th>{{ $do->order->order_id }}</th>
                                 <td>|</td>
+                                <th>{{ __('Preparation Time Left') }}</th>
+                                <td>:</td>
+                                <th>{!! remainingTime($do->pharmacy_prep_time, true) !!}</th>
+                            </tr>
+                            <tr>
+                                <th>{{ __('Total Product') }}</th>
+                                <td>:</td>
+                                <th>{{ $do->odps->count() }}</th>
+                                <td>|</td>
                                 <th>{{ __('Total Price') }}</th>
                                 <td>:</td>
                                 <th>
-                                    {{-- {!! get_taka_icon() !!}{{ number_format(ceil($do->dops->sum('totalPrice'))) }} --}}
+                                    {!! get_taka_icon() !!}{{ number_format(ceil($do->totalPharmacyAmount)) }}
                                 </th>
                             </tr>
                             <tr>
@@ -52,15 +61,6 @@
                                 <th>{{ $do->distributionType() }}</th>
                             </tr>
                             <tr>
-                                <th>{{ __('Total Product') }}</th>
-                                <td>:</td>
-                                <th>{{ $do->odps->count() }}</th>
-                                <td>|</td>
-                                <th>{{ __('Preparation Time Left') }}</th>
-                                <td>:</td>
-                                <th>{!! remainingTime($do->pharmacy_prep_time, true) !!}</th>
-                            </tr>
-                            <tr>
                                 <th>{{ __('Note') }}</th>
                                 <td>:</td>
                                 <th colspan="5">{!! $do->note !!}</th>
@@ -69,7 +69,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    @include('pharmacy.orders.partial.otp-verify')
+                    {{-- @include('pharmacy.orders.includes.otp-verify') --}}
                     <form action="{{ route('pharmacy.order_management.update', encrypt($do->id)) }}" method="POST">
                         @csrf
                         <div class="row mb-3">
@@ -93,15 +93,22 @@
                                                             {{ $dop->order_product->product->name }}</h6>
                                                         <small>{{ $dop->order_product->product->pro_cat->name }} </small>
                                                     </div>
-                                                    <div class="col my-auto d-flex justify-content-around"> <small>Qty :
-                                                            {{ $dop->order_product->quantity }}</small><small>Pack :
-                                                            {{ $dop->order_product->unit->name ?? 'Piece' }}</small>
+                                                    <div class="col my-auto d-flex justify-content-around"> Quantity :
+                                                        {{ $dop->order_product->quantity }} &nbsp; &nbsp; Pack :
+                                                        {{ $dop->order_product->unit->name ?? 'Piece' }}
                                                     </div>
                                                     <div class="col my-auto">
                                                         <h6 class="my-auto text-center">
-                                                            <span><strong>{{ __('Total Price : ') }}</strong>{!! get_taka_icon() !!}
+                                                            <span>{{ __('Total Price : ') }}{!! get_taka_icon() !!}
 
-                                                                {{ number_format(ceil($dop->totalPrice)) }}</span>
+                                                                <span
+                                                                    class="">{{ number_format(ceil($dop->discounted_price)) }}
+                                                                </span>
+                                                                @if ($dop->discounted_price != $dop->selling_price)
+                                                                    <del
+                                                                        class="text-danger">{{ number_format($dop->selling_price, 2) }}</del>
+                                                                @endif
+                                                            </span>
                                                             @if ($dop->discount)
                                                                 <sup><span class='badge badge-danger'>
                                                                         {{ $dop->discount . '% off' }}
@@ -124,7 +131,7 @@
                                                             </h6>
                                                         </div>
                                                     @endif
-                                                    @if ($do->status == 0 || $do->status == 1)
+                                                    @if ($dop->status == 0 || $dop->status == 1)
                                                         <div class="col my-auto mt-3">
                                                             <div class="card mb-0">
                                                                 <div class="card-body">
@@ -163,20 +170,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($do->status == 0 || $do->status == 1)
+                                @if ($dop->status == 0 || $dop->status == 1)
                                     <div class="form-group status_note mt-3" style="display: none">
                                         <textarea name="data[{{ $key }}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
                                     </div>
                                     @include('alerts.feedback', ['field' => 'data.' . $key . '.note'])
-                                @elseif($do->status == 3 || $do->status == -1)
+                                @elseif($dop->status == 3 || $dop->status == -1)
                                     <span><strong
-                                            class="text-danger">{{ __('Resoan: ') }}</strong>{{ $dop->note }}</span>
+                                            class="text-danger">{{ __('Reason: ') }}</strong>{{ $dop->note }}</span>
                                 @endif
 
                             </div>
                         @endforeach
                         @if ($do->status == 0 || $do->status == 1)
-                            <div class="col-12 text-end">
+                            <div class="col-12 text-end mt-2">
                                 <input type="submit" value="Confirm" class="btn btn-success">
                             </div>
                         @endif
