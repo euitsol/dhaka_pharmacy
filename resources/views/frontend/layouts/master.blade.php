@@ -54,6 +54,7 @@
             'login': `{{ route('login') }}`,
         };
     </script>
+    <link rel="stylesheet" href="{{asset('frontend/asset/css/responsive.css')}}">
 </head>
 
 <header>
