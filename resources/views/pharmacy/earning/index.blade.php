@@ -1,19 +1,10 @@
 @extends('pharmacy.layouts.master', ['pageSlug' => 'earning'])
 @section('title', 'My Earnings')
-@push('css')
-    <style>
-        .myTab.active {
-            color: var(--primary-color) !important;
-            border: 0;
-            border-bottom: 1px solid var(--primary) !important;
-            background: transparent !important;
-
-
-        }
-    </style>
+@push('css_link')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endpush
 @section('content')
-    <div class="row ">
+    <div class="row earning">
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
@@ -45,10 +36,13 @@
         </div>
     </div>
 @endsection
-
-@include('filepond.fileupload')
+@push('js_link')
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+@endpush
 @push('js')
     <script>
-        file_upload(["#files"], "uploadfiles", "pharmacy", true);
+        const myRoute = `{{ route('pharmacy.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`;
     </script>
+    <script src="{{ asset('pharmacy/js/earning.js') }}"></script>
 @endpush

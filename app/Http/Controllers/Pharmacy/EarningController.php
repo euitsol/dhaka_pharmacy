@@ -16,23 +16,36 @@ class EarningController extends Controller
     {
         return $this->middleware('pharmacy');
     }
-    public function index()
+    public function index(Request $request)
     {
         $pharmacyId = pharmacy()->id;
         $pharmacyClass = get_class(pharmacy());
         $query = Earning::with(['receiver', 'order', 'point_history'])
             ->where('receiver_id', $pharmacyId)
-            ->where('receiver_type', $pharmacyClass)->latest();
-        $totalEarnings = $query->get()->each(function ($earning) {
+            ->where('receiver_type', $pharmacyClass)
+            ->latest();
+        if ($request->filled('from') && $request->filled('to')) {
+            $query->whereDate('created_at', '>=', $request->from)
+                ->whereDate('created_at', '<=', $request->to);
+        }
+        $totalEarnings = $query->get()->each(function (&$earning) {
             $earning->point = $earning->amount / $earning->point_history->eq_amount;
         });
         $paginateEarnings = $query->paginate(1)->withQueryString();
+        $paginateEarnings->getCollection()->each(function (&$earning) {
+            $earning->creationDate = timeFormate($earning->created_at);
+            $earning->activityBg = $earning->activityBg();
+            $earning->activityTitle = $earning->activityTitle();
+        });
         $data = [
             'totalEarnings' => $totalEarnings,
             'paginateEarnings' => $paginateEarnings,
             'pagination' => $paginateEarnings->links('vendor.pagination.bootstrap-5')->render(),
         ];
-
-        return view('pharmacy.earning.index', $data);
+        if ($request->ajax()) {
+            return response()->json($data);
+        } else {
+            return view('pharmacy.earning.index', $data);
+        }
     }
 }

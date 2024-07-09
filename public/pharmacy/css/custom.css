@@ -45,7 +45,21 @@
     background:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
 }
+
 /*=============================================================
-                Site Settings CSS
+                Earning CSS
  =============================================================*/
+
+ .earning .amount .my_amount {
+    font-size: 30px;
+    font-weight: 900;
+    margin: 15px 0;
+    font-family: auto;
+}
+ .earning .myTab.active {
+    color: var(--primary-color) !important;
+    border: 0;
+    border-bottom: 1px solid var(--primary) !important;
+    background: transparent !important;
+}
 

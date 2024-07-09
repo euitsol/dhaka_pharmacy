@@ -1,46 +1,3 @@
-@push('css_link')
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-@endpush
-
-@push('css')
-    <style>
-        .amount .my_amount {
-            font-size: 30px;
-            font-weight: 900;
-            margin: 15px 0;
-            font-family: auto;
-        }
-    </style>
-@endpush
-
-@push('js_link')
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-@endpush
-
-@push('js')
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var startDate = moment().startOf('month');
-            var endDate = moment().endOf('month');
-
-            $('#daterange').daterangepicker({
-                locale: {
-                    format: 'YYYY-MM-DD'
-                },
-                startDate: startDate,
-                endDate: endDate,
-                autoUpdateInput: false
-            }, function(start, end, label) {
-                $('#daterange').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                    .format('YYYY-MM-DD'));
-            });
-
-            $('#daterange').attr('placeholder', 'Select Date Range');
-        });
-    </script>
-@endpush
 <div class="row px-4">
     <div class="col-md-4">
         <h6 class="card-title fw-bolder">{{ __('Total Balance') }}</h6>
@@ -97,7 +54,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row px-4">
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-2 mb-3">
@@ -117,7 +74,7 @@
                             <th>{{ __('Amount') }}</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="earning_wrap">
                         @foreach ($paginateEarnings as $earning)
                             <tr>
                                 <td>{{ timeFormate($earning->created_at) }}</td>
@@ -132,7 +89,9 @@
                 </table>
             </div>
         </div>
-        {!! $pagination !!}
+        <div class="paginate">
+            {!! $pagination !!}
+        </div>
     </div>
 </div>
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4]])
