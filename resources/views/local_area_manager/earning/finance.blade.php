@@ -1,6 +1,6 @@
 <div class="row px-4">
     <div class="col-4 mx-auto">
-        <form action="{{ route('rider.earning.report') }}" method="POST">
+        <form action="{{ route('lam.earning.report') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label>{{ __('Please choose the date range to receive a report on your email activity.') }}</label>
