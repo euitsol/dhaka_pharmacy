@@ -98,6 +98,13 @@
                     </ul>
                 </div>
             </li>
+            <li @if ($pageSlug == 'earning') class="active" @endif>
+                <a href="{{ route('rider.earning.index') }}">
+                    <i
+                        class="fa-solid fa-hand-holding-dollar @if ($pageSlug == 'earning') fa-beat-fade @endif"></i>
+                    <p>{{ 'My Earnings' }}</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'feedback') class="active" @endif>
                 <a href="{{ route('rider.fdk.index') }}">
                     <i class="fa-regular fa-thumbs-up @if ($pageSlug == 'feedback') fa-beat-fade @endif"></i>

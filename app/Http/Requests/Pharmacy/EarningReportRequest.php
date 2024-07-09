@@ -4,7 +4,7 @@ namespace App\Http\Requests\Pharmacy;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PharmacyEarningReportRequest extends FormRequest
+class EarningReportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

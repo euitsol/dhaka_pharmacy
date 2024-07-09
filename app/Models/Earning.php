@@ -53,4 +53,8 @@ class Earning extends BaseModel
     {
         return $query->where('receiver_id', pharmacy()->id)->where('receiver_type', get_class(pharmacy()));
     }
+    public function scopeRider($query)
+    {
+        return $query->where('receiver_id', rider()->id)->where('receiver_type', get_class(rider()));
+    }
 }
