@@ -101,6 +101,7 @@ use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\User\TipsController;
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
+use App\Http\Controllers\Rider\EarningController as RiderEarningController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 /*
@@ -841,6 +842,12 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
     Route::controller(RiderFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
+    });
+
+    //Rider Earning
+    Route::controller(RiderEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/report', 'report')->name('report');
     });
 });
 

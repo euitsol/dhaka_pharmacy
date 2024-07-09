@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Pharmacy;
+namespace App\Http\Controllers\Rider;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Pharmacy\EarningReportRequest;
+use App\Http\Requests\Rider\EarningReportRequest;
 use App\Models\Earning;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
 
 class EarningController extends Controller
 {
     public function __construct()
     {
-        return $this->middleware('pharmacy');
+        return $this->middleware('rider');
     }
     public function index(Request $request)
     {
         $query = Earning::with(['receiver', 'order', 'point_history'])
-            ->pharmacy()
+            ->rider()
             ->latest();
         if ($request->filled('from') && $request->filled('to')) {
             $query->whereDate('created_at', '>=', $request->from)
@@ -41,14 +40,14 @@ class EarningController extends Controller
         if ($request->ajax()) {
             return response()->json($data);
         } else {
-            return view('pharmacy.earning.index', $data);
+            return view('rider.earning.index', $data);
         }
     }
     public function report(EarningReportRequest $request): RedirectResponse
     {
 
         $earnings = Earning::with(['receiver', 'order'])
-            ->pharmacy()
+            ->rider()
             ->whereDate('created_at', '>=', $request->from_date)
             ->whereDate('created_at', '<=', $request->to_date)
             ->get();

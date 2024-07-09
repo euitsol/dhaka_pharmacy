@@ -1,4 +1,4 @@
-@extends('pharmacy.layouts.master', ['pageSlug' => 'earning'])
+@extends('rider.layouts.master', ['pageSlug' => 'earning'])
 @section('title', 'My Earnings')
 @push('css_link')
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -42,7 +42,7 @@
 @endpush
 @push('js')
     <script>
-        const myRoute = `{{ route('pharmacy.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`;
+        const myRoute = `{{ route('rider.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`;
     </script>
     <script src="{{ asset('earning/earning.js') }}"></script>
 @endpush
