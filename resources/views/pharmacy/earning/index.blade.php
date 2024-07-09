@@ -21,7 +21,7 @@
                                 aria-selected="false">{{ __('Financial documents') }}</button>
                         </div>
                     </nav>
-                    <div class="tab-content py-4" id="nav-tabContent">
+                    <div class="tab-content py-4" id="nav-tabContent" style="min-height:77vh;">
                         <div class="myContent tab-pane fade show active" id="nav-overview" role="tabpanel"
                             aria-labelledby="nav-overview-tab">
                             @include('pharmacy.earning.overview')

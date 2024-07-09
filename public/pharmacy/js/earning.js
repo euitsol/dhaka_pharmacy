@@ -64,7 +64,7 @@ $(document).ready(function () {
                 var earnings = data.paginateEarnings.data;
                 if (earnings.length === 0) {
                     result = `<tr>
-                        <td colspan="5" class="text-muted text-center">Earning Not Found</td>
+                        <td colspan="5" class="text-muted text-center">No earning found</td>
                         </tr>`;
                 } else {
                     result = getHtml(earnings);
@@ -79,4 +79,34 @@ $(document).ready(function () {
     }
 
     initializeDateRangePicker();
+});
+
+$(document).ready(function () {
+    function initializeReportDateRangePicker() {
+        var startDate = moment().startOf("month");
+        var endDate = moment().endOf("month");
+
+        $("#reportDateRange").daterangepicker(
+            {
+                locale: {
+                    format: "YYYY-MM-DD",
+                },
+                startDate: startDate,
+                endDate: endDate,
+                autoUpdateInput: false,
+            },
+            function (start, end) {
+                $("#reportDateRange").val(
+                    `${start.format("YYYY-MM-DD")} - ${end.format(
+                        "YYYY-MM-DD"
+                    )}`
+                );
+                $("#fromDate").val(start.format("YYYY-MM-DD"));
+                $("#toDate").val(end.format("YYYY-MM-DD"));
+            }
+        );
+
+        $("#reportDateRange").attr("placeholder", "Select Date Range");
+    }
+    initializeReportDateRangePicker();
 });

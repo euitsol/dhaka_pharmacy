@@ -163,15 +163,15 @@ class SiteSettingsController extends Controller
             foreach ($data as $key => $value) {
                 PointSetting::updateOrCreate(['key' => $key], ['value' => $value]);
             }
-            $ph = PointHistory::activated()->where('eq_amount', $request->equivalent_amount)->first();
-            if (!$ph) {
+            $ph = PointHistory::latest()->first();
+            if ($ph->eq_amount != $request->equivalent_amount) {
                 PointHistory::activated()->update(['status' => 0, 'updated_by' => admin()->id]);
                 PointHistory::create(['eq_amount' => $request->equivalent_amount, 'created_by' => admin()->id]);
             }
             flash()->addSuccess('Point settings added successfully.');
             return redirect()->route('settings.site_settings');
         } catch (\Exception $e) {
-            flash()->addError('Something is wrong.');
+            flash()->addError('Something went wrong.');
             return redirect()->route('settings.site_settings');
         }
     }

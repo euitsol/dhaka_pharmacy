@@ -62,4 +62,7 @@
     border-bottom: 1px solid var(--primary) !important;
     background: transparent !important;
 }
+ .earning .drp-buttons .cancelBtn.btn {
+    background: var(--bs-btn-bg) !important;
+}
 

@@ -47,7 +47,7 @@
                 <hr>
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Pending withdrawal amount') }}</span>
-                    <h4 class="my_amount">{{ number_format($totalEarnings->where('activity', -1)->sum('amount'), 2) }}
+                    <h4 class="my_amount">{{ number_format($totalEarnings->where('activity', 4)->sum('amount'), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
             </div>

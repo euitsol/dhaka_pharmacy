@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Pharmacy;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PointSettingRequest extends FormRequest
+class PharmacyEarningReportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class PointSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'point_name' => 'required|string|min:2',
-            'equivalent_amount' => 'required|numeric',
+            'from_date' => 'required|date|before:today',
+            'to_date' => 'required|date|before_or_equal:today',
         ];
     }
 }

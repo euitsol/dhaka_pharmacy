@@ -702,6 +702,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     //Pharmacy Earning
     Route::controller(PharmacyEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::post('/report', 'report')->name('report');
     });
 });
 

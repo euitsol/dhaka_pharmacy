@@ -49,4 +49,8 @@ class Earning extends BaseModel
                 return 'Pending withdrawn';
         }
     }
+    public function scopePharmacy($query)
+    {
+        return $query->where('receiver_id', pharmacy()->id)->where('receiver_type', get_class(pharmacy()));
+    }
 }
