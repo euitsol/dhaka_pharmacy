@@ -106,14 +106,11 @@ class OrderManagementController extends Controller
     public function order_distribution($id)
     {
         $data['order'] = Order::with(['address', 'od.odps.order_product', 'od.odps.pharmacy', 'products', 'products.pivot.unit', 'payments'])->paid()->find(decrypt($id));
+        $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
+
         if (!empty($data['order'])) {
             $this->calculateOrderTotalPrice($data['order']);
             $this->calculateOrderTotalDiscountPrice($data['order']);
-
-            $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
-            if ($data['order']->od) {
-                $data['order_distribution'] = $data['order']->od->where('status', 0)->first();
-            }
             return view('admin.order_management.order_distribution', $data);
         } else {
             flash()->addError('Cannot distribute this order');
@@ -123,62 +120,101 @@ class OrderManagementController extends Controller
 
     public function order_distribution_store(OrderDistributionRequest $req, $order_id): RedirectResponse
     {
-        //Update order status to distributed
+        dd($req->all());
         $order_id = decrypt($order_id);
-        Order::findOrFail($order_id)->update(['status' => 2]);
+        $order = Order::findOrFail($order_id);
 
-        //Create new order distribution
-        $od = new OrderDistribution();
-        $od->order_id = $order_id;
-        $od->payment_type = $req->payment_type;
-        $od->distribution_type = $req->distribution_type;
+        if($order->status == 1){
+            //Update order status to distributed
+            $order->status = 2;
+            $order->save();
 
-        //prepare the time
-        $od->pharmacy_prep_time = Carbon::now()->addMinutes($req->prep_time)->toDateTimeString();
+            //Create new order distribution
+            $od = new OrderDistribution();
+            $od->order_id = $order_id;
+            $od->payment_type = $req->payment_type;
+            $od->distribution_type = $req->distribution_type;
 
-        $od->note = $req->note;
-        $od->creater()->associate(admin());
-        $od->save();
+            //prepare the time
+            $od->pharmacy_prep_time = Carbon::now()->addMinutes($req->prep_time)->toDateTimeString();
 
-        // Iterate through the datas and create OrderDistributionPharmacy entries
-        foreach ($req->datas as $data) {
-            $odp = new OrderDistributionPharmacy();
-            $odp->order_distribution_id = $od->id;
-            $odp->op_id = $data['op_id'];
-            $odp->pharmacy_id = $data['pharmacy_id'];
-            $odp->creater()->associate(admin());
-            $odp->save();
+            $od->note = $req->note;
+            $od->creater()->associate(admin());
+            $od->save();
 
-            $this->createDistributionOTP($od, $odp);
+            // Iterate through the datas and create OrderDistributionPharmacy entries
+            foreach ($req->datas as $data) {
+                $odp = new OrderDistributionPharmacy();
+                $odp->order_distribution_id = $od->id;
+                $odp->op_id = $data['op_id'];
+                $odp->pharmacy_id = $data['pharmacy_id'];
+                $odp->creater()->associate(admin());
+                $odp->save();
+
+                $this->createDistributionOTP($od, $odp);
+            }
+            flash()->addSuccess('Order Processed Successfully.');
+            return redirect()->route('om.order.order_list', 'processed');
+        }else{
+            flash()->addSuccess('Cannot process this order');
+            return redirect()->route('om.order.order_list', 'submitted');
         }
-        flash()->addSuccess('Order Distributed Successfully.');
-        return redirect()->route('om.order.order_list', 'processed');
     }
 
 
     public function distribution_details($do_id): View
     {
-        $query = OrderDistribution::with(['order.customer', 'odrs.rider', 'odps' => function ($query) {
-            $query->with('order_product.product')->where('status', '!=', -1);
-        }])
-            ->withCount(['odps' => function ($query) {
-                $query->where('status', '!=', -1);
-            }])
-            ->findOrFail(decrypt($do_id));
-        $query->odps->each(function (&$odp) {
-            $odp->totalDiscountPrice = $this->OrderItemDiscountPrice($odp->order_product);
-            $odp->totalPrice = $this->OrderItemPrice($odp->order_product);
+        // $query = OrderDistribution::with(['order.customer', 'odrs.rider', 'odps' => function ($query) {
+        //     $query->with('order_product.product')->where('status', '!=', -1);
+        // }])
+        //     ->withCount(['odps' => function ($query) {
+        //         $query->where('status', '!=', -1);
+        //     }])
+        //     ->findOrFail(decrypt($do_id));
+
+        // $query->odps->each(function (&$odp) {
+        //     $odp->totalDiscountPrice = $this->OrderItemDiscountPrice($odp->order_product);
+        //     $odp->totalPrice = $this->OrderItemPrice($odp->order_product);
+        // });
+        // $this->calculateOrderTotalDiscountPrice($query->order);
+        // if ($query->status == 2) {
+        //     $data['riders'] = Rider::activated()->kycVerified()->latest()->get();
+        // }
+        // $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
+        // if ($query->odrs) {
+        //     $data['assigned_rider'] = $query->odrs->where('status', '!=', 0)->where('status', '!=', -1)->first();
+        //     $data['dispute_riders'] = $query->odrs()->where('status', 0)->orWhere('status', -1)->latest()->get();
+        // }
+        // $data['do'] = $query;
+
+        $data['do'] = OrderDistribution::with(['order.customer', 'odrs.rider', 'odrs', 'odps', 'order'])->findOrFail(decrypt($do_id));
+        $data['do']->each(function (&$od) {
+            $this->calculateOrderTotalDiscountPrice($od->order);
         });
-        $this->calculateOrderTotalDiscountPrice($query->order);
-        if ($query->status == 2) {
-            $data['riders'] = Rider::activated()->kycVerified()->latest()->get();
+
+
+        switch ($data['do']->status) {
+            case 1:
+                break;
+            case 2:
+                $data['riders'] = Pharmacy::activated()->kycVerified()->latest()->get();
+                break;
+            case 3:
+                $data['riders'] = Rider::activated()->kycVerified()->latest()->get();
+                break;
+
+            default:
+                break;
         }
+
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
-        if ($query->odrs) {
-            $data['assigned_rider'] = $query->odrs->where('status', '!=', 0)->where('status', '!=', -1)->first();
-            $data['dispute_riders'] = $query->odrs()->where('status', 0)->orWhere('status', -1)->latest()->get();
+
+
+
+        if ($data['do']->status == 2) {
+
         }
-        $data['do'] = $query;
+
         return view('admin.distributed_order.details', $data);
     }
 
@@ -195,6 +231,7 @@ class OrderManagementController extends Controller
         $do = OrderDistribution::with('order', 'odps')->findOrFail($do_id);
         $do->update(['status' => 3]);
         $do->order->update(['status' => 4]);
+
         flash()->addSuccess('Rider ' . $do_rider->rider->name . ' assigned succesfully.');
         return redirect()->back();
     }

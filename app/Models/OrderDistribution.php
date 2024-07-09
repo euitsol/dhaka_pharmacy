@@ -33,7 +33,7 @@ class OrderDistribution extends BaseModel
     }
     public function odr()
     {
-        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id', 'id')->whereNotIn('status', [0, -1]);
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id', 'id')->where('status', 1);
     }
 
     public function statusBg()
@@ -44,12 +44,22 @@ class OrderDistribution extends BaseModel
             case 1:
                 return 'badge bg-warning';
             case 2:
-                return 'badge badge-success';
+                return 'badge bg-secondary';
+            case 3:
+                return 'badge bg-danger';
+            case 4:
+                return 'badge bg-primary';
+            case 5:
+                return 'badge bg-dark';
+            case 6:
+                return 'badge bg-success';
+            case 7:
+                return 'badge bg-danger';
+
         }
     }
 
-    public function statusTitle()
-    {
+    public function statusTitle() {
         switch ($this->status) {
             case 0:
                 return 'Pending';
@@ -57,8 +67,19 @@ class OrderDistribution extends BaseModel
                 return 'Preparing';
             case 2:
                 return 'Prepared';
-        }
+            case 3:
+                return 'Waiting-for-pickup';
+            case 4:
+                return 'Picked-up';
+            case 5:
+                return 'Delivered';
+            case 6:
+                return 'Finish';
+            case 7:
+                return 'Cancel';
+            }
     }
+
     public function paymentType()
     {
         switch ($this->payment_type) {
