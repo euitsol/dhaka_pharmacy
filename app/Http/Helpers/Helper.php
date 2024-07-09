@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
+use App\Models\PointSetting;
 use App\Models\Review;
 use App\Models\SiteSetting;
 use Illuminate\Support\Str;
@@ -519,4 +520,49 @@ function is_valid_route($routeOrUrl)
 function slugToTitle($slug)
 {
     return ucwords(strtolower(str_replace('-', ' ', $slug)));
+}
+function activatedTime($startTime, $endTime)
+{
+    $startTime = Carbon::parse($startTime);
+    $endTime = Carbon::parse($endTime);
+
+    if ($startTime->eq($endTime)) {
+        $endTime = Carbon::now();
+        $active = ' - continue';
+    } else {
+        $active = '';
+    }
+
+    $diffInSeconds = $startTime->diffInSeconds($endTime);
+
+    $days = intdiv($diffInSeconds, 86400);
+    $diffInSeconds %= 86400;
+
+    $hours = intdiv($diffInSeconds, 3600);
+    $diffInSeconds %= 3600;
+
+    $minutes = intdiv($diffInSeconds, 60);
+    $seconds = $diffInSeconds % 60;
+
+    $string = '';
+
+    if ($days > 0) {
+        $string .= $days . ($days > 1 ? ' days, ' : ' day, ');
+    }
+    if ($hours > 0) {
+        $string .= $hours . ($hours > 1 ? ' hours, ' : ' hour, ');
+    }
+    if ($minutes > 0) {
+        $string .= $minutes . ($minutes > 1 ? ' minutes, ' : ' minute, ');
+    }
+    if ($seconds > 0) {
+        $string .= $seconds . ($seconds > 1 ? ' seconds' : ' second');
+    }
+
+    return rtrim($string, ', ') . $active;
+}
+
+function getPointName()
+{
+    return PointSetting::where('key', 'point_name')->first()->value;
 }

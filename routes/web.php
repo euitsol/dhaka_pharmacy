@@ -100,6 +100,7 @@ use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\User\TipsController;
+use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 /*
@@ -600,6 +601,7 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         Route::post('index', 'notification')->name('notification.site_settings');
         Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
+        Route::post('point-setting/update', 'ps_update')->name('ps_update');
     });
 
     // Order by Prescription
@@ -696,6 +698,11 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     Route::controller(PharmacyFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
+    });
+    //Pharmacy Earning
+    Route::controller(PharmacyEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/report', 'report')->name('report');
     });
 });
 
