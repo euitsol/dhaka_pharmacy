@@ -16,9 +16,9 @@
                             <button class="myTab nav-link active text-muted" id="nav-overview-tab" data-bs-toggle="tab"
                                 data-bs-target="#nav-overview" type="button" role="tab" aria-controls="nav-overview"
                                 aria-selected="true">{{ __('Overview') }}</button>
-                            <button class="myTab nav-link text-muted" id="nav-financial-tab" data-bs-toggle="tab"
+                            {{-- <button class="myTab nav-link text-muted" id="nav-financial-tab" data-bs-toggle="tab"
                                 data-bs-target="#nav-financial" type="button" role="tab" aria-controls="nav-financial"
-                                aria-selected="false">{{ __('Financial documents') }}</button>
+                                aria-selected="false">{{ __('Financial documents') }}</button> --}}
                         </div>
                     </nav>
                     <div class="tab-content py-4" id="nav-tabContent" style="min-height:77vh;">
@@ -26,10 +26,10 @@
                             aria-labelledby="nav-overview-tab">
                             @include('district_manager.earning.overview')
                         </div>
-                        <div class="myContent tab-pane fade" id="nav-financial" role="tabpanel"
+                        {{-- <div class="myContent tab-pane fade" id="nav-financial" role="tabpanel"
                             aria-labelledby="nav-financial-tab">
                             @include('district_manager.earning.finance')
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -42,7 +42,10 @@
 @endpush
 @push('js')
     <script>
-        const myRoute = `{{ route('dm.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`;
+        const myRoutes = {
+            'filter': `{{ route('dm.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`,
+            'report': `{{ route('dm.earning.report') }}`,
+        };
     </script>
     <script src="{{ asset('earning/earning.js') }}"></script>
 @endpush

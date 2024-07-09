@@ -320,3 +320,23 @@ textarea.form-control {
  .badge.badge-secondary{
     color: #000;
  }
+
+ /*=============================================================
+                Earning CSS
+ =============================================================*/
+
+ .earning .amount .my_amount {
+    font-size: 30px;
+    font-weight: 900;
+    margin: 15px 0;
+    font-family: auto;
+}
+ .earning .myTab.active {
+    color: var(--primary-color) !important;
+    border: 0;
+    border-bottom: 1px solid var(--primary) !important;
+    background: transparent !important;
+}
+ .earning .drp-buttons .cancelBtn.btn {
+    background: var(--bs-btn-bg) !important;
+}

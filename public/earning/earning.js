@@ -36,10 +36,8 @@ $(document).ready(function () {
                         "YYYY-MM-DD"
                     )}`
                 );
-                console.log(
-                    start.format("YYYY-MM-DD"),
-                    end.format("YYYY-MM-DD")
-                );
+                $("#fromDate").val(start.format("YYYY-MM-DD"));
+                $("#toDate").val(end.format("YYYY-MM-DD"));
                 fetchData(start.format("YYYY-MM-DD"), end.format("YYYY-MM-DD"));
             }
         );
@@ -48,13 +46,11 @@ $(document).ready(function () {
     }
 
     function fetchData(from, to) {
-        let url = myRoute;
+        let url = myRoutes["filter"];
         let __url = url
             .replace("_from", from)
             .replace("_to", to)
             .replace(/&amp;/g, "&");
-        console.log(__url);
-
         $.ajax({
             url: __url,
             method: "GET",
@@ -81,32 +77,68 @@ $(document).ready(function () {
     initializeDateRangePicker();
 });
 
-$(document).ready(function () {
-    function initializeReportDateRangePicker() {
-        var startDate = moment().startOf("month");
-        var endDate = moment().endOf("month");
+// $(document).ready(function () {
+//     function initializeReportDateRangePicker() {
+//         var startDate = moment().startOf("month");
+//         var endDate = moment().endOf("month");
 
-        $("#reportDateRange").daterangepicker(
-            {
-                locale: {
-                    format: "YYYY-MM-DD",
-                },
-                startDate: startDate,
-                endDate: endDate,
-                autoUpdateInput: false,
-            },
-            function (start, end) {
-                $("#reportDateRange").val(
-                    `${start.format("YYYY-MM-DD")} - ${end.format(
-                        "YYYY-MM-DD"
-                    )}`
-                );
-                $("#fromDate").val(start.format("YYYY-MM-DD"));
-                $("#toDate").val(end.format("YYYY-MM-DD"));
-            }
-        );
+//         $("#reportDateRange").daterangepicker(
+//             {
+//                 locale: {
+//                     format: "YYYY-MM-DD",
+//                 },
+//                 startDate: startDate,
+//                 endDate: endDate,
+//                 autoUpdateInput: false,
+//             },
+//             function (start, end) {
+//                 $("#reportDateRange").val(
+//                     `${start.format("YYYY-MM-DD")} - ${end.format(
+//                         "YYYY-MM-DD"
+//                     )}`
+//                 );
+//                 $("#fromDate").val(start.format("YYYY-MM-DD"));
+//                 $("#toDate").val(end.format("YYYY-MM-DD"));
+//             }
+//         );
 
-        $("#reportDateRange").attr("placeholder", "Select Date Range");
+//         $("#reportDateRange").attr("placeholder", "Select Date Range");
+//     }
+//     initializeReportDateRangePicker();
+// });
+
+function handleErrors(response) {
+    var errors = response.errors;
+    for (var field in errors) {
+        toastr.error(errors[field][0]);
     }
-    initializeReportDateRangePicker();
+}
+$(document).ready(function () {
+    $(".email_activity").on("click", function () {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+        $.ajax({
+            url: myRoutes["report"],
+            method: "POST",
+            dataType: "json",
+            data: {
+                from_date: $("#fromDate").val() ?? " ",
+                to_date: $("#toDate").val() ?? " ",
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.success) {
+                    toastr.success(response.message);
+                } else {
+                    handleErrors(response);
+                }
+            },
+            error: function (XHR, textStatus, errorThrown) {
+                console.error("Error:", textStatus, errorThrown);
+            },
+        });
+    });
 });

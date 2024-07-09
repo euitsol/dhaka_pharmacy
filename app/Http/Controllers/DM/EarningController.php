@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\DM;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DistrictManager\EarningReportRequest;
+use App\Http\Requests\EarningReportRequest;
 use App\Models\Earning;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
 
 class EarningController extends Controller
 {
@@ -18,8 +17,7 @@ class EarningController extends Controller
     public function index(Request $request)
     {
         $query = Earning::with(['receiver', 'order', 'point_history'])
-            ->lam()
-            ->latest();
+            ->dm();
         if ($request->filled('from') && $request->filled('to')) {
             $query->whereDate('created_at', '>=', $request->from)
                 ->whereDate('created_at', '<=', $request->to);
@@ -44,16 +42,17 @@ class EarningController extends Controller
             return view('district_manager.earning.index', $data);
         }
     }
-    public function report(EarningReportRequest $request): RedirectResponse
+    public function report(EarningReportRequest $request): JsonResponse
     {
-
-        $earnings = Earning::with(['receiver', 'order'])
-            ->pharmacy()
-            ->whereDate('created_at', '>=', $request->from_date)
-            ->whereDate('created_at', '<=', $request->to_date)
-            ->get();
-        // dd($earnings);
-        flash()->addSuccess('The email has been sent successfully.');
-        return redirect()->back();
+        $query = Earning::with(['receiver', 'order'])->dm();
+        if ($request->from_date != null && $request->to_date != null) {
+            $query->whereDate('created_at', '>=', $request->from_date)
+                ->whereDate('created_at', '<=', $request->to_date);
+        }
+        $earnings = $query->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'The email has been sent successfully.'
+        ]);
     }
 }
