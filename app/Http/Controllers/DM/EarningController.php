@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\LAM;
+namespace App\Http\Controllers\DM;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LocalAreaManager\EarningReportRequest;
-use App\Http\Traits\DetailsCommonDataTrait;
+use App\Http\Requests\DistrictManager\EarningReportRequest;
 use App\Models\Earning;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 
-class EarningContorller extends Controller
+class EarningController extends Controller
 {
     public function __construct()
     {
-        return $this->middleware('lam');
+        return $this->middleware('dm');
     }
     public function index(Request $request)
     {
@@ -44,7 +41,7 @@ class EarningContorller extends Controller
         if ($request->ajax()) {
             return response()->json($data);
         } else {
-            return view('local_area_manager.earning.index', $data);
+            return view('district_manager.earning.index', $data);
         }
     }
     public function report(EarningReportRequest $request): RedirectResponse
