@@ -56,9 +56,17 @@
 </div>
 <div class="row px-4">
     <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-2 mb-3">
+        <div class="row mb-3 align-items-center justify-content-between">
+            <div class="col-md-2">
                 <input type="text" name="daterange" id="daterange" class="form-control" />
+            </div>
+            <div class="col-md-2">
+                <a href="javascript:void(0)" class="text-muted email_activity float-end text-decoration-none">
+                    <i class="fa-solid fa-file-csv" style="color: rgb(3, 204, 3)"></i>
+                    {{ __('Email activity report') }}
+                </a>
+                <input type="hidden" name="from_date" id="fromDate">
+                <input type="hidden" name="to_date" id="toDate">
             </div>
         </div>
         <div class="card mb-2">
