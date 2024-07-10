@@ -61,4 +61,8 @@ class Earning extends BaseModel
     {
         return $query->where('receiver_id', lam()->id)->where('receiver_type', get_class(lam()));
     }
+    public function scopeDm($query)
+    {
+        return $query->where('receiver_id', dm()->id)->where('receiver_type', get_class(dm()));
+    }
 }
