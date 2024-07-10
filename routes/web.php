@@ -353,6 +353,8 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('index', 'index')->name('district_manager_list');
             Route::get('details/{id}', 'details')->name('details.district_manager_list');
             Route::get('profile/{id}', 'profile')->name('district_manager_profile');
+            Route::get('profile/{id}', 'profile')->name('district_manager_profile');
+            Route::get('cv/download/{url}', 'view_or_download')->name('download.district_manager_profile');
             Route::get('dashboard/{id}', 'loginAs')->name('login_as.district_manager_profile');
             Route::get('create', 'create')->name('district_manager_create');
             Route::post('create', 'store')->name('district_manager_create');

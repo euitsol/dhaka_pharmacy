@@ -122,11 +122,11 @@ function storage_url($urlOrArray)
 
 function auth_storage_url($urlOrArray, $gender)
 {
-    $image = asset('default_img/other-student.png');
+    $image = asset('default_img/other.png');
     if ($gender == 'Male') {
-        $image = asset('default_img/male-student.png');
+        $image = asset('default_img/male.png');
     } elseif ($gender == 'Male') {
-        $image = asset('default_img/female-student.png');
+        $image = asset('default_img/female.png');
     }
 
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
@@ -375,7 +375,6 @@ function remainingTime($endTime, $html = false)
         $result = $html ? "<span class='prep_time text-danger' data-end-time='$endTime'>Delayed</span>" : 0;
     }
     return $result;
-
 }
 
 function prepTimeConverter($end_time)
