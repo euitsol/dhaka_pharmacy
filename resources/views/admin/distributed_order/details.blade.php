@@ -35,15 +35,15 @@
                 </div>
                 <div class="card-footer">
                     @if ($do->status != 0 && $do->status != 1)
-                        @if (count($dispute_riders) > 0)
+                        @if ($do->disputedRiders->count() > 0)
                             <h4>{{ __('Rider Dispute Reasons:') }}</h4>
                         @endif
-                        @foreach ($dispute_riders as $ddor)
+                        @foreach ($do->disputedRiders as $ddor)
                             <p class="m-0 mb-1"><b class="fw-bold">{{ $ddor->rider->name . ' : ' }}</b><span
                                     class="text-danger">{{ $ddor->dispute_note }}</span></p>
                         @endforeach
 
-                        @if (auth()->user()->can('assign_order') && !$assigned_rider)
+                        @if (auth()->user()->can('assign_order') && !$do->assignedRider->first())
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
@@ -56,7 +56,7 @@
                                     <form action="{{ route('om.order.assign_order', encrypt($do->id)) }}" method="POST">
                                         @csrf
                                         <div class="row">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-3">
                                                 <label>{{ __('Rider') }}</label>
                                                 <select name="rider_id" class="form-control">
                                                     <option selected hidden value=" ">{{ __('Select Rider') }}
@@ -82,7 +82,7 @@
                                                 @include('alerts.feedback', ['field' => 'rider_id'])
 
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-3">
                                                 <label>{{ __('Priority') }}</label>
                                                 <select name="priority" class="form-control">
                                                     <option selected hidden value=" ">{{ __('Select Priority') }}
@@ -93,9 +93,45 @@
                                                 </select>
                                                 @include('alerts.feedback', ['field' => 'priority'])
                                             </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="pick_up_time">{{ __('Pick up Time') }}<span
+                                                        class="text-danger">*</span></label>
+                                                <select id="pick_up_time" class="form-control" name="pick_up_time">
+                                                    <option value="5">5 minutes</option>
+                                                    <option value="10">10 minutes</option>
+                                                    <option value="15">15 minutes</option>
+                                                    <option value="30">30 minutes</option>
+                                                    <option value="45">45 minutes</option>
+                                                    <option value="60">1 hour</option>
+                                                    <option value="90">1.5 hours</option>
+                                                    <option value="120">2 hours</option>
+                                                </select>
+                                                @include('alerts.feedback', [
+                                                    'field' => 'pick_up_time',
+                                                ])
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <label for="delivery_time">{{ __('Delivery Time') }}<span
+                                                        class="text-danger">*</span></label>
+                                                <select id="delivery_time" class="form-control" name="delivery_time">
+                                                    <option value="5">5 minutes</option>
+                                                    <option value="10">10 minutes</option>
+                                                    <option value="15">15 minutes</option>
+                                                    <option value="30">30 minutes</option>
+                                                    <option value="45">45 minutes</option>
+                                                    <option value="60">1 hour</option>
+                                                    <option value="90">1.5 hours</option>
+                                                    <option value="120">2 hours</option>
+                                                </select>
+                                                @include('alerts.feedback', [
+                                                    'field' => 'delivery_time',
+                                                ])
+                                            </div>
+
                                             <div class="form-group col-md-12">
                                                 <label>{{ __('Instraction') }}</label>
-                                                <textarea name="instraction" class="form-control" placeholder="Write delivery instration here">{{ optional($assigned_rider)->instraction }}</textarea>
+                                                <textarea name="instraction" class="form-control" placeholder="Write delivery instration here">{{ optional($do->assignedRider->first())->instraction }}</textarea>
                                                 @include('alerts.feedback', ['field' => 'instraction'])
                                             </div>
                                             <div class="form-group text-end">
@@ -105,7 +141,7 @@
                                     </form>
                                 </div>
                             </div>
-                        @elseif($assigned_rider)
+                        @elseif($do->assignedRider->first())
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
@@ -114,7 +150,7 @@
                                         </div>
                                         <div class="col-6 text-end">
                                             <span
-                                                class="{{ $assigned_rider->statusBg() }}">{{ __(slugToTitle($assigned_rider->statusTitle())) }}</span>
+                                                class="{{ $do->assignedRider->first()->statusBg() }}">{{ __(slugToTitle($do->assignedRider->first()->statusTitle())) }}</span>
                                         </div>
                                     </div>
 
@@ -126,12 +162,13 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="rider_image">
-                                                        <img src="{{ storage_url($assigned_rider->rider->image) }}"
+                                                        <img src="{{ storage_url($do->assignedRider->first()->rider->image) }}"
                                                             alt="">
                                                     </div>
                                                 </div>
                                                 <div class="card-footer bg-secondary">
-                                                    <h3 class="text-white m-0">{{ $assigned_rider->rider->name }}</h3>
+                                                    <h3 class="text-white m-0">
+                                                        {{ $do->assignedRider->first()->rider->name }}</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,40 +178,45 @@
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Rider Name') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $assigned_rider->rider->name }}</td>
+                                                        <td class="fw-bold">{{ $do->assignedRider->first()->rider->name }}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Rider Gender') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $assigned_rider->rider->gender }}</td>
+                                                        <td class="fw-bold">
+                                                            {{ $do->assignedRider->first()->rider->gender }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Rider Contact') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $assigned_rider->rider->phone }}</td>
+                                                        <td class="fw-bold">{{ $do->assignedRider->first()->rider->phone }}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Rider Age') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $assigned_rider->rider->age }}</td>
+                                                        <td class="fw-bold">{{ $do->assignedRider->first()->rider->age }}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Delivery Priority') }}</td>
                                                         <td>:</td>
-                                                        <td class="fw-bold">{{ $assigned_rider->priority() }}</td>
+                                                        <td class="fw-bold">{{ $do->assignedRider->first()->priority() }}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Operational Area') }}</td>
                                                         <td>:</td>
                                                         <td class="fw-bold">
-                                                            {{ $assigned_rider->rider->operation_area->name }}
+                                                            {{ $do->assignedRider->first()->rider->operation_area->name }}
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="fw-bold">{{ __('Operational Sub Area') }}</td>
                                                         <td>:</td>
                                                         <td class="fw-bold">
-                                                            {{ optional($assigned_rider->rider->operation_sub_area)->name }}
+                                                            {{ optional($do->assignedRider->first()->rider->operation_sub_area)->name }}
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -258,7 +300,8 @@
                                                                         @if (
                                                                             (isset($do->odps) && $do->odps[$key]->pharmacy_id == $pharmacy->id) ||
                                                                                 old('datas.' . $key . '.pharmacy_id') == $pharmacy->id) selected @endif
-                                                                        value="{{ $pharmacy->id }}">
+                                                                        value="{{ $pharmacy->id }}"
+                                                                        data-location="[{{ optional($pharmacy->address)->longitude }}, {{ optional($pharmacy->address)->latitude }}]">
                                                                         {{ $pharmacy->name . $area . $sub_area }}</option>
                                                                 @endforeach
                                                             </select>
@@ -325,4 +368,21 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="{{ asset('admin/js/remaining.js') }}"></script>
+    <script>
+        function getTravelTime() {
+            const origin = [longitude1, latitude1];
+            const destination = [longitude2, latitude2]; // replace with your destination coordinates
+            const url =
+                `https://api.mapbox.com/directions/v5/mapbox/cycling/${origin[0]},${origin[1]};${destination[0]},${destination[1]}?access_token=YOUR_MAPBOX_ACCESS_TOKEN`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const travelTime = data.routes[0].duration; // travel time in seconds
+                    const travelTimeInMinutes = Math.floor(travelTime / 60); // convert to minutes
+                    document.getElementById('travel-time').innerHTML = `Travel time: ${travelTimeInMinutes} min`;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 @endpush

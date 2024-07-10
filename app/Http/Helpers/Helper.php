@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\File;
 function get_permission_routes()
 {
     return [
-        'am.', 'um.', 'pm.', 'pm.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.'
+        'am.', 'um.', 'om.', 'pm.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.'
     ];
 }
 

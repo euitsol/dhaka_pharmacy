@@ -64,7 +64,7 @@ class OrderManagementController extends Controller
                     });
                 return view('admin.distributed_order.index', $data);
             case 'waiting-for-rider':
-                $data['dos'] = OrderDistribution::with(['order.products', 'odps'])
+                $data['dos'] = OrderDistribution::with(['order','order.products', 'odps'])
                     ->withCount(['odps' => function ($query) {
                         $query->where('status', '!=', -1);
                     }])
@@ -120,7 +120,6 @@ class OrderManagementController extends Controller
 
     public function order_distribution_store(OrderDistributionRequest $req, $order_id): RedirectResponse
     {
-        dd($req->all());
         $order_id = decrypt($order_id);
         $order = Order::findOrFail($order_id);
 
@@ -187,7 +186,11 @@ class OrderManagementController extends Controller
         // }
         // $data['do'] = $query;
 
-        $data['do'] = OrderDistribution::with(['order.customer', 'odrs.rider', 'odrs', 'odps', 'order'])->findOrFail(decrypt($do_id));
+        $data['do'] = OrderDistribution::with([
+            'assignedRider','disputedRiders','order.customer','odrs', 'odps', 'order'
+        ])
+        ->findOrFail(decrypt($do_id));
+
         $data['do']->each(function (&$od) {
             $this->calculateOrderTotalDiscountPrice($od->order);
         });
@@ -197,7 +200,7 @@ class OrderManagementController extends Controller
             case 1:
                 break;
             case 2:
-                $data['riders'] = Pharmacy::activated()->kycVerified()->latest()->get();
+                $data['riders'] = Rider::activated()->kycVerified()->latest()->get();
                 break;
             case 3:
                 $data['riders'] = Rider::activated()->kycVerified()->latest()->get();
@@ -210,26 +213,29 @@ class OrderManagementController extends Controller
         $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
 
 
-
-        if ($data['do']->status == 2) {
-
-        }
-
         return view('admin.distributed_order.details', $data);
     }
 
     public function assign_order(OrderDistributionRiderRequest $req, $do_id): RedirectResponse
     {
+        $interval_time = 5; //minutes to collect the order
+
         $do_id = decrypt($do_id);
+
         OrderDistributionRider::where('status', 0)->where('order_distribution_id', $do_id)->update(['status' => -1]);
+
         $do_rider = new OrderDistributionRider();
         $do_rider->rider_id = $req->rider_id;
         $do_rider->order_distribution_id = $do_id;
         $do_rider->priority = $req->priority;
         $do_rider->instraction = $req->instraction;
+
+
+
         $do_rider->save();
-        $do = OrderDistribution::with('order', 'odps')->findOrFail($do_id);
-        $do->update(['status' => 3]);
+
+        $do = OrderDistribution::with('order')->findOrFail($do_id);
+        $do->update(['status' => 3, 'rider_collect_time' => Carbon::now()->addMinutes($req->pick_up_time)->toDateTimeString(), 'rider_delivery_time' =>Carbon::now()->addMinutes($req->pick_up_time + $interval_time + $req->delivery_time)->toDateTimeString()]);
         $do->order->update(['status' => 4]);
 
         flash()->addSuccess('Rider ' . $do_rider->rider->name . ' assigned succesfully.');

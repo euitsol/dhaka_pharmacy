@@ -3,10 +3,16 @@
         <td class="fw-bold">{{ __('Order ID') }}</td>
         <td>:</td>
         <td>{{ $od->order->order_id }}</td>
-        <td class="fw-bold">{{ __('Preparation Time') }}</td>
-        <td>:</td>
-        <td>{!! remainingTime($od->pharmacy_prep_time, true) !!}</td>
 
+        @if ($od->status == 0 || $od->status == 1)
+            <td class="fw-bold">{{ __('Preparation Time') }}</td>
+            <td>:</td>
+            <td>{!! remainingTime($od->pharmacy_prep_time, true) !!}</td>
+        @else
+            <td class="fw-bold">{{ __('Prepared At') }}</td>
+            <td>:</td>
+            <td>{{ timeFormate($od->pharmacy_preped_at) }}</td>
+        @endif
     </tr>
     <tr>
         <td class="fw-bold">{{ __('Order Date') }}</td>
@@ -22,7 +28,7 @@
         <td class="fw-bold">{{ __('Order Type') }}</td>
         <td>:</td>
         <td>{{ $od->order->orderType() }}</td>
-        <td class="fw-bold">{{ __('Process By') }}</td>
+        <td class="fw-bold">{{ __('Processed By') }}</td>
         <td>:</td>
         <td>{{ isset($od->order->od->creater) ? $od->order->od->creater->name : '--' }}
         </td>

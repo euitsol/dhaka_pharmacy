@@ -20,18 +20,19 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Order ID') }}</th>
                                 {{-- @if ($rider && $status != 'dispute')
-                                    <th>{{ __('Rider') }}</th>
+
                                 @endif --}}
 
-                                <th>{{ __('Total Pending') }}</th>
-                                <th>{{ __('Total Preparing') }}</th>
-                                <th>{{ __('Total Dispute') }}</th>
-
+                                @if ($status == 'assigned')
+                                    <th>{{ __('Total Pending') }}</th>
+                                    <th>{{ __('Total Preparing') }}</th>
+                                    <th>{{ __('Total Dispute') }}</th>
+                                    <th>{{ __('Preparetion Time Left') }}</th>
+                                @else
+                                    <th>{{ __('Rider') }}</th>
+                                @endif
                                 <th>{{ __('Payment Type') }}</th>
                                 <th>{{ __('Distribution Type') }}</th>
-                                @if ($status == 'assigned')
-                                    <th>{{ __('Preparetion Time Left') }}</th>
-                                @endif
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -42,24 +43,26 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $od->order->order_id }} </td>
-
-                                    <td><span
-                                            class="{{ $od->odps->where('status', 0)->count() > 0 ? 'badge badge-primary' : '' }}">{{ $od->odps->where('status', 0)->count() }}</span>
-                                    </td>
-                                    <td><span
-                                            class="{{ $od->odps->where('status', 1)->count() > 0 ? 'badge badge-warning' : '' }}">{{ $od->odps->where('status', 1)->count() }}</span>
-                                    </td>
-                                    <td><span
-                                            class="{{ $od->odps->where('status', 3)->count() > 0 ? 'badge badge-danger' : '' }}">{{ $od->odps->where('status', 3)->count() }}</span>
-                                    </td>
-
-                                    <td> {{ $od->paymentType() }} </td>
-                                    <td> {{ $od->distributionType() }} </td>
                                     @if ($status == 'assigned')
+                                        <td><span
+                                                class="{{ $od->odps->where('status', 0)->count() > 0 ? 'badge badge-primary' : '' }}">{{ $od->odps->where('status', 0)->count() }}</span>
+                                        </td>
+                                        <td><span
+                                                class="{{ $od->odps->where('status', 1)->count() > 0 ? 'badge badge-warning' : '' }}">{{ $od->odps->where('status', 1)->count() }}</span>
+                                        </td>
+                                        <td><span
+                                                class="{{ $od->odps->where('status', 3)->count() > 0 ? 'badge badge-danger' : '' }}">{{ $od->odps->where('status', 3)->count() }}</span>
+                                        </td>
                                         <td>
                                             {!! remainingTime($od->pharmacy_prep_time, true) !!}
                                         </td>
+                                    @else
+                                        <td>
+                                            {{ $od->assignedRider->first() ? $od->assignedRider->first()->rider->name : '---' }}
+                                        </td>
                                     @endif
+                                    <td> {{ $od->paymentType() }} </td>
+                                    <td> {{ $od->distributionType() }} </td>
                                     <td>
                                         <span class="{{ $od->statusBg() }}">{{ $od->statusTitle() }}</span>
                                     </td>
