@@ -31,56 +31,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped datatable">
-                        <tbody>
-                            <tr>
-                                <td class="fw-bold">{{ __('Order ID') }}</td>
-                                <td>:</td>
-                                <td>{{ $do->order->order_id }}</td>
-                                <td>|</td>
-                                <td class="fw-bold">{{ __('Delivery Type') }}</td>
-                                <td>:</td>
-                                <td>{{ ucwords($do->order->delivery_type) }}</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">{{ __('Total Price') }}</td>
-                                <td>:</td>
-                                <td>{!! get_taka_icon() . number_format($do->order->totalDiscountPrice + $do->order->delivery_fee) !!}</td>
-                                <td>|</td>
-                                <td class="fw-bold">{{ __('Payment Type') }}</td>
-                                <td>:</td>
-                                <td>{{ $do->paymentType() }}</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">{{ __('Processed Type') }}</td>
-                                <td>:</td>
-                                <td>{{ $do->distributionType() }}</td>
-                                <td>|</td>
-                                <td class="fw-bold">{{ __('Total Product') }}</td>
-                                <td>:</td>
-                                <td>{{ $do->odps_count }}</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">{{ __('Preparation Time') }}</td>
-                                <td>:</td>
-                                <td>{!! remainingTime($do->pharmacy_prep_time, true) !!}</td>
-                                <td>|</td>
-                                <td class="fw-bold">{{ __('Order Type') }}</td>
-                                <td>:</td>
-                                <td>{{ $do->order->orderType() }}</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">{{ __('Order Processed By') }}</td>
-                                <td>:</td>
-                                <td colspan="5">{{ isset($do->creater) ? $do->creater->name : '--' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">{{ __('Note') }}</td>
-                                <td>:</td>
-                                <th colspan="5">{!! $do->note !!}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    @include('admin.distributed_order.includes.order_details', ['od' => $do])
                 </div>
                 <div class="card-footer">
                     @if ($do->status != 0 && $do->status != 1)
@@ -236,15 +187,7 @@
                     @endif
                     <form action="{{ route('om.order.dispute_update') }}" method="POST" class="px-0">
                         @csrf
-                        @php
-                            $dop_status = null;
-                        @endphp
                         @foreach ($do->odps as $key => $dop)
-                            @php
-                                if ($dop->status == 3) {
-                                    $dop_status = 3;
-                                }
-                            @endphp
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card card-2 mb-0 mt-3">
@@ -269,24 +212,6 @@
                                                                         {{ $dop->order_product->quantity }}</small></div>
                                                                 <div class="col my-auto"> <small>{{ __('Pack :') }}
                                                                         {{ $dop->order_product->unit->name ?? 'Piece' }}</small>
-                                                                </div>
-                                                                <div class="col my-auto">
-                                                                    @if ($dop->totalPrice != $dop->totalDiscountPrice)
-                                                                        <h6 class="mb-0 text-end">
-                                                                            <span class="text-danger">
-                                                                                <del>
-                                                                                    {!! get_taka_icon() !!}
-                                                                                    {{ number_format(ceil($dop->totalPrice)) }}
-                                                                                </del>
-                                                                            </span>
-                                                                        </h6>
-                                                                    @endif
-                                                                    <h6 class="mb-0 text-end">
-                                                                        <span>
-                                                                            {!! get_taka_icon() !!}
-                                                                            {{ number_format(ceil($dop->totalDiscountPrice)) }}
-                                                                        </span>
-                                                                    </h6>
                                                                 </div>
                                                                 <div class="col my-auto text-end"><span
                                                                         class="{{ $dop->statusBg() }}">{{ slugToTitle($dop->statusTitle()) }}</span>
@@ -374,13 +299,13 @@
                                     </div>
                                     @if ($dop->status == 3 || $dop->status == -1)
                                         <span><strong
-                                                class="text-danger">{{ __('Resoan: ') }}</strong>{{ $dop->note }}</span>
+                                                class="text-danger">{{ __('Reason: ') }}</strong>{{ $dop->note }}</span>
                                     @endif
                                 </div>
 
                             </div>
                         @endforeach
-                        @if ($dop_status == 3)
+                        @if ($dop->status == 3)
                             <div class="row">
                                 <div class="form-group col-md-12 text-end">
                                     <input type="submit" value="Update" class="btn btn-primary">
@@ -395,5 +320,9 @@
 
 @endsection
 @push('js_link')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="{{ asset('admin/js/remaining.js') }}"></script>
 @endpush

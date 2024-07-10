@@ -23,58 +23,11 @@
                                     </div>
                                 </div>
                                 <div class="card-body order_details">
-
                                     <div class="row">
                                         <div class="col-12">
-                                            <table class="table table-striped">
-                                                <tr>
-                                                    <td class="fw-bold">{{ __('Order ID') }}</td>
-                                                    <td>:</td>
-                                                    <td>{{ $order->order_id }}</td>
-                                                    <td class="fw-bold">{{ __('Delivery Type') }}</td>
-                                                    <td>:</td>
-                                                    <td>{{ ucwords($order->delivery_type) }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fw-bold">{{ __('Order Date') }}</td>
-                                                    <td>:</td>
-                                                    <td>{{ timeFormate($order->created_at) }}</td>
-                                                    <td class="fw-bold">{{ __('Order Status') }}</td>
-                                                    <td>:</td>
-                                                    <td><span
-                                                            class="{{ $order->statusBg() }}">{{ $order->statusTitle() }}</span>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td class="fw-bold">{{ __('Order Type') }}</td>
-                                                    <td>:</td>
-                                                    <td>{{ $order->orderType() }}</td>
-                                                    <td class="fw-bold">{{ __('Process By') }}</td>
-                                                    <td>:</td>
-                                                    <td>{{ isset($order_distribution->creater) ? $$order_distribution->creater->name : '--' }}
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    {{-- <td class="fw-bold">{{ __('Delivery Fee') }}</td>
-                                                    <td>:</td>
-                                                    <td class="fw-bold"><span>{!! get_taka_icon() !!}
-                                                        </span>{{ number_format(ceil($order->delivery_fee)) }}</td> --}}
-                                                    <td class="fw-bold">{{ __('Payable Amount') }}</td>
-                                                    <td>:</td>
-                                                    <td class="fw-bold" colspan="4"><span>{!! get_taka_icon() !!}
-                                                        </span>{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fw-bold">{{ __('Delivery Address') }}</td>
-                                                    <td>:</td>
-                                                    <td colspan="4" class="user-location"
-                                                        data-location="[{{ optional($order->address)->longitude }},{{ optional($order->address)->latitude }} ]">
-                                                        {!! optional($order->address)->address !!}</td>
-                                                </tr>
-                                            </table>
+                                            @include('admin.order_management.includes.order_details', [
+                                                'od' => $order->od,
+                                            ])
                                         </div>
                                     </div>
                                 </div>
@@ -88,10 +41,10 @@
                                     <div class="card-header">
                                         <div class="row justify-content-between mb-3">
                                             <div class="col-auto">
-                                                <h4 class="color-1 mb-0">{{ __('Order Process') }}</h4>
+                                                <h4 class="color-1 mb-0">{{ __('Process') }}</h4>
                                             </div>
                                             <div class="col-auto  ">{{ __(' Process Status :') }} <span
-                                                    class="{{ isset($order_distribution) ? $order_distribution->statusBg() : 'badge badge-danger' }}">{{ isset($order_distribution) ? 'Distributed' : 'None' }}</span>
+                                                    class="{{ isset($order->od) ? $order->od->statusBg() : 'badge badge-danger' }}">{{ isset($order->od) ? 'Distributed' : 'Not processed' }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -130,64 +83,40 @@
                                                                                     <small>{{ __('Pack :') }}
                                                                                         {{ $product->pivot->unit->name ?? 'Piece' }}</small>
                                                                                 </div>
-                                                                                <div class="col my-auto">
-                                                                                    @if ($product->totalPrice != $product->totalDiscountPrice)
-                                                                                        <h6 class="mb-0 text-end">
-                                                                                            <span class="text-danger">
-                                                                                                <del>
-                                                                                                    {!! get_taka_icon() !!}
-                                                                                                    {{ number_format(ceil($product->totalPrice)) }}
-                                                                                                </del>
-                                                                                            </span>
-                                                                                        </h6>
-                                                                                    @endif
-                                                                                    <h6 class="mb-0 text-end">
-                                                                                        <span>
-                                                                                            {!! get_taka_icon() !!}
-                                                                                            {{ number_format(ceil($product->totalDiscountPrice)) }}
-                                                                                        </span>
-                                                                                    </h6>
-
-                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <div class="form-group">
-                                                                        @if (isset($order_distribution) && $order_distribution->status == 0)
+                                                                        @if (isset($order->od) && $order->od->status == 0)
                                                                             @php
-                                                                                $area = $order_distribution->odps[$key]
-                                                                                    ->pharmacy->operation_area
-                                                                                    ? ($order_distribution->odps[$key]
-                                                                                        ->pharmacy->operation_sub_area
+                                                                                $area = $order->od->odps[$key]->pharmacy
+                                                                                    ->operation_area
+                                                                                    ? ($order->od->odps[$key]->pharmacy
+                                                                                        ->operation_sub_area
                                                                                         ? '( ' .
-                                                                                            $order_distribution->odps[
-                                                                                                $key
-                                                                                            ]->pharmacy->operation_area
-                                                                                                ->name .
+                                                                                            $order->od->odps[$key]
+                                                                                                ->pharmacy
+                                                                                                ->operation_area->name .
                                                                                             ' - '
                                                                                         : '( ' .
-                                                                                            $order_distribution->odps[
-                                                                                                $key
-                                                                                            ]->pharmacy->operation_area
-                                                                                                ->name .
+                                                                                            $order->od->odps[$key]
+                                                                                                ->pharmacy
+                                                                                                ->operation_area->name .
                                                                                             ' )')
                                                                                     : '';
-                                                                                $sub_area = $order_distribution->odps[
-                                                                                    $key
-                                                                                ]->pharmacy->operation_sub_area
-                                                                                    ? ($order_distribution->odps[$key]
-                                                                                        ->pharmacy->operation_area
-                                                                                        ? $order_distribution->odps[
-                                                                                                $key
-                                                                                            ]->pharmacy
+                                                                                $sub_area = $order->od->odps[$key]
+                                                                                    ->pharmacy->operation_sub_area
+                                                                                    ? ($order->od->odps[$key]->pharmacy
+                                                                                        ->operation_area
+                                                                                        ? $order->od->odps[$key]
+                                                                                                ->pharmacy
                                                                                                 ->operation_sub_area
                                                                                                 ->name . ' )'
                                                                                         : '( ' .
-                                                                                            $order_distribution->odps[
-                                                                                                $key
-                                                                                            ]->pharmacy
+                                                                                            $order->od->odps[$key]
+                                                                                                ->pharmacy
                                                                                                 ->operation_sub_area
                                                                                                 ->name .
                                                                                             ' )')
@@ -195,7 +124,7 @@
                                                                             @endphp
 
                                                                             <input type="text"
-                                                                                value="{{ $order_distribution->odps[$key]->pharmacy->name }}"
+                                                                                value="{{ $order->od->odps[$key]->pharmacy->name }}"
                                                                                 disabled class="form-control">
                                                                         @else
                                                                             <select
@@ -249,8 +178,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                             @endforeach
                                             <div class="col-12">
@@ -258,9 +185,9 @@
                                                     <div class="form-group col-md-4">
                                                         <label>{{ __('Payment Type') }}<span
                                                                 class="text-danger">*</span></label>
-                                                        @if (isset($order_distribution) && $order_distribution->status == 0)
+                                                        @if (isset($order->od) && $order->od->status == 0)
                                                             <input type="text"
-                                                                value="{{ $order_distribution->payment_type == 0 ? 'Fixed Payment' : ($order_distribution->payment_type == 1 ? 'Open Payment' : '') }}"
+                                                                value="{{ $order->od->payment_type == 0 ? 'Fixed Payment' : ($order->od->payment_type == 1 ? 'Open Payment' : '') }}"
                                                                 class="form-control" disabled>
                                                         @else
                                                             <select name="payment_type"
@@ -283,9 +210,9 @@
                                                     <div class="form-group col-md-4">
                                                         <label>{{ __('Distribution Type') }}<span
                                                                 class="text-danger">*</span></label>
-                                                        @if (isset($order_distribution) && $order_distribution->status == 0)
+                                                        @if (isset($order->od) && $order->od->status == 0)
                                                             <input type="text"
-                                                                value="{{ $order_distribution->distribution_type == 0 ? 'Normal Distribution' : ($order_distribution->distribution_type == 1 ? 'Priority Distribution' : '') }}"
+                                                                value="{{ $order->od->distribution_type == 0 ? 'Normal Distribution' : ($order->od->distribution_type == 1 ? 'Priority Distribution' : '') }}"
                                                                 class="form-control" disabled>
                                                         @else
                                                             <select name="distribution_type"
@@ -307,8 +234,7 @@
                                                     <div class="form-group col-md-4">
                                                         <label for="preparation-time">{{ __('Preparation Time') }}<span
                                                                 class="text-danger">*</span></label>
-                                                        <select id="preparation-time" class="form-control"
-                                                            name="prep_time">
+                                                        <select id="preparation-time" class="form-control" name="prep_time">
                                                             <option value="5">5 minutes</option>
                                                             <option value="10">10 minutes</option>
                                                             <option value="15">15 minutes</option>
@@ -318,23 +244,18 @@
                                                             <option value="90">1.5 hours</option>
                                                             <option value="120">2 hours</option>
                                                         </select>
-                                                        {{-- <input type="datetime-local"
-                                                            @if (isset($order_distribution) && $order_distribution->status == 0) disabled @endif
-                                                            name="prep_time"
-                                                            value="{{ isset($order_distribution->prep_time) ? $order_distribution->prep_time : old('prep_time') }}"
-                                                            class="form-control {{ $errors->has('prep_time') ? ' is-invalid' : '' }}"> --}}
                                                         @include('alerts.feedback', [
                                                             'field' => 'prep_time',
                                                         ])
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label>{{ __('Note') }}</label>
-                                                        <textarea name="note" @if (isset($order_distribution) && $order_distribution->status == 0) disabled @endif
+                                                        <textarea name="note" @if (isset($order->od) && $order->od->status == 0) disabled @endif
                                                             class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}"
-                                                            placeholder="Enter order instraction for pharmacy">{{ isset($order_distribution->note) ? $order_distribution->note : old('note') }}</textarea>
+                                                            placeholder="Enter order instraction for pharmacy">{{ isset($order->od->note) ? $order->od->note : old('note') }}</textarea>
                                                         @include('alerts.feedback', ['field' => 'note'])
                                                     </div>
-                                                    @if (!isset($order_distribution))
+                                                    @if (!isset($order->od))
                                                         <div class="form-group col-md-12 text-end">
                                                             <input type="submit" value="Distribute"
                                                                 class="btn btn-primary">
@@ -342,21 +263,14 @@
                                                     @endif
                                                 </div>
                                             </div>
-
-
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 @endsection
@@ -364,6 +278,4 @@
 @push('js_link')
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <script src="{{ asset('admin/js/order_distribution.js') }}"></script>
-@endpush
-@push('js')
 @endpush

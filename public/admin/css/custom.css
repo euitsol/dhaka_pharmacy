@@ -340,3 +340,6 @@ textarea.form-control {
  .earning .drp-buttons .cancelBtn.btn {
     background: var(--bs-btn-bg) !important;
 }
+ .select2-container {
+    width: 100% !important;
+ }

@@ -215,7 +215,7 @@ Route::controller(UserForgotPasswordController::class)->prefix('user')->group(fu
     Route::post('/reset/password', 'resetPasswordStore')->name('user.reset.password');
 });
 //Admin Auth Routes
-Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], function () {
+Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
     // Admin Management Routes
@@ -688,7 +688,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
 
     Route::controller(PharmacyOrderManagementController::class)->prefix('order-management')->name('order_management.')->group(function () {
         Route::get('/{status}', 'index')->name('index');
-        Route::get('details/{do_id}/{status}', 'details')->name('details');
+        Route::get('details/{od_id}/', 'details')->name('details');
         Route::post('update/{do_id}', 'update')->name('update');
     });
 
