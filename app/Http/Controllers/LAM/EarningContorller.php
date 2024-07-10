@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\LAM;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LocalAreaManager\EarningReportRequest;
-use App\Http\Traits\DetailsCommonDataTrait;
+use App\Http\Requests\EarningReportRequest;
 use App\Models\Earning;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
-
 
 class EarningContorller extends Controller
 {
@@ -47,16 +43,17 @@ class EarningContorller extends Controller
             return view('local_area_manager.earning.index', $data);
         }
     }
-    public function report(EarningReportRequest $request): RedirectResponse
+    public function report(EarningReportRequest $request): JsonResponse
     {
-
-        $earnings = Earning::with(['receiver', 'order'])
-            ->pharmacy()
-            ->whereDate('created_at', '>=', $request->from_date)
-            ->whereDate('created_at', '<=', $request->to_date)
-            ->get();
-        // dd($earnings);
-        flash()->addSuccess('The email has been sent successfully.');
-        return redirect()->back();
+        $query = Earning::with(['receiver', 'order'])->lam();
+        if ($request->from_date != null && $request->to_date != null) {
+            $query->whereDate('created_at', '>=', $request->from_date)
+                ->whereDate('created_at', '<=', $request->to_date);
+        }
+        $earnings = $query->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'The email has been sent successfully.'
+        ]);
     }
 }
