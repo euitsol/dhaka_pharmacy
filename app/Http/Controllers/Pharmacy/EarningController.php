@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Pharmacy;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Pharmacy\EarningReportRequest;
+use App\Http\Requests\EarningReportRequest;
 use App\Models\Earning;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 
@@ -44,16 +44,17 @@ class EarningController extends Controller
             return view('pharmacy.earning.index', $data);
         }
     }
-    public function report(EarningReportRequest $request): RedirectResponse
+    public function report(EarningReportRequest $request): JsonResponse
     {
-
-        $earnings = Earning::with(['receiver', 'order'])
-            ->pharmacy()
-            ->whereDate('created_at', '>=', $request->from_date)
-            ->whereDate('created_at', '<=', $request->to_date)
-            ->get();
-        // dd($earnings);
-        flash()->addSuccess('The email has been sent successfully.');
-        return redirect()->back();
+        $query = Earning::with(['receiver', 'order'])->pharmacy();
+        if ($request->from_date != null && $request->to_date != null) {
+            $query->whereDate('created_at', '>=', $request->from_date)
+                ->whereDate('created_at', '<=', $request->to_date);
+        }
+        $earnings = $query->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'The email has been sent successfully.'
+        ]);
     }
 }
