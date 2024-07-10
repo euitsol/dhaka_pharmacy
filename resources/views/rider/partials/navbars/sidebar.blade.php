@@ -57,10 +57,17 @@
                         <li @if ($pageSlug == 'assigned_orders') class="active" @endif>
                             <a href="{{ route('rider.order_management.index', 'assigned') }}">
                                 <i class="fa-solid fa-minus @if ($pageSlug == 'assigned_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Assigned' }}</p>
+                                <p>{{ 'Assigned Orders' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'picking-up_orders') class="active" @endif>
+                        <li @if ($pageSlug == 'picked-up_orders') class="active" @endif>
+                            <a href="{{ route('rider.order_management.index', 'picked-up') }}">
+                                <i
+                                    class="fa-solid fa-minus @if ($pageSlug == 'picked-up_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Picked Up Orders' }}</p>
+                            </a>
+                        </li>
+                        {{-- <li @if ($pageSlug == 'picking-up_orders') class="active" @endif>
                             <a href="{{ route('rider.order_management.index', 'picking-up') }}">
                                 <i
                                     class="fa-solid fa-minus @if ($pageSlug == 'picking-up_orders') fa-beat-fade @endif"></i>
@@ -94,7 +101,7 @@
                                     class="fa-solid fa-minus @if ($pageSlug == 'dispute_orders') fa-beat-fade @endif"></i>
                                 <p>{{ 'Dispute' }}</p>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </li>

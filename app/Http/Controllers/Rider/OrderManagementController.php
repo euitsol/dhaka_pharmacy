@@ -28,27 +28,44 @@ class OrderManagementController extends Controller
 
     public function index($status): View
     {
+        // dd($status);
+        // $data['status'] = $status;
+        // $data['dors'] = OrderDistributionRider::with(['od.odps.pharmacy', 'od.order.address', 'rider'])
+        //     ->where('rider_id', rider()->id)
+        //     ->status($status)
+        //     ->orderBy('priority', 'desc')
+        //     ->latest()->get()
+        //     ->each(function ($dor) {
+        //         $dor->pharmacy = $dor->od->odps->pluck('pharmacy')->unique()->values();
+        //         $dor->totalPrice = $this->calculateOrderTotalPrice($dor->od->order);
+        //         return $dor;
+        //     });
+
         $data['status'] = $status;
-        $data['dors'] = OrderDistributionRider::with(['od.odps.pharmacy', 'od.order.address', 'rider'])
-            ->where('rider_id', rider()->id)
-            ->status($status)
-            ->orderBy('priority', 'desc')
-            ->latest()->get()
-            ->each(function ($dor) {
-                $dor->pharmacy = $dor->od->odps->pluck('pharmacy')->unique()->values();
-                $dor->totalPrice = $this->calculateOrderTotalPrice($dor->od->order);
-                return $dor;
-            });
+        switch ($status) {
+            case 'assigned':
+                $data['dors'] = OrderDistributionRider::with(['od.active_odps.pharmacy','od.order.address', 'rider'])->where('rider_id', rider()->id)
+                    ->where('status', 0)->orWhere('status', 1)->orWhere('status', 2)
+                    ->orderBy('priority', 'desc')
+                    ->latest()->get()
+                    ->each(function (&$dor) {
+                        $this->calculateOrderTotalPrice($dor->od->order);
+                    });
+                break;
+
+            default:
+                break;
+        }
+        // dd($data['dors'][1]->od);
         return view('rider.orders.index', $data);
     }
 
     public function details($dor_id)
     {
-        $data['dor'] = OrderDistributionRider::with(['od.odps', 'od.order.address', 'rider'])->findORFail(decrypt($dor_id));
-        if ($data['dor']->status == 1) {
-            $data['dor']->update(['status' => 2]);
+        $data['dor'] = OrderDistributionRider::with(['od.active_odps', 'od.order.address', 'rider'])->findORFail(decrypt($dor_id));
+        if ($data['dor']->status == 0) {
+            $data['dor']->update(['status' => 1]);
         }
-        $data['dor']->pharmacy = $data['dor']->od->odps->pluck('pharmacy')->unique()->values();
         $this->calculateOrderTotalDiscountPrice($data['dor']->od->order);
         return view('rider.orders.details', $data);
     }
@@ -145,9 +162,9 @@ class OrderManagementController extends Controller
     }
     public function dispute(RiderDisputeRequest $req, $od_id)
     {
-        OrderDistribution::findOrFail(decrypt($od_id))->update(['status' => 2]);
-        OrderDistributionRider::where([['rider_id', rider()->id], ['order_distribution_id', decrypt($od_id)], ['status', 1]])
-            ->update(['status' => 0, 'dispute_note' => $req->dispute_reason]);
+        // OrderDistribution::findOrFail(decrypt($od_id))->update(['status' => -1]);
+        OrderDistributionRider::where([['rider_id', rider()->id], ['order_distribution_id', decrypt($od_id)], ['status', 2]])
+            ->update(['status' => -1, 'dispute_note' => $req->dispute_reason]);
         flash()->addSuccess('Order disputed successfully.');
         return redirect()->back();
     }
