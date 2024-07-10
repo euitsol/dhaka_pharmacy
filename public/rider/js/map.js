@@ -58,12 +58,20 @@ $(document).ready(function () {
     addNavigationControl(map);
 
     map.on("load", function () {
-        var directions = new MapboxDirections({
-            accessToken: mapboxgl.accessToken,
-        });
-        map.addControl(directions, "top-left");
+        var directionsInstances = [];
+        pharmacyLocations.forEach((element, index) => {
+            var directionsKey = "directions_" + index;
+            directionsInstances[directionsKey] = new MapboxDirections({
+                accessToken: mapboxgl.accessToken,
+            });
 
-        directions.setDestination([flng, flat]);
+            map.addControl(directionsInstances[directionsKey], "top-left");
+
+            directionsInstances[directionsKey].setDestination([
+                element.longitude,
+                element.latitude,
+            ]);
+        });
 
         // Add geolocate control to the map.
         var geolocate = new mapboxgl.GeolocateControl({
@@ -79,7 +87,11 @@ $(document).ready(function () {
                 position.coords.longitude,
                 position.coords.latitude,
             ];
-            directions.setOrigin(userLocation);
+            for (var key in directionsInstances) {
+                if (directionsInstances.hasOwnProperty(key)) {
+                    directionsInstances[key].setOrigin(userLocation);
+                }
+            }
         });
 
         geolocate.trigger();

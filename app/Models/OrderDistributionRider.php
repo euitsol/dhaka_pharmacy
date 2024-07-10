@@ -34,8 +34,6 @@ class OrderDistributionRider extends BaseModel
 
     public function scopeStatus($query, $status)
     {
-        // $status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
-
         switch ($status) {
             case 'dispute':
                 $status = 0;
@@ -56,7 +54,7 @@ class OrderDistributionRider extends BaseModel
                 $status = 5;
                 break;
             default:
-                $status =  'Unknown';
+                $status =  '';
                 break;
         }
         $query->where('status', $status);

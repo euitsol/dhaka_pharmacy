@@ -10,10 +10,12 @@ use App\Models\OrderDistributionPharmacy;
 use App\Models\OrderDistributionRider;
 use App\Models\Pharmacy;
 use App\Models\PharmacyDiscount;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Traits\TransformOrderItemTrait;
 use SebastianBergmann\Type\VoidType;
+use Illuminate\Support\Facades\DB;
 
 
 class OrderManagementController extends Controller
@@ -71,6 +73,8 @@ class OrderManagementController extends Controller
                 $query->where('pharmacy_id', pharmacy()->id);
             }, 'odps.order_product'])->findOrFail(decrypt($od_id));
 
+        $data['otp'] = DistributionOtp::where('order_distribution_id', $data['do']->id)->where('otp_author_id', pharmacy()->id)->where('otp_author_type', get_class(pharmacy()))->first();
+
         //odp pending -> preparing
         $this->updateODPStatus($data['do'], $pharmacy_id, 1);
         $this->calculateOrderTotalDiscountPrice($data['do']->order);
@@ -126,17 +130,24 @@ class OrderManagementController extends Controller
             $dop->open_amount = $data['dop_id'];
             $dop->status = $data['status'];
             $dop->note = $data['note'];
+            $dop->updated_at = Carbon::now();
             $dop->save();
         }
 
-        //Update OD status if everything is prepared
-        $od = OrderDistribution::with(['odps'])->findOrFail(decrypt($do_id));
+        //Update OD & order status if everything is prepared
+        $od = OrderDistribution::with(['odps', 'order'])->findOrFail(decrypt($do_id));
 
         if ($od->odps->filter(function ($odp) {
             return $odp->status == 0 || $odp->status == 1;
         })->isEmpty()) {
-            $od->status = 2;
-            $od->save();
+            DB::transaction(function () use ($od) {
+                $od->status = 2;
+                $od->pharmacy_preped_at = Carbon::now();
+                $od->save();
+
+                $od->order->status = 3;
+                $od->order->save();
+            });
         }
 
         flash()->addSuccess('Order prepared successfully.');
