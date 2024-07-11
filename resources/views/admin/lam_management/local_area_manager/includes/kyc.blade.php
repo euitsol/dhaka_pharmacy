@@ -145,6 +145,6 @@
             </tbody>
         </table>
     @else
-        <h4 class="text-center text-muted">{{ __('KYC not submitted yet') }}</h4>
+        <h5 class="text-center text-muted">{{ __('The KYC has not been submitted yet') }}</h5>
     @endif
 </div>

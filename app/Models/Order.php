@@ -84,7 +84,7 @@ class Order extends BaseModel
     {
         switch ($this->status) {
             case 0:
-                return 'badge badge-secondary';
+                return 'badge bg-secondary';
             case 1:
                 return 'badge badge-info';
             case 2:

@@ -10,7 +10,7 @@
                     <th>{{ __('KYC Status') }}</th>
                     <th>:</th>
                     <td>
-                        <span class="{{ $dm->getKycStatusClass() }}">{{ $dm->getKycStatus() }}</span>
+                        <span class="{{ $user->getKycStatusClass() }}">{{ $user->getKycStatus() }}</span>
                     </td>
                 </tr>
                 @foreach ($form_datas as $key => $form_data)
