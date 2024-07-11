@@ -110,13 +110,12 @@
                             <li>
                                 <i class="fa-regular fa-envelope mr-2"></i>
                                 <span class="title">{{ __('Email : ') }}</span>
-                                <span class="content">{{ $dm->email ?? 'shariful.info@gmail.com' }}</span>
+                                <span class="content">{{ $dm->email ?? '--' }}</span>
                             </li>
                             <li>
                                 <i class="fa-solid fa-location-dot mr-2"></i>
                                 <span class="title">{{ __('Address : ') }}</span>
-                                <span class="content">{!! $dm->present_address ??
-                                    'sit, amet consectetur adipisicing elit. Recusandae quis eos iste obcaecati assumenda enim explicabo aliquid' !!}</span>
+                                <span class="content">{!! $dm->present_address ?? '--' !!}</span>
                             </li>
                         </ul>
                     </div>
