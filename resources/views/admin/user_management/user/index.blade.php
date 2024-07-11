@@ -1,7 +1,4 @@
 @extends('admin.layouts.master', ['pageSlug' => 'user'])
-@push('css')
-    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
-@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -28,7 +25,6 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
-                                <th>{{ __('Image') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('KYC Status') }}</th>
                                 <th>{{ __('Phone Verify') }}</th>
@@ -43,14 +39,6 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $user->name }} </td>
                                     <td> {{ $user->phone }} </td>
-                                    <td>
-                                        <div id="lightbox" class="lightbox">
-                                            <div class="lightbox-content">
-                                                <img src="{{ auth_storage_url($user->image, $user->gender) }}"
-                                                    class="lightbox_image">
-                                            </div>
-                                            <div class="close_button fa-beat">X</div>
-                                        </div>
                                     <td>
                                         <span class="{{ $user->getStatusBadgeClass() }}">{{ $user->getStatus() }}</span>
                                     </td>
@@ -143,7 +131,6 @@
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
 @push('js')
-    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.view').on('click', function() {

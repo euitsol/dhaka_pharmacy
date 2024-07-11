@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
-
+use App\Models\Earning;
+use App\Models\KycSetting;
+use App\Models\SubmittedKyc;
+use App\Models\User;
 
 class LocalAreaManagerController extends Controller
 {
@@ -52,6 +55,14 @@ class LocalAreaManagerController extends Controller
     public function profile($id): View
     {
         $data['lam'] = LocalAreaManager::with(['creater', 'operation_sub_area', 'updater'])->findOrFail($id);
+        $lam_class = get_class($data['lam']);
+        $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $lam_class)->first();
+        $data['kyc_setting'] = KycSetting::where('type', 'lam')->first();
+        $data['users'] = User::where('creater_id', $id)->where('creater_type', $lam_class)->latest()->get();
+        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history'])
+            ->where('receiver_id', $id)->where('receiver_type', $lam_class)->get()->each(function ($earning) {
+                $earning->point = $earning->amount / $earning->point_history->eq_amount;
+            });
         return view('admin.lam_management.local_area_manager.profile', $data);
     }
 
