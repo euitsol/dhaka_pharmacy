@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\AuthenticationController;
 use App\Http\Controllers\Api\User\CartAjaxController;
+use App\Http\Controllers\Api\User\OrderController;
 use App\Http\Controllers\Api\User\UserController;
 
 Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
@@ -37,6 +38,9 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::get('products', 'products')->name('products');
         Route::post('update', 'update')->name('update');
         Route::post('delete', 'delete')->name('delete');
+    });
+    Route::controller(OrderController::class)->middleware('auth:api-user')->prefix('order')->name('order.')->group(function () {
+        Route::post('initiat', 'int_order')->name('i');
     });
 });
 
