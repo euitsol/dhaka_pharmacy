@@ -27,10 +27,38 @@ class OrderDistribution extends BaseModel
     {
         return $this->hasMany(OrderDistributionPharmacy::class, 'order_distribution_id', 'id');
     }
+    public function active_odps()
+    {
+        return $this->hasMany(OrderDistributionPharmacy::class, 'order_distribution_id', 'id')->where('status', 2);
+    }
     public function odrs()
     {
         return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id', 'id');
     }
+
+
+    public function assignedRider()
+    {
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id')->where('status', '!=', 0)->latest();
+    }
+
+    public function disputedRiders()
+    {
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id')->where('status', -1);
+    }
+
+    public function getPharmacyStatus($pharmacy_id)
+    {
+        if ($this->odps->where('pharmacy_id', $pharmacy_id)->filter(function ($odp) {
+            return $odp->status == 0 || $odp->status == 1;
+        })->isEmpty()) {
+            return 2;
+        }else{
+            return $this->status;
+        }
+    }
+
+
     public function odr()
     {
         return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id', 'id')->where('status', 1);

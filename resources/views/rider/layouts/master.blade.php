@@ -80,7 +80,6 @@
     @stack('js')
 
 
-    <script src="{{ asset('rider/js/map.js') }}"></script>
 
 </body>
 

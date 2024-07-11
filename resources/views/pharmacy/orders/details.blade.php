@@ -24,7 +24,7 @@
                             </h4>
                         </div>
                         <div class="col-6 text-end">
-
+                            <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
                         </div>
                     </div>
                 </div>
@@ -36,9 +36,15 @@
                                 <td>:</td>
                                 <th>{{ $do->order->order_id }}</th>
                                 <td>|</td>
-                                <th>{{ __('Preparation Time Left') }}</th>
-                                <td>:</td>
-                                <th>{!! remainingTime($do->pharmacy_prep_time, true) !!}</th>
+                                @if ($do->status == 0 || $do->status == 1)
+                                    <td class="fw-bold">{{ __('Preparation Time') }}</td>
+                                    <td>:</td>
+                                    <td>{!! remainingTime($do->pharmacy_prep_time, true) !!}</td>
+                                @else
+                                    <td class="fw-bold">{{ __('Prepared At') }}</td>
+                                    <td>:</td>
+                                    <td>{{ timeFormate($do->pharmacy_preped_at) }}</td>
+                                @endif
                             </tr>
                             <tr>
                                 <th>{{ __('Total Product') }}</th>
@@ -69,7 +75,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    {{-- @include('pharmacy.orders.includes.otp-verify') --}}
+                    @include('pharmacy.orders.includes.otp-verify')
                     <form action="{{ route('pharmacy.order_management.update', encrypt($do->id)) }}" method="POST">
                         @csrf
                         <div class="row mb-3">
@@ -182,7 +188,8 @@
 
                             </div>
                         @endforeach
-                        @if ($do->status == 0 || $do->status == 1)
+                        {{ $do->getPharmacyStatus(pharmacy()->id) }}
+                        @if ($do->getPharmacyStatus(pharmacy()->id) == 0 || $do->getPharmacyStatus(pharmacy()->id) == 1)
                             <div class="col-12 text-end mt-2">
                                 <input type="submit" value="Confirm" class="btn btn-success">
                             </div>
