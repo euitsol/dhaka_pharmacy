@@ -1,73 +1,8 @@
 @extends('admin.layouts.master', ['pageSlug' => 'district_manager'])
-
-@push('css')
-    <style>
-        .profile .card-user {
-            font-family: 'sans-serif';
-        }
-
-        .profile .card-user .contact_info {
-            background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
-            border: 1px solid rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
-        }
-
-        .profile .card-user .contact_info ul li {
-            color: #00000086;
-        }
-
-        .profile .card-user .contact_info ul li .title,
-        .profile .card-user .contact_info ul li i {
-            color: #000000ab;
-        }
-
-        .profile .card-user .earning_info {
-            /* background: linear-gradient(to right, rgba(225, 78, 202, 0.6) 0%, rgba(225, 78, 202, 0) 100%); */
-            font-family: auto;
-        }
-
-        .profile .card-user .earning_info .title {
-            font-size: 13px;
-            color: #00000086;
-        }
-
-        .profile .card-user .earning_info .amount {
-            font-weight: 900;
-            font-size: 15px;
-        }
-
-        .profile .card-user .earning_info .card {
-            border-color: rgba(0, 0, 0, 0.3);
-            background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
-        }
-
-        .profile .card-user .card-body {
-            min-height: auto;
-        }
-
-        .profile .card-user .bio {
-            color: #00000086 !important;
-            line-height: 18px;
-        }
-
-        .profile .nav .nav-link {
-            color: #00000086;
-        }
-
-        .profile .nav .nav-link.active {
-            color: #000;
-        }
-
-        .profile .earning .box {
-            background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%) !important;
-            border-color: rgba(0, 0, 0, 0.3);
-        }
-    </style>
-@endpush
 @section('content')
     <div class="row profile">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card h-100 mb-0">
                 <div class="card-header">
                     <nav>
                         <div class="nav nav-tabs row" id="nav-tab" role="tablist">
@@ -119,7 +54,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card card-user">
+            <div class="card card-user mb-0">
                 <div class="card-body">
                     <p class="card-text">
                     <div class="author">
