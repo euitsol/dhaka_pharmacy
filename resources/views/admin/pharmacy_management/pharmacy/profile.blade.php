@@ -44,7 +44,7 @@
                             alt="">
                         <h5 class="title mb-0">{{ $pharmacy->name }}</h5>
                         <p class="description">
-                            {{ __('District Manager') }}
+                            {{ __($pharmacy->designation ?? 'Pharmaciest') }}
                         </p>
                     </div>
                     </p>
@@ -63,15 +63,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6">
-                                <div class="card bg-transparent p-0 mb-0">
-                                    <div class="card-body p-2">
-                                        <h5 class="title">{{ __('Total Users') }}</h5>
-                                        <h5 class="m-0 amount">{{ number_format($orders->count()) }}
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                     <div class="contact_info py-3">
