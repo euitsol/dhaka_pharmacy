@@ -1,7 +1,7 @@
-<div class="row px-4">
+<div class="row px-4 earning">
     <div class="col-md-4">
         <h6 class="card-title fw-bolder">{{ __('Total Balance') }}</h6>
-        <div class="card ">
+        <div class="card box">
             <div class="card-body">
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Available points for withdrawal') }}</span>
@@ -19,7 +19,7 @@
     </div>
     <div class="col-md-4">
         <h6 class="card-title fw-bolder">{{ __('Total Payments') }}</h6>
-        <div class="card ">
+        <div class="card box">
             <div class="card-body">
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Payments being cleared') }}</span>
@@ -37,7 +37,7 @@
     </div>
     <div class="col-md-4">
         <h6 class="card-title fw-bolder">{{ __('Total Withdrawn') }}</h6>
-        <div class="card ">
+        <div class="card box">
             <div class="card-body">
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Withdrawal amount') }}</span>

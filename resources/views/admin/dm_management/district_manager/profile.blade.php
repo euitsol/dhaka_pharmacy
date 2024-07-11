@@ -34,7 +34,6 @@
         .profile .card-user .earning_info .amount {
             font-weight: 900;
             font-size: 15px;
-            color: #000000ab;
         }
 
         .profile .card-user .earning_info .card {
@@ -57,6 +56,11 @@
 
         .profile .nav .nav-link.active {
             color: #000;
+        }
+
+        .profile .earning .box {
+            background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%) !important;
+            border-color: rgba(0, 0, 0, 0.3);
         }
     </style>
 @endpush
