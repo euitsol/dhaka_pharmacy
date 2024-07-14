@@ -164,7 +164,9 @@ class SiteSettingsController extends Controller
                 PointSetting::updateOrCreate(['key' => $key], ['value' => $value]);
             }
             $ph = PointHistory::latest()->first();
-            if ($ph->eq_amount != $request->equivalent_amount) {
+            if(!$ph){
+                PointHistory::create(['eq_amount' => $request->equivalent_amount, 'created_by' => admin()->id]);
+            }elseif ($ph->eq_amount != $request->equivalent_amount) {
                 PointHistory::activated()->update(['status' => 0, 'updated_by' => admin()->id]);
                 PointHistory::create(['eq_amount' => $request->equivalent_amount, 'created_by' => admin()->id]);
             }

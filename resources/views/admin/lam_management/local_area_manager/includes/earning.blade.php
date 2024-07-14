@@ -72,7 +72,7 @@
                     <td><span class="{{ $earning->activityBg() }}">{{ $earning->activityTitle() }}</span>
                     </td>
                     <td>{{ $earning->description }}</td>
-                    <td>{{ $earning->order->order_id }}</td>
+                    <td>{{ $earning->order->order_id ?? '--' }}</td>
                     <td>{{ number_format($earning->amount, 2) }}{{ __(' BDT') }}</td>
                 </tr>
             @endforeach
