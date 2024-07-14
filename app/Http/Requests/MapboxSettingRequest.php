@@ -22,13 +22,14 @@ class MapboxSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mapbox_access_token' => 'nullable|string',
+            'mapbox_token' => 'nullable|string',
             'mapbox_style_id' => 'nullable|string',
             'per_km_delivery_charge' => 'nullable|numeric|min:0',
             'min_delivery_charge' => 'nullable|numeric|min:0',
             'miscellaneous_charge' => 'nullable|numeric|min:0',
-            'warehouse_lat' => 'nullable',
-            'warehouse_long' => 'nullable',
+            'center_location_lng' => 'nullable',
+            'center_location_lat' => 'nullable',
+            'pharmacy_radious' => 'nullable|numeric',
 
         ];
     }

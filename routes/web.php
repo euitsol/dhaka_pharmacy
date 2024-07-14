@@ -608,8 +608,8 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
         Route::post('point-setting/update', 'ps_update')->name('ps_update');
     });
-    Route::controller(MapboxSettingsController::class)->prefix('mapbox-settings')->name('settings.')->group(function () {
-        Route::post('update', 'store')->name('update.mbx_settings');
+    Route::controller(MapboxSettingsController::class)->prefix('mapbox-settings')->name('mbx_settings.')->group(function () {
+        Route::post('update', 'store')->name('update.site_settings');
     });
 
     // Order by Prescription

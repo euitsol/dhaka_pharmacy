@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MapboxSettingRequest;
 use App\Models\MapboxSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -12,11 +13,15 @@ use Illuminate\View\View;
 
 class MapboxSettingsController extends Controller
 {
-    public function store(Request $request): RedirectResponse
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+    public function store(MapboxSettingRequest $request): RedirectResponse
     {
         $data = $request->except('_token');
 
-        try {
+        // try {
             $envPath = base_path('.env');
             $env = file($envPath);
 
@@ -34,9 +39,21 @@ class MapboxSettingsController extends Controller
             fclose($fp);
             flash()->addSuccess('Mapbox settings updated successfully.');
             return redirect()->route('settings.site_settings');
-        } catch (\Exception $e) {
-            flash()->addError('Something is wrong.');
-            return redirect()->route('settings.site_settings');
+        // } catch (\Exception $e) {
+        //     flash()->addError('Something is wrong.');
+        //     return redirect()->route('settings.site_settings');
+        // }
+    }
+    private function set($key, $value, $env)
+    {
+        foreach ($env as $env_key => $env_value) {
+            $entry = explode("=", $env_value, 2);
+            if ($entry[0] == $key) {
+                $env[$env_key] = $key . "=" . $value . "\n";
+            } else {
+                $env[$env_key] = $env_value;
+            }
         }
+        return $env;
     }
 }

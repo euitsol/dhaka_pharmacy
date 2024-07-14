@@ -14,9 +14,9 @@ class MapboxSettingsSeeder extends Seeder
     public function run(): void
     {
         MapboxSetting::create([
-            'key' => 'mapbox_access_token',
+            'key' => 'mapbox_token',
             'value' => '',
-            'env_key' => 'MAPBOX_ACCESS_TOKEN'
+            'env_key' => 'MAPBOX_TOKEN'
         ]);
         MapboxSetting::create([
             'key' => 'mapbox_style_id',
@@ -39,14 +39,19 @@ class MapboxSettingsSeeder extends Seeder
             'env_key' => '',
         ]);
         MapboxSetting::create([
-            'key' => 'warehouse_lat',
+            'key' => 'center_location_lat',
             'value' => '',
-            'env_key' => 'WAREHOUSE_LAT',
+            'env_key' => 'MAP_CENTER_LAT',
         ]);
         MapboxSetting::create([
-            'key' => 'warehouse_long',
+            'key' => 'center_location_lng',
             'value' => '',
-            'env_key' => 'WAREHOUSE_LONG',
+            'env_key' => 'MAP_CENTER_LNG',
+        ]);
+        MapboxSetting::create([
+            'key' => 'pharmacy_radious',
+            'value' => '',
+            'env_key' => 'MAP_PHARMACY_RADIOUS',
         ]);
     }
 }

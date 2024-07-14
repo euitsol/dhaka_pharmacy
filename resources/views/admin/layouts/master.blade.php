@@ -33,6 +33,7 @@
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
         const map_center = `[{{ config('mapbox.center_location_lng') }}, {{ config('mapbox.center_location_lat') }}]`;
         const pharmacy_radious = `{{ config('mapbox.pharmacy_radious') }}`;
+        const mapbox_style_id = `{{ config('mapbox.pharmacy_radious') }}`;
     </script>
 </head>
 
