@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API\Order;
 
 use App\Http\Requests\API\BaseRequest;
+use App\Rules\ApiRules\OrderItemStatusCheck;
 
 class InitiatedRequest extends BaseRequest
 {
@@ -14,16 +15,20 @@ class InitiatedRequest extends BaseRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'carts' => json_decode($this->input('carts')),
+        ]);
+    }
+
+
     public function rules(): array
     {
         return [
-            'cart_id.*' => 'required|exists:add_to_carts,id',
-            'cart_id.*' => 'required|exists:add_to_carts,id',
+            'carts' => 'required|array',
+            'carts.*' => ['required', 'exists:add_to_carts,id', new OrderItemStatusCheck()],
         ];
     }
 }
