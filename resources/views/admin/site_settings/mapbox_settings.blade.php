@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">{{ _('Point Settings') }}</h5>
+            </div>
+            <form method="POST" action="{{ route('settings.update.mbx_settings') }}" autocomplete="off"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>{{ __('Mapbox Access Token') }}</label>
+                        <input type="text" name="mapbox_access_token"
+                            style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
+                            class="form-control{{ $errors->has('mapbox_access_token') ? ' is-invalid' : '' }}"
+                            placeholder="{{ _('ENTER MAPBOX ACCESS TOKEN') }}"
+                            value="{{ $mapbox_settings['mapbox_access_token'] ?? '' }}">
+                        @include('alerts.feedback', ['field' => 'mapbox_access_token'])
+                    </div>
+                    <div class="form-group">
+                        <label>{{ __('Mapbox Style ID') }}</label>
+                        <input type="text" name="mapbox_style_id"
+                            style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
+                            class="form-control{{ $errors->has('mapbox_style_id') ? ' is-invalid' : '' }}"
+                            placeholder="{{ _('ENTER MAPBOX STYLE ID') }}"
+                            value="{{ $mapbox_settings['mapbox_style_id'] ?? '' }}">
+                        @include('alerts.feedback', ['field' => 'mapbox_style_id'])
+                    </div>
+                    <div class="form-group">
+                        <label>{{ __('Per Km Delivery Charge') }}</label>
+                        <input type="text" name="per_km_delivery_charge"
+                            style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
+                            class="form-control{{ $errors->has('per_km_delivery_charge') ? ' is-invalid' : '' }}"
+                            placeholder="{{ _('ENTER PER KM DELIVERY CHARGE') }}"
+                            value="{{ $mapbox_settings['per_km_delivery_charge'] ?? '' }}">
+                        @include('alerts.feedback', ['field' => 'per_km_delivery_charge'])
+                    </div>
+                    <div class="form-group">
+                        <label>{{ __('Min Delivery Charge') }}</label>
+                        <input type="text" name="min_delivery_charge"
+                            style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
+                            class="form-control{{ $errors->has('min_delivery_charge') ? ' is-invalid' : '' }}"
+                            placeholder="{{ _('ENTER MIN DELIVERY CHARGE') }}"
+                            value="{{ $mapbox_settings['min_delivery_charge'] ?? '' }}">
+                        @include('alerts.feedback', ['field' => 'min_delivery_charge'])
+                    </div>
+                    <div class="form-group">
+                        <label>{{ __('Miscellaneous Charge') }}</label>
+                        <input type="text" name="miscellaneous_charge"
+                            style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
+                            class="form-control{{ $errors->has('miscellaneous_charge') ? ' is-invalid' : '' }}"
+                            placeholder="{{ _('ENTER MISCELLANEOUS CHARGE') }}"
+                            value="{{ $mapbox_settings['miscellaneous_charge'] ?? '' }}">
+                        @include('alerts.feedback', ['field' => 'miscellaneous_charge'])
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="warehouse_lat" id="warehouse_lat"
+                            value="{{ $mapbox_settings['warehouse_lat'] ?? '' }}">
+                        <input type="hidden" name="warehouse_long" id="warehouse_long"
+                            value="{{ $mapbox_settings['warehouse_long'] ?? '' }}">
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+                    <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    @include('admin.partials.documentation', ['document' => $document])
+</div>
