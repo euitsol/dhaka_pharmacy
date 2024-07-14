@@ -67,8 +67,7 @@ class OrderDistributionRider extends BaseModel
     {
         switch ($this->status) {
             case 0:
-            case -1:
-                return 'badge badge-danger';
+                return 'badge badge-secondary';
             case 1:
                 return 'badge bg-warning';
             case 2:
@@ -85,12 +84,11 @@ class OrderDistributionRider extends BaseModel
     {
         switch ($this->status) {
             case 0:
-            case -1:
-                return 'dispute';
-            case 1:
                 return 'assigned';
-            case 2:
+            case 1:
                 return 'picking-up';
+            case 2:
+                return 'picked-up';
             case 3:
                 return 'picked-up';
             case 4:

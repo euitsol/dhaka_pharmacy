@@ -20,7 +20,7 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Order ID') }}</th>
                                 <th>{{ __('Total Product') }}</th>
-                                <th>{{ __('Total Price') }}</th>
+                                <th>{{ __('Total Amount') }}</th>
                                 <th>{{ __('Delivery Type') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Order date') }}</th>

@@ -1,4 +1,16 @@
 @extends('rider.layouts.master', ['pageSlug' => $dor->statusTitle() . '_orders'])
+
+@push('css')
+    <style>
+        .pharmacy-location-map {
+            height: 400px;
+        }
+
+        .map_direction {
+            height: 500px;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -67,7 +79,18 @@
                             <div class="col-md-6">
                                 <div class="card pharmacy-details">
                                     <div class="card-header">
-                                        <h4 class="card-title">{{ $odp->pharmacy->name }}</h4>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <h4 class="card-title">{{ $odp->pharmacy->name }}</h4>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0)"
+                                                    class="btn btn-info text-white pharmacy-direction-btn"
+                                                    data-longitude="{{ optional($odp->pharmacy->address)->longitude }}"
+                                                    data-latitude="{{ optional($odp->pharmacy->address)->latitude }}">
+                                                    Direction </a>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-striped datatable">
@@ -94,9 +117,7 @@
                                                 <tr>
                                                     <th>{{ __('Pharmacy Address') }}</th>
                                                     <td>:</td>
-                                                    <th colspan="5" class="pharmacy_address"
-                                                        data-longitude="{{ optional($odp->pharmacy->address)->longitude }}"
-                                                        data-latitude="{{ optional($odp->pharmacy->address)->latitude }}">
+                                                    <th colspan="5" class="pharmacy_address">
                                                         {{ optional($odp->pharmacy->address)->address }}
                                                     </th>
                                                 </tr>
@@ -151,6 +172,12 @@
                                             @endif
                                         @endif --}}
                                     </div>
+                                    <div class="pharmacy-location">
+                                        <div class="pharmacy-location-map" id="pharmacy_location_map_{{ $key }}"
+                                            data-longitude="{{ optional($odp->pharmacy->address)->longitude }}"
+                                            data-latitude="{{ optional($odp->pharmacy->address)->latitude }}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -181,20 +208,6 @@
                     @endif --}}
                 </div>
             </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="text-center card-title"> Direction Planner </h5>
-                </div>
-                <div class="card-body">
-                    <div class="row justify-center">
-                        <div class="col-md-12">
-
-                            <div class="map" id="map"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>
@@ -215,21 +228,27 @@
             </div>
         </div>
     </div>
+
+    {{-- Map direction modal --}}
+    <div class="modal fade map-direction-modal" tabindex="-1" role="dialog" aria-labelledby="MapDirectionModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Pharmacy Direction') }}</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="map_direction" id="map_direction"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('js_link')
-    <script>
-        const pharmacyLocations = [];
-        $(".pharmacy-details").each(function() {
-            var pharmacy = {
-                name: $(this).find(".card-title").text(),
-                longitude: parseFloat($(this).find(".pharmacy_address").attr('data-longitude')),
-                latitude: parseFloat($(this).find(".pharmacy_address").attr('data-latitude')),
-            };
-            pharmacyLocations.push(pharmacy);
-        });
-        console.log(pharmacyLocations);
-    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
