@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
-    use AuditColumnsTrait,SoftDeletes;
+    use AuditColumnsTrait, SoftDeletes;
 
     /**
      * Run the migrations.
@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('routing_number');
             $table->string('account_name');
             $table->string('type');
-            $table->tinyInteger('status');
-            $table->longText('note');
+            $table->tinyInteger('status')->default(0);
+            $table->longText('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $this->addMorphedAuditColumns($table);

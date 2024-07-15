@@ -101,6 +101,7 @@ use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\User\TipsController;
 use App\Http\Controllers\DM\EarningController as DmEarningController;
+use App\Http\Controllers\DM\WithdrawMethodController as DmWithdrawMethodController;
 use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
@@ -771,10 +772,14 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
     });
-    //LAM Earning
+    //DM Earning
     Route::controller(DmEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/report', 'report')->name('report');
+    });
+    Route::controller(DmWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/details', 'details')->name('details');
+        Route::post('/update', 'update')->name('update');
     });
 });
 
