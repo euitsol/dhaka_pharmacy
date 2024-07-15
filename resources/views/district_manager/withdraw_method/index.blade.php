@@ -14,7 +14,7 @@
                             <span
                                 class="{{ $wm ? $wm->statusBg() : 'badge bg-secondary' }}">{{ $wm ? $wm->statusTitle() : 'Not submitted yet' }}</span>
                         </div>
-                        @if ($wm && $wm->status == 0 && !empty($wm->note))
+                        @if ($wm && $wm->status == 2)
                             <div class="col-12">
                                 <p><strong class="text-danger">{{ __('Declined Reason: ') }}</strong></p>
                             </div>
@@ -29,7 +29,7 @@
                             <input type="text" name="bank_name"
                                 class="form-control {{ $errors->has('bank_name') ? ' is-invalid' : '' }}"
                                 placeholder="Enter bank name" value="{{ $wm ? $wm->bank_name : old('bank_name') }}"
-                                {{ !empty(isset($wm->bank_name)) ? 'disabled' : '' }}>
+                                {{ $wm->status == 0 || $wm->status == 1 ? 'disabled' : '' }}>
                             @include('alerts.feedback', ['field' => 'bank_name'])
                         </div>
                         <div class="form-group">
@@ -38,7 +38,7 @@
                                 class="form-control {{ $errors->has('bank_brunch_name') ? ' is-invalid' : '' }}"
                                 placeholder="Enter bank brunch name"
                                 value="{{ $wm ? $wm->bank_brunch_name : old('bank_brunch_name') }}"
-                                {{ !empty(isset($wm->bank_brunch_name)) ? 'disabled' : '' }}>
+                                {{ $wm->status == 0 || $wm->status == 1 ? 'disabled' : '' }}>
                             @include('alerts.feedback', ['field' => 'bank_brunch_name'])
                         </div>
                         <div class="form-group">
@@ -47,7 +47,7 @@
                                 class="form-control {{ $errors->has('routing_number') ? ' is-invalid' : '' }}"
                                 placeholder="Enter routing number"
                                 value="{{ $wm ? $wm->routing_number : old('routing_number') }}"
-                                {{ !empty(isset($wm->routing_number)) ? 'disabled' : '' }}>
+                                {{ $wm->status == 0 || $wm->status == 1 ? 'disabled' : '' }}>
                             @include('alerts.feedback', ['field' => 'routing_number'])
                         </div>
                         <div class="form-group">
@@ -56,7 +56,7 @@
                                 class="form-control {{ $errors->has('account_name') ? ' is-invalid' : '' }}"
                                 placeholder="Enter account name"
                                 value="{{ $wm ? $wm->account_name : old('account_name') }}"
-                                {{ !empty(isset($wm->account_name)) ? 'disabled' : '' }}>
+                                {{ $wm->status == 0 || $wm->status == 1 ? 'disabled' : '' }}>
                             @include('alerts.feedback', ['field' => 'account_name'])
                         </div>
                         <div class="form-group">
@@ -64,10 +64,11 @@
                             <input type="text" name="type"
                                 class="form-control {{ $errors->has('type') ? ' is-invalid' : '' }}"
                                 placeholder="Enter type" value="{{ $wm ? $wm->type : old('type') }}"
-                                {{ !empty(isset($wm->type)) ? 'disabled' : '' }}>
+                                {{ $wm->status == 0 || $wm->status == 1 ? 'disabled' : '' }}>
                             @include('alerts.feedback', ['field' => 'type'])
                         </div>
-                        <input class="btn btn-primary float-end {{ $wm && empty($wm->note) ? 'disabled' : '' }}"
+                        <input
+                            class="btn btn-primary float-end {{ $wm->status == 0 || $wm->status == 1 ? 'disabled' : '' }}"
                             type="submit" name="submit" value="Submit">
                     </form>
                 </div>

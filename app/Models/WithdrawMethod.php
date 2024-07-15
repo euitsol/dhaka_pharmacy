@@ -42,4 +42,19 @@ class WithdrawMethod extends BaseModel
                 return 'Declained';
         }
     }
+    public function scopeStatus($query, $status)
+    {
+        switch ($status) {
+            case 'Pending':
+                $status = 0;
+                break;
+            case 'Verified':
+                $status = 1;
+                break;
+            case 'Declained':
+                $status = 2;
+                break;
+        }
+        return $query->where('status', $status);
+    }
 }

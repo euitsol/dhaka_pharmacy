@@ -794,6 +794,53 @@
                     </div>
                 </li>
             @endif
+            {{-- Payment Management  --}}
+            {{-- @if (mainMenuCheck([
+        'prefixes' => ['withdraw_method.'],
+        'routes' => ['wm_list'],
+    ])) --}}
+            <li>
+                <a class="@if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declained') @else collapsed @endif" data-toggle="collapse"
+                    href="#wm"
+                    @if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declained') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-credit-card"></i>
+                    <span class="nav-link-text">{{ __('Withdraw Method') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declained') show @endif" id="wm">
+                    <ul class="nav pl-2">
+                        @include('admin.partials.menu_buttons', [
+                            'menuItems' => [
+                                [
+                                    'pageSlug' => 'wm_Pending',
+                                    'routeName' => 'withdraw_method.wm_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'Pending',
+                                    'label' => 'Pending',
+                                ],
+                                [
+                                    'pageSlug' => 'wm_Verified',
+                                    'routeName' => 'withdraw_method.wm_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'Verified',
+                                    'label' => 'Verified',
+                                ],
+                                [
+                                    'pageSlug' => 'wm_Declained',
+                                    'routeName' => 'withdraw_method.wm_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'Declained',
+                                    'label' => 'Declained',
+                                ],
+                            ],
+                        ])
+                    </ul>
+                </div>
+            </li>
+            {{-- @endif --}}
+
+
             {{-- Feedback --}}
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [
