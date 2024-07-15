@@ -1,12 +1,17 @@
 @push('css_link')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
-        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
     <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
         type="text/css" />
+@endpush
+
+@push('css')
+    <style>
+        .my_map {
+
+            height: 500px;
+        }
+    </style>
 @endpush
 <div class="row">
     <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
@@ -20,8 +25,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>{{ __('Mapbox Access Token') }}</label>
-                        <input type="text" name="mapbox_token"
-                            style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
+                        <input type="text" name="mapbox_token" style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
                             class="form-control{{ $errors->has('mapbox_token') ? ' is-invalid' : '' }}"
                             placeholder="{{ _('ENTER MAPBOX ACCESS TOKEN') }}"
                             value="{{ $mapbox_settings['mapbox_token'] ?? old('mapbox_token') }}">
@@ -42,7 +46,7 @@
                             style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
                             class="form-control{{ $errors->has('per_km_delivery_charge') ? ' is-invalid' : '' }}"
                             placeholder="{{ _('ENTER PER KM DELIVERY CHARGE') }}"
-                            value="{{ $mapbox_settings['per_km_delivery_charge'] ??  old('per_km_delivery_charge') }}">
+                            value="{{ $mapbox_settings['per_km_delivery_charge'] ?? old('per_km_delivery_charge') }}">
                         @include('alerts.feedback', ['field' => 'per_km_delivery_charge'])
                     </div>
                     <div class="form-group">
@@ -99,6 +103,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
     </script>
-
+@endpush
+@push('js')
     <script src="{{ asset('admin/js/mapbox_settings.js') }}"></script>
 @endpush

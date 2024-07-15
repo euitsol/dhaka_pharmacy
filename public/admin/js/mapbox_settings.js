@@ -59,16 +59,16 @@ function clickNautofill(map, marker, parentID) {
         }
 
         marker = addMarker(map, e.lngLat);
-        $('#center_location_lat').val(e.lngLat.lat);
-        $('#center_location_lng').val(e.lngLat.lng);
+        $("#center_location_lat").val(e.lngLat.lat);
+        $("#center_location_lng").val(e.lngLat.lng);
     });
 }
 
 //Dashboard
 $(document).ready(function () {
-        const map = initializeMap("my_map", style, [dlng, dlat], 15);
-        initializeGeocode(map);
-        clickNautofill(map, null, ".map_wrap");
-        addGeolocateControl(map);
-        addNavigationControl(map);
+    const map = initializeMap("my_map", style, [dlng, dlat], 15);
+    initializeGeocode(map);
+    clickNautofill(map, null);
+    addGeolocateControl(map);
+    addNavigationControl(map);
 });
