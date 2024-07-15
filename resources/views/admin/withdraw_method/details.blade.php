@@ -1,21 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'wm_' . $wm->statusTitle()])
 @section('title', 'Withdraw Method Details')
-@push('css')
-    <style>
-        .declained_form {
-            height: 0;
-            opacity: 0;
-            visibility: hidden;
-            transition: .4s;
-        }
-
-        .declained_form.active {
-            height: auto;
-            opacity: 1;
-            visibility: visible;
-        }
-    </style>
-@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
