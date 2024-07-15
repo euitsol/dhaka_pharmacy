@@ -603,8 +603,8 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
     Route::controller(AdminWithdrawMethodController::class)->prefix('withdraw-method')->name('withdraw_method.')->group(function () {
         Route::get('/list/{status}', 'list')->name('wm_list');
         Route::get('/details/{id}', 'details')->name('wm_details');
-        Route::get('/status/{id}', 'accept')->name('status.wm_details');
-        Route::post('/status/{id}', 'declined')->name('status.wm_details');
+        Route::get('/accept/{id}', 'accept')->name('wm_accept');
+        Route::post('/declained/{id}', 'declained')->name('wm_declained');
     });
     // Site Settings
     Route::controller(SiteSettingsController::class)->prefix('site-settings')->name('settings.')->group(function () {
@@ -786,8 +786,12 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::post('/report', 'report')->name('report');
     });
     Route::controller(DmWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
-        Route::get('/details', 'details')->name('details');
-        Route::post('/update', 'update')->name('update');
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::put('/edit/{id}', 'update')->name('edit');
     });
 });
 

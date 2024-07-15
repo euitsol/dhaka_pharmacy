@@ -26,7 +26,7 @@ class WithdrawMethodRequest extends FormRequest
             'bank_brunch_name' => 'required|string',
             'routing_number' => 'required|numeric',
             'account_name' => 'required|string',
-            'type' => 'required',
+            'type' => 'required|in:personal,business',
             'note' => 'nullable|string',
         ];
     }

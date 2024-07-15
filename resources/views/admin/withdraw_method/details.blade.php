@@ -64,7 +64,7 @@
                             <tr>
                                 <td> {{ __('Note') }} </td>
                                 <td>{{ __(':') }}</td>
-                                <td> {!! $wm->note ?? '--' !!} </td>
+                                <td> {!! '<p class="text-danger">' . $wm->note . '</p>' ?? '--' !!} </td>
                             </tr>
                             <tr>
                                 <td> {{ __('Created At') }} </td>
@@ -90,23 +90,45 @@
                     </table>
                 </div>
                 <div class="card-footer py-4 text-end">
-                    @include('admin.partials.button', [
-                        'routeName' => 'withdraw_method.status.wm_details',
-                        'className' => 'btn-primary',
-                        'params' => ['id' => encrypt($wm->id)],
-                        'label' => 'Accept',
-                    ])
-                    <a href="javascript:void(0)" class="btn btn-sm btn-danger declained_btn">{{ __('Declained') }}</a>
-                    <form action="" method="POST" class="declained_form">
+                    @if ($wm->status !== 1)
+                        @include('admin.partials.button', [
+                            'routeName' => 'withdraw_method.wm_accept',
+                            'className' => 'btn-primary',
+                            'params' => ['id' => encrypt($wm->id)],
+                            'label' => 'Accept',
+                        ])
+                    @endif
+                    @if ($wm->status !== 2)
+                        <a href="javascript:void(0)" class="btn btn-sm btn-danger declained_btn">{{ __('Declained') }}</a>
+                    @endif
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Delained Modal  --}}
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Declaine') }}</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body modal_data">
+                    <form method="POST" class="declainedForm">
                         @csrf
-                        <div class="form-group text-start">
-                            <label>{{ __('Declained Reason') }}</label>
+                        <div class="form-group">
+                            <label>{{ __('Reason') }}</label>
                             <textarea name="declained_reason" placeholder="Enter declained reason" class="form-control">{{ old('declained_reason') }}</textarea>
                             @include('alerts.feedback', ['field' => 'declained_reason'])
                         </div>
-                        <input type="submit" value="Submit" class="btn btn-primary">
+                        <a href="javascript:void(0)" data-id="{{ encrypt($wm->id) }}"
+                            class="btn btn-primary float-end declained_submit">{{ __('Submit') }}</a>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -116,7 +138,46 @@
     <script>
         $(document).ready(function() {
             $('.declained_btn').on('click', function() {
-                $('.declained_form').toggleClass('active');
+                $('.view_modal').modal('show');
+            });
+        });
+
+        $(document).ready(function() {
+            $('.declained_submit').click(function() {
+                var form = $('.declainedForm');
+                let id = $(this).data('id');
+                let _url = ("{{ route('withdraw_method.wm_declained', ['id']) }}");
+                let __url = _url.replace('id', id);
+                $.ajax({
+                    type: 'POST',
+                    url: __url,
+                    data: form.serialize(),
+                    success: function(response) {
+                        $('.invalid-feedback').remove();
+                        $('.view_modal').modal('hide');
+                        window.location.href =
+                            "{{ route('withdraw_method.wm_list', 'Declained') }}";
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            $('.invalid-feedback').remove();
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function(field, messages) {
+                                // Display validation errors
+                                var errorHtml = '';
+                                $.each(messages, function(index, message) {
+                                    errorHtml +=
+                                        '<span class="invalid-feedback d-block" role="alert">' +
+                                        message + '</span>';
+                                });
+                                $('[name="' + field + '"]').after(errorHtml);
+                            });
+                        } else {
+                            // Handle other errors
+                            console.log('An error occurred.');
+                        }
+                    }
+                });
             });
         });
     </script>

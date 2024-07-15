@@ -1,5 +1,5 @@
-@extends('admin.layouts.master', ['pageSlug' => 'admin'])
-
+@extends('district_manager.layouts.master', ['pageSlug' => 'wm'])
+@section('title', 'Withdraw Method List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Admin List') }}</h4>
+                            <h4 class="card-title">{{ __('Withdraw Method List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
                                 'routeName' => 'dm.wm.create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new withdraw method',
+                                'label' => 'Add withdraw method',
                             ])
                         </div>
                     </div>
@@ -24,9 +24,10 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Name') }}</th>
-                                <th>{{ __('Email') }}</th>
-                                <th>{{ __('Role') }}</th>
+                                <th>{{ __('Account Name') }}</th>
+                                <th>{{ __('Bank Name') }}</th>
+                                <th>{{ __('Routing Number') }}</th>
+                                <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -34,48 +35,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($admins as $admin)
+                            @foreach ($wms as $wm)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $admin->name }} </td>
-                                    <td> {{ $admin->email }} </td>
-                                    <td> {{ $admin->role->name }} </td>
+                                    <td> {{ $wm->account_name }} </td>
+                                    <td> {{ $wm->bank_name }} </td>
+                                    <td> {{ $wm->routing_number }} </td>
+                                    <td> {{ $wm->type }} </td>
                                     <td>
-                                        <span class="{{ $admin->getStatusBadgeClass() }}">{{ $admin->getStatus() }}</span>
+                                        <span class="{{ $wm->statusBg() }}">{{ $wm->statusTitle() }}</span>
                                     </td>
-                                    <td>{{ timeFormate($admin->created_at) }}</td>
+                                    <td>{{ timeFormate($wm->created_at) }}</td>
 
-                                    <td> {{ c_user_name($admin->created_user) }} </td>
+                                    <td> {{ c_user_name($wm->creater) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'am.admin.admin_profile',
-                                                    'params' => [$admin->id],
-                                                    'label' => 'Profile',
-                                                ],
-                                                [
                                                     'routeName' => 'javascript:void(0)',
-                                                    'params' => [$admin->id],
                                                     'label' => 'View Details',
                                                     'className' => 'view',
-                                                    'data-id' => $admin->id,
-                                                ],
-                                                [
-                                                    'routeName' => 'am.admin.admin_edit',
-                                                    'params' => [$admin->id],
-                                                    'label' => 'Update',
-                                                ],
-                                                [
-                                                    'routeName' => 'am.admin.status.admin_edit',
-                                                    'params' => [$admin->id],
-                                                    'label' => $admin->getBtnStatus(),
-                                                ],
-                                                [
-                                                    'routeName' => 'am.admin.admin_delete',
-                                                    'params' => [$admin->id],
-                                                    'label' => 'Delete',
-                                                    'delete' => true,
+                                                    'data-id' => encrypt($wm->id),
                                                 ],
                                             ],
                                         ])
@@ -93,66 +73,74 @@
             </div>
         </div>
     </div>
-
-    {{-- Admin Details Modal  --}}
+    {{-- Withdraw Method Details Modal  --}}
     <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Admin Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Withdraw Method Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body modal_data">
+
                 </div>
             </div>
         </div>
     </div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6, 7]])
 @push('js')
     <script>
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('am.admin.details.admin_list', ['id']) }}");
+                let url = ("{{ route('dm.wm.details', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status == 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status == 1 ? 'badge-success' :
-                            'badge-warning';
+                        if (data.status == 2) {
+                            $('#declained_reason').html(
+                                `<p> <strong class = "text-danger"> Declined Reason: </strong>${data.note}</p>`
+                            )
+                        }
                         var result = `
+                                <div id='declained_reason mb-2'></div>
                                 <table class="table table-striped">
                                     <tr>
-                                        <th class="text-nowrap">Name</th>
+                                        <th class="text-nowrap">Account Name</th>
                                         <th>:</th>
-                                        <td>${data.name}</td>
+                                        <td>${data.account_name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Email</th>
+                                        <th class="text-nowrap">Bank Name</th>
                                         <th>:</th>
-                                        <td>${data.email}</td>
+                                        <td>${data.bank_name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Role</th>
+                                        <th class="text-nowrap">Bank Brunch Name</th>
                                         <th>:</th>
-                                        <td>${data.role.name}</td>
+                                        <td>${data.bank_brunch_name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">IP Address</th>
+                                        <th class="text-nowrap">Routing Number</th>
                                         <th>:</th>
-                                        <td>${data.ips}</td>
+                                        <td>${data.routing_number}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Type</th>
+                                        <th>:</th>
+                                        <td>${data.type}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
-                                        <td><span class="badge ${statusClass}">${status}</span></td>
+                                        <td><span class="badge ${data.statusBg}">${data.statusTitle}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created At</th>
@@ -167,7 +155,7 @@
                                     <tr>
                                         <th class="text-nowrap">Updated At</th>
                                         <th>:</th>
-                                        <td>${data.updating_time}</td>
+                                        <td>${data.creating_time != data.updating_time ? data.updating_time : ''}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Updated By</th>

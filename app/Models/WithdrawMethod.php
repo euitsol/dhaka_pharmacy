@@ -15,8 +15,11 @@ class WithdrawMethod extends BaseModel
         'routing_number',
         'account_name',
         'type',
+        'note',
         'creater_id',
-        'creater_type'
+        'creater_type',
+        'updater_id',
+        'updater_type',
     ];
 
     public function statusBg()
