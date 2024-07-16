@@ -138,6 +138,11 @@
                                         <td>${data.type}</td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">Note</th>
+                                        <th>:</th>
+                                        <td><span class="text-danger">${data.note ?? '--'}</span></td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
                                         <td><span class="badge ${data.statusBg}">${data.statusTitle}</span></td>

@@ -784,6 +784,8 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
     Route::controller(DmEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
     });
     Route::controller(DmWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
         Route::get('/list', 'list')->name('list');

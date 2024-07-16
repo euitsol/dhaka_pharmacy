@@ -15,19 +15,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('withdraws', function (Blueprint $table) {
+        Schema::create('withdraw_earnings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('receiver_id');
-            $table->string('receiver_type');
-            $table->unsignedBigInteger('wm_id');
-            $table->double('amount');
-            $table->longText('reason')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->unsignedBigInteger('w_id');
+            $table->unsignedBigInteger('e_id');
             $table->timestamps();
             $table->softDeletes();
             $this->addMorphedAuditColumns($table);
 
-            $table->foreign('wm_id')->references('id')->on('withdraw_methods')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('w_id')->references('id')->on('withdraws')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('e_id')->references('id')->on('earnings')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -36,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('withdraws');
+        Schema::dropIfExists('withdraw_earnings');
     }
 };

@@ -6,14 +6,14 @@
 @section('content')
     <div class="row earning">
         <div class="col-md-12">
-            <div class="card ">
+            <div class="card wrap">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-8">
                             <h4 class="card-title">{{ __('My Earnings') }}</h4>
                         </div>
                         <div class="col-md-4 text-end">
-                            <a href="#" class="btn btn-primary">{{__('Withdraw')}}</a>
+                            <a href="{{ route('dm.earning.withdraw') }}" class="btn btn-primary">{{ __('Withdraw') }}</a>
                         </div>
                     </div>
                 </div>
@@ -23,20 +23,13 @@
                             <button class="myTab nav-link active text-muted" id="nav-overview-tab" data-bs-toggle="tab"
                                 data-bs-target="#nav-overview" type="button" role="tab" aria-controls="nav-overview"
                                 aria-selected="true">{{ __('Overview') }}</button>
-                            {{-- <button class="myTab nav-link text-muted" id="nav-financial-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-financial" type="button" role="tab" aria-controls="nav-financial"
-                                aria-selected="false">{{ __('Financial documents') }}</button> --}}
                         </div>
                     </nav>
-                    <div class="tab-content py-4" id="nav-tabContent" style="min-height:77vh;">
+                    <div class="tab-content py-4" id="nav-tabContent">
                         <div class="myContent tab-pane fade show active" id="nav-overview" role="tabpanel"
                             aria-labelledby="nav-overview-tab">
                             @include('district_manager.earning.overview')
                         </div>
-                        {{-- <div class="myContent tab-pane fade" id="nav-financial" role="tabpanel"
-                            aria-labelledby="nav-financial-tab">
-                            @include('district_manager.earning.finance')
-                        </div> --}}
                     </div>
                 </div>
             </div>

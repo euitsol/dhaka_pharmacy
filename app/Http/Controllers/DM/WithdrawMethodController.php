@@ -23,7 +23,7 @@ class WithdrawMethodController extends Controller
 
     public function list()
     {
-        $data['wms'] = WithdrawMethod::where('creater_id', dm()->id)->where('creater_type', get_class(dm()))->latest()->get();
+        $data['wms'] = WithdrawMethod::dm()->latest()->get();
         return view('district_manager.withdraw_method.list', $data);
     }
     public function details($id): JsonResponse

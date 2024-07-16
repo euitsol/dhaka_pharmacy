@@ -60,4 +60,20 @@ class WithdrawMethod extends BaseModel
         }
         return $query->where('status', $status);
     }
+    public function scopePharmacy($query)
+    {
+        return $query->where('creater_id', pharmacy()->id)->where('creater_type', get_class(pharmacy()));
+    }
+    public function scopeRider($query)
+    {
+        return $query->where('creater_id', rider()->id)->where('creater_type', get_class(rider()));
+    }
+    public function scopeLam($query)
+    {
+        return $query->where('creater_id', lam()->id)->where('creater_type', get_class(lam()));
+    }
+    public function scopeDm($query)
+    {
+        return $query->where('creater_id', dm()->id)->where('creater_type', get_class(dm()));
+    }
 }
