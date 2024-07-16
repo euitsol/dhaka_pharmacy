@@ -5,13 +5,13 @@
             <div class="card-body">
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Available points for withdrawal') }}</span>
-                    <h4 class="my_amount">{{ number_format($earnings->where('activity', 1)->sum('point'), 2) }}
+                    <h4 class="my_amount">{{ number_format(getEarningPoints($earnings), 2) }}
                         {{ getPointName() }}</h4>
                 </div>
                 <hr>
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Equivalent amount') }}</span>
-                    <h4 class="my_amount">{{ number_format($earnings->where('activity', 1)->sum('amount'), 2) }}
+                    <h4 class="my_amount">{{ number_format(getEarningEqAmounts($earnings), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
             </div>
@@ -23,13 +23,13 @@
             <div class="card-body">
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Payments being cleared') }}</span>
-                    <h4 class="my_amount">{{ number_format($earnings->where('activity', 3)->sum('point'), 2) }}
+                    <h4 class="my_amount">{{ number_format(getPendingEarningPoints($earnings), 2) }}
                         {{ getPointName() }}</h4>
                 </div>
                 <hr>
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Equivalent amount') }}</span>
-                    <h4 class="my_amount">{{ number_format($earnings->where('activity', 3)->sum('amount'), 2) }}
+                    <h4 class="my_amount">{{ number_format(getPendingEarningEqAmounts($earnings), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
             </div>
@@ -41,13 +41,13 @@
             <div class="card-body">
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Withdrawal amount') }}</span>
-                    <h4 class="my_amount">{{ number_format($earnings->where('activity', 2)->sum('amount'), 2) }}
+                    <h4 class="my_amount">{{ number_format(getWithdrawEqAmounts($earnings), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
                 <hr>
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Pending withdrawal amount') }}</span>
-                    <h4 class="my_amount">{{ number_format($earnings->where('activity', 4)->sum('amount'), 2) }}
+                    <h4 class="my_amount">{{ number_format(getPendingWithdrawEqAmounts($earnings), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                     </td>
                     <td>{{ $earning->description }}</td>
                     <td>{{ $earning->order->order_id ?? '--' }}</td>
-                    <td>{{ number_format($earning->amount, 2) }}{{ __(' BDT') }}</td>
+                    <td>{{ number_format($earning->eq_amount, 2) }}{{ __(' BDT') }}</td>
                 </tr>
             @endforeach
 

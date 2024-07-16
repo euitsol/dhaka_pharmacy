@@ -101,6 +101,7 @@ use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\User\TipsController;
 use App\Http\Controllers\Admin\WithdrawMethodController as AdminWithdrawMethodController;
+use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
 use App\Http\Controllers\DM\EarningController as DmEarningController;
 use App\Http\Controllers\DM\WithdrawMethodController as DmWithdrawMethodController;
 use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
@@ -599,12 +600,19 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         });
     });
 
-    // Withdraw Method
+    // Withdraw Method Request
     Route::controller(AdminWithdrawMethodController::class)->prefix('withdraw-method')->name('withdraw_method.')->group(function () {
         Route::get('/list/{status}', 'list')->name('wm_list');
         Route::get('/details/{id}', 'details')->name('wm_details');
         Route::get('/accept/{id}', 'accept')->name('wm_accept');
         Route::post('/declained/{id}', 'declained')->name('wm_declained');
+    });
+    // Withdraw Request
+    Route::controller(AdminWithdrawController::class)->prefix('withdraw')->name('withdraw.')->group(function () {
+        Route::get('/list/{status}', 'list')->name('w_list');
+        Route::get('/details/{id}', 'details')->name('w_details');
+        Route::get('/accept/{id}', 'accept')->name('w_accept');
+        Route::post('/declained/{id}', 'declained')->name('w_declained');
     });
     // Site Settings
     Route::controller(SiteSettingsController::class)->prefix('site-settings')->name('settings.')->group(function () {

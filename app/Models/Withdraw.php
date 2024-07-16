@@ -24,6 +24,50 @@ class Withdraw extends BaseModel
             ->using(WithdrawEarning::class)
             ->withPivot('id');
     }
+    public function statusBg()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'badge bg-info';
+            case 1:
+                return 'badge badge-success';
+            case 2:
+                return 'badge badge-danger';
+        }
+    }
+
+    public function statusTitle()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'Pending';
+            case 1:
+                return 'Complete';
+            case 2:
+                return 'Declained';
+        }
+    }
+    public function scopeStatus($query, $status)
+    {
+        switch ($status) {
+            case 'Pending':
+                $status = 0;
+                break;
+            case 'Complete':
+                $status = 1;
+                break;
+            case 'Declained':
+                $status = 2;
+                break;
+        }
+        return $query->where('status', $status);
+    }
+
+
+
+
+
+
     public function scopePharmacy($query)
     {
         return $query->where('receiver_id', pharmacy()->id)->where('receiver_type', get_class(pharmacy()));

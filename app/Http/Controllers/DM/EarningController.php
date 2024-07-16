@@ -11,6 +11,7 @@ use App\Models\WithdrawEarning;
 use App\Models\WithdrawMethod;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EarningController extends Controller
 {
@@ -66,74 +67,85 @@ class EarningController extends Controller
     }
     public function withdrawConfirm(WithdrawConfirmRequest $request)
     {
-        $w_amount = $request->amount;
-        $withdraw_method = $request->withdraw_method;
-        $t_a_amount = getEarningEqAmounts(Earning::dm()->get());
+        DB::beginTransaction();
 
-        if ($t_a_amount < $w_amount) {
-            flash()->addError('Insuficient balance.');
-            return redirect()->back();
-        }
+        try {
+            $w_amount = $request->amount;
+            $withdraw_method = $request->withdraw_method;
+            $t_a_amount = getEarningEqAmounts(Earning::dm()->get());
 
-        $earnings = Earning::with(['point_history'])
-            ->selectRaw('ph_id, SUM(point) as total_points, SUM(eq_amount) as total_eq_amount')
-            ->where('activity', 1)
-            ->dm()
-            ->groupBy('ph_id')
-            ->get();
+            if ($t_a_amount < $w_amount) {
+                flash()->addError('Insufficient balance.');
+                return redirect()->back();
+            }
 
-        $withdraw = new Withdraw();
-        $withdraw->receiver()->associate(dm());
-        $withdraw->wm_id = $withdraw_method;
-        $withdraw->amount = $w_amount;
-        $withdraw->creater()->associate(dm());
-        $withdraw->save();
+            $earnings = Earning::with(['point_history'])
+                ->selectRaw('ph_id, SUM(point) as total_points, SUM(eq_amount) as total_eq_amount')
+                ->where('activity', 1)
+                ->dm()
+                ->groupBy('ph_id')
+                ->get();
 
-        foreach ($earnings as $er) {
-            if ($w_amount != 0) {
-                $a_points = $er->total_points;
-                $a_amount = $er->total_eq_amount;
-                $w_point = $w_amount / $er->point_history->eq_amount;
+            $withdraw = new Withdraw();
+            $withdraw->receiver()->associate(dm());
+            $withdraw->wm_id = $withdraw_method;
+            $withdraw->amount = $w_amount;
+            $withdraw->creater()->associate(dm());
+            $withdraw->save();
 
-                if ($a_points >= $w_point) {
-                    $earning = new Earning();
-                    $earning->ph_id = $er->ph_id;
-                    $earning->receiver()->associate(dm());
-                    $earning->point = $w_point;
-                    $earning->eq_amount = $w_amount;
-                    $earning->activity = 4; //Withdraw Pending
-                    $earning->description = 'Withdrawal request submitted successfully';
-                    $earning->creater()->associate(dm());
-                    $earning->save();
+            foreach ($earnings as $er) {
+                if ($w_amount != 0) {
+                    $a_points = $er->total_points;
+                    $a_amount = $er->total_eq_amount;
+                    $w_point = $w_amount / $er->point_history->eq_amount;
 
-                    $w_er = new WithdrawEarning();
-                    $w_er->w_id = $withdraw->id;
-                    $w_er->e_id = $earning->id;
-                    $w_er->creater()->associate(dm());
-                    $w_er->save();
-                    break;
-                } else {
-                    $earning = new Earning();
-                    $earning->ph_id = $er->ph_id;
-                    $earning->receiver()->associate(dm());
-                    $earning->point = $a_points;
-                    $earning->eq_amount = $a_amount;
-                    $earning->activity = 4; //Withdraw Pending
-                    $earning->description = 'Withdrawal request submitted successfully';
-                    $earning->creater()->associate(dm());
-                    $earning->save();
+                    if ($a_points >= $w_point) {
+                        $earning = new Earning();
+                        $earning->ph_id = $er->ph_id;
+                        $earning->receiver()->associate(dm());
+                        $earning->point = $w_point;
+                        $earning->eq_amount = $w_amount;
+                        $earning->activity = 4; // Withdraw Pending
+                        $earning->description = 'Withdrawal request submitted successfully';
+                        $earning->creater()->associate(dm());
+                        $earning->save();
 
-                    $w_er = new WithdrawEarning();
-                    $w_er->w_id = $withdraw->id;
-                    $w_er->e_id = $earning->id;
-                    $w_er->creater()->associate(dm());
-                    $w_er->save();
+                        $w_er = new WithdrawEarning();
+                        $w_er->w_id = $withdraw->id;
+                        $w_er->e_id = $earning->id;
+                        $w_er->creater()->associate(dm());
+                        $w_er->save();
+                        break;
+                    } else {
+                        $earning = new Earning();
+                        $earning->ph_id = $er->ph_id;
+                        $earning->receiver()->associate(dm());
+                        $earning->point = $a_points;
+                        $earning->eq_amount = $a_amount;
+                        $earning->activity = 4; // Withdraw Pending
+                        $earning->description = 'Withdrawal request submitted successfully';
+                        $earning->creater()->associate(dm());
+                        $earning->save();
 
-                    $w_amount -= $a_amount;
+                        $w_er = new WithdrawEarning();
+                        $w_er->w_id = $withdraw->id;
+                        $w_er->e_id = $earning->id;
+                        $w_er->creater()->associate(dm());
+                        $w_er->save();
+
+                        $w_amount -= $a_amount;
+                    }
                 }
             }
+
+            DB::commit();
+
+            flash()->addSuccess('Your withdrawal request has been successfully sent.');
+            return redirect()->route('dm.earning.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            flash()->addError('Your withdrawal request has failed. Please try again.');
+            return redirect()->back();
         }
-        flash()->addSuccess('Your withdrawal request has been successfully sent.');
-        return redirect()->route('dm.earning.index');
     }
 }

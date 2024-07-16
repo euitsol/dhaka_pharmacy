@@ -9,6 +9,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Earning extends BaseModel
 {
     use HasFactory, SoftDeletes;
+
+
+    protected $fillable = [
+        'ph_id',
+        'order_id',
+        'point',
+        'eq_amount',
+        'activity',
+        'description',
+        'receiver_id',
+        'receiver_type',
+        'creater_id',
+        'creater_type',
+        'updater_id',
+        'updater_type',
+    ];
+
     public function receiver()
     {
         return $this->morphTo();

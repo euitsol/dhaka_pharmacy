@@ -794,7 +794,7 @@
                     </div>
                 </li>
             @endif
-            {{-- Payment Management  --}}
+            {{-- Withdraw Method Request  --}}
             {{-- @if (mainMenuCheck([
         'prefixes' => ['withdraw_method.'],
         'routes' => ['wm_list'],
@@ -839,6 +839,55 @@
                 </div>
             </li>
             {{-- @endif --}}
+
+            {{-- Withdraw Request  --}}
+            {{-- @if (mainMenuCheck([
+        'prefixes' => ['withdraw.'],
+        'routes' => ['w_list'],
+    ])) --}}
+            <li>
+                <a class="@if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declained') @else collapsed @endif" data-toggle="collapse"
+                    href="#withdraw"
+                    @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declained') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-credit-card"></i>
+                    <span class="nav-link-text">{{ __('Withdraw Request') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declained') show @endif" id="withdraw">
+                    <ul class="nav pl-2">
+                        @include('admin.partials.menu_buttons', [
+                            'menuItems' => [
+                                [
+                                    'pageSlug' => 'w_Pending',
+                                    'routeName' => 'withdraw.w_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'Pending',
+                                    'label' => 'Pending',
+                                ],
+                                [
+                                    'pageSlug' => 'w_Complete',
+                                    'routeName' => 'withdraw.w_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'Complete',
+                                    'label' => 'Accepted',
+                                ],
+                                [
+                                    'pageSlug' => 'w_Declained',
+                                    'routeName' => 'withdraw.w_list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'Declained',
+                                    'label' => 'Declained',
+                                ],
+                            ],
+                        ])
+                    </ul>
+                </div>
+            </li>
+            {{-- @endif --}}
+
+
+
 
 
             {{-- Feedback --}}
