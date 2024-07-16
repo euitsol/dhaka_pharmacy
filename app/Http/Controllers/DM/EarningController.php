@@ -61,6 +61,7 @@ class EarningController extends Controller
 
     public function withdraw()
     {
+        $data['withdrawals'] = Withdraw::dm()->latest()->get();
         $data['wms'] = WithdrawMethod::dm()->activated()->latest()->get();
         $data['earnings'] = Earning::with(['receiver', 'order', 'point_history'])->dm()->get();
         return view('district_manager.earning.withdraw', $data);
