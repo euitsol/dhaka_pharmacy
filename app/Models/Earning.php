@@ -50,6 +50,8 @@ class Earning extends BaseModel
                 return 'badge badge-warning';
             case 4:
                 return 'badge badge-primary';
+            case 4:
+                return 'badge badge-danger';
         }
     }
 
@@ -64,6 +66,8 @@ class Earning extends BaseModel
                 return 'Pending clearance';
             case 4:
                 return 'Pending withdrawn';
+            case 5:
+                return 'Withdrawn Declained';
         }
     }
     public function scopePharmacy($query)

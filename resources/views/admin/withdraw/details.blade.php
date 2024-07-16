@@ -50,12 +50,12 @@
                                         <td> {{ c_user_name($withdraw->creater) }} </td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bolder"> {{ __('Updated At') }} </td>
+                                        <td class="fw-bolder"> {{ __('Accepted At') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ $withdraw->created_at != $withdraw->updated_at ? timeFormate($withdraw->updated_at) : '--' }}
                                         </td>
                                         <td>|</td>
-                                        <td class="fw-bolder"> {{ __('Updated By') }} </td>
+                                        <td class="fw-bolder"> {{ __('Accepted By') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ u_user_name($withdraw->updater) }} </td>
                                     </tr>
@@ -117,12 +117,12 @@
                                         <td> {{ c_user_name($withdraw->withdraw_method->creater) }} </td>
                                     </tr>
                                     <tr>
-                                        <td> {{ __('Updated At') }} </td>
+                                        <td> {{ __('Accepted At') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ $withdraw->withdraw_method->created_at != $withdraw->withdraw_method->updated_at ? timeFormate($withdraw->withdraw_method->updated_at) : '--' }}
                                         </td>
                                         <td>|</td>
-                                        <td> {{ __('Updated By') }} </td>
+                                        <td> {{ __('Accepted By') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ u_user_name($withdraw->withdraw_method->updater) }} </td>
                                     </tr>
@@ -187,7 +187,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Declaine') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Withdraw Declaine') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -230,7 +230,7 @@
                         $('.invalid-feedback').remove();
                         $('.view_modal').modal('hide');
                         window.location.href =
-                            "{{ route('withdraw_method.wm_list', 'Declained') }}";
+                            "{{ route('withdraw.w_list', 'Declained') }}";
                     },
                     error: function(xhr) {
                         if (xhr.status === 422) {
