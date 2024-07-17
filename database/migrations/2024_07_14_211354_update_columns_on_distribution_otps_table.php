@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('distribution_otps', function (Blueprint $table) {
-            // $table->dropColumn(['otp_author_id', 'otp_author_type']);
+            $table->dropColumn(['otp_author_id', 'otp_author_type']);
             $table->unsignedBigInteger('pharmacy_id');
             $table->foreign('pharmacy_id')->references('id')->on('pharmacies')->onDelete('cascade')->onUpdate('cascade');
         });
@@ -22,13 +22,13 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-{
-    Schema::table('distribution_otps', function (Blueprint $table) {
-        $table->dropForeign(['pharmacy_id']);
-        $table->dropColumn('pharmacy_id');
+    {
+        Schema::table('distribution_otps', function (Blueprint $table) {
+            $table->dropForeign(['pharmacy_id']);
+            $table->dropColumn('pharmacy_id');
 
-        $table->unsignedBigInteger('otp_author_id');
-        $table->string('otp_author_type');
-    });
-}
+            $table->unsignedBigInteger('otp_author_id');
+            $table->string('otp_author_type');
+        });
+    }
 };
