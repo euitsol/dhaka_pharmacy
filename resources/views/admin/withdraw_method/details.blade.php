@@ -51,7 +51,7 @@
                                 <td> {!! '<p class="text-danger">' . $wm->note . '</p>' ?? '--' !!} </td>
                             </tr>
                             <tr>
-                                <td> {{ __('Created At') }} </td>
+                                <td> {{ __('Created Date') }} </td>
                                 <td>{{ __(':') }}</td>
                                 <td> {{ timeFormate($wm->created_at) }} </td>
                             </tr>
@@ -61,7 +61,7 @@
                                 <td> {{ c_user_name($wm->creater) }} </td>
                             </tr>
                             <tr>
-                                <td> {{ __('Updated At') }} </td>
+                                <td> {{ __('Updated Date') }} </td>
                                 <td>{{ __(':') }}</td>
                                 <td> {{ $wm->created_at != $wm->updated_at ? timeFormate($wm->updated_at) : '--' }} </td>
                             </tr>

@@ -132,7 +132,7 @@
                 let id = $(this).data('id');
                 let url = (
                     "{{ route('product.product_sub_category.details.product_sub_category_list', ['id']) }}"
-                    );
+                );
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -175,7 +175,7 @@
                                         <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created At</th>
+                                        <th class="text-nowrap">Created Date</th>
                                         <th>:</th>
                                         <td>${data.creating_time}</td>
                                     </tr>
@@ -185,7 +185,7 @@
                                         <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Updated At</th>
+                                        <th class="text-nowrap">Updated Date</th>
                                         <th>:</th>
                                         <td>${data.updating_time}</td>
                                     </tr>

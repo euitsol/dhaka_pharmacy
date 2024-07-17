@@ -41,7 +41,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bolder"> {{ __('Created At') }} </td>
+                                        <td class="fw-bolder"> {{ __('Created Date') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ timeFormate($withdraw->created_at) }} </td>
                                         <td>|</td>
@@ -108,7 +108,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td> {{ __('Created At') }} </td>
+                                        <td> {{ __('Created Date') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ timeFormate($withdraw->withdraw_method->created_at) }} </td>
                                         <td>|</td>
