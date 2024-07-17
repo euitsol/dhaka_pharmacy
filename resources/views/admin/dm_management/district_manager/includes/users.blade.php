@@ -1,4 +1,4 @@
-<table class="table table-striped datatable">
+<table class="table table-striped user_datatable">
     <thead>
         <tr>
             <th>{{ __('SL') }}</th>
@@ -46,4 +46,7 @@
 
     </tbody>
 </table>
-{{-- @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6]]) --}}
+@include('admin.partials.datatable', [
+    'columns_to_show' => [0, 1, 2, 3, 4, 5, 6],
+    'mainClass' => 'user_datatable',
+])

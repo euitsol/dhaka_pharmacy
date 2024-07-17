@@ -121,3 +121,12 @@ obp_list,admin,"Order By Prescription"
 obp_details,admin,"Order By Prescription"
 obp_order_create,admin,"Order By Prescription"
 status_update,admin,"Order By Prescription"
+ps_update,admin,"Site Settings"
+wm_list,admin,"Withdraw Method"
+wm_details,admin,"Withdraw Method"
+wm_accept,admin,"Withdraw Method"
+wm_declained,admin,"Withdraw Method"
+w_list,admin,Withdraw
+w_details,admin,Withdraw
+w_accept,admin,Withdraw
+w_declained,admin,Withdraw

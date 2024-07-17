@@ -105,6 +105,12 @@
                     </ul>
                 </div>
             </li>
+            <li @if ($pageSlug == 'wm') class="active" @endif>
+                <a href="{{ route('rider.wm.list') }}">
+                    <i class="fa-regular fa-credit-card @if ($pageSlug == 'wm') fa-beat-fade @endif"></i>
+                    <p>{{ 'Withdraw Method' }}</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'earning') class="active" @endif>
                 <a href="{{ route('rider.earning.index') }}">
                     <i

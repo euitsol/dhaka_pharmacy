@@ -17,7 +17,7 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 function get_permission_routes()
 {
     return [
-        'am.', 'um.', 'pm.', 'pm.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.', 'om.'
+        'am.', 'um.', 'pm.', 'pm.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.', 'om.', 'withdraw_method.', 'withdraw.'
     ];
 }
 
@@ -206,6 +206,9 @@ function mainMenuCheck($array)
                     break;
                 }
             }
+        } else {
+            $check = true;
+            break;
         }
     }
     return $check;
@@ -577,4 +580,36 @@ function translate($text)
         $translatedText = $text;
     }
     return $translatedText;
+}
+function getEarningPoints($earnings)
+{
+    return ($earnings->where('activity', 1)->sum('point') - ($earnings->where('activity', 2)->sum('point') + $earnings->where('activity', 4)->sum('point')));
+}
+function getEarningEqAmounts($earnings)
+{
+    return ($earnings->where('activity', 1)->sum('eq_amount') - ($earnings->where('activity', 2)->sum('eq_amount') + $earnings->where('activity', 4)->sum('eq_amount')));
+}
+function getWithdrawPoints($earnings)
+{
+    return $earnings->where('activity', 2)->sum('point');
+}
+function getWithdrawEqAmounts($earnings)
+{
+    return $earnings->where('activity', 2)->sum('eq_amount');
+}
+function getPendingWithdrawPoints($earnings)
+{
+    return $earnings->where('activity', 4)->sum('point');
+}
+function getPendingWithdrawEqAmounts($earnings)
+{
+    return $earnings->where('activity', 4)->sum('eq_amount');
+}
+function getPendingEarningPoints($earnings)
+{
+    return $earnings->where('activity', 3)->sum('point');
+}
+function getPendingEarningEqAmounts($earnings)
+{
+    return $earnings->where('activity', 3)->sum('eq_amount');
 }

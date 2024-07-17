@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             SslCommerzSeeder::class,
             AddressSeeder::class,
             PointSettingSeeder::class,
+            MapboxSettingsSeeder::class,
         ]);
     }
 }

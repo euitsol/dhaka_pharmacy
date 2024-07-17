@@ -63,7 +63,7 @@
                 <td class="fw-bolder">{{ __('Operational Area') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>
-                    {{ $lam->operation_sub_area->name ?? '<span class="badge badge-warning">__("Area not allocated")</span>' }}
+                    {!! $lam->operation_sub_area->name ?? '<span class="badge badge-warning">Area not allocated</span>' !!}
                 </td>
             </tr>
             <tr>
