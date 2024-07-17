@@ -108,6 +108,7 @@ use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
 use App\Http\Controllers\LAM\WithdrawMethodController as LamWithdrawMethodController;
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
+use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 /*
@@ -898,6 +899,15 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
     Route::controller(RiderEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
+    });
+    //Rider Withdraw Method
+    Route::controller(RiderWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
     });
 });
 
