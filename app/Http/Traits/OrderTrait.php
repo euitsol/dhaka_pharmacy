@@ -5,9 +5,11 @@ namespace App\Http\Traits;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
-trait OrderTrait{
+trait OrderTrait
+{
 
-    public function  createOrder(){
+    public function  createOrder()
+    {
         $orderId = generateOrderId();
         $order = new Order();
 
@@ -19,5 +21,4 @@ trait OrderTrait{
 
         return $order;
     }
-
 }
