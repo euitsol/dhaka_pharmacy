@@ -40,44 +40,27 @@ $(document).ready(function () {
                                 <th class="text-nowrap">Type</th>
                                 <th>:</th>
                                 <td>${data.typeTitle}</td>
-                            </tr>
+                            </tr>`;
+                if (data.status == 2) {
+                    result += `
                             <tr>
                                 <th class="text-nowrap">Note</th>
                                 <th>:</th>
                                 <td><span class="text-danger">${
                                     data.note ?? "--"
                                 }</span></td>
-                            </tr>
+                            </tr>`;
+                }
+                result += `
                             <tr>
                                 <th class="text-nowrap">Status</th>
                                 <th>:</th>
-                                <td><span class="badge ${data.statusBg}">${
-                    data.statusTitle
-                }</span></td>
+                                <td><span class="badge ${data.statusBg}">${data.statusTitle}</span></td>
                             </tr>
                             <tr>
-                                <th class="text-nowrap">Created At</th>
+                                <th class="text-nowrap">Submitted Date</th>
                                 <th>:</th>
                                 <td>${data.creating_time}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-nowrap">Created By</th>
-                                <th>:</th>
-                                <td>${data.created_by}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-nowrap">Updated At</th>
-                                <th>:</th>
-                                <td>${
-                                    data.creating_time != data.updating_time
-                                        ? data.updating_time
-                                        : ""
-                                }</td>
-                            </tr>
-                            <tr>
-                                <th class="text-nowrap">Updated By</th>
-                                <th>:</th>
-                                <td>${data.updated_by}</td>
                             </tr>
                         </table>
                         `;

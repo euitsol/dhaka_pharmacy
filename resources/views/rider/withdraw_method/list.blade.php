@@ -29,8 +29,7 @@
                                 <th>{{ __('Routing Number') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Created date') }}</th>
-                                <th>{{ __('Created by') }}</th>
+                                <th>{{ __('Submitted date') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -46,8 +45,6 @@
                                         <span class="{{ $wm->statusBg() }}">{{ $wm->statusTitle() }}</span>
                                     </td>
                                     <td>{{ timeFormate($wm->created_at) }}</td>
-
-                                    <td> {{ c_user_name($wm->creater) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
