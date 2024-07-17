@@ -311,10 +311,11 @@
                             @endforeach
                             <div id="message"></div>
                         </div>
-                        <div class="card-footer">
-                            <button {{ $disabled ? 'disabled' : '' }} type="submit"
-                                class="btn btn-fill btn-primary">{{ __('Update') }}</button>
-                        </div>
+                        @if (!$disabled)
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
+                            </div>
+                        @endif
                     </form>
                 @endif
             </div>
