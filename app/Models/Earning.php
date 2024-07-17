@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Earning extends BaseModel
 {
@@ -25,6 +26,10 @@ class Earning extends BaseModel
         'updater_id',
         'updater_type',
     ];
+    public function withdraw_earning(): HasOne
+    {
+        return $this->hasOne(WithdrawEarning::class, 'e_id');
+    }
 
     public function receiver()
     {
@@ -50,7 +55,7 @@ class Earning extends BaseModel
                 return 'badge badge-warning';
             case 4:
                 return 'badge badge-primary';
-            case 4:
+            case 5:
                 return 'badge badge-danger';
         }
     }

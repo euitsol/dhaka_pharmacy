@@ -55,11 +55,12 @@
     </div>
 </div>
 <div class="row">
-    <table class="table table-striped datatable">
+    <table class="table table-striped earning_datatable">
         <thead>
             <tr>
                 <th>{{ __('Date') }}</th>
                 <th>{{ __('Activity') }}</th>
+                <th>{{ __('Per Point Rate') }}</th>
                 <th>{{ __('Description') }}</th>
                 <th>{{ __('Order') }}</th>
                 <th>{{ __('Amount') }}</th>
@@ -71,7 +72,11 @@
                     <td>{{ timeFormate($earning->created_at) }}</td>
                     <td><span class="{{ $earning->activityBg() }}">{{ $earning->activityTitle() }}</span>
                     </td>
-                    <td>{{ $earning->description }}</td>
+                    <td>{!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }}</td>
+                    <td>{{ $earning->description }}@if ($earning->activity == 2)
+                            {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}
+                        @endif
+                    </td>
                     <td>{{ $earning->order->order_id ?? '--' }}</td>
                     <td>{{ number_format($earning->eq_amount, 2) }}{{ __(' BDT') }}</td>
                 </tr>
@@ -80,3 +85,8 @@
         </tbody>
     </table>
 </div>
+@include('admin.partials.datatable', [
+    'columns_to_show' => [0, 1, 2, 3, 4],
+    'mainClass' => 'earning_datatable',
+    'order' => 'desc',
+])

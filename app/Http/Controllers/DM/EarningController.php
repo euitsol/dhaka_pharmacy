@@ -5,6 +5,7 @@ namespace App\Http\Controllers\DM;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EarningReportRequest;
 use App\Http\Requests\WithdrawConfirmRequest;
+use App\Http\Traits\DetailsCommonDataTrait;
 use App\Models\Earning;
 use App\Models\Withdraw;
 use App\Models\WithdrawEarning;
@@ -15,13 +16,14 @@ use Illuminate\Support\Facades\DB;
 
 class EarningController extends Controller
 {
+    use DetailsCommonDataTrait;
     public function __construct()
     {
         return $this->middleware('dm');
     }
     public function index(Request $request)
     {
-        $query = Earning::with(['receiver', 'order', 'point_history'])
+        $query = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
             ->dm()->latest();
         if ($request->filled('from') && $request->filled('to')) {
             $query->whereDate('created_at', '>=', $request->from)
@@ -61,7 +63,6 @@ class EarningController extends Controller
 
     public function withdraw()
     {
-        $data['withdrawals'] = Withdraw::dm()->latest()->get();
         $data['wms'] = WithdrawMethod::dm()->activated()->latest()->get();
         $data['earnings'] = Earning::with(['receiver', 'order', 'point_history'])->dm()->get();
         return view('district_manager.earning.withdraw', $data);

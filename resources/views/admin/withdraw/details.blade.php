@@ -164,15 +164,13 @@
                     </div>
                 </div>
                 <div class="card-footer py-4 text-end">
-                    @if ($withdraw->status !== 1)
+                    @if ($withdraw->status == 0)
                         @include('admin.partials.button', [
                             'routeName' => 'withdraw.w_accept',
                             'className' => 'btn-primary',
                             'params' => ['id' => encrypt($withdraw->id)],
                             'label' => 'Accept',
                         ])
-                    @endif
-                    @if ($withdraw->status == 0)
                         <a href="javascript:void(0)" class="btn btn-sm btn-danger declained_btn">{{ __('Declained') }}</a>
                     @endif
 

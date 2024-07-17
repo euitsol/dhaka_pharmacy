@@ -80,6 +80,7 @@
                         <tr>
                             <th>{{ __('Date') }}</th>
                             <th>{{ __('Activity') }}</th>
+                            <th>{{ __('Per Point Rate') }}</th>
                             <th>{{ __('Description') }}</th>
                             <th>{{ __('Order') }}</th>
                             <th>{{ __('Amount') }}</th>
@@ -91,7 +92,12 @@
                                 <td>{{ timeFormate($earning->created_at) }}</td>
                                 <td><span class="{{ $earning->activityBg() }}">{{ $earning->activityTitle() }}</span>
                                 </td>
-                                <td>{{ $earning->description }}</td>
+                                <td>{!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }}
+                                </td>
+                                <td>{{ $earning->description }}@if ($earning->activity == 2)
+                                        {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}
+                                    @endif
+                                </td>
                                 <td>{{ $earning->order->order_id ?? '--' }}</td>
                                 <td>{{ number_format($earning->eq_amount, 2) }}{{ __(' BDT') }}</td>
                             </tr>

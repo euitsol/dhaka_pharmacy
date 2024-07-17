@@ -67,7 +67,7 @@
                                         @foreach ($wms as $wm)
                                             <option value="{{ $wm->id }}"
                                                 {{ $wm->id == old('withdraw_method') ? 'selected' : '' }}>
-                                                {{ $wm->bank_name . ' ( ' . $wm->routing_number . ' )' }}
+                                                {{ $wm->account_name . ' ( ' . $wm->bank_name . ' )' }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -79,143 +79,10 @@
                             </form>
                         </div>
                     </div>
-                    <div class="row withdraw_history mt-5">
-                        <table class="table table-striped datatable">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('Date') }}</th>
-                                    <th>{{ __('Withdraw Method') }}</th>
-                                    <th>{{ __('Status') }}</th>
-                                    <th>{{ __('Note') }}</th>
-                                    <th>{{ __('Amount') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($withdrawals as $w)
-                                    <tr>
-                                        <td>{{ timeFormate($w->created_at) }}</td>
-                                        <td><a href="javascript:void(0)" class="btn btn-sm btn-primary view"
-                                                data-id="{{ encrypt($w->wm_id) }}">{{ __('Details') }}</a>
-                                        </td>
-                                        <td><span class="{{ $w->statusBg() }}">{{ $w->statusTitle() }}</span>
-                                        </td>
-                                        <td>{!! $w->reason ? "<p class='text-danger'>$w->reason</p>" : '--' !!}</td>
-                                        <td>{!! get_taka_icon() !!}{{ number_format($w->amount, 2) }}</td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Withdraw Method Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Withdraw Method Details') }}</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body modal_data">
 
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4], 'order' => 'desc'])
-@push('js')
-    <script>
-        $(document).ready(function() {
-            $('.view').on('click', function() {
-                let id = $(this).data('id');
-                let url = ("{{ route('dm.wm.details', ['id']) }}");
-                let _url = url.replace('id', id);
-                $.ajax({
-                    url: _url,
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        if (data.status == 2) {
-                            $('#declained_reason').html(
-                                `<p> <strong class = "text-danger"> Declined Reason: </strong>${data.note}</p>`
-                            )
-                        }
-                        var result = `
-                                <div id='declained_reason mb-2'></div>
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th class="text-nowrap">Account Name</th>
-                                        <th>:</th>
-                                        <td>${data.account_name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Bank Name</th>
-                                        <th>:</th>
-                                        <td>${data.bank_name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Bank Brunch Name</th>
-                                        <th>:</th>
-                                        <td>${data.bank_brunch_name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Routing Number</th>
-                                        <th>:</th>
-                                        <td>${data.routing_number}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Type</th>
-                                        <th>:</th>
-                                        <td>${data.type}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Note</th>
-                                        <th>:</th>
-                                        <td><span class="text-danger">${data.note ?? '--'}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Status</th>
-                                        <th>:</th>
-                                        <td><span class="badge ${data.statusBg}">${data.statusTitle}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Created At</th>
-                                        <th>:</th>
-                                        <td>${data.creating_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Created By</th>
-                                        <th>:</th>
-                                        <td>${data.created_by}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Updated At</th>
-                                        <th>:</th>
-                                        <td>${data.creating_time != data.updating_time ? data.updating_time : ''}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Updated By</th>
-                                        <th>:</th>
-                                        <td>${data.updated_by}</td>
-                                    </tr>
-                                </table>
-                                `;
-                        $('.modal_data').html(result);
-                        $('.view_modal').modal('show');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching admin data:', error);
-                    }
-                });
-            });
-        });
-    </script>
-@endpush

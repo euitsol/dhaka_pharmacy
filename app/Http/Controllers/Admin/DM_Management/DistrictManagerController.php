@@ -58,7 +58,7 @@ class DistrictManagerController extends Controller
         $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $dm_class)->first();
         $data['kyc_setting'] = KycSetting::where('type', 'dm')->first();
         $data['users'] = User::where('creater_id', $id)->where('creater_type', $dm_class)->latest()->get();
-        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history'])
+        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
             ->where('receiver_id', $id)->where('receiver_type', $dm_class)->latest()->get();
         return view('admin.dm_management.district_manager.profile', $data);
     }

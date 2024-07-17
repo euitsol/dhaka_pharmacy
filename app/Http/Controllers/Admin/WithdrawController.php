@@ -49,7 +49,7 @@ class WithdrawController extends Controller
             $w->earnings->each(function (&$earning) {
                 $earning->update(['activity' => 5, 'description' => 'Withdraw declained']);
             });
-            $w->status = 3;
+            $w->status = 2;
             $w->reason = $request->declained_reason;
             $w->updater()->associate(admin());
             $w->update();
