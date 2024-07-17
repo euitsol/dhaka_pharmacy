@@ -38,7 +38,7 @@
                             <tr>
                                 <td> {{ __('Type') }} </td>
                                 <td>{{ __(':') }}</td>
-                                <td> {{ $wm->type }} </td>
+                                <td> {{ $wm->type() }} </td>
                             </tr>
                             <tr>
                                 <td> {{ __('Status') }} </td>
@@ -51,22 +51,23 @@
                                 <td> {!! '<p class="text-danger">' . $wm->note . '</p>' ?? '--' !!} </td>
                             </tr>
                             <tr>
-                                <td> {{ __('Created Date') }} </td>
+                                <td> {{ __('Submitted Date') }} </td>
                                 <td>{{ __(':') }}</td>
                                 <td> {{ timeFormate($wm->created_at) }} </td>
                             </tr>
                             <tr>
-                                <td> {{ __('Created By') }} </td>
+                                <td> {{ __('Submitted By') }} </td>
                                 <td>{{ __(':') }}</td>
-                                <td> {{ c_user_name($wm->creater) }} </td>
+                                <td> {{ c_user_name($wm->creater) . ' ( ' . getSubmitterType($wm->creater_type) . ' )' }}
+                                </td>
                             </tr>
                             <tr>
-                                <td> {{ __('Updated Date') }} </td>
+                                <td> {{ __('Approved Date') }} </td>
                                 <td>{{ __(':') }}</td>
                                 <td> {{ $wm->created_at != $wm->updated_at ? timeFormate($wm->updated_at) : '--' }} </td>
                             </tr>
                             <tr>
-                                <td> {{ __('Updated By') }} </td>
+                                <td> {{ __('Approved By') }} </td>
                                 <td>{{ __(':') }}</td>
                                 <td> {{ u_user_name($wm->updater) }} </td>
                             </tr>

@@ -41,21 +41,22 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bolder"> {{ __('Created Date') }} </td>
+                                        <td class="fw-bolder"> {{ __('Submitted Date') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ timeFormate($withdraw->created_at) }} </td>
                                         <td>|</td>
-                                        <td class="fw-bolder"> {{ __('Created By') }} </td>
+                                        <td class="fw-bolder"> {{ __('Submitted By') }} </td>
                                         <td>{{ __(':') }}</td>
-                                        <td> {{ c_user_name($withdraw->creater) }} </td>
+                                        <td> {{ c_user_name($withdraw->creater) . ' ( ' . getSubmitterType($withdraw->creater_type) . ' )' }}
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bolder"> {{ __('Accepted At') }} </td>
+                                        <td class="fw-bolder"> {{ __('Approved Date') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ $withdraw->created_at != $withdraw->updated_at ? timeFormate($withdraw->updated_at) : '--' }}
                                         </td>
                                         <td>|</td>
-                                        <td class="fw-bolder"> {{ __('Accepted By') }} </td>
+                                        <td class="fw-bolder"> {{ __('Approved By') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ u_user_name($withdraw->updater) }} </td>
                                     </tr>
@@ -99,7 +100,7 @@
                                     <tr>
                                         <td> {{ __('Type') }} </td>
                                         <td>{{ __(':') }}</td>
-                                        <td> {{ $withdraw->withdraw_method->type }} </td>
+                                        <td> {{ $withdraw->withdraw_method->type() }} </td>
                                         <td>|</td>
                                         <td> {{ __('Status') }} </td>
                                         <td>{{ __(':') }}</td>
@@ -108,21 +109,22 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td> {{ __('Created Date') }} </td>
+                                        <td> {{ __('Submitted Date') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ timeFormate($withdraw->withdraw_method->created_at) }} </td>
                                         <td>|</td>
-                                        <td> {{ __('Created By') }} </td>
+                                        <td> {{ __('Submitted By') }} </td>
                                         <td>{{ __(':') }}</td>
-                                        <td> {{ c_user_name($withdraw->withdraw_method->creater) }} </td>
+                                        <td> {{ c_user_name($withdraw->withdraw_method->creater) . ' ( ' . getSubmitterType($withdraw->withdraw_method->creater_type) . ' )' }}
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td> {{ __('Accepted At') }} </td>
+                                        <td> {{ __('Approved Date') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ $withdraw->withdraw_method->created_at != $withdraw->withdraw_method->updated_at ? timeFormate($withdraw->withdraw_method->updated_at) : '--' }}
                                         </td>
                                         <td>|</td>
-                                        <td> {{ __('Accepted By') }} </td>
+                                        <td> {{ __('Approved By') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ u_user_name($withdraw->withdraw_method->updater) }} </td>
                                     </tr>

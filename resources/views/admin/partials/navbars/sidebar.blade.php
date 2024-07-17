@@ -804,7 +804,7 @@
                         href="#wm"
                         @if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declained') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-regular fa-credit-card"></i>
-                        <span class="nav-link-text">{{ __('Withdraw Method') }}</span>
+                        <span class="nav-link-text">{{ __('Method Request') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 

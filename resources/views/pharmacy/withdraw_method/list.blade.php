@@ -41,7 +41,7 @@
                                     <td> {{ $wm->account_name }} </td>
                                     <td> {{ $wm->bank_name }} </td>
                                     <td> {{ $wm->routing_number }} </td>
-                                    <td> {{ $wm->type }} </td>
+                                    <td> {{ $wm->type() }} </td>
                                     <td>
                                         <span class="{{ $wm->statusBg() }}">{{ $wm->statusTitle() }}</span>
                                     </td>

@@ -20,8 +20,8 @@
                                 <th>{{ __('Receiver') }}</th>
                                 <th>{{ __('Amount') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Created date') }}</th>
-                                <th>{{ __('Created by') }}</th>
+                                <th>{{ __('Submitted date') }}</th>
+                                <th>{{ __('Submitted by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -37,7 +37,8 @@
                                     </td>
                                     <td>{{ timeFormate($w->created_at) }}</td>
 
-                                    <td> {{ c_user_name($w->creater) }} </td>
+                                    <td> {{ c_user_name($w->creater) . ' ( ' . getSubmitterType($w->creater_type) . ' )' }}
+                                    </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

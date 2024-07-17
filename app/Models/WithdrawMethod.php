@@ -22,6 +22,16 @@ class WithdrawMethod extends BaseModel
         'updater_type',
     ];
 
+    public function type()
+    {
+        switch ($this->type) {
+            case 0:
+                return 'Personal';
+            case 1:
+                return 'Business';
+        }
+    }
+
     public function statusBg()
     {
         switch ($this->status) {

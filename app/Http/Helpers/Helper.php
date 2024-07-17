@@ -613,3 +613,9 @@ function getPendingEarningEqAmounts($earnings)
 {
     return $earnings->where('activity', 3)->sum('eq_amount');
 }
+
+function getSubmitterType($className)
+{
+    $className = basename(str_replace('\\', '/', $className));
+    return trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $className));
+}

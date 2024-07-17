@@ -39,7 +39,7 @@ $(document).ready(function () {
                             <tr>
                                 <th class="text-nowrap">Type</th>
                                 <th>:</th>
-                                <td>${data.type}</td>
+                                <td>${data.typeTitle}</td>
                             </tr>
                             <tr>
                                 <th class="text-nowrap">Note</th>
