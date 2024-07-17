@@ -8,6 +8,7 @@ use App\Http\Requests\PointSettingRequest;
 use App\Http\Requests\SmsSettingUpdateRequest;
 use App\Models\Documentation;
 use App\Models\EmailTemplate;
+use App\Models\MapboxSetting;
 use App\Models\PointHistory;
 use App\Models\PointSetting;
 use App\Models\SiteSetting;
@@ -28,6 +29,7 @@ class SiteSettingsController extends Controller
         $data['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
         $data['point_settings'] = PointSetting::pluck('value', 'key')->all();
         $data['point_histories'] = PointHistory::latest()->get();
+        $data['mapbox_settings'] = MapboxSetting::pluck('value', 'key')->all();
         $data['documents'] = Documentation::where('module_key', 'general_settings')
             ->orWhere('module_key', 'email_settings')
             ->orWhere('module_key', 'database_settings')
@@ -35,6 +37,7 @@ class SiteSettingsController extends Controller
             ->orWhere('module_key', 'notification_settings')
             ->orWhere('module_key', 'email_templates')
             ->orWhere('module_key', 'point_settings')
+            ->orWhere('module_key', 'map_settings')
             ->get();
         $data['availableTimezones'] = availableTimezones();
         return view('admin.site_settings.index', $data);

@@ -15,7 +15,7 @@
         <div class="tab col-md-2 p-md-3 pl-sm-3">
             <button id="tab1Btn" class="tablinks p-3 btn-success text-white"
                 onclick="openTab(event, 'tab1')">{{ __('General
-                                                                                                                                Settings') }}</button>
+                                                                                                                                                                                                                                                Settings') }}</button>
             <button id="tab2Btn" class="tablinks p-3" onclick="openTab(event, 'tab2')">{{ __('Email Settings') }}</button>
             <button id="tab3Btn" class="tablinks p-3"
                 onclick="openTab(event, 'tab3')">{{ __('Database Settings') }}</button>
@@ -25,6 +25,7 @@
             <button id="tab6Btn" class="tablinks p-3"
                 onclick="openTab(event, 'tab6')">{{ __('Email Templates') }}</button>
             <button id="tab7Btn" class="tablinks p-3" onclick="openTab(event, 'tab7')">{{ __('Point Setting') }}</button>
+            <button id="tab8Btn" class="tablinks p-3" onclick="openTab(event, 'tab8')">{{ __('Mapbox Setting') }}</button>
         </div>
         <div class="col-md-10 p-0">
             {{-- Tab-1 --}}
@@ -69,6 +70,12 @@
                     $document = $documents->where('module_key', 'point_settings')->first();
                 @endphp
                 @include('admin.site_settings.point_settings', ['document' => $document])
+            </div>
+            <div id="tab8" class="tabcontent py-3" style="display: none">
+                @php
+                    $document = $documents->where('module_key', 'mapbox_settings')->first();
+                @endphp
+                @include('admin.site_settings.mapbox_settings', ['document' => $document])
             </div>
 
 

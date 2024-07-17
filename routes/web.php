@@ -99,6 +99,7 @@ use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
 use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\Admin\MapboxSettingsController;
 use App\Http\Controllers\Admin\User\TipsController;
 use App\Http\Controllers\Admin\WithdrawMethodController as AdminWithdrawMethodController;
 use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
@@ -626,6 +627,9 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
         Route::post('point-setting/update', 'ps_update')->name('ps_update');
+    });
+    Route::controller(MapboxSettingsController::class)->prefix('mapbox-settings')->name('mbx_settings.')->group(function () {
+        Route::post('update', 'store')->name('update.site_settings');
     });
 
     // Order by Prescription
