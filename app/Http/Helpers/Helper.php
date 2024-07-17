@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\File;
 function get_permission_routes()
 {
     return [
-        'am.', 'um.', 'pm.', 'pm.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.', 'om.'
+        'am.', 'um.', 'pm.', 'pm.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.', 'om.', 'withdraw_method.', 'withdraw.'
     ];
 }
 
@@ -204,6 +204,9 @@ function mainMenuCheck($array)
                     break;
                 }
             }
+        } else {
+            $check = true;
+            break;
         }
     }
     return $check;
