@@ -15,20 +15,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('distribution_otps', function (Blueprint $table) {
+        Schema::create('delivery_otps', function (Blueprint $table) {
             $table->id();
+
             $table->unsignedBigInteger('order_distribution_id');
-            $table->unsignedBigInteger('otp_author_id');
-            $table->string('otp_author_type');
+            $table->foreign('order_distribution_id')->references('id')->on('order_distributions')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unsignedBigInteger('rider_id')->nullable();
+            $table->foreign('rider_id')->references('id')->on('riders')->onDelete('cascade')->onUpdate('cascade');
+
+
             $table->string('otp');
             $table->boolean('status')->default(1);
-            $table->unsignedBigInteger('rider_id')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
-            $this->addAuditColumns($table);
-
-            $table->foreign('order_distribution_id')->references('id')->on('order_distributions')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('rider_id')->references('id')->on('riders')->onDelete('cascade')->onUpdate('cascade');
+            $this->addMorphedAuditColumns($table);
         });
     }
 
@@ -37,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('distribution_otps');
+        Schema::dropIfExists('delivery_otps');
     }
 };

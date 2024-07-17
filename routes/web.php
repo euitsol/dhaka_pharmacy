@@ -691,6 +691,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
         Route::get('/{status}', 'index')->name('index');
         Route::get('details/{od_id}/', 'details')->name('details');
         Route::post('update/{do_id}', 'update')->name('update');
+        Route::post('verify-otp', 'verify')->name('verify');
     });
 
 
@@ -839,8 +840,13 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::get('/{status}', 'index')->name('index');
         Route::get('/details/{dor_id}', 'details')->name('details');
         Route::post('/pharmacy/otp-verify', 'pOtpVerify')->name('pharmacy.otp_verify');
-        Route::post('/customer/otp-verify/{od_id}', 'cOtpVerify')->name('customer.otp_verify');
-        Route::post('/dispute/{od_id}', 'dispute')->name('dispute');
+        Route::post('/user/otp-verify', 'uOtpVerify')->name('user.otp_verify');
+        // Route::post('/customer/otp-verify/{od_id}', 'cOtpVerify')->name('customer.otp_verify');
+        // Route::post('/dispute/{od_id}', 'dispute')->name('dispute');
+
+
+
+        Route::get('get/otp', 'get_otp')->name('get_otp');
     });
 
     Route::controller(RiderProfileController::class)->prefix('profile')->name('profile.')->group(function () {

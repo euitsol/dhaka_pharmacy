@@ -59,8 +59,12 @@
     height: 300px;
  }
 
- #map ol li{
+ #map ol li, .map_direction ol li{
     color: #fff !important;
+ }
+
+ .mapboxgl-ctrl-top-left .mapboxgl-ctrl {
+    max-width: 15rem;
  }
 
  .mapboxgl-ctrl-top-left .directions-control .mapbox-directions-origin,

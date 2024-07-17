@@ -10,6 +10,46 @@
             width: 250px;
             border-radius: 50%;
         }
+
+
+        .otp-field {
+            flex-direction: row;
+            column-gap: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .otp-field input {
+            height: 45px;
+            background-color: #e9e9e9 !important;
+            width: 42px;
+            border-radius: 6px;
+            outline: none;
+            font-size: 1.125rem;
+            text-align: center;
+            border: 1px solid var(--bg-1);
+            padding: unset !important;
+        }
+
+        .otp-field input:focus {
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .otp-field input::-webkit-inner-spin-button,
+        .otp-field input::-webkit-outer-spin-button {
+            display: none;
+        }
+
+        .submit_button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .verify-btn {
+            margin-top: 2rem;
+            width: 20rem;
+        }
     </style>
 @endpush
 @section('content')
@@ -121,7 +161,7 @@
                                                                     </span></sup>
                                                             @endif
                                                         </h6>
-                                                        @if ($do->payment_type == 1 && ($status == 0 || $status == 1))
+                                                        @if ($do->payment_type == 1 && ($dop->status == 0 || $dop->status == 1))
                                                             <div class="input-group">
                                                                 <input type="text"
                                                                     name="data[{{ $key }}][open_amount]"
@@ -129,7 +169,7 @@
                                                             </div>
                                                         @endif
                                                     </div>
-                                                    @if ($do->payment_type == 1 && ($status == 1 || $status == 0) && $dop->open_amount > 0)
+                                                    @if ($do->payment_type == 1 && $dop->status == 2 && $dop->open_amount > 0)
                                                         <div class="col my-auto">
                                                             <h6 class="my-auto text-center">
                                                                 <span><strong>{{ __('Bit Price : ') }}</strong>{!! get_taka_icon() !!}
@@ -200,6 +240,7 @@
             </div>
         </div>
     </div>
+    @include('pharmacy.orders.includes.otp-modal')
 @endsection
 @push('js')
     <script>
@@ -211,6 +252,74 @@
                     $(this).closest('.status_wrap').find('.status_note').hide();
                     $(this).closest('.status_wrap').find('.status_note .form-control').val('');
                 }
+            });
+
+
+            $(document).ready(function() {
+                const inputs = $(".otp-field > input");
+                const button = $(".verify-btn");
+
+                inputs.eq(0).focus();
+                button.prop("disabled", true);
+
+                inputs.eq(0).on("paste", function(event) {
+                    event.preventDefault();
+
+                    const pastedValue = (event.originalEvent.clipboardData || window.clipboardData)
+                        .getData(
+                            "text");
+                    const otpLength = inputs.length;
+
+                    for (let i = 0; i < otpLength; i++) {
+                        if (i < pastedValue.length) {
+                            inputs.eq(i).val(pastedValue[i]);
+                            inputs.eq(i).removeAttr("disabled");
+                            inputs.eq(i).focus();
+                        } else {
+                            inputs.eq(i).val(""); // Clear any remaining inputs
+                            inputs.eq(i).focus();
+                        }
+                    }
+                });
+
+                inputs.each(function(index1) {
+                    $(this).on("keyup", function(e) {
+                        const currentInput = $(this);
+                        const nextInput = currentInput.next();
+                        const prevInput = currentInput.prev();
+
+                        if (currentInput.val().length > 1) {
+                            currentInput.val("");
+                            return;
+                        }
+
+                        if (nextInput && nextInput.attr("disabled") && currentInput
+                            .val() !== "") {
+                            nextInput.removeAttr("disabled");
+                            nextInput.focus();
+                        }
+
+                        if (e.key === "Backspace") {
+                            inputs.each(function(index2) {
+                                if (index1 <= index2 && prevInput) {
+                                    $(this).attr("disabled", true);
+                                    $(this).val("");
+                                    prevInput.focus();
+                                }
+                            });
+                        }
+
+                        button.prop("disabled", true);
+
+                        const inputsNo = inputs.length;
+                        if (!inputs.eq(inputsNo - 1).prop("disabled") && inputs.eq(
+                                inputsNo - 1)
+                            .val() !== "") {
+                            button.prop("disabled", false);
+                            return;
+                        }
+                    });
+                });
             });
         });
     </script>

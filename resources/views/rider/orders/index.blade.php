@@ -1,4 +1,4 @@
-@extends('rider.layouts.master', ['pageSlug' => $status . '_orders'])
+@extends('rider.layouts.master', ['pageSlug' => $slug])
 
 @section('content')
     <div class="row">
@@ -8,7 +8,7 @@
                     <div class="row">
                         <div class="col-8">
                             <h4 class="card-title">
-                                {{ __(ucwords(strtolower(str_replace('-', ' ', $status))) . ' Order List') }}</h4>
+                                {{ __(ucwords(strtolower(str_replace('-', ' ', $slug))) . ' Order List') }}</h4>
                         </div>
                     </div>
                 </div>

@@ -12,6 +12,8 @@ use App\Models\Pharmacy;
 use App\Models\PharmacyDiscount;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use App\Http\Traits\TransformOrderItemTrait;
 use SebastianBergmann\Type\VoidType;
@@ -71,9 +73,9 @@ class OrderManagementController extends Controller
         $pharmacy_id = pharmacy()->id;
         $data['do'] = OrderDistribution::with(['order', 'odr', 'odps' => function ($query) {
                 $query->where('pharmacy_id', pharmacy()->id);
-            }, 'odps.order_product'])->findOrFail(decrypt($od_id));
+            }, 'odps.order_product','active_otps'])->findOrFail(decrypt($od_id));
 
-        $data['otp'] = DistributionOtp::where('order_distribution_id', $data['do']->id)->where('otp_author_id', pharmacy()->id)->where('otp_author_type', get_class(pharmacy()))->first();
+        // $data['otp'] = DistributionOtp::where('order_distribution_id', $data['do']->id)->where('otp_author_id', pharmacy()->id)->where('otp_author_type', get_class(pharmacy()))->first();
 
         //odp pending -> preparing
         $this->updateODPStatus($data['do'], $pharmacy_id, 1);
@@ -117,8 +119,6 @@ class OrderManagementController extends Controller
         // $data['statusBg'] = $this->statusBg($this->getStatus($status));
         // $data['odr'] = $data['do']->odr->first();
 
-        // $data['otp'] = DistributionOtp::where('order_distribution_id', $data['do']->id)->where('otp_author_id', pharmacy()->id)->where('otp_author_type', get_class(pharmacy()))->first();
-
 
         return view('pharmacy.orders.details', $data);
     }
@@ -159,6 +159,40 @@ class OrderManagementController extends Controller
             $odp->status = $status;
             $odp->save();
         }
+    }
 
+    public function verify(Request $request): RedirectResponse
+    {
+        $od = OrderDistribution::findOrFail($request->od);
+        $otp = $od->active_otps->where('pharmacy_id', pharmacy()->id)->first();
+        $reqOtp = implode('', $request->otp);
+
+        if(!empty($otp) && $otp->otp == $reqOtp){
+            DB::transaction(function () use ($od, $otp) {
+                $od->status = 4; // rider picked up
+                $od->save();
+
+                $od->order->status = 5; //picked up
+                $od->order->save();
+
+                $otp->status = 2; //verified
+                $otp->save();
+
+                if ($od->assignedRider) {
+                    $assignedRider = $od->assignedRider->first();
+                    if ($assignedRider) {
+                        $assignedRider->status = 2; // picked up
+                        $assignedRider->save();
+                    }
+                }
+
+                flash()->addSuccess('Order delivered successfully.');
+            });
+
+        }else{
+            flash()->addError('Something went wrong. Please try again');
+        }
+
+        return redirect()->back();
     }
 }

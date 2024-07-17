@@ -29,7 +29,7 @@ class OrderDistribution extends BaseModel
     }
     public function active_odps()
     {
-        return $this->hasMany(OrderDistributionPharmacy::class, 'order_distribution_id', 'id')->where('status', 2);
+        return $this->hasMany(OrderDistributionPharmacy::class, 'order_distribution_id', 'id')->where('status', 2)->latest();
     }
     public function odrs()
     {
@@ -45,6 +45,16 @@ class OrderDistribution extends BaseModel
     public function disputedRiders()
     {
         return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id')->where('status', -1);
+    }
+
+    public function otps()
+    {
+        return $this->hasMany(DistributionOtp::class, 'order_distribution_id');
+    }
+
+    public function active_otps()
+    {
+        return $this->hasMany(DistributionOtp::class, 'order_distribution_id')->where('status', 1)->latest();
     }
 
     public function getPharmacyStatus($pharmacy_id)
@@ -72,9 +82,9 @@ class OrderDistribution extends BaseModel
             case 1:
                 return 'badge bg-warning';
             case 2:
-                return 'badge bg-secondary';
-            case 3:
                 return 'badge bg-danger';
+            case 3:
+                return 'badge bg-secondary';
             case 4:
                 return 'badge bg-primary';
             case 5:
@@ -96,7 +106,7 @@ class OrderDistribution extends BaseModel
             case 2:
                 return 'Prepared';
             case 3:
-                return 'Waiting-for-pickup';
+                return 'Assigned';
             case 4:
                 return 'Picked-up';
             case 5:
