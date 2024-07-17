@@ -99,7 +99,18 @@ use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
 use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\Admin\MapboxSettingsController;
 use App\Http\Controllers\Admin\User\TipsController;
+use App\Http\Controllers\Admin\WithdrawMethodController as AdminWithdrawMethodController;
+use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
+use App\Http\Controllers\DM\EarningController as DmEarningController;
+use App\Http\Controllers\DM\WithdrawMethodController as DmWithdrawMethodController;
+use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
+use App\Http\Controllers\LAM\WithdrawMethodController as LamWithdrawMethodController;
+use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
+use App\Http\Controllers\Pharmacy\WithdrawMethodController as PharmacyWithdrawMethodController;
+use App\Http\Controllers\Rider\EarningController as RiderEarningController;
+use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 /*
@@ -211,7 +222,7 @@ Route::controller(UserForgotPasswordController::class)->prefix('user')->group(fu
     Route::post('/reset/password', 'resetPasswordStore')->name('user.reset.password');
 });
 //Admin Auth Routes
-Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], function () {
+Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
     // Admin Management Routes
@@ -349,6 +360,8 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('index', 'index')->name('district_manager_list');
             Route::get('details/{id}', 'details')->name('details.district_manager_list');
             Route::get('profile/{id}', 'profile')->name('district_manager_profile');
+            Route::get('profile/{id}', 'profile')->name('district_manager_profile');
+            Route::get('cv/download/{url}', 'view_or_download')->name('download.district_manager_profile');
             Route::get('dashboard/{id}', 'loginAs')->name('login_as.district_manager_profile');
             Route::get('create', 'create')->name('district_manager_create');
             Route::post('create', 'store')->name('district_manager_create');
@@ -564,19 +577,22 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
             Route::get('/details/{id}', 'details')->name('order_details');
             Route::get('/order-distribution/{id}', 'order_distribution')->name('order_distribution');
             Route::post('/order-distribution/{order_id}', 'order_distribution_store')->name('order_distribution');
+            Route::get('/distribution/details/{do_id}', 'distribution_details')->name('details.order_distribution');
+            Route::post('/distribution/assign-order/{do_id}', 'assign_order')->name('assign_order');
+            Route::post('/distribution/dispute-update', 'disputeUpdate')->name('dispute_update');
         });
     });
 
     // Admin Distributed Order
-    Route::controller(DistributedOrderController::class)->prefix('distributed-order')->name('do.')->group(function () {
-        Route::get('/{status}', 'index')->name('do_list');
-        Route::get('/{status}/orders', 'dispute')->name('dispute.do_list');
-        Route::get('/details/{do_id}', 'details')->name('do_details');
-        Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
-        Route::post('/update', 'update')->name('do_update');
+    // Route::controller(DistributedOrderController::class)->prefix('distributed-order')->name('do.')->group(function () {
+    //     Route::get('/{status}', 'index')->name('do_list');
+    //     Route::get('/{status}/orders', 'dispute')->name('dispute.do_list');
+    //     // Route::get('/details/{do_id}', 'details')->name('do_details');
+    //     Route::get('/edit/{do_id}/{pid}', 'edit')->name('do_edit');
+    //     Route::post('/update', 'update')->name('do_update');
 
-        Route::post('/rider/{do_id}', 'do_rider')->name('do_rider');
-    });
+    //     Route::post('/rider/{do_id}', 'do_rider')->name('do_rider');
+    // });
 
 
 
@@ -588,13 +604,32 @@ Route::group(['middleware' => ['admin', 'permission'], 'prefix' => 'admin'], fun
         });
     });
 
+    // Withdraw Method Request
+    Route::controller(AdminWithdrawMethodController::class)->prefix('withdraw-method')->name('withdraw_method.')->group(function () {
+        Route::get('/list/{status}', 'list')->name('wm_list');
+        Route::get('/details/{id}', 'details')->name('wm_details');
+        Route::get('/accept/{id}', 'accept')->name('wm_accept');
+        Route::post('/declained/{id}', 'declained')->name('wm_declained');
+    });
+    // Withdraw Request
+    Route::controller(AdminWithdrawController::class)->prefix('withdraw')->name('withdraw.')->group(function () {
+        Route::get('/list/{status}', 'list')->name('w_list');
+        Route::get('/details/{id}', 'details')->name('w_details');
+        Route::get('/accept/{id}', 'accept')->name('w_accept');
+        Route::post('/declained/{id}', 'declained')->name('w_declained');
+    });
     // Site Settings
     Route::controller(SiteSettingsController::class)->prefix('site-settings')->name('settings.')->group(function () {
         Route::get('index', 'index')->name('site_settings');
         Route::post('update', 'store')->name('update.site_settings');
+        Route::post('sms/update', 'sms_store')->name('update.sms.site_settings');
         Route::post('index', 'notification')->name('notification.site_settings');
         Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
+        Route::post('point-setting/update', 'ps_update')->name('ps_update');
+    });
+    Route::controller(MapboxSettingsController::class)->prefix('mapbox-settings')->name('mbx_settings.')->group(function () {
+        Route::post('update', 'store')->name('update.site_settings');
     });
 
     // Order by Prescription
@@ -678,7 +713,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
 
     Route::controller(PharmacyOrderManagementController::class)->prefix('order-management')->name('order_management.')->group(function () {
         Route::get('/{status}', 'index')->name('index');
-        Route::get('details/{do_id}/{status}', 'details')->name('details');
+        Route::get('details/{od_id}/', 'details')->name('details');
         Route::post('update/{do_id}', 'update')->name('update');
     });
 
@@ -691,6 +726,21 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     Route::controller(PharmacyFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
+    });
+    //Pharmacy Earning
+    Route::controller(PharmacyEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
+    });
+
+    //Pharmacy Withdraw Method
+    Route::controller(PharmacyWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
     });
 });
 
@@ -755,6 +805,21 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
     });
+    //DM Earning
+    Route::controller(DmEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
+    });
+
+    //DM Withdraw Method
+    Route::controller(DmWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
+    });
 });
 
 
@@ -798,6 +863,20 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
     });
+    //LAM Earning
+    Route::controller(LamEarningContorller::class)->prefix('my-earning')->name('earning.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
+    });
+    //LAM Withdraw Method
+    Route::controller(LamWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
+    });
 });
 // Rider Auth Routes
 Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], function () {
@@ -829,6 +908,21 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
     Route::controller(RiderFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
+    });
+
+    //Rider Earning
+    Route::controller(RiderEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
+    });
+    //Rider Withdraw Method
+    Route::controller(RiderWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
     });
 });
 

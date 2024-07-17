@@ -1,4 +1,4 @@
-@extends('pharmacy.layouts.master', ['pageSlug' => $statusTitle . '_orders'])
+@extends('pharmacy.layouts.master', ['pageSlug' => $do->statusTitle() . '_orders'])
 @push('css')
     <style>
         .rider_image {
@@ -20,15 +20,11 @@
                     <div class="row">
                         <div class="col-6">
                             <h4 class="card-title">
-                                {{ __(ucwords(strtolower(str_replace('-', ' ', $statusTitle))) . ' Order Details') }}</h4>
+                                {{ __('Order Details') }}
+                            </h4>
                         </div>
                         <div class="col-6 text-end">
-                            @include('admin.partials.button', [
-                                'routeName' => 'pharmacy.order_management.index',
-                                'className' => 'btn-primary',
-                                'params' => $statusTitle,
-                                'label' => 'Back',
-                            ])
+                            <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
                         </div>
                     </div>
                 </div>
@@ -40,9 +36,25 @@
                                 <td>:</td>
                                 <th>{{ $do->order->order_id }}</th>
                                 <td>|</td>
+                                @if ($do->status == 0 || $do->status == 1)
+                                    <td class="fw-bold">{{ __('Preparation Time') }}</td>
+                                    <td>:</td>
+                                    <td>{!! remainingTime($do->pharmacy_prep_time, true) !!}</td>
+                                @else
+                                    <td class="fw-bold">{{ __('Prepared At') }}</td>
+                                    <td>:</td>
+                                    <td>{{ timeFormate($do->pharmacy_preped_at) }}</td>
+                                @endif
+                            </tr>
+                            <tr>
+                                <th>{{ __('Total Product') }}</th>
+                                <td>:</td>
+                                <th>{{ $do->odps->count() }}</th>
+                                <td>|</td>
                                 <th>{{ __('Total Price') }}</th>
                                 <td>:</td>
-                                <th>{!! get_taka_icon() !!}{{ number_format(ceil($do->dops->sum('totalPrice'))) }}
+                                <th>
+                                    {!! get_taka_icon() !!}{{ number_format(ceil($do->totalPharmacyAmount)) }}
                                 </th>
                             </tr>
                             <tr>
@@ -55,15 +67,6 @@
                                 <th>{{ $do->distributionType() }}</th>
                             </tr>
                             <tr>
-                                <th>{{ __('Total Product') }}</th>
-                                <td>:</td>
-                                <th>{{ count($do->dops) }}</th>
-                                <td>|</td>
-                                <th>{{ __('Preparation Time') }}</th>
-                                <td>:</td>
-                                <th>{{ $do->prep_time }}</th>
-                            </tr>
-                            <tr>
                                 <th>{{ __('Note') }}</th>
                                 <td>:</td>
                                 <th colspan="5">{!! $do->note !!}</th>
@@ -72,92 +75,15 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    @if ($odr && $status != 3 && $status != -1)
-                        @if ($status == 2)
-                            <h5><b>{{ __('Note:') }}</b> <span
-                                    class="text-danger">{{ __('Please verify your order before handing it over to the rider. Your OTP is : ') }}
-                                </span> <strong class="text-success">{{ optional($otp)->otp }}</strong></h5>
-                        @endif
-                        @if ($status == 4)
-                            <h4 class="text-success m-0 py-3">{{ __('Order successfully collected.') }}</h4>
-                        @endif
-                        @if ($status == 5)
-                            <h4 class="text-success m-0 py-3">{{ __('Order successfully delivered.') }}</h4>
-                        @endif
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">{{ __('Rider Details') }}</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="rider_image">
-                                                    <img src="{{ storage_url($odr->rider->image) }}" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="card-footer bg-secondary">
-                                                <h3 class="text-white m-0">{{ $odr->rider->name }}</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <table class="table table-striped datatable">
-                                            <tbody>
-                                                <tr>
-                                                    <th>{{ __('Rider Name') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ $odr->rider->name }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>{{ __('Rider Gender') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ $odr->rider->gender }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>{{ __('Rider Contact') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ $odr->rider->phone }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>{{ __('Rider Age') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ $odr->rider->age }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>{{ __('Delivery Priority') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ $odr->priority() }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>{{ __('Operational Area') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ $odr->rider->operation_area->name }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>{{ __('Operational Sub Area') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ optional($odr->rider->operation_sub_area)->name }}</th>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
+                    @include('pharmacy.orders.includes.otp-verify')
                     <form action="{{ route('pharmacy.order_management.update', encrypt($do->id)) }}" method="POST">
                         @csrf
                         <div class="row mb-3">
                             <div class="col-12 px-4 text-end">
-                                <span
-                                    class="{{ $statusBg }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $statusTitle)))) }}</span>
+                                <span class="{{ $do->statusBg() }}">{{ __(ucfirst($do->statusTitle())) }}</span>
                             </div>
                         </div>
-                        @foreach ($do->dops as $key => $dop)
+                        @foreach ($do->odps as $key => $dop)
                             <div class="col-12 status_wrap">
                                 <div class="card card-2 mb-0 mt-3">
                                     <div class="card-body">
@@ -173,15 +99,22 @@
                                                             {{ $dop->order_product->product->name }}</h6>
                                                         <small>{{ $dop->order_product->product->pro_cat->name }} </small>
                                                     </div>
-                                                    <div class="col my-auto d-flex justify-content-around"> <small>Qty :
-                                                            {{ $dop->order_product->quantity }}</small><small>Pack :
-                                                            {{ $dop->order_product->unit->name ?? 'Piece' }}</small>
+                                                    <div class="col my-auto d-flex justify-content-around"> Quantity :
+                                                        {{ $dop->order_product->quantity }} &nbsp; &nbsp; Pack :
+                                                        {{ $dop->order_product->unit->name ?? 'Piece' }}
                                                     </div>
                                                     <div class="col my-auto">
                                                         <h6 class="my-auto text-center">
-                                                            <span><strong>{{ __('Total Price : ') }}</strong>{!! get_taka_icon() !!}
+                                                            <span>{{ __('Total Price : ') }}{!! get_taka_icon() !!}
 
-                                                                {{ number_format(ceil($dop->totalPrice)) }}</span>
+                                                                <span
+                                                                    class="">{{ number_format(ceil($dop->discounted_price)) }}
+                                                                </span>
+                                                                @if ($dop->discounted_price != $dop->selling_price)
+                                                                    <del
+                                                                        class="text-danger">{{ number_format($dop->selling_price, 2) }}</del>
+                                                                @endif
+                                                            </span>
                                                             @if ($dop->discount)
                                                                 <sup><span class='badge badge-danger'>
                                                                         {{ $dop->discount . '% off' }}
@@ -192,8 +125,7 @@
                                                             <div class="input-group">
                                                                 <input type="text"
                                                                     name="data[{{ $key }}][open_amount]"
-                                                                    class="form-control"
-                                                                    placeholder="Enter your product price">
+                                                                    class="form-control" placeholder="Enter product price">
                                                             </div>
                                                         @endif
                                                     </div>
@@ -205,8 +137,8 @@
                                                             </h6>
                                                         </div>
                                                     @endif
-                                                    @if ($status == 0 || $status == 1)
-                                                        <div class="col my-auto">
+                                                    @if ($dop->status == 0 || $dop->status == 1)
+                                                        <div class="col my-auto mt-3">
                                                             <div class="card mb-0">
                                                                 <div class="card-body">
                                                                     <input type="hidden"
@@ -244,20 +176,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($status == 0 || $status == 1)
-                                    <div class="form-group status_note" style="display: none">
+                                @if ($dop->status == 0 || $dop->status == 1)
+                                    <div class="form-group status_note mt-3" style="display: none">
                                         <textarea name="data[{{ $key }}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
                                     </div>
                                     @include('alerts.feedback', ['field' => 'data.' . $key . '.note'])
-                                @elseif($status == 3 || $status == -1)
+                                @elseif($dop->status == 3 || $dop->status == -1)
                                     <span><strong
-                                            class="text-danger">{{ __('Resoan: ') }}</strong>{{ $dop->note }}</span>
+                                            class="text-danger">{{ __('Reason: ') }}</strong>{{ $dop->note }}</span>
                                 @endif
 
                             </div>
                         @endforeach
-                        @if ($status == 0 || $status == 1)
-                            <div class="col-12 text-end">
+                        {{ $do->getPharmacyStatus(pharmacy()->id) }}
+                        @if ($do->getPharmacyStatus(pharmacy()->id) == 0 || $do->getPharmacyStatus(pharmacy()->id) == 1)
+                            <div class="col-12 text-end mt-2">
                                 <input type="submit" value="Confirm" class="btn btn-success">
                             </div>
                         @endif
@@ -281,4 +214,11 @@
             });
         });
     </script>
+@endpush
+@push('js_link')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="{{ asset('pharmacy/js/remaining.js') }}"></script>
 @endpush

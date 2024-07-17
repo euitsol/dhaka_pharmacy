@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
+use App\Models\PointSetting;
 use App\Models\Review;
 use App\Models\SiteSetting;
 use Illuminate\Support\Str;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\File;
 function get_permission_routes()
 {
     return [
-        'am.', 'um.', 'pm.', 'om.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.'
+        'am.', 'um.', 'pm.', 'pm.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.', 'om.', 'withdraw_method.', 'withdraw.'
     ];
 }
 
@@ -121,11 +122,11 @@ function storage_url($urlOrArray)
 
 function auth_storage_url($urlOrArray, $gender)
 {
-    $image = asset('default_img/other-student.png');
+    $image = asset('default_img/other.png');
     if ($gender == 'Male') {
-        $image = asset('default_img/male-student.png');
+        $image = asset('default_img/male.png');
     } elseif ($gender == 'Male') {
-        $image = asset('default_img/female-student.png');
+        $image = asset('default_img/female.png');
     }
 
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
@@ -203,6 +204,9 @@ function mainMenuCheck($array)
                     break;
                 }
             }
+        } else {
+            $check = true;
+            break;
         }
     }
     return $check;
@@ -331,8 +335,8 @@ function formatPercentageNumber($number)
 
 function otp()
 {
-    $otp =  mt_rand(100000, 999999);
-    // $otp =  '000000';
+    // $otp =  mt_rand(100000, 999999);
+    $otp =  '000000';
     return $otp;
 }
 
@@ -350,18 +354,35 @@ function u_user_name($user)
 {
     return $user->name ?? '--';
 }
-
-function readablePrepTime($start_time, $end_time)
+/**
+ * Calculate the remaining time until the end time.
+ *
+ * @param string $endTime The end time.
+ * @param bool $html Whether to return HTML formatted string.
+ * @return string
+ */
+function remainingTime($endTime, $html = false)
 {
-    $duration = Carbon::parse($end_time)->diff(Carbon::parse($start_time));
-    $formattedDuration = '';
-    if ($duration->h > 0) {
-        $formattedDuration .= $duration->h . ' hours ';
+    $end = Carbon::parse($endTime);
+    $now = Carbon::now();
+    $difference = $now->diffForHumans($end, [
+        'parts' => 2,
+        'join' => ', ',
+        'syntax' => Carbon::DIFF_ABSOLUTE,
+        'short' => true,
+    ]);
+
+    if ($now->lessThan($end)) {
+        $result = $html ? "<span class='prep_time text-success' data-end-time='$endTime'>$difference remaining</span>" : "$difference remaining";
+    } else {
+        $result = $html ? "<span class='prep_time text-danger' data-end-time='$endTime'>Delayed</span>" : 0;
     }
-    if ($duration->i > 0) {
-        $formattedDuration .= $duration->i . ' minutes';
-    }
-    return $formattedDuration;
+    return $result;
+}
+
+function prepTimeConverter($end_time)
+{
+    $duration = Carbon::now()->diff(Carbon::parse($end_time));
 }
 
 function prepTotalSeconds($start_time, $end_time)
@@ -488,12 +509,95 @@ function getFormattedCountdown($pastDate)
     return $countdown;
 }
 
-    //This function will check the if the given route is a route name or full url
-    function is_valid_route($routeOrUrl)
-    {
-        if (!empty($routeOrUrl) && (Route::has($routeOrUrl))) {
-            return true;
-        }else{
-            return false;
-        }
+//This function will check the if the given route is a route name or full url
+function is_valid_route($routeOrUrl)
+{
+    if (!empty($routeOrUrl) && (Route::has($routeOrUrl))) {
+        return true;
+    } else {
+        return false;
     }
+}
+
+function slugToTitle($slug)
+{
+    return ucwords(strtolower(str_replace('-', ' ', $slug)));
+}
+function activatedTime($startTime, $endTime)
+{
+    $startTime = Carbon::parse($startTime);
+    $endTime = Carbon::parse($endTime);
+
+    if ($startTime->eq($endTime)) {
+        $endTime = Carbon::now();
+        $active = ' - continue';
+    } else {
+        $active = '';
+    }
+
+    $diffInSeconds = $startTime->diffInSeconds($endTime);
+
+    $days = intdiv($diffInSeconds, 86400);
+    $diffInSeconds %= 86400;
+
+    $hours = intdiv($diffInSeconds, 3600);
+    $diffInSeconds %= 3600;
+
+    $minutes = intdiv($diffInSeconds, 60);
+    $seconds = $diffInSeconds % 60;
+
+    $string = '';
+
+    if ($days > 0) {
+        $string .= $days . ($days > 1 ? ' days, ' : ' day, ');
+    }
+    if ($hours > 0) {
+        $string .= $hours . ($hours > 1 ? ' hours, ' : ' hour, ');
+    }
+    if ($minutes > 0) {
+        $string .= $minutes . ($minutes > 1 ? ' minutes, ' : ' minute, ');
+    }
+    if ($seconds > 0) {
+        $string .= $seconds . ($seconds > 1 ? ' seconds' : ' second');
+    }
+
+    return rtrim($string, ', ') . $active;
+}
+
+function getPointName()
+{
+    return PointSetting::where('key', 'point_name')->first()->value;
+}
+
+function getEarningPoints($earnings)
+{
+    return ($earnings->where('activity', 1)->sum('point') - ($earnings->where('activity', 2)->sum('point') + $earnings->where('activity', 4)->sum('point')));
+}
+function getEarningEqAmounts($earnings)
+{
+    return ($earnings->where('activity', 1)->sum('eq_amount') - ($earnings->where('activity', 2)->sum('eq_amount') + $earnings->where('activity', 4)->sum('eq_amount')));
+}
+function getWithdrawPoints($earnings)
+{
+    return $earnings->where('activity', 2)->sum('point');
+}
+function getWithdrawEqAmounts($earnings)
+{
+    return $earnings->where('activity', 2)->sum('eq_amount');
+}
+function getPendingWithdrawPoints($earnings)
+{
+    return $earnings->where('activity', 4)->sum('point');
+}
+function getPendingWithdrawEqAmounts($earnings)
+{
+    return $earnings->where('activity', 4)->sum('eq_amount');
+}
+function getPendingEarningPoints($earnings)
+{
+    return $earnings->where('activity', 3)->sum('point');
+}
+function getPendingEarningEqAmounts($earnings)
+{
+    return $earnings->where('activity', 3)->sum('eq_amount');
+}

@@ -10,9 +10,12 @@ use App\Models\OrderDistributionPharmacy;
 use App\Models\OrderDistributionRider;
 use App\Models\Pharmacy;
 use App\Models\PharmacyDiscount;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Traits\TransformOrderItemTrait;
+use SebastianBergmann\Type\VoidType;
+use Illuminate\Support\Facades\DB;
 
 
 class OrderManagementController extends Controller
@@ -27,87 +30,96 @@ class OrderManagementController extends Controller
     public function index($status): View
     {
         $data['status'] = $status;
-        $data['prep_time'] = false;
-        $data['rider'] = false;
-        $pharmacy_discount = PharmacyDiscount::activated()->where('pharmacy_id', pharmacy()->id)->first();
-        if ($this->getStatus($status) == 0 || $this->getStatus($status) == 1) {
-            $data['prep_time'] = true;
-        } else {
-            $data['rider'] = true;
+        $pharmacy_id = pharmacy()->id;
+
+
+        switch ($status) {
+            case 'assigned':
+                $query =  OrderDistribution::with(['order', 'odps' => function($query) use ($pharmacy_id) {$query->where('pharmacy_id', $pharmacy_id);}, 'odrs', 'order.products.discounts', 'order.products.pivot','order.products.pivot.unit'])->whereHas('odps', function ($query) use($pharmacy_id) {
+                            $query->where(function ($subQuery) {
+                                $subQuery->where('status', 0)->orWhere('status', 1);
+                            })->where('pharmacy_id', $pharmacy_id);
+                        })->where(function ($subQuery) {
+                            $subQuery->where('status', 0)->orWhere('status', 1);
+                        });
+                break;
+
+            case 'prepared':
+
+                $query =  OrderDistribution::with(['order', 'odps' => function($query) use ($pharmacy_id) {$query->where('pharmacy_id', $pharmacy_id);}, 'odrs', 'order.products.discounts', 'order.products.pivot','order.products.pivot.unit'])->whereHas('odps', function ($query) use($pharmacy_id) {
+                    $query->where(function ($subQuery) {
+                        $subQuery->where('status', 2);
+                    })->where('pharmacy_id', $pharmacy_id);
+                });
+                break;
+
+            default:
+                break;
         }
-        $query = OrderDistributionPharmacy::with(['order_product.product', 'pharmacy', 'od.order'])->where('pharmacy_id', pharmacy()->id);
-        $query->where('status', $this->getStatus($status));
-        if ($this->getStatus($status) == 3) {
-            $query->orWhere('status', -1);
-        }
-        $dops = $query->latest()->get()->groupBy('order_distribution_id');
 
-        $od_ids = $dops->keys()->all();
 
-        $orderDistributions = OrderDistribution::whereIn('id', $od_ids)->get()->keyBy('id');
-        $orderDistributionRiders = OrderDistributionRider::with('rider')
-            ->whereIn('order_distribution_id', $od_ids)
-            ->whereNotIn('status', [0, -1])
-            ->get()
-            ->groupBy('order_distribution_id');
-
-        $data['dops'] = $dops->each(function ($dop, $key) use ($orderDistributions, $orderDistributionRiders, $status, $pharmacy_discount) {
-            $dop->od = $orderDistributions->get($key);
-            $dop->odr = $orderDistributionRiders->get($key)?->first();
-            $dop->statusTitle = $this->statusTitle($this->getStatus($status));
-            $dop->statusBg = $this->statusBg($this->getStatus($status));
-            $dop->each(function ($dp) use ($dop, $pharmacy_discount) {
-                $dp->price = $this->OrderItemDiscountPrice($dp->order_product);
-                if ($dop->od->payment_type == 0 && $pharmacy_discount) {
-                    $dp->price -= (($dp->price / 100) * $pharmacy_discount->discount_percent);
-                }
-                return $dp;
-            });
-            return $dop;
+        $data['ods'] = $query->get()->each(function(&$od){
+            $this->calculateOrderTotalDiscountPrice($od->order);
         });
+
+
         return view('pharmacy.orders.index', $data);
     }
 
-    public function details($do_id, $status): View
+    public function details($od_id): View
     {
-
-        $data['prep_time'] = false;
-        if ($this->getStatus($status) == 0 || $this->getStatus($status) == 1) {
-            $data['prep_time'] = true;
-        }
-        $data['pharmacy_discount'] = PharmacyDiscount::activated()->where('pharmacy_id', pharmacy()->id)->first();
-
-        $data['do'] = OrderDistribution::with(['order', 'odr', 'odps' => function ($query) use ($status) {
-            $query->with('order_product')->where('status', $this->getStatus($status));
-            if ($this->getStatus($status) == 3) {
-                $query->orWhere('status', -1);
-            }
-        }])->findOrFail(decrypt($do_id));
-        if ($data['do']->status == 0) {
-            if ($data['do']->odps->where('pharmacy_id', pharmacy()->id)->every(fn ($odp) => $odp->status == 0)) {
-                $data['do']->odps->where('pharmacy_id', pharmacy()->id)->each(function ($odp) {
-                    $odp->update(['status' => 1]);
-                });
-                $data['do']->update(['status' => 1]);
-            }
-        }
-        $data['do']->prep_time = readablePrepTime($data['do']->created_at, $data['do']->prep_time);
-        $data['do']->pharmacy = Pharmacy::findOrFail(pharmacy()->id);
-        $data['do']['dops'] = $data['do']->odps
-            ->where('pharmacy_id', pharmacy()->id)->each(function ($dop) use ($data) {
-                $dop->totalPrice = $this->OrderItemDiscountPrice($dop->order_product);
-                if ($data['do']->payment_type == 0 && $data['pharmacy_discount']) {
-                    $dop->totalPrice -= (($dop->totalPrice / 100) * $data['pharmacy_discount']->discount_percent);
-                    $dop->discount = $data['pharmacy_discount']->discount_percent;
-                }
-                return $dop;
-            });
-        $data['status'] = $this->getStatus($status);
-        $data['statusTitle'] = $this->statusTitle($this->getStatus($status));
-        $data['statusBg'] = $this->statusBg($this->getStatus($status));
-        $data['odr'] = $data['do']->odr->first();
+        $pharmacy_id = pharmacy()->id;
+        $data['do'] = OrderDistribution::with(['order', 'odr', 'odps' => function ($query) {
+                $query->where('pharmacy_id', pharmacy()->id);
+            }, 'odps.order_product'])->findOrFail(decrypt($od_id));
 
         $data['otp'] = DistributionOtp::where('order_distribution_id', $data['do']->id)->where('otp_author_id', pharmacy()->id)->where('otp_author_type', get_class(pharmacy()))->first();
+
+        //odp pending -> preparing
+        $this->updateODPStatus($data['do'], $pharmacy_id, 1);
+        $this->calculateOrderTotalDiscountPrice($data['do']->order);
+        $this->calculatePharmacyTotalAmount($data['do']);
+
+
+        // $data['prep_time'] = false;
+        // if ($this->getStatus($status) == 0 || $this->getStatus($status) == 1) {
+        //     $data['prep_time'] = true;
+        // }
+        // $data['pharmacy_discount'] = PharmacyDiscount::activated()->where('pharmacy_id', pharmacy()->id)->first();
+
+        // $data['do'] = OrderDistribution::with(['order', 'odr', 'odps' => function ($query) use ($status) {
+        //     $query->with('order_product')->where('status', $this->getStatus($status));
+        //     if ($this->getStatus($status) == 3) {
+        //         $query->orWhere('status', -1);
+        //     }
+        // }])->findOrFail(decrypt($do_id));
+        // if ($data['do']->status == 0) {
+        //     if ($data['do']->odps->where('pharmacy_id', pharmacy()->id)->every(fn ($odp) => $odp->status == 0)) {
+        //         $data['do']->odps->where('pharmacy_id', pharmacy()->id)->each(function ($odp) {
+        //             $odp->update(['status' => 1]);
+        //         });
+        //         $data['do']->update(['status' => 1]);
+        //     }
+        // }
+        // $data['do']->prep_time = readablePrepTime($data['do']->created_at, $data['do']->prep_time);
+        // $data['do']->pharmacy = Pharmacy::findOrFail(pharmacy()->id);
+        // $data['do']['dops'] = $data['do']->odps
+        //     ->where('pharmacy_id', pharmacy()->id)->each(function ($dop) use ($data) {
+        //         $dop->totalPrice = $this->OrderItemDiscountPrice($dop->order_product);
+        //         if ($data['do']->payment_type == 0 && $data['pharmacy_discount']) {
+        //             $dop->totalPrice -= (($dop->totalPrice / 100) * $data['pharmacy_discount']->discount_percent);
+        //             $dop->discount = $data['pharmacy_discount']->discount_percent;
+        //         }
+        //         return $dop;
+        //     });
+        //
+        // $data['statusTitle'] = $this->statusTitle($this->getStatus($status));
+        // $data['statusBg'] = $this->statusBg($this->getStatus($status));
+        // $data['odr'] = $data['do']->odr->first();
+
+        // $data['otp'] = DistributionOtp::where('order_distribution_id', $data['do']->id)->where('otp_author_id', pharmacy()->id)->where('otp_author_type', get_class(pharmacy()))->first();
+
+
         return view('pharmacy.orders.details', $data);
     }
 
@@ -118,81 +130,35 @@ class OrderManagementController extends Controller
             $dop->open_amount = $data['dop_id'];
             $dop->status = $data['status'];
             $dop->note = $data['note'];
+            $dop->updated_at = Carbon::now();
             $dop->save();
         }
-        $do = OrderDistribution::findOrFail(decrypt($do_id));
-        $odpsArray = $do->odps->toArray(); // Convert the collection to an array
-        $statuses = array_column($odpsArray, 'status');
-        $allValid = array_reduce($statuses, function ($carry, $status) {
-            return $carry && ($status == 2 || $status == -1);
-        }, true);
 
-        if ($allValid) {
-            $do->update(['status' => 2]);
-        }
-        flash()->addSuccess('Order distributed successfully.');
-        return redirect()->route('pharmacy.order_management.index', 'waiting-for-rider');
-    }
+        //Update OD & order status if everything is prepared
+        $od = OrderDistribution::with(['odps', 'order'])->findOrFail(decrypt($do_id));
 
-    protected function getStatus($status)
-    {
-        switch ($status) {
-            case 'pending':
-                return 0;
-            case 'preparing':
-                return 1;
-            case 'waiting-for-rider':
-                return 2;
-            case 'dispute':
-                return 3;
-            case 'picked-up':
-                return 4;
-            case 'delivered':
-                return 5;
-            case 'cancel':
-                return 6;
-            case 'old-disputed':
-                return -1;
+        if ($od->odps->filter(function ($odp) {
+            return $odp->status == 0 || $odp->status == 1;
+        })->isEmpty()) {
+            DB::transaction(function () use ($od) {
+                $od->status = 2;
+                $od->pharmacy_preped_at = Carbon::now();
+                $od->save();
+
+                $od->order->status = 3;
+                $od->order->save();
+            });
         }
+
+        flash()->addSuccess('Order prepared successfully.');
+        return redirect()->route('pharmacy.order_management.index', 'prepared');
     }
-    public function statusBg($status)
+    protected function updateODPStatus($od, $pharmacy_id, $status): Void
     {
-        switch ($status) {
-            case 0:
-                return 'badge badge-info';
-            case 1:
-                return 'badge badge-primary';
-            case 2:
-                return 'badge bg-secondary';
-            case 3:
-            case -1:
-                return 'badge badge-danger';
-            case 4:
-                return 'badge badge-dark';
-            case 5:
-                return 'badge badge-success';
-            case 6:
-                return 'badge badge-danger';
+        foreach ($od->odps->where('pharmacy_id', $pharmacy_id)->where('status', 0) as $key => $odp) {
+            $odp->status = $status;
+            $odp->save();
         }
-    }
-    public function statusTitle($status)
-    {
-        switch ($status) {
-            case 0:
-                return 'pending';
-            case 1:
-                return 'preparing';
-            case 2:
-                return 'waiting-for-rider';
-            case 3:
-            case -1:
-                return 'dispute';
-            case 4:
-                return 'picked-up';
-            case 5:
-                return 'delivered';
-            case 6:
-                return 'cancel';
-        }
+
     }
 }

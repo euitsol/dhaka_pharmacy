@@ -1,4 +1,16 @@
 @extends('rider.layouts.master', ['pageSlug' => $dor->statusTitle() . '_orders'])
+
+@push('css')
+    <style>
+        .pharmacy-location-map {
+            height: 400px;
+        }
+
+        .map_direction {
+            height: 500px;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -9,12 +21,7 @@
                             <h4 class="card-title">{{ __(ucwords($dor->statusTitle()) . ' Order Details') }}</h4>
                         </div>
                         <div class="col-6 text-end">
-                            @include('admin.partials.button', [
-                                'routeName' => 'rider.order_management.index',
-                                'className' => 'btn-primary',
-                                'params' => $dor->statusTitle(),
-                                'label' => 'Back',
-                            ])
+                            <a href="{{ URL::previous() }}" class="btn btn-success">Back</a>
                         </div>
                     </div>
                 </div>
@@ -22,33 +29,36 @@
                     <table class="table table-striped datatable">
                         <tbody>
                             <tr>
+                                <td>{{ __('Order ID') }}</th>
+                                <td>:</td>
+                                <td>{{ $dor->od->order->order_id }}</th>
+                                <td>|</td>
+                                <td>{{ __('Remaining Time') }}</td>
+                                <td>:</td>
+                                @if ($dor->status == 0 || $dor->status == 1)
+                                    <td>{!! remainingTime($dor->od->rider_collect_time, true) !!}</td>
+                                @else
+                                    <td></td>
+                                @endif
+                            </tr>
+                            <tr>
                                 <th>{{ __('Customer Name') }}</th>
                                 <td>:</td>
-                                <th>{{ $dor->od->order->address->name }}</th>
+                                <th>{{ $dor->od->order->customer->name }}</th>
                                 <td>|</td>
                                 <th>{{ __('Customer Contact') }}</th>
                                 <td>:</td>
-                                <th>{{ $dor->od->order->address->phone }}</th>
+                                <th>{{ $dor->od->order->customer->phone }}</th>
                             </tr>
                             <tr>
                                 <th>{{ __('Delivery Address') }}</th>
                                 <td>:</td>
                                 <th>{!! $dor->od->order->address->address !!}</th>
                                 <td>|</td>
-                                <th>{{ __('Order ID') }}</th>
-                                <td>:</td>
-                                <th>{{ $dor->od->order->order_id }}</th>
-
-                            </tr>
-                            <tr>
                                 <th>{{ __('Priority') }}</th>
                                 <td>:</td>
                                 <th>{{ $dor->priority() }}</th>
-                                <td>|</td>
-                                <th>{{ __('Total Price') }}</th>
-                                <td>:</td>
-                                <th>{!! get_taka_icon() !!}{{ number_format(ceil($dor->od->order->totalDiscountPrice + $dor->od->order->delivery_fee)) }}
-                                </th>
+
                             </tr>
                             <tr>
                                 <th>{{ __('Delivery Instraction') }}</th>
@@ -65,11 +75,22 @@
                 </div>
                 <div class="card-body">
                     <div class="row justify-center">
-                        @foreach ($dor->pharmacy as $pharmacy)
+                        @foreach ($dor->od->active_odps->unique('pharmacy_id') as $key => $odp)
                             <div class="col-md-6">
-                                <div class="card">
+                                <div class="card pharmacy-details">
                                     <div class="card-header">
-                                        <h4 class="card-title">{{ $pharmacy->name }}</h4>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <h4 class="card-title">{{ $odp->pharmacy->name }}</h4>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0)"
+                                                    class="btn btn-info text-white pharmacy-direction-btn"
+                                                    data-longitude="{{ optional($odp->pharmacy->address)->longitude }}"
+                                                    data-latitude="{{ optional($odp->pharmacy->address)->latitude }}">
+                                                    Direction </a>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-striped datatable">
@@ -77,30 +98,32 @@
                                                 <tr>
                                                     <th>{{ __('Pharmacy Name') }}</th>
                                                     <td>:</td>
-                                                    <th>{{ $pharmacy->name }}</th>
+                                                    <th>{{ $odp->pharmacy->name }}</th>
                                                     <td>|</td>
                                                     <th>{{ __('Pharmacy Contact') }}</th>
                                                     <td>:</td>
-                                                    <th>{{ $pharmacy->phone }}</th>
+                                                    <th>{{ $odp->pharmacy->phone }}</th>
                                                 </tr>
                                                 <tr>
                                                     <th>{{ __('Operational Area') }}</th>
                                                     <td>:</td>
-                                                    <th>{{ optional($pharmacy->operation_area)->name }}</th>
+                                                    <th>{{ optional($odp->pharmacy->operation_area)->name }}</th>
                                                     <td>|</td>
                                                     <th>{{ __('Operational Sub Area') }}</th>
                                                     <td>:</td>
-                                                    <th>{{ optional($pharmacy->operation_sub_area)->name }}</th>
+                                                    <th>{{ optional($odp->pharmacy->operation_sub_area)->name }}</th>
 
                                                 </tr>
                                                 <tr>
                                                     <th>{{ __('Pharmacy Address') }}</th>
                                                     <td>:</td>
-                                                    <th colspan="5">{{ $pharmacy->present_address }}</th>
+                                                    <th colspan="5" class="pharmacy_address">
+                                                        {{ optional($odp->pharmacy->address)->address }}
+                                                    </th>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        @php
+                                        {{-- @php
                                             $pharmacyOtp = App\Models\DistributionOtp::where(
                                                 'order_distribution_id',
                                                 $dor->od->id,
@@ -108,8 +131,8 @@
                                                 ->where('otp_author_id', $pharmacy->id)
                                                 ->where('otp_author_type', get_class($pharmacy))
                                                 ->first();
-                                        @endphp
-                                        @if ($pharmacyOtp)
+                                        @endphp --}}
+                                        {{-- @if ($pharmacyOtp)
                                             @if ($pharmacyOtp->status == 1)
                                                 @if ($dor->od->status == 5)
                                                     <h4 class="text-success m-0 py-3">
@@ -147,40 +170,47 @@
                                                     </form>
                                                 @endif
                                             @endif
-                                        @endif
+                                        @endif --}}
+                                    </div>
+                                    <div class="pharmacy-location">
+                                        <div class="pharmacy-location-map" id="pharmacy_location_map_{{ $key }}"
+                                            data-longitude="{{ optional($odp->pharmacy->address)->longitude }}"
+                                            data-latitude="{{ optional($odp->pharmacy->address)->latitude }}">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
+
+
                 <div class="card-footer ms-auto">
                     @if ($dor->status == 1)
-                        <div class="buttons text-end">
+                        {{-- <div class="buttons text-end">
                             <a href="javascript:void(0)" class="btn btn-danger dispute" data-name="dispute_reason"
                                 data-action="{{ route('rider.order_management.dispute', encrypt($dor->od->id)) }}"
                                 data-placeholder="Enter dispute reason" data-title="Dispute Form">{{ __('Dispute') }}</a>
-                        </div>
+                        </div> --}}
                     @endif
                     @if ($dor->status == 2)
-                        <a href="javascript:void(0)" class="btn btn-danger cancel" data-name="cancel_reason"
+                        {{-- <a href="javascript:void(0)" class="btn btn-danger cancel" data-name="cancel_reason"
                             data-action="javascript:void(0)" data-placeholder="Enter cancel reason"
-                            data-title="Cancel Form">{{ __('Cancel') }}</a>
+                            data-title="Cancel Form">{{ __('Cancel') }}</a> --}}
                         <a href="javascript:void(0)" class="btn btn-primary delivered" data-name="delivered_otp"
                             data-action="{{ route('rider.order_management.customer.otp_verify', encrypt($dor->od->id)) }}"
                             data-placeholder="Enter user verify otp" data-title="Delivered Form">{{ __('Delivered') }}</a>
                     @endif
-                    @if ($dor->status == 3)
+                    {{-- @if ($dor->status == 3)
                         <a href="javascript:void(0)" class="btn btn-success finish" data-name="trans_id"
                             data-action="javascript:void(0)" data-placeholder="Enter transaction details"
                             data-title="Delivery Finish Form">{{ __('Delivery Finish') }}</a>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
         </div>
+
     </div>
-
-
 
     {{-- Admin Details Modal  --}}
     <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -198,7 +228,35 @@
             </div>
         </div>
     </div>
+
+    {{-- Map direction modal --}}
+    <div class="modal fade map-direction-modal" tabindex="-1" role="dialog" aria-labelledby="MapDirectionModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Pharmacy Direction') }}</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="map_direction" id="map_direction"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
+@push('js_link')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('rider/js/remaining.js') }}"></script>
+    <script src="{{ asset('rider/js/direction.js') }}"></script>
+    <script src="{{ asset('rider/js/map.js') }}"></script>
+@endpush
+
 @push('js')
     <script>
         function showForm(element) {

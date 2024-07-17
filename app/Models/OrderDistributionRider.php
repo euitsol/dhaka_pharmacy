@@ -9,14 +9,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderDistributionRider extends BaseModel
 {
     use HasFactory, SoftDeletes;
-    public function od(){
-        return $this->belongsTo(OrderDistribution::class,'order_distribution_id');
+    protected $fillable = [
+        'status',
+    ];
+    public function od()
+    {
+        return $this->belongsTo(OrderDistribution::class, 'order_distribution_id');
     }
-    public function rider(){
-        return $this->belongsTo(Rider::class,'rider_id');
+    public function rider()
+    {
+        return $this->belongsTo(Rider::class, 'rider_id');
     }
-    public function priority(){
-        switch($this->priority){
+    public function priority()
+    {
+        switch ($this->priority) {
             case 0:
                 return "Normal";
             case 1:
@@ -25,39 +31,70 @@ class OrderDistributionRider extends BaseModel
                 return "High";
         }
     }
-    public function statusBg() {
+
+    public function scopeStatus($query, $status)
+    {
+        switch ($status) {
+            case 'dispute':
+                $status = 0;
+                break;
+            case 'assigned':
+                $status = 1;
+                break;
+            case 'picking-up':
+                $status = 2;
+                break;
+            case 'picked-up':
+                $status = 3;
+                break;
+            case 'delivering':
+                $status = 4;
+                break;
+            case 'delivered':
+                $status = 5;
+                break;
+            default:
+                $status =  '';
+                break;
+        }
+        $query->where('status', $status);
+        if ($status == 0) {
+            $query->orWhere('status', -1);
+        }
+        return $query;
+    }
+    public function statusBg()
+    {
         switch ($this->status) {
             case 0:
-            case -1:
-                return 'badge badge-danger';
+                return 'badge badge-secondary';
             case 1:
-                return 'badge bg-info';
+                return 'badge bg-warning';
             case 2:
                 return 'badge badge-primary';
             case 3:
                 return 'badge badge-dark';
             case 4:
-                return 'badge badge-success';
+                return 'badge badge-info';
             case 5:
-                return 'badge badge-danger';
+                return 'badge badge-success';
         }
     }
-    public function statusTitle() {
+    public function statusTitle()
+    {
         switch ($this->status) {
             case 0:
-            case -1:
-                return 'dispute';
+                return 'assigned';
             case 1:
-                return 'waiting-for-pickup';
+                return 'picking-up';
             case 2:
                 return 'picked-up';
             case 3:
-                return 'delivered';
+                return 'picked-up';
             case 4:
-                return 'finish';
+                return 'delivering';
             case 5:
-                return 'cancel';
+                return 'delivered';
         }
     }
-
 }

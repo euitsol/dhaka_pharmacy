@@ -12,6 +12,7 @@ function get_distance(pharmacyLocation, userLocation) {
     userLocation = turf.point(userLocation);
     pharmacyLocation = turf.point(pharmacyLocation);
     let distance = turf.distance(userLocation, pharmacyLocation);
+    console.log(distance);
     return distance;
 }
 
@@ -38,11 +39,14 @@ function modifyOptions(userLocation) {
         let addedText = 0;
         if (location && userLocation) {
             addedText = get_distance(location, userLocation);
-
-            $(this).attr("data-distance", addedText.toFixed(2));
-            const modifiedText =
-                originalText + " (" + addedText.toFixed(2) + " km )";
-            $(this).text(modifiedText);
+            if (addedText <= pharmacy_radious) {
+                $(this).attr("data-distance", addedText.toFixed(2));
+                const modifiedText =
+                    originalText + " (" + addedText.toFixed(2) + " km )";
+                $(this).text(modifiedText);
+            } else {
+                $(this).remove();
+            }
         }
     });
 }

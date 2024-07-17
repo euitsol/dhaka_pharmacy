@@ -6,10 +6,10 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Order List') }}</h4>
+                            <h4 class="card-title">{{ __(slugToTitle($status) . ' Order List') }}</h4>
                         </div>
                         <div class="col-4 text-end">
-                            <span class="{{ $statusBgColor }}">{{ $status }}</span>
+                            <span class="{{ $statusBgColor }}">{{ slugToTitle($status) }}</span>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,8 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Order ID') }}</th>
                                 <th>{{ __('Total Product') }}</th>
-                                <th>{{ __('Total Price') }}</th>
+                                <th>{{ __('Total Amount') }}</th>
+                                <th>{{ __('Delivery Type') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Order date') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -34,6 +35,7 @@
                                     <td>{{ $order->products->count() }}</td>
                                     <td>{!! get_taka_icon() !!}{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}
                                     </td>
+                                    <td>{{ slugToTitle($order->delivery_type) }}</td>
                                     <td><span class="{{ $order->statusBg() }}">{{ $order->statusTitle() }}</span></td>
                                     <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>

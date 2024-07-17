@@ -59,7 +59,7 @@ class ProductController extends BaseController
     }
     public function products(Request $request): JsonResponse
     {
-        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units']);
+        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units', 'reviews.customer']);
 
         //By Category
         if ($request->has('category') && !empty($request->category)) {

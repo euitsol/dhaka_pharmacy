@@ -10,54 +10,72 @@
     @endphp
     <div class="row site_settings px-3">
         <div class="col-md-12 pl-0 pr-0">
-            
+
         </div>
         <div class="tab col-md-2 p-md-3 pl-sm-3">
-            <button id="tab1Btn" class="tablinks p-3 btn-success text-white" onclick="openTab(event, 'tab1')">General
-                Settings</button>
-            <button id="tab2Btn" class="tablinks p-3" onclick="openTab(event, 'tab2')">Email Settings</button>
-            <button id="tab3Btn" class="tablinks p-3" onclick="openTab(event, 'tab3')">Database Settings</button>
-            <button id="tab4Btn" class="tablinks p-3" onclick="openTab(event, 'tab4')">SMS Settings</button>
-            <button id="tab5Btn" class="tablinks p-3" onclick="openTab(event, 'tab5')">Notification Settings</button>
-            <button id="tab6Btn" class="tablinks p-3" onclick="openTab(event, 'tab6')">Email Templates</button>
+            <button id="tab1Btn" class="tablinks p-3 btn-success text-white"
+                onclick="openTab(event, 'tab1')">{{ __('General
+                                                                                                                                                                                                                                                Settings') }}</button>
+            <button id="tab2Btn" class="tablinks p-3" onclick="openTab(event, 'tab2')">{{ __('Email Settings') }}</button>
+            <button id="tab3Btn" class="tablinks p-3"
+                onclick="openTab(event, 'tab3')">{{ __('Database Settings') }}</button>
+            <button id="tab4Btn" class="tablinks p-3" onclick="openTab(event, 'tab4')">{{ __('SMS Settings') }}</button>
+            <button id="tab5Btn" class="tablinks p-3"
+                onclick="openTab(event, 'tab5')">{{ __('Notification Settings') }}</button>
+            <button id="tab6Btn" class="tablinks p-3"
+                onclick="openTab(event, 'tab6')">{{ __('Email Templates') }}</button>
+            <button id="tab7Btn" class="tablinks p-3" onclick="openTab(event, 'tab7')">{{ __('Point Setting') }}</button>
+            <button id="tab8Btn" class="tablinks p-3" onclick="openTab(event, 'tab8')">{{ __('Mapbox Setting') }}</button>
         </div>
         <div class="col-md-10 p-0">
             {{-- Tab-1 --}}
             <div id="tab1" class="tabcontent py-3">
                 @php
-                    $document = $documents->where('module_key','general_settings')->first();
+                    $document = $documents->where('module_key', 'general_settings')->first();
                 @endphp
-                @include('admin.site_settings.general_settings',['document'=>$document])
+                @include('admin.site_settings.general_settings', ['document' => $document])
             </div>
 
             <div id="tab2" class="tabcontent py-3" style="display: none">
                 @php
-                    $document = $documents->where('module_key','email_settings')->first();
+                    $document = $documents->where('module_key', 'email_settings')->first();
                 @endphp
-                @include('admin.site_settings.email_settings',['document'=>$document]);
+                @include('admin.site_settings.email_settings', ['document' => $document]);
             </div>
 
             <div id="tab3" class="tabcontent py-3" style="display: none">
                 @php
-                    $document = $documents->where('module_key','database_settings')->first();
+                    $document = $documents->where('module_key', 'database_settings')->first();
                 @endphp
-                @include('admin.site_settings.database_settings',['document'=>$document])
+                @include('admin.site_settings.database_settings', ['document' => $document])
             </div>
 
             <div id="tab4" class="tabcontent py-3" style="display: none">
                 @php
-                    $document = $documents->where('module_key','sms_settings')->first();
+                    $document = $documents->where('module_key', 'sms_settings')->first();
                 @endphp
-                @include('admin.site_settings.sms_settings',['document'=>$document])
+                @include('admin.site_settings.sms_settings', ['document' => $document])
             </div>
             <div id="tab5" class="tabcontent py-3" style="display: none">
                 @php
-                    $document = $documents->where('module_key','notification_settings')->first();
+                    $document = $documents->where('module_key', 'notification_settings')->first();
                 @endphp
-                @include('admin.site_settings.notification_settings',['document'=>$document])
+                @include('admin.site_settings.notification_settings', ['document' => $document])
             </div>
             <div id="tab6" class="tabcontent py-3" style="display: none">
                 @include('admin.site_settings.email_templates')
+            </div>
+            <div id="tab7" class="tabcontent py-3" style="display: none">
+                @php
+                    $document = $documents->where('module_key', 'point_settings')->first();
+                @endphp
+                @include('admin.site_settings.point_settings', ['document' => $document])
+            </div>
+            <div id="tab8" class="tabcontent py-3" style="display: none">
+                @php
+                    $document = $documents->where('module_key', 'mapbox_settings')->first();
+                @endphp
+                @include('admin.site_settings.mapbox_settings', ['document' => $document])
             </div>
 
 
