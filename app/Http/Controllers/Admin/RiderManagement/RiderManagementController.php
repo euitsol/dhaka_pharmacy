@@ -56,10 +56,8 @@ class RiderManagementController extends Controller
         $rider_class = get_class($data['rider']);
         $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $rider_class)->first();
         $data['kyc_setting'] = KycSetting::where('type', 'dm')->first();
-        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history'])
-            ->where('receiver_id', $id)->where('receiver_type', $rider_class)->get()->each(function (&$earning) {
-                $earning->point = $earning->amount / $earning->point_history->eq_amount;
-            });
+        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
+            ->where('receiver_id', $id)->where('receiver_type', $rider_class)->get();
         return view('admin.rider_management.rider.profile', $data);
     }
 

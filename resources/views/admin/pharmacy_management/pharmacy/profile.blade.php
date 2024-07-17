@@ -58,7 +58,7 @@
                                     <div class="card-body p-2">
                                         <h5 class="title">{{ __('Available Balance') }}</h5>
                                         <h5 class="m-0 amount">
-                                            {{ number_format($earnings->where('activity', 1)->sum('amount'), 2) }}{{ __(' BDT') }}
+                                            {{ number_format(getEarningEqAmounts($earnings), 2) }}{{ __(' BDT') }}
                                         </h5>
                                     </div>
                                 </div>
