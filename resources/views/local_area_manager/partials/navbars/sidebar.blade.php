@@ -37,6 +37,12 @@
                     <p>{{ 'Operation Areas' }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'wm') class="active" @endif>
+                <a href="{{ route('lam.wm.list') }}">
+                    <i class="fa-regular fa-credit-card @if ($pageSlug == 'wm') fa-beat-fade @endif"></i>
+                    <p>{{ 'Withdraw Method' }}</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'earning') class="active" @endif>
                 <a href="{{ route('lam.earning.index') }}">
                     <i

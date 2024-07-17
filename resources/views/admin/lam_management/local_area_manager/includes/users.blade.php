@@ -1,9 +1,8 @@
-<table class="table table-striped datatable">
+<table class="table table-striped user_datatable">
     <thead>
         <tr>
             <th>{{ __('SL') }}</th>
             <th>{{ __('Name') }}</th>
-            <th>{{ __('Phone') }}</th>
             <th>{{ __('Status') }}</th>
             <th>{{ __('KYC Status') }}</th>
             <th>{{ __('Phone Verify') }}</th>
@@ -16,7 +15,6 @@
             <tr>
                 <td> {{ $loop->iteration }} </td>
                 <td> {{ $user->name }} </td>
-                <td> {{ $user->phone }} </td>
                 <td>
                     <span class="{{ $user->getStatusBadgeClass() }}">{{ $user->getStatus() }}</span>
                 </td>
@@ -46,4 +44,7 @@
 
     </tbody>
 </table>
-{{-- @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6]]) --}}
+@include('admin.partials.datatable', [
+    'columns_to_show' => [0, 1, 2, 3, 4, 5],
+    'mainClass' => 'user_datatable',
+])

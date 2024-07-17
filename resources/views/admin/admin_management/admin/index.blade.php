@@ -11,9 +11,9 @@
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'am.admin.admin_create',
+                                'routeName' => 'dm.wm.create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new admin',
+                                'label' => 'Add new withdraw method',
                             ])
                         </div>
                     </div>
