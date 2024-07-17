@@ -29,7 +29,7 @@
                                 <th>{{ __('Title') }}</th>
                                 <th>{{ __('Image') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation Date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created By') }}</th>
                                 <th class="text-center">{{ __('Action') }}</th>
                             </tr>

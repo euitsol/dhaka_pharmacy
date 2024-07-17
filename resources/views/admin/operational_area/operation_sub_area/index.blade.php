@@ -26,7 +26,7 @@
                                 <th>{{ __('Operation Area') }}</th>
                                 <th>{{ __('Operation Sub Area') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -38,15 +38,16 @@
                                     <td> {{ $op_sub_area->operation_area->name }} </td>
                                     <td> {{ $op_sub_area->name }} </td>
                                     <td>
-                                        <span class="{{$op_sub_area->getMultiStatusClass()}}">{{$op_sub_area->getMultiStatus()}}</span>
+                                        <span
+                                            class="{{ $op_sub_area->getMultiStatusClass() }}">{{ $op_sub_area->getMultiStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($op_sub_area->created_at) }}</td>
 
                                     <td> {{ c_user_name($op_sub_area->creater) }} </td>
                                     <td>
-                                        @include('admin.partials.action_buttons', 
-                                            $op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug)
-                                        )
+                                        @include(
+                                            'admin.partials.action_buttons',
+                                            $op_sub_area->getMultiStatusBtn($op_sub_area->id, $op_sub_area->slug))
                                     </td>
                                 </tr>
                             @endforeach

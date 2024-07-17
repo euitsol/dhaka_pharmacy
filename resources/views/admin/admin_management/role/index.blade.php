@@ -26,7 +26,7 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Guard Name') }}</th>
-                                <th>{{ __('Creation Date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Update Date') }}</th>
                                 <th class="text-center">{{ __('Action') }}</th>
                             </tr>

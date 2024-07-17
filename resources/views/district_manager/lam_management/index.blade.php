@@ -29,7 +29,7 @@
                                 <th>{{ __('Operation Area') }}</th>
                                 <th>{{ __('Operation Sub Area') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>

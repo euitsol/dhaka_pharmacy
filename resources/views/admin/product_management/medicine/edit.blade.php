@@ -364,7 +364,7 @@
                                     <th>{{ __('Discount Amount') }}</th>
                                     <th>{{ __('Discount Percentage') }}</th>
                                     <th>{{ __('Status') }}</th>
-                                    <th>{{ __('Creation date') }}</th>
+                                    <th>{{ __('Created date') }}</th>
                                     <th>{{ __('Created by') }}</th>
                                     <th>{{ __('Updated date') }}</th>
                                     <th>{{ __('Updated by') }}</th>

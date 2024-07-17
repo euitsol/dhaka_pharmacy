@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'payment_'.$status])
+@extends('admin.layouts.master', ['pageSlug' => 'payment_' . $status])
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -6,10 +6,10 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __("Payment List") }}</h4>
+                            <h4 class="card-title">{{ __('Payment List') }}</h4>
                         </div>
                         <div class="col-4 text-end">
-                            <span class="{{$statusBgColor}}">{{$status}}</span>
+                            <span class="{{ $statusBgColor }}">{{ $status }}</span>
                         </div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                                 <th>{{ __('Tran ID') }}</th>
                                 <th>{{ __('Amount') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -31,9 +31,10 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $payment->customer->name }}</td>
-                                    <td>{{json_decode($payment->details,true)['tran_id'] ?? '--'}}</td>
-                                    <td>{!! get_taka_icon() !!}{{isset(json_decode($payment->details,true)['amount']) ? number_format(ceil((json_decode($payment->details,true)['amount']))) : '--'}}</td>
-                                    <td><span class="{{$statusBgColor}}">{{$status}}</span></td>
+                                    <td>{{ json_decode($payment->details, true)['tran_id'] ?? '--' }}</td>
+                                    <td>{!! get_taka_icon() !!}{{ isset(json_decode($payment->details, true)['amount']) ? number_format(ceil(json_decode($payment->details, true)['amount'])) : '--' }}
+                                    </td>
+                                    <td><span class="{{ $statusBgColor }}">{{ $status }}</span></td>
                                     <td>{{ timeFormate($payment->created_at) }}</td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
