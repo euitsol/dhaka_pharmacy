@@ -358,6 +358,13 @@ textarea.form-control {
   /*=============================================================
                 Admin > Profiles CSS
  =============================================================*/
+ .profile #nav-tabContent .tab-pane {
+    display: none;
+}
+
+.profile #nav-tabContent .tab-pane.active {
+    display: block;
+}
 
  .profile .card-user {
     font-family: 'sans-serif';

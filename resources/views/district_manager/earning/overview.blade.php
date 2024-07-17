@@ -111,4 +111,3 @@
         </div>
     </div>
 </div>
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4]])

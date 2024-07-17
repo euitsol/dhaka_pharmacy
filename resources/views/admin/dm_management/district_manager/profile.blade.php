@@ -1,15 +1,4 @@
 @extends('admin.layouts.master', ['pageSlug' => 'district_manager'])
-@push('css')
-    <style>
-        .profile #nav-tabContent .tab-pane {
-            display: none;
-        }
-
-        .profile #nav-tabContent .tab-pane.active {
-            display: block;
-        }
-    </style>
-@endpush
 @section('content')
     <div class="row profile">
         <div class="col-md-8">
