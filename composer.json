@@ -23,6 +23,7 @@
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-backup": "^8.4",
         "spatie/laravel-permission": "^6.2",
+        "stichoza/google-translate-php": "^5.1",
         "tanmuhittin/laravel-google-translate": "^2.2",
         "yajra/laravel-datatables-oracle": "^10.3.1"
     },

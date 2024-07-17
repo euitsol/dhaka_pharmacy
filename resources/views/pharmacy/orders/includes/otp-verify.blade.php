@@ -54,23 +54,24 @@
                                 <th>{{ $do->assignedRider->first()->priority() }}</th>
                             </tr>
                             <tr>
-                                <th>{{ __('Operational Area') }}</th>
+                                <th>{{ __('Area') }}</th>
                                 <td>:</td>
-                                <th>{{ $do->assignedRider->first()->rider->operation_area->name }}</th>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Operational Sub Area') }}</th>
-                                <td>:</td>
-                                <th>{{ optional($do->assignedRider->first()->rider->operation_sub_area)->name }}</th>
+                                <th>{{ $do->assignedRider->first()->rider->operation_area->name }} <span
+                                        class="small">({{ optional($do->assignedRider->first()->rider->operation_sub_area)->name }})</span>
+                                </th>
                             </tr>
                             <tr>
                                 <th>{{ __('OTP') }}</th>
                                 <td>:</td>
                                 <th>
-                                    <span class="text-warning">
-                                        {{ __('Please verify your order before handing it over to the rider. The OTP is : ') }}
+                                    <span class="text-success">
+                                        {{ __('Please verify your delivery man before handing the order to the rider.') }}
                                     </span>
-                                    <strong class="text-success">{{ optional($otp)->otp }}</strong>
+                                    {{-- <strong
+                                        class="text-success">{{ optional($do->active_otps->first())->otp }}</strong> --}}
+
+                                    <button type="button" class="btn btn-success ml-1" data-bs-toggle="modal"
+                                        data-bs-target="#otpVerifyModal">{{ __('Deliver') }}</button>
                                 </th>
                             </tr>
                         </tbody>

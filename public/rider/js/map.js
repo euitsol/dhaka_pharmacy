@@ -53,6 +53,47 @@ function addNavigationControl(map) {
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
 }
 
+function addCustomPin(type, map, coordinates) {
+    if (type == "pharmacy") {
+        var pin = pharmacy_pin;
+    } else if (type == "rider") {
+        var pin = rider_pin;
+    } else {
+        var pin = user_pin;
+    }
+
+    map.loadImage(pin, (error, image) => {
+        if (error) throw error;
+        map.addImage(type, image);
+        map.addSource("point", {
+            type: "geojson",
+            data: {
+                type: "FeatureCollection",
+                features: [
+                    {
+                        type: "Feature",
+                        geometry: {
+                            type: "Point",
+                            coordinates: coordinates,
+                        },
+                    },
+                ],
+            },
+        });
+
+        map.addLayer({
+            id: "points",
+            type: "symbol",
+            source: "point",
+            layout: {
+                "icon-image": type,
+                "icon-size": 0.15,
+            },
+        });
+    });
+}
+
+//For pharmacy directions
 $(document).ready(function () {
     const maps = {};
     const mapDirectionModal = "map-direction-modal";
@@ -60,17 +101,15 @@ $(document).ready(function () {
     var directionMap = null;
 
     $(".pharmacy-location-map").each(function (index) {
-        const lng = parseFloat($(this).data("longitude"));
-        const lat = parseFloat($(this).data("latitude"));
-        const containerId = $(this).attr("id");
-        const mapName = "map" + (index + 1);
+        var lng = parseFloat($(this).data("longitude"));
+        var lat = parseFloat($(this).data("latitude"));
+        var containerId = $(this).attr("id");
+        var mapName = "map" + (index + 1);
         let map = initializeMap(containerId, style, [lng, lat], 15);
-        addMarker(map, [lng, lat]);
+        addCustomPin("pharmacy", map, [lng, lat]);
         addNavigationControl(map);
         maps[mapName] = map;
     });
-
-    console.log(maps);
 
     $(".pharmacy-direction-btn").on("click", function () {
         var longitude = $(this).attr("data-longitude");
@@ -103,6 +142,7 @@ $(document).ready(function () {
 
             directionMap.addControl(direction, "top-left");
             direction.setDestination([longitude, latitude]);
+            addCustomPin("pharmacy", directionMap, [longitude, latitude]);
 
             var geolocate = new mapboxgl.GeolocateControl({
                 positionOptions: {
@@ -139,52 +179,91 @@ $(document).ready(function () {
             directionMap = null;
         }
     });
-    // const map = initializeMap("map", style, [dlng, dlat], 15);
-    // addNavigationControl(map);
+});
 
-    // map.on("load", function () {
-    //     var directionsInstances = [];
-    //     pharmacyLocations.forEach((element, index) => {
-    // var directionsKey = "directions_" + index;
-    // directionsInstances[directionsKey] = new MapboxDirections({
-    //     accessToken: mapboxgl.accessToken,
-    // });
-    // map.addControl(directionsInstances[directionsKey], "top-left");
-    // directionsInstances[directionsKey].setDestination([
-    //     element.longitude,
-    //     element.latitude,
-    // ]);
-    // });
+//For user directions
+$(document).ready(function () {
+    const c_maps = {};
+    const mapCDirectionModal = "c_map-direction-modal";
+    const mapCDirectionMap = "c_map_direction";
+    var c_directionMap = null;
+    $(".customer-location-map").each(function (index) {
+        var lng = parseFloat($(this).data("longitude"));
+        var lat = parseFloat($(this).data("latitude"));
+        var containerId = $(this).attr("id");
+        var mapName = "cmap";
+        let map = initializeMap(containerId, style, [lng, lat], 15);
+        addCustomPin("user", map, [lng, lat]);
+        addNavigationControl(map);
+        c_maps[mapName] = map;
+    });
 
-    // Add geolocate control to the map.
-    // var geolocate = new mapboxgl.GeolocateControl({
-    //     positionOptions: {
-    //         enableHighAccuracy: true,
-    //     },
-    //     trackUserLocation: true,
-    // });
-    // map.addControl(geolocate);
+    $(".customer-direction-btn").on("click", function () {
+        var longitude = $(this).attr("data-longitude");
+        var latitude = $(this).attr("data-latitude");
 
-    // geolocate.on("geolocate", function (position) {
-    //     var userLocation = [
-    //         position.coords.longitude,
-    //         position.coords.latitude,
-    //     ];
-    //     for (var key in directionsInstances) {
-    //         if (directionsInstances.hasOwnProperty(key)) {
-    //             directionsInstances[key].setOrigin(userLocation);
-    //         }
-    //     }
-    // });
+        $("." + mapCDirectionModal).modal("show");
 
-    // geolocate.trigger();
-    // });
+        if (c_directionMap === null) {
+            c_directionMap = initializeMap(
+                mapCDirectionMap,
+                style,
+                [dlng, dlat],
+                15
+            );
+        } else {
+            c_directionMap.remove();
+            c_directionMap = initializeMap(
+                mapCDirectionMap,
+                style,
+                [dlng, dlat],
+                15
+            );
+        }
 
-    // $(document).on("shown.bs.modal", ".map-modal", function () {
-    //     if (typeof map === "function") {
-    //         map.resize();
-    //     } else {
-    //         console.warn("Map object (map) not found. Cannot resize the map.");
-    //     }
-    // });
+        c_directionMap.on("load", function () {
+            addNavigationControl(c_directionMap);
+            var c_direction = new MapboxDirections({
+                accessToken: mapboxgl.accessToken,
+            });
+
+            c_directionMap.addControl(c_direction, "top-left");
+            c_direction.setDestination([longitude, latitude]);
+            addCustomPin("user", c_directionMap, [longitude, latitude]);
+
+            var geolocate = new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true,
+                },
+                trackUserLocation: true,
+            });
+            c_directionMap.addControl(geolocate);
+
+            geolocate.on("geolocate", function (position) {
+                var userLocation = [
+                    position.coords.longitude,
+                    position.coords.latitude,
+                ];
+                c_direction.setOrigin(userLocation);
+            });
+        });
+    });
+
+    $("." + mapCDirectionModal).modal({
+        backdrop: "static",
+        keyboard: false,
+    });
+
+    $("." + mapCDirectionModal).on("shown.bs.modal", function () {
+        if (c_directionMap !== null) {
+            c_directionMap.resize();
+        }
+    });
+
+    $("." + mapCDirectionModal).on("hidden.bs.modal", function () {
+        if (c_directionMap !== null) {
+            c_directionMap.remove();
+            c_directionMap = null;
+        }
+    });
 });

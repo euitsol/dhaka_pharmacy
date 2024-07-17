@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DisputeOrderRequest;
 use App\Http\Requests\OrderDistributionRequest;
 use App\Http\Requests\OrderDistributionRiderRequest;
+use App\Http\Traits\OTPTrait;
 use App\Models\AddToCart;
 use App\Models\DistributionOtp;
 use App\Models\Order;
@@ -24,7 +25,7 @@ use App\Models\Rider;
 
 class OrderManagementController extends Controller
 {
-    use TransformOrderItemTrait;
+    use TransformOrderItemTrait, OTPTrait;
 
     public function __construct()
     {
@@ -150,7 +151,7 @@ class OrderManagementController extends Controller
                 $odp->creater()->associate(admin());
                 $odp->save();
 
-                $this->createDistributionOTP($od, $odp);
+                // $this->createDistributionOTP($od, $odp);
             }
             flash()->addSuccess('Order Processed Successfully.');
             return redirect()->route('om.order.order_list', 'processed');
@@ -229,14 +230,16 @@ class OrderManagementController extends Controller
         $do_rider->order_distribution_id = $do_id;
         $do_rider->priority = $req->priority;
         $do_rider->instraction = $req->instraction;
-
-
-
         $do_rider->save();
 
         $do = OrderDistribution::with('order')->findOrFail($do_id);
         $do->update(['status' => 3, 'rider_collect_time' => Carbon::now()->addMinutes($req->pick_up_time)->toDateTimeString(), 'rider_delivery_time' =>Carbon::now()->addMinutes($req->pick_up_time + $interval_time + $req->delivery_time)->toDateTimeString()]);
         $do->order->update(['status' => 4]);
+
+        $this->generateDeliveryOtp([
+            'order_distribution_id' => $do_id,
+            'user_id' => $do->order->customer->id,
+        ]);
 
         flash()->addSuccess('Rider ' . $do_rider->rider->name . ' assigned succesfully.');
         return redirect()->back();

@@ -35,6 +35,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
+        const rider_pin = `{{ asset('map/rider-pinpng.png') }}`;
+        const pharmacy_pin = `{{ asset('map/pharmacy-pin.png') }}`;
+        const user_pin = `{{ asset('map/user-pin.png') }}`;
     </script>
 </head>
 

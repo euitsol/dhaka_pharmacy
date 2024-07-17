@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
@@ -9,6 +10,7 @@ use App\Models\SiteSetting;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 
 //This will retun the route prefix of the routes for permission check
@@ -335,8 +337,8 @@ function formatPercentageNumber($number)
 
 function otp()
 {
-    // $otp =  mt_rand(100000, 999999);
-    $otp =  '000000';
+    $otp =  mt_rand(100000, 999999);
+    // $otp =  '000000';
     return $otp;
 }
 
@@ -569,6 +571,16 @@ function getPointName()
     return PointSetting::where('key', 'point_name')->first()->value;
 }
 
+function translate($text)
+{
+    $locale = App::getLocale();
+    try {
+        $translatedText = GoogleTranslate::trans($text, $locale, null, ['verify' => false]);
+    } catch (Exception $e) {
+        $translatedText = $text;
+    }
+    return $translatedText;
+}
 function getEarningPoints($earnings)
 {
     return ($earnings->where('activity', 1)->sum('point') - ($earnings->where('activity', 2)->sum('point') + $earnings->where('activity', 4)->sum('point')));
