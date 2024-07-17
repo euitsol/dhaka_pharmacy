@@ -94,12 +94,12 @@
                                 </td>
                                 <td>{!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }}
                                 </td>
-                                <td>{{ $earning->description }}@if ($earning->activity == 2)
+                                <td>{{ $earning->description ?? '--' }}@if ($earning->activity == 2)
                                         {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}
                                     @endif
                                 </td>
                                 <td>{{ $earning->order->order_id ?? '--' }}</td>
-                                <td>{{ number_format($earning->eq_amount, 2) }}{{ __(' BDT') }}</td>
+                                <td>{!! get_taka_icon() !!}{{ number_format($earning->eq_amount, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

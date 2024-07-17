@@ -1,4 +1,4 @@
-@extends('district_manager.layouts.master', ['pageSlug' => 'wm'])
+@extends('local_area_manager.layouts.master', ['pageSlug' => 'wm'])
 @section('title', 'Withdraw Method List')
 @section('content')
     <div class="row">
@@ -10,11 +10,7 @@
                             <h4 class="card-title">{{ __('Withdraw Method List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            @include('admin.partials.button', [
-                                'routeName' => 'dm.wm.create',
-                                'className' => 'btn-primary',
-                                'label' => 'Add withdraw method',
-                            ])
+                            <a href="{{ route('lam.wm.create') }}" class="btn btn-primary">{{ __('Add withdraw method') }}</a>
                         </div>
                     </div>
                 </div>
@@ -95,7 +91,7 @@
 @push('js')
     <script>
         const details = {
-            'my_route': `{{ route('dm.wm.details', ['id']) }}`,
+            'my_route': `{{ route('lam.wm.details', ['id']) }}`,
         };
     </script>
     <script src="{{ asset('withdraw_method/details.js') }}"></script>

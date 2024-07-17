@@ -105,6 +105,7 @@ use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
 use App\Http\Controllers\DM\EarningController as DmEarningController;
 use App\Http\Controllers\DM\WithdrawMethodController as DmWithdrawMethodController;
 use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
+use App\Http\Controllers\LAM\WithdrawMethodController as LamWithdrawMethodController;
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
@@ -795,13 +796,13 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::get('/withdraw', 'withdraw')->name('withdraw');
         Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
     });
+
+    //DM Withdraw Method
     Route::controller(DmWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
         Route::get('/list', 'list')->name('list');
         Route::get('/details/{id}', 'details')->name('details');
         Route::get('/create', 'create')->name('create');
         Route::post('/create', 'store')->name('create');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::put('/edit/{id}', 'update')->name('edit');
     });
 });
 
@@ -850,6 +851,15 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
     Route::controller(LamEarningContorller::class)->prefix('my-earning')->name('earning.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
+    });
+    //LAM Withdraw Method
+    Route::controller(LamWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
     });
 });
 // Rider Auth Routes

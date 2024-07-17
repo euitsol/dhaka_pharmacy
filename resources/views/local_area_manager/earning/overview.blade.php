@@ -5,13 +5,13 @@
             <div class="card-body">
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Available points for withdrawal') }}</span>
-                    <h4 class="my_amount">{{ number_format($totalEarnings->where('activity', 1)->sum('point'), 2) }}
+                    <h4 class="my_amount">{{ number_format(getEarningPoints($totalEarnings), 2) }}
                         {{ getPointName() }}</h4>
                 </div>
                 <hr>
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Equivalent amount') }}</span>
-                    <h4 class="my_amount">{{ number_format($totalEarnings->where('activity', 1)->sum('amount'), 2) }}
+                    <h4 class="my_amount">{{ number_format(getEarningEqAmounts($totalEarnings), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
             </div>
@@ -23,13 +23,14 @@
             <div class="card-body">
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Payments being cleared') }}</span>
-                    <h4 class="my_amount">{{ number_format($totalEarnings->where('activity', 3)->sum('point'), 2) }}
+                    <h4 class="my_amount">{{ number_format(getPendingEarningPoints($totalEarnings), 2) }}
                         {{ getPointName() }}</h4>
                 </div>
                 <hr>
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Equivalent amount') }}</span>
-                    <h4 class="my_amount">{{ number_format($totalEarnings->where('activity', 3)->sum('amount'), 2) }}
+                    <h4 class="my_amount">
+                        {{ number_format(getPendingEarningEqAmounts($totalEarnings), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
             </div>
@@ -41,13 +42,15 @@
             <div class="card-body">
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Withdrawal amount') }}</span>
-                    <h4 class="my_amount">{{ number_format($totalEarnings->where('activity', 2)->sum('amount'), 2) }}
+                    <h4 class="my_amount">
+                        {{ number_format(getWithdrawEqAmounts($totalEarnings), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
                 <hr>
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Pending withdrawal amount') }}</span>
-                    <h4 class="my_amount">{{ number_format($totalEarnings->where('activity', 4)->sum('amount'), 2) }}
+                    <h4 class="my_amount">
+                        {{ number_format(getPendingWithdrawEqAmounts($totalEarnings), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
             </div>
@@ -77,6 +80,7 @@
                         <tr>
                             <th>{{ __('Date') }}</th>
                             <th>{{ __('Activity') }}</th>
+                            <th>{{ __('Per Point Rate') }}</th>
                             <th>{{ __('Description') }}</th>
                             <th>{{ __('Order') }}</th>
                             <th>{{ __('Amount') }}</th>
@@ -88,9 +92,14 @@
                                 <td>{{ timeFormate($earning->created_at) }}</td>
                                 <td><span class="{{ $earning->activityBg() }}">{{ $earning->activityTitle() }}</span>
                                 </td>
-                                <td>{{ $earning->description }}</td>
+                                <td>{!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }}
+                                </td>
+                                <td>{{ $earning->description ?? '--' }}@if ($earning->activity == 2)
+                                        {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}
+                                    @endif
+                                </td>
                                 <td>{{ $earning->order->order_id ?? '--' }}</td>
-                                <td>{{ number_format($earning->amount, 2) }}{{ __(' BDT') }}</td>
+                                <td>{!! get_taka_icon() !!}{{ number_format($earning->eq_amount, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

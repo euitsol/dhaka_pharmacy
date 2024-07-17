@@ -72,6 +72,7 @@ class EarningController extends Controller
         DB::beginTransaction();
 
         try {
+            $dm = dm();
             $w_amount = $request->amount;
             $withdraw_method = $request->withdraw_method;
             $t_a_amount = getEarningEqAmounts(Earning::dm()->get());
@@ -89,10 +90,10 @@ class EarningController extends Controller
                 ->get();
 
             $withdraw = new Withdraw();
-            $withdraw->receiver()->associate(dm());
+            $withdraw->receiver()->associate($dm);
             $withdraw->wm_id = $withdraw_method;
             $withdraw->amount = $w_amount;
-            $withdraw->creater()->associate(dm());
+            $withdraw->creater()->associate($dm);
             $withdraw->save();
 
             foreach ($earnings as $er) {
@@ -104,35 +105,35 @@ class EarningController extends Controller
                     if ($a_points >= $w_point) {
                         $earning = new Earning();
                         $earning->ph_id = $er->ph_id;
-                        $earning->receiver()->associate(dm());
+                        $earning->receiver()->associate($dm);
                         $earning->point = $w_point;
                         $earning->eq_amount = $w_amount;
                         $earning->activity = 4; // Withdraw Pending
                         $earning->description = 'Withdrawal request submitted successfully';
-                        $earning->creater()->associate(dm());
+                        $earning->creater()->associate($dm);
                         $earning->save();
 
                         $w_er = new WithdrawEarning();
                         $w_er->w_id = $withdraw->id;
                         $w_er->e_id = $earning->id;
-                        $w_er->creater()->associate(dm());
+                        $w_er->creater()->associate($dm);
                         $w_er->save();
                         break;
                     } else {
                         $earning = new Earning();
                         $earning->ph_id = $er->ph_id;
-                        $earning->receiver()->associate(dm());
+                        $earning->receiver()->associate($dm);
                         $earning->point = $a_points;
                         $earning->eq_amount = $a_amount;
                         $earning->activity = 4; // Withdraw Pending
                         $earning->description = 'Withdrawal request submitted successfully';
-                        $earning->creater()->associate(dm());
+                        $earning->creater()->associate($dm);
                         $earning->save();
 
                         $w_er = new WithdrawEarning();
                         $w_er->w_id = $withdraw->id;
                         $w_er->e_id = $earning->id;
-                        $w_er->creater()->associate(dm());
+                        $w_er->creater()->associate($dm);
                         $w_er->save();
 
                         $w_amount -= $a_amount;
