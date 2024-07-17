@@ -5,10 +5,32 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Earning extends BaseModel
 {
     use HasFactory, SoftDeletes;
+
+
+    protected $fillable = [
+        'ph_id',
+        'order_id',
+        'point',
+        'eq_amount',
+        'activity',
+        'description',
+        'receiver_id',
+        'receiver_type',
+        'creater_id',
+        'creater_type',
+        'updater_id',
+        'updater_type',
+    ];
+    public function withdraw_earning(): HasOne
+    {
+        return $this->hasOne(WithdrawEarning::class, 'e_id');
+    }
+
     public function receiver()
     {
         return $this->morphTo();
@@ -33,6 +55,8 @@ class Earning extends BaseModel
                 return 'badge badge-warning';
             case 4:
                 return 'badge badge-primary';
+            case 5:
+                return 'badge badge-danger';
         }
     }
 
@@ -47,6 +71,8 @@ class Earning extends BaseModel
                 return 'Pending clearance';
             case 4:
                 return 'Pending withdrawn';
+            case 5:
+                return 'Withdrawn Declained';
         }
     }
     public function scopePharmacy($query)

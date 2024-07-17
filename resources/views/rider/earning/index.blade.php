@@ -8,7 +8,14 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title">{{ __('My Earnings') }}</h4>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="card-title">{{ __('My Earnings') }}</h4>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <a href="{{ route('rider.earning.withdraw') }}" class="btn btn-primary">{{ __('Withdraw') }}</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <nav>

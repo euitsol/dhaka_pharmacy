@@ -51,10 +51,6 @@ class DistrictManagerController extends Controller
             return redirect()->back();
         }
     }
-
-
-
-
     public function profile($id): View
     {
         $data['dm'] = DistrictManager::with(['lams', 'operation_area', 'created_user', 'updated_user'])->findOrFail($id);
@@ -62,10 +58,8 @@ class DistrictManagerController extends Controller
         $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $dm_class)->first();
         $data['kyc_setting'] = KycSetting::where('type', 'dm')->first();
         $data['users'] = User::where('creater_id', $id)->where('creater_type', $dm_class)->latest()->get();
-        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history'])
-            ->where('receiver_id', $id)->where('receiver_type', $dm_class)->get()->each(function ($earning) {
-                $earning->point = $earning->amount / $earning->point_history->eq_amount;
-            });
+        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
+            ->where('receiver_id', $id)->where('receiver_type', $dm_class)->latest()->get();
         return view('admin.dm_management.district_manager.profile', $data);
     }
     public function create(): View

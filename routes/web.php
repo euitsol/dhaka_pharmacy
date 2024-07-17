@@ -100,10 +100,16 @@ use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\User\TipsController;
+use App\Http\Controllers\Admin\WithdrawMethodController as AdminWithdrawMethodController;
+use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
 use App\Http\Controllers\DM\EarningController as DmEarningController;
+use App\Http\Controllers\DM\WithdrawMethodController as DmWithdrawMethodController;
 use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
+use App\Http\Controllers\LAM\WithdrawMethodController as LamWithdrawMethodController;
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
+use App\Http\Controllers\Pharmacy\WithdrawMethodController as PharmacyWithdrawMethodController;
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
+use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 /*
@@ -597,6 +603,20 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         });
     });
 
+    // Withdraw Method Request
+    Route::controller(AdminWithdrawMethodController::class)->prefix('withdraw-method')->name('withdraw_method.')->group(function () {
+        Route::get('/list/{status}', 'list')->name('wm_list');
+        Route::get('/details/{id}', 'details')->name('wm_details');
+        Route::get('/accept/{id}', 'accept')->name('wm_accept');
+        Route::post('/declained/{id}', 'declained')->name('wm_declained');
+    });
+    // Withdraw Request
+    Route::controller(AdminWithdrawController::class)->prefix('withdraw')->name('withdraw.')->group(function () {
+        Route::get('/list/{status}', 'list')->name('w_list');
+        Route::get('/details/{id}', 'details')->name('w_details');
+        Route::get('/accept/{id}', 'accept')->name('w_accept');
+        Route::post('/declained/{id}', 'declained')->name('w_declained');
+    });
     // Site Settings
     Route::controller(SiteSettingsController::class)->prefix('site-settings')->name('settings.')->group(function () {
         Route::get('index', 'index')->name('site_settings');
@@ -707,6 +727,16 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     Route::controller(PharmacyEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
+    });
+
+    //Pharmacy Withdraw Method
+    Route::controller(PharmacyWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
     });
 });
 
@@ -771,10 +801,20 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
     });
-    //LAM Earning
+    //DM Earning
     Route::controller(DmEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
+    });
+
+    //DM Withdraw Method
+    Route::controller(DmWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
     });
 });
 
@@ -823,6 +863,15 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
     Route::controller(LamEarningContorller::class)->prefix('my-earning')->name('earning.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
+    });
+    //LAM Withdraw Method
+    Route::controller(LamWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
     });
 });
 // Rider Auth Routes
@@ -861,6 +910,15 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
     Route::controller(RiderEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/report', 'report')->name('report');
+        Route::get('/withdraw', 'withdraw')->name('withdraw');
+        Route::post('/withdraw', 'withdrawConfirm')->name('withdraw');
+    });
+    //Rider Withdraw Method
+    Route::controller(RiderWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('create');
     });
 });
 
