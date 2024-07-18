@@ -27,6 +27,8 @@
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Email') }}</th>
                                 <th>{{ __('Status') }}</th>
+                                <th>{{ __('KYC Status') }}</th>
+                                <th>{{ __('Email Verify') }}</th>
                                 <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -41,6 +43,14 @@
                                     <td>
                                         <span
                                             class="{{ $pharmacy->getStatusBadgeClass() }}">{{ $pharmacy->getStatus() }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="{{ $pharmacy->getKycStatusClass() }}">{{ $pharmacy->getKycStatus() }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="{{ $pharmacy->getEmailVerifyClass() }}">{{ $pharmacy->getEmailVerifyStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($pharmacy->created_at) }}</td>
 

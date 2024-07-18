@@ -6,32 +6,34 @@
                 <td>{{ __(':') }}</td>
                 <td>{{ $pharmacy->name }}</td>
                 <td>|</td>
-                <td class="fw-bolder">{{ __('Designation') }}</td>
-                <td>{{ __(':') }}</td>
-                <td>{{ $pharmacy->designation ?? 'Pharmaciest' }}</td>
-            </tr>
-            <tr>
                 <td class="fw-bolder">{{ __('Phone') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $pharmacy->phone }}</td>
-                <td>|</td>
+            </tr>
+            <tr>
                 <td class="fw-bolder">{{ __('Emergency Contact') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $pharmacy->parent_phone ?? '--' }}</td>
-            </tr>
-            <tr>
+                <td>|</td>
                 <td class="fw-bolder">{{ __('Identification Type') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $pharmacy->identification_type ?? '--' }}</td>
-                <td>|</td>
+
+            </tr>
+            <tr>
                 <td class="fw-bolder">{{ __('Identification No') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $pharmacy->identification_no ?? '--' }}</td>
-            </tr>
-            <tr>
+                <td>|</td>
                 <td class="fw-bolder">{{ __('Operational Area') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $pharmacy->operation_area->name ?? '--' }}</td>
+
+            </tr>
+            <tr>
+                <td class="fw-bolder">{{ __('Operational Sub Area') }}</td>
+                <td>{{ __(':') }}</td>
+                <td>{{ $pharmacy->operation_sub_area->name ?? '--' }}</td>
                 <td>|</td>
                 <td class="fw-bolder">{{ __('Status') }}</td>
                 <td>{{ __(':') }}</td>

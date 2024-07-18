@@ -17,7 +17,7 @@
                                 value="{{ $point_settings['point_name'] ?? '' }}">
                             <input type="text" name="equivalent_amount"
                                 class="form-control{{ $errors->has('equivalent_amount') ? ' is-invalid' : '' }}"
-                                placeholder="{{ _('ENTER POINT EQUIVALENT AMOUNT') }}"
+                                placeholder="{{ _('ENTER BDT EQUIVALENT AMOUNT') }}"
                                 value="{{ $point_settings['equivalent_amount'] ?? '' }}">
                             <input type="button" class="btn btn-secondary disabled m-0" value="BDT">
                         </div>
@@ -60,8 +60,8 @@
                         @foreach ($point_histories as $ph)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $ph->eq_amount }}</td>
-                                <td>{{ activatedTime($ph->created_at, $ph->updated_at) }}</td>
+                                <td>{!! get_taka_icon() !!}{{ number_format($ph->eq_amount, 2) }}</td>
+                                <td class="nowrap">{{ activatedTime($ph->created_at, $ph->updated_at) }}</td>
                                 <td><span class="{{ $ph->getStatusBadgeClass() }}">{{ $ph->getStatus() }}</span></td>
                                 <td>{{ timeFormate($ph->created_at) }}</td>
                                 <td>{{ c_user_name($ph->created_user) }}</td>

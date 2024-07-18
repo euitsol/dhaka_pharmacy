@@ -28,6 +28,8 @@
                                 <th>{{ __('Area') }}</th>
                                 <th>{{ __('Active L.A.M') }}</th>
                                 <th>{{ __('Status') }}</th>
+                                <th>{{ __('KYC Status') }}</th>
+                                <th>{{ __('Phone Verify') }}</th>
                                 <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -43,6 +45,13 @@
                                     <td class="text-center"> {{ $dm->lams->count() }} </td>
                                     <td>
                                         <span class="{{ $dm->getStatusBadgeClass() }}">{{ $dm->getStatus() }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="{{ $dm->getKycStatusClass() }}">{{ $dm->getKycStatus() }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="{{ $dm->getPhoneVerifyClass() }}">{{ $dm->getPhoneVerifyStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($dm->created_at) }}</td>
 

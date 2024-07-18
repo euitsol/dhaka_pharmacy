@@ -40,18 +40,6 @@
                                                 placeholder="Enter Name" value="{{ $pharmacy->name }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label>{{ __('Father Name') }}</label>
-                                            <input type="text" name="father_name" class="form-control"
-                                                placeholder="Enter Father Name" value="{{ $pharmacy->father_name }}">
-                                            @include('alerts.feedback', ['field' => 'father_name'])
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label>{{ __('Nother Name') }}</label>
-                                            <input type="text" name="mother_name" class="form-control"
-                                                placeholder="Enter Mother Name" value="{{ $pharmacy->mother_name }}">
-                                            @include('alerts.feedback', ['field' => 'mother_name'])
-                                        </div>
 
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Phone') }}</label>
@@ -73,11 +61,23 @@
                                             @include('alerts.feedback', ['field' => 'emergency_phone'])
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Date of Birth') }}</label>
-                                            <input type="date" name="dob"
-                                                value="{{ $pharmacy->dob ? $pharmacy->dob : old('dob') }}"
+                                            <label>{{ __('Identification Type') }}</label>
+                                            <select name="identification_type" id="identification_type"
                                                 class="form-control">
-                                            @include('alerts.feedback', ['field' => 'dob'])
+                                                <option selected hidden value=" ">
+                                                    {{ __('Select Identification Type') }}
+                                                </option>
+                                                <option value="NID"
+                                                    {{ $pharmacy->identification_type == 'NID' ? 'selected' : '' }}>
+                                                    {{ __('National ID Card') }}</option>
+                                                <option value="DOB"
+                                                    {{ $pharmacy->identification_type == 'DOB' ? 'selected' : '' }}>
+                                                    {{ __('Birth Certificate No') }}</option>
+                                                <option value="Passport"
+                                                    {{ $pharmacy->identification_type == 'Passport' ? 'selected' : '' }}>
+                                                    {{ __('Passport NO') }}</option>
+                                            </select>
+                                            @include('alerts.feedback', ['field' => 'identification_type'])
                                         </div>
                                     </div>
                                 </div>
@@ -100,27 +100,6 @@
                                 </div>
                             </div>
                             <div class="row">
-
-
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Identification Type') }}</label>
-                                    <select name="identification_type" id="identification_type" class="form-control">
-                                        <option selected hidden value=" ">{{ __('Select Identification Type') }}
-                                        </option>
-                                        <option value="NID"
-                                            {{ $pharmacy->identification_type == 'NID' ? 'selected' : '' }}>
-                                            {{ __('National ID Card') }}</option>
-                                        <option value="DOB"
-                                            {{ $pharmacy->identification_type == 'DOB' ? 'selected' : '' }}>
-                                            {{ __('Birth Certificate No') }}</option>
-                                        <option value="Passport"
-                                            {{ $pharmacy->identification_type == 'Passport' ? 'selected' : '' }}>
-                                            {{ __('Passport NO') }}</option>
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'identification_type'])
-                                </div>
-
-
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification NO') }}</label>
                                     <input type="text" name="identification_no" id="identification_no"
@@ -128,21 +107,6 @@
                                         class="form-control" placeholder="Enter identification number">
                                     @include('alerts.feedback', ['field' => 'identification_no'])
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Gender') }}</label>
-                                    <select name="gender" class="form-control">
-                                        <option selected hidden value=" ">{{ __('Select Genger') }}</option>
-                                        <option value="Male" {{ $pharmacy->gender == 'Male' ? 'selected' : '' }}>
-                                            {{ __('Male') }}</option>
-                                        <option value="Female" {{ $pharmacy->gender == 'Female' ? 'selected' : '' }}>
-                                            {{ __('Female') }}</option>
-                                        <option value="Others" {{ $pharmacy->gender == 'Others' ? 'selected' : '' }}>
-                                            {{ __('Others') }}</option>
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'gender'])
-                                </div>
-
-
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operation Area') }}</label>
                                     @if (empty($pharmacy->oa_id))
@@ -173,32 +137,6 @@
                                             class="form-control" disabled>
                                     @endif
                                 </div>
-
-
-
-
-
-
-
-
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Age') }}</label>
-                                    <input type="text" name="age"
-                                        value="{{ $pharmacy->age ? $pharmacy->age : old('age') }}" class="form-control"
-                                        placeholder="Enter age">
-                                    @include('alerts.feedback', ['field' => 'age'])
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>{{ __('Upload CV') }}</label>
-                                        <input type="file" accept=".pdf" class="form-control" name="cv">
-                                        @include('alerts.feedback', ['field' => 'cv'])
-                                    </div>
-                                </div>
-
-
-
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Present Address') }}</label>
                                     <textarea name="present_address" class="form-control" placeholder="Enter present address">{{ $pharmacy->present_address ? $pharmacy->present_address : old('present_address') }}</textarea>

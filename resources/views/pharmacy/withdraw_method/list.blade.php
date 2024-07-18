@@ -26,7 +26,6 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Account Name') }}</th>
                                 <th>{{ __('Bank Name') }}</th>
-                                <th>{{ __('Routing Number') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Submitted date') }}</th>
@@ -39,7 +38,6 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $wm->account_name }} </td>
                                     <td> {{ $wm->bank_name }} </td>
-                                    <td> {{ $wm->routing_number }} </td>
                                     <td> {{ $wm->type() }} </td>
                                     <td>
                                         <span class="{{ $wm->statusBg() }}">{{ $wm->statusTitle() }}</span>

@@ -27,8 +27,7 @@
                                 <th>{{ __('Customer') }}</th>
                                 <th>{{ __('Review') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Created date') }}</th>
-                                <th>{{ __('Created by') }}</th>
+                                <th>{{ __('Submitted date') }}</th>
                                 <th>{{ __('Updated date') }}</th>
                                 <th>{{ __('Updated by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -45,7 +44,6 @@
                                             class="{{ $review->getStatusBadgeClass() }}">{{ $review->getStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($review->created_at) }}</td>
-                                    <td> {{ c_user_name($review->creater) }} </td>
                                     <td>{{ $review->created_at != $review->updated_at ? timeFormate($review->updated_at) : '--' }}
                                     </td>
                                     <td> {{ u_user_name($review->updater) }} </td>
@@ -144,14 +142,9 @@
                                         <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created Date</th>
+                                        <th class="text-nowrap">Submitted Date</th>
                                         <th>:</th>
                                         <td>${data.creating_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Created By</th>
-                                        <th>:</th>
-                                        <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Updated Date</th>

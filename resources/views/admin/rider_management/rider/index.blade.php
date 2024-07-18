@@ -25,9 +25,9 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
-                                <th>{{ __('OP Area') }}</th>
-                                <th>{{ __('OPS Area') }}</th>
                                 <th>{{ __('Status') }}</th>
+                                <th>{{ __('KYC Status') }}</th>
+                                <th>{{ __('Phone Verify') }}</th>
                                 <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -39,18 +39,16 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $rider->name }} </td>
                                     <td> {{ $rider->phone }} </td>
-
-                                    <td>
-                                        @if ($rider->operation_area)
-                                            {{ $rider->operation_area->name }}
-                                        @else
-                                            <span class="badge badge-warning">{{ __('Area not allocated') }}</span>
-                                        @endif
-
-                                    </td>
-                                    <td> {{ $rider->operation_sub_area ? $rider->operation_sub_area->name : '--' }} </td>
                                     <td>
                                         <span class="{{ $rider->getStatusBadgeClass() }}">{{ $rider->getStatus() }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="{{ $rider->getKycStatusClass() }}">{{ $rider->getKycStatus() }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="{{ $rider->getPhoneVerifyClass() }}">{{ $rider->getPhoneVerifyStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($rider->created_at) }}</td>
 
