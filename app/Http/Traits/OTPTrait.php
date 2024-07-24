@@ -6,7 +6,8 @@ use App\Models\DeliveryOtp;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
-trait OTPTrait{
+trait OTPTrait
+{
 
     public function generateDeliveryOtp(array $data)
     {
@@ -17,7 +18,7 @@ trait OTPTrait{
         $do->user_id = $data['user_id'];
         $do->otp = otp();
         $do->status = 1;
-        $do->created_by = $data['user_id'];
+        // $do->created_by = $data['user_id'];
         $do->save();
 
         return $do;
@@ -27,5 +28,4 @@ trait OTPTrait{
     {
         DeliveryOtp::where('order_distribution_id', $od_id)->activated()->update(['status' => -1]);
     }
-
 }

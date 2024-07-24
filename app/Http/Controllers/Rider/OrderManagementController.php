@@ -231,7 +231,7 @@ class OrderManagementController extends Controller
         $save->otp = otp();
         $save->status = 1;
         $save->rider_id = rider()->id;
-        $save->created_by = rider()->id;
+        // $save->created_by = rider()->id;
         $save->pharmacy_id = $request->pharmacyId;
         $save->save();
 
