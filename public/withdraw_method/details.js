@@ -9,12 +9,12 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 if (data.status == 2) {
-                    $("#declained_reason").html(
+                    $("#declined_reason").html(
                         `<p> <strong class = "text-danger"> Declined Reason: </strong>${data.note}</p>`
                     );
                 }
                 var result = `
-                        <div id='declained_reason mb-2'></div>
+                        <div id='declined_reason mb-2'></div>
                         <table class="table table-striped">
                             <tr>
                                 <th class="text-nowrap">Account Name</th>

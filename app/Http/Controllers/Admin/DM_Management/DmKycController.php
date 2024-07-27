@@ -43,7 +43,7 @@ class DmKycController extends Controller
         return redirect()->back();
     }
 
-    public function declained(SubmittedKycRequest $req, $id)
+    public function declined(SubmittedKycRequest $req, $id)
     {
         try {
             $data = SubmittedKyc::findOrFail($id);
@@ -51,8 +51,8 @@ class DmKycController extends Controller
             $data->note = $req->note;
             $data->update();
             $data->creater->update(['kyc_status' => 1]);
-            flash()->addSuccess('KYC declained succesfully');
-            return response()->json(['message' => 'KYC declained succesfully']);
+            flash()->addSuccess('KYC declined succesfully');
+            return response()->json(['message' => 'KYC declined succesfully']);
         } catch (\Exception $e) {
             flash()->addError('Somethings is wrong.');
             return response()->json(['message' => 'An error occurred'], 500);

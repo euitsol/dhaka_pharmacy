@@ -17,7 +17,7 @@
                             @elseif(!empty($datas) && $datas->status === 0)
                                 <span class="badge badge-info">{{ __('Pending') }}</span>
                             @elseif(!empty($datas) && $datas->status === null)
-                                <span class="badge badge-danger">{{ __('Declained') }}</span>
+                                <span class="badge badge-danger">{{ __('Declined') }}</span>
                             @elseif(empty($datas))
                                 <span class="badge badge-warning">{{ __('Empty') }}</span>
                             @endif

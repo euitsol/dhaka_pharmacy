@@ -22,7 +22,7 @@ class WmDeclainedRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'declained_reason' => 'required|string'
+            'declined_reason' => 'required|string'
         ];
     }
 }

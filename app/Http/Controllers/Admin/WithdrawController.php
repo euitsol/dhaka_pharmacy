@@ -42,18 +42,18 @@ class WithdrawController extends Controller
         flash()->addSuccess('Withdraw accepted successfully.');
         return redirect()->route('withdraw.w_list', 'Complete');
     }
-    public function declained(WithdrawDeclainedRequest $request, $id): JsonResponse
+    public function declined(WithdrawDeclainedRequest $request, $id): JsonResponse
     {
         try {
             $w = Withdraw::with('earnings')->findOrFail(decrypt($id));
             $w->earnings->each(function (&$earning) {
-                $earning->update(['activity' => 5, 'description' => 'Withdraw declained']);
+                $earning->update(['activity' => 5, 'description' => 'Withdraw declined']);
             });
             $w->status = 2;
-            $w->reason = $request->declained_reason;
+            $w->reason = $request->declined_reason;
             $w->updater()->associate(admin());
             $w->update();
-            flash()->addSuccess('Withdraw declained successfully.');
+            flash()->addSuccess('Withdraw declined successfully.');
             return response()->json();
         } catch (\Exception $e) {
             flash()->addError('Somethings is wrong.');

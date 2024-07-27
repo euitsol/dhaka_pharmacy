@@ -44,7 +44,7 @@ class Withdraw extends BaseModel
             case 1:
                 return 'Complete';
             case 2:
-                return 'Declained';
+                return 'Declined';
         }
     }
     public function scopeStatus($query, $status)
@@ -56,7 +56,7 @@ class Withdraw extends BaseModel
             case 'Complete':
                 $status = 1;
                 break;
-            case 'Declained':
+            case 'Declined':
                 $status = 2;
                 break;
         }

@@ -72,7 +72,7 @@ class Earning extends BaseModel
             case 4:
                 return 'Pending withdrawn';
             case 5:
-                return 'Withdrawn Declained';
+                return 'Withdrawn Declined';
         }
     }
     public function scopePharmacy($query)

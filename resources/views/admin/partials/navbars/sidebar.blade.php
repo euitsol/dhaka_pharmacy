@@ -800,15 +800,15 @@
                     'routes' => ['wm_list'],
                 ]))
                 <li>
-                    <a class="@if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declained') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declined') @else collapsed @endif" data-toggle="collapse"
                         href="#wm"
-                        @if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declained') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declined') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-regular fa-credit-card"></i>
                         <span class="nav-link-text">{{ __('Method Request') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declained') show @endif" id="wm">
+                    <div class="collapse @if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declined') show @endif" id="wm">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -827,11 +827,11 @@
                                         'label' => 'Verified',
                                     ],
                                     [
-                                        'pageSlug' => 'wm_Declained',
+                                        'pageSlug' => 'wm_Declined',
                                         'routeName' => 'withdraw_method.wm_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'Declained',
-                                        'label' => 'Declained',
+                                        'params' => 'Declined',
+                                        'label' => 'Declined',
                                     ],
                                 ],
                             ])
@@ -846,15 +846,15 @@
                     'routes' => ['w_list'],
                 ]))
                 <li>
-                    <a class="@if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declained') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declined') @else collapsed @endif" data-toggle="collapse"
                         href="#withdraw"
-                        @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declained') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declined') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-money-bill-wave"></i>
                         <span class="nav-link-text">{{ __('Withdraw Request') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declained') show @endif" id="withdraw">
+                    <div class="collapse @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declined') show @endif" id="withdraw">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -873,11 +873,11 @@
                                         'label' => 'Accepted',
                                     ],
                                     [
-                                        'pageSlug' => 'w_Declained',
+                                        'pageSlug' => 'w_Declined',
                                         'routeName' => 'withdraw.w_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'Declained',
-                                        'label' => 'Declained',
+                                        'params' => 'Declined',
+                                        'label' => 'Declined',
                                     ],
                                 ],
                             ])

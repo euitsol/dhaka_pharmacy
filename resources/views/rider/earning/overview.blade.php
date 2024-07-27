@@ -1,6 +1,10 @@
 <div class="row px-4">
     <div class="col-md-4">
-        <h6 class="card-title fw-bolder">{{ __('Total Balance') }}</h6>
+        <div class="d-flex justify-content-between">
+            <h6 class="card-title fw-bolder">{{ __('Total Balance') }}</h6>
+            <a href="javascript:void(0)" type="button" data-activity="1" data-bs-toggle="modal"
+                data-bs-target="#exampleModal55"><i class="fa-solid fa-circle-info"></i></a>
+        </div>
         <div class="card box">
             <div class="card-body">
                 <div class="amount">
@@ -108,6 +112,24 @@
         </div>
         <div class="paginate">
             {!! $pagination !!}
+        </div>
+    </div>
+</div>
+
+{{-- Information Modal  --}}
+<div class="modal info_modal fade" id="exampleModal55" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('Information') }}</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body modal_data">
+
+            </div>
         </div>
     </div>
 </div>

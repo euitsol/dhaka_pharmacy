@@ -38,15 +38,15 @@ class WithdrawMethodController extends Controller
         flash()->addSuccess('Withdraw method accepted successfully.');
         return redirect()->route('withdraw_method.wm_list', 'Verified');
     }
-    public function declained(WmDeclainedRequest $request, $id): JsonResponse
+    public function declined(WmDeclainedRequest $request, $id): JsonResponse
     {
         try {
             $wm = WithdrawMethod::findOrFail(decrypt($id));
             $wm->status = 2;
-            $wm->note = $request->declained_reason;
+            $wm->note = $request->declined_reason;
             $wm->updater()->associate(admin());
             $wm->update();
-            flash()->addSuccess('Withdraw method declained successfully.');
+            flash()->addSuccess('Withdraw method declined successfully.');
             return response()->json();
         } catch (\Exception $e) {
             flash()->addError('Somethings is wrong.');
