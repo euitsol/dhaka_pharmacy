@@ -46,6 +46,7 @@
             'filter': `{{ route('rider.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`,
             'report': `{{ route('rider.earning.report') }}`,
         };
+        const takaIcon = `{!! get_taka_icon() !!}`;
     </script>
     <script src="{{ asset('earning/earning.js') }}"></script>
 @endpush

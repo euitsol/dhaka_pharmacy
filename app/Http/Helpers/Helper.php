@@ -551,35 +551,35 @@ function translate($text)
 }
 function getEarningPoints($earnings)
 {
-    return ($earnings->where('activity', 1)->sum('point') - ($earnings->where('activity', 2)->sum('point') + $earnings->where('activity', 4)->sum('point')));
+    return ($earnings->where('activity', 1)->sum('point') - ($earnings->where('activity', 3)->sum('point') + $earnings->where('activity', 2)->sum('point')));
 }
 function getEarningEqAmounts($earnings)
 {
-    return ($earnings->where('activity', 1)->sum('eq_amount') - ($earnings->where('activity', 2)->sum('eq_amount') + $earnings->where('activity', 4)->sum('eq_amount')));
+    return ($earnings->where('activity', 1)->sum('eq_amount') - ($earnings->where('activity', 3)->sum('eq_amount') + $earnings->where('activity', 2)->sum('eq_amount')));
 }
 function getWithdrawPoints($earnings)
 {
-    return $earnings->where('activity', 2)->sum('point');
+    return $earnings->where('activity', 3)->sum('point');
 }
 function getWithdrawEqAmounts($earnings)
 {
-    return $earnings->where('activity', 2)->sum('eq_amount');
+    return $earnings->where('activity', 3)->sum('eq_amount');
 }
 function getPendingWithdrawPoints($earnings)
 {
-    return $earnings->where('activity', 4)->sum('point');
+    return $earnings->where('activity', 2)->sum('point');
 }
 function getPendingWithdrawEqAmounts($earnings)
 {
-    return $earnings->where('activity', 4)->sum('eq_amount');
+    return $earnings->where('activity', 2)->sum('eq_amount');
 }
 function getPendingEarningPoints($earnings)
 {
-    return $earnings->where('activity', 3)->sum('point');
+    return $earnings->where('activity', 0)->sum('point');
 }
 function getPendingEarningEqAmounts($earnings)
 {
-    return $earnings->where('activity', 3)->sum('eq_amount');
+    return $earnings->where('activity', 0)->sum('eq_amount');
 }
 
 function getSubmitterType($className)

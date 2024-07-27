@@ -90,8 +90,8 @@
                     <i class="fa-solid fa-file-csv" style="color: rgb(3, 204, 3)"></i>
                     {{ __('Email activity report') }}
                 </a>
-                <input type="hidden" name="from_date" id="fromDate">
-                <input type="hidden" name="to_date" id="toDate">
+                <input type="hidden" name="from_date" id="fromDate" autocomplete="off">
+                <input type="hidden" name="to_date" id="toDate" autocomplete="off">
             </div>
         </div>
         <div class="card mb-2">

@@ -46,6 +46,7 @@
             'filter': `{{ route('dm.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`,
             'report': `{{ route('dm.earning.report') }}`,
         };
+        const takaIcon = `{!! get_taka_icon() !!}`;
     </script>
     <script src="{{ asset('earning/earning.js') }}"></script>
 @endpush
