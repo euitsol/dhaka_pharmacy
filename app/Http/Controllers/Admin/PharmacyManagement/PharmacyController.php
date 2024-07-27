@@ -38,6 +38,7 @@ class PharmacyController extends Controller
     {
         $data = Pharmacy::with(['creater', 'updater'])->findOrFail(decrypt($id));
         $this->morphColumnData($data);
+        $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
     }
     public function profile($id): View

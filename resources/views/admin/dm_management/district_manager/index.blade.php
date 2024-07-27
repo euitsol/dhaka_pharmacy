@@ -1,5 +1,7 @@
 @extends('admin.layouts.master', ['pageSlug' => 'district_manager'])
-
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -134,6 +136,7 @@
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
 @push('js')
+    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.view').on('click', function() {
@@ -149,7 +152,13 @@
                     success: function(data) {
                         let status = data.status == 1 ? 'Active' : 'Deactive';
                         let statusClass = data.status == 1 ? 'badge-success' :
+                            'badge-danger';
+                        let kycStatus = data.kyc_status == 1 ? 'Complete' : 'Pending';
+                        let kycStatusClass = data.kyc_status == 1 ? 'badge-info' :
                             'badge-warning';
+                        let verifyStatus = data.is_verify == 1 ? 'Success' : 'Pending';
+                        let verifyStatusClass = data.is_verify == 1 ? 'badge-primary' :
+                            'badge-dark';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -161,6 +170,18 @@
                                         <th class="text-nowrap">Phone</th>
                                         <th>:</th>
                                         <td>${data.phone}</td>
+                                    </tr>
+                                     <tr>
+                                        <th class="text-nowrap">Image</th>
+                                        <th>:</th>
+                                        <td><div id="lightbox" class="lightbox">
+                                                <div class="lightbox-content">
+                                                    <img src="${data.image}"
+                                                        class="lightbox_image">
+                                                </div>
+                                                <div class="close_button fa-beat">X</div>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Email</th>
@@ -177,10 +198,20 @@
                                         <th>:</th>
                                         <td>${data.total_lams}</td>
                                     </tr>
-                                    <tr>
+                                     <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
                                         <td><span class="badge ${statusClass}">${status}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">KYC Status</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${kycStatusClass}">${kycStatus}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Phone Verify</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${verifyStatusClass}">${verifyStatus}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created Date</th>

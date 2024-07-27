@@ -35,6 +35,7 @@ class RiderManagementController extends Controller
     {
         $data = Rider::with(['operation_area', 'creater', 'operation_sub_area', 'updater'])->findOrFail($id);
         $this->morphColumnData($data);
+        $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
     }
 
