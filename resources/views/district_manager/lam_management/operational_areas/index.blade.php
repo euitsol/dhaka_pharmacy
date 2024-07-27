@@ -26,7 +26,6 @@
                                 <th>{{ __('Operation Areas') }}</th>
                                 <th>{{ __('Operation Sub Areas') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -44,7 +43,6 @@
                                                 {{ $sub_area->status == 1 ? 'Operational' : ($sub_area->status == 0 ? 'Pending' : 'Not Operational') }}
                                             </span>
                                         </td>
-                                        <td>{{ c_user_name($sub_area->creater) }}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)"
@@ -67,7 +65,6 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $area->name }}</td>
-                                        <td>{{ 'empty' }}</td>
                                         <td>{{ 'empty' }}</td>
                                         <td>{{ 'empty' }}</td>
                                         <td>{{ 'empty' }}</td>

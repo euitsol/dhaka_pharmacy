@@ -34,6 +34,7 @@ class LamManagementController extends Controller
     {
         $data = LocalAreaManager::with(['dm.operation_area', 'operation_sub_area', 'creater', 'updater'])->findOrFail($id);
         $this->morphColumnData($data);
+        $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
     }
 
