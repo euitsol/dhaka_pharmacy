@@ -29,7 +29,7 @@ class EarningContorller extends Controller
                 ->whereDate('created_at', '<=', $request->to);
         }
         $totalEarnings = $query->get();
-        $paginateEarnings = $query->paginate(1)->withQueryString();
+        $paginateEarnings = $query->paginate(10)->withQueryString();
         $paginateEarnings->getCollection()->each(function (&$earning) {
             $earning->creationDate = timeFormate($earning->created_at);
             $earning->activityBg = $earning->activityBg();
