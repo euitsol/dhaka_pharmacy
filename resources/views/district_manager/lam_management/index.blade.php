@@ -25,10 +25,10 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
-                                <th>{{ __('District Manager') }}</th>
-                                <th>{{ __('Operation Area') }}</th>
                                 <th>{{ __('Operation Sub Area') }}</th>
                                 <th>{{ __('Status') }}</th>
+                                <th>{{ __('KYC Status') }}</th>
+                                <th>{{ __('Phone Verify') }}</th>
                                 <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
@@ -40,8 +40,6 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $lam->name }} </td>
                                     <td> {{ $lam->phone }} </td>
-                                    <td> {{ $lam->dm->name }} </td>
-                                    <td> {{ $lam->dm->operation_area->name }} </td>
                                     <td>
                                         @if ($lam->operation_sub_area)
                                             {{ $lam->operation_sub_area->name }}
@@ -53,8 +51,14 @@
                                     <td>
                                         <span class="{{ $lam->getStatusBadgeClass() }}">{{ $lam->getStatus() }}</span>
                                     </td>
+                                    <td>
+                                        <span class="{{ $lam->getKycStatusClass() }}">{{ $lam->getKycStatus() }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="{{ $lam->getPhoneVerifyClass() }}">{{ $lam->getPhoneVerifyStatus() }}</span>
+                                    </td>
                                     <td>{{ timeFormate($lam->created_at) }}</td>
-
                                     <td> {{ c_user_name($lam->creater) }} </td>
                                     <td>
                                         <div class="dropdown">

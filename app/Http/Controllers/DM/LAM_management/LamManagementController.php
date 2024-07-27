@@ -12,7 +12,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
-
+use App\Models\Earning;
+use App\Models\KycSetting;
+use App\Models\SubmittedKyc;
+use App\Models\User;
 
 class LamManagementController extends Controller
 {
@@ -36,7 +39,14 @@ class LamManagementController extends Controller
 
     public function profile($id): View
     {
-        $data['lam'] = LocalAreaManager::with(['creater', 'updater'])->findOrFail($id);
+
+        $data['lam'] = LocalAreaManager::with(['creater', 'operation_sub_area', 'updater'])->findOrFail($id);
+        $lam_class = get_class($data['lam']);
+        $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $lam_class)->first();
+        $data['kyc_setting'] = KycSetting::where('type', 'lam')->first();
+        $data['users'] = User::where('creater_id', $id)->where('creater_type', $lam_class)->latest()->get();
+        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
+            ->where('receiver_id', $id)->where('receiver_type', $lam_class)->get();
         return view('district_manager.lam_management.profile', $data);
     }
 
