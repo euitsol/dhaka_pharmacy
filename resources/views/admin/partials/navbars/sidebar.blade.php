@@ -804,7 +804,7 @@
                         href="#wm"
                         @if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declined') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-regular fa-credit-card"></i>
-                        <span class="nav-link-text">{{ __('Method Request') }}</span>
+                        <span class="nav-link-text">{{ __('Payment Method Request') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
@@ -816,21 +816,21 @@
                                         'pageSlug' => 'wm_Pending',
                                         'routeName' => 'withdraw_method.wm_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'Pending',
+                                        'params' => 'pending',
                                         'label' => 'Pending',
                                     ],
                                     [
                                         'pageSlug' => 'wm_Verified',
                                         'routeName' => 'withdraw_method.wm_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'Verified',
+                                        'params' => 'verified',
                                         'label' => 'Verified',
                                     ],
                                     [
                                         'pageSlug' => 'wm_Declined',
                                         'routeName' => 'withdraw_method.wm_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'Declined',
+                                        'params' => 'declined',
                                         'label' => 'Declined',
                                     ],
                                 ],
@@ -846,15 +846,15 @@
                     'routes' => ['w_list'],
                 ]))
                 <li>
-                    <a class="@if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declined') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Accepted' || $pageSlug == 'w_Declined') @else collapsed @endif" data-toggle="collapse"
                         href="#withdraw"
-                        @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declined') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Accepted' || $pageSlug == 'w_Declined') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-money-bill-wave"></i>
                         <span class="nav-link-text">{{ __('Withdraw Request') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Complete' || $pageSlug == 'w_Declined') show @endif" id="withdraw">
+                    <div class="collapse @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Accepted' || $pageSlug == 'w_Declined') show @endif" id="withdraw">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -862,21 +862,21 @@
                                         'pageSlug' => 'w_Pending',
                                         'routeName' => 'withdraw.w_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'Pending',
+                                        'params' => 'pending',
                                         'label' => 'Pending',
                                     ],
                                     [
-                                        'pageSlug' => 'w_Complete',
+                                        'pageSlug' => 'w_Accepted',
                                         'routeName' => 'withdraw.w_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'Complete',
+                                        'params' => 'accepted',
                                         'label' => 'Accepted',
                                     ],
                                     [
                                         'pageSlug' => 'w_Declined',
                                         'routeName' => 'withdraw.w_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'Declined',
+                                        'params' => 'declined',
                                         'label' => 'Declined',
                                     ],
                                 ],

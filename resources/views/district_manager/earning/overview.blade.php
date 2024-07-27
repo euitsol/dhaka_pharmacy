@@ -1,16 +1,19 @@
 <div class="row px-4">
     <div class="col-md-4">
         <div class="d-flex justify-content-between">
-            <h6 class="card-title fw-bolder">{{ __('Total Balance') }}</h6>
+            <h6 class="card-title fw-bolder">{{ __('Available Balance') }}</h6>
             <a href="javascript:void(0)" class="view_info" data-activity="1" data-title="Total Balance Information"
                 data-type='Earning'><i class="fa-solid fa-circle-info"></i></a>
         </div>
+        @php
+            $point_name = getPointName();
+        @endphp
         <div class="card box">
             <div class="card-body">
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Available points for withdrawal') }}</span>
                     <h4 class="my_amount">{{ number_format(getEarningPoints($totalEarnings), 2) }}
-                        {{ getPointName() }}</h4>
+                        {{ $point_name }}</h4>
                 </div>
                 <hr>
                 <div class="amount">
@@ -23,7 +26,7 @@
     </div>
     <div class="col-md-4">
         <div class="d-flex justify-content-between">
-            <h6 class="card-title fw-bolder">{{ __('Total Payments') }}</h6>
+            <h6 class="card-title fw-bolder">{{ __('Future Payments') }}</h6>
             <a href="javascript:void(0)" class="view_info" data-activity="3" data-title="Total Payments Information"
                 data-type='Pending Clearance'><i class="fa-solid fa-circle-info"></i></a>
         </div>
@@ -32,7 +35,7 @@
                 <div class="amount">
                     <span class="text-muted fw-bold">{{ __('Payments being cleared') }}</span>
                     <h4 class="my_amount">{{ number_format(getPendingEarningPoints($totalEarnings), 2) }}
-                        {{ getPointName() }}</h4>
+                        {{ $point_name }}</h4>
                 </div>
                 <hr>
                 <div class="amount">
@@ -45,7 +48,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <h6 class="card-title fw-bolder">{{ __('Total Withdrawn') }}</h6>
+        <h6 class="card-title fw-bolder">{{ __('Total Withdraw') }}</h6>
         <div class="card box">
             <div class="card-body">
                 <div class="amount">
@@ -99,7 +102,7 @@
                         <tr>
                             <th>{{ __('Date') }}</th>
                             <th>{{ __('Activity') }}</th>
-                            <th>{{ __('Per Point Rate') }}</th>
+                            <th>{{ __('Total Point') }}</th>
                             <th>{{ __('Description') }}</th>
                             <th>{{ __('Order') }}</th>
                             <th>{{ __('Amount') }}</th>
@@ -111,7 +114,8 @@
                                 <td>{{ timeFormate($earning->created_at) }}</td>
                                 <td><span class="{{ $earning->activityBg() }}">{{ $earning->activityTitle() }}</span>
                                 </td>
-                                <td>{!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }}
+                                <td>{{ number_format($earning->point, 2) }}
+                                    ({!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }})
                                 </td>
                                 <td>{{ $earning->description ?? '--' }}@if ($earning->activity == 2)
                                         {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}

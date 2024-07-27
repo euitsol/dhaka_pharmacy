@@ -58,13 +58,13 @@ class WithdrawMethod extends BaseModel
     public function scopeStatus($query, $status)
     {
         switch ($status) {
-            case 'Pending':
+            case 'pending':
                 $status = 0;
                 break;
-            case 'Verified':
+            case 'verified':
                 $status = 1;
                 break;
-            case 'Declined':
+            case 'declined':
                 $status = 2;
                 break;
         }

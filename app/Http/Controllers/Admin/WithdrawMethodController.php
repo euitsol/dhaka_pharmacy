@@ -20,7 +20,7 @@ class WithdrawMethodController extends Controller
 
     public function list($status): View
     {
-        $data['status'] = $status;
+        $data['status'] = ucfirst($status);
         $data['wms'] = WithdrawMethod::status($status)->latest()->get();
         return view('admin.withdraw_method.list', $data);
     }

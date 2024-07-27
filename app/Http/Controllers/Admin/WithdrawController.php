@@ -20,7 +20,7 @@ class WithdrawController extends Controller
 
     public function list($status): View
     {
-        $data['status'] = $status;
+        $data['status'] = ucfirst($status);
         $data['withdrawals'] = Withdraw::status($status)->latest()->get();
         return view('admin.withdraw.list', $data);
     }
@@ -40,7 +40,7 @@ class WithdrawController extends Controller
         $w->updater()->associate(admin());
         $w->update();
         flash()->addSuccess('Withdraw accepted successfully.');
-        return redirect()->route('withdraw.w_list', 'Complete');
+        return redirect()->route('withdraw.w_list', 'accepted');
     }
     public function declined(WithdrawDeclainedRequest $request, $id): JsonResponse
     {

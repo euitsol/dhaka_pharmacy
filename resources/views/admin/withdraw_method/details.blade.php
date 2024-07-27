@@ -84,7 +84,7 @@
                         ])
                     @endif
                     @if ($wm->status !== 2)
-                        <a href="javascript:void(0)" class="btn btn-sm btn-danger declined_btn">{{ __('Declined') }}</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-danger declined_btn">{{ __('Decline') }}</a>
                     @endif
 
 
