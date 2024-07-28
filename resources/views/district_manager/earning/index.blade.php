@@ -47,6 +47,7 @@
             'report': `{{ route('dm.earning.report') }}`,
         };
         const takaIcon = `{!! get_taka_icon() !!}`;
+        const order = false;
     </script>
     <script src="{{ asset('earning/earning.js') }}"></script>
 @endpush
