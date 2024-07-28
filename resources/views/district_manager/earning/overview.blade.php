@@ -5,9 +5,6 @@
             <a href="javascript:void(0)" class="view_info" data-activity="1" data-title="Available balance history"
                 data-type='Earning'><i class="fa-solid fa-circle-info"></i></a>
         </div>
-        @php
-            $point_name = getPointName();
-        @endphp
         <div class="card box">
             <div class="card-body">
                 <div class="amount">

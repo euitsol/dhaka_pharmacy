@@ -36,6 +36,7 @@ class EarningController extends Controller
             $earning->activityTitle = $earning->activityTitle();
         });
         $data = [
+            'point_name' => getPointName(),
             'totalEarnings' => $totalEarnings,
             'paginateEarnings' => $paginateEarnings,
             'pagination' => $paginateEarnings->links('vendor.pagination.bootstrap-5')->render(),
