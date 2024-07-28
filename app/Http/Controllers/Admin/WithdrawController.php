@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\WithdrawDeclainedRequest;
+use App\Http\Requests\WithdrawDeclinedRequest;
 use App\Models\Withdraw;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -42,7 +42,7 @@ class WithdrawController extends Controller
         flash()->addSuccess('Withdraw accepted successfully.');
         return redirect()->route('withdraw.w_list', 'accepted');
     }
-    public function declined(WithdrawDeclainedRequest $request, $id): JsonResponse
+    public function declined(WithdrawDeclinedRequest $request, $id): JsonResponse
     {
         try {
             $w = Withdraw::with('earnings')->findOrFail(decrypt($id));

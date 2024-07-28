@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\WmDeclainedRequest;
+use App\Http\Requests\WmDeclinedRequest;
 use App\Models\WithdrawMethod;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +38,7 @@ class WithdrawMethodController extends Controller
         flash()->addSuccess('Withdraw method accepted successfully.');
         return redirect()->route('withdraw_method.wm_list', 'Verified');
     }
-    public function declined(WmDeclainedRequest $request, $id): JsonResponse
+    public function declined(WmDeclinedRequest $request, $id): JsonResponse
     {
         try {
             $wm = WithdrawMethod::findOrFail(decrypt($id));

@@ -2,7 +2,7 @@
     <div class="col-md-4">
         <div class="d-flex justify-content-between">
             <h6 class="card-title fw-bolder">{{ __('Available Balance') }}</h6>
-            <a href="javascript:void(0)" class="view_info" data-activity="1" data-title="Total Balance Information"
+            <a href="javascript:void(0)" class="view_info" data-activity="1" data-title="Available balance history"
                 data-type='Earning'><i class="fa-solid fa-circle-info"></i></a>
         </div>
         @php
@@ -27,7 +27,7 @@
     <div class="col-md-4">
         <div class="d-flex justify-content-between">
             <h6 class="card-title fw-bolder">{{ __('Future Payments') }}</h6>
-            <a href="javascript:void(0)" class="view_info" data-activity="3" data-title="Total Payments Information"
+            <a href="javascript:void(0)" class="view_info" data-activity="3" data-title="Future payment history"
                 data-type='Pending Clearance'><i class="fa-solid fa-circle-info"></i></a>
         </div>
         <div class="card box">
@@ -56,7 +56,7 @@
                     <div class="d-flex justify-content-between">
                         <span class="text-muted fw-bold">{{ __('Withdrawal amount') }}</span>
                         <a href="javascript:void(0)" class="view_info" data-activity="2"
-                            data-title="Total Withdrawn Information" data-type='Withdrawn'><i
+                            data-title="Total withdraw history" data-type='Withdrawn'><i
                                 class="fa-solid fa-circle-info"></i></a>
                     </div>
                     <h4 class="my_amount">
@@ -68,7 +68,7 @@
                     <div class="d-flex justify-content-between">
                         <span class="text-muted fw-bold">{{ __('Pending withdrawal amount') }}</span>
                         <a href="javascript:void(0)" class="view_info" data-activity="4"
-                            data-title="Pending withdrawn Information" data-type='Withdrawn'><i
+                            data-title="Pending withdraw history" data-type='Withdrawn'><i
                                 class="fa-solid fa-circle-info"></i></a>
                     </div>
                     <h4 class="my_amount">
@@ -117,7 +117,7 @@
                                 <td>{{ number_format($earning->point, 2) }}
                                     ({!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }})
                                 </td>
-                                <td>{{ $earning->description ?? '--' }}@if ($earning->activity == 2)
+                                <td>{!! $earning->description ?? '--' !!}@if ($earning->activity == 3)
                                         {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}
                                     @endif
                                 </td>
@@ -146,7 +146,7 @@
                 </button>
             </div>
             <div class="modal-body modal_data">
-                <table class="table table-striped datatable">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>{{ __('Activity') }}</th>
@@ -164,7 +164,6 @@
         </div>
     </div>
 </div>
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3]])
 @push('js')
     <script>
         $('.view_info').on('click', function() {
