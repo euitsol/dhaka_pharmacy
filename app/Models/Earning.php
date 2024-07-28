@@ -66,11 +66,11 @@ class Earning extends BaseModel
             case 1:
                 return 'Earning';
             case 2:
-                return 'Pending withdrawn';
+                return 'Pending withdraw';
             case 3:
-                return 'Withdrawn';
+                return 'Withdraw';
             case 4:
-                return 'Withdrawn Declined';
+                return 'Withdraw Declined';
         }
     }
 

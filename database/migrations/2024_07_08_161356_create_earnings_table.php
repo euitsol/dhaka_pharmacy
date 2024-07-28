@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('receiver_type');
             $table->double('point');
             $table->double('eq_amount');
-            $table->tinyInteger('activity')->comment('1 -> earning, 2 -> withdrawn, 3 -> pending clearance');
+            $table->tinyInteger('activity')->comment('1 -> earning, 2 -> withdraw, 3 -> pending clearance');
             $table->longText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

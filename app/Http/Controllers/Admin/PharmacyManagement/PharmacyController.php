@@ -56,6 +56,7 @@ class PharmacyController extends Controller
             ->each(function (&$od) {
                 $this->calculateOrderTotalDiscountPrice($od->order);
             });
+        $data['point_name'] = getPointName();
         return view('admin.pharmacy_management.pharmacy.profile', $data);
     }
     public function loginAs($id)

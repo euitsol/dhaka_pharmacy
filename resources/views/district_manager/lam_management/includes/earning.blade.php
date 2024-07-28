@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <h6 class="card-title fw-bolder">{{ __('Total Withdrawn') }}</h6>
+        <h6 class="card-title fw-bolder">{{ __('Total Withdraw') }}</h6>
         <div class="card box">
             <div class="card-body">
                 <div class="amount">

@@ -56,7 +56,7 @@
                     <div class="d-flex justify-content-between">
                         <span class="text-muted fw-bold">{{ __('Withdrawal amount') }}</span>
                         <a href="javascript:void(0)" class="view_info" data-activity="2"
-                            data-title="Total Withdrawn Information" data-type='Withdrawn'><i
+                            data-title="Total Withdraw Information" data-type='Withdraw'><i
                                 class="fa-solid fa-circle-info"></i></a>
                     </div>
                     <h4 class="my_amount">
@@ -68,7 +68,7 @@
                     <div class="d-flex justify-content-between">
                         <span class="text-muted fw-bold">{{ __('Pending withdrawal amount') }}</span>
                         <a href="javascript:void(0)" class="view_info" data-activity="4"
-                            data-title="Pending withdrawn Information" data-type='Withdrawn'><i
+                            data-title="Pending withdraw Information" data-type='Withdraw'><i
                                 class="fa-solid fa-circle-info"></i></a>
                     </div>
                     <h4 class="my_amount">
