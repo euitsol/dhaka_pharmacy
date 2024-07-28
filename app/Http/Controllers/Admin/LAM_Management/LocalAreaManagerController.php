@@ -60,8 +60,9 @@ class LocalAreaManagerController extends Controller
         $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $lam_class)->first();
         $data['kyc_setting'] = KycSetting::where('type', 'lam')->first();
         $data['users'] = User::where('creater_id', $id)->where('creater_type', $lam_class)->latest()->get();
-        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
+        $data['earnings'] = Earning::with(['receiver', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
             ->where('receiver_id', $id)->where('receiver_type', $lam_class)->get();
+        $data['point_name'] = getPointName();
         return view('admin.lam_management.local_area_manager.profile', $data);
     }
 
