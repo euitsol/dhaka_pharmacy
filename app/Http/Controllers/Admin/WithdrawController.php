@@ -33,7 +33,7 @@ class WithdrawController extends Controller
     {
         $w = Withdraw::with('earnings')->findOrFail(decrypt($id));
         $w->earnings->each(function (&$earning) {
-            $earning->update(['activity' => 2, 'description' => 'Withdrawal completed successfully']);
+            $earning->update(['activity' => 3, 'description' => 'Withdrawal completed successfully']);
         });
         // $w->load('earnings');
         $w->status = 1;
@@ -47,7 +47,7 @@ class WithdrawController extends Controller
         try {
             $w = Withdraw::with('earnings')->findOrFail(decrypt($id));
             $w->earnings->each(function (&$earning) {
-                $earning->update(['activity' => 5, 'description' => 'Withdraw declined']);
+                $earning->update(['activity' => 4, 'description' => 'Withdraw declined']);
             });
             $w->status = 2;
             $w->reason = $request->declined_reason;

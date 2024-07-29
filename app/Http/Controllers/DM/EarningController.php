@@ -72,13 +72,19 @@ class EarningController extends Controller
         DB::beginTransaction();
 
         try {
+            $totalEarnings =  Earning::dm()->get();
+            $pw_check = $totalEarnings->where('activity', 2)->first();
+            if ($pw_check) {
+                flash()->addInfo('You have a pending withdrawal request. Please wait for it to be completed.');
+                return redirect()->back();
+            }
             $dm = dm();
             $w_amount = $request->amount;
             $withdraw_method = $request->withdraw_method;
-            $t_a_amount = getEarningEqAmounts(Earning::dm()->get());
+            $t_a_amount = getEarningEqAmounts($totalEarnings);
 
             if ($t_a_amount < $w_amount) {
-                flash()->addError('Insufficient balance.');
+                flash()->addWarning('Insufficient balance.');
                 return redirect()->back();
             }
 
@@ -108,7 +114,7 @@ class EarningController extends Controller
                         $earning->receiver()->associate($dm);
                         $earning->point = $w_point;
                         $earning->eq_amount = $w_amount;
-                        $earning->activity = 4; // Withdraw Pending
+                        $earning->activity = 2; // Withdraw Pending
                         $earning->description = 'Withdrawal request submitted successfully';
                         $earning->creater()->associate($dm);
                         $earning->save();
@@ -125,7 +131,7 @@ class EarningController extends Controller
                         $earning->receiver()->associate($dm);
                         $earning->point = $a_points;
                         $earning->eq_amount = $a_amount;
-                        $earning->activity = 4; // Withdraw Pending
+                        $earning->activity = 2; // Withdraw Pending
                         $earning->description = 'Withdrawal request submitted successfully';
                         $earning->creater()->associate($dm);
                         $earning->save();
