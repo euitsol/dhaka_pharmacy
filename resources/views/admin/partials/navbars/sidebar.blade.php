@@ -863,7 +863,7 @@
                                         'routeName' => 'pc.pc_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'pending-clearance',
-                                        'label' => 'Pending clearance',
+                                        'label' => 'Pending',
                                     ],
                                     [
                                         'pageSlug' => 'pc_Earning',
@@ -877,7 +877,7 @@
                                         'routeName' => 'pc.pc_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'payment-declined',
-                                        'label' => 'Payment declined',
+                                        'label' => 'Declined',
                                     ],
                                 ],
                             ])
