@@ -15,6 +15,10 @@ body{
     overflow-x: hidden;
 }
 
+.sidebar .nav li>a, .off-canvas-sidebar .nav li>a{
+    font-size: 0.58rem;
+}
+
 .brand-link .brand-image {
     float: none;
     margin-left: 0;
