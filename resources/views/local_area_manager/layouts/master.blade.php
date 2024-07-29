@@ -15,6 +15,7 @@
     <link rel="icon" href="" type="image/png">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 
     {{-- White Dashboard --}}
     <link href="{{ asset('white') }}/css/nucleo-icons.css" rel="stylesheet" />
@@ -64,6 +65,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('admin/js/custom.js') }}"></script>
     <script src="{{ asset('lam/js/custom.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @stack('js_link')
     @stack('js')
 
