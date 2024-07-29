@@ -22,6 +22,16 @@ class WithdrawMethod extends BaseModel
         'updater_type',
     ];
 
+    public function type()
+    {
+        switch ($this->type) {
+            case 0:
+                return 'Personal';
+            case 1:
+                return 'Business';
+        }
+    }
+
     public function statusBg()
     {
         switch ($this->status) {
@@ -42,19 +52,19 @@ class WithdrawMethod extends BaseModel
             case 1:
                 return 'Verified';
             case 2:
-                return 'Declained';
+                return 'Declined';
         }
     }
     public function scopeStatus($query, $status)
     {
         switch ($status) {
-            case 'Pending':
+            case 'pending':
                 $status = 0;
                 break;
-            case 'Verified':
+            case 'verified':
                 $status = 1;
                 break;
-            case 'Declained':
+            case 'declined':
                 $status = 2;
                 break;
         }

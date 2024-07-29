@@ -16,50 +16,50 @@ use Illuminate\View\View;
 class PharmacyKycController extends Controller
 {
     //
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
 
     public function index(): View
     {
-        $s['datas'] = SubmittedKyc::with('creater')->where('type','pharmacy')->orderBy('status','desc')->get()->groupBy('status');
-        return view('admin.pharmacy_management.submitted_kyc.index',$s);
-
+        $s['datas'] = SubmittedKyc::with('creater')->where('type', 'pharmacy')->orderBy('status', 'desc')->get()->groupBy('status');
+        return view('admin.pharmacy_management.submitted_kyc.index', $s);
     }
-    public function details($id):View
+    public function details($id): View
     {
         $data['data'] = SubmittedKyc::findOrFail($id);
-        $data['kyc_setting'] = KycSetting::where('type','pharmacy')->first();
-        return view('admin.pharmacy_management.submitted_kyc.details',$data);
-
+        $data['kyc_setting'] = KycSetting::where('type', 'pharmacy')->first();
+        return view('admin.pharmacy_management.submitted_kyc.details', $data);
     }
     public function accept($id)
     {
         $data = SubmittedKyc::findOrFail($id);
         $data->status = 1;
         $data->update();
-        $data->creater->update(['kyc_status'=>1]);
+        $data->creater->update(['kyc_status' => 1]);
         flash()->addSuccess('KYC accepted succesfully');
         return redirect()->back();
-
     }
 
-    public function declained(SubmittedKycRequest $req, $id) {
+    public function declined(SubmittedKycRequest $req, $id)
+    {
         try {
             $data = SubmittedKyc::findOrFail($id);
             $data->status = NULL;
             $data->note = $req->note;
             $data->update();
-            $data->creater->update(['kyc_status'=>0]);
-            flash()->addSuccess('KYC declained succesfully');
-            return response()->json(['message' => 'KYC declained succesfully']);
+            $data->creater->update(['kyc_status' => 0]);
+            flash()->addSuccess('KYC declined succesfully');
+            return response()->json(['message' => 'KYC declined succesfully']);
         } catch (\Exception $e) {
             flash()->addError('Somethings is wrong.');
             return response()->json(['message' => 'An error occurred'], 500);
         }
     }
 
-    public function view_or_download($file_url){
+    public function view_or_download($file_url)
+    {
         $file_url = base64_decode($file_url);
         if (Storage::exists('public/' . $file_url)) {
             $fileExtension = pathinfo($file_url, PATHINFO_EXTENSION);

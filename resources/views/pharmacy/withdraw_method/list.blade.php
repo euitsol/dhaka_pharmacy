@@ -26,11 +26,9 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Account Name') }}</th>
                                 <th>{{ __('Bank Name') }}</th>
-                                <th>{{ __('Routing Number') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
-                                <th>{{ __('Created by') }}</th>
+                                <th>{{ __('Submitted date') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -40,14 +38,11 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $wm->account_name }} </td>
                                     <td> {{ $wm->bank_name }} </td>
-                                    <td> {{ $wm->routing_number }} </td>
-                                    <td> {{ $wm->type }} </td>
+                                    <td> {{ $wm->type() }} </td>
                                     <td>
                                         <span class="{{ $wm->statusBg() }}">{{ $wm->statusTitle() }}</span>
                                     </td>
                                     <td>{{ timeFormate($wm->created_at) }}</td>
-
-                                    <td> {{ c_user_name($wm->creater) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

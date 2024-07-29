@@ -8,8 +8,13 @@ function getHtml(earnings) {
                                 ${earning.activityTitle}
                             </span>
                         </td>
-                        <td>${earning.description}</td>
-                        <td>${earning.order.order_id}</td>
+                        <td>${numberFormat(earning.point, 2)}${
+            takaIcon + numberFormat(earning.point_history.eq_amount, 2)
+        }</td>
+                        <td>${earning.description ?? "--"}</td>
+                        <td>${
+                            earning.order ? earning.order.order_id : "--"
+                        }</td>
                         <td>${numberFormat(earning.amount, 2)} BDT</td>
                     </tr>`;
     });

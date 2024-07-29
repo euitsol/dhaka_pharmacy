@@ -47,6 +47,7 @@
             'filter': `{{ route('pharmacy.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`,
             'report': `{{ route('pharmacy.earning.report') }}`,
         };
+        const takaIcon = `{!! get_taka_icon() !!}`;
     </script>
     <script src="{{ asset('earning/earning.js') }}"></script>
 @endpush

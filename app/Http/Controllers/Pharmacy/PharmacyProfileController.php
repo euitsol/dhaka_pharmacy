@@ -66,18 +66,6 @@ class PharmacyProfileController extends Controller
     {
 
         $pharmacy = Pharmacy::findOrFail(pharmacy()->id);
-        if ($request->hasFile('cv')) {
-            $file = $request->file('cv');
-            $fileName = pharmacy()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $folderName = 'pharmacy/' . pharmacy()->id;
-            $path = $file->storeAs($folderName, $fileName, 'public');
-            if (!empty($pharmacy->cv)) {
-                $this->fileDelete($pharmacy->cv);
-            }
-            $pharmacy->cv = $path;
-        }
-
-
         if (empty($pharmacy->oa_id)) {
             $pharmacy->oa_id = $request->oa_id;
         }
@@ -87,14 +75,9 @@ class PharmacyProfileController extends Controller
         $pharmacy->name = $request->name;
         $pharmacy->phone = $request->phone;
         $pharmacy->email = $request->email;
-        $pharmacy->age = $request->age;
         $pharmacy->identification_type = $request->identification_type;
         $pharmacy->identification_no = $request->identification_no;
         $pharmacy->present_address = $request->present_address;
-        $pharmacy->gender = $request->gender;
-        $pharmacy->dob = $request->dob;
-        $pharmacy->father_name = $request->father_name;
-        $pharmacy->mother_name = $request->mother_name;
         $pharmacy->permanent_address = $request->permanent_address;
         $pharmacy->emergency_phone = $request->emergency_phone;
         $pharmacy->update();

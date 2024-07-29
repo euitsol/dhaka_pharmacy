@@ -1,6 +1,6 @@
 <div class="row px-4 earning">
     <div class="col-md-4">
-        <h6 class="card-title fw-bolder">{{ __('Total Balance') }}</h6>
+        <h6 class="card-title fw-bolder">{{ __('Available Balance') }}</h6>
         <div class="card box">
             <div class="card-body">
                 <div class="amount">
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <h6 class="card-title fw-bolder">{{ __('Total Payments') }}</h6>
+        <h6 class="card-title fw-bolder">{{ __('Future Payments') }}</h6>
         <div class="card box">
             <div class="card-body">
                 <div class="amount">
@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <h6 class="card-title fw-bolder">{{ __('Total Withdrawn') }}</h6>
+        <h6 class="card-title fw-bolder">{{ __('Total Withdraw') }}</h6>
         <div class="card box">
             <div class="card-body">
                 <div class="amount">
@@ -60,7 +60,7 @@
             <tr>
                 <th>{{ __('Date') }}</th>
                 <th>{{ __('Activity') }}</th>
-                <th>{{ __('Per Point Rate') }}</th>
+                <th>{{ __('Total Point') }}</th>
                 <th>{{ __('Description') }}</th>
                 <th>{{ __('Order') }}</th>
                 <th>{{ __('Amount') }}</th>
@@ -72,7 +72,8 @@
                     <td>{{ timeFormate($earning->created_at) }}</td>
                     <td><span class="{{ $earning->activityBg() }}">{{ $earning->activityTitle() }}</span>
                     </td>
-                    <td>{!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }}</td>
+                    <td>{{ number_format($earning->point, 2) }}({!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }})
+                    </td>
                     <td>{{ $earning->description }}@if ($earning->activity == 2)
                             {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}
                         @endif

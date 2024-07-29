@@ -42,21 +42,21 @@ class Withdraw extends BaseModel
             case 0:
                 return 'Pending';
             case 1:
-                return 'Complete';
+                return 'Accepted';
             case 2:
-                return 'Declained';
+                return 'Declined';
         }
     }
     public function scopeStatus($query, $status)
     {
         switch ($status) {
-            case 'Pending':
+            case 'pending':
                 $status = 0;
                 break;
-            case 'Complete':
+            case 'accepted':
                 $status = 1;
                 break;
-            case 'Declained':
+            case 'declined':
                 $status = 2;
                 break;
         }

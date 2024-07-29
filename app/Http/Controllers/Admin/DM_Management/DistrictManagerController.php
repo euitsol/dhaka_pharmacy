@@ -37,6 +37,7 @@ class DistrictManagerController extends Controller
         $data = DistrictManager::with('operation_area')->findOrFail($id);
         $data->total_lams = count($data->lams);
         $this->simpleColumnData($data);
+        $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
     }
 

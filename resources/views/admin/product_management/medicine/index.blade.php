@@ -25,13 +25,13 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Product Category') }}</th>
-                                <th title="{{__('Maximum Retail Price')}}">{{__('MRP')}}</th>
+                                <th title="{{ __('Maximum Retail Price') }}">{{ __('MRP') }}</th>
                                 <th>{{ __('Discount') }} </th>
                                 <th>{{ __('Price') }}</th>
                                 <th>{{ __('Best Selling') }}</th>
                                 <th>{{ __('Featured') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -42,9 +42,11 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $medicine->name }} </td>
                                     <td> {{ $medicine->pro_cat->name }} </td>
-                                    <td> {{ number_format($medicine->price,2) }} {{__('BDT')}} </td>
-                                    <td> {{ number_format(calculateProductDiscount($medicine, false),2) }}{{__(' BDT')}} </td>
-                                    <td> {{ number_format(proDisPrice($medicine->price, $medicine->discounts),2) }} {{__('BDT')}} </td>
+                                    <td> {{ number_format($medicine->price, 2) }} {{ __('BDT') }} </td>
+                                    <td> {{ number_format(calculateProductDiscount($medicine, false), 2) }}{{ __(' BDT') }}
+                                    </td>
+                                    <td> {{ number_format(proDisPrice($medicine->price, $medicine->discounts), 2) }}
+                                        {{ __('BDT') }} </td>
                                     <td>
                                         <span
                                             class="{{ $medicine->getBestSellingBadgeClass() }}">{{ $medicine->getBestSelling() }}</span>
@@ -69,32 +71,27 @@
                                                     'label' => 'View Details',
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'product.medicine.medicine_edit',
+                                                    'routeName' => 'product.medicine.medicine_edit',
                                                     'params' => [$medicine->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'product.medicine.best_selling.medicine_edit',
+                                                    'routeName' => 'product.medicine.best_selling.medicine_edit',
                                                     'params' => [$medicine->id],
                                                     'label' => $medicine->getBtnBestSelling(),
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'product.medicine.featured.medicine_edit',
+                                                    'routeName' => 'product.medicine.featured.medicine_edit',
                                                     'params' => [$medicine->id],
                                                     'label' => $medicine->getBtnFeatured(),
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'product.medicine.status.medicine_edit',
+                                                    'routeName' => 'product.medicine.status.medicine_edit',
                                                     'params' => [$medicine->id],
                                                     'label' => $medicine->getBtnStatus(),
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'product.medicine.medicine_delete',
+                                                    'routeName' => 'product.medicine.medicine_delete',
                                                     'params' => [$medicine->id],
                                                     'label' => 'Delete',
                                                     'delete' => true,

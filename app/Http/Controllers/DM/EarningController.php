@@ -23,20 +23,20 @@ class EarningController extends Controller
     }
     public function index(Request $request)
     {
-        $query = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
-            ->dm()->latest();
+        $query = Earning::with(['point_history'])->dm()->latest();
         if ($request->filled('from') && $request->filled('to')) {
             $query->whereDate('created_at', '>=', $request->from)
                 ->whereDate('created_at', '<=', $request->to);
         }
         $totalEarnings = $query->get();
-        $paginateEarnings = $query->paginate(10)->withQueryString();
+        $paginateEarnings = $query->with(['receiver', 'withdraw_earning.withdraw.withdraw_method'])->paginate(10)->withQueryString();
         $paginateEarnings->getCollection()->each(function (&$earning) {
             $earning->creationDate = timeFormate($earning->created_at);
             $earning->activityBg = $earning->activityBg();
             $earning->activityTitle = $earning->activityTitle();
         });
         $data = [
+            'point_name' => getPointName(),
             'totalEarnings' => $totalEarnings,
             'paginateEarnings' => $paginateEarnings,
             'pagination' => $paginateEarnings->links('vendor.pagination.bootstrap-5')->render(),
@@ -72,13 +72,19 @@ class EarningController extends Controller
         DB::beginTransaction();
 
         try {
+            $totalEarnings =  Earning::dm()->get();
+            $pw_check = $totalEarnings->where('activity', 2)->first();
+            if ($pw_check) {
+                flash()->addInfo('You have a pending withdrawal request. Please wait for it to be completed.');
+                return redirect()->back();
+            }
             $dm = dm();
             $w_amount = $request->amount;
             $withdraw_method = $request->withdraw_method;
-            $t_a_amount = getEarningEqAmounts(Earning::dm()->get());
+            $t_a_amount = getEarningEqAmounts($totalEarnings);
 
             if ($t_a_amount < $w_amount) {
-                flash()->addError('Insufficient balance.');
+                flash()->addWarning('Insufficient balance.');
                 return redirect()->back();
             }
 
@@ -108,7 +114,7 @@ class EarningController extends Controller
                         $earning->receiver()->associate($dm);
                         $earning->point = $w_point;
                         $earning->eq_amount = $w_amount;
-                        $earning->activity = 4; // Withdraw Pending
+                        $earning->activity = 2; // Withdraw Pending
                         $earning->description = 'Withdrawal request submitted successfully';
                         $earning->creater()->associate($dm);
                         $earning->save();
@@ -125,7 +131,7 @@ class EarningController extends Controller
                         $earning->receiver()->associate($dm);
                         $earning->point = $a_points;
                         $earning->eq_amount = $a_amount;
-                        $earning->activity = 4; // Withdraw Pending
+                        $earning->activity = 2; // Withdraw Pending
                         $earning->description = 'Withdrawal request submitted successfully';
                         $earning->creater()->associate($dm);
                         $earning->save();
