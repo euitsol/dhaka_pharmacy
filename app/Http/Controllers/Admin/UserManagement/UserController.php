@@ -50,7 +50,6 @@ class UserController extends Controller
             $this->calculateOrderTotalDiscountPrice($order);
         });
         $data['reviews'] = Review::with('product')->where('customer_id', $id)->latest()->get();
-        $data['wishlists'] = WishList::with('product')->where('user_id', $id)->latest()->get();
         $data['payments'] = Payment::with(['customer', 'order.od'])->where('customer_id', $id)->where('customer_type', $user_class)->latest()->get();
         return view('admin.user_management.user.profile', $data);
     }
