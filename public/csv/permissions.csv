@@ -130,3 +130,7 @@ w_list,admin,Withdraw
 w_details,admin,Withdraw
 w_accept,admin,Withdraw
 w_declined,admin,Withdraw
+pc_list,admin,"Payment Clearance"
+pc_details,admin,"Payment Clearance"
+pc_accept,admin,"Payment Clearance"
+pc_declined,admin,"Payment Clearance"
