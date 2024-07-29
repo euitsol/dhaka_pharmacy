@@ -21,7 +21,7 @@ class EarningContorller extends Controller
     }
     public function index(Request $request)
     {
-        $query = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
+        $query = Earning::with('point_history')
             ->lam()
             ->latest();
         if ($request->filled('from') && $request->filled('to')) {
@@ -29,13 +29,14 @@ class EarningContorller extends Controller
                 ->whereDate('created_at', '<=', $request->to);
         }
         $totalEarnings = $query->get();
-        $paginateEarnings = $query->paginate(10)->withQueryString();
+        $paginateEarnings = $query->with(['receiver', 'withdraw_earning.withdraw.withdraw_method'])->paginate(10)->withQueryString();
         $paginateEarnings->getCollection()->each(function (&$earning) {
             $earning->creationDate = timeFormate($earning->created_at);
             $earning->activityBg = $earning->activityBg();
             $earning->activityTitle = $earning->activityTitle();
         });
         $data = [
+            'point_name' => getPointName(),
             'totalEarnings' => $totalEarnings,
             'paginateEarnings' => $paginateEarnings,
             'pagination' => $paginateEarnings->links('vendor.pagination.bootstrap-5')->render(),

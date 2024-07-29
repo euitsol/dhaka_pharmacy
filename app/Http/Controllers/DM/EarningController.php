@@ -23,7 +23,7 @@ class EarningController extends Controller
     }
     public function index(Request $request)
     {
-        $query = Earning::with(['point_history'])->dm()->latest();
+        $query = Earning::with('point_history')->dm()->latest();
         if ($request->filled('from') && $request->filled('to')) {
             $query->whereDate('created_at', '>=', $request->from)
                 ->whereDate('created_at', '<=', $request->to);
