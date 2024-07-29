@@ -36,7 +36,7 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $up->customer->name }}</td>
                                     <td>{{ str_limit($up->address->address, 30) }}</td>
-                                    <td>{{ ucwords($up->delivery_type) }}</td>
+                                    <td>{{ $up->deliveryType() }}</td>
                                     <td>
                                         <div id="lightbox" class="lightbox">
                                             <div class="lightbox-content">

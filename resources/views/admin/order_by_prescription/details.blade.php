@@ -108,7 +108,7 @@
                             <tr>
                                 <th>{{ __('Delivery Type') }}</th>
                                 <th>:</th>
-                                <td>{{ ucwords($up->delivery_type) }}</td>
+                                <td>{{ $up->deliveryType() }}</td>
                             </tr>
                         </tbody>
                     </table>
