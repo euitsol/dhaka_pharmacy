@@ -895,7 +895,7 @@
                     <a class="@if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Accepted' || $pageSlug == 'w_Declined') @else collapsed @endif" data-toggle="collapse"
                         href="#withdraw"
                         @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Accepted' || $pageSlug == 'w_Declined') aria-expanded="true" @else aria-expanded="false" @endif>
-                        <i class="fa-solid fa-money-bill-wave"></i>
+                        <i class="fa-solid fa-hourglass-half"></i>
                         <span class="nav-link-text">{{ __('Withdraw Request') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
