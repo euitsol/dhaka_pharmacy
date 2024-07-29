@@ -35,7 +35,7 @@
                                     <td>{{ $order->products->count() }}</td>
                                     <td>{!! get_taka_icon() !!}{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}
                                     </td>
-                                    <td>{{ slugToTitle($order->delivery_type) }}</td>
+                                    <td>{{ $order->deliveryType() }}</td>
                                     <td><span class="{{ $order->statusBg() }}">{{ $order->statusTitle() }}</span></td>
                                     <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>

@@ -26,6 +26,15 @@ class OrderPrescription extends BaseModel
     {
         return $this->hasOne(Order::class, 'obp_id');
     }
+    public function deliveryType()
+    {
+        switch ($this->delivery_type) {
+            case 0:
+                return 'Normal';
+            case 1:
+                return 'Standard';
+        }
+    }
 
     public function statusBg()
     {

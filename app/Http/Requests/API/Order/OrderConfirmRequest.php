@@ -24,7 +24,7 @@ class OrderConfirmRequest extends BaseRequest
         return [
             'order_id' => 'required|exists:orders,id',
             'address' => 'required|exists:addresses,id',
-            'delivery_type' => 'required|in:normal,standard',
+            'delivery_type' => 'required|numeric',
             'delivery_fee' => 'required|numeric|min:1',
             'payment_method' => 'required|in:bkash,nogod,roket,upay,ssl',
         ];

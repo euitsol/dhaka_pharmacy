@@ -5,7 +5,7 @@
         <td>{{ $order->order_id }}</td>
         <td class="fw-bold">{{ __('Delivery Type') }}</td>
         <td>:</td>
-        <td>{{ ucwords($order->delivery_type) }}</td>
+        <td>{{ $order->deliveryType() }}</td>
     </tr>
     <tr>
         <td class="fw-bold">{{ __('Order Date') }}</td>
