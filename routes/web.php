@@ -100,6 +100,7 @@ use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\MapboxSettingsController;
+use App\Http\Controllers\Admin\PaymentClearanceController;
 use App\Http\Controllers\Admin\User\TipsController;
 use App\Http\Controllers\Admin\WithdrawMethodController as AdminWithdrawMethodController;
 use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
@@ -617,6 +618,13 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         Route::get('/details/{id}', 'details')->name('w_details');
         Route::get('/accept/{id}', 'accept')->name('w_accept');
         Route::post('/declined/{id}', 'declined')->name('w_declined');
+    });
+    // Payment Clearance
+    Route::controller(PaymentClearanceController::class)->prefix('payment-clearance')->name('pc.')->group(function () {
+        Route::get('/list/{status}', 'list')->name('pc_list');
+        Route::get('/details/{id}', 'details')->name('pc_details');
+        Route::get('/accept/{id}', 'accept')->name('pc_accept');
+        Route::post('/declined/{id}', 'declined')->name('pc_declined');
     });
     // Site Settings
     Route::controller(SiteSettingsController::class)->prefix('site-settings')->name('settings.')->group(function () {

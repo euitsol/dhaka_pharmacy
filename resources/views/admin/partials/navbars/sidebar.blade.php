@@ -840,6 +840,52 @@
                 </li>
             @endif
 
+            {{-- Payment Clearance  --}}
+            @if (mainMenuCheck([
+                    'prefixes' => ['pc.'],
+                    'routes' => ['pc_list'],
+                ]))
+                <li>
+                    <a class="@if ($pageSlug == 'pc_Payment-declined' || $pageSlug == 'pc_Pending-clearance' || $pageSlug == 'pc_Earning') @else collapsed @endif" data-toggle="collapse"
+                        href="#pc"
+                        @if ($pageSlug == 'pc_Payment-declined' || $pageSlug == 'pc_Pending-clearance' || $pageSlug == 'pc_Earning') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                        <span class="nav-link-text">{{ __('Payment Clearance') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'pc_Payment-declined' || $pageSlug == 'pc_Pending-clearance' || $pageSlug == 'pc_Earning') show @endif" id="pc">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'pc_Pending-clearance',
+                                        'routeName' => 'pc.pc_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'pending-clearance',
+                                        'label' => 'Pending clearance',
+                                    ],
+                                    [
+                                        'pageSlug' => 'pc_Earning',
+                                        'routeName' => 'pc.pc_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'earning',
+                                        'label' => 'Payments',
+                                    ],
+                                    [
+                                        'pageSlug' => 'pc_Payment-declined',
+                                        'routeName' => 'pc.pc_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'payment-declined',
+                                        'label' => 'Payment declined',
+                                    ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
             {{-- Withdraw Request  --}}
             @if (mainMenuCheck([
                     'prefixes' => ['withdraw.'],

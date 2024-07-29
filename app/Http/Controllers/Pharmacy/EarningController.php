@@ -34,7 +34,7 @@ class EarningController extends Controller
         $paginateEarnings->getCollection()->each(function (&$earning) {
             $earning->creationDate = timeFormate($earning->created_at);
             $earning->activityBg = $earning->activityBg();
-            $earning->activityTitle = $earning->activityTitle();
+            $earning->activityTitle = slugToTitle($earning->activityTitle());
         });
         $data = [
             'point_name' => getPointName(),
@@ -72,7 +72,7 @@ class EarningController extends Controller
         DB::beginTransaction();
 
         try {
-            
+
             $totalEarnings =  Earning::pharmacy()->get();
             $pw_check = $totalEarnings->where('activity', 2)->first();
             if ($pw_check) {
