@@ -23,7 +23,7 @@ class OrderConfirmRequest extends FormRequest
     {
         return [
             'address' => 'required|exists:addresses,id',
-            'delivery_type' => 'required',
+            'delivery_type' => 'nullable',
             'delivery_fee' => 'required|numeric',
             'payment_method' => 'required',
         ];
