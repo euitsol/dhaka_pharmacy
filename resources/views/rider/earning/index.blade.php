@@ -47,6 +47,7 @@
             'report': `{{ route('rider.earning.report') }}`,
         };
         const takaIcon = `{!! get_taka_icon() !!}`;
+        const order = true;
     </script>
     <script src="{{ asset('earning/earning.js') }}"></script>
 @endpush
