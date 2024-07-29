@@ -46,6 +46,7 @@
             'filter': `{{ route('lam.earning.index', ['page' => '1', 'from' => '_from', 'to' => '_to']) }}`,
             'report': `{{ route('lam.earning.report') }}`,
         };
+        const order = false;
         const takaIcon = `{!! get_taka_icon() !!}`;
     </script>
     <script src="{{ asset('earning/earning.js') }}"></script>
