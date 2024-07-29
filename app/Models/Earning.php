@@ -46,6 +46,8 @@ class Earning extends BaseModel
     public function activityBg()
     {
         switch ($this->activity) {
+            case -1:
+                return 'badge bg-secondary';
             case 0:
                 return 'badge badge-warning';
             case 1:
@@ -61,17 +63,44 @@ class Earning extends BaseModel
     public function activityTitle()
     {
         switch ($this->activity) {
+            case -1:
+                return 'Payment-declined';
             case 0:
-                return 'Pending clearance';
+                return 'Pending-clearance';
             case 1:
                 return 'Earning';
             case 2:
-                return 'Pending withdraw';
+                return 'Pending-withdraw';
             case 3:
                 return 'Withdraw';
             case 4:
-                return 'Withdraw Declined';
+                return 'Withdraw-declined';
         }
+    }
+
+    public function scopeActivity($query, $activity)
+    {
+        switch ($activity) {
+            case 'Payment-declined':
+                $activity = -1;
+                break;
+            case 'Pending-clearance':
+                $activity = 0;
+                break;
+            case 'Earning':
+                $activity = 1;
+                break;
+            case 'Pending-withdraw':
+                $activity = 2;
+                break;
+            case 'Withdraw':
+                $activity = 3;
+                break;
+            case 'Withdraw-declined':
+                $activity = 4;
+                break;
+        }
+        return $query->where('activity', $activity);
     }
 
 

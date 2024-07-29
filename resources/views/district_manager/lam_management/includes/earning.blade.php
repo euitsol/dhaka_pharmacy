@@ -22,7 +22,7 @@
         <div class="card box">
             <div class="card-body">
                 <div class="amount">
-                    <span class="text-muted fw-bold">{{ __('Payments being cleared') }}</span>
+                    <span class="text-muted fw-bold">{{ __('Pending clearance') }}</span>
                     <h4 class="my_amount">{{ number_format(getPendingEarningPoints($earnings), 2) }}
                         {{ getPointName() }}</h4>
                 </div>
@@ -70,7 +70,7 @@
             @foreach ($earnings as $earning)
                 <tr>
                     <td>{{ timeFormate($earning->created_at) }}</td>
-                    <td><span class="{{ $earning->activityBg() }}">{{ $earning->activityTitle() }}</span>
+                    <td><span class="{{ $earning->activityBg() }}">{{ slugToTitle($earning->activityTitle()) }}</span>
                     </td>
                     <td>{!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }}</td>
                     <td>{{ $earning->description }}@if ($earning->activity == 2)
