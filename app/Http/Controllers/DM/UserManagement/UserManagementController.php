@@ -47,12 +47,9 @@ class UserManagementController extends Controller
         $user_class = get_class($data['user']);
         $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $user_class)->first();
         $data['kyc_setting'] = KycSetting::where('type', 'user')->first();
-        $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od')->where('customer_id', $id)->where('customer_type', $user_class)->latest()->get()->each(function (&$order) {
-            $this->calculateOrderTotalDiscountPrice($order);
-        });
-        $data['reviews'] = Review::with('product')->where('customer_id', $id)->latest()->get();
-        $data['wishlists'] = WishList::with('product')->where('user_id', $id)->latest()->get();
-        $data['payments'] = Payment::with(['customer', 'order.od'])->where('customer_id', $id)->where('customer_type', $user_class)->latest()->get();
+        $data['orders'] = Order::where('customer_id', $id)->where('customer_type', $user_class)->latest()->get();
+        $data['reviews'] = Review::where('customer_id', $id)->latest()->get();
+        $data['payments'] = Payment::where('customer_id', $id)->where('customer_type', $user_class)->latest()->get();
         return view('district_manager.user_management.profile', $data);
     }
     public function create(): View

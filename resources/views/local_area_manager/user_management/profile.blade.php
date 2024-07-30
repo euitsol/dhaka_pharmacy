@@ -12,21 +12,6 @@
                             <button class="nav-link col" id="kyc-tab" data-bs-toggle="tab" data-bs-target="#kyc"
                                 type="button" role="tab" aria-controls="kyc"
                                 aria-selected="false">{{ __('KYC') }}</button>
-                            <button class="nav-link col" id="order-tab" data-bs-toggle="tab" data-bs-target="#order"
-                                type="button" role="tab" aria-controls="order"
-                                aria-selected="false">{{ __('Orders') }}</button>
-                            <button class="nav-link col" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments"
-                                type="button" role="tab" aria-controls="payments"
-                                aria-selected="false">{{ __('Payments') }}</button>
-                            <button class="nav-link col" id="review-tab" data-bs-toggle="tab" data-bs-target="#review"
-                                type="button" role="tab" aria-controls="review"
-                                aria-selected="false">{{ __('Review') }}</button>
-                            <button class="nav-link col" id="wish-tab" data-bs-toggle="tab" data-bs-target="#wish"
-                                type="button" role="tab" aria-controls="wish"
-                                aria-selected="false">{{ __('Wishlists') }}</button>
-
-
-
                         </div>
                     </nav>
 
@@ -40,21 +25,6 @@
                         <div class="tab-pane fade" id="kyc" role="tabpanel" aria-labelledby="kyc-tab">
                             @include('local_area_manager.user_management.includes.kyc')
                         </div>
-                        <div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="order-tab">
-                            @include('local_area_manager.user_management.includes.orders')
-                        </div>
-                        <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
-                            @include('local_area_manager.user_management.includes.payments')
-                        </div>
-                        <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                            @include('local_area_manager.user_management.includes.reviews')
-                        </div>
-                        <div class="tab-pane fade" id="wish" role="tabpanel" aria-labelledby="wish-tab">
-                            {{-- @include('admin.user_management.user.includes.wishlists') --}}
-                        </div>
-
-
-
                     </div>
                 </div>
             </div>
@@ -76,7 +46,7 @@
                     </div>
                     <div class="earning_info py-3">
                         <div class="row">
-                            <div class="col-lg-3 col-md-6">
+                            <div class="col-lg-4 col-md-6">
                                 <div class="card bg-transparent p-0 mb-0">
                                     <div class="card-body p-2">
                                         <h5 class="title">{{ __('Total Orders') }}</h5>
@@ -85,7 +55,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6">
+                            <div class="col-lg-4 col-md-6">
                                 <div class="card bg-transparent p-0 mb-0">
                                     <div class="card-body p-2">
                                         <h5 class="title">{{ __('Total Payments') }}</h5>
@@ -95,19 +65,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6">
+                            <div class="col-lg-4 col-md-6">
                                 <div class="card bg-transparent p-0 mb-0">
                                     <div class="card-body p-2">
                                         <h5 class="title">{{ __('Total Reviews') }}</h5>
-                                        <h5 class="m-0 amount">{{ number_format($reviews->count()) }}
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card bg-transparent p-0 mb-0">
-                                    <div class="card-body p-2">
-                                        <h5 class="title">{{ __('Total Wishlist') }}</h5>
                                         <h5 class="m-0 amount">{{ number_format($reviews->count()) }}
                                         </h5>
                                     </div>

@@ -101,7 +101,6 @@
                             <th>{{ __('Activity') }}</th>
                             <th>{{ __('Total Point') }}</th>
                             <th>{{ __('Description') }}</th>
-                            <th>{{ __('Order') }}</th>
                             <th>{{ __('Amount') }}</th>
                         </tr>
                     </thead>
@@ -119,7 +118,6 @@
                                         {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}
                                     @endif
                                 </td>
-                                <td>{{ $earning->order->order_id ?? '--' }}</td>
                                 <td>{!! get_taka_icon() !!}{{ number_format($earning->eq_amount, 2) }}</td>
                             </tr>
                         @endforeach
