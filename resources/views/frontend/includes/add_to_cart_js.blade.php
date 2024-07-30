@@ -298,7 +298,6 @@
             item_price = parseFloat($(this).attr('data-total'));
             total_price += item_price;
         });
-        console.log(total_price);
         $('.subtotal_price').html(numberFormat(total_price, 2));
     }
     refreshSubtotal();
