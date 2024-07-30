@@ -108,6 +108,7 @@ use App\Http\Controllers\DM\EarningController as DmEarningController;
 use App\Http\Controllers\DM\WithdrawMethodController as DmWithdrawMethodController;
 use App\Http\Controllers\Frontend\FaqPageController;
 use App\Http\Controllers\Frontend\PrivacyPolicyPageController;
+use App\Http\Controllers\Frontend\TermsAndConditionsPageController;
 use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
 use App\Http\Controllers\LAM\WithdrawMethodController as LamWithdrawMethodController;
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
@@ -1028,6 +1029,7 @@ Route::get('/product-details/{slug}', [SingleProductController::class, 'singlePr
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
 Route::get('/frequently-asked-question', [FaqPageController::class, 'faq'])->name('faq');
 Route::get('/privacy-policy', [PrivacyPolicyPageController::class, 'privacy_policy'])->name('privacy_policy');
+Route::get('/terms-and-conditions', [TermsAndConditionsPageController::class, 'terms_and_conditions'])->name('terms_and_conditions');
 
 
 
