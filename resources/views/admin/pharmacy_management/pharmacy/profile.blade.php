@@ -13,6 +13,9 @@
                             <button class="nav-link col" id="kyc-tab" data-bs-toggle="tab" data-bs-target="#kyc"
                                 type="button" role="tab" aria-controls="kyc"
                                 aria-selected="false">{{ __('KYC') }}</button>
+                            <button class="nav-link col" id="order-tab" data-bs-toggle="tab" data-bs-target="#order"
+                                type="button" role="tab" aria-controls="order"
+                                aria-selected="false">{{ __('Orders') }}</button>
                             <button class="nav-link col" id="earning-tab" data-bs-toggle="tab" data-bs-target="#earning"
                                 type="button" role="tab" aria-controls="earning"
                                 aria-selected="false">{{ __('Earnings') }}</button>
@@ -28,6 +31,9 @@
                         </div>
                         <div class="tab-pane fade" id="kyc" role="tabpanel" aria-labelledby="kyc-tab">
                             @include('admin.pharmacy_management.pharmacy.includes.kyc')
+                        </div>
+                        <div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="order-tab">
+                            @include('admin.pharmacy_management.pharmacy.includes.order')
                         </div>
                         <div class="tab-pane fade" id="earning" role="tabpanel" aria-labelledby="earning-tab">
                             @include('admin.pharmacy_management.pharmacy.includes.earning')
@@ -60,6 +66,16 @@
                                         <h5 class="title">{{ __('Available Balance') }}</h5>
                                         <h5 class="m-0 amount">
                                             {{ number_format(getEarningEqAmounts($earnings), 2) }}{{ __(' BDT') }}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-transparent p-0 mb-0">
+                                    <div class="card-body p-2">
+                                        <h5 class="title">{{ __('Total Orders') }}</h5>
+                                        <h5 class="m-0 amount">
+                                            {{ number_format($ods->count()) }}
                                         </h5>
                                     </div>
                                 </div>

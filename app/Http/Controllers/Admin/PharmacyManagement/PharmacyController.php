@@ -43,19 +43,21 @@ class PharmacyController extends Controller
     }
     public function profile($id): View
     {
-        $data['pharmacy'] = Pharmacy::with(['creater', 'updater'])->findOrFail(decrypt($id));
+        $pharmacy_id = decrypt($id);
+        $data['pharmacy'] = Pharmacy::with(['creater', 'updater'])->findOrFail($pharmacy_id);
         $pharmacy_class = get_class($data['pharmacy']);
         $data['kyc'] = SubmittedKyc::where('creater_id', decrypt($id))->where('creater_type', $pharmacy_class)->first();
         $data['kyc_setting'] = KycSetting::where('type', 'pharmacy')->first();
         $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
             ->where('receiver_id', decrypt($id))->where('receiver_type', $pharmacy_class)->get();
-
-        $data['ods'] =  OrderDistribution::with(['order', 'odps' => function ($query) use ($id) {
-            $query->where('pharmacy_id', $id);
-        }, 'odrs', 'order.products.discounts', 'order.products.pivot', 'order.products.pivot.unit'])->get()
-            ->each(function (&$od) {
-                $this->calculateOrderTotalDiscountPrice($od->order);
-            });
+        $query =  OrderDistribution::with(['order', 'odps' => function ($query) use ($pharmacy_id) {
+            $query->where('pharmacy_id', $pharmacy_id);
+        }, 'odrs', 'order.products.discounts', 'order.products.pivot', 'order.products.pivot.unit'])->whereHas('odps', function ($query) use ($pharmacy_id) {
+            $query->where('pharmacy_id', $pharmacy_id);
+        });
+        $data['ods'] = $query->get()->each(function (&$od) {
+            $this->calculateOrderTotalDiscountPrice($od->order);
+        });
         $data['point_name'] = getPointName();
         return view('admin.pharmacy_management.pharmacy.profile', $data);
     }
