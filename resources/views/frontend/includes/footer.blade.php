@@ -117,7 +117,7 @@
                         <h2 class="title">{{ __('Customer Service') }}</h2>
                         <div class="footer-menu">
                             <ul class="footer-nav">
-                                <li><a href="#">{{ __('FAQ') }}</a></li>
+                                <li><a href="{{ route('faq') }}">{{ __('FAQ') }}</a></li>
                                 <li><a href="#">{{ __('Terms and Conditions') }}</a></li>
                                 <li><a href="#">{{ __('Privacy Policy') }}</a></li>
                                 @if (!Auth::guard('web')->check())
