@@ -106,6 +106,7 @@ use App\Http\Controllers\Admin\WithdrawMethodController as AdminWithdrawMethodCo
 use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
 use App\Http\Controllers\DM\EarningController as DmEarningController;
 use App\Http\Controllers\DM\WithdrawMethodController as DmWithdrawMethodController;
+use App\Http\Controllers\Frontend\FaqPageController;
 use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
 use App\Http\Controllers\LAM\WithdrawMethodController as LamWithdrawMethodController;
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
@@ -1024,6 +1025,7 @@ Route::controller(HomePageController::class)->group(function () {
 Route::get('/product-search/{search_value}/{category}', [ProductSearchController::class, 'productSearch'])->name('home.product.search');
 Route::get('/product-details/{slug}', [SingleProductController::class, 'singleProduct'])->name('product.single_product');
 Route::get('/products', [ProductPageController::class, 'products'])->name('category.products');
+Route::get('/frequently-asked-question', [FaqPageController::class, 'faq'])->name('faq');
 
 
 
