@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'pharmacy'])
+@section('title', 'Pharmacy Profile')
 @section('content')
     <div class="row profile">
         <div class="col-md-8">

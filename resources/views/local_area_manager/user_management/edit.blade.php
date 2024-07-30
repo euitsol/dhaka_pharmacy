@@ -1,5 +1,5 @@
 @extends('local_area_manager.layouts.master', ['pageSlug' => 'user'])
-
+@section('title', 'Edit User')
 @section('content')
     <div class="row px-3">
         <div class=" {{ $document ? 'col-md-8' : 'col-md-12' }}">
@@ -23,18 +23,18 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label>{{__('Name')}}</label>
+                            <label>{{ __('Name') }}</label>
                             <input type="text" name="name" class="form-control" placeholder="Enter name"
                                 value="{{ $user->name }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>{{__('Phone')}}</label>
+                            <label>{{ __('Phone') }}</label>
                             <input type="text" name="phone" class="form-control" placeholder="Enter phone"
                                 value="{{ $user->phone }}">
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
-                        <button type="submit" class="btn btn-primary">{{__('Update')}}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
                     </form>
                 </div>
             </div>

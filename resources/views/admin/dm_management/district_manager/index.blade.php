@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'district_manager'])
+@section('title', 'District Manager List')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 @endpush

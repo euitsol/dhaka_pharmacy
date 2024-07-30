@@ -1,5 +1,5 @@
 @extends('rider.layouts.master', ['pageSlug' => $slug])
-
+@section('title', ucwords(strtolower(str_replace('-', ' ', $slug))) . ' Order List')
 @section('content')
     <div class="row">
         <div class="col-md-12">

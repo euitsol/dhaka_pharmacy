@@ -1,4 +1,5 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'kyc_verification'])
+@section('title', 'KYC Verification Center')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dm/css/kyc.css') }}">
 @endpush

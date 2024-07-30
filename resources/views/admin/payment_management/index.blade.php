@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'payment_' . $status])
+@section('title', 'Payment List')
 @section('content')
     <div class="row">
         <div class="col-md-12">

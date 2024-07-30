@@ -1,5 +1,5 @@
 @extends('pharmacy.layouts.master', ['pageSlug' => $status . '_orders'])
-
+@section('title', ucwords(strtolower(str_replace('-', ' ', $status))) . ' Orders')
 @section('content')
     <div class="row">
         <div class="col-md-12">

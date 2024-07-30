@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'district_manager'])
+@section('title', 'District Manager Profile')
 @section('content')
     <div class="row profile">
         <div class="col-md-8">

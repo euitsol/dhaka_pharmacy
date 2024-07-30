@@ -1,4 +1,5 @@
 @extends('local_area_manager.layouts.master', ['pageSlug' => 'user'])
+@section('title', 'User List')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 @endpush
@@ -9,7 +10,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">User List</h4>
+                            <h4 class="card-title">{{ __('User List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [

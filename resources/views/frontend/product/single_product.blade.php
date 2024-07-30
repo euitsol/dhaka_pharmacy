@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title', 'Home')
+@section('title', $single_product->name)
 @push('css_link')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/plugin/xzoom/xzoom.min.css') }}" media="all" />

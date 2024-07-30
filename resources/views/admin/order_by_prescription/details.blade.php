@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'ubp_' . $up->statusTitle()])
+@section('title', 'Order By Prescription Details')
 @section('content')
     <div class="row">
         @if ($up->status == 0)

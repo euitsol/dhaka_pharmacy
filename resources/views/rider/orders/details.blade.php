@@ -1,5 +1,5 @@
 @extends('rider.layouts.master', ['pageSlug' => $dor->statusTitle() . '_orders'])
-
+@section('title', 'Order Details')
 @push('css')
     <style>
         .pharmacy-location-map,

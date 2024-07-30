@@ -1,5 +1,4 @@
 @extends('admin.layouts.master', ['pageSlug' => 'rider_kyc_settings'])
-
 @section('title', 'Rider KYC Settings')
 @push('css_link')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">

@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'operation_sub_area'])
-
+@section('title', 'Opeation Sub Area List')
 @section('content')
     <div class="row">
         <div class="col-md-12">

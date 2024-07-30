@@ -1,4 +1,5 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'lam'])
+@section('title', 'Create Local Area Manager')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">

@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'latest_offer'])
+@section('title', 'Latest Offer List')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 @endpush

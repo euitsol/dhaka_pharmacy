@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'local_area_manager'])
-
+@section('title', 'Edit Local Area Manager')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Update Local Area Manager') }}</h4>
+                            <h4 class="card-title">{{ __('Edit Local Area Manager') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [

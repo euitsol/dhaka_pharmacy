@@ -1,5 +1,5 @@
 @extends('local_area_manager.layouts.master', ['pageSlug' => 'operational_area'])
-
+@section('title', 'Operation Area List')
 @section('content')
     <div class="row">
         <div class="col-md-12">

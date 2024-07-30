@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'order_' . $status])
+@section('title', slugToTitle($status) . ' Order List')
 @section('content')
     <div class="row">
         <div class="col-md-12">

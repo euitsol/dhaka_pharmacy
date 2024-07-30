@@ -1,6 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'dashboard'])
-
-@section('title', 'Dashboard')
+@section('title', 'Admin Dashboard')
 @push('css')
     <style>
         .dashboard_wrap {

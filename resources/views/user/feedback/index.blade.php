@@ -1,9 +1,8 @@
 @extends('user.layouts.master', ['pageSlug' => 'feedback'])
-
+@section('title', 'Feedback')
 @push('css')
     <link rel="stylesheet" href="{{ asset('user/asset/css/feedback.css') }}">
 @endpush
-@section('title', 'Feedback')
 @section('content')
     <section class="form-section">
         <div class="container">

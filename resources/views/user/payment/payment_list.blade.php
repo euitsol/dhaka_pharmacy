@@ -1,5 +1,5 @@
 @extends('user.layouts.master', ['pageSlug' => 'payment'])
-
+@section('title', 'Payment List')
 @push('css')
     <style>
         .my-order-section .order-row .order-status .total {
@@ -8,7 +8,6 @@
         }
     </style>
 @endpush
-@section('title', 'Payment List')
 @section('content')
     <section class="my-order-section">
         <div class="container">

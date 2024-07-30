@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'role'])
+@section('title', 'Create Role')
 @push('css')
     <style>
         .groupName {

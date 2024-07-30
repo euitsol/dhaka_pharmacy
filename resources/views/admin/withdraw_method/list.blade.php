@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'wm_' . $status])
-@section('title', 'Withdraw Method List')
+@section('title', "Withdraw Method $status List")
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Withdraw Method List') }}</h4>
+                            <h4 class="card-title">{{ __("Withdraw Method $status List") }}</h4>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'dm_kyc_list'])
-
+@section('title', 'District Manager KYC List')
 @section('content')
     <div class="row">
         @forelse ($datas as $groupDatas)

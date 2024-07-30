@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine'])
-
+@section('title', 'Edit Product')
 @section('content')
     @if ($errors->any())
         <div class="alert alert-danger">
