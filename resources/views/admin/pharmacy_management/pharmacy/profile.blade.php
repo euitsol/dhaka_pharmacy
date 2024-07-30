@@ -4,18 +4,18 @@
     <div class="row profile">
         <div class="col-md-8">
             <div class="card h-100 mb-0">
-                <div class="card-header">
+                <div class="card-header px-4">
                     <nav>
                         <div class="nav nav-tabs row" id="nav-tab" role="tablist">
                             <button class="nav-link active col" id="details-tab" data-bs-toggle="tab" data-bs-target="#details"
                                 type="button" role="tab" aria-controls="details"
                                 aria-selected="true">{{ __('Details') }}</button>
-                            <button class="nav-link col" id="earning-tab" data-bs-toggle="tab" data-bs-target="#earning"
-                                type="button" role="tab" aria-controls="earning"
-                                aria-selected="false">{{ __('Earnings') }}</button>
                             <button class="nav-link col" id="kyc-tab" data-bs-toggle="tab" data-bs-target="#kyc"
                                 type="button" role="tab" aria-controls="kyc"
                                 aria-selected="false">{{ __('KYC') }}</button>
+                            <button class="nav-link col" id="earning-tab" data-bs-toggle="tab" data-bs-target="#earning"
+                                type="button" role="tab" aria-controls="earning"
+                                aria-selected="false">{{ __('Earnings') }}</button>
                         </div>
                     </nav>
 
@@ -26,11 +26,11 @@
                             aria-labelledby="details-tab">
                             @include('admin.pharmacy_management.pharmacy.includes.details')
                         </div>
-                        <div class="tab-pane fade" id="earning" role="tabpanel" aria-labelledby="earning-tab">
-                            @include('admin.pharmacy_management.pharmacy.includes.earning')
-                        </div>
                         <div class="tab-pane fade" id="kyc" role="tabpanel" aria-labelledby="kyc-tab">
                             @include('admin.pharmacy_management.pharmacy.includes.kyc')
+                        </div>
+                        <div class="tab-pane fade" id="earning" role="tabpanel" aria-labelledby="earning-tab">
+                            @include('admin.pharmacy_management.pharmacy.includes.earning')
                         </div>
                     </div>
                 </div>
