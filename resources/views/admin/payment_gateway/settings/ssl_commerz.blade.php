@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'ssl_commerz'])
-@section('title', 'Payment Gateway Settings')
+@section('title', 'SSL Payment Gateway Settings')
 @section('content')
     <div class="row">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
@@ -16,8 +16,7 @@
                             <label>{{ _('Store ID') }}</label>
                             <input type="text" name="store_id"
                                 class="form-control{{ $errors->has('store_id') ? ' is-invalid' : '' }}"
-                                placeholder="{{ _('Store ID') }}"
-                                value="{{ $pg_settings['store_id'] ?? '' }}">
+                                placeholder="{{ _('Store ID') }}" value="{{ $pg_settings['store_id'] ?? '' }}">
                             @include('alerts.feedback', ['field' => 'store_id'])
                         </div>
                         <div class="form-group{{ $errors->has('store_password') ? ' has-danger' : '' }}">
@@ -40,9 +39,9 @@
                             </select>
                             @include('alerts.feedback', ['field' => 'test_mode'])
                         </div>
-        
 
-                        
+
+
 
 
                     </div>
@@ -52,7 +51,7 @@
                 </form>
             </div>
         </div>
-        @include('admin.partials.documentation',['document'=>$document])
+        @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection
 @push('js')

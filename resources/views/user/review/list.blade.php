@@ -1,5 +1,5 @@
 @extends('user.layouts.master', ['pageSlug' => 'review'])
-@section('title', 'All Reviews')
+@section('title', 'Review')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
     <style>

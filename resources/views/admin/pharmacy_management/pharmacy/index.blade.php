@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'pharmacy'])
+@section('title', 'Pharmacy List')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 @endpush

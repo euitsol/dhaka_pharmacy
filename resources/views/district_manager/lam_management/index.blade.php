@@ -1,4 +1,5 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'lam'])
+@section('title', 'Local Area Manager List')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 @endpush

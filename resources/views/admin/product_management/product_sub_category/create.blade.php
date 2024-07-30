@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'product_sub_category'])
-
+@section('title', 'Create Product Sub Category')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">

@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'payment_' . $payment->statusTitle()])
+@section('title', 'Payment Details')
 @push('css')
     <link rel="stylesheet" href="{{ asset('admin/css/ordermanagement.css') }}">
 @endpush

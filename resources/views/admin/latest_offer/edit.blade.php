@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'latest_offer'])
+@section('title', 'Edit Latest Offer')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">

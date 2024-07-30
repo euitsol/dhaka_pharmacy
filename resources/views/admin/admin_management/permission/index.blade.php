@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'permission'])
-
+@section('title', 'Permission List')
 @section('content')
     <div class="row">
         <div class="col-md-12">

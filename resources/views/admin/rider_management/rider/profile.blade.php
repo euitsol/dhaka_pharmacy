@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'rider'])
+@section('title', 'Rider Profile')
 @section('content')
     <div class="row profile">
         <div class="col-md-8">

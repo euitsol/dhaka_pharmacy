@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'order_' . $order->statusTitle()])
+@section('title', 'Processed Order Details')
 @push('css_link')
     <link rel="stylesheet" href="{{ asset('admin/css/ordermanagement.css') }}">
 @endpush

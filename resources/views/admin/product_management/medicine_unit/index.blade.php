@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine_unit'])
-
+@section('title', 'Medicine Unit List')
 @section('content')
     <div class="row">
         <div class="col-md-12">

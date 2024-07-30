@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'pharmacy'])
+@section('title', 'Edit Pharmacy Discount')
 @push('css')
     <style>
         .input-group .percentage {
@@ -17,7 +18,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Update Pharmacy Discount') }}</h4>
+                            <h4 class="card-title">{{ __('Edit Pharmacy Discount') }}</h4>
                         </div>
                     </div>
                 </div>

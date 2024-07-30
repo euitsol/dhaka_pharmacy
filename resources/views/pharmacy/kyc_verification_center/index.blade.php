@@ -1,4 +1,5 @@
 @extends('pharmacy.layouts.master', ['pageSlug' => 'kyc_verification'])
+@section('title', 'KYC Verification Center')
 @push('css')
     <style>
         .form-group .form-control,

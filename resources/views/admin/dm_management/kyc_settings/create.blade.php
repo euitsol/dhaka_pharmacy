@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'dm_kyc_settings'])
-
+@section('title', 'District Manager KYC Settings')
 @section('title', 'KYC Settings')
 @push('css_link')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">

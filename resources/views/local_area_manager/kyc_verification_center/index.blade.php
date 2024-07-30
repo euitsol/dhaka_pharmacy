@@ -1,4 +1,5 @@
 @extends('local_area_manager.layouts.master', ['pageSlug' => 'kyc_verification'])
+@section('title', 'KYC Verification Center')
 @push('css')
     <style>
         .form-group .form-control,
@@ -35,8 +36,6 @@
         }
     </style>
 @endpush
-
-
 @section('content')
     <div class="row">
         <div class="col-md-8">

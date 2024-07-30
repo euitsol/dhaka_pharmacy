@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'product_sub_category'])
-
+@section('title', 'Edit Product Sub Category')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Update Product Sub Category') }}</h4>
+                            <h4 class="card-title">{{ __('Edit Product Sub Category') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [

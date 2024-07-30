@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'pharmacy'])
-
+@section('title', 'Edit Pharmacy')
 @section('content')
     <div class="row px-3">
         <div class=" {{ $document ? 'col-md-8' : 'col-md-12' }}">
