@@ -118,7 +118,8 @@
                         <div class="footer-menu">
                             <ul class="footer-nav">
                                 <li><a href="{{ route('faq') }}">{{ __('FAQ') }}</a></li>
-                                <li><a href="#">{{ __('Terms and Conditions') }}</a></li>
+                                <li><a href="{{ route('terms_and_conditions') }}">{{ __('Terms and Conditions') }}</a>
+                                </li>
                                 <li><a href="{{ route('privacy_policy') }}">{{ __('Privacy Policy') }}</a></li>
                                 @if (!Auth::guard('web')->check())
                                     <li><a href="{{ route('use.register') }}">{{ __('Register') }}</a></li>

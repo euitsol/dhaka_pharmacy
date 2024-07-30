@@ -1,0 +1,22 @@
+.tream-condition h2{
+    font-family: var(--secondry-font);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 40px;
+    color: var(--text);
+}
+.tream-condition hr{
+    border-width: 3px;
+    border-color: rgba(0, 0, 0, 0.7);
+}
+.tream-condition ul{
+    padding-left: 0;
+}
+.tream-condition ul li, .tream-condition p{
+    list-style: none;
+    font-family: var(--secondry-font);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 40px;
+    color: rgba(0, 0, 0, 0.7);
+}
