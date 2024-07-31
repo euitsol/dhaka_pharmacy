@@ -45,7 +45,7 @@ class OrderManagementController extends Controller
         switch ($status) {
             case 'assigned':
                 $data['slug'] = 'assigned_orders';
-                $data['dors'] = OrderDistributionRider::with(['od.active_odps.pharmacy','od.order.address', 'rider'])->where('rider_id', rider()->id)
+                $data['dors'] = OrderDistributionRider::with(['od.active_odps.pharmacy', 'od.order.address', 'rider'])->where('rider_id', rider()->id)
                     ->where('status', 0)->orWhere('status', 1)
                     ->orderBy('priority', 'desc')
                     ->latest()->get()
@@ -55,7 +55,7 @@ class OrderManagementController extends Controller
                 break;
             case 'picked-up':
                 $data['slug'] = 'picked_up_orders';
-                $data['dors'] = OrderDistributionRider::with(['od.active_odps.pharmacy','od.order.address', 'rider'])->where('rider_id', rider()->id)
+                $data['dors'] = OrderDistributionRider::with(['od.active_odps.pharmacy', 'od.order.address', 'rider'])->where('rider_id', rider()->id)
                     ->where('status', 2)->orWhere('status', 3)
                     ->orderBy('priority', 'desc')
                     ->latest()->get()
@@ -87,7 +87,7 @@ class OrderManagementController extends Controller
         $otp = $od->active_otps->where('rider_id', rider()->id)->first();
         $reqOtp = implode('', $request->otp);
 
-        if(!empty($otp) && $otp->otp == $reqOtp){
+        if (!empty($otp) && $otp->otp == $reqOtp) {
             DB::transaction(function () use ($od, $otp) {
                 $od->status = 4; // rider picked up
                 $od->save();
@@ -108,8 +108,7 @@ class OrderManagementController extends Controller
 
                 flash()->addSuccess('Order delivered successfully.');
             });
-
-        }else{
+        } else {
             flash()->addError('Something went wrong. Please try again');
         }
 
@@ -244,7 +243,6 @@ class OrderManagementController extends Controller
                 'pharmacy' => $p,
             ],
         ]);
-
     }
 
     protected function getStatus($status)

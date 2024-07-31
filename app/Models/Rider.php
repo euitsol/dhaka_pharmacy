@@ -34,4 +34,9 @@ class Rider extends AuthenticateBaseModel
     {
         return $this->belongsTo(OperationSubArea::class, 'osa_id');
     }
+
+    public function odrs()
+    {
+        return $this->hasMany(OrderDistributionRider::class, 'rider_id');
+    }
 }

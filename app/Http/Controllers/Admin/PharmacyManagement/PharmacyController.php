@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
-use App\Http\Traits\TransformOrderItemTrait;
 use App\Models\Earning;
 use App\Models\KycSetting;
 use App\Models\OrderDistribution;
@@ -22,7 +21,7 @@ use App\Models\SubmittedKyc;
 
 class PharmacyController extends Controller
 {
-    use DetailsCommonDataTrait, TransformOrderItemTrait;
+    use DetailsCommonDataTrait;
 
     public function __construct()
     {
@@ -44,7 +43,7 @@ class PharmacyController extends Controller
     public function profile($id): View
     {
         $pharmacy_id = decrypt($id);
-        $data['pharmacy'] = Pharmacy::with(['creater', 'updater'])->findOrFail($pharmacy_id);
+        $data['pharmacy'] = Pharmacy::with(['creater', 'address', 'updater'])->findOrFail($pharmacy_id);
         $pharmacy_class = get_class($data['pharmacy']);
         $data['kyc'] = SubmittedKyc::where('creater_id', decrypt($id))->where('creater_type', $pharmacy_class)->first();
         $data['kyc_setting'] = KycSetting::where('type', 'pharmacy')->first();
@@ -55,9 +54,7 @@ class PharmacyController extends Controller
         }, 'odrs', 'order.products.discounts', 'order.products.pivot', 'order.products.pivot.unit'])->whereHas('odps', function ($query) use ($pharmacy_id) {
             $query->where('pharmacy_id', $pharmacy_id);
         });
-        $data['ods'] = $query->get()->each(function (&$od) {
-            $this->calculateOrderTotalDiscountPrice($od->order);
-        });
+        $data['ods'] = $query->get();
         $data['point_name'] = getPointName();
         return view('admin.pharmacy_management.pharmacy.profile', $data);
     }
