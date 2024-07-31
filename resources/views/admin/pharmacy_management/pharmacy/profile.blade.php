@@ -1,5 +1,18 @@
 @extends('admin.layouts.master', ['pageSlug' => 'pharmacy'])
 @section('title', 'Pharmacy Profile')
+@push('css_link')
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
+        type="text/css" />
+@endpush
+@push('css')
+    <style>
+        .map {
+            height: 300px;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="row profile">
         <div class="col-md-8">
@@ -7,8 +20,8 @@
                 <div class="card-header px-4">
                     <nav>
                         <div class="nav nav-tabs row" id="nav-tab" role="tablist">
-                            <button class="nav-link active col" id="details-tab" data-bs-toggle="tab" data-bs-target="#details"
-                                type="button" role="tab" aria-controls="details"
+                            <button class="nav-link active col" id="details-tab" data-bs-toggle="tab"
+                                data-bs-target="#details" type="button" role="tab" aria-controls="details"
                                 aria-selected="true">{{ __('Details') }}</button>
                             <button class="nav-link col" id="kyc-tab" data-bs-toggle="tab" data-bs-target="#kyc"
                                 type="button" role="tab" aria-controls="kyc"
@@ -97,12 +110,23 @@
                             <li>
                                 <i class="fa-solid fa-location-dot mr-2"></i>
                                 <span class="title">{{ __('Address : ') }}</span>
-                                <span class="content">{!! $pharmacy->present_address ?? '--' !!}</span>
+                                <span class="content">{!! $pharmacy->address ? $pharmacy->address->address : '--' !!}</span>
                             </li>
                         </ul>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="map" id="map" data-lat="{{ optional($pharmacy->address)->latitude }}"
+                            data-lng="{{ optional($pharmacy->address)->longitude }}"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+@push('js_link')
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
+    </script>
+    <script src="{{ asset('pharmacy/js/mapbox.js') }}"></script>
+@endpush
