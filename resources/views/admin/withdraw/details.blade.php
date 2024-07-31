@@ -41,21 +41,22 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bolder"> {{ __('Created At') }} </td>
+                                        <td class="fw-bolder"> {{ __('Submitted Date') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ timeFormate($withdraw->created_at) }} </td>
                                         <td>|</td>
-                                        <td class="fw-bolder"> {{ __('Created By') }} </td>
+                                        <td class="fw-bolder"> {{ __('Submitted By') }} </td>
                                         <td>{{ __(':') }}</td>
-                                        <td> {{ c_user_name($withdraw->creater) }} </td>
+                                        <td> {{ c_user_name($withdraw->creater) . ' ( ' . getSubmitterType($withdraw->creater_type) . ' )' }}
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bolder"> {{ __('Accepted At') }} </td>
+                                        <td class="fw-bolder"> {{ __('Approved Date') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ $withdraw->created_at != $withdraw->updated_at ? timeFormate($withdraw->updated_at) : '--' }}
                                         </td>
                                         <td>|</td>
-                                        <td class="fw-bolder"> {{ __('Accepted By') }} </td>
+                                        <td class="fw-bolder"> {{ __('Approved By') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ u_user_name($withdraw->updater) }} </td>
                                     </tr>
@@ -99,7 +100,7 @@
                                     <tr>
                                         <td> {{ __('Type') }} </td>
                                         <td>{{ __(':') }}</td>
-                                        <td> {{ $withdraw->withdraw_method->type }} </td>
+                                        <td> {{ $withdraw->withdraw_method->type() }} </td>
                                         <td>|</td>
                                         <td> {{ __('Status') }} </td>
                                         <td>{{ __(':') }}</td>
@@ -108,21 +109,22 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td> {{ __('Created At') }} </td>
+                                        <td> {{ __('Submitted Date') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ timeFormate($withdraw->withdraw_method->created_at) }} </td>
                                         <td>|</td>
-                                        <td> {{ __('Created By') }} </td>
+                                        <td> {{ __('Submitted By') }} </td>
                                         <td>{{ __(':') }}</td>
-                                        <td> {{ c_user_name($withdraw->withdraw_method->creater) }} </td>
+                                        <td> {{ c_user_name($withdraw->withdraw_method->creater) . ' ( ' . getSubmitterType($withdraw->withdraw_method->creater_type) . ' )' }}
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td> {{ __('Accepted At') }} </td>
+                                        <td> {{ __('Approved Date') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ $withdraw->withdraw_method->created_at != $withdraw->withdraw_method->updated_at ? timeFormate($withdraw->withdraw_method->updated_at) : '--' }}
                                         </td>
                                         <td>|</td>
-                                        <td> {{ __('Accepted By') }} </td>
+                                        <td> {{ __('Approved By') }} </td>
                                         <td>{{ __(':') }}</td>
                                         <td> {{ u_user_name($withdraw->withdraw_method->updater) }} </td>
                                     </tr>
@@ -171,7 +173,7 @@
                             'params' => ['id' => encrypt($withdraw->id)],
                             'label' => 'Accept',
                         ])
-                        <a href="javascript:void(0)" class="btn btn-sm btn-danger declained_btn">{{ __('Declained') }}</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-danger declined_btn">{{ __('Decline') }}</a>
                     @endif
 
 
@@ -191,15 +193,15 @@
                     </button>
                 </div>
                 <div class="modal-body modal_data">
-                    <form method="POST" class="declainedForm">
+                    <form method="POST" class="declinedForm">
                         @csrf
                         <div class="form-group">
                             <label>{{ __('Reason') }}</label>
-                            <textarea name="declained_reason" placeholder="Enter declained reason" class="form-control">{{ old('declained_reason') }}</textarea>
-                            @include('alerts.feedback', ['field' => 'declained_reason'])
+                            <textarea name="declined_reason" placeholder="Enter declined reason" class="form-control">{{ old('declined_reason') }}</textarea>
+                            @include('alerts.feedback', ['field' => 'declined_reason'])
                         </div>
                         <a href="javascript:void(0)" data-id="{{ encrypt($withdraw->id) }}"
-                            class="btn btn-primary float-end declained_submit">{{ __('Submit') }}</a>
+                            class="btn btn-primary float-end declined_submit">{{ __('Submit') }}</a>
                     </form>
                 </div>
             </div>
@@ -209,16 +211,16 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('.declained_btn').on('click', function() {
+            $('.declined_btn').on('click', function() {
                 $('.view_modal').modal('show');
             });
         });
 
         $(document).ready(function() {
-            $('.declained_submit').click(function() {
-                var form = $('.declainedForm');
+            $('.declined_submit').click(function() {
+                var form = $('.declinedForm');
                 let id = $(this).data('id');
-                let _url = ("{{ route('withdraw.w_declained', ['id']) }}");
+                let _url = ("{{ route('withdraw.w_declined', ['id']) }}");
                 let __url = _url.replace('id', id);
                 $.ajax({
                     type: 'POST',
@@ -228,7 +230,7 @@
                         $('.invalid-feedback').remove();
                         $('.view_modal').modal('hide');
                         window.location.href =
-                            "{{ route('withdraw.w_list', 'Declained') }}";
+                            "{{ route('withdraw.w_list', 'Declined') }}";
                     },
                     error: function(xhr) {
                         if (xhr.status === 422) {

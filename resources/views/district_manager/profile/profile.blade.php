@@ -46,9 +46,10 @@
                                             @include('alerts.feedback', ['field' => 'phone'])
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Parents Phone') }}</label>
+                                            <label>{{ __('Emergency Contact') }}</label>
                                             <input type="text" name="parent_phone" class="form-control"
-                                                placeholder="Enter Parents Phone" value="{{ $dm->parent_phone }}">
+                                                placeholder="Enter Emergency Contact Number"
+                                                value="{{ $dm->parent_phone }}">
                                             @include('alerts.feedback', ['field' => 'parent_phone'])
                                         </div>
                                     </div>

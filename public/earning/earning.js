@@ -8,9 +8,16 @@ function getHtml(earnings) {
                                 ${earning.activityTitle}
                             </span>
                         </td>
-                        <td>${earning.description}</td>
-                        <td>${earning.order.order_id}</td>
-                        <td>${numberFormat(earning.amount, 2)} BDT</td>
+                        <td>${numberFormat(earning.point, 2)}${
+            takaIcon + numberFormat(earning.point_history.eq_amount, 2)
+        }</td>
+                        <td>${earning.description ?? "--"}</td>`;
+        if (order) {
+            result += `<td>${
+                earning.order ? earning.order.order_id : "--"
+            }</td>`;
+        }
+        result += `<td>${numberFormat(earning.eq_amount, 2)} BDT</td>
                     </tr>`;
     });
     return result;
@@ -60,7 +67,7 @@ $(document).ready(function () {
                 var earnings = data.paginateEarnings.data;
                 if (earnings.length === 0) {
                     result = `<tr>
-                        <td colspan="5" class="text-muted text-center">No earning found</td>
+                        <td colspan="6" class="text-muted text-center">No earning found</td>
                         </tr>`;
                 } else {
                     result = getHtml(earnings);

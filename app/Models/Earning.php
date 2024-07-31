@@ -43,38 +43,47 @@ class Earning extends BaseModel
     {
         return $this->belongsTo(PointHistory::class, 'ph_id');
     }
-
     public function activityBg()
     {
         switch ($this->activity) {
+            case 0:
+                return 'badge badge-warning';
             case 1:
                 return 'badge badge-success';
             case 2:
-                return 'badge badge-info';
-            case 3:
-                return 'badge badge-warning';
-            case 4:
                 return 'badge badge-primary';
-            case 5:
+            case 3:
+                return 'badge badge-info';
+            case 4:
                 return 'badge badge-danger';
         }
     }
-
     public function activityTitle()
     {
         switch ($this->activity) {
+            case 0:
+                return 'Pending clearance';
             case 1:
                 return 'Earning';
             case 2:
-                return 'Withdrawn';
+                return 'Pending withdraw';
             case 3:
-                return 'Pending clearance';
+                return 'Withdraw';
             case 4:
-                return 'Pending withdrawn';
-            case 5:
-                return 'Withdrawn Declained';
+                return 'Withdraw Declined';
         }
     }
+
+
+
+
+
+
+
+
+
+
+
     public function scopePharmacy($query)
     {
         return $query->where('receiver_id', pharmacy()->id)->where('receiver_type', get_class(pharmacy()));

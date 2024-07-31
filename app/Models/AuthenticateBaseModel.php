@@ -159,4 +159,20 @@ class AuthenticateBaseModel extends Authenticatable
             return 'badge badge-dark';
         }
     }
+    public function getEmailVerifyStatus()
+    {
+        if ($this->is_verify == 1) {
+            return 'Success';
+        } else {
+            return 'Pending';
+        }
+    }
+    public function getEmailVerifyClass()
+    {
+        if ($this->is_verify == 1) {
+            return 'badge badge-primary';
+        } else {
+            return 'badge badge-dark';
+        }
+    }
 }

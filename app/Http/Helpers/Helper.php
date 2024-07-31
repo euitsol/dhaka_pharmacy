@@ -525,45 +525,13 @@ function slugToTitle($slug)
 {
     return ucwords(strtolower(str_replace('-', ' ', $slug)));
 }
-function activatedTime($startTime, $endTime)
+function activatedTime($start_time, $end_time)
 {
-    $startTime = Carbon::parse($startTime);
-    $endTime = Carbon::parse($endTime);
-
-    if ($startTime->eq($endTime)) {
-        $endTime = Carbon::now();
-        $active = ' - continue';
+    if ($end_time != $start_time) {
+        return timeFormate($start_time) . ' - ' . timeFormate($end_time);
     } else {
-        $active = '';
+        return timeFormate($start_time) . " - Running";
     }
-
-    $diffInSeconds = $startTime->diffInSeconds($endTime);
-
-    $days = intdiv($diffInSeconds, 86400);
-    $diffInSeconds %= 86400;
-
-    $hours = intdiv($diffInSeconds, 3600);
-    $diffInSeconds %= 3600;
-
-    $minutes = intdiv($diffInSeconds, 60);
-    $seconds = $diffInSeconds % 60;
-
-    $string = '';
-
-    if ($days > 0) {
-        $string .= $days . ($days > 1 ? ' days, ' : ' day, ');
-    }
-    if ($hours > 0) {
-        $string .= $hours . ($hours > 1 ? ' hours, ' : ' hour, ');
-    }
-    if ($minutes > 0) {
-        $string .= $minutes . ($minutes > 1 ? ' minutes, ' : ' minute, ');
-    }
-    if ($seconds > 0) {
-        $string .= $seconds . ($seconds > 1 ? ' seconds' : ' second');
-    }
-
-    return rtrim($string, ', ') . $active;
 }
 
 function getPointName()
@@ -583,33 +551,39 @@ function translate($text)
 }
 function getEarningPoints($earnings)
 {
-    return ($earnings->where('activity', 1)->sum('point') - ($earnings->where('activity', 2)->sum('point') + $earnings->where('activity', 4)->sum('point')));
+    return ($earnings->where('activity', 1)->sum('point') - ($earnings->where('activity', 3)->sum('point') + $earnings->where('activity', 2)->sum('point')));
 }
 function getEarningEqAmounts($earnings)
 {
-    return ($earnings->where('activity', 1)->sum('eq_amount') - ($earnings->where('activity', 2)->sum('eq_amount') + $earnings->where('activity', 4)->sum('eq_amount')));
+    return ($earnings->where('activity', 1)->sum('eq_amount') - ($earnings->where('activity', 3)->sum('eq_amount') + $earnings->where('activity', 2)->sum('eq_amount')));
 }
 function getWithdrawPoints($earnings)
 {
-    return $earnings->where('activity', 2)->sum('point');
+    return $earnings->where('activity', 3)->sum('point');
 }
 function getWithdrawEqAmounts($earnings)
 {
-    return $earnings->where('activity', 2)->sum('eq_amount');
+    return $earnings->where('activity', 3)->sum('eq_amount');
 }
 function getPendingWithdrawPoints($earnings)
 {
-    return $earnings->where('activity', 4)->sum('point');
+    return $earnings->where('activity', 2)->sum('point');
 }
 function getPendingWithdrawEqAmounts($earnings)
 {
-    return $earnings->where('activity', 4)->sum('eq_amount');
+    return $earnings->where('activity', 2)->sum('eq_amount');
 }
 function getPendingEarningPoints($earnings)
 {
-    return $earnings->where('activity', 3)->sum('point');
+    return $earnings->where('activity', 0)->sum('point');
 }
 function getPendingEarningEqAmounts($earnings)
 {
-    return $earnings->where('activity', 3)->sum('eq_amount');
+    return $earnings->where('activity', 0)->sum('eq_amount');
+}
+
+function getSubmitterType($className)
+{
+    $className = basename(str_replace('\\', '/', $className));
+    return trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $className));
 }

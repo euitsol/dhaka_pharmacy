@@ -319,7 +319,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
                 Route::get('details/{id}', 'details')->name('pharmacy_kyc_details');
                 Route::get('file-download/{url}', 'view_or_download')->name('download.pharmacy_kyc_details');
                 Route::get('accept/{id}', 'accept')->name('accept.pharmacy_kyc_status');
-                Route::put('declained/{id}', 'declained')->name('declined.pharmacy_kyc_status');
+                Route::put('declined/{id}', 'declined')->name('declined.pharmacy_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('pharmacy_kyc_delete');
             });
             Route::controller(PharmacyKycSettingsController::class)->prefix('settings')->group(function () {
@@ -382,7 +382,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
                 Route::get('details/{id}', 'details')->name('district_manager_kyc_details');
                 Route::get('file-download/{url}', 'view_or_download')->name('download.district_manager_kyc_details');
                 Route::get('accept/{id}', 'accept')->name('accept.district_manager_kyc_status');
-                Route::put('declained/{id}', 'declained')->name('declined.district_manager_kyc_status');
+                Route::put('declined/{id}', 'declined')->name('declined.district_manager_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('district_manager_kyc_delete');
             });
             Route::controller(DmKycSettingsController::class)->prefix('settings')->group(function () {
@@ -416,7 +416,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
                 Route::get('details/{id}', 'details')->name('local_area_manager_kyc_details');
                 Route::get('file-download/{url}', 'view_or_download')->name('download.local_area_manager_kyc_details');
                 Route::get('accept/{id}', 'accept')->name('accept.local_area_manager_kyc_status');
-                Route::put('declained/{id}', 'declained')->name('declined.local_area_manager_kyc_status');
+                Route::put('declined/{id}', 'declined')->name('declined.local_area_manager_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('local_area_manager_kyc_delete');
             });
             Route::controller(LamKycSettingsController::class)->prefix('settings')->group(function () {
@@ -449,7 +449,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
                 Route::get('details/{id}', 'details')->name('rider_kyc_details');
                 Route::get('file-download/{url}', 'view_or_download')->name('download.rider_kyc_details');
                 Route::get('accept/{id}', 'accept')->name('accept.rider_kyc_status');
-                Route::put('declained/{id}', 'declained')->name('declined.rider_kyc_status');
+                Route::put('declined/{id}', 'declined')->name('declined.rider_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('rider_kyc_delete');
             });
 
@@ -609,14 +609,14 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         Route::get('/list/{status}', 'list')->name('wm_list');
         Route::get('/details/{id}', 'details')->name('wm_details');
         Route::get('/accept/{id}', 'accept')->name('wm_accept');
-        Route::post('/declained/{id}', 'declained')->name('wm_declained');
+        Route::post('/declined/{id}', 'declined')->name('wm_declined');
     });
     // Withdraw Request
     Route::controller(AdminWithdrawController::class)->prefix('withdraw')->name('withdraw.')->group(function () {
         Route::get('/list/{status}', 'list')->name('w_list');
         Route::get('/details/{id}', 'details')->name('w_details');
         Route::get('/accept/{id}', 'accept')->name('w_accept');
-        Route::post('/declained/{id}', 'declained')->name('w_declained');
+        Route::post('/declined/{id}', 'declined')->name('w_declined');
     });
     // Site Settings
     Route::controller(SiteSettingsController::class)->prefix('site-settings')->name('settings.')->group(function () {

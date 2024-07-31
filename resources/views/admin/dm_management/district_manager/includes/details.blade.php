@@ -6,66 +6,69 @@
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->name }}</td>
                 <td>|</td>
-                <td class="fw-bolder">{{ __('Designation') }}</td>
-                <td>{{ __(':') }}</td>
-                <td>{{ $dm->designation ?? 'District Manager' }}</td>
-            </tr>
-            <tr>
                 <td class="fw-bolder">{{ __('Father Name') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->father_name ?? '--' }}</td>
-                <td>|</td>
+            </tr>
+            <tr>
                 <td class="fw-bolder">{{ __('Mother Name') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->mother_name ?? '--' }}</td>
-            </tr>
-            <tr>
+                <td>|</td>
                 <td class="fw-bolder">{{ __('Phone') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->phone }}</td>
-                <td>|</td>
+
+            </tr>
+            <tr>
                 <td class="fw-bolder">{{ __('Emergency Contact') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->parent_phone ?? '--' }}</td>
-            </tr>
-            <tr>
+                <td>|</td>
                 <td class="fw-bolder">{{ __('Birth Date') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->dob ?? '--' }}</td>
-                <td>|</td>
+            </tr>
+            <tr>
                 <td class="fw-bolder">{{ __('Age') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->age ?? '--' }}</td>
-            </tr>
-            <tr>
+                <td>|</td>
                 <td class="fw-bolder">{{ __('Identification Type') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->identification_type ?? '--' }}</td>
-                <td>|</td>
+            </tr>
+            <tr>
                 <td class="fw-bolder">{{ __('Identification No') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->identification_no ?? '--' }}</td>
-            </tr>
-            <tr>
+                <td>|</td>
                 <td class="fw-bolder">{{ __('Gender') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->gender ?? '--' }}</td>
-                <td>|</td>
+            </tr>
+            <tr>
                 <td class="fw-bolder">{{ __('Operational Area') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>{{ $dm->operation_area->name ?? '--' }}</td>
-            </tr>
-            <tr>
+                <td>|</td>
                 <td class="fw-bolder">{{ __('Status') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>
                     <span class="{{ $dm->getStatusBadgeClass() }}">{{ $dm->getStatus() }}</span>
                 </td>
-                <td>|</td>
+            </tr>
+            <tr>
                 <td class="fw-bolder">{{ __('KYC Status') }}</td>
                 <td>{{ __(':') }}</td>
                 <td>
                     <span class="{{ $dm->getKycStatusClass() }}">{{ $dm->getKycStatus() }}</span>
+                </td>
+                <td>|</td>
+                <td class="fw-bolder">{{ __('Phone Verify') }}</td>
+                <td>{{ __(':') }}</td>
+                <td>
+                    <span class="{{ $dm->getPhoneVerifyClass() }}">{{ $dm->getPhoneVerifyStatus() }}</span>
                 </td>
             </tr>
             <tr>

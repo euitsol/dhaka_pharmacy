@@ -54,9 +54,9 @@
                             <label>{{ __('Type') }}</label>
                             <select name="type" class="form-control">
                                 <option value=" " selected hidden>{{ __('Select Account Type') }}</option>
-                                <option value="personal" {{ old('type') == 'personal' ? 'selected' : '' }}>
+                                <option value="0" {{ old('type') == '0' ? 'selected' : '' }}>
                                     {{ __('Personal') }}</option>
-                                <option value="business" {{ old('type') == 'business' ? 'selected' : '' }}>
+                                <option value="1" {{ old('type') == '1' ? 'selected' : '' }}>
                                     {{ __('Business') }}</option>
                             </select>
                             @include('alerts.feedback', ['field' => 'type'])

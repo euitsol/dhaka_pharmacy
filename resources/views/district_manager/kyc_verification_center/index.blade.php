@@ -17,7 +17,7 @@
                             @elseif(!empty($datas) && $datas->status === 0)
                                 <span class="badge badge-info">{{ __('Pending') }}</span>
                             @elseif(!empty($datas) && $datas->status === null)
-                                <span class="badge badge-danger">{{ __('Declained') }}</span>
+                                <span class="badge badge-danger">{{ __('Declined') }}</span>
                             @elseif(empty($datas))
                                 <span class="badge badge-warning">{{ __('Empty') }}</span>
                             @endif
@@ -311,10 +311,11 @@
                             @endforeach
                             <div id="message"></div>
                         </div>
-                        <div class="card-footer">
-                            <button {{ $disabled ? 'disabled' : '' }} type="submit"
-                                class="btn btn-fill btn-primary">{{ __('Update') }}</button>
-                        </div>
+                        @if (!$disabled)
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
+                            </div>
+                        @endif
                     </form>
                 @endif
             </div>

@@ -1,5 +1,7 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'user'])
-
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -19,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    
+
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
@@ -27,7 +29,9 @@
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('KYC Status') }}</th>
+                                <th>{{ __('Phone Verify') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -39,22 +43,51 @@
                                     <td> {{ $user->name }} </td>
                                     <td> {{ $user->phone }} </td>
                                     <td>
+                                        <span class="{{ $user->getStatusBadgeClass() }}">{{ $user->getStatus() }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="{{ $user->getKycStatusClass() }}">{{ $user->getKycStatus() }}</span>
+                                    </td>
+                                    <td>
                                         <span
-                                            class="badge {{ $user->status == 1 ? 'badge-success' : 'badge-warning' }}">{{ $user->status == 1 ? 'Active' : 'Disabled' }}</span>
+                                            class="{{ $user->getPhoneVerifyClass() }}">{{ $user->getPhoneVerifyStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($user->created_at) }}</td>
 
                                     <td> {{ c_user_name($user->creater) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    ['routeName' => 'dm.user.profile',   'params' => [$user->id], 'label' => 'Profile'],
-                                                    ['routeName' => 'javascript:void(0)',  'params' => [$user->id], 'label' => 'View Details', 'className' => 'view', 'data-id' => $user->id ],
-                                                    ['routeName' => 'dm.user.edit',   'params' => [$user->id], 'label' => 'Update'],
-                                                    ['routeName' => 'dm.user.status.edit',   'params' => [$user->id], 'label' => $user->getBtnStatus()],
-                                                    ['routeName' => 'dm.user.delete', 'params' => [$user->id], 'label' => 'Delete', 'delete' => true],
-                                                ]
-                                            ])
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'dm.user.profile',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Profile',
+                                                ],
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$user->id],
+                                                    'label' => 'View Details',
+                                                    'className' => 'view',
+                                                    'data-id' => $user->id,
+                                                ],
+                                                [
+                                                    'routeName' => 'dm.user.edit',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'dm.user.status.edit',
+                                                    'params' => [$user->id],
+                                                    'label' => $user->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'dm.user.delete',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -71,7 +104,8 @@
     </div>
 
     {{-- User Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -86,8 +120,9 @@
         </div>
     </div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6]])
 @push('js')
+    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.view').on('click', function() {
@@ -101,7 +136,13 @@
                     success: function(data) {
                         let status = data.status == 1 ? 'Active' : 'Deactive';
                         let statusClass = data.status == 1 ? 'badge-success' :
+                            'badge-danger';
+                        let kycStatus = data.kyc_status == 1 ? 'Complete' : 'Pending';
+                        let kycStatusClass = data.kyc_status == 1 ? 'badge-info' :
                             'badge-warning';
+                        let verifyStatus = data.is_verify == 1 ? 'Success' : 'Pending';
+                        let verifyStatusClass = data.is_verify == 1 ? 'badge-primary' :
+                            'badge-dark';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -115,9 +156,21 @@
                                         <td>${data.phone}</td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">Image</th>
+                                        <th>:</th>
+                                        <td><div id="lightbox" class="lightbox">
+                                                <div class="lightbox-content">
+                                                    <img src="${data.image}"
+                                                        class="lightbox_image">
+                                                </div>
+                                                <div class="close_button fa-beat">X</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
-                                        <td>${data.email}</td>
+                                        <td>${data.email ? data.email : '--'}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
@@ -125,7 +178,17 @@
                                         <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created At</th>
+                                        <th class="text-nowrap">KYC Status</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${kycStatusClass}">${kycStatus}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Phone Verify</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${verifyStatusClass}">${verifyStatus}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Created Date</th>
                                         <th>:</th>
                                         <td>${data.creating_time}</td>
                                     </tr>
@@ -135,7 +198,7 @@
                                         <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Updated At</th>
+                                        <th class="text-nowrap">Updated Date</th>
                                         <th>:</th>
                                         <td>${data.updating_time}</td>
                                     </tr>

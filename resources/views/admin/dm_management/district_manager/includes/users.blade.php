@@ -7,7 +7,7 @@
             <th>{{ __('Status') }}</th>
             <th>{{ __('KYC Status') }}</th>
             <th>{{ __('Phone Verify') }}</th>
-            <th>{{ __('Creation date') }}</th>
+            <th>{{ __('Created date') }}</th>
             <th>{{ __('Action') }}</th>
         </tr>
     </thead>

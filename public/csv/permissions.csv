@@ -125,8 +125,8 @@ ps_update,admin,"Site Settings"
 wm_list,admin,"Withdraw Method"
 wm_details,admin,"Withdraw Method"
 wm_accept,admin,"Withdraw Method"
-wm_declained,admin,"Withdraw Method"
+wm_declined,admin,"Withdraw Method"
 w_list,admin,Withdraw
 w_details,admin,Withdraw
 w_accept,admin,Withdraw
-w_declained,admin,Withdraw
+w_declined,admin,Withdraw

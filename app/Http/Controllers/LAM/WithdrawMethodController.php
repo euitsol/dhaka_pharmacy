@@ -31,6 +31,7 @@ class WithdrawMethodController extends Controller
         $data = WithdrawMethod::findOrFail(decrypt($id));
         $data->statusBg = $data->statusBg();
         $data->statusTitle = $data->statusTitle();
+        $data->typeTitle = $data->type();
         $this->morphColumnData($data);
         return response()->json($data);
     }

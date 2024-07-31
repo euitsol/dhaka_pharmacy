@@ -35,6 +35,7 @@ class RiderManagementController extends Controller
     {
         $data = Rider::with(['operation_area', 'creater', 'operation_sub_area', 'updater'])->findOrFail($id);
         $this->morphColumnData($data);
+        $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
     }
 
@@ -58,6 +59,7 @@ class RiderManagementController extends Controller
         $data['kyc_setting'] = KycSetting::where('type', 'dm')->first();
         $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
             ->where('receiver_id', $id)->where('receiver_type', $rider_class)->get();
+        $data['point_name'] = getPointName();
         return view('admin.rider_management.rider.profile', $data);
     }
 

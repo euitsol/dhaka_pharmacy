@@ -9,12 +9,12 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 if (data.status == 2) {
-                    $("#declained_reason").html(
+                    $("#declined_reason").html(
                         `<p> <strong class = "text-danger"> Declined Reason: </strong>${data.note}</p>`
                     );
                 }
                 var result = `
-                        <div id='declained_reason mb-2'></div>
+                        <div id='declined_reason mb-2'></div>
                         <table class="table table-striped">
                             <tr>
                                 <th class="text-nowrap">Account Name</th>
@@ -39,15 +39,19 @@ $(document).ready(function () {
                             <tr>
                                 <th class="text-nowrap">Type</th>
                                 <th>:</th>
-                                <td>${data.type}</td>
-                            </tr>
+                                <td>${data.typeTitle}</td>
+                            </tr>`;
+                if (data.status == 2) {
+                    result += `
                             <tr>
                                 <th class="text-nowrap">Note</th>
                                 <th>:</th>
                                 <td><span class="text-danger">${
                                     data.note ?? "--"
                                 }</span></td>
-                            </tr>
+                            </tr>`;
+                }
+                result += `
                             <tr>
                                 <th class="text-nowrap">Status</th>
                                 <th>:</th>
@@ -56,28 +60,23 @@ $(document).ready(function () {
                 }</span></td>
                             </tr>
                             <tr>
-                                <th class="text-nowrap">Created At</th>
+                                <th class="text-nowrap">Submitted Date</th>
                                 <th>:</th>
                                 <td>${data.creating_time}</td>
                             </tr>
                             <tr>
-                                <th class="text-nowrap">Created By</th>
+                                <th class="text-nowrap">Approved By</th>
                                 <th>:</th>
-                                <td>${data.created_by}</td>
+                                <td>${data.updated_by}</td>
                             </tr>
                             <tr>
-                                <th class="text-nowrap">Updated At</th>
+                                <th class="text-nowrap">Approved Date</th>
                                 <th>:</th>
                                 <td>${
-                                    data.creating_time != data.updating_time
+                                    data.updating_time != data.creating_time
                                         ? data.updating_time
                                         : ""
                                 }</td>
-                            </tr>
-                            <tr>
-                                <th class="text-nowrap">Updated By</th>
-                                <th>:</th>
-                                <td>${data.updated_by}</td>
                             </tr>
                         </table>
                         `;

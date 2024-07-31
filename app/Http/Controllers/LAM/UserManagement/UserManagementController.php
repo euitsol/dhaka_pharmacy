@@ -10,6 +10,12 @@ use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Models\Documentation;
 use App\Http\Traits\DetailsCommonDataTrait;
+use App\Models\KycSetting;
+use App\Models\Order;
+use App\Models\Payment;
+use App\Models\Review;
+use App\Models\SubmittedKyc;
+use App\Models\WishList;
 
 class UserManagementController extends Controller
 {
@@ -32,11 +38,21 @@ class UserManagementController extends Controller
     {
         $data = User::with(['creater', 'updater'])->findOrFail($id);
         $this->morphColumnData($data);
+        $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
     }
     public function profile($id): View
     {
         $data['user'] = User::with(['creater', 'updater'])->findOrFail($id);
+        $user_class = get_class($data['user']);
+        $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $user_class)->first();
+        $data['kyc_setting'] = KycSetting::where('type', 'user')->first();
+        $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od')->where('customer_id', $id)->where('customer_type', $user_class)->latest()->get()->each(function (&$order) {
+            $this->calculateOrderTotalDiscountPrice($order);
+        });
+        $data['reviews'] = Review::with('product')->where('customer_id', $id)->latest()->get();
+        $data['wishlists'] = WishList::with('product')->where('user_id', $id)->latest()->get();
+        $data['payments'] = Payment::with(['customer', 'order.od'])->where('customer_id', $id)->where('customer_type', $user_class)->latest()->get();
         return view('local_area_manager.user_management.profile', $data);
     }
     public function create(): View

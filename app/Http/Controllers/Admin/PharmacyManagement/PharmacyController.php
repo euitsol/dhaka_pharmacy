@@ -38,13 +38,14 @@ class PharmacyController extends Controller
     {
         $data = Pharmacy::with(['creater', 'updater'])->findOrFail(decrypt($id));
         $this->morphColumnData($data);
+        $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
     }
     public function profile($id): View
     {
         $data['pharmacy'] = Pharmacy::with(['creater', 'updater'])->findOrFail(decrypt($id));
         $pharmacy_class = get_class($data['pharmacy']);
-        $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $pharmacy_class)->first();
+        $data['kyc'] = SubmittedKyc::where('creater_id', decrypt($id))->where('creater_type', $pharmacy_class)->first();
         $data['kyc_setting'] = KycSetting::where('type', 'pharmacy')->first();
         $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
             ->where('receiver_id', decrypt($id))->where('receiver_type', $pharmacy_class)->get();
@@ -55,6 +56,7 @@ class PharmacyController extends Controller
             ->each(function (&$od) {
                 $this->calculateOrderTotalDiscountPrice($od->order);
             });
+        $data['point_name'] = getPointName();
         return view('admin.pharmacy_management.pharmacy.profile', $data);
     }
     public function loginAs($id)
