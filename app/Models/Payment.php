@@ -62,7 +62,7 @@ class Payment extends BaseModel
             case 0:
                 return 'Initiated';
             case 1:
-                return 'Success';
+                return 'Paid';
             case -1:
                 return 'Failed';
             case -2:

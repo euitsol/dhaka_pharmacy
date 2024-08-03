@@ -4,7 +4,7 @@
     <div class="row profile">
         <div class="col-md-8">
             <div class="card h-100 mb-0">
-                <div class="card-header">
+                <div class="card-header px-4">
                     <nav>
                         <div class="nav nav-tabs row" id="nav-tab" role="tablist">
                             <button class="nav-link active col" id="details-tab" data-bs-toggle="tab" data-bs-target="#details"

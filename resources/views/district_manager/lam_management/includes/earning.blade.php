@@ -1,4 +1,4 @@
-<div class="row px-4 earning">
+<div class="row px-0 earning">
     <div class="col-md-4">
         <div class="d-flex justify-content-between">
             <h6 class="card-title fw-bolder">{{ __('Available Balance') }}</h6>

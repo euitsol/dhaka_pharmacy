@@ -587,3 +587,9 @@ function getSubmitterType($className)
     $className = basename(str_replace('\\', '/', $className));
     return trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $className));
 }
+
+function formatPhoneNumber($phone)
+{
+    $phone = ltrim($phone, '0');
+    return '+880 ' . substr($phone, 0, 5) . '-' . substr($phone, 5);
+}

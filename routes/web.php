@@ -993,7 +993,8 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
         Route::post('/store', 'store')->name('store');
     });
     Route::controller(UserOrderController::class)->prefix('order')->name('u.order.')->group(function () {
-        Route::get('list', 'order_list')->name('list');
+        Route::get('list', 'list')->name('list');
+        Route::get('details/{id}', 'details')->name('details');
     });
 
     Route::controller(UserWishlistController::class)->prefix('wishlist')->name('u.wishlist.')->group(function () {
