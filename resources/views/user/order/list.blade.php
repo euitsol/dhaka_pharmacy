@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="total">
                                         <p class="total text-center">
-                                            {{ __('Total: ') }}<span>{{ $order->totalPrice }}</span>{{ __('tk') }}
+                                            {{ __('Total: ') }}<span>{{ number_format($order->totalPrice, 2) }}</span>{{ __('tk') }}
                                         </p>
                                     </div>
                                 </div>
