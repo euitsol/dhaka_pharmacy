@@ -6,6 +6,7 @@
             <th>{{ __('Phone') }}</th>
             <th>{{ __('Status') }}</th>
             <th>{{ __('KYC Status') }}</th>
+            <th>{{ __('Phone Verify') }}</th>
             <th>{{ __('Created date') }}</th>
             <th>{{ __('Action') }}</th>
         </tr>
@@ -21,6 +22,9 @@
                 </td>
                 <td>
                     <span class="{{ $lam->getKycStatusClass() }}">{{ $lam->getKycStatus() }}</span>
+                </td>
+                <td>
+                    <span class="{{ $lam->getPhoneVerifyClass() }}">{{ $lam->getPhoneVerifyStatus() }}</span>
                 </td>
                 <td>{{ timeFormate($lam->created_at) }}</td>
                 <td>

@@ -13,7 +13,7 @@
                             @include('admin.partials.button', [
                                 'routeName' => 'dm.wm.create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new withdraw method',
+                                'label' => 'Add admin',
                             ])
                         </div>
                     </div>
