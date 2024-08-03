@@ -7,6 +7,8 @@
     --text: #000;
     --btn_bg: #2581B8;
     --white: #fff;
+    --primary-bg: #00204B;
+    --asent-color: #28A349;
 }
 
 /*====== Global font size varriable ====== */
@@ -44,4 +46,243 @@ body{
 .container{
     max-width: 1440px;
     padding: 0 30px;
+}
+
+
+/* Order Details CSS */
+/*======== This code only for the oder information page ========*/
+.order-info-section .order-info-cont{
+    max-width: 1214px;
+    margin: 0 auto;
+}
+.order-info-section .order-status-row .img{
+    background:#BFE6FA;
+    border-radius: 4px;
+    padding: 10px 12px;
+}
+.order-info-section .order-status-row h2{
+    font-family: var(--secondry-font);
+    line-height: 36px;
+    font-weight: 400;
+}
+.order-info-section .order-status-row p{
+    font-family: var(--secondry-font);
+    font: 18px;
+    line-height: 27px;
+    font-weight: 300;
+    color: #0BACFF;
+    background:#BFE6FA;
+    border-radius: 4px;
+    padding: 3px 16px;
+}
+.order-info-section .order-details span{
+    font-family: var(--secondry-font);
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+}
+.order-info-section .order-details p{
+    font-family: var(--secondry-font);
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 500;
+    color: var(--text);
+}
+.order-info-section .order-info-row .left,
+.order-info-section .order-info-row .right{
+    height: 375px;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    padding: 20px 30px;
+}
+.order-info-section .order-info-row .left{
+    overflow-y: auto;
+}
+.order-info-section .order-info-row .left::-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
+    border-radius: 10px;
+    background-color: var(--primary-bg);
+  }
+  
+  .order-info-section .order-info-row .left::-scrollbar {
+    width: 6px;
+    background-color: #F5F5F5;
+  }
+  
+  .order-info-section .order-info-row .left::-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--asent-color);
+    background-image: linear-gradient(90deg,
+                                    transparent,
+                                    var(--asent-color) 50%,
+                                    transparent,
+                                    transparent);
+  }
+  
+  .order-info-section .order-info-row .left::-webkit-scrollbar-track
+  {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
+      border-radius: 10px;
+      background-color: var(--primary-bg);
+  }
+  
+  .order-info-section .order-info-row .left::-webkit-scrollbar
+  {
+      width: 6px;
+      background-color: #F5F5F5;
+  }
+  
+  .order-info-section .order-info-row .left::-webkit-scrollbar-thumb
+  {
+      border-radius: 10px;
+      background-color: var(--asent-color);
+      background-image: -webkit-linear-gradient(90deg,
+                                              transparent,
+                                              var(--asent-color) 50%,
+                                              transparent,
+                                              transparent)
+  }
+.order-info-section .order-info-row .left .row{
+    border-bottom: 1px solid;
+    border-color: rgba(0, 0, 0, 0.25);
+}
+.order-info-section .order-info-row .left .row:last-child{
+    border: none;
+}
+.order-info-section .order-info-row .left .img{
+    width: 86px;
+}
+.order-info-section .order-info-row .left .img img{
+    width: 100%;
+}
+.order-info-section .order-info-row .left h5{
+    font-family: var(--secondry-font);
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    color: var(--text);
+}
+.order-info-section .order-info-row .left p{
+    font-family: var(--secondry-font);
+    font-size: 10px;
+    line-height: 15px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+}
+.order-info-section .order-info-row .left .qt span{
+    font-weight: 500;
+    color: var(--text);
+}
+.order-info-section .order-info-row .right{
+    background: rgba(247, 247, 247, 1);
+}
+.order-info-section .order-info-row .right h5{
+    font-family: var(--secondry-font);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.5);
+}
+.order-info-section .order-info-row .right p{
+    font-family: var(--secondry-font);
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 500;
+    color: var(--text);
+    min-width: 80px;
+}
+.order-info-section .order-info-row .right div:last-child p{
+    font-weight: 700;
+}
+.order-info-section .order-info-row .right div.total-border{
+    border-bottom: 2px solid;
+    border-color: rgba(0, 0, 0, 0.54);
+}
+.order-info-section .payment-info-row .wrap{
+    height: auto;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    padding: 20px 30px;
+}
+
+.order-info-section .payment-info-row .wrap .table{
+    text-align: center;
+}
+.order-info-section .order-info-row .title,
+.order-info-section .payment-info-row .title{
+    font-family: var(--secondry-font);
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 500;
+    color: var(--text);
+}
+.order-info-section .order-traking-row .icon{
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(217, 217, 217, 1);
+    position: relative;
+}
+.order-info-section .order-traking-row .confirm{
+    background-color: rgba(40, 163, 73, 1);
+}
+.order-info-section .order-traking-row .step-1 .icon::before{
+    position: absolute;
+    content: "";
+    width: 48px;
+    height: 5px;
+    background-color: rgba(40, 163, 73, 1);
+    left: -55px;
+}
+.order-info-section .order-traking-row .step .icon::after{
+    position: absolute;
+    content: "";
+    width: 233px;
+    height: 5px;
+    background-color: rgba(40, 163, 73, 1);
+    right: -240px;
+}
+.order-info-section .order-traking-row .step-5 .icon::after{
+    width: 48px;
+    right: -55px;
+}
+.order-info-section .order-traking-row .step h5{
+    font-family: var(--secondry-font);
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 400;
+    color: var(--text);
+}
+.order-info-section .order-traking-row .step h5{
+    font-family: var(--secondry-font);
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0;
+}
+.order-info-section .order-traking-row .step p{
+    color: rgba(0, 0, 0, 0.58);
+}
+.order-info-section .order-traking-row .progress-box{
+    background: rgba(247, 247, 247, 1);
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    padding: 20px 30px;
+    padding-top: 35px;
+}
+.order-info-section .title{
+    font-family: var(--secondry-font);
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    color: var(--text);
 }

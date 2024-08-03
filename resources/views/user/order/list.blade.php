@@ -72,11 +72,13 @@
                             <div class="col-3 d-flex justify-content-end align-items-center py-3 px-4">
                                 <div class="order-status">
                                     <div class="btn">
-                                        <a href="#">{{ __('Details') }}</a>
+                                        <a
+                                            href="{{ route('u.order.details', encrypt($order->id)) }}">{{ __('Details') }}</a>
                                     </div>
                                     <div class="total">
                                         <p class="total text-center">
-                                            {{ __('Total: ') }}<span>{{ $order->totalPrice }}</span>tk</p>
+                                            {{ __('Total: ') }}<span>{{ $order->totalPrice }}</span>{{ __('tk') }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
