@@ -84,14 +84,6 @@
 // }
 // });
 
-// Homepage top slider
-const myCarouselElement = document.querySelector("#carouselExampleCaptions");
-
-const carousel = new bootstrap.Carousel(myCarouselElement, {
-    interval: 4000,
-    ride: true,
-});
-
 function numberFormat(value, decimals) {
     if (decimals != null && decimals >= 0) {
         value = parseFloat(value).toFixed(decimals);

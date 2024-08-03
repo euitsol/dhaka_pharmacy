@@ -1,6 +1,6 @@
 @extends('rider.layouts.master', ['pageSlug' => 'rider_dashboard'])
 
-@section('title', 'Dashboard')
+@section('title', 'Rider Dashboard')
 @push('css')
     <style>
         .dashboard_wrap {

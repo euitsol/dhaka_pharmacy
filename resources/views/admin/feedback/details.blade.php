@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'feedback'])
+@section('title', 'Feedback Details')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 @endpush

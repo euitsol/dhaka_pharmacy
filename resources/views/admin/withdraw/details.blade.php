@@ -9,6 +9,14 @@
                         <div class="col-8">
                             <h4 class="card-title">{{ __('Withdraw Details') }}</h4>
                         </div>
+                        <div class="col-4 text-right">
+                            @include('admin.partials.button', [
+                                'routeName' => 'withdraw_method.w_list',
+                                'params' => strtolower($withdraw->statusTitle()),
+                                'className' => 'btn-primary',
+                                'label' => 'Back',
+                            ])
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">

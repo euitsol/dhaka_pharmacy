@@ -30,7 +30,7 @@
         <div class="card box">
             <div class="card-body">
                 <div class="amount">
-                    <span class="text-muted fw-bold">{{ __('Payments being cleared') }}</span>
+                    <span class="text-muted fw-bold">{{ __('Pending clearance') }}</span>
                     <h4 class="my_amount">{{ number_format(getPendingEarningPoints($totalEarnings), 2) }}
                         {{ $point_name }}</h4>
                 </div>
@@ -101,7 +101,6 @@
                             <th>{{ __('Activity') }}</th>
                             <th>{{ __('Total Point') }}</th>
                             <th>{{ __('Description') }}</th>
-                            <th>{{ __('Order') }}</th>
                             <th>{{ __('Amount') }}</th>
                         </tr>
                     </thead>
@@ -109,7 +108,8 @@
                         @foreach ($paginateEarnings as $earning)
                             <tr>
                                 <td>{{ timeFormate($earning->created_at) }}</td>
-                                <td><span class="{{ $earning->activityBg() }}">{{ $earning->activityTitle() }}</span>
+                                <td><span
+                                        class="{{ $earning->activityBg() }}">{{ slugToTitle($earning->activityTitle()) }}</span>
                                 </td>
                                 <td>{{ number_format($earning->point, 2) }}
                                     ({!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }})
@@ -118,7 +118,6 @@
                                         {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}
                                     @endif
                                 </td>
-                                <td>{{ $earning->order->order_id ?? '--' }}</td>
                                 <td>{!! get_taka_icon() !!}{{ number_format($earning->eq_amount, 2) }}</td>
                             </tr>
                         @endforeach

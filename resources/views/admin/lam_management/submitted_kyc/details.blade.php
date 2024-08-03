@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'lam_kyc_list'])
+@section('title', 'Local Area Manager KYC Details')
 @section('content')
     <div class="row px-3">
         <div class="col-md-12">

@@ -9,8 +9,8 @@ const min_charge = 60; //tk
 const miscellaneous_charge = 10; //tk
 
 $(document).ready(function () {
-    $(".address").each(function (e) {
-        get_location($(this).val(), $(this));
+    $(".address option").each(function (e) {
+        get_location($(this).attr("value"), $(this));
     });
 });
 
@@ -32,7 +32,6 @@ function calculate_cost(distance = null) {
     } else {
         cost = min_charge;
     }
-
     return cost;
 }
 
@@ -51,11 +50,8 @@ function get_location(id, target) {
                         response.latitude
                     );
                     let cost = numberFormat(calculate_cost(distance));
-                    $(target).closest(".form-check").find(".charge").text(cost);
-                    $(target)
-                        .closest(".form-check")
-                        .find(".charge")
-                        .attr("data-charge", cost);
+                    $(target).append("(" + data.taka_icon + cost + ")");
+                    $(target).attr("data-charge", cost);
                 }
             },
             error: function (xhr, status, error) {
@@ -70,11 +66,10 @@ function refreshDeliveryFee(e = false) {
     if (e == false) {
         $(document).ready(function () {
             setTimeout(function () {
-                delivery_fee = $(".address:checked").length
-                    ? $(".address:checked")
-                          .next("label")
-                          .find(".charge")
-                          .text()
+                delivery_fee = $(".address option").length
+                    ? $(".address option:selected")
+                          .data("charge")
+                          .toString()
                           .replace(",", "")
                     : 0;
 
@@ -93,7 +88,7 @@ function refreshDeliveryFee(e = false) {
             }, 1500);
         });
     } else {
-        delivery_fee = e.next("label").find(".charge").text().replace(",", "");
+        delivery_fee = e.data("charge").toString().replace(",", "");
         $(".delivery_fee").text(
             numberFormat(Math.ceil(parseInt(delivery_fee)))
         );
@@ -109,6 +104,6 @@ refreshDeliveryFee();
 
 $(document).ready(function () {
     $(".address").on("change", function () {
-        refreshDeliveryFee($(this));
+        refreshDeliveryFee($(this).find(":selected"));
     });
 });

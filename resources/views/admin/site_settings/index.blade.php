@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'site_settings'])
-@section('title', 'Site Settings')
+@section('title', 'Application Settings')
 @push('css_link')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
 @endpush
@@ -15,7 +15,7 @@
         <div class="tab col-md-2 p-md-3 pl-sm-3">
             <button id="tab1Btn" class="tablinks p-3 btn-success text-white"
                 onclick="openTab(event, 'tab1')">{{ __('General
-                                                                                                                                                                                                                                                Settings') }}</button>
+                                                                                                                                                                                                                                                                                Settings') }}</button>
             <button id="tab2Btn" class="tablinks p-3" onclick="openTab(event, 'tab2')">{{ __('Email Settings') }}</button>
             <button id="tab3Btn" class="tablinks p-3"
                 onclick="openTab(event, 'tab3')">{{ __('Database Settings') }}</button>

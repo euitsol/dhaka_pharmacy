@@ -1,28 +1,28 @@
 @extends('frontend.layouts.master')
-@section('title', 'Order Success')
+@section('title', 'Payment')
 @section('content')
     <div class="row py-5 my-5 order_success_wrap">
         <div class="col-12">
             <div class="order_success">
                 <div class="printer-top"></div>
-    
+
                 <div class="paper-container">
                     <div class="printer-bottom"></div>
-    
+
                     <div class="paper">
                         <div class="main-contents">
                             <div class="success-icon">&#10004;</div>
                             <div class="success-title">
-                                Payment Complete
+                                {{ __('Payment Complete') }}
                             </div>
                             <div class="success-description">
-                                Your payment has been recieved and send to Dhaka Pharmacy.
+                                {{ __('Your payment has been recieved and send to Dhaka Pharmacy.') }}
                             </div>
                             <div class="order-details">
-                                <div class="order-number-label">Order Id</div>
-                                <div class="order-number">{{$order_id}}</div>
+                                <div class="order-number-label">{{ __('Order Id') }}</div>
+                                <div class="order-number">{{ $order_id }}</div>
                             </div>
-                            <div class="order-footer">You can close this page!</div>
+                            <div class="order-footer">{{ __('You can close this page!') }}</div>
                         </div>
                         <div class="jagged-edge"></div>
                     </div>

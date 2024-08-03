@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'product_category'])
-
+@section('title', 'Product Category List')
 @section('content')
     <div class="row">
         <div class="col-md-12">

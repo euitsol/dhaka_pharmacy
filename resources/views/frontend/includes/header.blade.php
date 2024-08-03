@@ -3,7 +3,7 @@
         <div class="row align-items-center">
             <div class="col-3">
                 <div class="row align-items-center">
-                    <div class="col-2">
+                    {{-- <div class="col-2">
                         <a class="menu-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
                             aria-controls="offcanvasExample">
                             <i class="fa-solid fa-bars fs-4 text-white"></i>
@@ -19,7 +19,7 @@
                                 <!--========= Burger Menu data here =======-->
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-6">
                         <div class="logo">
                             <a href="{{ route('home') }}"><img class="w-100"
@@ -71,23 +71,23 @@
                             <option value="bangla">{{ __('Bangla') }}</option>
                         </select>
                     </div>
-                    <div class="item">
-                        <button class="wish-btn bg-none" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#wishlist" aria-controls="offcanvasRight">
-                            <i class="fa-solid fa-heart me-1"></i>
-                            <span>{{ __('Wish List') }}</span>
-                        </button>
-                        @include('frontend.includes.wishlist_slide')
-                    </div>
-                    <div class="item">
-                        <button class="cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"
-                            aria-controls="offcanvasRight">
-                            <i class="fa-solid fa-cart-shopping me-1"></i>
-                            <span>{{ __('Cart') }}</span><sup><strong id="cart_btn_quantity"></strong></sup>
-                        </button>
-                        @include('frontend.includes.add_to_cart_slide')
-                    </div>
                     @if (Auth::guard('web')->check())
+                        <div class="item">
+                            <button class="wish-btn bg-none" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#wishlist" aria-controls="offcanvasRight">
+                                <i class="fa-solid fa-heart me-1"></i>
+                                <span>{{ __('Wish List') }}</span>
+                            </button>
+                            @include('frontend.includes.wishlist_slide')
+                        </div>
+                        <div class="item">
+                            <button class="cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"
+                                aria-controls="offcanvasRight">
+                                <i class="fa-solid fa-cart-shopping me-1"></i>
+                                <span>{{ __('Cart') }}</span><sup><strong id="cart_btn_quantity"></strong></sup>
+                            </button>
+                            @include('frontend.includes.add_to_cart_slide')
+                        </div>
                         <div class="item" style="max-width: 185px; overflow:hidden;">
                             <a href="{{ route('user.dashboard') }}" class="login-btn d-flex align-items-center">
                                 <img style="height: 35px; width: 35px; object-fit: cover; border-radius: 50%;"

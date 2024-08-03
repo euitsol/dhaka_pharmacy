@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'local_area_manager'])
+@section('title', 'Local Area Manager Profile')
 @section('content')
     <div class="row profile">
         <div class="col-md-8">

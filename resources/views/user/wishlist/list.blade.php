@@ -1,6 +1,5 @@
 @extends('user.layouts.master', ['pageSlug' => 'wishlist'])
-
-@section('title', 'Wish List')
+@section('title', 'Wishlist')
 @push('css')
     <link rel="stylesheet" href="{{ asset('user/asset/css/wishlist.css') }}">
 @endpush

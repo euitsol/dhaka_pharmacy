@@ -1,6 +1,6 @@
 @extends('local_area_manager.layouts.master', ['pageSlug' => 'lam_dashboard'])
 
-@section('title', 'Dashboard')
+@section('title', 'Local Area Manager Dashboard')
 @push('css')
     <style>
         .dashboard_wrap {
@@ -60,7 +60,7 @@
             <div class="dashboard_wrap d-flex flex-column justify-content-center align-items-center">
                 <h2>{{ __('DHAKA PHARMACY') }}</h2>
                 <h4>{{ __('LOCAL AREA MANAGER') }}</h4>
-                <h4>{{__(strtoupper(optional(lam()->operation_sub_area)->name))}}</h4>
+                <h4>{{ __(strtoupper(optional(lam()->operation_sub_area)->name)) }}</h4>
             </div>
         </div>
     </div>

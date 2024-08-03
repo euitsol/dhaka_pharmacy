@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'ubp_' . $up->statusTitle()])
+@section('title', 'Order By Prescription Details')
 @section('content')
     <div class="row">
         @if ($up->status == 0)
@@ -108,7 +109,7 @@
                             <tr>
                                 <th>{{ __('Delivery Type') }}</th>
                                 <th>:</th>
-                                <td>{{ ucwords($up->delivery_type) }}</td>
+                                <td>{{ $up->deliveryType() }}</td>
                             </tr>
                         </tbody>
                     </table>

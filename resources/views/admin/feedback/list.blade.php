@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'feedback'])
-
+@section('title', 'Feedback List')
 @section('content')
     <div class="row">
         <div class="col-md-12">

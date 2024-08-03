@@ -1,4 +1,5 @@
 @extends('pharmacy.layouts.master', ['pageSlug' => $do->statusTitle() . '_orders'])
+@section('title', 'Order Details')
 @push('css')
     <style>
         .rider_image {
@@ -64,7 +65,7 @@
                             </h4>
                         </div>
                         <div class="col-6 text-end">
-                            <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
+                            <a href="{{ URL::previous() }}" class="btn btn-primary">{{ __('Back') }}</a>
                         </div>
                     </div>
                 </div>

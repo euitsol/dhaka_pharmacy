@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine_unit'])
-
+@section('title', 'Create Medicine Unit')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">

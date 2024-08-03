@@ -5,7 +5,7 @@
             <th>{{ __('Customer') }}</th>
             <th>{{ __('Product') }}</th>
             <th>{{ __('Status') }}</th>
-            <th>{{ __('Created date') }}</th>
+            <th>{{ __('Submitted date') }}</th>
             <th>{{ __('Action') }}</th>
         </tr>
     </thead>

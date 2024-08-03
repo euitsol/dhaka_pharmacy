@@ -71,7 +71,7 @@ class CheckoutController extends Controller
         $order = Order::with(['products'])->self()->findOrFail(decrypt($order_id));
         $order->address_id = $req->address;
         $order->status = 1; //Order Submit
-        $order->delivery_type = $req->delivery_type;
+        $order->delivery_type = 0;
         $order->delivery_fee = $req->delivery_fee;
         $order->save();
         $this->calculateOrderTotalDiscountPrice($order);

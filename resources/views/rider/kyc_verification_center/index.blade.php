@@ -1,4 +1,5 @@
 @extends('rider.layouts.master', ['pageSlug' => 'kyc_verification'])
+@section('title', 'KYC Verification Center')
 @push('css')
     <style>
         .form-group .form-control,
@@ -424,7 +425,7 @@
 
                                 let url = (
                                     "{{ route('rider.kyc.file.delete', ['url']) }}"
-                                    );
+                                );
                                 let _url = url.replace('url', response.url);
                                 if (isMultiple) {
                                     var file = `<div class="form-group">

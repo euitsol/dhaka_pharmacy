@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'local_area_manager'])
-
+@section('title', 'Create Local Area Manager')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">

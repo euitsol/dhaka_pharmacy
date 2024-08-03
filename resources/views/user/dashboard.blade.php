@@ -1,7 +1,5 @@
 @extends('user.layouts.master', ['pageSlug' => 'dashboard'])
-
-@section('title', 'Dashboard')
-
+@section('title', 'User Dashboard')
 @push('css_link')
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
     <link rel="stylesheet"

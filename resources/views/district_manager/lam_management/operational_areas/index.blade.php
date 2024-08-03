@@ -1,5 +1,5 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'lam_area'])
-
+@section('title', 'Operation Area List')
 @section('content')
     <div class="row">
         <div class="col-md-12">

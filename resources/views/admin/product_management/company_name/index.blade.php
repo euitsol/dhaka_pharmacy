@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine_company_name'])
-
+@section('title', 'Company List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Company Name List') }}</h4>
+                            <h4 class="card-title">{{ __('Company List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -91,7 +91,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Company Name Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Company Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

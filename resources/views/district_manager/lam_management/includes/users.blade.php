@@ -29,7 +29,7 @@
                     @include('admin.partials.action_buttons', [
                         'menuItems' => [
                             [
-                                'routeName' => 'um.user.user_profile',
+                                'routeName' => 'dm.user.profile',
                                 'params' => [$user->id],
                                 'target' => '_blank',
                                 'label' => 'Profile',

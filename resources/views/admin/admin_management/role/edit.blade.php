@@ -1,7 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'role'])
-
 @section('title', 'Edit Role')
-
 @push('css')
     <style>
         .groupName {
@@ -39,7 +37,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Update Role') }}</h4>
+                            <h4 class="card-title">{{ __('Edit Role') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
