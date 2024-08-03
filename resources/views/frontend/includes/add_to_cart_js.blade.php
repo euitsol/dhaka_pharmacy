@@ -129,8 +129,26 @@
             var cart_id = $(this).data('cart_id');
             updateCart(cart_id, unit_id);
         });
+
+        $('#checkoutBtn').on('click', function(e) {
+            e.preventDefault();
+            if (checkoutValidation()) {
+                $('#checkoutForm').submit();
+            }
+        });
     });
 
+    function checkoutValidation() {
+        let isValid = true;
+        $('.add_to_cart_item').each(function() {
+            if (!$(this).find('.item_units .unit_quantity:checked').length) {
+                toastr.error('Plese select item unit');
+                isValid = false;
+                return false;
+            }
+        });
+        return isValid;
+    }
 
     function handleLoginRequirement() {
         window.location.href = routes.login;
@@ -280,7 +298,6 @@
             item_price = parseFloat($(this).attr('data-total'));
             total_price += item_price;
         });
-        console.log(total_price);
         $('.subtotal_price').html(numberFormat(total_price, 2));
     }
     refreshSubtotal();
@@ -350,6 +367,7 @@
             },
             success: function(response) {
                 if (response.success) {
+                    console.log(response.data.unit.quantity);
                     toastr.success(response.message);
                     var item = $('.item_' + response.data.id);
                     cardBody = item.closest('.card-body');

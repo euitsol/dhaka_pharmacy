@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
-
+use App\Models\Earning;
+use App\Models\KycSetting;
+use App\Models\SubmittedKyc;
+use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class DistrictManagerController extends Controller
 {
@@ -33,6 +37,7 @@ class DistrictManagerController extends Controller
         $data = DistrictManager::with('operation_area')->findOrFail($id);
         $data->total_lams = count($data->lams);
         $this->simpleColumnData($data);
+        $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
     }
 
@@ -47,13 +52,16 @@ class DistrictManagerController extends Controller
             return redirect()->back();
         }
     }
-
-
-
-
     public function profile($id): View
     {
         $data['dm'] = DistrictManager::with(['lams', 'operation_area', 'created_user', 'updated_user'])->findOrFail($id);
+        $dm_class = get_class($data['dm']);
+        $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $dm_class)->first();
+        $data['kyc_setting'] = KycSetting::where('type', 'dm')->first();
+        $data['users'] = User::where('creater_id', $id)->where('creater_type', $dm_class)->latest()->get();
+        $data['earnings'] = Earning::with(['receiver', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
+            ->where('receiver_id', $id)->where('receiver_type', $dm_class)->latest()->get();
+        $data['point_name'] = getPointName();
         return view('admin.dm_management.district_manager.profile', $data);
     }
     public function create(): View
@@ -108,5 +116,23 @@ class DistrictManagerController extends Controller
         $dm->delete();
         flash()->addSuccess('District Manager ' . $dm->name . ' deleted successfully.');
         return redirect()->route('dm_management.district_manager.district_manager_list');
+    }
+
+    public function view_or_download($file_url)
+    {
+        $file_url = base64_decode($file_url);
+        if (Storage::exists('public/' . $file_url)) {
+            $fileExtension = pathinfo($file_url, PATHINFO_EXTENSION);
+
+            if (strtolower($fileExtension) === 'pdf') {
+                return response()->file(storage_path('app/public/' . $file_url), [
+                    'Content-Disposition' => 'inline; filename="' . basename($file_url) . '"'
+                ]);
+            } else {
+                return response()->download(storage_path('app/public/' . $file_url), basename($file_url));
+            }
+        } else {
+            return response()->json(['error' => 'File not found'], 404);
+        }
     }
 }

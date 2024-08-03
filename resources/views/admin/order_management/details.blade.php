@@ -1,4 +1,5 @@
-@extends('admin.layouts.master', ['pageSlug' => 'order_details'])
+@extends('admin.layouts.master', ['pageSlug' => 'order_' . $order->statusTitle()])
+@section('title', 'Order Details')
 @push('css')
     <link rel="stylesheet" href="{{ asset('admin/css/ordermanagement.css') }}">
 @endpush
@@ -22,46 +23,36 @@
                                 <div class="card-body order_items">
 
                                     <div class="row">
-                                        @foreach ($order_items as $item)
+                                        @foreach ($order->products as $product)
                                             <div class="col-12">
                                                 <div class="card card-2">
                                                     <div class="card-body">
                                                         <div class="media">
                                                             <div class="sq align-self-center "> <img
                                                                     class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
-                                                                    src="{{ storage_url($item->product->image) }}"
-                                                                    width="135" height="135" /> </div>
+                                                                    src="{{ storage_url($product->image) }}" width="135"
+                                                                    height="135" /> </div>
                                                             <div class="media-body my-auto text-center">
                                                                 <div class="row  my-auto flex-column flex-md-row px-3">
                                                                     <div class="col my-auto">
                                                                         <h6 class="mb-0 text-start">
-                                                                            {{ $item->product->name }}</h6>
+                                                                            {{ $product->name }}</h6>
                                                                     </div>
                                                                     <div class="col-auto my-auto">
-                                                                        <small>{{ $item->product->pro_cat->name }} </small>
+                                                                        <small>{{ $product->pro_cat->name }} </small>
                                                                     </div>
                                                                     <div class="col my-auto"> <small>{{ __('Qty :') }}
-                                                                            {{ $item->quantity }}</small></div>
+                                                                            {{ $product->pivot->quantity }}</small></div>
                                                                     <div class="col my-auto"> <small>{{ __('Pack :') }}
-                                                                            {{ $item->unit->name ?? 'Piece' }}</small>
+                                                                            {{ $product->pivot->unit->name ?? 'Piece' }}</small>
                                                                     </div>
                                                                     <div class="col my-auto">
-                                                                        @php
-                                                                            $cartItemRegPrice = number_format(
-                                                                                cartItemRegPrice($item),
-                                                                                2,
-                                                                            );
-                                                                            $cartItemPrice = number_format(
-                                                                                cartItemPrice($item),
-                                                                                2,
-                                                                            );
-                                                                        @endphp
-                                                                        @if ($cartItemRegPrice != $cartItemPrice)
+                                                                        @if ($product->totalPrice != $product->totalDiscountPrice)
                                                                             <h6 class="mb-0 text-end">
                                                                                 <span class="text-danger">
                                                                                     <del>
                                                                                         {!! get_taka_icon() !!}
-                                                                                        {{ $cartItemRegPrice }}
+                                                                                        {{ $product->totalPrice }}
                                                                                     </del>
                                                                                 </span>
                                                                             </h6>
@@ -69,7 +60,7 @@
                                                                         <h6 class="mb-0 text-end">
                                                                             <span>
                                                                                 {!! get_taka_icon() !!}
-                                                                                {{ $cartItemPrice }}
+                                                                                {{ $product->totalDiscountPrice }}
                                                                             </span>
                                                                         </h6>
                                                                     </div>
@@ -93,12 +84,16 @@
                                         <div class="col-12 d-flex justify-content-between align-items-center">
                                             <h4 class="color-1 mb-0">{{ __('Order Details') }}</h4>
                                             <div class="buttons">
-                                                @include('admin.partials.button', [
-                                                    'routeName' => 'om.order.order_distribution',
-                                                    'className' => 'btn-primary',
-                                                    'params' => encrypt($order->id),
-                                                    'label' => 'Distribute',
-                                                ])
+
+                                                @if ($order->status == 1)
+                                                    @include('admin.partials.button', [
+                                                        'routeName' => 'om.order.order_distribution',
+                                                        'className' => 'btn-primary',
+                                                        'params' => encrypt($order->id),
+                                                        'label' => 'Distribute',
+                                                    ])
+                                                @endif
+
                                                 @include('admin.partials.button', [
                                                     'routeName' => 'om.order.order_list',
                                                     'className' => 'btn-primary',
@@ -115,60 +110,66 @@
                                         <div class="col-12">
                                             <table class="table table-striped">
                                                 <tr>
-                                                    <th>{{ __('Order ID') }}</th>
+                                                    <td class="fw-bolder">{{ __('Order ID') }}</td>
                                                     <td>:</td>
                                                     <td>{{ $order->order_id }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th>{{ __('Delivery Address') }}</th>
+                                                    <td class="fw-bolder">{{ __('Delivery Address') }}</td>
                                                     <td>:</td>
                                                     <td>{!! optional($order->address)->address !!}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th>{{ __('Order Date') }}</th>
+                                                    <td class="fw-bolder">{{ __('Order Date') }}</td>
                                                     <td>:</td>
                                                     <td>{{ timeFormate($order->created_at) }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th>{{ __('Order Type') }}</th>
+                                                    <td class="fw-bolder">{{ __('Order Type') }}</td>
                                                     <td>:</td>
                                                     <td>{{ $order->orderType() }}</td>
                                                 </tr>
-                                                <tr>
-                                                    <th>{{ __('Order Generated By') }}</th>
+                                                {{-- <tr>
+                                                    <td class="fw-bolder">{{ __('Order Generated By') }}</td>
                                                     <td>:</td>
                                                     <td>{{ $order->creater ? $order->creater->name : $order->customer->name }}
                                                     </td>
-                                                </tr>
+                                                </tr> --}}
                                                 <tr>
-                                                    <th>{{ __('Total Price') }}</th>
+                                                    <td class="fw-bolder">{{ __('Total Amount') }}</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <span>{!! get_taka_icon() !!} {{ $totalRegularPrice }}</span>
+                                                        <span>{!! get_taka_icon() !!}
+                                                            {{ number_format($order->totalPrice, 2) }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>{{ __('Discount') }}</th>
+                                                    <td class="fw-bolder">{{ __('Discount') }}</td>
                                                     <td>:</td>
-                                                    <td><span>{!! get_taka_icon() !!} {{ $totalDiscount }}</span></td>
+                                                    <td><span>{!! get_taka_icon() !!}
+                                                            {{ number_format($order->totalPrice - $order->totalDiscountPrice, 2) }}</span>
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>{{ __('Sub Total') }}</th>
+                                                    <td class="fw-bolder">{{ __('Sub Total') }}</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <span>{!! get_taka_icon() !!} {{ $subTotalPrice }}</span>
+                                                        <span>{!! get_taka_icon() !!}
+                                                            {{ number_format($order->totalDiscountPrice) }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>{{ __('Delivery Fee') }}</th>
+                                                    <td class="fw-bolder">{{ __('Delivery Fee') }}</td>
                                                     <td>:</td>
-                                                    <td>{!! get_taka_icon() !!}{{ number_format(ceil($order->delivery_fee)) }}
+                                                    <td>{!! get_taka_icon() !!}{{ number_format($order->delivery_fee) }}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>{{ __('Payable Amount') }}</th>
+                                                    <td class="fw-bolder">{{ __('Total Payable Amount') }}</td>
                                                     <td>:</td>
-                                                    <th><span>{!! get_taka_icon() !!} </span>{{ $totalPrice }}</th>
+                                                    <td class="fw-bolder"><span>{!! get_taka_icon() !!}
+                                                        </span>{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}
+                                                    </td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -185,7 +186,8 @@
                                 <h2 class="mb-0 font-weight-bold">{{ __('TOTAL AMOUNT') }}</h2>
                             </div>
                             <div class="col-auto my-auto ml-auto">
-                                <h1 class="display-3 ">{!! get_taka_icon() !!} {{ $totalPrice }}</h1>
+                                <h1 class="display-3 ">{!! get_taka_icon() !!}
+                                    {{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}</h1>
                             </div>
                         </div>
                     </div>
@@ -211,6 +213,7 @@
                             <thead>
                                 <tr>
                                     <th>{{ __('SL') }}</th>
+                                    <th>{{ __('Type') }}</th>
                                     <th>{{ __('Transaction ID') }}</th>
                                     <th>{{ __('Total Amount') }}</th>
                                     <th>{{ __('Status') }}</th>
@@ -220,35 +223,14 @@
                             </thead>
                             <tbody>
                                 @foreach ($order->payments as $payment)
-                                    @php
-                                        $statusBgColor =
-                                            $payment->status == 1
-                                                ? 'badge badge-success'
-                                                : ($payment->status == 0
-                                                    ? 'badge badge-info'
-                                                    : ($payment->status == -1
-                                                        ? 'badge badge-danger'
-                                                        : ($payment->status == -2
-                                                            ? 'badge badge-warning'
-                                                            : 'badge badge-primary')));
-
-                                        $status =
-                                            $payment->status == 1
-                                                ? 'Success'
-                                                : ($payment->status == 0
-                                                    ? 'Pending'
-                                                    : ($payment->status == -1
-                                                        ? 'Failed'
-                                                        : ($payment->status == -2
-                                                            ? 'Cancel'
-                                                            : 'Processing')));
-                                    @endphp
                                     <tr>
                                         <td> {{ $loop->iteration }} </td>
+                                        <td>{{ $payment->payment_method }}</td>
                                         <td>{{ $payment->transaction_id }}</td>
                                         <td><span>{!! get_taka_icon() !!}
                                             </span>{{ number_format(ceil($payment->amount)) }}</td>
-                                        <td><span class="{{ $statusBgColor }}">{{ $status }}</span></td>
+                                        <td><span class="{{ $payment->statusBg() }}">{{ $payment->statusTitle() }}</span>
+                                        </td>
                                         <td>{{ timeFormate($order->created_at) }}</td>
                                         <td>
                                             @include('admin.partials.action_buttons', [

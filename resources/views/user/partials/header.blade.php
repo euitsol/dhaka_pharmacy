@@ -19,7 +19,9 @@
                         <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'wishlist') active @endif"
                                 href="{{ route('u.wishlist.list') }}">{{ __('Wishlists') }}</a></li>
                         <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'payment') active @endif"
-                                href="{{ route('u.payment.list') }}">{{ __('Payment') }}</a></li>
+                                href="{{ route('u.payment.list') }}">{{ __('Payments') }}</a></li>
+                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'review') active @endif"
+                                href="{{ route('u.review.list') }}">{{ __('Reviews') }}</a></li>
                     </ul>
                 </div>
             </div>

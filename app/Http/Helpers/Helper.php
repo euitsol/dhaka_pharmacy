@@ -1,19 +1,23 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
+use App\Models\PointSetting;
+use App\Models\Review;
 use App\Models\SiteSetting;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 
 //This will retun the route prefix of the routes for permission check
 function get_permission_routes()
 {
     return [
-        'am.', 'um.', 'pm.', 'om.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.'
+        'am.', 'um.', 'pm.', 'pm.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.', 'om.', 'withdraw_method.', 'withdraw.'
     ];
 }
 
@@ -96,7 +100,7 @@ function createCSV($filename = 'permissions.csv'): string
 
 function storage_url($urlOrArray)
 {
-    $image = asset('frontend\default\cat_img.png');
+    $image = asset('frontend/default/default.png');
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
         $result = '';
         $count = 0;
@@ -120,11 +124,11 @@ function storage_url($urlOrArray)
 
 function auth_storage_url($urlOrArray, $gender)
 {
-    $image = asset('default_img\other-student.png');
+    $image = asset('default_img/other.png');
     if ($gender == 'Male') {
-        $image = asset('default_img\male-student.png');
+        $image = asset('default_img/male.png');
     } elseif ($gender == 'Male') {
-        $image = asset('default_img\female-student.png');
+        $image = asset('default_img/female.png');
     }
 
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
@@ -202,6 +206,9 @@ function mainMenuCheck($array)
                     break;
                 }
             }
+        } else {
+            $check = true;
+            break;
         }
     }
     return $check;
@@ -261,16 +268,22 @@ function str_limit($data, $limit = 20, $end = '...')
     return Str::limit($data, $limit, $end);
 }
 
-function generateOrderId()
+function generateOrderId($type = 'web')
 {
-    // $alphaPart = strtoupper(Str::random(3)); // Generates 3 random uppercase letters
-    $numericPart = mt_rand(100000, 999999); // Generates 5 random alphanumeric characters
+    if ($type == 'web') {
+        $prefix = 'DPW';
+    } elseif ($type == 'api') {
+        $prefix = 'DPA';
+    } else {
+        $prefix = 'DP';
+    }
 
-    $alphaPart = 'DP';
-    $date = date('d'); // Generates 5 random alphanumeric characters
+    $microseconds = explode(' ', microtime(true))[0];
 
+    $date = date('ymd');
+    $time = date('is');
 
-    return $alphaPart . $date . $numericPart;
+    return $prefix . $date . $time . mt_rand(10000, 99999);
 }
 function generateTranId()
 {
@@ -304,19 +317,6 @@ function calculateProductDiscount($product, $isPercent = false)
         }
     }
 }
-
-function cartItemRegPrice($cart)
-{
-    $unit = $cart->unit ? $cart->unit->quantity : 1;
-    return ($cart->product->price * $unit * $cart->quantity);
-}
-function cartItemPrice($cart)
-{
-    $product_discount = proDisPrice($cart->product->price, $cart->product->discounts);
-    $unit = $cart->unit ? $cart->unit->quantity : 1;
-    return ($product_discount * $unit * $cart->quantity);
-}
-
 function proDisPrice($price, $pro_discounts)
 {
     $discount = $pro_discounts->where('status', 1)->first();
@@ -337,8 +337,8 @@ function formatPercentageNumber($number)
 
 function otp()
 {
-    // $otp =  mt_rand(100000, 999999);
-    $otp =  '000000';
+    $otp =  mt_rand(100000, 999999);
+    // $otp =  '000000';
     return $otp;
 }
 
@@ -356,18 +356,35 @@ function u_user_name($user)
 {
     return $user->name ?? '--';
 }
-
-function readablePrepTime($start_time, $end_time)
+/**
+ * Calculate the remaining time until the end time.
+ *
+ * @param string $endTime The end time.
+ * @param bool $html Whether to return HTML formatted string.
+ * @return string
+ */
+function remainingTime($endTime, $html = false)
 {
-    $duration = Carbon::parse($end_time)->diff(Carbon::parse($start_time));
-    $formattedDuration = '';
-    if ($duration->h > 0) {
-        $formattedDuration .= $duration->h . ' hours ';
+    $end = Carbon::parse($endTime);
+    $now = Carbon::now();
+    $difference = $now->diffForHumans($end, [
+        'parts' => 2,
+        'join' => ', ',
+        'syntax' => Carbon::DIFF_ABSOLUTE,
+        'short' => true,
+    ]);
+
+    if ($now->lessThan($end)) {
+        $result = $html ? "<span class='prep_time text-success' data-end-time='$endTime'>$difference remaining</span>" : "$difference remaining";
+    } else {
+        $result = $html ? "<span class='prep_time text-danger' data-end-time='$endTime'>Delayed</span>" : 0;
     }
-    if ($duration->i > 0) {
-        $formattedDuration .= $duration->i . ' minutes';
-    }
-    return $formattedDuration;
+    return $result;
+}
+
+function prepTimeConverter($end_time)
+{
+    $duration = Carbon::now()->diff(Carbon::parse($end_time));
 }
 
 function prepTotalSeconds($start_time, $end_time)
@@ -461,4 +478,112 @@ function pdf_storage_url($urlOrArray)
     } else {
         return asset('/laraview/#../storage/' . $urlOrArray);
     }
+}
+
+function getFormattedCountdown($pastDate)
+{
+    if (!($pastDate instanceof Carbon)) {
+        $pastDate = Carbon::parse($pastDate);
+    }
+
+    $now = Carbon::now();
+    // Check if the past date has passed
+    if ($pastDate->gt($now)) {
+        $years = $pastDate->diffInYears($now);
+        $weeks = $pastDate->diffInWeeks($now) % 52;
+        $days = $pastDate->diffInDays($now) % 7;
+        $hours = $pastDate->diffInHours($now) % 24;
+        $minutes = $pastDate->diffInMinutes($now) % 60;
+        $seconds = $pastDate->diffInSeconds($now) % 60;
+    } else {
+        $years = $weeks = $days = $hours = $minutes = $seconds = 0;
+    }
+
+    $countdown = [
+        'years' => $years,
+        'weeks' => $weeks,
+        'days' => $days,
+        'hours' => $hours,
+        'minutes' => $minutes,
+        'seconds' => $seconds,
+    ];
+
+    return $countdown;
+}
+
+//This function will check the if the given route is a route name or full url
+function is_valid_route($routeOrUrl)
+{
+    if (!empty($routeOrUrl) && (Route::has($routeOrUrl))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function slugToTitle($slug)
+{
+    return ucwords(strtolower(str_replace('-', ' ', $slug)));
+}
+function activatedTime($start_time, $end_time)
+{
+    if ($end_time != $start_time) {
+        return timeFormate($start_time) . ' - ' . timeFormate($end_time);
+    } else {
+        return timeFormate($start_time) . " - Running";
+    }
+}
+
+function getPointName()
+{
+    return PointSetting::where('key', 'point_name')->first()->value;
+}
+
+function translate($text)
+{
+    $locale = App::getLocale();
+    try {
+        $translatedText = GoogleTranslate::trans($text, $locale, null, ['verify' => false]);
+    } catch (Exception $e) {
+        $translatedText = $text;
+    }
+    return $translatedText;
+}
+function getEarningPoints($earnings)
+{
+    return ($earnings->where('activity', 1)->sum('point') - ($earnings->where('activity', 3)->sum('point') + $earnings->where('activity', 2)->sum('point')));
+}
+function getEarningEqAmounts($earnings)
+{
+    return ($earnings->where('activity', 1)->sum('eq_amount') - ($earnings->where('activity', 3)->sum('eq_amount') + $earnings->where('activity', 2)->sum('eq_amount')));
+}
+function getWithdrawPoints($earnings)
+{
+    return $earnings->where('activity', 3)->sum('point');
+}
+function getWithdrawEqAmounts($earnings)
+{
+    return $earnings->where('activity', 3)->sum('eq_amount');
+}
+function getPendingWithdrawPoints($earnings)
+{
+    return $earnings->where('activity', 2)->sum('point');
+}
+function getPendingWithdrawEqAmounts($earnings)
+{
+    return $earnings->where('activity', 2)->sum('eq_amount');
+}
+function getPendingEarningPoints($earnings)
+{
+    return $earnings->where('activity', 0)->sum('point');
+}
+function getPendingEarningEqAmounts($earnings)
+{
+    return $earnings->where('activity', 0)->sum('eq_amount');
+}
+
+function getSubmitterType($className)
+{
+    $className = basename(str_replace('\\', '/', $className));
+    return trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $className));
 }

@@ -22,7 +22,7 @@ class CartProductRule implements ValidationRule
         $query = AddToCart::query();
 
         if ($user && $product) {
-            if ($query->where('customer_id', $user->id)->where('product_id', $product->id)->exists()) {
+            if ($query->where('customer_id', $user->id)->where('product_id', $product->id)->where('status', 1)->exists()) {
                 $fail('This product is already in your cart!');
             }
         }

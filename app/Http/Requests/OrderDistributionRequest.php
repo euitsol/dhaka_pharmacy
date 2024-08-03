@@ -16,14 +16,12 @@ class OrderDistributionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_type'=>'required|numeric',
-            'distribution_type'=>'required|numeric',
-            'prep_time'=>'required|date',
-            'note'=>'nullable',
-            'datas.*.cart_id'=>'required|exists:add_to_carts,id',
-            'datas.*.pharmacy_id'=>'required|exists:pharmacies,id',
+            'payment_type' => 'required|numeric',
+            'distribution_type' => 'required|numeric',
+            'prep_time' => 'required|numeric',
+            'note' => 'nullable',
+            'datas.*.op_id' => 'required|exists:order_products,id',
+            'datas.*.pharmacy_id' => 'required|exists:pharmacies,id',
         ];
     }
 }
-
-

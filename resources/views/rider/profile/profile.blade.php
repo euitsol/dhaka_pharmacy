@@ -1,4 +1,5 @@
 @extends('rider.layouts.master', ['pageSlug' => 'rider_profile'])
+@section('title', 'My Profile')
 @push('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
         integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
@@ -8,6 +9,16 @@
     <div class="profile-section">
         <div class="row">
             <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="title">{{ __('Map') }}</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div id="map" style="height: 500px"></div>
+                    </div>
+
+                </div>
                 <div class="card">
                     <div class="card-header">
                         <h5 class="title">{{ __('Update Profile') }}</h5>
@@ -73,14 +84,17 @@
                             </div>
                             <div class="row">
 
-                                
+
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification Type') }}</label>
                                     <select name="identification_type" id="identification_type" class="form-control">
-                                        <option selected hidden value="">{{ __('Select Identification Type') }}</option>
-                                        <option value="NID" {{ $rider->identification_type == 'NID' ? 'selected' : '' }}>
+                                        <option selected hidden value=" ">{{ __('Select Identification Type') }}
+                                        </option>
+                                        <option value="NID"
+                                            {{ $rider->identification_type == 'NID' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
-                                        <option value="DOB" {{ $rider->identification_type == 'DOB' ? 'selected' : '' }}>
+                                        <option value="DOB"
+                                            {{ $rider->identification_type == 'DOB' ? 'selected' : '' }}>
                                             {{ __('Birth Certificate No') }}</option>
                                         <option value="Passport"
                                             {{ $rider->identification_type == 'Passport' ? 'selected' : '' }}>
@@ -100,7 +114,7 @@
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
-                                        <option selected hidden value="">{{ __('Select Genger') }}</option>
+                                        <option selected hidden value=" ">{{ __('Select Genger') }}</option>
                                         <option value="Male" {{ $rider->gender == 'Male' ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
                                         <option value="Female" {{ $rider->gender == 'Female' ? 'selected' : '' }}>
@@ -112,47 +126,49 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operation Area') }}</label>
-                                    @if(empty($rider->oa_id))
+                                    @if (empty($rider->oa_id))
                                         <select name="oa_id" class="form-control operation_area">
-                                            <option selected hidden>{{ __('Select Operation Area') }}</option>
+                                            <option selected hidden value=" ">{{ __('Select Operation Area') }}
+                                            </option>
                                             @foreach ($operation_areas as $area)
-                                                <option value="{{$area->id}}">{{ $area->name }}</option>
+                                                <option value="{{ $area->id }}">{{ $area->name }}</option>
                                             @endforeach
                                         </select>
-                                        @include('alerts.feedback', ['field' => 'osa_id'])
+                                        @include('alerts.feedback', ['field' => 'oa_id'])
                                     @else
                                         <input type="text" value="{{ $rider->operation_area->name }}"
-                                        class="form-control" disabled>
+                                            class="form-control" disabled>
                                     @endif
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operation Sub Area') }}</label>
-                                    @if(empty($rider->osa_id))
+                                    @if (empty($rider->osa_id))
                                         <select name="osa_id" class="form-control operation_sub_area" disabled>
-                                            <option selected hidden>{{ __('Select Operation Sub Area') }}</option>
+                                            <option selected hidden value=" ">{{ __('Select Operation Sub Area') }}
+                                            </option>
                                         </select>
                                         @include('alerts.feedback', ['field' => 'osa_id'])
                                     @else
                                         <input type="text" value="{{ $rider->operation_sub_area->name }}"
-                                        class="form-control" disabled>
+                                            class="form-control" disabled>
                                     @endif
                                 </div>
 
-                                
-
-                                
 
 
-                                
+
+
+
+
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Date of Birth') }}</label>
-                                    <input type="date" name="dob" value="{{ $rider->dob ? $rider->dob : old('dob') }}"
-                                        class="form-control">
+                                    <input type="date" name="dob"
+                                        value="{{ $rider->dob ? $rider->dob : old('dob') }}" class="form-control">
                                     @include('alerts.feedback', ['field' => 'dob'])
                                 </div>
-                                
-                                
+
+
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label>{{ __('Upload CV') }}</label>
@@ -160,11 +176,12 @@
                                         @include('alerts.feedback', ['field' => 'cv'])
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Age') }}</label>
-                                    <input type="text" name="age" value="{{ $rider->age ? $rider->age : old('age') }}"
-                                        class="form-control" placeholder="Enter age">
+                                    <input type="text" name="age"
+                                        value="{{ $rider->age ? $rider->age : old('age') }}" class="form-control"
+                                        placeholder="Enter age">
                                     @include('alerts.feedback', ['field' => 'age'])
                                 </div>
 
@@ -181,6 +198,9 @@
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-sm btn-primary">{{ __('Update') }}</button>
                                 </div>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -217,6 +237,10 @@
                 </div>
             </form>
         </div>
+
+
+
+
     </div>
     @include('district_manager.partials.documentation', ['document' => $document])
     </div>
@@ -225,9 +249,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script src="{{ asset('rider/js/direction.js') }}"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.css"
+        type="text/css">
 @endpush
 @push('js')
     <script>
+        function handleErrors(response) {
+            var errors = response.errors;
+            for (var field in errors) {
+                toastr.error(errors[field][0]);
+            }
+        }
         $(document).ready(function() {
             var form = $('#updateForm');
             $('#imageInput').change(function() {
@@ -283,37 +319,43 @@
                                 'X-CSRF-TOKEN': csrfToken
                             },
                             success: function(response) {
-                                console.log('Image uploaded successfully');
+                                if (!response.success) {
+                                    $('.profile_image .img').removeClass(
+                                        'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src',
+                                        "{{ storage_url($rider->image) }}");
+                                    handleErrors(response);
+                                }
+
                             },
                             complete: function(response) {
-                                // Remove animation classes after AJAX request is complete
-                                $('.profile_image .img').removeClass(
-                                    'div_animation overly');
-                                $('.profile_image .img img.avatar').removeClass(
-                                    'image_animation');
-                                $('.profile_image .camera-icon').css('display', 'block');
-                                toastr.success(response.responseJSON.message);
+                                if (response.responseJSON.message) {
+                                    $('.profile_image .img').removeClass(
+                                        'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src', response.responseJSON
+                                        .image);
+                                    toastr.success(response.responseJSON.message);
+                                }
                             },
                             error: function(xhr) {
                                 if (xhr.status === 422) {
                                     $('.profile_image .img').removeClass(
-                                    'div_animation overly');
+                                        'div_animation overly');
                                     $('.profile_image .img img.avatar').removeClass(
                                         'image_animation');
-                                    $('.profile_image .camera-icon').css('display', 'block');
-                                    $('#previewImage').attr('src', "{{ $rider->image ? storage_url($rider->image) : asset('no_img/no_img.jpg') }}");
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src',
+                                        "{{ storage_url($rider->image) }}");
                                     toastr.error('Something is wrong!');
-                                    var errors = xhr.responseJSON.errors;
-                                    $.each(errors, function(field, messages) {
-                                        var errorHtml = '';
-                                        $.each(messages, function(index, message) {
-                                            errorHtml +=
-                                                '<span class="invalid-feedback mt-4 d-block" role="alert">' +
-                                                message + '</span>';
-                                        });
-                                        $('.profile_image img').after(
-                                            errorHtml);
-                                    });
                                 } else {
                                     console.log('An error occurred.');
                                 }
@@ -333,20 +375,21 @@
                 let operation_sub_area = $('.operation_sub_area');
                 let oa_id = $(this).val();
 
-                operation_sub_area.prop('disabled',true);
+                operation_sub_area.prop('disabled', true);
 
                 let url = ("{{ route('rider.profile.get_osa', ['oa_id']) }}");
                 let _url = url.replace('oa_id', oa_id);
-                
+
                 $.ajax({
                     url: _url,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        operation_sub_area.prop('disabled',false);
+                        operation_sub_area.prop('disabled', false);
                         var result = '';
                         data.operation_sub_areas.forEach(function(sub_area) {
-                            result += `<option value="${sub_area.id}">${sub_area.name}</option>`;
+                            result +=
+                                `<option value="${sub_area.id}">${sub_area.name}</option>`;
                         });
                         operation_sub_area.html(result);
                     },

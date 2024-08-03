@@ -17,13 +17,16 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('.datatable').each(function() {
+            var main_class = {!! json_encode($mainClass ?? 'datatable') !!};
+            $('.' + main_class).css('width', '100%');
+            $('.' + main_class).each(function() {
                 var columnsToShow = {!! json_encode($columns_to_show ?? []) !!};
                 var order = {!! json_encode($order ?? 'asc') !!};
+                var length = {!! json_encode($length ?? 50) !!};
                 $(this).DataTable({
                     dom: 'Bfrtip',
                     responsive: true,
-                    iDisplayLength: 50,
+                    iDisplayLength: length,
                     order: [
                         [0, order]
                     ],

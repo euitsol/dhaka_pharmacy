@@ -84,14 +84,6 @@
 // }
 // });
 
-// Homepage top slider
-const myCarouselElement = document.querySelector("#carouselExampleCaptions");
-
-const carousel = new bootstrap.Carousel(myCarouselElement, {
-    interval: 4000,
-    ride: true,
-});
-
 function numberFormat(value, decimals) {
     if (decimals != null && decimals >= 0) {
         value = parseFloat(value).toFixed(decimals);
@@ -104,4 +96,14 @@ function numberFormat(value, decimals) {
 
 function getCsrfToken() {
     return $("#csrf-token").val();
+}
+
+function formatPercentageNumber(number) {
+    var formattedNumber = number.toString();
+    formattedNumber = formattedNumber.includes(".")
+        ? parseFloat(formattedNumber)
+              .toFixed(2)
+              .replace(/\.?0+$/, "")
+        : formattedNumber;
+    return formattedNumber;
 }

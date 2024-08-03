@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <title> @yield('title', 'Dhakha Pharmacy') - Dhakha Pharmacy </title>
+    <title> @yield('title', 'Admin Dashboard') - Dhakha Pharmacy </title>
 
     <!-- Favicon -->
     <link rel="icon" href="{{ storage_url(settings('site_favicon')) }}">
@@ -29,7 +29,12 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     @stack('css')
-
+    <script>
+        const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
+        const map_center = `[{{ config('mapbox.center_location_lng') }}, {{ config('mapbox.center_location_lat') }}]`;
+        const pharmacy_radious = `{{ config('mapbox.pharmacy_radious') }}`;
+        const mapbox_style_id = `{{ config('mapbox.pharmacy_radious') }}`;
+    </script>
 </head>
 
 <body class="white-content dark {{ $class ?? '' }}">

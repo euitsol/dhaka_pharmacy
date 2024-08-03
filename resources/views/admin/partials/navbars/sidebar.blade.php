@@ -549,55 +549,66 @@
                 ]))
                 <li>
                     <a class="@if (
-                        $pageSlug == 'order_Success' ||
-                            $pageSlug == 'order_details' ||
-                            $pageSlug == 'order_Failed' ||
-                            $pageSlug == 'order_Cancel' ||
-                            $pageSlug == 'order_Pending' ||
-                            $pageSlug == 'order_Initiated') @else collapsed @endif" data-toggle="collapse"
+                        $pageSlug == 'order_Initiated' ||
+                            $pageSlug == 'order_Submitted' ||
+                            $pageSlug == 'order_Processed' ||
+                            $pageSlug == 'order_Waiting-for-rider' ||
+                            $pageSlug == 'order_Assigned') @else collapsed @endif" data-toggle="collapse"
                         href="#order_management"
                         @if (
-                            $pageSlug == 'order_Success' ||
-                                $pageSlug == 'order_details' ||
-                                $pageSlug == 'order_Failed' ||
-                                $pageSlug == 'order_Cancel' ||
-                                $pageSlug == 'order_Pending' ||
-                                $pageSlug == 'order_Initiated') aria-expanded="true" @else aria-expanded="false" @endif>
+                            $pageSlug == 'order_Initiated' ||
+                                $pageSlug == 'order_Submitted' ||
+                                $pageSlug == 'order_Processed' ||
+                                $pageSlug == 'order_Waiting-for-rider' ||
+                                $pageSlug == 'order_Assigned') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-truck-fast"></i>
                         <span class="nav-link-text">{{ __('Order Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
                     <div class="collapse @if (
-                        $pageSlug == 'order_Success' ||
-                            $pageSlug == 'order_details' ||
-                            $pageSlug == 'order_Failed' ||
-                            $pageSlug == 'order_Cancel' ||
-                            $pageSlug == 'order_Pending' ||
-                            $pageSlug == 'order_Initiated') show @endif" id="order_management">
+                        $pageSlug == 'order_Initiated' ||
+                            $pageSlug == 'order_Submitted' ||
+                            $pageSlug == 'order_Processed' ||
+                            $pageSlug == 'order_Waiting-for-rider' ||
+                            $pageSlug == 'order_Assigned') show @endif" id="order_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
-                                    [
-                                        'pageSlug' => 'order_Pending',
-                                        'routeName' => 'om.order.order_list',
-                                        'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'pending',
-                                        'label' => 'Order List (Pending)',
-                                    ],
                                     [
                                         'pageSlug' => 'order_Initiated',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'initiated',
-                                        'label' => 'Order List (Initiated)',
+                                        'label' => 'Initiated Orders',
                                     ],
                                     [
-                                        'pageSlug' => 'order_Success',
+                                        'pageSlug' => 'order_Submitted',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'success',
-                                        'label' => 'Order List (Success)',
+                                        'params' => 'submitted',
+                                        'label' => 'Submitted Orders',
+                                    ],
+                                    [
+                                        'pageSlug' => 'order_Processed',
+                                        'routeName' => 'om.order.order_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'processed',
+                                        'label' => 'Processed Orders',
+                                    ],
+                                    [
+                                        'pageSlug' => 'order_Waiting-for-rider',
+                                        'routeName' => 'om.order.order_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'waiting-for-rider',
+                                        'label' => 'Waiting For Rider',
+                                    ],
+                                    [
+                                        'pageSlug' => 'order_Assigned',
+                                        'routeName' => 'om.order.order_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'assigned',
+                                        'label' => 'Assigned',
                                     ],
                                     [
                                         'pageSlug' => 'order_Failed',
@@ -621,50 +632,20 @@
             @endif
 
             {{-- Distributed Order  --}}
-            @if (mainMenuCheck([
-                    'prefixes' => ['do.'],
-                    'routes' => ['do_list'],
-                ]))
+            {{-- @if (mainMenuCheck([
+        'prefixes' => ['do.'],
+        'routes' => ['do_list'],
+    ]))
                 <li>
-                    <a class="@if (
-                        $pageSlug == 'order_pending' ||
-                            $pageSlug == 'order_preparing' ||
-                            $pageSlug == 'dispute_orders' ||
-                            $pageSlug == 'order_dispute' ||
-                            $pageSlug == 'order_cancel' ||
-                            $pageSlug == 'order_waiting-for-pickup' ||
-                            $pageSlug == 'order_waiting-for-rider' ||
-                            $pageSlug == 'order_picked-up' ||
-                            $pageSlug == 'order_delivered' ||
-                            $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders' || $pageSlug == 'order_dispute' || $pageSlug == 'order_cancel' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_delivered' || $pageSlug == 'order_finish') @else collapsed @endif" data-toggle="collapse"
                         href="#distributed_order"
-                        @if (
-                            $pageSlug == 'order_pending' ||
-                                $pageSlug == 'order_preparing' ||
-                                $pageSlug == 'dispute_orders' ||
-                                $pageSlug == 'order_dispute' ||
-                                $pageSlug == 'order_cancel' ||
-                                $pageSlug == 'order_waiting-for-pickup' ||
-                                $pageSlug == 'order_waiting-for-rider' ||
-                                $pageSlug == 'order_picked-up' ||
-                                $pageSlug == 'order_delivered' ||
-                                $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders' || $pageSlug == 'order_dispute' || $pageSlug == 'order_cancel' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_delivered' || $pageSlug == 'order_finish') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-network-wired"></i>
                         <span class="nav-link-text">{{ __('Distributed Orders') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if (
-                        $pageSlug == 'order_pending' ||
-                            $pageSlug == 'order_preparing' ||
-                            $pageSlug == 'dispute_orders' ||
-                            $pageSlug == 'order_dispute' ||
-                            $pageSlug == 'order_cancel' ||
-                            $pageSlug == 'order_waiting-for-pickup' ||
-                            $pageSlug == 'order_waiting-for-rider' ||
-                            $pageSlug == 'order_picked-up' ||
-                            $pageSlug == 'order_delivered' ||
-                            $pageSlug == 'order_finish') show @endif" id="distributed_order">
+                    <div class="collapse @if ($pageSlug == 'order_pending' || $pageSlug == 'order_preparing' || $pageSlug == 'dispute_orders' || $pageSlug == 'order_dispute' || $pageSlug == 'order_cancel' || $pageSlug == 'order_waiting-for-pickup' || $pageSlug == 'order_waiting-for-rider' || $pageSlug == 'order_picked-up' || $pageSlug == 'order_delivered' || $pageSlug == 'order_finish') show @endif" id="distributed_order">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -736,7 +717,9 @@
                         </ul>
                     </div>
                 </li>
-            @endif
+            @endif --}}
+
+
             {{-- Payment Management  --}}
             @if (mainMenuCheck([
                     'prefixes' => ['pym.'],
@@ -745,19 +728,17 @@
                 <li>
                     <a class="@if (
                         $pageSlug == 'payment_Success' ||
-                            $pageSlug == 'payment_details' ||
                             $pageSlug == 'payment_Failed' ||
                             $pageSlug == 'payment_Cancel' ||
-                            $pageSlug == 'payment_Pending' ||
-                            $pageSlug == 'payment_Processing') @else collapsed @endif" data-toggle="collapse"
+                            $pageSlug == 'payment_Initiated' ||
+                            $pageSlug == 'payment_Unkhown') @else collapsed @endif" data-toggle="collapse"
                         href="#payment_management"
                         @if (
                             $pageSlug == 'payment_Success' ||
-                                $pageSlug == 'payment_details' ||
                                 $pageSlug == 'payment_Failed' ||
                                 $pageSlug == 'payment_Cancel' ||
-                                $pageSlug == 'payment_Pending' ||
-                                $pageSlug == 'payment_Processing') aria-expanded="true" @else aria-expanded="false" @endif>
+                                $pageSlug == 'payment_Initiated' ||
+                                $pageSlug == 'payment_Unkhown') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-credit-card"></i>
                         <span class="nav-link-text">{{ __('Payment Management') }}</span>
                         <b class="caret mt-1"></b>
@@ -765,20 +746,19 @@
 
                     <div class="collapse @if (
                         $pageSlug == 'payment_Success' ||
-                            $pageSlug == 'payment_details' ||
                             $pageSlug == 'payment_Failed' ||
                             $pageSlug == 'payment_Cancel' ||
-                            $pageSlug == 'payment_Pending' ||
-                            $pageSlug == 'payment_Processing') show @endif" id="payment_management">
+                            $pageSlug == 'payment_Initiated' ||
+                            $pageSlug == 'payment_Unkhown') show @endif" id="payment_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
                                     [
-                                        'pageSlug' => 'payment_Pending',
+                                        'pageSlug' => 'payment_Initiated',
                                         'routeName' => 'pym.payment.payment_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'pending',
-                                        'label' => 'Payment List (Pending)',
+                                        'params' => 'initiated',
+                                        'label' => 'Payment List (Initiated)',
                                     ],
                                     [
                                         'pageSlug' => 'payment_Success',
@@ -802,11 +782,11 @@
                                         'label' => 'Payment List (Cancel)',
                                     ],
                                     [
-                                        'pageSlug' => 'payment_Processing',
+                                        'pageSlug' => 'payment_Unkhown',
                                         'routeName' => 'pym.payment.payment_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'processing',
-                                        'label' => 'Payment List (Processing)',
+                                        'params' => 'unkhown',
+                                        'label' => 'Payment List (Unkhown)',
                                     ],
                                 ],
                             ])
@@ -814,6 +794,148 @@
                     </div>
                 </li>
             @endif
+            {{-- Withdraw Method Request  --}}
+            @if (mainMenuCheck([
+                    'prefixes' => ['withdraw_method.'],
+                    'routes' => ['wm_list'],
+                ]))
+                <li>
+                    <a class="@if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declined') @else collapsed @endif" data-toggle="collapse"
+                        href="#wm"
+                        @if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declined') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-regular fa-credit-card"></i>
+                        <span class="nav-link-text">{{ __('Withdraw Method Request') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'wm_Pending' || $pageSlug == 'wm_Verified' || $pageSlug == 'wm_Declined') show @endif" id="wm">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'wm_Pending',
+                                        'routeName' => 'withdraw_method.wm_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'pending',
+                                        'label' => 'Pending',
+                                    ],
+                                    [
+                                        'pageSlug' => 'wm_Verified',
+                                        'routeName' => 'withdraw_method.wm_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'verified',
+                                        'label' => 'Verified',
+                                    ],
+                                    [
+                                        'pageSlug' => 'wm_Declined',
+                                        'routeName' => 'withdraw_method.wm_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'declined',
+                                        'label' => 'Declined',
+                                    ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
+            {{-- Payment Clearance  --}}
+            @if (mainMenuCheck([
+                    'prefixes' => ['pc.'],
+                    'routes' => ['pc_list'],
+                ]))
+                <li>
+                    <a class="@if ($pageSlug == 'pc_Payment-declined' || $pageSlug == 'pc_Pending-clearance' || $pageSlug == 'pc_Earning') @else collapsed @endif" data-toggle="collapse"
+                        href="#pc"
+                        @if ($pageSlug == 'pc_Payment-declined' || $pageSlug == 'pc_Pending-clearance' || $pageSlug == 'pc_Earning') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                        <span class="nav-link-text">{{ __('Payment Clearance') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'pc_Payment-declined' || $pageSlug == 'pc_Pending-clearance' || $pageSlug == 'pc_Earning') show @endif" id="pc">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'pc_Pending-clearance',
+                                        'routeName' => 'pc.pc_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'pending-clearance',
+                                        'label' => 'Pending',
+                                    ],
+                                    [
+                                        'pageSlug' => 'pc_Earning',
+                                        'routeName' => 'pc.pc_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'earning',
+                                        'label' => 'Payments',
+                                    ],
+                                    [
+                                        'pageSlug' => 'pc_Payment-declined',
+                                        'routeName' => 'pc.pc_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'payment-declined',
+                                        'label' => 'Declined',
+                                    ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
+            {{-- Withdraw Request  --}}
+            @if (mainMenuCheck([
+                    'prefixes' => ['withdraw.'],
+                    'routes' => ['w_list'],
+                ]))
+                <li>
+                    <a class="@if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Accepted' || $pageSlug == 'w_Declined') @else collapsed @endif" data-toggle="collapse"
+                        href="#withdraw"
+                        @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Accepted' || $pageSlug == 'w_Declined') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-hourglass-half"></i>
+                        <span class="nav-link-text">{{ __('Withdraw Request') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'w_Pending' || $pageSlug == 'w_Accepted' || $pageSlug == 'w_Declined') show @endif" id="withdraw">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'w_Pending',
+                                        'routeName' => 'withdraw.w_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'pending',
+                                        'label' => 'Pending',
+                                    ],
+                                    [
+                                        'pageSlug' => 'w_Accepted',
+                                        'routeName' => 'withdraw.w_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'accepted',
+                                        'label' => 'Accepted',
+                                    ],
+                                    [
+                                        'pageSlug' => 'w_Declined',
+                                        'routeName' => 'withdraw.w_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'declined',
+                                        'label' => 'Declined',
+                                    ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
+
+
+
+
             {{-- Feedback --}}
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [
@@ -822,6 +944,17 @@
                         'routeName' => 'feedback.fdk_list',
                         'iconClass' => 'fa-regular fa-thumbs-up',
                         'label' => 'Feedback',
+                    ],
+                ],
+            ])
+            {{-- Feedback --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'review',
+                        'routeName' => 'review.review_products',
+                        'iconClass' => 'fa-regular fa-star-half-alt',
+                        'label' => 'Review',
                     ],
                 ],
             ])

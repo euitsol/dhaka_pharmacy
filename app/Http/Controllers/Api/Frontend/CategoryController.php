@@ -5,20 +5,30 @@ namespace App\Http\Controllers\Api\Frontend;
 use App\Http\Controllers\Api\BaseController;
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 
 class CategoryController extends BaseController
 {
-    public function categories($is_featured = false): JsonResponse
+    public function categories(Request $request): JsonResponse
     {
-        $defaultImagePath = 'frontend\default\cat_img.png'; // Set your default image path here
-        $query = ProductCategory::selectRaw('id, name, slug, IFNULL(image, ?) as image', [$defaultImagePath]);
-        $message = 'The category list was obtained successfully';
-        if ($is_featured === 'featured') {
-            $query->featured();
-            $message = 'The featured category list was obtained successfully';
+        $query = ProductCategory::with(['pro_sub_cats']);
+
+        //Featured Category
+        if ($request->has('featured') && !empty($request->featured)) {
+            if($request->featured == true){
+                $query = $query->featured();
+            }
         }
-        $cats = $query->orderBy('name', 'asc')->get();
-        return sendResponse(true, $message, $cats);
+
+        //Transform
+        $cats = $query->activated()->orderBy('name', 'asc')->get()->each(function (&$cat) {
+            $cat->image = storage_url($cat->image);
+            $cat->pro_sub_cats->each(function (&$scat) {
+                $scat->image = storage_url($scat->image);
+            });
+        });
+
+        return sendResponse(true, null, $cats);
     }
 }

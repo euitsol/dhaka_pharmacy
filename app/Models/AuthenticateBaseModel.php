@@ -110,21 +110,69 @@ class AuthenticateBaseModel extends Authenticatable
         }
     }
 
-    public function scopeActivated($query){
-        return $query->where('status',1);
+    public function scopeActivated($query)
+    {
+        return $query->where('status', 1);
     }
-    public function scopeFeatured($query){
-        return $query->where('is_featured',1);
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', 1);
     }
-    public function scopeKycVerified($query){
-        return $query->where('kyc_status',1);
+    public function scopeKycVerified($query)
+    {
+        return $query->where('kyc_status', 1);
     }
-    public function scopeMenu($query){
-        return $query->where('is_menu',1);
+    public function scopeMenu($query)
+    {
+        return $query->where('is_menu', 1);
     }
 
-
-
-
-
+    public function getKycStatus()
+    {
+        if ($this->kyc_status == 1) {
+            return 'Complete';
+        } else {
+            return 'Pending';
+        }
+    }
+    public function getKycStatusClass()
+    {
+        if ($this->kyc_status == 1) {
+            return 'badge badge-info';
+        } else {
+            return 'badge badge-warning';
+        }
+    }
+    public function getPhoneVerifyStatus()
+    {
+        if ($this->is_verify == 1) {
+            return 'Success';
+        } else {
+            return 'Pending';
+        }
+    }
+    public function getPhoneVerifyClass()
+    {
+        if ($this->is_verify == 1) {
+            return 'badge badge-primary';
+        } else {
+            return 'badge badge-dark';
+        }
+    }
+    public function getEmailVerifyStatus()
+    {
+        if ($this->is_verify == 1) {
+            return 'Success';
+        } else {
+            return 'Pending';
+        }
+    }
+    public function getEmailVerifyClass()
+    {
+        if ($this->is_verify == 1) {
+            return 'badge badge-primary';
+        } else {
+            return 'badge badge-dark';
+        }
+    }
 }

@@ -69,9 +69,11 @@ class CartAjaxController extends Controller
             'product.pro_sub_cat',
             'product.company',
             'product.discounts',
-            'product.units',
             'unit',
-        ])->where('customer_id', $customer_id)->get();
+            'product.units' => function ($q) {
+                $q->orderBy('quantity', 'asc');
+            },
+        ])->currentCart()->get();
 
         $products = $atc->each(function (&$atc) {
             $atc->product = $this->transformProduct($atc->product);
@@ -91,15 +93,19 @@ class CartAjaxController extends Controller
             'product.pro_sub_cat',
             'product.company',
             'product.discounts',
-            'product.units',
+            'unit',
+            'product.units' => function ($q) {
+                $q->orderBy('quantity', 'asc');
+            },
         ])->where('id', $request->cart)->first();
         if (!empty($atc)) {
             $atc->unit_id = $request->unit ? $request->unit : $atc->unit_id;
             $atc->quantity = $request->quantity ? $request->quantity : $atc->quantity;
             $atc->save();
 
+            $atc->load('unit');
             $atc->product = $this->transformProduct($atc->product);
-            $atc->unit = $atc->unit;
+
 
             return response()->json([
                 'success' => true,

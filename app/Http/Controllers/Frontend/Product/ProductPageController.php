@@ -24,7 +24,9 @@ class ProductPageController extends Controller
 
         $data['sub_category'] =  ProductSubCategory::where('slug', $sub_category_slug)->activated()->first();
 
-        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units'])->activated();
+        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units' => function ($q) {
+            $q->orderBy('quantity', 'asc');
+        }])->activated();
 
         $sub_cat_query = ProductSubCategory::with(['pro_cat'])->activated();
 

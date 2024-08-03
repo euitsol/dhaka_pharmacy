@@ -16,6 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Traits\TransformOrderItemTrait;
+use Illuminate\Support\Facades\DB;
 
 
 class OrderManagementController extends Controller
@@ -28,94 +29,159 @@ class OrderManagementController extends Controller
 
     public function index($status): View
     {
-        $data['status'] = $status;
-        $query = OrderDistributionRider::with(['od.odps.pharmacy', 'od.order.address', 'rider'])->where('rider_id', rider()->id);
-        $query->where('status', $this->getStatus($status));
-        if ($this->getStatus($status) == 0) {
-            $query->orWhere('status', -1);
+        // dd($status);
+        // $data['status'] = $status;
+        // $data['dors'] = OrderDistributionRider::with(['od.odps.pharmacy', 'od.order.address', 'rider'])
+        //     ->where('rider_id', rider()->id)
+        //     ->status($status)
+        //     ->orderBy('priority', 'desc')
+        //     ->latest()->get()
+        //     ->each(function ($dor) {
+        //         $dor->pharmacy = $dor->od->odps->pluck('pharmacy')->unique()->values();
+        //         $dor->totalPrice = $this->calculateOrderTotalPrice($dor->od->order);
+        //         return $dor;
+        //     });
+
+        switch ($status) {
+            case 'assigned':
+                $data['slug'] = 'assigned_orders';
+                $data['dors'] = OrderDistributionRider::with(['od.active_odps.pharmacy','od.order.address', 'rider'])->where('rider_id', rider()->id)
+                    ->where('status', 0)->orWhere('status', 1)
+                    ->orderBy('priority', 'desc')
+                    ->latest()->get()
+                    ->each(function (&$dor) {
+                        $this->calculateOrderTotalPrice($dor->od->order);
+                    });
+                break;
+            case 'picked-up':
+                $data['slug'] = 'picked_up_orders';
+                $data['dors'] = OrderDistributionRider::with(['od.active_odps.pharmacy','od.order.address', 'rider'])->where('rider_id', rider()->id)
+                    ->where('status', 2)->orWhere('status', 3)
+                    ->orderBy('priority', 'desc')
+                    ->latest()->get()
+                    ->each(function (&$dor) {
+                        $this->calculateOrderTotalPrice($dor->od->order);
+                    });
+                break;
+
+            default:
+                break;
         }
-        $data['dors'] = $query->orderBy('priority', 'desc')->latest()->get()->each(function ($dor) {
-            $dor->pharmacy = $dor->od->odps->pluck('pharmacy')->unique()->values();
-            $dor->totalPrice = $this->calculateOrderTotalPrice($dor->od->order);
-            return $dor;
-        });
         return view('rider.orders.index', $data);
     }
 
     public function details($dor_id)
     {
-        $data['dor'] = OrderDistributionRider::with(['od.odps', 'od.order.address', 'rider'])->findORFail(decrypt($dor_id));
-        $data['dor']->pharmacy = $data['dor']->od->odps->pluck('pharmacy')->unique()->values();
-        $data['dor']->totalPrice = $this->calculateOrderTotalPrice($data['dor']->od->order);
+        $data['dor'] = OrderDistributionRider::with(['od.active_odps', 'od.order.address', 'rider'])->findORFail(decrypt($dor_id));
+        if ($data['dor']->status == 0) {
+            $data['dor']->update(['status' => 1]);
+        }
+        $this->calculateOrderTotalDiscountPrice($data['dor']->od->order);
         return view('rider.orders.details', $data);
     }
 
-    public function pOtpVerify(PharmacyOtpVerifyRequest $req)
+    public function uOtpVerify(Request $request): RedirectResponse
     {
+        dd($request->all());
+        $od = OrderDistribution::findOrFail($request->od);
+        $otp = $od->active_otps->where('rider_id', rider()->id)->first();
+        $reqOtp = implode('', $request->otp);
 
-        $od_id = decrypt($req->od_id);
-        $pharmacy_id = decrypt($req->pid);
-        $pharmacy = Pharmacy::findOrFail($pharmacy_id);
-        $otp = $req->collect_otp;
+        if(!empty($otp) && $otp->otp == $reqOtp){
+            DB::transaction(function () use ($od, $otp) {
+                $od->status = 4; // rider picked up
+                $od->save();
 
-        $check = DistributionOtp::where([
-            ['order_distribution_id', $od_id],
-            ['otp_author_id', $pharmacy->id],
-            ['otp_author_type', get_class($pharmacy)],
-            ['otp', $otp]
-        ])->first();
+                $od->order->status = 5; //picked up
+                $od->order->save();
 
-        if ($check) {
-            $check->update([
-                'status' => 1,
-                'rider_id' => rider()->id
-            ]);
+                $otp->status = 2; //verified
+                $otp->save();
 
-            OrderDistributionPharmacy::where([
-                ['order_distribution_id', $od_id],
-                ['pharmacy_id', $pharmacy->id],
-                ['status', 2]
-            ])->update(['status' => 4]);
+                if ($od->assignedRider) {
+                    $assignedRider = $od->assignedRider->first();
+                    if ($assignedRider) {
+                        $assignedRider->status = 2; // picked up
+                        $assignedRider->save();
+                    }
+                }
 
-            flash()->addSuccess('Order collected from ' . $pharmacy->name . ' successfully.');
-        } else {
-            flash()->addError('Something is wrong, please try again.');
-        }
-
-
-        $all_collect = OrderDistributionPharmacy::where('order_distribution_id', $od_id)
-            ->where('status', 2)
-            ->with('pharmacy')
-            ->get()
-            ->every(function ($dop) use ($od_id) {
-                return DistributionOtp::where([
-                    ['order_distribution_id', $od_id],
-                    ['otp_author_id', $dop->pharmacy->id],
-                    ['otp_author_type', get_class($dop->pharmacy)],
-                    ['status', 1]
-                ])->exists();
+                flash()->addSuccess('Order delivered successfully.');
             });
-        if ($all_collect) {
-            OrderDistributionRider::where([
-                ['rider_id', rider()->id],
-                ['order_distribution_id', $od_id],
-                ['status', 1]
-            ])->update(['status' => 2]);
 
-            OrderDistribution::where('id', $od_id)->update(['status' => 4]);
-
-            $od = OrderDistribution::with('order.customer')->findOrFail($od_id);
-            $customer = $od->order->customer;
-
-            DistributionOtp::create([
-                'order_distribution_id' => $od_id,
-                'otp_author_id' => $customer->id,
-                'otp_author_type' => get_class($customer),
-                'otp' => otp()
-            ]);
+        }else{
+            flash()->addError('Something went wrong. Please try again');
         }
+
         return redirect()->back();
     }
+
+    // public function pOtpVerify(PharmacyOtpVerifyRequest $req)
+    // {
+
+    //     $od_id = decrypt($req->od_id);
+    //     $pharmacy_id = decrypt($req->pid);
+    //     $pharmacy = Pharmacy::findOrFail($pharmacy_id);
+    //     $otp = $req->collect_otp;
+
+    //     $check = DistributionOtp::where([
+    //         ['order_distribution_id', $od_id],
+    //         ['otp_author_id', $pharmacy->id],
+    //         ['otp_author_type', get_class($pharmacy)],
+    //         ['otp', $otp]
+    //     ])->first();
+
+    //     if ($check) {
+    //         $check->update([
+    //             'status' => 1,
+    //             'rider_id' => rider()->id
+    //         ]);
+
+    //         OrderDistributionPharmacy::where([
+    //             ['order_distribution_id', $od_id],
+    //             ['pharmacy_id', $pharmacy->id],
+    //             ['status', 2]
+    //         ])->update(['status' => 4]);
+
+    //         flash()->addSuccess('Order collected from ' . $pharmacy->name . ' successfully.');
+    //     } else {
+    //         flash()->addError('Something is wrong, please try again.');
+    //     }
+
+
+    //     $all_collect = OrderDistributionPharmacy::where('order_distribution_id', $od_id)
+    //         ->where('status', 2)
+    //         ->with('pharmacy')
+    //         ->get()
+    //         ->every(function ($dop) use ($od_id) {
+    //             return DistributionOtp::where([
+    //                 ['order_distribution_id', $od_id],
+    //                 ['otp_author_id', $dop->pharmacy->id],
+    //                 ['otp_author_type', get_class($dop->pharmacy)],
+    //                 ['status', 1]
+    //             ])->exists();
+    //         });
+    //     if ($all_collect) {
+    //         OrderDistributionRider::where([
+    //             ['rider_id', rider()->id],
+    //             ['order_distribution_id', $od_id],
+    //             ['status', 1]
+    //         ])->update(['status' => 3]);
+
+    //         $od = OrderDistribution::with('order.customer')->findOrFail($od_id);
+    //         $customer = $od->order->customer;
+
+    //         DistributionOtp::create([
+    //             'order_distribution_id' => $od_id,
+    //             'otp_author_id' => $customer->id,
+    //             'otp_author_type' => get_class($customer),
+    //             'otp' => otp()
+    //         ]);
+    //     }
+    //     return redirect()->back();
+    // }
+
+
     public function cOtpVerify(CustomerOtpVerifyRequest $req, $od_id)
     {
         $od_id = decrypt($od_id);
@@ -124,17 +190,18 @@ class OrderManagementController extends Controller
             ['order_distribution_id', $od_id],
             ['otp_author_id', $od->order->customer->id],
             ['otp_author_type', get_class($od->order->customer)],
-            ['otp', $req->delivered_otp]])->first();
+            ['otp', $req->delivered_otp]
+        ])->first();
         if ($check) {
             $check->status = 1;
             $check->rider_id = rider()->id;
             $check->update();
 
-            OrderDistributionRider::where([['rider_id', rider()->id],['order_distribution_id', $od_id],['status', 2]])
-                                    ->update(['status' => 3]);
+            OrderDistributionRider::where([['rider_id', rider()->id], ['order_distribution_id', $od_id], ['status', 2]])
+                ->update(['status' => 3]);
             $od->update(['status' => 5]);
 
-            OrderDistributionPharmacy::where([['order_distribution_id', $od_id],['status', 4]])->update(['status' => 5]);
+            OrderDistributionPharmacy::where([['order_distribution_id', $od_id], ['status', 4]])->update(['status' => 5]);
             flash()->addSuccess('Order delivered successfully.');
         } else {
             flash()->addError('Something is wrong please try again.');
@@ -143,11 +210,41 @@ class OrderManagementController extends Controller
     }
     public function dispute(RiderDisputeRequest $req, $od_id)
     {
-        OrderDistribution::findOrFail(decrypt($od_id))->update(['status' => 2]);
-        OrderDistributionRider::where([['rider_id', rider()->id],['order_distribution_id', decrypt($od_id)],['status', 1]])
-                                ->update(['status' => 0, 'dispute_note' => $req->dispute_reason]);
+        // OrderDistribution::findOrFail(decrypt($od_id))->update(['status' => -1]);
+        OrderDistributionRider::where([['rider_id', rider()->id], ['order_distribution_id', decrypt($od_id)], ['status', 2]])
+            ->update(['status' => -1, 'dispute_note' => $req->dispute_reason]);
         flash()->addSuccess('Order disputed successfully.');
         return redirect()->back();
+    }
+
+    public function get_otp(Request $request): JsonResponse
+    {
+
+        $odr = OrderDistributionRider::find($request->odrId);
+        $odr->od->otps()->where('status', 1)->update(['status' => -1]);
+
+
+        $p = Pharmacy::find($request->pharmacyId);
+
+        $save = new DistributionOtp();
+        $save->order_distribution_id = $odr->od->id;
+        $save->otp = otp();
+        $save->status = 1;
+        $save->rider_id = rider()->id;
+        // $save->created_by = rider()->id;
+        $save->pharmacy_id = $request->pharmacyId;
+        $save->save();
+
+
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'otp' => $save,
+                'pharmacy' => $p,
+            ],
+        ]);
+
     }
 
     protected function getStatus($status)

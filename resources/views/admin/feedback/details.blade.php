@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'feedback'])
+@section('title', 'Feedback Details')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 @endpush
@@ -45,24 +46,9 @@
                                 <td>{{ $feedback->openedBy->name }}</td>
                             </tr>
                             <tr>
-                                <th>{{ __('Created Date') }}</th>
+                                <th>{{ __('Submitted Date') }}</th>
                                 <th>:</th>
                                 <td>{{ timeFormate($feedback->created_at) }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Created By') }}</th>
-                                <th>:</th>
-                                <td>{{ c_user_name($feedback->creater) }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Updated Date') }}</th>
-                                <th>:</th>
-                                <td>{{ timeFormate($feedback->updated_at) }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Updated By') }}</th>
-                                <th>:</th>
-                                <td>{{ c_user_name($feedback->updater) }}</td>
                             </tr>
                         </tbody>
                     </table>

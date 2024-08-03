@@ -10,18 +10,39 @@ class Payment extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    public function customer(){
+    public function customer()
+    {
         return $this->morphTo();
     }
-    public function order(){
+    public function order()
+    {
         return $this->belongsTo(Order::class, 'order_id');
     }
-    public function scopeStatus($query, $status){
-        $db_status = ($status == 'success') ? 1 : (($status == 'pending') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 2)));
-        return $query->where('status',$db_status);
-    } 
+    public function scopeStatus($query, $status)
+    {
+        // $db_status = ($status == 'success') ? 1 : (($status == 'pending') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 2)));
+        switch ($status) {
+            case 'initiated':
+                $status = 0;
+                break;
+            case 'success':
+                $status = 1;
+                break;
+            case 'failed':
+                $status = -1;
+                break;
+            case 'cancel':
+                $status = -2;
+                break;
+            default:
+                $status =  'Unknown';
+                break;
+        }
+        return $query->where('status', $status);
+    }
 
-    public function statusBg() {
+    public function statusBg()
+    {
         switch ($this->status) {
             case 0:
                 return 'badge bg-info';
@@ -35,10 +56,11 @@ class Payment extends BaseModel
                 return 'badge bg-primary';
         }
     }
-    public function statusTitle() {
+    public function statusTitle()
+    {
         switch ($this->status) {
             case 0:
-                return 'Pending';
+                return 'Initiated';
             case 1:
                 return 'Success';
             case -1:
@@ -46,8 +68,7 @@ class Payment extends BaseModel
             case -2:
                 return 'Cancel';
             default:
-                return 'Processing';
+                return 'Unknown';
         }
     }
-
 }

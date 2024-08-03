@@ -19,29 +19,72 @@ class OrderDistribution extends BaseModel
         'status'
     ];
 
-    public function order(){
-        return $this->belongsTo(Order::class,'order_id');
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
     }
-    public function odps(){
-        return $this->hasMany(OrderDistributionPharmacy::class,'order_distribution_id','id');
+    public function odps()
+    {
+        return $this->hasMany(OrderDistributionPharmacy::class, 'order_distribution_id', 'id');
     }
-    public function odrs(){
-        return $this->hasMany(OrderDistributionRider::class,'order_distribution_id','id');
+    public function active_odps()
+    {
+        return $this->hasMany(OrderDistributionPharmacy::class, 'order_distribution_id', 'id')->where('status', 2)->latest();
     }
-    public function odr(){
-        return $this->hasMany(OrderDistributionRider::class,'order_distribution_id','id')->whereNotIn('status', [0, -1]);
+    public function odrs()
+    {
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id', 'id');
     }
 
-    public function statusBg() {
+
+    public function assignedRider()
+    {
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id')->where('status', '!=', 0)->latest();
+    }
+
+    public function disputedRiders()
+    {
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id')->where('status', -1);
+    }
+
+    public function otps()
+    {
+        return $this->hasMany(DistributionOtp::class, 'order_distribution_id');
+    }
+
+    public function active_otps()
+    {
+        return $this->hasMany(DistributionOtp::class, 'order_distribution_id')->where('status', 1)->latest();
+    }
+
+    public function getPharmacyStatus($pharmacy_id)
+    {
+        if ($this->odps->where('pharmacy_id', $pharmacy_id)->filter(function ($odp) {
+            return $odp->status == 0 || $odp->status == 1;
+        })->isEmpty()) {
+            return 2;
+        }else{
+            return $this->status;
+        }
+    }
+
+
+    public function odr()
+    {
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id', 'id')->where('status', 1);
+    }
+
+    public function statusBg()
+    {
         switch ($this->status) {
             case 0:
                 return 'badge bg-info';
             case 1:
                 return 'badge bg-warning';
             case 2:
-                return 'badge bg-secondary';
-            case 3:
                 return 'badge bg-danger';
+            case 3:
+                return 'badge bg-secondary';
             case 4:
                 return 'badge bg-primary';
             case 5:
@@ -50,10 +93,10 @@ class OrderDistribution extends BaseModel
                 return 'badge bg-success';
             case 7:
                 return 'badge bg-danger';
-                
+
         }
     }
-    
+
     public function statusTitle() {
         switch ($this->status) {
             case 0:
@@ -61,9 +104,9 @@ class OrderDistribution extends BaseModel
             case 1:
                 return 'Preparing';
             case 2:
-                return 'Waiting-for-rider';
+                return 'Prepared';
             case 3:
-                return 'Waiting-for-pickup';
+                return 'Assigned';
             case 4:
                 return 'Picked-up';
             case 5:
@@ -72,9 +115,11 @@ class OrderDistribution extends BaseModel
                 return 'Finish';
             case 7:
                 return 'Cancel';
-        }
+            }
     }
-    public function paymentType() {
+
+    public function paymentType()
+    {
         switch ($this->payment_type) {
             case 0:
                 return 'Fixed Payment';
@@ -82,7 +127,8 @@ class OrderDistribution extends BaseModel
                 return 'Open Payment';
         }
     }
-    public function distributionType() {
+    public function distributionType()
+    {
         switch ($this->distribution_type) {
             case 0:
                 return 'Normal Distribution';
@@ -90,5 +136,4 @@ class OrderDistribution extends BaseModel
                 return 'Priority Distribution';
         }
     }
-    
 }

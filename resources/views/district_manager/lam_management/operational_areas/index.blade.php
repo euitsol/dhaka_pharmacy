@@ -1,5 +1,5 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'lam_area'])
-
+@section('title', 'Operation Area List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -26,29 +26,28 @@
                                 <th>{{ __('Operation Areas') }}</th>
                                 <th>{{ __('Operation Sub Areas') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($operational_areas as $key=>$area)
+                            @foreach ($operational_areas as $key => $area)
                                 @forelse ($area->operation_sub_areas as $sub_area)
                                     <tr>
                                         @if ($loop->first)
                                             <td rowspan="{{ count($area->operation_sub_areas) }}">{{ ++$key }}</td>
                                             <td rowspan="{{ count($area->operation_sub_areas) }}">{{ $area->name }}</td>
                                         @endif
-                                        <td>{{$sub_area->name }}</td>
+                                        <td>{{ $sub_area->name }}</td>
                                         <td>
-                                                <span class="{{ $sub_area->getMultiStatusClass() }}">
-                                                    {{ $sub_area->status == 1 ? 'Operational' : ($sub_area->status == 0 ? 'Pending' : 'Not Operational') }}
-                                                </span>
+                                            <span class="{{ $sub_area->getMultiStatusClass() }}">
+                                                {{ $sub_area->status == 1 ? 'Operational' : ($sub_area->status == 0 ? 'Pending' : 'Not Operational') }}
+                                            </span>
                                         </td>
-                                        <td>{{(c_user_name($sub_area->creater)) }}</td>
                                         <td>
                                             <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)" role="button"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -64,12 +63,11 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td >{{ ++$key }}</td>
-                                        <td >{{ $area->name }}</td>
-                                        <td>{{'empty' }}</td>
-                                        <td>{{'empty' }}</td>
-                                        <td>{{'empty' }}</td>
-                                        <td>{{'empty' }}</td>
+                                        <td>{{ ++$key }}</td>
+                                        <td>{{ $area->name }}</td>
+                                        <td>{{ 'empty' }}</td>
+                                        <td>{{ 'empty' }}</td>
+                                        <td>{{ 'empty' }}</td>
                                     </tr>
                                 @endforelse
                             @endforeach
@@ -136,7 +134,7 @@
                                         <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created At</th>
+                                        <th class="text-nowrap">Created Date</th>
                                         <th>:</th>
                                         <td>${data.creating_time}</td>
                                     </tr>
@@ -146,7 +144,7 @@
                                         <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Updated At</th>
+                                        <th class="text-nowrap">Updated Date</th>
                                         <th>:</th>
                                         <td>${data.updating_time}</td>
                                     </tr>

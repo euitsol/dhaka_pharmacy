@@ -21,14 +21,14 @@ return new class extends Migration
             $table->unsignedBigInteger('otp_author_id');
             $table->string('otp_author_type');
             $table->string('otp');
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(1);
             $table->unsignedBigInteger('rider_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);
 
-            $table->foreign('order_distribution_id')->references('id')->on('order_distributions')->onDelete('cascade')->onUpdate('cascade');   
-            $table->foreign('rider_id')->references('id')->on('riders')->onDelete('cascade')->onUpdate('cascade');  
+            $table->foreign('order_distribution_id')->references('id')->on('order_distributions')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('rider_id')->references('id')->on('riders')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

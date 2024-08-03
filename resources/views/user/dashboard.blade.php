@@ -1,7 +1,5 @@
 @extends('user.layouts.master', ['pageSlug' => 'dashboard'])
-
-@section('title', 'Dashboard')
-
+@section('title', 'User Dashboard')
 @push('css_link')
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
     <link rel="stylesheet"
@@ -122,12 +120,21 @@
                                     <h2>{{ __('My Cart') }}</h2>
                                 </div>
                             </div>
+
                         </a>
                         <a href="{{ route('u.wishlist.list') }}">
                             <div class="single  d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
                                     <img src="{{ asset('user/asset/img/wishtlist2.png') }}" alt="">
                                     <h2>{{ __('Wishlists') }}</h2>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('u.review.list') }}">
+                            <div class="single  d-flex align-items-center justify-content-center">
+                                <div class="content text-center">
+                                    <img src="{{ asset('user/asset/img/star-half.png') }}" alt="">
+                                    <h2>{{ __('Reviews') }}</h2>
                                 </div>
                             </div>
                         </a>

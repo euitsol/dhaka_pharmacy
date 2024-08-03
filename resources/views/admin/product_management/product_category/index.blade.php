@@ -1,10 +1,10 @@
 @extends('admin.layouts.master', ['pageSlug' => 'product_category'])
-
+@section('title', 'Product Category List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-danger {{($menuItemsCount%2 == 0) ? 'd-none' : ''}}">
-                <span>{{__("Please add an even number of categories to the menu for design purposes. Now you have a total of $menuItemsCount categories in your menu.")}}</span>
+            <div class="alert alert-danger {{ $menuItemsCount % 2 == 0 ? 'd-none' : '' }}">
+                <span>{{ __("Please add an even number of categories to the menu for design purposes. Now you have a total of $menuItemsCount categories in your menu.") }}</span>
             </div>
             <div class="card ">
                 <div class="card-header">
@@ -31,7 +31,7 @@
                                 <th>{{ __('Menu') }}</th>
                                 <th>{{ __('Featured') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -41,7 +41,8 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $product_category->name }} </td>
-                                    <td> <img height="70px" width="70px" style="object-fit: contain" src="{{ storage_url($product_category->image) }}" > </td>
+                                    <td> <img height="70px" width="70px" style="object-fit: contain"
+                                            src="{{ storage_url($product_category->image) }}"> </td>
                                     <td>
                                         <span
                                             class="{{ $product_category->getMenuBadgeClass() }}">{{ $product_category->getMenu() }}</span>
@@ -183,7 +184,7 @@
                                         <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created At</th>
+                                        <th class="text-nowrap">Created Date</th>
                                         <th>:</th>
                                         <td>${data.creating_time}</td>
                                     </tr>
@@ -193,7 +194,7 @@
                                         <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Updated At</th>
+                                        <th class="text-nowrap">Updated Date</th>
                                         <th>:</th>
                                         <td>${data.updating_time}</td>
                                     </tr>

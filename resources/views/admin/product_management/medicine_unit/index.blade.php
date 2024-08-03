@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine_unit'])
-
+@section('title', 'Medicine Unit List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -28,7 +28,7 @@
                                 <th>{{ __('Quantity') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -38,7 +38,8 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $medicine_unit->name }} </td>
-                                    <td> <img height="60px" width="60px" style="object-fit: cover" src="{{storage_url($medicine_unit->image)}}" alt=""> </td>
+                                    <td> <img height="60px" width="60px" style="object-fit: cover"
+                                            src="{{ storage_url($medicine_unit->image) }}" alt=""> </td>
                                     <td> {{ $medicine_unit->quantity }} </td>
                                     <td> {{ $medicine_unit->type ? $medicine_unit->type : '-' }} </td>
                                     <td>
@@ -122,8 +123,8 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
+                        let status = data.status == 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status == 1 ? 'badge-success' :
                             'badge-warning';
                         var result = `
                                 <table class="table table-striped">
@@ -155,7 +156,7 @@
                                         <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created At</th>
+                                        <th class="text-nowrap">Created Date</th>
                                         <th>:</th>
                                         <td>${data.creating_time}</td>
                                     </tr>
@@ -165,7 +166,7 @@
                                         <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Updated At</th>
+                                        <th class="text-nowrap">Updated Date</th>
                                         <th>:</th>
                                         <td>${data.updating_time}</td>
                                     </tr>

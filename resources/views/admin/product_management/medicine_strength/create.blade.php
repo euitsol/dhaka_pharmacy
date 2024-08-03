@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine_strength'])
-
+@section('title', 'Create Medicine Strength')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
@@ -18,36 +18,43 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('product.medicine_strength.medicine_strength_create') }}">
-                        @csrf
+                <form method="POST" action="{{ route('product.medicine_strength.medicine_strength_create') }}">
+                    @csrf
+                    <div class="card-body">
                         <div class="form-group">
                             <div class="inptu-group">
                                 <div class="quantity">
-                                    <label>{{__('Quantity')}}</label>
+                                    <label>{{ __('Quantity') }}</label>
                                     <input type="text" name="quantity" class="form-control" placeholder="Enter quantity"
                                         value="{{ old('quantity') }}">
                                     @include('alerts.feedback', ['field' => 'quantity'])
                                 </div>
                                 <div class="unit">
-                                    <label>{{__('Unit')}}</label>
+                                    <label>{{ __('Unit') }}</label>
                                     <select name="unit" class="form-control">
-                                        <option selected hidden>{{__('Select unit')}}</option>
-                                        <option value="mg" {{(old('unit') == 'mg') ? 'selected' : ''}}>{{__('MG')}}</option>
-                                        <option value="ml" {{(old('unit') == 'ml') ? 'selected' : ''}}>{{__('ML')}}</option>
-                                        <option value="kg" {{(old('unit') == 'kg') ? 'selected' : ''}}>{{__('KG')}}</option>
-                                        <option value="gm" {{(old('unit') == 'gm') ? 'selected' : ''}}>{{__('GM')}}</option>
-                                        <option value="litter" {{(old('unit') == 'litter') ? 'selected' : ''}}>{{__('Litter')}}</option>
+                                        <option selected hidden value=" ">{{ __('Select unit') }}</option>
+                                        <option value="mg" {{ old('unit') == 'mg' ? 'selected' : '' }}>
+                                            {{ __('MG') }}</option>
+                                        <option value="ml" {{ old('unit') == 'ml' ? 'selected' : '' }}>
+                                            {{ __('ML') }}</option>
+                                        <option value="kg" {{ old('unit') == 'kg' ? 'selected' : '' }}>
+                                            {{ __('KG') }}</option>
+                                        <option value="gm" {{ old('unit') == 'gm' ? 'selected' : '' }}>
+                                            {{ __('GM') }}</option>
+                                        <option value="litter" {{ old('unit') == 'litter' ? 'selected' : '' }}>
+                                            {{ __('Litter') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'unit'])
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="card-footer text-end">
+                        <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                    </div>
+                </form>
             </div>
         </div>
-        @include('admin.partials.documentation',['document'=>$document])
+        @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\LAM;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LocalAreaManager\ImageUpdateRequest;
+use App\Http\Requests\LocalAreaManager\PasswordUpdateRequest;
+use App\Http\Requests\LocalAreaManager\ProfileUpdateRequest;
 use App\Models\Documentation;
 use App\Models\LocalAreaManager;
 use Illuminate\Http\JsonResponse;
@@ -28,28 +31,10 @@ class LamProfileController extends Controller
         return view('local_area_manager.profile.profile', $data);
     }
 
-    public function update(Request $request)
+    public function update(ProfileUpdateRequest $request)
     {
 
         $lam = LocalAreaManager::findOrFail(lam()->id);
-        $validator = $request->validate([
-            'name' => 'required|min:4',
-            'phone' => 'required|numeric|digits:11|unique:local_area_managers,phone,' . lam()->id,
-            'age' => 'nullable|numeric|digits:2',
-            'area' => 'nullable',
-            'identification_type' => 'nullable|in:NID,DOB,Passport',
-            'identification_no' => 'nullable|numeric',
-            'present_address' => 'nullable',
-            'cv' => 'nullable|file|mimes:pdf',
-
-            'gender' => 'nullable|in:Male,Female,Others',
-            'dob' => 'nullable|date|before:today',
-            'father_name' => 'nullable|min:6',
-            'mother_name' => 'nullable|min:6',
-            'permanent_address' => 'nullable',
-            'parent_phone' => 'nullable|numeric|digits:11',
-            'osa_id' => 'nullable|exists:operation_sub_areas,id',
-        ]);
         if ($request->hasFile('cv')) {
             $file = $request->file('cv');
             $fileName = lam()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
@@ -61,7 +46,7 @@ class LamProfileController extends Controller
             $lam->cv = $path;
         }
 
-        if(empty($lam->osa_id)){
+        if (empty($lam->osa_id)) {
             $lam->osa_id = $request->osa_id;
         }
         $lam->name = $request->name;
@@ -78,47 +63,21 @@ class LamProfileController extends Controller
         $lam->permanent_address = $request->permanent_address;
         $lam->parent_phone = $request->parent_phone;
         $lam->update();
+        flash()->addSuccess('Profile updated successfully.');
 
-        if ($validator) {
-            flash()->addSuccess('Profile updated successfully.');
-        }
         return redirect()->back();
     }
-    public function updatePassword(Request $request)
+    public function updatePassword(PasswordUpdateRequest $request)
     {
 
         $lam = LocalAreaManager::findOrFail(lam()->id);
-        $validator = $request->validate([
-            'old_password' => [
-                'required',
-                'min:4',
-                function ($attribute, $value, $fail) {
-                    // Check if the old_password matches the current password
-                    if (!\Hash::check($value, lam()->password)) {
-                        $fail("The $attribute doesn't match the current password.");
-                    }
-                },
-            ],
-            'password' => 'required|min:6|confirmed',
-        ]);
         $lam->password = $request->password;
         $lam->update();
-
-        if ($validator) {
-            flash()->addSuccess('Password updated successfully.');
-        }
+        flash()->addSuccess('Password updated successfully.');
         return redirect()->back();
     }
-    public function updateImage(Request $request)
+    public function updateImage(ImageUpdateRequest $request)
     {
-
-        $validator = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
         $lam = LocalAreaManager::findOrFail(lam()->id);
 
         if ($request->hasFile('image')) {
@@ -128,9 +87,8 @@ class LamProfileController extends Controller
             $path = $image->storeAs($folderName, $imageName, 'public');
             $lam->image = $path;
             $lam->save();
-            return response()->json(['message' => 'Image uploaded successfully'], 200);
+            return response()->json(['message' => 'Image uploaded successfully', 'image' => storage_url($lam->image)], 200);
         }
-
         return response()->json(['message' => 'Image not uploaded'], 400);
     }
 }

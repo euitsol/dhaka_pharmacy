@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'feedback'])
-
+@section('title', 'Feedback List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -20,8 +20,7 @@
                                 <th>{{ __('Submitted By') }}</th>
                                 <th>{{ __('Subject') }}</th>
                                 <th>{{ __('Opened By') }}</th>
-                                <th>{{ __('Creation date') }}</th>
-                                <th>{{ __('Created by') }}</th>
+                                <th>{{ __('Submitted date') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -40,7 +39,6 @@
                                     </td>
                                     <td> {{ $feedback->openedBy ? $feedback->openedBy->name : '--' }} </td>
                                     <td>{{ timeFormate($feedback->created_at) }}</td>
-                                    <td> {{ c_user_name($feedback->creater) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [

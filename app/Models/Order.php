@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 
 class Order extends BaseModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, EagerLoadPivotTrait;
     protected $fillable = [
         'status',
         'address_id',
@@ -45,11 +46,41 @@ class Order extends BaseModel
     {
         return $this->belongsTo(OrderPrescription::class, 'obp_id');
     }
+    public function deliveryType()
+    {
+        switch ($this->delivery_type) {
+            case 0:
+                return 'Normal';
+            case 1:
+                return 'Standard';
+        }
+    }
 
     public function scopeStatus($query, $status)
     {
-        $db_status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
-        return $query->where('status', $db_status);
+        // $status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
+
+        switch ($status) {
+            case 'initiated':
+                $status = 0;
+                break;
+            case 'submitted':
+                $status = 1;
+                break;
+            case 'processed':
+                $status = 2;
+                break;
+            case 'waiting-for-rider':
+                $status = 3;
+                break;
+            case 'assigned':
+                $status = 4;
+                break;
+            default:
+                $status =  'Unknown';
+                break;
+        }
+        return $query->where('status', $status);
     }
 
     public function od(): HasOne
@@ -62,7 +93,7 @@ class Order extends BaseModel
     {
         switch ($this->status) {
             case 0:
-                return 'badge badge-secondary';
+                return 'badge bg-secondary';
             case 1:
                 return 'badge bg-info';
             case 2:
@@ -82,9 +113,13 @@ class Order extends BaseModel
             case 0:
                 return 'Initiated';
             case 1:
-                return 'Pending';
+                return 'Submitted';
             case 2:
-                return 'Success';
+                return 'Processed';
+            case 3:
+                return 'Waiting-for-rider';
+            case 4:
+                return 'Assigned';
             case -1:
                 return 'Failed';
             case -2:

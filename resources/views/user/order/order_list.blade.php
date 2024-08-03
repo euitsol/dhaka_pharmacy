@@ -1,5 +1,4 @@
 @extends('user.layouts.master', ['pageSlug' => 'order'])
-
 @section('title', 'Order List')
 @section('content')
     <section class="my-order-section">

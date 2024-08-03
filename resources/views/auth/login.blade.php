@@ -11,10 +11,11 @@
                 <div class="col-5">
                     <div class="left-col login_wrap" @if (isset($otp)) style="display: none;" @endif>
                         <div class="form-title">
-                            <h1 class="otp_title">LOGIN IN WITH OTP</h1>
-                            <h1 class="login_title" style="display: none;">LOGIN WITH PASSWORD</h1>
-                            <h3>Follow the instructions to make it easier to register and you will be able to explore
-                                inside.</h3>
+                            <h1 class="otp_title">{{ __('LOGIN IN WITH OTP') }}</h1>
+                            <h1 class="login_title" style="display: none;">{{ __('LOGIN WITH PASSWORD') }}</h1>
+                            <h3>{{ __('Follow the instructions to make it easier to register and you will be able to explore
+                                                                                                                                                                                                                                                                                                                                                                                inside.') }}
+                            </h3>
                         </div>
 
 
@@ -27,11 +28,13 @@
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
 
-                            <p class="get-otp"><a class="login_switch" href="javascript:void(0)">Login with password?</a>
+                            <p class="get-otp"><a class="login_switch"
+                                    href="javascript:void(0)">{{ __('Login with password?') }}</a>
                             </p>
-                            <a href="javascript:void(0)" class="otp_button submit_button">SEND OTP</a>
-                            <p class="get-otp">Not yet registered? <a href="{{ route('use.register') }}">Create an
-                                    account</a></p>
+                            <a href="javascript:void(0)" class="otp_button submit_button">{{ __('SEND OTP') }}</a>
+                            <p class="get-otp">{{ __('Not yet registered? ') }}<a
+                                    href="{{ route('use.register') }}">{{ __('Create an account') }}</a>
+                            </p>
 
                         </form>
 
@@ -55,12 +58,15 @@
                             @include('alerts.feedback', ['field' => 'password'])
 
                             <p class="rfp text-end mb-2"><a class="forgot-password"
-                                    href="{{ route('user.forgot.password') }}">Lost your password?</a></p>
+                                    href="{{ route('user.forgot.password') }}">{{ __('Lost your password?') }}</a></p>
 
-                            <p class="get-otp"> <a class="otp_switch" href="javascript:void(0)">Login with phone?</a></p>
+                            <p class="get-otp"> <a class="otp_switch"
+                                    href="javascript:void(0)">{{ __('Login with phone?') }}</a></p>
                             <input class="login_button submit_button" type="submit" value="LOGIN">
-                            <p class="get-otp">Not yet registered? <a href="{{ route('use.register') }}">Create an
-                                    account</a></p>
+                            <p class="get-otp">{{ __('Not yet registered? ') }}<a
+                                    href="{{ route('use.register') }}">{{ __('Create an
+                                                                                                                                                                                    account') }}</a>
+                            </p>
                         </form>
                         {{-- login With Password --}}
                         @include('auth.login_with')
@@ -75,7 +81,7 @@
                             <h1 class="otp_title">
                                 {{ isset(Session::get('data')['title']) ? Session::get('data')['title'] : 'VERIFY YOUR PHONE TO LOGIN' }}
                             </h1>
-                            <h3>We have sent a verification code to your mobile number</h3>
+                            <h3>{{ __('We have sent a verification code to your mobile number') }}</h3>
                         </div>
                         <form action="{{ route('use.otp.verify') }}" method="POST">
                             @csrf
@@ -87,8 +93,8 @@
                                 <input name=otp[] type="number" disabled />
                                 <input name=otp[] type="number" disabled />
                             </div>
-                            <p class="get-otp">Didn't receive a code? <a class="send_otp_again"
-                                    href="javascript:void(0)">Send Again</a></p>
+                            <p class="get-otp">{{ __("Didn't receive a code? ") }}<a class="send_otp_again"
+                                    href="javascript:void(0)">{{ __('Send Again') }}</a></p>
                             <input type="submit" class="verify-btn submit_button" value="VERIFY">
                         </form>
                     </div>

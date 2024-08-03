@@ -45,7 +45,7 @@ class ProductCategoryController extends Controller
         if ($req->hasFile('image')) {
             $image = $req->file('image');
             $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'product_category/';
+            $folderName = 'product_category';
             $path = $image->storeAs($folderName, $imageName, 'public');
             $product_category->image = $path;
         }
@@ -69,7 +69,7 @@ class ProductCategoryController extends Controller
         if ($req->hasFile('image')) {
             $image = $req->file('image');
             $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'product_category/';
+            $folderName = 'product_category';
             $path = $image->storeAs($folderName, $imageName, 'public');
             if (!empty($product_category->image)) {
                 $this->fileDelete($product_category->image);

@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'ubp_' . $up->statusTitle()])
+@section('title', 'Order By Prescription Details')
 @section('content')
     <div class="row">
         @if ($up->status == 0)
@@ -31,14 +32,14 @@
                                         <div class="form-group">
                                             <label>{{ __('Medicine') }}</label>
                                             <select name="item[1][medicine]" class="form-control medicine">
-                                                <option value="" selected hidden>{{ __('Select Medicine') }}</option>
+                                                <option value=" " selected hidden>{{ __('Select Medicine') }}</option>
                                             </select>
                                             @include('alerts.feedback', ['field' => 'item.*.medicine'])
                                         </div>
                                         <div class="form-group">
                                             <label>{{ __('Unit') }}</label>
                                             <select name="item[1][unit]" class="form-control unit" disabled>
-                                                <option value="" selected hidden>{{ __('Select Unit') }}</option>
+                                                <option value=" " selected hidden>{{ __('Select Unit') }}</option>
                                             </select>
                                             @include('alerts.feedback', ['field' => 'item.*.unit'])
                                         </div>
@@ -108,7 +109,7 @@
                             <tr>
                                 <th>{{ __('Delivery Type') }}</th>
                                 <th>:</th>
-                                <td>{{ ucwords($up->delivery_type) }}</td>
+                                <td>{{ $up->deliveryType() }}</td>
                             </tr>
                         </tbody>
                     </table>

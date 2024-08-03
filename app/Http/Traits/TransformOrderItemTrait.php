@@ -3,62 +3,57 @@
 namespace App\Http\Traits;
 
 use App\Models\AddToCart;
+use App\Http\Traits\TransformProductTrait;
 
 trait TransformOrderItemTrait
 {
 
-    private function getOrderItems($order)
+    use TransformProductTrait;
+
+    private function transformOrderItemPrice(&$order)
     {
-        $cart_items =  AddToCart::with([
-            'product.pro_cat',
-            'product.pro_sub_cat',
-            'product.generic',
-            'product.company',
-            'product.strength',
-            'customer',
-            'unit',
-            'product.discounts'
-        ])
-            ->whereIn('id', json_decode($order->carts))
-            ->orderBy('created_at', 'asc')
-            ->get()->each(function ($cart_item) {
-                return $this->transformOrderItemPrice($cart_item);
-            });
-        return $cart_items;
+        $order->products->each(function (&$product) {
+            $this->setDiscountInformation($product);
+            $product->totalPrice = $product->pivot->quantity * $product->pivot->unit->quantity * $product->price;
+            $product->totalDiscountPrice = $product->pivot->quantity * $product->pivot->unit->quantity * $product->discounted_price;
+        });
     }
-    private function transformOrderItemPrice($cart_item)
+    // private function OrderItemPrice($item_product)
+    // {
+    //     // return $item_product->quantity * $item_product->unit->quantity * $item_product->product->price;
+    // }
+    // private function OrderItemDiscountPrice($item_product)
+    // {
+    //     // $discounted_price = proDisPrice($item_product->product->price, $item_product->product->discounts);
+    //     // return $item_product->quantity * $item_product->unit->quantity * $discounted_price;
+    // }
+    private function calculateOrderTotalPrice(&$order)
     {
-        $cart_item->price = cartItemRegPrice($cart_item);
-        $cart_item->discount_price = cartItemPrice($cart_item);
-        $cart_item->discount = ($cart_item->price - $cart_item->discount_price);
-        return $cart_item;
+        $this->transformOrderItemPrice($order);
+        $order->totalPrice = $order->products->sum('totalPrice');
     }
-    private function calculateOrderTotalRegularPrice($order, $order_items = false)
+    private function calculateOrderTotalDiscountPrice(&$order)
     {
-        if ($order_items == false) {
-            $order_items = $this->getOrderItems($order);
-        }
-        return number_format(ceil($order_items->sum('price')));
+        $this->transformOrderItemPrice($order);
+        $order->totalDiscountPrice = $order->products->sum('totalDiscountPrice');
     }
-    private function calculateOrderTotalDiscount($order, $order_items = false)
+
+    private function calculatePharmacyTotalAmount(&$od)
     {
-        if ($order_items == false) {
-            $order_items = $this->getOrderItems($order);
-        }
-        return number_format($order_items->sum('discount'), 2);
-    }
-    private function calculateOrderSubTotalPrice($order, $order_items = false)
-    {
-        if ($order_items == false) {
-            $order_items = $this->getOrderItems($order);
-        }
-        return number_format(ceil($order_items->sum('discount_price')));
-    }
-    private function calculateOrderTotalPrice($order, $order_items = false)
-    {
-        if ($order_items == false) {
-            $order_items = $this->getOrderItems($order);
-        }
-        return number_format(ceil($order_items->sum('discount_price') + $order->delivery_fee));
+        $this->calculateOrderTotalDiscountPrice($od->order);
+        $discount = $od->odps->first()->pharmacy->pharmacyDiscounts->where('status', 1)->first() ? $od->odps->first()->pharmacy->pharmacyDiscounts->where('status', 1)->first()->discount_percent: 0;
+        $totalPharmacyAmount = 0;
+
+        //add discounted product price to odp
+        $od->odps->each(function (&$odp) use($discount, $totalPharmacyAmount){
+            $this->setDiscountInformation($odp->order_product->product);
+            $price = $odp->order_product->quantity * $odp->order_product->unit->quantity * $odp->order_product->product->discounted_price;
+            $odp->discounted_price = $price - ($price *($discount/100));
+            $odp->selling_price = $price;
+        });
+
+        //add discounted total amount to od
+        $od->totalPharmacyAmount = $od->odps->sum('discounted_price');
+
     }
 }

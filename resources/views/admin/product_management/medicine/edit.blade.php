@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine'])
-
+@section('title', 'Edit Product')
 @section('content')
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -56,7 +56,7 @@
                                 <label>{{ __('Product Category') }}</label>
                                 <select name="pro_cat_id"
                                     class="form-control {{ $errors->has('pro_cat_id') ? ' is-invalid' : '' }} pro_cat">
-                                    <option selected hidden>{{ __('Select product category') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select product category') }}</option>
                                     @foreach ($pro_cats as $cat)
                                         <option value="{{ $cat->id }}"
                                             {{ $cat->id == $medicine->pro_cat_id ? 'selected' : '' }}>
@@ -83,7 +83,7 @@
                                 <label>{{ __('Generic Name') }}</label>
                                 <select name="generic_id"
                                     class="form-control {{ $errors->has('generic_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select generic name') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select generic name') }}</option>
                                     @foreach ($generics as $generic)
                                         <option value="{{ $generic->id }}"
                                             {{ $generic->id == $medicine->generic_id ? 'selected' : '' }}>
@@ -96,7 +96,7 @@
                                 <label>{{ __('Company Name') }}</label>
                                 <select name="company_id"
                                     class="form-control {{ $errors->has('company_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select company name') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select company name') }}</option>
                                     @foreach ($companies as $company)
                                         <option value="{{ $company->id }}"
                                             {{ $company->id == $medicine->company_id ? 'selected' : '' }}>
@@ -109,7 +109,7 @@
                                 <label>{{ __('Medicine Dosage') }}</label>
                                 <select name="medicine_cat_id"
                                     class="form-control {{ $errors->has('medicine_cat_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select medicine dosage') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select medicine dosage') }}</option>
                                     @foreach ($medicine_cats as $medicine_cat)
                                         <option value="{{ $medicine_cat->id }}"
                                             {{ ($medicine_cat->id == $medicine->medicine_cat_id) ? 'selected' : '' }}>
@@ -122,7 +122,7 @@
                                 <label>{{ __('Medicine Strength') }}</label>
                                 <select name="strength_id"
                                     class="form-control {{ $errors->has('strength_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden value="">{{ __('Select medicine strength') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select medicine strength') }}</option>
                                     @foreach ($strengths as $strength)
                                         <option value="{{ $strength->id }}"
                                             {{ $strength->id == $medicine->strength_id ? 'selected' : '' }}>
@@ -207,9 +207,17 @@
                 <div class="card medicine_price_card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-8">
                                 <h4 class="card-title">{{ __('Product Pricing') }}</h4>
                             </div>
+                            @if ($discounts->isNotEmpty())
+                                <div class="col-4 text-end">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        title="Discount History" data-target="#discount_modal">
+                                        <i class="fa-solid fa-info"></i>
+                                    </button>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -220,7 +228,7 @@
                                     <input type="text" name="price"
                                         class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
                                         placeholder="Enter price"
-                                        value="{{ proDisPrice($medicine->price, $medicine->discounts) }}">
+                                        value="{{ number_format(proDisPrice($medicine->price, $medicine->discounts), 2) }}">
                                     <span class="bdt_button">BDT</span>
                                 </div>
                                 @include('alerts.feedback', ['field' => 'price'])
@@ -291,13 +299,106 @@
                 </div>
 
 
+                {{-- Product Precaution  --}}
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="card-title">{{ __('Product Precaution') }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label>{{ __('Precaution') }}</label>
+                                <textarea name="precaution" placeholder="Enter product precaution"
+                                    class="form-control {{ $errors->has('precaution') ? ' is-invalid' : '' }}">{{ $precaution ? $precaution->description : old('precaution') }}</textarea>
+                                @include('alerts.feedback', ['field' => 'precaution'])
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>{{ __('Status') }}</label>
+                                <div class="form-check form-check-radio">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="precaution_status"
+                                            id="precaution1" value="1"
+                                            {{ ($precaution && $precaution->status == 1) || !$precaution ? 'checked' : '' }}>
+                                        {{ __('Active') }}
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                    <label class="form-check-label ms-5">
+                                        <input class="form-check-input" type="radio" name="precaution_status"
+                                            id="precaution2" value="0"
+                                            {{ $precaution && $precaution->status == 0 ? 'checked' : '' }}>
+                                        {{ __('Deactive') }}
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+
+                <button type="submit" class="btn btn-primary float-end">{{ __('Update') }}</button>
             </form>
         </div>
+
+
+        {{-- Old Discount Modal  --}}
+        <div class="modal discount_modal fade" id="discount_modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Discount Histories') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body modal_data">
+                        <table class="table table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('SL') }}</th>
+                                    <th>{{ __('Discount Amount') }}</th>
+                                    <th>{{ __('Discount Percentage') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th>{{ __('Created date') }}</th>
+                                    <th>{{ __('Created by') }}</th>
+                                    <th>{{ __('Updated date') }}</th>
+                                    <th>{{ __('Updated by') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($discounts as $discount)
+                                    <tr>
+                                        <td> {{ $loop->iteration }} </td>
+                                        <td> {{ $discount->discount_amount }} </td>
+                                        <td> {{ $discount->discount_percentage }} </td>
+                                        <td>
+                                            <span
+                                                class="{{ $discount->getStatusBadgeClass() }}">{{ $discount->getStatus() }}</span>
+                                        </td>
+                                        <td>{{ timeFormate($discount->created_at) }}</td>
+                                        <td> {{ c_user_name($discount->created_user) }} </td>
+                                        <td>{{ timeFormate($discount->updated_at) }}</td>
+                                        <td> {{ c_user_name($discount->updated_user) }} </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5], 'length' => 10])
 @push('js')
     <script>
         $(document).ready(function() {

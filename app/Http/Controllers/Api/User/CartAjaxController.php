@@ -45,8 +45,10 @@ class CartAjaxController extends BaseController
                 'product.pro_sub_cat',
                 'product.company',
                 'product.discounts',
-                'product.units',
                 'unit',
+                'product.units' => function ($q) {
+                    $q->orderBy('quantity', 'asc');
+                }
             ])->where('customer_id', $user->id)->get();
 
             $products = $atc->each(function (&$atc) {
