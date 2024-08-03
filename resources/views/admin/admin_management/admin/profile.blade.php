@@ -39,30 +39,6 @@
                     <div class="card-description bio my-2 text-justify">
                         {!! $admin->bio !!}
                     </div>
-                    <div class="earning_info py-3">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card bg-transparent p-0 mb-0">
-                                    <div class="card-body p-2">
-                                        <h5 class="title">{{ __('Available Balance') }}</h5>
-                                        <h5 class="m-0 amount">
-                                            {{ number_format(getEarningEqAmounts($earnings), 2) }}{{ __(' BDT') }}
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card bg-transparent p-0 mb-0">
-                                    <div class="card-body p-2">
-                                        <h5 class="title">{{ __('Total Orders') }}</h5>
-                                        <h5 class="m-0 amount">
-                                            {{ number_format($dors->count()) }}
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="contact_info py-3">
                         <ul class="m-0 px-3 list-unstyled">
                             <li>
