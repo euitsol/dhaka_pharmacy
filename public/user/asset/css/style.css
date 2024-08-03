@@ -9,6 +9,7 @@
     --white: #fff;
     --primary-bg: #00204B;
     --asent-color: #28A349;
+    --secondary-bg:rgba(247, 247, 247, 1);
 }
 
 /*====== Global font size varriable ====== */
@@ -96,6 +97,7 @@ body{
     border-color: rgba(0, 0, 0, 0.15);
     border-radius: 5px;
     padding: 20px 30px;
+    background-color: var(--secondary-bg);
 }
 .order-info-section .order-info-row .left{
     overflow-y: auto;
@@ -175,9 +177,7 @@ body{
     font-weight: 500;
     color: var(--text);
 }
-.order-info-section .order-info-row .right{
-    background: rgba(247, 247, 247, 1);
-}
+
 .order-info-section .order-info-row .right h5{
     font-family: var(--secondry-font);
     font-size: 16px;
@@ -272,7 +272,7 @@ body{
     color: rgba(0, 0, 0, 0.58);
 }
 .order-info-section .order-traking-row .progress-box{
-    background: rgba(247, 247, 247, 1);
+    background: var(--secondary-bg);
     border: 1px solid;
     border-color: rgba(0, 0, 0, 0.15);
     border-radius: 5px;

@@ -97,8 +97,6 @@
     </section>
 @endsection
 @push('js')
-    @include('frontend.includes.wishlist_js')
-    <script src="{{ asset('user/asset/js/wishlist.js') }}"></script>
     <script>
         const myDatas = {
             'login_route': `{{ route('login') }}`,
@@ -109,4 +107,5 @@
             'taka_icon': `{!! get_taka_icon() !!}`,
         };
     </script>
+    <script src="{{ asset('user/asset/js/wishlist.js') }}"></script>
 @endpush
