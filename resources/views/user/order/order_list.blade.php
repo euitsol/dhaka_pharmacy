@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col">
                     <div class="page-title">
-                        <h3>{{ __(isset($status) ? str_replace('-', ' ', str($status)->title()) : 'My Orders') }}</h3>
+                        <h3>{{ __(isset($status) ? slugToTitle($status->title()) : 'My Orders') }}</h3>
                     </div>
                     <div class="show-order d-flex align-items-center">
                         <h4 class="me-2">{{ __('Show:') }}</h4>
@@ -36,37 +36,31 @@
                                     <p class="date-time">{{ __('Placed on ') }}<span>{{ $order->place_date }}</span></p>
                                 </div>
                                 <div class="col-2 text-end">
-                                    @if ($order->od)
-                                        <span
-                                            class="{{ $order->od->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $order->od->statusTitle())))) }}</span>
-                                    @else
-                                        <span class="badge bg-info">{{ __('Pending') }}</span>
-                                    @endif
+                                    <span class="{{ $order->statusBg }}">{{ __(slugToTitle($order->statusTitle)) }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-9">
-                                @forelse ($order->order_items as $item)
+                                @forelse ($order->products as $product)
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="row py-3 px-4">
                                                 <div class="col-3">
                                                     <div class="img">
-                                                        <img class="w-100" src="{{ $item->product->image }}"
-                                                            alt="">
+                                                        <img class="w-100" src="{{ $product->image }}" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="product-info">
-                                                        <h2 class="name" title="{{ $item->product->attr_title }}">
-                                                            {{ $item->product->name }}</h2>
-                                                        <h3 class="cat">{{ $item->product->pro_sub_cat->name }}</h3>
-                                                        <h3 class="cat">{{ $item->product->pro_cat->name }}</h3>
+                                                        <h2 class="name" title="{{ $product->attr_title }}">
+                                                            {{ $product->name }}</h2>
+                                                        <h3 class="cat">{{ $product->pro_sub_cat->name }}</h3>
+                                                        <h3 class="cat">{{ $product->pro_cat->name }}</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
-                                                    <p class="qty">Qty: <span>{{ $item->quantity }}</span></p>
+                                                    <p class="qty">Qty: <span>{{ $product->pivot->quantity }}</span></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -85,7 +79,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 @empty
                     <h3 class="my-5 text-danger text-center">Order Not Found</h3>
@@ -100,50 +93,6 @@
 @endsection
 @push('js')
     <script>
-        function statusBg(status) {
-            switch (status) {
-                case 0:
-                    return 'badge bg-info';
-                case 1:
-                    return 'badge bg-warning';
-                case 2:
-                    return 'badge bg-secondary';
-                case 3:
-                    return 'badge bg-danger';
-                case 4:
-                    return 'badge bg-primary';
-                case 5:
-                    return 'badge bg-dark';
-                case 6:
-                    return 'badge bg-success';
-                case 7:
-                    return 'badge bg-danger';
-
-            }
-        }
-
-        function statusTitle(status) {
-            switch (status) {
-                case 0:
-                    return 'Pending';
-                case 1:
-                    return 'Preparing';
-                case 2:
-                    return 'Waiting For Rider';
-                case 3:
-                    return 'Waiting For Pickup';
-                case 4:
-                    return 'Picked Up';
-                case 5:
-                    return 'Delivered';
-                case 6:
-                    return 'Finish';
-                case 7:
-                    return 'Cancel';
-            }
-        }
-
-
         function getHtml(orders) {
             var result = '';
             orders.forEach(function(order) {
@@ -156,15 +105,9 @@
                                                 <p class="date-time">Placed on <span>${order.place_date}</span></p>
                                             </div>
                                             <div class="col-2 text-end"> 
-                                `;
-                if (order.od) {
-                    result +=
-                        `<span class="${statusBg(order.od.status)}">${statusTitle(order.od.status)}</span>`;
-                } else {
-                    result +=
-                        `<span class="badge bg-info">{{ __('Pending') }}</span>`;
-                }
-                result += `
+
+                                            <span class="${order.statusBg}">${order.statusTitle}</span>
+
                                             </div>
                                         </div>
                                     </div>
@@ -173,25 +116,25 @@
                                 `;
 
 
-                order.order_items.forEach(function(item) {
+                order.products.forEach(function(product) {
                     result += `
                                                 <div class="row">
                                                         <div class="col-12">
                                                             <div class="row py-3 px-4">
                                                                 <div class="col-3">
                                                                     <div class="img">
-                                                                        <img class="w-100" src="${item.product.image}" alt="">
+                                                                        <img class="w-100" src="${product.image}" alt="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="product-info">
-                                                                        <h2 class="name" title="${item.product.attr_title}">${item.product.name}</h2>
-                                                                        <h3 class="cat">${item.product.pro_sub_cat.name}</h3>
-                                                                        <h3 class="cat">${item.product.pro_cat.name}</h3>
+                                                                        <h2 class="name" title="${product.attr_title}">${product.name}</h2>
+                                                                        <h3 class="cat">${product.pro_sub_cat.name}</h3>
+                                                                        <h3 class="cat">${product.pro_cat.name}</h3>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3">
-                                                                    <p class="qty">Qty: <span>${item.quantity}</span></p>
+                                                                    <p class="qty">Qty: <span>${product.pivot.quantity}</span></p>
                                                                 </div> 
                                                             </div>
                                                         </div>
@@ -204,13 +147,10 @@
                                                 <div class="col-3 d-flex justify-content-end align-items-center py-3 px-4">
                                                     <div class="order-status">
                                                         <div class="btn">
-                                                            <a href="#">{{ __('Details') }}</a>
-                                        `;
-                result += `
-                                                            
+                                                            <a href="#">Details</a>
                                                         </div>
                                                         <div class="total">
-                                                            <p class="total">Total: <span>${order.totalPrice}</span>tk</p>
+                                                            <p class="total text-center">Total: <span>${order.totalPrice}</span>tk</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -231,7 +171,6 @@
                 let _url = url.replace('filter_value', filter_value);
                 let __url = _url.replace('_status', status);
                 __url = __url.replace(/&amp;/g, '&');
-                console.log(__url);
                 $.ajax({
                     url: __url,
                     method: 'GET',

@@ -30,7 +30,7 @@ class UserOrderController extends Controller
 
         $query = $this->buildOrderQuery($status);
         $perPage = 10;
-        $query->with(['address', 'customer', 'payments', 'ref_user', 'od']);
+        $query->with(['address', 'customer', 'payments', 'od', 'products.pro_cat', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength']);
         if ($filter_val && $filter_val != 'all') {
             if ($filter_val == 5) {
                 $query->latest();
@@ -41,7 +41,6 @@ class UserOrderController extends Controller
         }
         $orders =  $query->paginate($perPage)->withQueryString();
         $this->prepareOrderData($orders);
-
         $data['orders'] = $orders;
         $data['status'] = $status;
         $data['pagination'] = $orders->links('vendor.pagination.bootstrap-5')->render();
@@ -81,19 +80,16 @@ class UserOrderController extends Controller
 
     private function prepareOrderData($orders)
     {
-        $orders->getCollection()->each(function ($order) {
+        $orders->getCollection()->each(function (&$order) {
             $order->place_date = date('d M Y h:m:s', strtotime($order->created_at));
-            $order->order_items = $this->getOrderItems($order);
-            $order->totalPrice = $this->calculateOrderTotalPrice($order, $order->order_items);
-            $order->totalRegularPrice = $this->calculateOrderTotalRegularPrice($order, $order->order_items);
-            $order->totalDiscount = $this->calculateOrderTotalDiscount($order, $order->order_items);
-
-            $order->order_items->each(function ($item) {
-                $item->product = $this->transformProduct($item->product, 30);
-                return $item;
+            $this->calculateOrderTotalPrice($order);
+            $this->calculateOrderTotalDiscountPrice($order);
+            $order->totalRegularPrice = ($order->totalPrice - $order->totalDiscountPrice);
+            $order->statusBg = $order->statusBg();
+            $order->statusTitle = $order->statusTitle();
+            $order->products->each(function (&$product) {
+                $this->transformProduct($product, 30);
             });
-
-            return $order;
         });
     }
 }

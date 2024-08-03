@@ -37,10 +37,10 @@ class Order extends BaseModel
         return $this->hasMany(Payment::class, 'order_id', 'id');
     }
 
-    public function ref_user()
-    {
-        return $this->belongsTo(User::class, 'ref_user');
-    }
+    // public function ref_user()
+    // {
+    //     return $this->belongsTo(User::class, 'ref_user');
+    // }
     public function obp()
     {
         return $this->belongsTo(OrderPrescription::class, 'obp_id');
@@ -64,17 +64,15 @@ class Order extends BaseModel
             case 0:
                 return 'badge badge-secondary';
             case 1:
-                return 'badge badge-info';
+                return 'badge bg-info';
             case 2:
-                return 'badge badge-success';
-            case -1:
-                return 'badge badge-danger';
-            case -2:
-                return 'badge badge-warning';
-            case -3:
-                return 'badge badge-dark';
+                return 'badge bg-warning';
+            case 3:
+                return 'badge bg-danger';
+            case 4:
+                return 'badge bg-success';
             default:
-                return 'badge badge-primary';
+                return 'badge bg-primary';
         }
     }
 
@@ -100,5 +98,36 @@ class Order extends BaseModel
     public function orderType()
     {
         return $this->obp_id != null ? 'Order By Prescription' : 'Manual Order';
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
+            ->using(OrderProduct::class)
+            ->withPivot('id', 'unit_id', 'quantity');
+    }
+
+    public function scopeInitiated($query)
+    {
+        return $query->where('status', 0);
+    }
+
+    public function scopeSelf($query)
+    {
+        return $query->where('creater_type', User::class)
+            ->where('creater_id', user()->id);
+    }
+
+    /**
+     * Scope to filter orders where at least one payment is paid.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePaid($query)
+    {
+        return $query->whereHas('payments', function ($subQuery) {
+            $subQuery->where('status', 1)->orWhere('payment_method', 'cod');
+        });
     }
 }
