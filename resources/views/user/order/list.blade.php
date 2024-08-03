@@ -42,7 +42,8 @@
                                                 class="{{ $order->statusBg }} badge-lg">{{ __($order->statusTitle) }}</span>
 
                                             <p class="total text-center p-0">
-                                                {{ __('Total Amount: ') }}<span>{{ number_format($order->totalPrice, 2) }}</span>{{ __('tk') }}
+                                                {{ __('Total Amount: ') }}<span
+                                                    class="fw-bold">{{ number_format($order->totalPrice, 2) }}{{ __('tk') }}</span>
                                             </p>
                                         </div>
                                     </div>

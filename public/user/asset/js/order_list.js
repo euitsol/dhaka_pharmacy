@@ -36,10 +36,10 @@ function getHtml(orders) {
         }</span>
 
                                                         <p class="total text-center p-0">
-                                                            Total Amount: <span>${numberFormat(
+                                                            Total Amount: <span class='fw-bold'>${numberFormat(
                                                                 order.totalPrice,
                                                                 2
-                                                            )}</span>tk
+                                                            )}tk</span>
                                                         </p>
                                                     </div>
                                                 </div>
