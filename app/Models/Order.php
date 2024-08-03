@@ -38,10 +38,10 @@ class Order extends BaseModel
         return $this->hasMany(Payment::class, 'order_id', 'id');
     }
 
-    public function ref_user()
-    {
-        return $this->belongsTo(User::class, 'ref_user');
-    }
+    // public function ref_user()
+    // {
+    //     return $this->belongsTo(User::class, 'ref_user');
+    // }
     public function obp()
     {
         return $this->belongsTo(OrderPrescription::class, 'obp_id');
@@ -95,15 +95,15 @@ class Order extends BaseModel
             case 0:
                 return 'badge bg-secondary';
             case 1:
-                return 'badge badge-info';
+                return 'badge bg-info';
             case 2:
-                return 'badge badge-warning';
+                return 'badge bg-warning';
             case 3:
-                return 'badge badge-danger';
+                return 'badge bg-danger';
             case 4:
-                return 'badge badge-success';
+                return 'badge bg-success';
             default:
-                return 'badge badge-primary';
+                return 'badge bg-primary';
         }
     }
 
