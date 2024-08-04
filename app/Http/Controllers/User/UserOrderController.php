@@ -30,7 +30,7 @@ class UserOrderController extends Controller
 
         $query = $this->buildOrderQuery($status);
         $perPage = 2;
-        $query->with(['od', 'products.pro_cat', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength']);
+        $query->with(['od', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength']);
         if ($filter_val && $filter_val != 'all') {
             $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
         }
@@ -99,6 +99,7 @@ class UserOrderController extends Controller
             $order->totalRegularPrice = ($order->totalPrice - $order->totalDiscountPrice);
             $order->statusBg = $order->statusBg();
             $order->statusTitle = $order->statusTitle();
+            $order->encrypt_oid = encrypt($order->id);
             $order->products->each(function (&$product) {
                 $this->transformProduct($product, 30);
             });

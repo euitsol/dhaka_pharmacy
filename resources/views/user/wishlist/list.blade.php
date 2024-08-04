@@ -16,8 +16,6 @@
                         <select class="form-select order_filter" aria-label="Default select example">
                             <option value="all" {{ $filterValue == 'all' ? 'selected' : '' }}>{{ __('All orders') }}
                             </option>
-                            <option value="5" {{ $filterValue == '5' ? 'selected' : '' }}>{{ __('Last 5 Wishes') }}
-                            </option>
                             <option value="7" {{ $filterValue == '7' ? 'selected' : '' }}>{{ __('Last 7 days') }}
                             </option>
                             <option value="15" {{ $filterValue == '15' ? 'selected' : '' }}>{{ __('Last 15 days') }}
@@ -33,29 +31,26 @@
                     <div class="order-row wish_item">
                         <div class="row">
                             <div class="col-8">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="row py-3 px-4">
-                                            <div class="col-3">
-                                                <div class="img">
-                                                    <img class="w-100" src="{{ $wish->product->image }}" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="col-9">
-                                                <div class="product-info">
-                                                    <h2 class="name" title="{{ $wish->product->attr_title }}">
-                                                        {{ $wish->product->name }}</h2>
-                                                    <h3 class="cat">{{ $wish->product->pro_sub_cat->name }}</h3>
-                                                    <h3 class="cat">{{ $wish->product->pro_cat->name }}</h3>
-                                                </div>
-                                            </div>
+                                <div class="row py-3 px-4">
+                                    <div class="col-2">
+                                        <div class="img">
+                                            <img class="w-100" src="{{ $wish->product->image }}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="product-info">
+                                            <h2 class="name" title="{{ $wish->product->attr_title }}">
+                                                {{ $wish->product->name }}</h2>
+                                            <h3 class="cat">{{ $wish->product->pro_sub_cat->name }}</h3>
+                                            <h3 class="cat">{{ $wish->product->generic->name }}</h3>
+                                            <h3 class="cat">{{ $wish->product->company->name }}</h3>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-4 d-flex justify-content-center align-items-center py-3 px-4">
                                 <div class="order-status p-0">
-                                    <div class="total">
+                                    <div class="total mb-2">
                                         <p class="total text-center ms-3">{{ __('Total:') }}
                                             <span>{{ number_format($wish->product->discounted_price, 2) }}{{ __('tk') }}</span>
                                             @if ($wish->product->discounted_price != $wish->product->price)
@@ -67,19 +62,18 @@
                                         </p>
                                         <div class="favorite wishlist_item me-3 text-danger">
                                             <i class="fa-solid fa-trash-can wish_update wish_remove_btn"
-                                                data-pid="{{ encrypt($wish->product->id) }}"></i>
+                                                data-pid="{{ $wish->product->pid }}"></i>
                                         </div>
                                     </div>
                                     <div class="btns w-100 mx-auto">
                                         <a class="button"
                                             href="{{ route('product.single_product', $wish->product->slug) }}">{{ __('Details') }}</a>
-                                        <form action="{{ route('u.ck.product.single_order') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="slug" value="{{ $wish->product->slug }}">
-                                            <input type="hidden" name="unit_id"
-                                                value="{{ $wish->product->units[0]->id }}">
-                                            <input type="submit" class="button" value="Order Now">
-                                        </form>
+                                        <div class="add_to_card">
+                                            <a class="cart-btn button" href="javascript:void(0)"
+                                                data-product_slug="{{ $wish->product->slug }}"
+                                                data-unit_id="{{ $wish->product->units[0]['id'] }}">
+                                                {{ __('Add To Cart') }}</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -96,15 +90,16 @@
         </div>
     </section>
 @endsection
+
 @push('js')
+@include('frontend.includes.wishlist_js')
     <script>
         const myDatas = {
-            'login_route': `{{ route('login') }}`,
-            'w_update_route': `{{ route('u.wishlist.update', 'param') }}`,
-            'w_refresh_route': `{{ route('u.wishlist.refresh') }}`,
+            'filter': `{{ $filterValue }}`,
+            'url': `{{ route('u.wishlist.list', ['filter' => 'filter_value', 'page' => '1']) }}`,
             'single_product_route': `{{ route('product.single_product', 'param') }}`,
             'single_order_route': `{{ route('u.ck.product.single_order') }}`,
-            'taka_icon': `{!! get_taka_icon() !!}`,
+            'csrf':'@csrf',
         };
     </script>
     <script src="{{ asset('user/asset/js/wishlist.js') }}"></script>

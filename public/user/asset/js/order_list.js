@@ -52,7 +52,7 @@ function getHtml(orders) {
                                                         href="${
                                                             myDatas[
                                                                 "details_route"
-                                                            ]
+                                                            ].replace('order_id',order.encrypt_oid)
                                                         }">Details</a>
                                                 </div>
                                             </div>
