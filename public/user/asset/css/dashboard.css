@@ -437,16 +437,10 @@ select.form-select::selection{
     font-family: "Inter", sans-serif;
     font-size: 15;
     font-weight: 300;
-    line-height: 0;
+    line-height: 1;
 }
 .my-order-section .order-row .img{
     width: 90px;
-}
-.my-order-section .order-row .list-item:last-child{
-    border-bottom:0;
-}
-.my-order-section .order-row .list-item{
-    border-bottom:1px solid rgba(0, 0, 0, 0.47);
 }
 .my-order-section .order-row .product-info .name{
     font-family: "Inter", sans-serif;

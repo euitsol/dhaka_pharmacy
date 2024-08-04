@@ -29,9 +29,9 @@
             <div class="order_wrap" id="wish_wrap">
                 @forelse ($wishes as $wish)
                     <div class="order-row wish_item">
-                        <div class="row">
+                        <div class="row px-4">
                             <div class="col-8">
-                                <div class="row py-3 px-4">
+                                <div class="row py-3">
                                     <div class="col-2">
                                         <div class="img">
                                             <img class="w-100" src="{{ $wish->product->image }}" alt="">
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 d-flex justify-content-center align-items-center py-3 px-4">
+                            <div class="col-4 d-flex justify-content-end align-items-center py-3 px-4">
                                 <div class="order-status p-0">
                                     <div class="total mb-2">
                                         <p class="total text-center ms-3">{{ __('Total:') }}

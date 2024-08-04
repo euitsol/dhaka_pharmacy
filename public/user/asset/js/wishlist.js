@@ -3,9 +3,9 @@ function getHtml(wishes) {
     wishes.forEach(function (wish) {
         result += `
         <div class="order-row wish_item">
-                        <div class="row">
+                        <div class="row px-4">
                             <div class="col-8">
-                                <div class="row py-3 px-4">
+                                <div class="row py-3">
                                     <div class="col-2">
                                         <div class="img">
                                             <img class="w-100" src="${ wish.product.image }" alt="">
@@ -22,7 +22,7 @@ function getHtml(wishes) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 d-flex justify-content-center align-items-center py-3 px-4">
+                            <div class="col-4 d-flex justify-content-end align-items-center py-3 px-4">
                                 <div class="order-status p-0">
                                     <div class="total mb-2">
                                         <p class="total text-center ms-3">Total:
@@ -64,12 +64,7 @@ function getHtml(wishes) {
 }
 
 $(document).ready(function () {
-    function updateUrlParameter(param = "filter", value = myDatas["filter"]) {
-        var url = new URL(window.location.href);
-        url.searchParams.set(param, value);
-        window.history.pushState({}, "", url);
-    }
-    updateUrlParameter();
+    updateUrlParameter('filter',myDatas["filter"]);
 
     $(".order_filter").on("change", function () {
         var filter_value = $(this).val();
@@ -93,9 +88,6 @@ $(document).ready(function () {
                 $(".paginate").html(data.pagination);
                 if (data.filterValue) {
                     updateUrlParameter("filter", data.filterValue);
-                }
-                if (data.status) {
-                    updateUrlParameter("status", data.status);
                 }
                 updateUrlParameter("page", 1);
             },
