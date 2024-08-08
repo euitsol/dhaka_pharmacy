@@ -1,146 +1,99 @@
+function getHtml(wishes) {
+    var result = "";
+    wishes.forEach(function (wish) {
+        result += `
+        <div class="order-row wish_item">
+                        <div class="row px-4">
+                            <div class="col-8">
+                                <div class="row py-3">
+                                    <div class="col-2">
+                                        <div class="img">
+                                            <img class="w-100" src="${ wish.product.image }" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="product-info">
+                                            <h2 class="name" title="${ wish.product.attr_title }">
+                                                ${ wish.product.name }</h2>
+                                            <h3 class="cat">${ wish.product.pro_sub_cat.name }</h3>
+                                            <h3 class="cat">${ wish.product.generic.name }</h3>
+                                            <h3 class="cat">${ wish.product.company.name }</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end align-items-center py-3 px-4">
+                                <div class="order-status p-0">
+                                    <div class="total mb-2">
+                                        <p class="total text-center ms-3">Total:
+                                            <span>${ numberFormat(wish.product.discounted_price, 2) }tk</span>`;
+
+                                            if (wish.product.discounted_price != wish.product.price){
+                                                result += `<sup>
+                                                            <del
+                                                                class="text-danger">${ numberFormat(wish.product.price, 2) }tk</del>
+                                                        </sup>`;
+                                            }
+                                                
+                                            result += `
+                                        </p>
+                                        <div class="favorite wishlist_item me-3 text-danger">
+                                            <i class="fa-solid fa-trash-can wish_update wish_remove_btn"
+                                                data-pid="${ wish.product.pid }"></i>
+                                        </div>
+                                    </div>
+                                    <div class="btns w-100 mx-auto">
+                                        <a class="button"
+                                            href="${ myDatas['single_product_route'].replace('param',wish.product.slug) }">Details</a>
+                                        <div class="add_to_card">
+                                            <a class="cart-btn button" href="javascript:void(0)"
+                                                data-product_slug="${ wish.product.slug }"
+                                                data-unit_id="${ wish.product.units[0]['id'] }">
+                                                Add To Cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+        `;
+                                
+    });
+    return result;
+}
+
 $(document).ready(function () {
-    $(document).on("click", ".wish_update", function () {
-        let login_url = myDatas["login_route"];
-        let _url = myDatas["w_update_route"];
-        let pid = $(this).data("pid");
-        _url = _url.replace("param", pid);
-        let element = $(this);
+    updateUrlParameter('filter',myDatas["filter"]);
+
+    $(".order_filter").on("change", function () {
+        var filter_value = $(this).val();
+        let url = myDatas["url"];
+        let _url = url.replace("filter_value", filter_value);
+        __url = _url.replace(/&amp;/g, "&");
         $.ajax({
-            url: _url,
+            url: __url,
             method: "GET",
             dataType: "json",
-            success: function (response) {
-                if (response.status == 1) {
-                    toastr.success(response.message);
-                    element.removeClass("fa-regular").addClass("fa-solid");
+            success: function (data) {
+                var result = "";
+                var wishes = data.wishes.data;
+                if (wishes.length === 0) {
+                    result = `<h3 class="my-5 text-danger text-center wish_empty_alert">{{ __('Wished Item Not Found') }}</h3>`;
                 } else {
-                    toastr.warning(response.message);
-                    element.removeClass("fa-solid").addClass("fa-regular");
+                    result = getHtml(wishes);
                 }
-                if (element.parent().hasClass("wishlist_item")) {
-                    element.closest(".wish_item").remove(); // More efficient parent traversal
+
+                $("#wish_wrap").html(result);
+                $(".paginate").html(data.pagination);
+                if (data.filterValue) {
+                    updateUrlParameter("filter", data.filterValue);
                 }
-                refreshWishlist();
+                updateUrlParameter("page", 1);
             },
             error: function (xhr, status, error) {
-                window.location.href = login_url;
-                console.error("Error fetching search data:", error);
+                console.error("Error fetching admin data:", error);
             },
         });
     });
 });
-
-function refreshWishlist() {
-    let refresh = myDatas["w_refresh_route"];
-    $.ajax({
-        url: refresh,
-        method: "GET",
-        dataType: "json",
-        success: function (data) {
-            let result = "";
-            if (data.wishes.length > 0) {
-                data.wishes.forEach(function (wish) {
-                    let product = wish.product;
-                    let product_details = myDatas["single_product_route"];
-                    product_details = product_details.replace(
-                        "param",
-                        product.slug
-                    );
-                    result += `<div class="card wish_item mb-2">
-                                            <div class="card-body py-2">
-                                                <div class="row align-items-center product_details mb-2">
-                                                    <div class="image col-2">
-                                                        <a href="${product_details}">
-                                                            <img class="border border-1 rounded-1" src="${product.image}"
-                                                                alt="${product.name}">
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-6 info">
-                                                        <h4 class="product_title" title="${product.attr_title}"> <a
-                                                                href="${product_details}">${product.name}</a>
-                                                        </h4>
-                                                        <p><a href="">${product.pro_sub_cat.name}</a></p>
-                                                        <p><a href="">${product.generic.name}</a></p>
-                                                        <p><a href="">${product.company.name}</a></p>
-                                                    </div>
-                                                    <div class="col-4 ps-0">
-                                                        <div class="details">
-                                                            <div class="row align-items-center">
-                                                                <div class="col-8">
-                                                                    <div class="item_price_wrap">`;
-                    if (product.discountPrice != product.price) {
-                        result += `
-                                                        <h4 class="text-start item_regular_price price"> <del
-                                                                class="text-danger">${
-                                                                    myDatas[
-                                                                        "taka_icon"
-                                                                    ]
-                                                                }${numberFormat(
-                            product.price,
-                            2
-                        )}</del>
-                                                        </h4>
-                                                        `;
-                    }
-                    result += `
-                                                        <h4 class="text-start item_price price"> <span>
-                                                                ${
-                                                                    myDatas[
-                                                                        "taka_icon"
-                                                                    ]
-                                                                }${numberFormat(
-                        product.discountPrice,
-                        2
-                    )}</span>
-                                                        </h4>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4 text-center ps-0 wishlist_item">
-                                                    <i class="fa-solid fa-trash-can text-danger wish_remove_btn wish_update"
-                                                        data-pid="${
-                                                            product.pid
-                                                        }"></i>
-                                                </div>
-                                                <div class="col-6 pe-1 mt-2">
-                                                    <a href="${product_details}"
-                                                        class="details_btn">Details</a>
-                                                </div>
-                                                <div class="col-6 ps-1 mt-2">
-                                                    <form action="${
-                                                        myDatas[
-                                                            "single_order_route"
-                                                        ]
-                                                    }" method="POST">
-                                                        @csrf
-                                                        <input type="hidden" name="slug" value="${
-                                                            product.slug
-                                                        }">
-                                                        <input type="hidden" name="unit_id"
-                                                            value="${
-                                                                product.units[0]
-                                                                    .id
-                                                            }">
-                                                        <input type="submit" class="order_btn" value="Order Now">
-                                                    </form>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>`;
-                });
-            } else {
-                result = `<h5 class="text-center wish_empty_alert">Item Not Found</h5>`;
-            }
-
-            $(".slide_wishes").html(result);
-        },
-        error: function (xhr, status, error) {
-            console.error("Error fetching search data:", error);
-        },
-    });
-}

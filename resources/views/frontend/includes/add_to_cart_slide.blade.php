@@ -3,7 +3,7 @@
         <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('Cart') }}</h5>
         <a href="javascript:void(0)" class="cart_clear_btn"><i class="fa-solid fa-trash-can"></i>
             {{ __('Clear All') }}</a>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close m-0" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body cart_items">
 

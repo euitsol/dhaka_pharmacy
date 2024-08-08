@@ -52,7 +52,7 @@ function getHtml(orders) {
                                                         href="${
                                                             myDatas[
                                                                 "details_route"
-                                                            ]
+                                                            ].replace('order_id',order.encrypt_oid)
                                                         }">Details</a>
                                                 </div>
                                             </div>
@@ -135,12 +135,7 @@ function getHtml(orders) {
 }
 
 $(document).ready(function () {
-    function updateUrlParameter(param = "filter", value = myDatas["filter"]) {
-        var url = new URL(window.location.href);
-        url.searchParams.set(param, value);
-        window.history.pushState({}, "", url);
-    }
-    updateUrlParameter();
+    updateUrlParameter('filter',myDatas["filter"]);
 
     $(".order_filter").on("change", function () {
         var filter_value = $(this).val();

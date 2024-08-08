@@ -961,7 +961,8 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     });
 
     Route::controller(UserPaymentController::class)->prefix('payment')->name('u.payment.')->group(function () {
-        Route::get('list', 'payment_list')->name('list');
+        Route::get('list', 'list')->name('list');
+        Route::get('details/{id}', 'details')->name('details');
 
         Route::get('/intermediate/{payment_id}', 'int_payment')->name('int');
         Route::get('/success/{payment_id}', 'success')->name('payment_success');

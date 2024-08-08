@@ -52,7 +52,7 @@
                                     <div class="order-status">
                                         <div class="btn p-0">
                                             <a
-                                                href="{{ route('u.order.details', encrypt($order->id)) }}">{{ __('Details') }}</a>
+                                                href="{{ route('u.order.details', $order->encrypt_oid) }}">{{ __('Details') }}</a>
                                         </div>
 
                                     </div>
@@ -107,7 +107,7 @@
             'status': `{{ $status }}`,
             'filter': `{{ $filterValue }}`,
             'url': `{{ route('u.order.list', ['status' => '_status', 'filter' => 'filter_value', 'page' => '1']) }}`,
-            'details_route': `{{ route('u.order.details', encrypt($order->id)) }}`,
+            'details_route': `{{ route('u.order.details', ['order_id']) }}`,
         };
     </script>
     <script src="{{ asset('user/asset/js/order_list.js') }}"></script>

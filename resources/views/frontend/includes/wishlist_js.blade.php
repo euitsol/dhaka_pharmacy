@@ -1,46 +1,4 @@
 <script>
-    function numberFormat(value, decimals) {
-        if (decimals != null && decimals >= 0) {
-            value = parseFloat(value).toFixed(decimals);
-        } else {
-            value = Math.round(parseFloat(value)).toString();
-        }
-        return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-    $(document).ready(function() {
-        $(document).on("click", ".wish_update", function() {
-            let login_url = `{{ route('login') }}`;
-            let _url = `{{ route('u.wishlist.update', 'param') }}`;
-            let pid = $(this).data("pid");
-            _url = _url.replace("param", pid);
-            let element = $(this);
-            $.ajax({
-                url: _url,
-                method: "GET",
-                dataType: "json",
-                success: function(response) {
-                    if (response.status == 1) {
-                        toastr.success(response.message);
-                        element.removeClass("fa-regular").addClass("fa-solid");
-                    } else {
-                        toastr.warning(response.message);
-                        element.removeClass("fa-solid").addClass("fa-regular");
-                    }
-                    if (element.parent().hasClass("wishlist_item")) {
-                        element.closest(".wish_item")
-                            .remove(); // More efficient parent traversal
-                    }
-                    refreshWishlist();
-                },
-                error: function(xhr, status, error) {
-                    window.location.href = login_url;
-                    console.error("Error fetching search data:", error);
-                },
-            });
-        });
-    });
-
-
     function refreshWishlist() {
         let refresh = `{{ route('u.wishlist.refresh') }}`;
         $.ajax({
@@ -129,4 +87,36 @@
             },
         });
     }
+    $(document).ready(function() {
+        $(document).on("click", ".wish_update", function() {
+            let login_url = `{{ route('login') }}`;
+            let _url = `{{ route('u.wishlist.update', 'param') }}`;
+            let pid = $(this).data("pid");
+            _url = _url.replace("param", pid);
+            let element = $(this);
+            $.ajax({
+                url: _url,
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.status == 1) {
+                        toastr.success(response.message);
+                        element.removeClass("fa-regular").addClass("fa-solid");
+                    } else {
+                        toastr.warning(response.message);
+                        element.removeClass("fa-solid").addClass("fa-regular");
+                    }
+                    if (element.parent().hasClass("wishlist_item")) {
+                        element.closest(".wish_item")
+                            .remove(); // More efficient parent traversal
+                    }
+                    refreshWishlist();
+                },
+                error: function(xhr, status, error) {
+                    window.location.href = login_url;
+                    console.error("Error fetching search data:", error);
+                },
+            });
+        });
+    });
 </script>

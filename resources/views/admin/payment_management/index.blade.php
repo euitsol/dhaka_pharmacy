@@ -32,10 +32,8 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $payment->customer->name }}</td>
-                                    <td>{{ json_decode($payment->details, true)['tran_id'] ?? '--' }}</td>
-                                    <td>{!! isset(json_decode($payment->details, true)['amount'])
-                                        ? get_taka_icon() . number_format(ceil(json_decode($payment->details, true)['amount']))
-                                        : '--' !!}
+                                    <td>{{ $payment->transaction_id }}</td>
+                                    <td>{!! get_taka_icon(). number_format(ceil($payment->amount),2) !!}
                                     </td>
                                     <td><span class="{{ $statusBgColor }}">{{ $status }}</span></td>
                                     <td>{{ timeFormate($payment->created_at) }}</td>

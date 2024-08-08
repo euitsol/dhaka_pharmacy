@@ -16,7 +16,7 @@
             <tr>
                 <td> {{ $loop->iteration }} </td>
                 <td>{{ $payment->customer->name }}</td>
-                <td>{{ json_decode($payment->details, true)['tran_id'] ?? '--' }}</td>
+                <td>{{ $payment->transaction_id }}</td>
                 <td>
                     @if (!auth()->user()->can('order_details'))
                         {{ $payment->order->order_id }}
@@ -30,7 +30,7 @@
                         @endif
                     @endif
                 </td>
-                <td>{!! get_taka_icon() !!}{{ isset(json_decode($payment->details, true)['amount']) ? number_format(ceil(json_decode($payment->details, true)['amount'])) : '--' }}
+                <td>{!! get_taka_icon(). number_format(ceil($payment->amount),2) !!}
                 </td>
                 <td><span class="{{ $payment->statusBg() }}">{{ $payment->statusTitle() }}</span></td>
                 <td>{{ timeFormate($payment->created_at) }}</td>
