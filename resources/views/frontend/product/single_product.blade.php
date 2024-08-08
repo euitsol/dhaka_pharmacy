@@ -433,7 +433,15 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js">
     </script>
     <script type="text/javascript" src="{{ asset('frontend/plugin/xzoom/xzoom.min.js') }}"></script>
+    <script src="{{ asset('frontend/asset/js/single_product.js') }}"></script>
 @endpush
 @push('js')
-    <script src="{{ asset('frontend/asset/js/single_product.js') }}"></script>
+    <script>
+        let errors = {!! json_encode($errors->all()) !!};
+        if (errors.length > 0) {
+            errors.forEach(function(error) {
+                toastr.error(error);
+            });
+        }
+    </script>
 @endpush

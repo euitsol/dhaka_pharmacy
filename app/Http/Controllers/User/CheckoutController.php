@@ -29,14 +29,14 @@ class CheckoutController extends Controller
     {
         $order = $this->createOrder();
 
-        if (isset($request->product)) {
+        if (isset($request->product)) { // for single order int
             $op = new OrderProduct();
             $op->order_id = $order->id;
             $op->product_id = $request->product;
             $op->unit_id = $request->unit_id;
             $op->quantity = $request->quantity;
             $op->save();
-        } else { // for all cart item checkout
+        } else { // for multiple order int
 
             $carts = AddToCart::currentCart()->get();
             foreach ($carts as $cart) {
@@ -49,11 +49,8 @@ class CheckoutController extends Controller
                 $cart->forceDelete();
             }
         }
-        if (request()->ajax()) {
-            return response()->json(['success' => true, 'redirect_url' => route('u.ck.index', encrypt($order->id))]);
-        } else {
-            return redirect()->route('u.ck.index', encrypt($order->id));
-        }
+
+        return redirect()->route('u.ck.index', encrypt($order->id));
     }
 
     public function checkout($order_id)

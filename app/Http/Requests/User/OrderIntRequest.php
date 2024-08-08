@@ -28,22 +28,12 @@ class OrderIntRequest extends FormRequest
 
         if ($this->has('product') || $this->has('unit_id') || $this->has('quantity')) {
             $rules = [
-                'product' => 'required|exists:medicines,id',
-                'unit_id' => 'required|exists:medicine_units,id',
-                'quantity' => 'required|numeric|min:1',
+                'product' => 'required|exists:medicines,name',
+                'unit_id' => 'required|exists:medicine_units,quantity',
+                'quantity' => 'required|numeric|min:6',
             ];
         }
 
         return $rules;
-    }
-    protected function failedValidation(Validator $validator): void
-    {
-        $errors = $validator->errors();
-        $response = new JsonResponse([
-            'success' => false,
-            'errors' => $errors->messages(),
-        ], 200);
-
-        throw new HttpResponseException($response);
     }
 }

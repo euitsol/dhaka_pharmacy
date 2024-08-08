@@ -165,30 +165,3 @@ function handleErrors(response) {
         toastr.error(errors[field][0]);
     }
 }
-// Single Product Order
-$(document).ready(function () {
-    $("#single_order_form").on("submit", function (e) {
-        e.preventDefault();
-        let formData = $(this).serialize();
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-        });
-        $.ajax({
-            url: $(this).attr("action"),
-            type: "POST",
-            data: formData,
-            success: function (response) {
-                if (response.success === false) {
-                    handleErrors(response);
-                } else if (response.success === true && response.redirect_url) {
-                    window.location.href = response.redirect_url;
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            },
-        });
-    });
-});

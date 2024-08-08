@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\API\Order\InitiatedRequest;
+use App\Http\Requests\API\Order\IntSingleOrderRequest;
 use App\Http\Requests\API\Order\OrderConfirmRequest;
 use App\Models\AddToCart;
 use App\Models\Order;
@@ -29,12 +30,6 @@ class OrderController extends BaseController
         $order->creater()->associate($user);
         $order->save();
 
-        // if (isset($request->products) && !empty($request->products)) {   //for single orders & selected item checkout
-
-        // } else { // for all cart item checkout
-
-        // $carts = AddToCart::currentCart()->get();
-
         foreach ($request->carts as $id) {
             $cart = AddToCart::currentCart()->whereId('id', $id)->first();
 
@@ -46,10 +41,30 @@ class OrderController extends BaseController
                 $op->quantity = $cart->quantity;
                 $op->save();
 
-                $cart->status = -1;
-                $cart->update();
+                $cart->forceDelete();
             }
         }
+        return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->id]);
+    }
+
+    public function int_single_order(IntSingleOrderRequest $request): JsonResponse
+    {
+        $user = $request->user();
+        $orderId = generateOrderId();
+        $order = new Order();
+
+        $order->customer()->associate($user);
+        $order->status = 0; //Order initiated
+        $order->order_id = $orderId;
+        $order->creater()->associate($user);
+        $order->save();
+
+        $op = new OrderProduct();
+        $op->order_id = $order->id;
+        $op->product_id = $request->product_id;
+        $op->unit_id = $request->unit_id;
+        $op->quantity = $request->quantity;
+        $op->save();
         return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->id]);
     }
     public function details(Request $request)
