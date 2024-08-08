@@ -121,8 +121,8 @@
                                                                             <i class="fa-solid fa-minus"></i>
                                                                         </a>
                                                                         <input type="number" min="1" disabled
-                                                                            class="form-control text-center" name="quantity"
-                                                                            value="1">
+                                                                            class="form-control text-center quantity_input"
+                                                                            name="quantity" value="1">
                                                                         <a href="javascript:void(0)"
                                                                             class="btn btn-sm plus_qty">
                                                                             <i class="fa-solid fa-plus"></i>
@@ -137,6 +137,7 @@
                                                     <div class="add_to_card">
                                                         <a class="cart-btn" href="javascript:void(0)"
                                                             data-product_slug="{{ $single_product->slug }}"
+                                                            data-quantity="1"
                                                             data-unit_id="{{ $single_product->units[0]['id'] }}">
                                                             <i class="fa-solid fa-cart-plus"></i>
                                                             {{ __('Add to Cart') }}</a>
