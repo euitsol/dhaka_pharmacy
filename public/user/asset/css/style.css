@@ -340,6 +340,13 @@ body{
 
 /* Cart CSS */
 
+.header-section .right-col .cart-icon {
+    display: block;
+  }
+.header-section .right-col .cart-icon #cart_btn_quantity{
+    color: var(--asent-color);
+    font-size: 15px;
+  }
 .header-section .right-col .offcanvas {
     width: 600px;
     

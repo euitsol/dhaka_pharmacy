@@ -92,14 +92,13 @@
 @endsection
 
 @push('js')
-@include('frontend.includes.wishlist_js')
+    @include('frontend.includes.wishlist_js')
     <script>
         const myDatas = {
             'filter': `{{ $filterValue }}`,
             'url': `{{ route('u.wishlist.list', ['filter' => 'filter_value', 'page' => '1']) }}`,
             'single_product_route': `{{ route('product.single_product', 'param') }}`,
-            'single_order_route': `{{ route('u.ck.product.single_order') }}`,
-            'csrf':'@csrf',
+            'csrf': '@csrf',
         };
     </script>
     <script src="{{ asset('user/asset/js/wishlist.js') }}"></script>

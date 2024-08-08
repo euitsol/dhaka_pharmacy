@@ -112,7 +112,7 @@ function updatePrices(quantity, unit = false) {
     );
 }
 
-function changeQuantity(element, increment) {
+function QuantityUpdate(element, increment) {
     var quantityInput = element.siblings(".quantity_input");
     var quantity = parseInt(quantityInput.val()) || 1;
 
@@ -151,11 +151,11 @@ $(document).ready(function () {
     });
 
     $(".plus_qty").on("click", function () {
-        changeQuantity($(this), true);
+        QuantityUpdate($(this), true);
     });
 
     $(".minus_qty").on("click", function () {
-        changeQuantity($(this), false);
+        QuantityUpdate($(this), false);
     });
 });
 

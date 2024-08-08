@@ -91,8 +91,8 @@
                                 <div class="product-info text-center">
                                     <p class="mb-0">
                                         <strong>{{ __('Price: ') }}</strong>
-                                        <span>{{ number_format($discount_price, 2) }}</span><sup
-                                            class="text-danger"><del>{{ $discount_price != $product->price ? number_format($product->price, 2) : '' }}</del></sup>
+                                        <span>{{ number_format($discount_price, 2) }}{{ __('tk') }}</span><sup
+                                            class="text-danger"><del>{{ $discount_price != $product->price ? number_format($product->price, 2) . 'tk' : '' }}</del></sup>
                                     </p>
                                 </div>
                             </div>

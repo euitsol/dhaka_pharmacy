@@ -28,13 +28,13 @@
                                 <div class="row align-items-center">
                                     <div class="col-8">
                                         <div class="item_price_wrap">
-                                            @if ($wish->product->discountPrice != $wish->product->price)
+                                            @if ($wish->product->discounted_price != $wish->product->price)
                                                 <h4 class="text-start item_regular_price price"> <del
                                                         class="text-danger">{!! get_taka_icon() !!}{{ number_format($wish->product->price, 2) }}</del>
                                                 </h4>
                                             @endif
                                             <h4 class="text-start item_price price"> <span>
-                                                    {!! get_taka_icon() !!}{{ number_format($wish->product->discountPrice, 2) }}</span>
+                                                    {!! get_taka_icon() !!}{{ number_format($wish->product->discounted_price, 2) }}</span>
                                             </h4>
                                         </div>
                                     </div>
@@ -47,13 +47,12 @@
                                             class="details_btn">{{ __('Details') }}</a>
                                     </div>
                                     <div class="col-6 ps-1 mt-2">
-                                        <form action="{{ route('u.ck.product.single_order') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="slug" value="{{ $wish->product->slug }}">
-                                            <input type="hidden" name="unit_id"
-                                                value="{{ $wish->product->units[0]->id }}">
-                                            <input type="submit" class="order_btn" value="Order Now">
-                                        </form>
+                                        <div class="add_to_card">
+                                            <a class="cart-btn order_btn" href="javascript:void(0)"
+                                                data-product_slug="{{ $wish->product->slug }}"
+                                                data-unit_id="{{ $wish->product->units[0]['id'] }}">
+                                                {{ __('Add To Cart') }}</a>
+                                        </div>
                                     </div>
                                 </div>
 
