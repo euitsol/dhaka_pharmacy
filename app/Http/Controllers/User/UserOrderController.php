@@ -30,7 +30,7 @@ class UserOrderController extends Controller
 
         $query = $this->buildOrderQuery($status);
         $perPage = 2;
-        $query->with(['od', 'products.pro_cat', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength']);
+        $query->with(['od', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength']);
         if ($filter_val && $filter_val != 'all') {
             $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
         }
@@ -53,9 +53,8 @@ class UserOrderController extends Controller
 
     public function details($id): View
     {
-        $order = Order::with(['customer', 'address', 'payments', 'od', 'products.pro_cat', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength'])->findOrFail(decrypt($id));
+        $order = Order::with(['customer', 'address', 'payments', 'od.odrs', 'products.pro_cat', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength'])->findOrFail(decrypt($id));
         $order->place_date = date('M d,Y', strtotime($order->created_at));
-        $order->status_update_time = date('M d, h:ma', strtotime($order->updated_at));
         $this->calculateOrderTotalPrice($order);
         $this->calculateOrderTotalDiscountPrice($order);
         $order->totalRegularPrice = ($order->totalPrice - $order->totalDiscountPrice);
@@ -99,6 +98,7 @@ class UserOrderController extends Controller
             $order->totalRegularPrice = ($order->totalPrice - $order->totalDiscountPrice);
             $order->statusBg = $order->statusBg();
             $order->statusTitle = $order->statusTitle();
+            $order->encrypt_oid = encrypt($order->id);
             $order->products->each(function (&$product) {
                 $this->transformProduct($product, 30);
             });

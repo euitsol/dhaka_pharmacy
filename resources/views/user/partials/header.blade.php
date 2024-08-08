@@ -29,6 +29,14 @@
 
             </div> -->
             <div class="col-3 d-flex flex-row align-items-center justify-content-end">
+                <div class="right-col me-4">
+                    <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"
+                    aria-controls="offcanvasRight">
+                        <img src="{{ asset('user/asset/img/setting.png') }}" alt="">
+                        <sup><strong id="cart_btn_quantity"></strong></sup>
+                    </a>
+                    @include('frontend.includes.add_to_cart_slide')
+                </div>
                 <div class="setting me-4">
                     <a href="#">
                         <img src="{{ asset('user/asset/img/setting.png') }}" alt="">
