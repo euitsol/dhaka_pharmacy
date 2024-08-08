@@ -40,45 +40,30 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    let checkUnit = $(".item_quantity:checked");
-    $(".unit_name").html(checkUnit.data("name"));
-    $(".total_price").html(
-        numberFormat(
-            parseFloat(checkUnit.data("total_price")) *
-                $(".quantity_input").val(),
-            2
-        )
-    );
-    $(".total_regular_price").html(
-        numberFormat(
-            parseFloat(checkUnit.data("total_regular_price")) *
-                $(".quantity_input").val(),
-            2
-        )
-    );
-    $(".product_price .item_quantity").on("change", function () {
-        var name = $(this).data("name");
-        var id = $(this).data("id");
-        $(this)
-            .closest(".product_content")
-            .find(".cart-btn")
-            .attr("data-unit_id", id);
-
-        var TotalPrice = numberFormat(
-            parseFloat($(this).data("total_price")) *
-                $(".quantity_input").val(),
-            2
-        );
-        var TotalRegularPrice = numberFormat(
-            parseFloat($(this).data("total_regular_price")) *
-                $(".quantity_input").val(),
-            2
-        );
-        $(".total_price").html(TotalPrice);
-        $(".total_regular_price").html(TotalRegularPrice);
-        $(".unit_name").html(name);
+    $(document).on("click", ".review_read", function () {
+        let review = $(this).data("content");
+        let author = $(this).data("author");
+        let modal_content = `
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Author</th>
+                        <th>:</th>
+                        <td>${author}</td>
+                    </tr>
+                    <tr>
+                        <th>Review</th>
+                        <th>:</th>
+                        <td style="text-align: justify;">${review}</td>
+                    </tr>
+                </tbody>
+            </table>
+        `;
+        $(".review_details").html(modal_content);
+        $("#review_modal").modal("show");
     });
-
+});
+$(document).ready(function () {
     //Height Control Jquery
     var single_product_height = $(".single_product_card").height();
     $(".similar_products_card").css("max-height", single_product_height + "px");
@@ -116,33 +101,9 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-    $(document).on("click", ".review_read", function () {
-        let review = $(this).data("content");
-        let author = $(this).data("author");
-        let modal_content = `
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                        <th>Author</th>
-                        <th>:</th>
-                        <td>${author}</td>
-                    </tr>
-                    <tr>
-                        <th>Review</th>
-                        <th>:</th>
-                        <td style="text-align: justify;">${review}</td>
-                    </tr>
-                </tbody>
-            </table>
-        `;
-        $(".review_details").html(modal_content);
-        $("#review_modal").modal("show");
-    });
-});
-
-function updatePrices(quantity) {
-    let checkUnit = $(".item_quantity:checked");
+function updatePrices(quantity, unit = false) {
+    checkUnit = unit == false ? $(".item_quantity:checked") : unit;
+    $(".unit_name").html(checkUnit.data("name"));
     $(".total_price").html(
         numberFormat(checkUnit.data("total_price") * quantity, 2)
     );
@@ -168,21 +129,34 @@ function changeQuantity(element, increment) {
     updatePrices(quantity);
 }
 
-$(".quantity_input").on("input", function () {
-    var quantity = parseInt($(this).val()) || 1;
-    $(this)
-        .siblings(".minus_qty")
-        .toggleClass("disabled", quantity <= 1);
-    $(".product_content").find(".cart-btn").attr("data-quantity", quantity);
-    updatePrices(quantity);
-});
+$(document).ready(function () {
+    let quantity_value = parseInt($(".quantity_input").val()) ?? 1;
+    updatePrices(quantity_value);
+    $(".product_price .item_quantity").on("change", function () {
+        var id = $(this).data("id");
+        $(this)
+            .closest(".product_content")
+            .find(".cart-btn")
+            .attr("data-unit_id", id);
+        updatePrices(quantity_value, $(this));
+    });
 
-$(".plus_qty").on("click", function () {
-    changeQuantity($(this), true);
-});
+    $(".quantity_input").on("input", function () {
+        var quantity = parseInt($(this).val()) ?? 1;
+        $(this)
+            .siblings(".minus_qty")
+            .toggleClass("disabled", quantity <= 1);
+        $(".product_content").find(".cart-btn").attr("data-quantity", quantity);
+        updatePrices(quantity);
+    });
 
-$(".minus_qty").on("click", function () {
-    changeQuantity($(this), false);
+    $(".plus_qty").on("click", function () {
+        changeQuantity($(this), true);
+    });
+
+    $(".minus_qty").on("click", function () {
+        changeQuantity($(this), false);
+    });
 });
 
 function handleErrors(response) {
