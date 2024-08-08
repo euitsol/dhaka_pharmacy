@@ -141,19 +141,7 @@ $(document).ready(function () {
     });
 });
 
-// Quantity Increment or Decrement Function
-function changeQuantity(element, increment) {
-    var quantityInput = element.siblings(".quantity_input");
-    var quantity = parseInt(quantityInput.val()) || 1;
-    if (quantity == 2 && increment == false) {
-        element.addClass("disabled");
-    } else {
-        element.siblings(".minus_qty").removeClass("disabled");
-    }
-    quantity = increment ? quantity + 1 : quantity - 1;
-    quantityInput.val(quantity);
-    $(".product_content").find(".cart-btn").attr("data-quantity", quantity);
-
+function updatePrices(quantity) {
     let checkUnit = $(".item_quantity:checked");
     $(".total_price").html(
         numberFormat(checkUnit.data("total_price") * quantity, 2)
@@ -162,16 +150,71 @@ function changeQuantity(element, increment) {
         numberFormat(checkUnit.data("total_regular_price") * quantity, 2)
     );
 }
-if ($(".quantity_input").val() == 1) {
-    $(".quantity_input").siblings(".minus_qty").addClass("disabled");
+
+function changeQuantity(element, increment) {
+    var quantityInput = element.siblings(".quantity_input");
+    var quantity = parseInt(quantityInput.val()) || 1;
+
+    if (quantity <= 2 && !increment) {
+        element.addClass("disabled");
+        quantity = Math.max(1, quantity - 1);
+    } else {
+        element.siblings(".minus_qty").removeClass("disabled");
+        quantity = increment ? quantity + 1 : quantity - 1;
+    }
+
+    quantityInput.val(quantity);
+    $(".product_content").find(".cart-btn").attr("data-quantity", quantity);
+    updatePrices(quantity);
 }
 
-// Plus Quantity
-$(document).on("click", ".plus_qty", function () {
+$(".quantity_input").on("input", function () {
+    var quantity = parseInt($(this).val()) || 1;
+    $(this)
+        .siblings(".minus_qty")
+        .toggleClass("disabled", quantity <= 1);
+    $(".product_content").find(".cart-btn").attr("data-quantity", quantity);
+    updatePrices(quantity);
+});
+
+$(".plus_qty").on("click", function () {
     changeQuantity($(this), true);
 });
 
-// Minus Quantity
-$(document).on("click", ".minus_qty", function () {
+$(".minus_qty").on("click", function () {
     changeQuantity($(this), false);
+});
+
+function handleErrors(response) {
+    var errors = response.errors;
+    for (var field in errors) {
+        toastr.error(errors[field][0]);
+    }
+}
+// Single Product Order
+$(document).ready(function () {
+    $("#single_order_form").on("submit", function (e) {
+        e.preventDefault();
+        let formData = $(this).serialize();
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+        $.ajax({
+            url: $(this).attr("action"),
+            type: "POST",
+            data: formData,
+            success: function (response) {
+                if (response.success === false) {
+                    handleErrors(response);
+                } else if (response.success === true && response.redirect_url) {
+                    window.location.href = response.redirect_url;
+                }
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            },
+        });
+    });
 });

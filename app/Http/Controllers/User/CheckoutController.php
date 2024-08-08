@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SingleOrderRequest;
 use App\Http\Requests\User\OrderConfirmRequest;
+use App\Http\Requests\User\OrderIntRequest;
 use App\Http\Traits\OrderTrait;
 use App\Models\Address;
 use App\Models\AddToCart;
@@ -24,29 +25,35 @@ class CheckoutController extends Controller
 {
     use OrderNotificationTrait, TransformProductTrait, OrderTrait, TransformOrderItemTrait;
 
-    public function int_order(Request $request): RedirectResponse
+    public function int_order(OrderIntRequest $request)
     {
         $order = $this->createOrder();
 
-        if (isset($request->products) && !empty($request->products)) {   //for single orders & selected item checkout
-
+        if (isset($request->product)) {
+            $op = new OrderProduct();
+            $op->order_id = $order->id;
+            $op->product_id = $request->product;
+            $op->unit_id = $request->unit_id;
+            $op->quantity = $request->quantity;
+            $op->save();
         } else { // for all cart item checkout
 
             $carts = AddToCart::currentCart()->get();
             foreach ($carts as $cart) {
-                $cart->status = -1;
-                $cart->update();
-
                 $op = new OrderProduct();
                 $op->order_id = $order->id;
                 $op->product_id = $cart->product_id;
                 $op->unit_id = $cart->unit_id;
                 $op->quantity = $cart->quantity;
                 $op->save();
+                $cart->forceDelete();
             }
         }
-
-        return redirect()->route('u.ck.index', encrypt($order->id));
+        if (request()->ajax()) {
+            return response()->json(['success' => true, 'redirect_url' => route('u.ck.index', encrypt($order->id))]);
+        } else {
+            return redirect()->route('u.ck.index', encrypt($order->id));
+        }
     }
 
     public function checkout($order_id)

@@ -72,12 +72,13 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <form action="{{ route('u.ck.product.single_order') }}" method="POST">
+                                            <form action="{{ route('u.ck.init') }}" id="single_order_form" method="POST">
                                                 @csrf
                                                 <div class="product_content">
                                                     <h1>{{ __($single_product->name) }} </h1>
-                                                    <input type="hidden" name="slug"
-                                                        value="{{ $single_product->slug }}">
+                                                    {{-- <input type="hidden" name="slug"
+                                                        value="{{ $single_product->slug }}"> --}}
+                                                    <input type="hidden" name="product" value="{{ $single_product->id }}">
                                                     <p>{{ __($single_product->pro_sub_cat->name) }}</p>
                                                     <p>{{ __($single_product->generic->name) }}</p>
                                                     <p>{{ __($single_product->company->name) }}</p>
@@ -117,10 +118,10 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group" role="group">
                                                                         <a href="javascript:void(0)"
-                                                                            class="btn btn-sm minus_qty">
+                                                                            class="btn btn-sm minus_qty disabled">
                                                                             <i class="fa-solid fa-minus"></i>
                                                                         </a>
-                                                                        <input type="number" min="1" disabled
+                                                                        <input type="text"
                                                                             class="form-control text-center quantity_input"
                                                                             name="quantity" value="1">
                                                                         <a href="javascript:void(0)"
