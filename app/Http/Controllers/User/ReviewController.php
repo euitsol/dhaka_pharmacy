@@ -17,7 +17,6 @@ class ReviewController extends Controller
 
     public function list(Request $request)
     {
-        // $data['pageNumber'] = $request->query('page', 1);
         $filter_val = $request->get('filter') ?? request('filter');
         $data['filterValue'] = $filter_val;
         // $perPage = 10;

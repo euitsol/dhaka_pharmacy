@@ -5,7 +5,7 @@
 .dashboard-main-section .col-left .single-box{
     padding: 30px 20px;
     border-radius: 25px;
-    box-shadow: 0 5px 4px 0 rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
 }
 .dashboard-main-section .col-left {
     row-gap: 20px;
@@ -380,15 +380,16 @@ width: 50px;
     color: var(--text);
 }
 .my-order-section .show-order{
-    background-color: rgba(217, 217, 217, 0.5);
+    background-color: var(--secondary-bg);
     padding: 20px 25px;
-    box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
 }
 .my-order-section .show-order h4{
-    font-size: 24px;
+    font-size: 20px;
     line-height: 29px;
     font-weight: 300;
     color: var(--text);
+    margin-bottom: 0;
 }
 .my-order-section .show-order .form-select:focus{
     outline: none;
@@ -398,7 +399,7 @@ width: 50px;
     border: 1px solid #000;
     width: 240px;
     border-radius: 0;
-    padding: 10px;
+    padding: 6px 10px;
     background-color: transparent;
 }
 select.form-select::selection{
@@ -407,8 +408,8 @@ select.form-select::selection{
     font-weight: 300;
 }
 .my-order-section .order-row{
-    background-color: rgba(217, 217, 217, 0.5);
-    box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.25);
+    background-color: var(--secondary-bg);
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
     margin-top: 20px;
 }
 .my-order-section .order-row .order-id-row{
@@ -416,9 +417,16 @@ select.form-select::selection{
     padding-bottom: 0;
     border-bottom: 2px solid rgba(0, 0, 0, 0.47);
 }
+.my-order-section .order-row .order-id-row .status .total{
+        font-family: "Inter", sans-serif;
+        font-size: 15;
+        font-weight: 300;
+        line-height: 30px;
+        margin-bottom: 0;
+}
 .my-order-section .order-row .order-id-row .order-num{
     font-family: "Inter", sans-serif;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 400;
     line-height: 29px;
 }
@@ -427,47 +435,47 @@ select.form-select::selection{
 }
 .my-order-section .order-row .order-id-row .date-time{
     font-family: "Inter", sans-serif;
-    font-size: 20px;
+    font-size: 15;
     font-weight: 300;
-    line-height: 24px;
+    line-height: 1;
 }
 .my-order-section .order-row .img{
-    width: 165px;
+    width: 90px;
 }
 .my-order-section .order-row .product-info .name{
     font-family: "Inter", sans-serif;
-    font-size: 22px;
+    font-size: 15px;
     font-weight: 600;
-    line-height: 39px;
+    line-height: 30px;
     margin-bottom: 0;
 }
 .my-order-section .order-row .product-info .cat{
     font-family: "Inter", sans-serif;
-    font-size: 20px;
+    font-size: 12px;
     font-weight: 400;
-    line-height: 29px;
+    line-height: 15px;
     margin-bottom: 0;
 }
 .my-order-section .order-row .qty{
     font-family: "Inter", sans-serif;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 29px;
-    color: rgba(204, 185, 185, 1);
+    line-height: 25px;
+    color: rgb(0 0 0 / 50%);
+    margin-bottom: 0;
 }
 .my-order-section .order-row .qty span{
     color: #000;
 }
-.my-order-section .order-row .order-status .btn a{
-    height: 65px;
-    width: 212px;
+.my-order-section .order-row .order-status .btn a {
+    width: 130px;
     border: 2px solid #000;
     border-radius: 10px;
     color: var(--text);
     text-decoration: none;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 400;
-    line-height: 58px;
+    line-height: 35px;
     display: inline-block;
     transition: 0.4s;
 }
@@ -476,12 +484,16 @@ select.form-select::selection{
     border-color: var(--primary);;
 }
 .my-order-section .order-row .order-status .total{
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     line-height: 29px;
     color: var(--text);
-    margin-top: 10px;
 }
-.my-order-section .order-row .order-status{
-    padding-right: 30px;
+.my-order-section .page-link{
+    color: var(--btn_bg) !important;
+}
+.my-order-section .page-link.active, .active>.page-link {
+    background-color: var(--primary);
+    border-color: var(--text);
+    color: var(--text) !important;
 }

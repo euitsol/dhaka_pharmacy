@@ -30,6 +30,7 @@ trait TransformProductTrait
     private function setProductNames(&$product, $limit)
     {
         $product->name = Str::limit(Str::ucfirst(Str::lower($product->name . ($product->strength_info))), $limit, '..');
+        $product->pro_sub_cat->name = Str::limit(Str::title($product->pro_sub_cat->name), $limit, '..');
         $product->generic->name = Str::limit(Str::title($product->generic->name), $limit, '..');
         $product->company->name = Str::limit(Str::title($product->company->name), $limit, '..');
         $product->attr_title = Str::ucfirst(Str::lower($product->name));

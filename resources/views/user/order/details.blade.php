@@ -23,58 +23,58 @@
                     <h2 class="title mb-4">{{ __('Order Tracking') }}</h2>
                     <div class="progress-box d-flex justify-content-between">
                         <div class="step step-1 text-center">
-                            <div class="icon {{ $order->status >= 0 ? 'confirm' : '' }} text-center mb-2">
-                                @if ($order->status >= 0)
-                                    <img src="{{ asset('user/asset/img/check.png') }}" alt="">
-                                @endif
-                            </div>
-                            <h5>{{ __('Order Initiated') }}</h5>
-                            @if ($order->status == 0)
-                                <p class="m-0">{{ $order->status_update_time }}</p>
-                            @endif
-                        </div>
-                        <div class="step step-2 text-center">
                             <div class="icon {{ $order->status >= 1 ? 'confirm' : '' }} text-center mb-2">
                                 @if ($order->status >= 1)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
                             <h5>{{ __('Order Submitted') }}</h5>
-                            @if ($order->status == 1)
-                                <p class="m-0">{{ $order->status_update_time }}</p>
+                            @if ($order->status >= 1)
+                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->created_at)) }}</p>
                             @endif
                         </div>
-                        <div class="step step-3 text-center">
+                        <div class="step step-2 text-center">
                             <div class="icon {{ $order->status >= 2 ? 'confirm' : '' }} text-center mb-2">
                                 @if ($order->status >= 2)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <h5>{{ __('Order Processed') }}</h5>
-                            @if ($order->status == 2)
-                                <p class="m-0">{{ $order->status_update_time }}</p>
+                            <h5>{{ __('Order Proccesing') }}</h5>
+                            @if ($order->status >= 2)
+                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->od->created_at)) }}</p>
                             @endif
                         </div>
-                        <div class="step step-4 text-center">
-                            <div class="icon {{ $order->status >= 3 ? 'confirm' : '' }} text-center mb-2">
-                                @if ($order->status >= 3)
-                                    <img src="{{ asset('user/asset/img/check.png') }}" alt="">
-                                @endif
-                            </div>
-                            <h5>{{ __('Waiting For Rider') }}</h5>
-                            @if ($order->status == 3)
-                                <p class="m-0">{{ $order->status_update_time }}</p>
-                            @endif
-                        </div>
-                        <div class="step step-5 text-center">
+                        <div class="step step-3 text-center">
                             <div class="icon {{ $order->status >= 4 ? 'confirm' : '' }} text-center mb-2">
                                 @if ($order->status >= 4)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <h5>{{ __('Rider Assigned') }}</h5>
-                            @if ($order->status == 4)
-                                <p class="m-0">{{ $order->status_update_time }}</p>
+                            <h5>{{ __('Order Shipped') }}</h5>
+                            @if ($order->status >= 4)
+                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->od->odrs->where('status','!=',0)->first()->created_at)) }}</p>
+                            @endif
+                        </div>
+                        <div class="step step-4 text-center">
+                            <div class="icon {{ $order->status >= 5 ? 'confirm' : '' }} text-center mb-2">
+                                @if ($order->status >= 5)
+                                    <img src="{{ asset('user/asset/img/check.png') }}" alt="">
+                                @endif
+                            </div>
+                            <h5>{{ __('Out For Delivery') }}</h5>
+                            @if ($order->status == 5)
+                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->od->rider_collected_at)) }}</p>
+                            @endif
+                        </div>
+                        <div class="step step-5 text-center">
+                            <div class="icon {{ $order->status >= 6 ? 'confirm' : '' }} text-center mb-2">
+                                @if ($order->status >= 6)
+                                    <img src="{{ asset('user/asset/img/check.png') }}" alt="">
+                                @endif
+                            </div>
+                            <h5>{{ __('Delivered') }}</h5>
+                            @if ($order->status >= 6)
+                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->od->rider_delivered_at)) }}</p>
                             @endif
                         </div>
                     </div>
@@ -189,10 +189,8 @@
                                         @foreach ($order->payments as $payment)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ json_decode($payment->details, true)['tran_id'] ?? '--' }}</td>
-                                                <td>{!! isset(json_decode($payment->details, true)['amount'])
-                                                    ? get_taka_icon() . number_format(ceil(json_decode($payment->details, true)['amount']))
-                                                    : '--' !!}
+                                                <td>{{ $payment->transaction_id}}</td>
+                                                <td>{!! get_taka_icon(). number_format(ceil($payment->amount),2) !!}
                                                 </td>
                                                 <td><span
                                                         class="{{ $payment->statusBg() }}">{{ $payment->statusTitle() }}</span>
