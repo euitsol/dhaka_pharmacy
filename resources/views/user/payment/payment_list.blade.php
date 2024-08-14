@@ -72,7 +72,8 @@
                                         <div class="col-4 text-end">
                                             <div class="order-status">
                                                 <div class="btn p-0">
-                                                    <a href="{{ route('u.payment.details',$payment->encrypted_id) }}">{{ __('Details') }}</a>
+                                                    <a
+                                                        href="{{ route('u.payment.details', $payment->encrypted_id) }}">{{ __('Details') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -97,6 +98,7 @@
         const myDatas = {
             'filter': `{{ $filterValue }}`,
             'url': `{{ route('u.payment.list', ['filter' => 'filter_value', 'page' => '1']) }}`,
+            'details_url': `{{ route('u.payment.details', ['param']) }}`,
         };
     </script>
     <script src="{{ asset('user/asset/js/payment_list.js') }}"></script>
