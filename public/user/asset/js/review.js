@@ -108,7 +108,7 @@ $(document).ready(function () {
                 var result = "";
                 var products = data.products.data;
                 if (products.length === 0) {
-                    result = `<h3 class="my-5 text-danger text-center">{{ __('Product Not Found For Review') }}</h3>`;
+                    result = `<h3 class="my-5 text-danger text-center">Product Not Found For Review</h3>`;
                 } else {
                     result = getHtml(products);
                 }
