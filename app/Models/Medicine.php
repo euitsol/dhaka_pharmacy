@@ -38,6 +38,11 @@ class Medicine extends BaseModel
     {
         return $this->hasMany(Review::class, 'product_id', 'id');
     }
+    public function self_review()
+    {
+        return $this->hasOne(Review::class, 'product_id', 'id')
+            ->where('customer_id', auth()->id());
+    }
 
     public function wish()
     {
@@ -113,5 +118,4 @@ class Medicine extends BaseModel
     {
         return $query->where('pro_sub_cat_id', $scategoryId);
     }
-
 }
