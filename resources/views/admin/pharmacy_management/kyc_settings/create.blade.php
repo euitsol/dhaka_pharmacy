@@ -47,7 +47,7 @@
                                                             value="{{ $data['field_name'] }}" required>
 
                                                         <select name="formdata[{{ $count }}][type]"
-                                                            class="form-control form-data">
+                                                            class="form-control form-data no-select">
                                                             <option value="text"
                                                                 {{ $data['type'] == 'text' ? 'selected' : '' }}>
                                                                 {{ trans('Input Text') }}</option>
@@ -84,7 +84,7 @@
                                                         </select>
 
                                                         <select name="formdata[{{ $count }}][required]"
-                                                            class="form-control  ">
+                                                            class="form-control no-select">
                                                             <option value="required"
                                                                 {{ $data['required'] == 'required' ? 'selected' : '' }}>
                                                                 {{ trans('Required') }}</option>
@@ -92,13 +92,10 @@
                                                                 {{ $data['required'] == 'nullable' ? 'selected' : '' }}>
                                                                 {{ trans('Optional') }}</option>
                                                         </select>
-
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-danger delete_desc" type="button"
-                                                                style=" margin-top: 0px; padding-bottom: 8px;">
-                                                                <i class="fa fa-times"></i>
-                                                            </button>
-                                                        </span>
+                                                        <button class="btn btn-danger delete_desc" type="button"
+                                                            style=" margin-top: 0px; padding-bottom: 8px;">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
                                                 @php
@@ -159,7 +156,7 @@
                                 <div class="input-group">
                                     <input name="formdata[${count}][field_name]" class="form-control " type="text" value="" required placeholder="{{ trans('Field Name') }}">
 
-                                    <select name="formdata[${count}][type]"  class="form-control form-data">
+                                    <select name="formdata[${count}][type]"  class="form-control form-data no-select">
                                         <option value="text">{{ trans('Input Text') }}</option>
                                         <option value="number">{{ trans('Input Number') }}</option>
                                         <option value="url">{{ trans('Input URL') }}</option>
@@ -173,16 +170,14 @@
                                         <option value="file_multiple">{{ trans('File Multiple') }}</option>
                                     </select>
 
-                                    <select name="formdata[${count}][required]"  class="form-control  ">
+                                    <select name="formdata[${count}][required]"  class="form-control no-select">
                                         <option value="required">{{ trans('Required') }}</option>
                                         <option value="nullable">{{ trans('Optional') }}</option>
                                     </select>
 
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-danger delete_desc" type="button" style=" margin-top: 0px; padding-bottom: 8px;">
-                                            <i class="fa fa-times"></i>
-                                        </button>
-                                    </span>
+                                    <button class="btn btn-danger delete_desc" type="button" style=" margin-top: 0px; padding-bottom: 8px;">
+                                        <i class="fa fa-times"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="form-group select_option" style="display:none">

@@ -157,7 +157,7 @@
                                 <div class="input-group">
                                     <input name="formdata[${count}][field_name]" class="form-control " type="text" value="" required placeholder="{{ trans('Field Name') }}">
 
-                                    <select name="formdata[${count}][type]"  class="form-control form-data">
+                                    <select name="formdata[${count}][type]"  class="form-control form-data no-select">
                                         <option value="text">{{ trans('Input Text') }}</option>
                                         <option value="number">{{ trans('Input Number') }}</option>
                                         <option value="url">{{ trans('Input URL') }}</option>
@@ -171,7 +171,7 @@
                                         <option value="file_multiple">{{ trans('File Multiple') }}</option>
                                     </select>
 
-                                    <select name="formdata[${count}][required]"  class="form-control  ">
+                                    <select name="formdata[${count}][required]"  class="form-control no-select">
                                         <option value="required">{{ trans('Required') }}</option>
                                         <option value="nullable">{{ trans('Optional') }}</option>
                                     </select>
