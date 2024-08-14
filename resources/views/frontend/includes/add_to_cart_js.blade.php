@@ -4,6 +4,7 @@
         $(document).on('click', '.add_to_card .cart-btn', function() {
             let product_slug = $(this).data('product_slug');
             let unit_id = $(this).data('unit_id');
+            let quantity = $(this).data('quantity');
             let url = routes.cart_add;
 
             $.ajaxSetup({
@@ -18,7 +19,8 @@
                 dataType: 'json',
                 data: {
                     'slug': product_slug,
-                    'unit': unit_id ? unit_id : null
+                    'unit': unit_id ? unit_id : null,
+                    'quantity': quantity ? quantity : 1,
                 },
                 success: function(response) {
                     if (response.success) {

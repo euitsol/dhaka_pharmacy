@@ -1,7 +1,7 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine'])
 @section('title', 'Edit Product')
 @section('content')
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -9,7 +9,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif --}}
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
             <form method="POST" action="{{ route('product.medicine.medicine_edit', $medicine->id) }}"

@@ -34,7 +34,7 @@
                                                             <div class="row align-items-center">
                                                                 <div class="col-8">
                                                                     <div class="item_price_wrap">`;
-                        if (product.discountPrice != product.price) {
+                        if (product.discounted_price != product.price) {
                             result += `
                                                         <h4 class="text-start item_regular_price price"> <del
                                                                 class="text-danger">{!! get_taka_icon() !!}${ numberFormat(product.price, 2)}</del>
@@ -43,7 +43,7 @@
                         };
                         result += `
                                                         <h4 class="text-start item_price price"> <span>
-                                                                {!! get_taka_icon() !!}${numberFormat(product.discountPrice, 2)}</span>
+                                                                {!! get_taka_icon() !!}${numberFormat(product.discounted_price, 2)}</span>
                                                         </h4>
                                                     </div>
                                                 </div>
@@ -56,13 +56,12 @@
                                                         class="details_btn">Details</a>
                                                 </div>
                                                 <div class="col-6 ps-1 mt-2">
-                                                    <form action="{{ route('u.ck.product.single_order') }}" method="POST">
-                                                        @csrf
-                                                        <input type="hidden" name="slug" value="${product.slug}">
-                                                        <input type="hidden" name="unit_id"
-                                                            value="${product.units[0].id}">
-                                                        <input type="submit" class="order_btn" value="Order Now">
-                                                    </form>
+                                                    <div class="add_to_card">
+                                                        <a class="cart-btn order_btn" href="javascript:void(0)"
+                                                            data-product_slug="${ wish.product.slug }"
+                                                            data-unit_id="${ wish.product.units[0]['id'] }">
+                                                            Add To Cart</a>
+                                                    </div>
                                                 </div>
                                             </div>
 

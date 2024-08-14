@@ -176,8 +176,11 @@
 
 @push('js')
     <script>
-        if (`{{ $errors->any() }}`) {
-            toastr.error(`{{ $errors->first() }}`);
+        let errors = {!! json_encode($errors->all()) !!};
+        if (errors.length > 0) {
+            errors.forEach(function(error) {
+                toastr.error(error);
+            });
         }
     </script>
     <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>

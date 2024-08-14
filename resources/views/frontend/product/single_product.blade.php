@@ -72,18 +72,19 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <form action="{{ route('u.ck.product.single_order') }}" method="POST">
+                                            <form action="{{ route('u.ck.init') }}" id="single_order_form" method="POST">
                                                 @csrf
                                                 <div class="product_content">
                                                     <h1>{{ __($single_product->name) }} </h1>
-                                                    <input type="hidden" name="slug"
-                                                        value="{{ $single_product->slug }}">
+                                                    {{-- <input type="hidden" name="slug"
+                                                        value="{{ $single_product->slug }}"> --}}
+                                                    <input type="hidden" name="product" value="{{ $single_product->id }}">
                                                     <p>{{ __($single_product->pro_sub_cat->name) }}</p>
                                                     <p>{{ __($single_product->generic->name) }}</p>
                                                     <p>{{ __($single_product->company->name) }}</p>
 
 
-                                                    <div class="product_price mt-4">
+                                                    <div class="product_price mt-3">
                                                         @if ($singleProDisPrice != $single_product->price)
                                                             <p><del class="text-danger">{{ __('MRP Tk') }} <span
                                                                         class="total_regular_price">{{ __(number_format($single_product->price, 2)) }}</span></del>
@@ -95,26 +96,49 @@
                                                                     class="total_price">{{ __(number_format($singleProDisPrice, 2)) }}
                                                                 </span></strong> /<span
                                                                 class="unit_name">{{ __('piece') }}</span> </p>
-                                                        <div class="form-group my-4 boxed">
-                                                            @foreach ($single_product->units as $key => $unit)
-                                                                <input type="radio" value="{{ $unit->id }}"
-                                                                    name="unit_id" data-id="{{ $unit->id }}"
-                                                                    data-name="{{ $unit->name }}"
-                                                                    @if ($key == 0) checked @endif
-                                                                    class="item_quantity" id="android-{{ $key }}"
-                                                                    name="data"
-                                                                    data-total_price="{{ $singleProDisPrice * $unit->quantity }}"
-                                                                    data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
-                                                                <label for="android-{{ $key }}">
-                                                                    <img src="{{ storage_url($unit->image) }}"
-                                                                        title="{{ $unit->name }}">
-                                                                </label>
-                                                            @endforeach
+
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <div class="form-group my-4 boxed">
+                                                                @foreach ($single_product->units as $key => $unit)
+                                                                    <input type="radio" value="{{ $unit->id }}"
+                                                                        name="unit_id" data-id="{{ $unit->id }}"
+                                                                        data-name="{{ $unit->name }}"
+                                                                        @if ($key == 0) checked @endif
+                                                                        class="item_quantity"
+                                                                        id="android-{{ $key }}" name="data"
+                                                                        data-total_price="{{ $singleProDisPrice * $unit->quantity }}"
+                                                                        data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
+                                                                    <label for="android-{{ $key }}">
+                                                                        <img src="{{ storage_url($unit->image) }}"
+                                                                            title="{{ $unit->name }}">
+                                                                    </label>
+                                                                @endforeach
+                                                            </div>
+                                                            <div class="sp_quantity w-25">
+                                                                <div class="form-group">
+                                                                    <div class="input-group" role="group">
+                                                                        <a href="javascript:void(0)"
+                                                                            class="btn btn-sm minus_qty disabled">
+                                                                            <i class="fa-solid fa-minus"></i>
+                                                                        </a>
+                                                                        <input type="text"
+                                                                            class="form-control text-center quantity_input"
+                                                                            name="quantity" value="1">
+                                                                        <a href="javascript:void(0)"
+                                                                            class="btn btn-sm plus_qty">
+                                                                            <i class="fa-solid fa-plus"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
+
+
                                                     <div class="add_to_card">
                                                         <a class="cart-btn" href="javascript:void(0)"
                                                             data-product_slug="{{ $single_product->slug }}"
+                                                            data-quantity="1"
                                                             data-unit_id="{{ $single_product->units[0]['id'] }}">
                                                             <i class="fa-solid fa-cart-plus"></i>
                                                             {{ __('Add to Cart') }}</a>
@@ -409,7 +433,15 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js">
     </script>
     <script type="text/javascript" src="{{ asset('frontend/plugin/xzoom/xzoom.min.js') }}"></script>
+    <script src="{{ asset('frontend/asset/js/single_product.js') }}"></script>
 @endpush
 @push('js')
-    <script src="{{ asset('frontend/asset/js/single_product.js') }}"></script>
+    <script>
+        let errors = {!! json_encode($errors->all()) !!};
+        if (errors.length > 0) {
+            errors.forEach(function(error) {
+                toastr.error(error);
+            });
+        }
+    </script>
 @endpush
