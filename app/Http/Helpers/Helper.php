@@ -10,6 +10,7 @@ use App\Models\SiteSetting;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 
@@ -17,7 +18,24 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 function get_permission_routes()
 {
     return [
-        'am.', 'um.', 'pm.', 'pm.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.', 'om.', 'withdraw_method.', 'withdraw.'
+        'am.',
+        'um.',
+        'pm.',
+        'pm.',
+        'rm.',
+        'opa.',
+        'do.',
+        'pym.',
+        'push.',
+        'settings.',
+        'dm_management.',
+        'lam_management.',
+        'product.',
+        'payment_gateway.',
+        'obp.',
+        'om.',
+        'withdraw_method.',
+        'withdraw.'
     ];
 }
 
@@ -592,4 +610,16 @@ function formatPhoneNumber($phone)
 {
     $phone = ltrim($phone, '0');
     return '+880 ' . substr($phone, 0, 5) . '-' . substr($phone, 5);
+}
+
+function isFilePath($pathString)
+{
+    return Storage::exists('public/' . $pathString) || file_exists('public/' . $pathString) || preg_match('/\.(jpg|jpeg|png|gif|pdf|doc|docx|xls|xlsx|zip|rar)$/i', $pathString);
+}
+
+function isImage($path)
+{
+    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'];
+    $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    return in_array($extension, $imageExtensions);
 }

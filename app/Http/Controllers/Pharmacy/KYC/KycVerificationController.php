@@ -30,6 +30,7 @@ class KycVerificationController extends Controller
 
     public function kyc_store(Request $request)
     {
+        // dd($request->all());
         $kyc_setting = KycSetting::where('type', 'pharmacy')->activated()->first();
         $submitted_kyc = SubmittedKyc::where('type', 'pharmacy')->where('creater_id', pharmacy()->id)->where('creater_type', get_class(pharmacy()))->first();
         if ($submitted_kyc && ($submitted_kyc->status === 1 || $submitted_kyc->status === 0)) {
@@ -79,6 +80,16 @@ class KycVerificationController extends Controller
                     array_push($rules[$fd->field_key], 'url');
 
                     $data[$fd->field_key] = $request->$input_name;
+                } elseif ($fd->type == 'date') {
+                    if ($fd->required == 'required') {
+                        array_push($rules[$fd->field_key], 'required');
+                    } else {
+                        array_push($rules[$fd->field_key], 'nullable');
+                    }
+                    array_push($rules[$fd->field_key], 'before:today');
+                    array_push($rules[$fd->field_key], 'date');
+
+                    $data[$fd->field_key] = $request->$input_name;
                 } elseif ($fd->type == 'textarea') {
                     if ($fd->required == 'required') {
                         array_push($rules[$fd->field_key], 'required');
@@ -89,7 +100,9 @@ class KycVerificationController extends Controller
                     $data[$fd->field_key] = $request->$input_name;
                 } elseif ($fd->type == 'image') {
                     if ($fd->required == 'required') {
-                        array_push($rules[$fd->field_key], 'required');
+                        if (!isset($saved_data->$input_name)) {
+                            array_push($rules[$fd->field_key], 'required');
+                        }
                     } else {
                         array_push($rules[$fd->field_key], 'nullable');
                     }
@@ -116,7 +129,9 @@ class KycVerificationController extends Controller
                     }
                 } elseif ($fd->type == 'image_multiple') {
                     if ($fd->required == 'required') {
-                        array_push($rules[$fd->field_key], 'required');
+                        if (!isset($saved_data->$input_name)) {
+                            array_push($rules[$fd->field_key], 'required');
+                        }
                     } else {
                         array_push($rules[$fd->field_key], 'nullable');
                     }
@@ -143,6 +158,17 @@ class KycVerificationController extends Controller
                         return back()->withInput();
                     }
                 } elseif ($fd->type == 'file_single') {
+                    if ((isset($saved_data->$input_name) && empty($saved_data->$input_name)) || !isset($saved_data->$input_name)) {
+                        $rules[$fd->field_key . '.url'] = [];
+                        $rules[$fd->field_key . '.title'] = [];
+                        if ($fd->required == 'required') {
+                            array_push($rules[$fd->field_key . '.url'], 'required');
+                        } else {
+                            array_push($rules[$fd->field_key . '.url'], 'nullable');
+                        }
+                        array_push($rules[$fd->field_key . '.title'], 'nullable');
+                        array_push($rules[$fd->field_key . '.title'], 'string');
+                    }
                     if (isset($request->$input_name['url']) && Storage::exists($request->$input_name['url'])) {
 
                         if (isset($saved_data->$input_name) && !empty($saved_data->$input_name)) {
@@ -172,7 +198,39 @@ class KycVerificationController extends Controller
                             $data[$fd->field_key] = $saved_data->$input_name;
                         }
                     }
-                } elseif ($fd->type == 'file_multiple') {
+                }elseif ($fd->type == 'email') {
+                    if ($fd->required == 'required') {
+                        array_push($rules[$fd->field_key], 'required');
+                    } else {
+                        array_push($rules[$fd->field_key], 'nullable');
+                    }
+
+                    array_push($rules[$fd->field_key], 'email');
+
+                    $data[$fd->field_key] = $request->$input_name;
+                } elseif ($fd->type == 'option') {
+                    if ($fd->required == 'required') {
+                        array_push($rules[$fd->field_key], 'required');
+                    } else {
+                        array_push($rules[$fd->field_key], 'nullable');
+                    }
+                    $values = implode(',', array_keys((array)$fd->option_data));
+                    array_push($rules[$fd->field_key], 'in:' . $values);
+
+                    $data[$fd->field_key] = $request->$input_name;
+                }elseif ($fd->type == 'file_multiple') {
+                    if ((isset($saved_data->$input_name) && empty($saved_data->$input_name)) || !isset($saved_data->$input_name) ) {
+                        $rules[$fd->field_key . '.*.url'] = [];
+                        $rules[$fd->field_key . '.*.title'] = [];
+                        if ($fd->required == 'required') {
+                            array_push($rules[$fd->field_key . '.*.url'], 'required');
+                        } else {
+                            array_push($rules[$fd->field_key . '.*.url'], 'nullable');
+                        }
+                        array_push($rules[$fd->field_key . '.*.title'], 'nullable');
+                        array_push($rules[$fd->field_key . '.*.title'], 'string');
+                    }
+                    $this->validate($request, $rules);
                     $paths = [];
 
                     if (isset($request->$input_name) && !empty($request->$input_name)) {
@@ -215,30 +273,10 @@ class KycVerificationController extends Controller
                             }
                         }
                     }
-                } elseif ($fd->type == 'email') {
-                    if ($fd->required == 'required') {
-                        array_push($rules[$fd->field_key], 'required');
-                    } else {
-                        array_push($rules[$fd->field_key], 'nullable');
-                    }
-
-                    array_push($rules[$fd->field_key], 'email');
-
-                    $data[$fd->field_key] = $request->$input_name;
-                } elseif ($fd->type == 'option') {
-                    if ($fd->required == 'required') {
-                        array_push($rules[$fd->field_key], 'required');
-                    } else {
-                        array_push($rules[$fd->field_key], 'nullable');
-                    }
-                    $values = implode(',', array_keys((array)$fd->option_data));
-                    array_push($rules[$fd->field_key], 'in:' . $values);
-
-                    $data[$fd->field_key] = $request->$input_name;
                 }
             }
         }
-        $this->validate($request, $rules);
+        // $this->validate($request, $rules);
         if ($submitted_kyc) {
             $submitted_kyc->type = 'pharmacy';
             $submitted_kyc->creater()->associate(pharmacy());
