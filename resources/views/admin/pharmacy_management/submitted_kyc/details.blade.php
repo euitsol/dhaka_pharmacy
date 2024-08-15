@@ -123,6 +123,7 @@
                                         </tr>
                                     @endif
                                     @if ($form_data['type'] == 'date')
+                                    
                                         <tr>
                                             <th>{{ $form_data['field_name'] }}</th>
                                             <th>:</th>
@@ -138,9 +139,9 @@
                                             <th>{{ $form_data['field_name'] }}</th>
                                             <th>:</th>
                                             <td>
+                                                
                                                 @if (isset($save_datas[$form_data['field_key']]))
-                                                    <span
-                                                        class="badge {{ $save_datas[$form_data['field_key']] == 1 ? 'badge-success' : 'badge-info' }}">{{ $save_datas[$form_data['field_key']] == 1 ? 'True' : 'False' }}</span>
+                                                    {{$form_data['option_data'][$save_datas[$form_data['field_key']]]}}
                                                 @endif
                                             </td>
                                         </tr>

@@ -37,7 +37,7 @@ class PharmacyKycSettingsController extends Controller
             ['type' => 'pharmacy'],
             [
                 'status' => $status,
-                'form_data' => json_encode($data),
+                'form_data' => json_encode($data,JSON_FORCE_OBJECT),
             ]
         );
         flash()->addSuccess('KYC settings updated successfully.');
@@ -75,10 +75,9 @@ class PharmacyKycSettingsController extends Controller
             if (count($parts) === 2) {
                 $key = trim($parts[0]);
                 $value = trim($parts[1]);
-                $optionsArray[$key] = $value;
+                $optionsArray[strval($key)] = $value;
             }
         }
-
         return $optionsArray;
     }
 }
