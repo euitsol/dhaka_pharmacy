@@ -3,12 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\AddToCart;
-use App\Models\MedicineUnit;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
 use App\Http\Traits\TransformProductTrait;
 use App\Models\WishList;
 

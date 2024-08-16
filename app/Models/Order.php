@@ -102,8 +102,12 @@ class Order extends BaseModel
                 return 'badge bg-danger';
             case 4:
                 return 'badge bg-success';
+            case 5:
+                return 'badge bg-success';
+            case 6:
+                return 'badge bg-success';
             default:
-                return 'badge bg-primary';
+                return 'badge bg-dark';
         }
     }
 
@@ -120,14 +124,13 @@ class Order extends BaseModel
                 return 'Waiting-for-rider';
             case 4:
                 return 'Assigned';
-            case -1:
-                return 'Failed';
-            case -2:
-                return 'Cancel';
-            case -3:
-                return 'Distributed';
+            case 5:
+                return 'Picked up';
+            case 6:
+                return 'Delivered';
+
             default:
-                return 'Processing';
+                return 'Not-defined';
         }
     }
     public function orderType()

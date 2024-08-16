@@ -29,9 +29,9 @@ class OrderManagementController extends Controller
 
     public function __construct()
     {
-        return $this->middleware('admin');
+        $this->middleware('admin');
     }
-    public function index($status): View
+    public function index($status): View|RedirectResponse
     {
         $data['status'] = ucfirst($status);
         $data['statusBgColor'] = $this->getOrderStatusBgColor($status);
@@ -45,7 +45,7 @@ class OrderManagementController extends Controller
                     );
                 return view('admin.order_management.index', $data);
             case 'submitted':
-                $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od')->status($status)->latest()->get()
+                $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od',)->status($status)->latest()->get()
                     ->each(
                         function (&$order) {
                             $this->calculateOrderTotalDiscountPrice($order);
@@ -53,7 +53,7 @@ class OrderManagementController extends Controller
                     );
                 return view('admin.order_management.index', $data);
             case 'processed':
-                $data['dos'] = OrderDistribution::with(['order.products', 'odps'])
+                $data['dos'] = OrderDistribution::with(['order.products', 'odps', 'creater'])
                     ->withCount(['odps' => function ($query) {
                         $query->where('status', '!=', -1);
                     }])
@@ -65,7 +65,7 @@ class OrderManagementController extends Controller
                     });
                 return view('admin.distributed_order.index', $data);
             case 'waiting-for-rider':
-                $data['dos'] = OrderDistribution::with(['order','order.products', 'odps'])
+                $data['dos'] = OrderDistribution::with(['order','order.products','order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'odps', 'creater'])
                     ->withCount(['odps' => function ($query) {
                         $query->where('status', '!=', -1);
                     }])
@@ -79,7 +79,7 @@ class OrderManagementController extends Controller
                     });
                 return view('admin.distributed_order.index', $data);
             case 'assigned':
-                $data['dos'] = OrderDistribution::with(['order.products', 'odps', 'odrs.rider'])
+                $data['dos'] = OrderDistribution::with(['order','order.products','order.products.units', 'order.products.discounts', 'order.products.pivot.unit','assignedRider', 'assignedRider.rider', 'creater'])
                     ->withCount(['odps' => function ($query) {
                         $query->where('status', '!=', -1);
                     }])
@@ -91,9 +91,22 @@ class OrderManagementController extends Controller
                         $this->calculateOrderTotalDiscountPrice($do->order);
                     });
                 return view('admin.distributed_order.index', $data);
-
+            case 'delivered':
+                $data['dos'] = OrderDistribution::with(['order','order.products','order.products.units', 'order.products.discounts', 'order.products.pivot.unit','assignedRider', 'assignedRider.rider', 'creater'])
+                ->withCount(['odps' => function ($query) {
+                    $query->where('status', '!=', -1);
+                }])
+                ->whereHas('order', function ($query) {
+                    $query->where('status', 6);
+                })
+                ->latest()->get()
+                ->each(function (&$do) {
+                    $this->calculateOrderTotalDiscountPrice($do->order);
+                });
+                return view('admin.distributed_order.index', $data);
             default:
-                break;
+                flash()->addError('Something went wrong');
+                return redirect()->back();
         }
     }
     public function details($id): View
@@ -236,9 +249,10 @@ class OrderManagementController extends Controller
         $do->update(['status' => 3, 'rider_collect_time' => Carbon::now()->addMinutes($req->pick_up_time)->toDateTimeString(), 'rider_delivery_time' =>Carbon::now()->addMinutes($req->pick_up_time + $interval_time + $req->delivery_time)->toDateTimeString()]);
         $do->order->update(['status' => 4]);
 
+        //Delivery OTP
         $this->generateDeliveryOtp([
             'order_distribution_id' => $do_id,
-            'user_id' => $do->order->customer->id,
+            'rider_id' => $do_rider->rider_id,
         ]);
 
         flash()->addSuccess('Rider ' . $do_rider->rider->name . ' assigned succesfully.');

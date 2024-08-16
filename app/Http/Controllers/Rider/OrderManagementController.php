@@ -24,7 +24,7 @@ class OrderManagementController extends Controller
     use TransformOrderItemTrait;
     public function __construct()
     {
-        return $this->middleware('rider');
+        $this->middleware('rider');
     }
 
     public function index($status): View
@@ -82,18 +82,19 @@ class OrderManagementController extends Controller
 
     public function uOtpVerify(Request $request): RedirectResponse
     {
-        dd($request->all());
-        $od = OrderDistribution::findOrFail($request->od);
-        $otp = $od->active_otps->where('rider_id', rider()->id)->first();
+        $od = OrderDistribution::findOrFail(decrypt($request->od));
+        $otp = $od->delivery_active_otps->where('rider_id', rider()->id)->first();
         $reqOtp = implode('', $request->otp);
 
         if (!empty($otp) && $otp->otp == $reqOtp) {
             DB::transaction(function () use ($od, $otp) {
-                $od->status = 4; // rider picked up
+                $od->status = 5; // rider delivered
                 $od->save();
 
-                $od->order->status = 5; //picked up
+                $od->order->status = 6; //delivered
                 $od->order->save();
+
+                $od->odps()->update(['status' => 3]);
 
                 $otp->status = 2; //verified
                 $otp->save();
@@ -101,7 +102,7 @@ class OrderManagementController extends Controller
                 if ($od->assignedRider) {
                     $assignedRider = $od->assignedRider->first();
                     if ($assignedRider) {
-                        $assignedRider->status = 2; // picked up
+                        $assignedRider->status = 3; // picked up
                         $assignedRider->save();
                     }
                 }
