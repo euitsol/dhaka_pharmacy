@@ -37,10 +37,12 @@
     </style>
 @endpush
 
-
+@php
+    $submitted_kyc = $kyc->p_submitted_kyc;
+@endphp
 @section('content')
     <div class="row">
-        <div class="{{ isset($datas->status) && $datas->status !== null ? 'col-12' : 'col-8' }}">
+        <div class="{{ !empty($submitted_kyc) &&  $submitted_kyc->status !== -1 ? 'col-12' : 'col-8' }}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -48,43 +50,40 @@
                             <h5 class="card-title">{{ __('KYC Verification Center') }}</h5>
                         </div>
                         <div class="col-4 text-right">
-                            @if (!empty($datas) && $datas->status === 1)
-                                <span class="badge badge-success">{{ __('Varified') }}</span>
-                            @elseif(!empty($datas) && $datas->status === 0)
+                            @if(!empty($submitted_kyc))
+                                @if ($submitted_kyc->status === 1)
+                                    <span class="badge badge-success">{{ __('Varified') }}</span>
+                                @elseif($submitted_kyc->status === 0)
+                                    <span class="badge badge-info">{{ __('Pending') }}</span>
+                                @elseif($submitted_kyc->status === -1)
+                                    <span class="badge badge-danger">{{ __('Declined') }}</span>
+                                @endif
+                            @else
                                 <span class="badge badge-info">{{ __('Pending') }}</span>
-                            @elseif(!empty($datas) && $datas->status === null)
-                                <span class="badge badge-danger">{{ __('Declined') }}</span>
-                            @elseif(empty($datas))
-                                <span class="badge badge-warning">{{ __('Empty') }}</span>
                             @endif
                         </div>
-                        @if (!empty($datas) && $datas->status === null)
+                        @if (!empty($submitted_kyc) && $submitted_kyc->status === -1)
                             <div class="col-12">
-                                <strong class="text-danger">{{ __('Declined Reason: ') }}</strong>{!! $datas->note !!}
+                                <strong class="text-danger">{{ __('Declined Reason: ') }}</strong>{!! $submitted_kyc->note !!}
                             </div>
                         @endif
                     </div>
                 </div>
                 @php
-                    if (isset($datas->status) && $datas->status !== null) {
-                        $disabled = true;
-                    } else {
-                        $disabled = false;
-                    }
+                    $disabled = (!empty($submitted_kyc) && $submitted_kyc->status !== -1) ? true : false;
                 @endphp
-                @if (isset($datas->status) && $datas->status == 1)
+                @if (!empty($submitted_kyc) && $submitted_kyc->status == 1)
                     <div class="kyc_varified text-center" style="height: 85vh">
                         <img src="{{ asset('default_img/kyc_varified.svg') }}" width="25%" class="py-5" alt="">
                     </div>
                 @else
-                    @if (isset($details->form_data))
+                    @if (isset($kyc->form_data))
                         <form method="POST" action="{{ route('pharmacy.kyc.store') }}" autocomplete="off"
-                            enctype="multipart/form-data" disabled>
-
-
+                            enctype="multipart/form-data">
                             @csrf
+
                             <div class="card-body">
-                                @foreach (json_decode($details->form_data) as $k => $fd)
+                                @foreach (json_decode($kyc->form_data) as $k => $fd)
                                     @php
                                         $a = $fd->field_key;
                                         $count = 0;
@@ -99,7 +98,7 @@
                                                 <input {{ $disabled ? 'disabled' : '' }} type="text"
                                                     name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
                                                     class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
-                                                    value="{{ isset($datas->submitted_data) && isset(json_decode($datas->submitted_data)->$a) ? json_decode($datas->submitted_data)->$a : old($fd->field_key) }}">
+                                                    value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
                                                 @include('alerts.feedback', ['field' => $fd->field_key])
                                             </div>
                                     @elseif($fd->type == 'number')
@@ -111,7 +110,7 @@
                                                 <input {{ $disabled ? 'disabled' : '' }} type="number"
                                                     name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
                                                     class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
-                                                    value="{{ isset($datas->submitted_data) && isset(json_decode($datas->submitted_data)->$a) ? json_decode($datas->submitted_data)->$a : old($fd->field_key) }}">
+                                                    value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
                                                 @include('alerts.feedback', ['field' => $fd->field_key])
                                             </div>
                                     @elseif($fd->type == 'url')
@@ -123,7 +122,7 @@
                                                 <input {{ $disabled ? 'disabled' : '' }} type="url"
                                                     name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
                                                     class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
-                                                    value="{{ isset($datas->submitted_data) && isset(json_decode($datas->submitted_data)->$a) ? json_decode($datas->submitted_data)->$a : old($fd->field_key) }}">
+                                                    value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
                                                 @include('alerts.feedback', ['field' => $fd->field_key])
                                             </div>
                                     @elseif($fd->type == 'date')
@@ -135,7 +134,7 @@
                                                 <input {{ $disabled ? 'disabled' : '' }} type="date"
                                                     name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
                                                     class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
-                                                    value="{{ isset($datas->submitted_data) && isset(json_decode($datas->submitted_data)->$a) ? json_decode($datas->submitted_data)->$a : old($fd->field_key) }}">
+                                                    value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
                                                 @include('alerts.feedback', ['field' => $fd->field_key])
                                             </div>
                                     @elseif($fd->type == 'textarea')
@@ -145,7 +144,7 @@
                                                     <span class="text-danger">*</span>
                                                 @endif
                                                 <textarea {{ $disabled ? 'disabled' : '' }} name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
-                                                    class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}">{{ isset($datas->submitted_data) && isset(json_decode($datas->submitted_data)->$a) ? json_decode($datas->submitted_data)->$a : old($fd->field_key) }}</textarea>
+                                                    class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}">{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}</textarea>
                                                 @include('alerts.feedback', ['field' => $fd->field_key])
                                             </div>
                                     @elseif($fd->type == 'image')
@@ -157,18 +156,18 @@
                                                 <input {{ $disabled ? 'disabled' : '' }} type="file" accept="image/*"
                                                     name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
                                                     class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }} image-upload"
-                                                    @if (isset($datas->submitted_data) &&
-                                                            isset(json_decode($datas->submitted_data)->$a) &&
-                                                            !empty(json_decode($datas->submitted_data))) data-existing-files="{{ storage_url(json_decode($datas->submitted_data)->$a) }}"
+                                                    @if (isset($submitted_kyc->submitted_data) &&
+                                                            isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                            !empty(json_decode($submitted_kyc->submitted_data))) data-existing-files="{{ storage_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
                                         data-delete-url="{{ route('pharmacy.kyc.file.delete', [$details->id, $a]) }}" @endif>
                                                 @include('alerts.feedback', ['field' => $fd->field_key])
                                             </div>
                                     @elseif($fd->type == 'image_multiple')
-                                            @if (isset($datas->submitted_data) &&
-                                                    isset(json_decode($datas->submitted_data)->$a) &&
-                                                    !empty(json_decode($datas->submitted_data)))
+                                            @if (isset($submitted_kyc->submitted_data) &&
+                                                    isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                    !empty(json_decode($submitted_kyc->submitted_data)))
                                                 @php
-                                                    $data = collect(json_decode($datas->submitted_data, true)[$a]);
+                                                    $data = collect(json_decode($submitted_kyc->submitted_data, true)[$a]);
                                                     $result = '';
                                                     if (!empty($data)) {
                                                         $itemCount = count($data);
@@ -196,9 +195,9 @@
                                                     name="{{ $fd->field_key }}[]" id="{{ $fd->field_key }}"
                                                     class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }} image-upload"
                                                     multiple
-                                                    @if (isset($datas->submitted_data) &&
-                                                            isset(json_decode($datas->submitted_data)->$a) &&
-                                                            !empty(json_decode($datas->submitted_data))) data-existing-files="{{ storage_url($data) }}"
+                                                    @if (isset($submitted_kyc->submitted_data) &&
+                                                            isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                            !empty(json_decode($submitted_kyc->submitted_data))) data-existing-files="{{ storage_url($data) }}"
                                                 data-delete-url="{{ $result }}" @endif>
                                                 @include('alerts.feedback', ['field' => $fd->field_key])
 
@@ -233,19 +232,19 @@
                                                 </div>
 
                                                 <div class="show_file">
-                                                    @if (isset($datas->submitted_data) &&
-                                                            isset(json_decode($datas->submitted_data)->$a) &&
-                                                            !empty(json_decode($datas->submitted_data)))
+                                                    @if (isset($submitted_kyc->submitted_data) &&
+                                                            isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                            !empty(json_decode($submitted_kyc->submitted_data)))
                                                         <div class="form-group">
                                                             <label>{{ _('Uploded file') }}</label>
                                                             <div class="input-group mb-3">
                                                                 <input {{ $disabled ? 'disabled' : '' }} type="text"
                                                                     class="form-control"
-                                                                    value="{{ file_title_from_url(json_decode($datas->submitted_data)->$a) }}"
+                                                                    value="{{ file_title_from_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
                                                                     disabled>
                                                                 <input {{ $disabled ? 'disabled' : '' }} type="text"
                                                                     class="form-control"
-                                                                    value="{{ file_name_from_url(json_decode($datas->submitted_data)->$a) }}"
+                                                                    value="{{ file_name_from_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
                                                                     disabled>
                                                                 @if (!$disabled)
                                                                     <a
@@ -289,9 +288,9 @@
                                                         name="" id="{{ $fd->field_key }}"
                                                         class="form-control fileInput {{ $disabled ? 'disabled' : '' }} {{ $errors->has($fd->field_key . '.*.url') ? 'is-invalid' : '' }}"
                                                         multiple
-                                                        @if (isset($datas->submitted_data) &&
-                                                                isset(json_decode($datas->submitted_data)->$a) &&
-                                                                !empty(json_decode($datas->submitted_data))) data-count="{{ collect(json_decode($datas->submitted_data)->$a)->count() }}" @else data-count="1" @endif>
+                                                        @if (isset($submitted_kyc->submitted_data) &&
+                                                                isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                                !empty(json_decode($submitted_kyc->submitted_data))) data-count="{{ collect(json_decode($submitted_kyc->submitted_data)->$a)->count() }}" @else data-count="1" @endif>
                                                 </div>
 
 
@@ -304,10 +303,10 @@
                                                 </div>
 
                                                 <div class="show_file">
-                                                    @if (isset($datas->submitted_data) &&
-                                                            isset(json_decode($datas->submitted_data)->$a) &&
-                                                            !empty(json_decode($datas->submitted_data)))
-                                                        @foreach (json_decode($datas->submitted_data)->$a as $url)
+                                                    @if (isset($submitted_kyc->submitted_data) &&
+                                                            isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                            !empty(json_decode($submitted_kyc->submitted_data)))
+                                                        @foreach (json_decode($submitted_kyc->submitted_data)->$a as $url)
                                                             @php
                                                                 $count += 1;
                                                             @endphp
@@ -358,7 +357,7 @@
                                                 <input {{ $disabled ? 'disabled' : '' }} type="email"
                                                     name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
                                                     class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}"
-                                                    value="{{ isset($datas->submitted_data) && isset(json_decode($datas->submitted_data)->$a) ? json_decode($datas->submitted_data)->$a : old($fd->field_key) }}">
+                                                    value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
                                                 @include('alerts.feedback', ['field' => $fd->field_key])
                                             </div>
                                     @elseif($fd->type == 'option')
@@ -372,9 +371,9 @@
                                                     class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}">
                                                     @foreach ($fd->option_data as $value => $label)
                                                         <option value="{{ $value }}"
-                                                            @if (isset($datas->submitted_data) &&
-                                                                    isset(json_decode($datas->submitted_data)->$a) &&
-                                                                    (json_decode($datas->submitted_data)->$a == $value || old($fd->field_key) == $value)) selected @endif>
+                                                            @if (isset($submitted_kyc->submitted_data) &&
+                                                                    isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                                    (json_decode($submitted_kyc->submitted_data)->$a == $value || old($fd->field_key) == $value)) selected @endif>
                                                             {{ $label }}
                                                         </option>
                                                     @endforeach
@@ -397,7 +396,7 @@
 
             </div>
         </div>
-        @if (!isset($datas->status) || (isset($datas->status) && $datas->status === null))
+        @if (!!empty($submitted_kyc) || $submitted_kyc->status === -1)
             <div class="col-md-4">
                 <div class="card card-user">
                     <div class="card-body">

@@ -46,7 +46,7 @@ class PharmacyKycController extends Controller
     {
         try {
             $data = SubmittedKyc::findOrFail($id);
-            $data->status = NULL;
+            $data->status = -1;
             $data->note = $req->note;
             $data->update();
             $data->creater->update(['kyc_status' => 0]);

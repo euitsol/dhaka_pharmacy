@@ -22,23 +22,19 @@ class KycVerificationController extends Controller
 
     public function kyc_verification()
     {
-        $data['details'] = KycSetting::where('type', 'pharmacy')->activated()->first();
-        $data['datas'] = SubmittedKyc::where('type', 'pharmacy')->where('creater_id', pharmacy()->id)->where('creater_type', get_class(pharmacy()))->first();
+        $data['kyc'] = KycSetting::activated()->with('p_submitted_kyc')->where('type', 'pharmacy')->first();
         return view('pharmacy.kyc_verification_center.index', $data);
     }
-
-
     public function kyc_store(Request $request)
     {
-        // dd($request->all());
-        $kyc_setting = KycSetting::where('type', 'pharmacy')->activated()->first();
-        $submitted_kyc = SubmittedKyc::where('type', 'pharmacy')->where('creater_id', pharmacy()->id)->where('creater_type', get_class(pharmacy()))->first();
-        if ($submitted_kyc && ($submitted_kyc->status === 1 || $submitted_kyc->status === 0)) {
-            flash()->addWarning('Data already submitted.');
+        $kyc = KycSetting::with('p_submitted_kyc')->where('type', 'pharmacy')->activated()->first();
+        $submitted_kyc = $kyc->p_submitted_kyc;
+        if (!empty($submitted_kyc) && ($submitted_kyc->status === 1 || $submitted_kyc->status === 0)) {
+            flash()->addWarning('Your KYC has already been submitted.');
             return redirect()->back();
         }
-        $params = json_decode($kyc_setting->form_data);
-        if ($submitted_kyc) {
+        $params = json_decode($kyc->form_data);
+        if (!empty($submitted_kyc)) {
             $saved_data = json_decode($submitted_kyc->submitted_data);
         }
         $rules = [];
@@ -276,20 +272,22 @@ class KycVerificationController extends Controller
                 }
             }
         }
-        // $this->validate($request, $rules);
-        if ($submitted_kyc) {
+        $this->validate($request, $rules);
+        if (!empty($submitted_kyc)) {
             $submitted_kyc->type = 'pharmacy';
             $submitted_kyc->creater()->associate(pharmacy());
             $submitted_kyc->submitted_data = json_encode($data);
+            $submitted_kyc->kyc_id = $kyc->id;
         } else {
             $submitted_kyc = new SubmittedKyc();
             $submitted_kyc->type = 'pharmacy';
             $submitted_kyc->creater()->associate(pharmacy());
             $submitted_kyc->submitted_data = json_encode($data);
+            $submitted_kyc->kyc_id = $kyc->id;
         }
         $submitted_kyc->status = 0;
         $submitted_kyc->save();
-        flash()->addSuccess('Data has been saved successfully.');
+        flash()->addSuccess('KYC has been successfully submitted.');
         return redirect()->back();
     }
 
