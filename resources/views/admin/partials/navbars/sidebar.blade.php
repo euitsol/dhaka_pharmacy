@@ -107,7 +107,7 @@
             {{-- Pharmacy Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['pm.'],
-                    'routes' => ['pharmacy_list', 'pharmacy_kyc_list', 'pharmacy_kyc_settings'],
+                    'routes' => ['pharmacy_list', 'pharmacy_kyc_list', 'p_kyc_list'],
                 ]))
                 <li>
                     <a class="@if (
@@ -153,7 +153,7 @@
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
-                                                'subRouteName' => 'pm.pharmacy_kyc.pharmacy_kyc_settings',
+                                                'subRouteName' => 'pm.pharmacy_kyc.settings.p_kyc_list',
                                                 'subPageSlug' => 'pharmacy_kyc_settings',
                                             ],
                                         ],

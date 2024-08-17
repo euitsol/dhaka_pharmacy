@@ -10,4 +10,8 @@ class SubmittedKyc extends BaseModel
 {
     use HasFactory, SoftDeletes;
     protected $table = 'submitted_kycs';
+
+    public function kyc(){
+        return $this->belongsTo(KycSetting::class,'kyc_id');
+    }
 }

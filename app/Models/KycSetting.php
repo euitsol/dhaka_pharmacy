@@ -12,6 +12,12 @@ class KycSetting extends BaseModel
     protected $fillable = [
         'type',
         'status',
-        'form_data'
+        'form_data',
+        'created_by',
+        'updated_by'
     ];
+
+    public function submitted_kycs(){
+        return $this->hasMany(SubmittedKyc::class,'kyc_id');
+    }
 }

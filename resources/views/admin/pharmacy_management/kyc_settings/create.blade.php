@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'pharmacy_kyc_settings'])
-@section('title', 'Pharmacy KYC Settings')
+@section('title', 'Create Pharmacy KCY')
 @push('css_link')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
 @endpush
@@ -9,16 +9,16 @@
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{ __('Pharmacy KYC Settings') }}</h5>
+                    <h5 class="title">{{ __('Create Pharmacy KYC') }}</h5>
                 </div>
-                <form method="POST" action="{{ route('pm.pharmacy_kyc.pharmacy_kyc_settings') }}" autocomplete="off">
+                <form method="POST" action="{{ route('pm.pharmacy_kyc.settings.p_kyc_create') }}" autocomplete="off">
                     @csrf
                     <div class="card-body">
 
                         <div class="form-group mb-3">
-                            <input type="checkbox" value="1" {{ optional($kyc_setting)->status == 1 ? 'checked' : '' }}
-                                class="valueToggle" name='status' data-toggle="toggle" data-onlabel="ON"
-                                data-offlabel="OFF" data-onstyle="success" data-offstyle="danger" data-style="ios">
+                            <input type="checkbox" value="1" {{ old('status') == 1 ? 'checked' : '' }}
+                                class="valueToggle" name='status' data-toggle="toggle" data-onlabel="Active"
+                                data-offlabel="Deactive" data-onstyle="success" data-offstyle="danger" data-style="ios">
                             @include('alerts.feedback', ['field' => 'status'])
                         </div>
 
@@ -26,14 +26,14 @@
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <label class="m-0">{{ __('KYC Requirements') }}</label>
                                 <a href="javascript:void(0)" class="btn btn-dark btn-sm btn-rounded p-6 ml-4 generate_atf"
-                                    data-count="{{ isset($kyc_setting->form_data) && null !== json_decode($kyc_setting->form_data) ? count(json_decode($kyc_setting->form_data, true)) : '1' }}"><i
+                                    data-count="1"><i
                                         class="fa fa-plus-circle"></i>
                                     {{ trans('Add Field') }}
                                 </a>
 
                             </div>
                             <div class="card-body">
-                                @if (isset($kyc_setting->form_data) && null !== json_decode($kyc_setting->form_data))
+                                {{-- @if (isset($kyc_setting->form_data) && null !== json_decode($kyc_setting->form_data))
                                     @php
                                         $count = 1;
                                     @endphp
@@ -126,7 +126,7 @@
                                             $count++;
                                         @endphp
                                     @endforeach
-                                @endif
+                                @endif --}}
                                 <div class="row addedField"> </div>
 
 
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-end">
-                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Save') }}</button>
+                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Create') }}</button>
                     </div>
                 </form>
             </div>
@@ -187,7 +187,6 @@
                         </div>
                         `;
 
-            // $('.addedField').append(form);
             $(this).closest('.card').find('.addedField').append(form);
         });
 

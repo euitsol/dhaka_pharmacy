@@ -326,9 +326,12 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
                 Route::put('declined/{id}', 'declined')->name('declined.pharmacy_kyc_status');
                 Route::get('delete/{id}', 'delete')->name('pharmacy_kyc_delete');
             });
-            Route::controller(PharmacyKycSettingsController::class)->prefix('settings')->group(function () {
-                Route::get('/', 'kycSettings')->name('pharmacy_kyc_settings');
-                Route::post('/', 'kycSettingsUpdate')->name('pharmacy_kyc_settings');
+            Route::controller(PharmacyKycSettingsController::class)->prefix('settings')->name('settings.')->group(function () {
+                Route::get('/list', 'list')->name('p_kyc_list');
+                Route::get('/create', 'create')->name('p_kyc_create');
+                Route::post('/create', 'store')->name('p_kyc_create');
+                Route::get('/details/{id}', 'details')->name('p_kyc_details');
+                Route::get('/status/{id}', 'status')->name('p_kyc_status');
             });
         });
     });
