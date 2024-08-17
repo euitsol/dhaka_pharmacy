@@ -23,13 +23,12 @@ class PharmacyKycController extends Controller
 
     public function index(): View
     {
-        $s['datas'] = SubmittedKyc::with('creater')->where('type', 'pharmacy')->orderBy('status', 'desc')->get()->groupBy('status');
+        $s['submitted_kyc'] = SubmittedKyc::with('creater')->where('type', 'pharmacy')->orderBy('status')->get()->groupBy('status');
         return view('admin.pharmacy_management.submitted_kyc.index', $s);
     }
     public function details($id): View
     {
-        $data['data'] = SubmittedKyc::findOrFail($id);
-        $data['kyc_setting'] = KycSetting::where('type', 'pharmacy')->first();
+        $data['submitted_kyc'] = SubmittedKyc::with('kyc')->findOrFail($id);
         return view('admin.pharmacy_management.submitted_kyc.details', $data);
     }
     public function accept($id)
@@ -46,7 +45,7 @@ class PharmacyKycController extends Controller
     {
         try {
             $data = SubmittedKyc::findOrFail($id);
-            $data->status = NULL;
+            $data->status = -1;
             $data->note = $req->note;
             $data->update();
             $data->creater->update(['kyc_status' => 0]);

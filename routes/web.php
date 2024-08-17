@@ -318,17 +318,20 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
 
         // KYC ROUTES
         Route::group(['as' => 'pharmacy_kyc.', 'prefix' => 'pharmacy-kyc'], function () {
-            Route::controller(PharmacyKycController::class)->prefix('kyc-list')->name('kyc_list.')->group(function () {
-                Route::get('index', 'index')->name('pharmacy_kyc_list');
-                Route::get('details/{id}', 'details')->name('pharmacy_kyc_details');
-                Route::get('file-download/{url}', 'view_or_download')->name('download.pharmacy_kyc_details');
-                Route::get('accept/{id}', 'accept')->name('accept.pharmacy_kyc_status');
-                Route::put('declined/{id}', 'declined')->name('declined.pharmacy_kyc_status');
-                Route::get('delete/{id}', 'delete')->name('pharmacy_kyc_delete');
+            Route::controller(PharmacyKycController::class)->prefix('submitted-kyc')->name('submitted_kyc.')->group(function () {
+                Route::get('index', 'index')->name('ps_kyc_list');
+                Route::get('details/{id}', 'details')->name('ps_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.ps_kyc_details');
+                Route::get('accept/{id}', 'accept')->name('accept.ps_kyc_status');
+                Route::put('declined/{id}', 'declined')->name('declined.ps_kyc_status');
+                Route::get('delete/{id}', 'delete')->name('ps_kyc_delete');
             });
-            Route::controller(PharmacyKycSettingsController::class)->prefix('settings')->group(function () {
-                Route::get('/', 'kycSettings')->name('pharmacy_kyc_settings');
-                Route::post('/', 'kycSettingsUpdate')->name('pharmacy_kyc_settings');
+            Route::controller(PharmacyKycSettingsController::class)->prefix('settings')->name('settings.')->group(function () {
+                Route::get('/list', 'list')->name('p_kyc_list');
+                Route::get('/create', 'create')->name('p_kyc_create');
+                Route::post('/create', 'store')->name('p_kyc_create');
+                Route::get('/details/{id}', 'details')->name('p_kyc_details');
+                Route::get('/status/{id}', 'status')->name('p_kyc_status');
             });
         });
     });

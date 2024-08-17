@@ -45,8 +45,7 @@ class PharmacyController extends Controller
         $pharmacy_id = decrypt($id);
         $data['pharmacy'] = Pharmacy::with(['creater', 'address', 'updater'])->findOrFail($pharmacy_id);
         $pharmacy_class = get_class($data['pharmacy']);
-        $data['kyc'] = SubmittedKyc::where('creater_id', decrypt($id))->where('creater_type', $pharmacy_class)->first();
-        $data['kyc_setting'] = KycSetting::where('type', 'pharmacy')->first();
+        $data['submitted_kyc'] = SubmittedKyc::with('kyc')->where('creater_id', $pharmacy_id)->where('creater_type', $pharmacy_class)->first();
         $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
             ->where('receiver_id', decrypt($id))->where('receiver_type', $pharmacy_class)->get();
         $query =  OrderDistribution::with(['order', 'odps' => function ($query) use ($pharmacy_id) {

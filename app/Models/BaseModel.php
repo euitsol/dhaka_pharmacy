@@ -53,9 +53,9 @@ class BaseModel extends Model
     public function getStatusClass()
     {
         if ($this->status == 1) {
-            return 'btn-success';
-        } else {
             return 'btn-danger';
+        } else {
+            return 'btn-success';
         }
     }
     public function getStatusBadgeClass()
