@@ -38,11 +38,11 @@
 @endpush
 
 @php
-    $submitted_kyc = $kyc->p_submitted_kyc;
+    $submitted_kyc = isset($kyc->p_submitted_kyc) ? $kyc->p_submitted_kyc : null;
 @endphp
 @section('content')
     <div class="row">
-        <div class="{{ !empty($submitted_kyc) &&  $submitted_kyc->status !== -1 ? 'col-12' : 'col-8' }}">
+        <div class="{{ !empty($submitted_kyc) &&  $submitted_kyc->status == -1 ? 'col-8' : 'col-12' }}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -159,7 +159,7 @@
                                                     @if (isset($submitted_kyc->submitted_data) &&
                                                             isset(json_decode($submitted_kyc->submitted_data)->$a) &&
                                                             !empty(json_decode($submitted_kyc->submitted_data))) data-existing-files="{{ storage_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
-                                        data-delete-url="{{ route('pharmacy.kyc.file.delete', [$details->id, $a]) }}" @endif>
+                                        data-delete-url="{{ route('pharmacy.kyc.file.delete', [$kyc->id, $a]) }}" @endif>
                                                 @include('alerts.feedback', ['field' => $fd->field_key])
                                             </div>
                                     @elseif($fd->type == 'image_multiple')
@@ -173,7 +173,7 @@
                                                         $itemCount = count($data);
                                                         foreach ($data as $index => $url) {
                                                             $result .= route('pharmacy.kyc.file.delete', [
-                                                                $details->id,
+                                                                $kyc->id,
                                                                 $a,
                                                                 base64_encode($url),
                                                             ]);
@@ -248,7 +248,7 @@
                                                                     disabled>
                                                                 @if (!$disabled)
                                                                     <a
-                                                                        href="{{ route('pharmacy.kyc.file.delete', [$details->id, $a]) }}">
+                                                                        href="{{ route('pharmacy.kyc.file.delete', [$kyc->id, $a]) }}">
                                                                         <span class="input-group-text text-danger h-100"><i
                                                                                 class="tim-icons icon-trash-simple"></i></span>
                                                                     </a>
@@ -329,7 +329,7 @@
                                                                         value="{{ file_title_from_url($url) }}">
                                                                     @if (!$disabled)
                                                                         <a
-                                                                            href="{{ route('pharmacy.kyc.file.delete', [$details->id, $a, base64_encode($url)]) }}">
+                                                                            href="{{ route('pharmacy.kyc.file.delete', [$kyc->id, $a, base64_encode($url)]) }}">
                                                                             <span
                                                                                 class="input-group-text text-danger h-100"><i
                                                                                     class="tim-icons icon-trash-simple"></i></span>
@@ -369,6 +369,7 @@
                                                 <select {{ $disabled ? 'disabled' : '' }} name="{{ $fd->field_key }}"
                                                     id="{{ $fd->field_key }}"
                                                     class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}">
+                                                    <option value=" " selected hidden>{{__('Select '.$fd->field_name )}}</option>
                                                     @foreach ($fd->option_data as $value => $label)
                                                         <option value="{{ $value }}"
                                                             @if (isset($submitted_kyc->submitted_data) &&
@@ -386,7 +387,7 @@
                                 <div id="message"></div>
                             </div>
                             @if (!$disabled)
-                                <div class="card-footer">
+                                <div class="card-footer text-end">
                                     <button type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
                                 </div>
                             @endif
@@ -396,15 +397,15 @@
 
             </div>
         </div>
-        @if (!!empty($submitted_kyc) || $submitted_kyc->status === -1)
+        @if (!empty($submitted_kyc) &&  $submitted_kyc->status == -1)
             <div class="col-md-4">
                 <div class="card card-user">
                     <div class="card-body">
                         <p class="card-text" style="font-weight: 600;">
-                            {{ isset($details->documentation) ? __(json_decode($details->documentation)->title) : '' }}
+                            {{ isset($kyc->documentation) ? __(json_decode($kyc->documentation)->title) : '' }}
                         </p>
                         <div class="card-description content-description">
-                            {!! isset($details->documentation) ? json_decode($details->documentation)->details : '' !!}</div>
+                            {!! isset($kyc->documentation) ? json_decode($kyc->documentation)->details : '' !!}</div>
                     </div>
                 </div>
             </div>

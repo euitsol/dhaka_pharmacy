@@ -14,4 +14,27 @@ class SubmittedKyc extends BaseModel
     public function kyc(){
         return $this->belongsTo(KycSetting::class,'kyc_id');
     }
+
+    public function getStatus()
+    {
+        switch($this->status){
+            case 0:
+                return 'Pending';
+            case 1: 
+                return 'Varified';
+            case -1:
+                return 'Declined';
+        }
+    }
+    public function getStatusBadgeClass()
+    {
+        switch($this->status){
+            case 0:
+                return 'badge badge-danger';
+            case 1: 
+                return 'badge badge-success';
+            case -1:
+                return 'badge badge-info';
+        }
+    }
 }

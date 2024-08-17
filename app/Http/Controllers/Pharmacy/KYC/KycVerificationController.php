@@ -22,12 +22,20 @@ class KycVerificationController extends Controller
 
     public function kyc_verification()
     {
-        $data['kyc'] = KycSetting::activated()->with('p_submitted_kyc')->where('type', 'pharmacy')->first();
-        return view('pharmacy.kyc_verification_center.index', $data);
+        $query = KycSetting::with('p_submitted_kyc')->where('type', 'pharmacy');
+        $kyc = $query->first();
+        if(!$kyc->p_submitted_kyc){
+            $kyc = $query->activated()->first();
+        }
+        return view('pharmacy.kyc_verification_center.index', ['kyc'=>$kyc]);
     }
     public function kyc_store(Request $request)
     {
-        $kyc = KycSetting::with('p_submitted_kyc')->where('type', 'pharmacy')->activated()->first();
+        $query = KycSetting::with('p_submitted_kyc')->where('type', 'pharmacy');
+        $kyc = $query->first();
+        if(!$kyc->p_submitted_kyc){
+            $kyc = $query->activated()->first();
+        }
         $submitted_kyc = $kyc->p_submitted_kyc;
         if (!empty($submitted_kyc) && ($submitted_kyc->status === 1 || $submitted_kyc->status === 0)) {
             flash()->addWarning('Your KYC has already been submitted.');
@@ -96,7 +104,7 @@ class KycVerificationController extends Controller
                     $data[$fd->field_key] = $request->$input_name;
                 } elseif ($fd->type == 'image') {
                     if ($fd->required == 'required') {
-                        if (!isset($saved_data->$input_name)) {
+                        if (!isset($saved_data->$input_name) || empty($saved_data->$input_name)) {
                             array_push($rules[$fd->field_key], 'required');
                         }
                     } else {
@@ -125,7 +133,7 @@ class KycVerificationController extends Controller
                     }
                 } elseif ($fd->type == 'image_multiple') {
                     if ($fd->required == 'required') {
-                        if (!isset($saved_data->$input_name)) {
+                        if (!isset($saved_data->$input_name) || empty($saved_data->$input_name)) {
                             array_push($rules[$fd->field_key], 'required');
                         }
                     } else {
@@ -158,7 +166,9 @@ class KycVerificationController extends Controller
                         $rules[$fd->field_key . '.url'] = [];
                         $rules[$fd->field_key . '.title'] = [];
                         if ($fd->required == 'required') {
-                            array_push($rules[$fd->field_key . '.url'], 'required');
+                            if (!isset($saved_data->$input_name['url']) || empty($saved_data->$input_name['url'])) {
+                                array_push($rules[$fd->field_key . '.url'], 'required');
+                            }
                         } else {
                             array_push($rules[$fd->field_key . '.url'], 'nullable');
                         }
@@ -219,7 +229,9 @@ class KycVerificationController extends Controller
                         $rules[$fd->field_key . '.*.url'] = [];
                         $rules[$fd->field_key . '.*.title'] = [];
                         if ($fd->required == 'required') {
-                            array_push($rules[$fd->field_key . '.*.url'], 'required');
+                            if (!isset($saved_data->$input_name[1]['url']) || empty($saved_data->$input_name[1]['url'])) {
+                                array_push($rules[$fd->field_key . '.*.url'], 'required');
+                            }
                         } else {
                             array_push($rules[$fd->field_key . '.*.url'], 'nullable');
                         }

@@ -20,7 +20,7 @@ class PharmacyKycSettingsController extends Controller
 
     public function list():View
     {
-        $data['kycs'] = KycSetting::where('type','pharmacy')->orderBy('status','desc')->latest()->get();
+        $data['kycs'] = KycSetting::where('type','pharmacy')->orderBy('status','desc')->latest()->get()->groupBy('status');
         return view('admin.pharmacy_management.kyc_settings.list',$data);
     }
     public function create():View

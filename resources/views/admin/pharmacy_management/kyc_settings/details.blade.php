@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'pharmacy_kyc_settings'])
+@extends('admin.layouts.master', ['pageSlug' => 'p_kyc_settings'])
 @section('title', 'Pharmacy KYC Details')
 @section('content')
     <div class="row px-3">
@@ -36,8 +36,8 @@
                             @foreach ($form_datas as $fd)
                                 <tr>
                                    <td>{{$loop->iteration}}</td>
-                                   <td>{{$fd['field_key']}}</td>
                                    <td>{{$fd['field_name']}}</td>
+                                   <td>{{$fd['field_key']}}</td>
                                    <td>
                                     {{$fd['type']}} 
                                     @if(isset($fd['option_data']))

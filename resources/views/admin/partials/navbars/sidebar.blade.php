@@ -107,20 +107,18 @@
             {{-- Pharmacy Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['pm.'],
-                    'routes' => ['pharmacy_list', 'pharmacy_kyc_list', 'p_kyc_list'],
+                    'routes' => ['pharmacy_list', 'ps_kyc_list', 'p_kyc_list'],
                 ]))
                 <li>
                     <a class="@if (
                         $pageSlug == 'pharmacy' ||
-                            $pageSlug == 'kyc' ||
-                            $pageSlug == 'pharmacy_kyc_list' ||
-                            $pageSlug == 'pharmacy_kyc_settings') @else collapsed @endif" data-toggle="collapse"
+                        $pageSlug == 'ps_kyc_list' ||
+                        $pageSlug == 'p_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#pharmacy-management"
                         @if (
                             $pageSlug == 'pharmacy' ||
-                                $pageSlug == 'kyc' ||
-                                $pageSlug == 'pharmacy_kyc_list' ||
-                                $pageSlug == 'pharmacy_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
+                            $pageSlug == 'ps_kyc_list' ||
+                            $pageSlug == 'p_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-kit-medical"></i>
                         <span class="nav-link-text">{{ __('Pharmacy Management') }}</span>
                         <b class="caret mt-1"></b>
@@ -128,9 +126,8 @@
 
                     <div class="collapse @if (
                         $pageSlug == 'pharmacy' ||
-                            $pageSlug == 'kyc' ||
-                            $pageSlug == 'pharmacy_kyc_list' ||
-                            $pageSlug == 'pharmacy_kyc_settings') show @endif" id="pharmacy-management">
+                            $pageSlug == 'ps_kyc_list' ||
+                            $pageSlug == 'p_kyc_settings') show @endif" id="pharmacy-management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -141,20 +138,20 @@
                                     ],
                             
                                     [
-                                        'pageSlug' => ['pharmacy_kyc_list', 'pharmacy_kyc_settings'],
+                                        'pageSlug' => ['ps_kyc_list', 'p_kyc_settings'],
                                         'routeName' => 'submenu',
                                         'label' => 'KYC Verification Center',
                                         'id' => 'pharmacy_kyc',
                                         'subMenu' => [
                                             [
-                                                'subLabel' => 'KYC List',
-                                                'subRouteName' => 'pm.pharmacy_kyc.kyc_list.pharmacy_kyc_list',
-                                                'subPageSlug' => 'pharmacy_kyc_list',
+                                                'subLabel' => 'Submitted KYC List',
+                                                'subRouteName' => 'pm.pharmacy_kyc.submitted_kyc.ps_kyc_list',
+                                                'subPageSlug' => 'ps_kyc_list',
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
                                                 'subRouteName' => 'pm.pharmacy_kyc.settings.p_kyc_list',
-                                                'subPageSlug' => 'pharmacy_kyc_settings',
+                                                'subPageSlug' => 'p_kyc_settings',
                                             ],
                                         ],
                                     ],
