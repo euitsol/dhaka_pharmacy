@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\OrderManagement;
 
+use App\Events\OrderStatusChangeEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DisputeOrderRequest;
 use App\Http\Requests\OrderDistributionRequest;
@@ -166,6 +167,9 @@ class OrderManagementController extends Controller
 
                 // $this->createDistributionOTP($od, $odp);
             }
+
+
+
             flash()->addSuccess('Order Processed Successfully.');
             return redirect()->route('om.order.order_list', 'processed');
         }else{

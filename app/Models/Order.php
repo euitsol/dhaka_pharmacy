@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
+use App\Observers\OrderModelObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
+#[ObservedBy([OrderModelObserver::class])]
 class Order extends BaseModel
 {
     use HasFactory, SoftDeletes, EagerLoadPivotTrait;

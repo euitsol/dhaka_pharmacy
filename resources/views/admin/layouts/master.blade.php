@@ -34,6 +34,8 @@
         const map_center = `[{{ config('mapbox.center_location_lng') }}, {{ config('mapbox.center_location_lat') }}]`;
         const pharmacy_radious = `{{ config('mapbox.pharmacy_radious') }}`;
         const mapbox_style_id = `{{ config('mapbox.pharmacy_radious') }}`;
+        const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
+        const admin_id = `{{ admin() ? admin()->id : false }}`;
     </script>
 </head>
 
@@ -69,6 +71,7 @@
     @stack('js_link')
     <script src="{{ asset('admin/js/custom.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('admin/js/realtime-notification.js') }}"></script>
 
     @stack('js')
 

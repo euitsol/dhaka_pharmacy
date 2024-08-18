@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Events\OrderStatusChangeEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Medicine;
 use App\Models\ProductCategory;
@@ -10,6 +11,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\URL;
 use App\Http\Traits\OrderNotificationTrait;
 use App\Http\Traits\TransformProductTrait;
+use App\Models\Order;
 
 class HomePageController extends Controller
 {
@@ -17,10 +19,6 @@ class HomePageController extends Controller
     use OrderNotificationTrait, TransformProductTrait;
     public function home(): View
     {
-        //test
-        // $order = Order::findOrFail(1);
-        // $this->order_notification($order, 'order_initialized');
-
         $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'units' => function ($q) {
             $q->orderBy('quantity', 'asc');
         }])->activated();
