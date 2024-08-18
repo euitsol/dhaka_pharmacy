@@ -24,16 +24,16 @@ class KycVerificationController extends Controller
     {
         $query = KycSetting::with('p_submitted_kyc')->where('type', 'pharmacy');
         $kyc = $query->first();
-        if(!$kyc->p_submitted_kyc){
+        if (!$kyc->p_submitted_kyc) {
             $kyc = $query->activated()->first();
         }
-        return view('pharmacy.kyc_verification_center.index', ['kyc'=>$kyc]);
+        return view('pharmacy.kyc_verification_center.index', ['kyc' => $kyc]);
     }
     public function kyc_store(Request $request)
     {
         $query = KycSetting::with('p_submitted_kyc')->where('type', 'pharmacy');
         $kyc = $query->first();
-        if(!$kyc->p_submitted_kyc){
+        if (!$kyc->p_submitted_kyc) {
             $kyc = $query->activated()->first();
         }
         $submitted_kyc = $kyc->p_submitted_kyc;
@@ -204,7 +204,7 @@ class KycVerificationController extends Controller
                             $data[$fd->field_key] = $saved_data->$input_name;
                         }
                     }
-                }elseif ($fd->type == 'email') {
+                } elseif ($fd->type == 'email') {
                     if ($fd->required == 'required') {
                         array_push($rules[$fd->field_key], 'required');
                     } else {
@@ -224,8 +224,8 @@ class KycVerificationController extends Controller
                     array_push($rules[$fd->field_key], 'in:' . $values);
 
                     $data[$fd->field_key] = $request->$input_name;
-                }elseif ($fd->type == 'file_multiple') {
-                    if ((isset($saved_data->$input_name) && empty($saved_data->$input_name)) || !isset($saved_data->$input_name) ) {
+                } elseif ($fd->type == 'file_multiple') {
+                    if ((isset($saved_data->$input_name) && empty($saved_data->$input_name)) || !isset($saved_data->$input_name)) {
                         $rules[$fd->field_key . '.*.url'] = [];
                         $rules[$fd->field_key . '.*.title'] = [];
                         if ($fd->required == 'required') {
@@ -312,56 +312,18 @@ class KycVerificationController extends Controller
             $filePath = $file->store('public/pharmacy/kyc/' . pharmacy()->id . '/' . 'uploads');
             $ext = pathinfo($filePath, PATHINFO_EXTENSION);
             $title = pathinfo($originalFileName, PATHINFO_FILENAME);
-            return response()->json(['success' => true, 'file_path' => $filePath, 'title' => $title, 'extension' => $ext, 'url' => base64_encode($filePath)]);
+            return response()->json(['success' => true, 'file_path' => $filePath, 'title' => $title, 'extension' => $ext, 'url' => encrypt($filePath)]);
         }
 
         return response()->json(['success' => false, 'message' => 'File upload failed.']);
     }
 
-    public function delete($id = null, $key = null, $file_path = null)
-    {
-        if ($file_path) {
-            $acc_file_path = base64_decode($file_path);
+    // public function delete($id = null, $key = null, $file_path = null)
+    // public function delete(Request $request)
+    // {
+    //     $this->kycFileDelete($request);
 
-            if (!Str::startsWith($acc_file_path, 'public/')) {
-                $file_path = 'public/' . $acc_file_path;
-            }
-        }
-        if ($file_path != null) {
-            if (Storage::exists($file_path)) {
-                Storage::delete($file_path);
-            }
-            if ($id != null && $key != null) {
-                $sp = SubmittedKyc::findOrFail($id);
-                $saved_data = json_decode($sp->saved_data, true);
-                if (isset($saved_data[$key])) {
-                    if (is_array($saved_data)) {
-                        $array = $saved_data[$key];
-                        $index = array_search($acc_file_path, $array);
-                        unset($array[$index]);
-                        $saved_data[$key] = $array;
-                    } else {
-                        unset($saved_data[$key]);
-                    }
-                    $sp->submitted_kyc = json_encode($saved_data);
-                    $sp->save();
-                }
-            }
-        } else {
-            if ($id != null && $key != null) {
-                $kyc = SubmittedKyc::where('id', $id)->firstOrFail();
-                $saved_data = json_decode($kyc->saved_data, true);
-                if (isset($saved_data[$key])) {
-                    if (Storage::exists('public/' . $saved_data[$key])) {
-                        Storage::delete('public/' . $saved_data[$key]);
-                    }
-                    unset($saved_data[$key]);
-                    $kyc->submitted_kyc = json_encode($saved_data);
-                    $kyc->save();
-                }
-            }
-        }
-        flash()->addSuccess('File deleted successfully.');
-        return redirect()->back();
-    }
+    //     flash()->addSuccess('File deleted successfully.');
+    //     return redirect()->back();
+    // }
 }

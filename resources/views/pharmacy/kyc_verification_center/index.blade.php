@@ -42,7 +42,7 @@
 @endphp
 @section('content')
     <div class="row">
-        <div class="{{ !empty($submitted_kyc) &&  $submitted_kyc->status == -1 ? 'col-8' : 'col-12' }}">
+        <div class="{{ !empty($submitted_kyc) && $submitted_kyc->status == -1 ? 'col-8' : 'col-12' }}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -50,7 +50,7 @@
                             <h5 class="card-title">{{ __('KYC Verification Center') }}</h5>
                         </div>
                         <div class="col-4 text-right">
-                            @if(!empty($submitted_kyc))
+                            @if (!empty($submitted_kyc))
                                 @if ($submitted_kyc->status === 1)
                                     <span class="badge badge-success">{{ __('Varified') }}</span>
                                 @elseif($submitted_kyc->status === 0)
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 @php
-                    $disabled = (!empty($submitted_kyc) && $submitted_kyc->status !== -1) ? true : false;
+                    $disabled = !empty($submitted_kyc) && $submitted_kyc->status !== -1 ? true : false;
                 @endphp
                 @if (!empty($submitted_kyc) && $submitted_kyc->status == 1)
                     <div class="kyc_varified text-center" style="height: 85vh">
@@ -90,297 +90,302 @@
                                     @endphp
 
                                     @if ($fd->type == 'text')
-                                            <div class="form-group">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                                <input {{ $disabled ? 'disabled' : '' }} type="text"
-                                                    name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
-                                                    class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
-                                                    value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
-                                                @include('alerts.feedback', ['field' => $fd->field_key])
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                            <input {{ $disabled ? 'disabled' : '' }} type="text"
+                                                name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
+                                                class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
+                                                value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
+                                            @include('alerts.feedback', ['field' => $fd->field_key])
+                                        </div>
                                     @elseif($fd->type == 'number')
-                                            <div class="form-group">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                                <input {{ $disabled ? 'disabled' : '' }} type="number"
-                                                    name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
-                                                    class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
-                                                    value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
-                                                @include('alerts.feedback', ['field' => $fd->field_key])
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                            <input {{ $disabled ? 'disabled' : '' }} type="number"
+                                                name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
+                                                class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
+                                                value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
+                                            @include('alerts.feedback', ['field' => $fd->field_key])
+                                        </div>
                                     @elseif($fd->type == 'url')
-                                            <div class="form-group">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                                <input {{ $disabled ? 'disabled' : '' }} type="url"
-                                                    name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
-                                                    class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
-                                                    value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
-                                                @include('alerts.feedback', ['field' => $fd->field_key])
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                            <input {{ $disabled ? 'disabled' : '' }} type="url"
+                                                name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
+                                                class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
+                                                value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
+                                            @include('alerts.feedback', ['field' => $fd->field_key])
+                                        </div>
                                     @elseif($fd->type == 'date')
-                                            <div class="form-group">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                                <input {{ $disabled ? 'disabled' : '' }} type="date"
-                                                    name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
-                                                    class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
-                                                    value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
-                                                @include('alerts.feedback', ['field' => $fd->field_key])
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                            <input {{ $disabled ? 'disabled' : '' }} type="date"
+                                                name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
+                                                class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}"
+                                                value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
+                                            @include('alerts.feedback', ['field' => $fd->field_key])
+                                        </div>
                                     @elseif($fd->type == 'textarea')
-                                            <div class="form-group">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                                <textarea {{ $disabled ? 'disabled' : '' }} name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
-                                                    class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}">{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}</textarea>
-                                                @include('alerts.feedback', ['field' => $fd->field_key])
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                            <textarea {{ $disabled ? 'disabled' : '' }} name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
+                                                class="form-control title {{ $errors->has($fd->field_key) ? ' is-invalid' : '' }}">{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}</textarea>
+                                            @include('alerts.feedback', ['field' => $fd->field_key])
+                                        </div>
                                     @elseif($fd->type == 'image')
-                                            <div class="form-group">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                                <input {{ $disabled ? 'disabled' : '' }} type="file" accept="image/*"
-                                                    name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
-                                                    class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }} image-upload"
-                                                    @if (isset($submitted_kyc->submitted_data) &&
-                                                            isset(json_decode($submitted_kyc->submitted_data)->$a) &&
-                                                            !empty(json_decode($submitted_kyc->submitted_data))) data-existing-files="{{ storage_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
-                                        data-delete-url="{{ route('pharmacy.kyc.file.delete', [$kyc->id, $a]) }}" @endif>
-                                                @include('alerts.feedback', ['field' => $fd->field_key])
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                            <input {{ $disabled ? 'disabled' : '' }} type="file" accept="image/*"
+                                                name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
+                                                class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }} image-upload"
+                                                @if (isset($submitted_kyc->submitted_data) &&
+                                                        isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                        !empty(json_decode($submitted_kyc->submitted_data))) data-existing-files="{{ storage_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
+                                        data-delete-url="{{ route('kyc.file.delete', ['id' => encrypt($kyc->id), 'key' => $a]) }}" @endif>
+                                            @include('alerts.feedback', ['field' => $fd->field_key])
+                                        </div>
                                     @elseif($fd->type == 'image_multiple')
-                                            @if (isset($submitted_kyc->submitted_data) &&
-                                                    isset(json_decode($submitted_kyc->submitted_data)->$a) &&
-                                                    !empty(json_decode($submitted_kyc->submitted_data)))
-                                                @php
-                                                    $data = collect(json_decode($submitted_kyc->submitted_data, true)[$a]);
-                                                    $result = '';
-                                                    if (!empty($data)) {
-                                                        $itemCount = count($data);
-                                                        foreach ($data as $index => $url) {
-                                                            $result .= route('pharmacy.kyc.file.delete', [
-                                                                $kyc->id,
-                                                                $a,
-                                                                base64_encode($url),
-                                                            ]);
-                                                            if ($index === $itemCount - 1) {
-                                                                $result .= '';
-                                                            } else {
-                                                                $result .= ', ';
-                                                            }
+                                        @if (isset($submitted_kyc->submitted_data) &&
+                                                isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                !empty(json_decode($submitted_kyc->submitted_data)))
+                                            @php
+                                                $data = collect(json_decode($submitted_kyc->submitted_data, true)[$a]);
+                                                $result = '';
+                                                if (!empty($data)) {
+                                                    $itemCount = count($data);
+                                                    foreach ($data as $index => $url) {
+                                                        $result .= route([
+                                                            'id' => encrypt($kyc->id),
+                                                            'key' => $a,
+                                                            'url' => encrypt($url),
+                                                        ]);
+                                                        if ($index === $itemCount - 1) {
+                                                            $result .= '';
+                                                        } else {
+                                                            $result .= ', ';
                                                         }
                                                     }
-                                                @endphp
+                                                }
+                                            @endphp
+                                        @endif
+                                        <div class="form-group">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
                                             @endif
-                                            <div class="form-group">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
+                                            <input {{ $disabled ? 'disabled' : '' }} type="file" accept="image/*"
+                                                name="{{ $fd->field_key }}[]" id="{{ $fd->field_key }}"
+                                                class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }} image-upload"
+                                                multiple
+                                                @if (isset($submitted_kyc->submitted_data) &&
+                                                        isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                        !empty(json_decode($submitted_kyc->submitted_data))) data-existing-files="{{ storage_url($data) }}"
+                                                data-delete-url="{{ $result }}" @endif>
+                                            @include('alerts.feedback', ['field' => $fd->field_key])
+
+
+
+
+                                        </div>
+                                    @elseif($fd->type == 'file_single')
+                                        <div class="form-group">
+                                            <input {{ $disabled ? 'disabled' : '' }} type="hidden"
+                                                name="{{ $fd->field_key }}[url]" class="file_url">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
+                                            @endif
+
+                                            <div class="input-group mb-3">
+                                                <input {{ $disabled ? 'disabled' : '' }} type="text"
+                                                    name="{{ $fd->field_key }}[title]"
+                                                    class="form-control file_title {{ $errors->has($fd->field_key . '.title') ? 'is-invalid' : '' }}"
+                                                    placeholder="{{ _('Enter file name') }}">
+                                                <input {{ $disabled ? 'disabled' : '' }} type="file" accept=""
+                                                    name="{{ $fd->field_key }}[file]" id="{{ $fd->field_key }}"
+                                                    class="form-control fileInput {{ $disabled ? 'disabled' : '' }} {{ $errors->has($fd->field_key . '.url') ? 'is-invalid' : '' }}">
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="progressBar bg-success"
+                                                    style="width: 0%; background: #ddd; height: 20px;"></div>
+                                                <span class="cancelBtn"
+                                                    style="margin-left: 1rem; margin-right: 1rem; cursor: pointer; display:none;"><i
+                                                        class="fa-solid fa-xmark"></i></span>
+                                            </div>
+
+                                            <div class="show_file">
+                                                @if (isset($submitted_kyc->submitted_data) &&
+                                                        isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                        !empty(json_decode($submitted_kyc->submitted_data)))
+                                                    <div class="form-group">
+                                                        <label>{{ _('Uploded file') }}</label>
+                                                        <div class="input-group mb-3">
+                                                            <input {{ $disabled ? 'disabled' : '' }} type="text"
+                                                                class="form-control"
+                                                                value="{{ file_title_from_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
+                                                                disabled>
+                                                            <input {{ $disabled ? 'disabled' : '' }} type="text"
+                                                                class="form-control"
+                                                                value="{{ file_name_from_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
+                                                                disabled>
+                                                            @if (!$disabled)
+                                                                <a
+                                                                    href="{{ route('kyc.file.delete', [
+                                                                        'id' => encrypt($kyc->id),
+                                                                        'key' => $a,
+                                                                    ]) }}">
+                                                                    <span class="input-group-text text-danger h-100"><i
+                                                                            class="tim-icons icon-trash-simple"></i></span>
+                                                                </a>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 @endif
-                                                <input {{ $disabled ? 'disabled' : '' }} type="file" accept="image/*"
-                                                    name="{{ $fd->field_key }}[]" id="{{ $fd->field_key }}"
-                                                    class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }} image-upload"
+                                            </div>
+                                            @include('alerts.feedback', [
+                                                'field' => $fd->field_key . '.url',
+                                            ])
+                                            @include('alerts.feedback', [
+                                                'field' => $fd->field_key . '.title',
+                                            ])
+                                        </div>
+                                    @elseif($fd->type == 'file_multiple')
+                                        <div class="form-group">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                            <div class='temp-input'>
+                                                <div class="input-group mb-3">
+                                                    <input type="hidden" name="{{ $fd->field_key . '[1][title]' }}">
+                                                    <input type="hidden" name="{{ $fd->field_key . '[1][url]' }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="input-group mb-3">
+                                                <input {{ $disabled ? 'disabled' : '' }} type="text" name=""
+                                                    class="form-control file_title"
+                                                    placeholder="{{ _('Enter file name') }}"
+                                                    {{ $errors->has($fd->field_key . '.*.title') ? 'is-invalid' : '' }}>
+                                                <input {{ $disabled ? 'disabled' : '' }} type="file" name=""
+                                                    id="{{ $fd->field_key }}"
+                                                    class="form-control fileInput {{ $disabled ? 'disabled' : '' }} {{ $errors->has($fd->field_key . '.*.url') ? 'is-invalid' : '' }}"
                                                     multiple
                                                     @if (isset($submitted_kyc->submitted_data) &&
                                                             isset(json_decode($submitted_kyc->submitted_data)->$a) &&
-                                                            !empty(json_decode($submitted_kyc->submitted_data))) data-existing-files="{{ storage_url($data) }}"
-                                                data-delete-url="{{ $result }}" @endif>
-                                                @include('alerts.feedback', ['field' => $fd->field_key])
-
-
-
-
+                                                            !empty(json_decode($submitted_kyc->submitted_data))) data-count="{{ collect(json_decode($submitted_kyc->submitted_data)->$a)->count() }}" @else data-count="1" @endif>
                                             </div>
-                                    @elseif($fd->type == 'file_single')
-                                            <div class="form-group">
-                                                <input {{ $disabled ? 'disabled' : '' }} type="hidden"
-                                                    name="{{ $fd->field_key }}[url]" class="file_url">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
-                                                @endif
 
-                                                <div class="input-group mb-3">
-                                                    <input {{ $disabled ? 'disabled' : '' }} type="text"
-                                                        name="{{ $fd->field_key }}[title]"
-                                                        class="form-control file_title {{ $errors->has($fd->field_key . '.title') ? 'is-invalid' : '' }}"
-                                                        placeholder="{{ _('Enter file name') }}">
-                                                    <input {{ $disabled ? 'disabled' : '' }} type="file" accept=""
-                                                        name="{{ $fd->field_key }}[file]" id="{{ $fd->field_key }}"
-                                                        class="form-control fileInput {{ $disabled ? 'disabled' : '' }} {{ $errors->has($fd->field_key . '.url') ? 'is-invalid' : '' }}">
-                                                </div>
-                                                <div class="d-flex">
-                                                    <div class="progressBar bg-success"
-                                                        style="width: 0%; background: #ddd; height: 20px;"></div>
-                                                    <span class="cancelBtn"
-                                                        style="margin-left: 1rem; margin-right: 1rem; cursor: pointer; display:none;"><i
-                                                            class="fa-solid fa-xmark"></i></span>
-                                                </div>
 
-                                                <div class="show_file">
-                                                    @if (isset($submitted_kyc->submitted_data) &&
-                                                            isset(json_decode($submitted_kyc->submitted_data)->$a) &&
-                                                            !empty(json_decode($submitted_kyc->submitted_data)))
+                                            <div class="d-flex">
+                                                <div class="progressBar bg-success"
+                                                    style="width: 0%; background: #ddd; height: 20px;"></div>
+                                                <span class="cancelBtn"
+                                                    style="margin-left: 1rem; margin-right: 1rem; cursor: pointer; display:none;"><i
+                                                        class="fa-solid fa-xmark"></i></span>
+                                            </div>
+
+                                            <div class="show_file">
+                                                @if (isset($submitted_kyc->submitted_data) &&
+                                                        isset(json_decode($submitted_kyc->submitted_data)->$a) &&
+                                                        !empty(json_decode($submitted_kyc->submitted_data)))
+                                                    @foreach (json_decode($submitted_kyc->submitted_data)->$a as $url)
+                                                        @php
+                                                            $count += 1;
+                                                        @endphp
                                                         <div class="form-group">
-                                                            <label>{{ _('Uploded file') }}</label>
+                                                            <label>{{ _('Uploded file - ' . $count) }}</label>
                                                             <div class="input-group mb-3">
                                                                 <input {{ $disabled ? 'disabled' : '' }} type="text"
                                                                     class="form-control"
-                                                                    value="{{ file_title_from_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
-                                                                    disabled>
+                                                                    value="{{ file_title_from_url($url) }}" disabled>
                                                                 <input {{ $disabled ? 'disabled' : '' }} type="text"
                                                                     class="form-control"
-                                                                    value="{{ file_name_from_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
-                                                                    disabled>
+                                                                    value="{{ file_name_from_url($url) }}" disabled>
+                                                                <input {{ $disabled ? 'disabled' : '' }} type="hidden"
+                                                                    class="d-none"
+                                                                    name="{{ $fd->field_key }}[{{ $count }}][url]"
+                                                                    value="{{ file_name_from_url($url) }}">
+                                                                <input {{ $disabled ? 'disabled' : '' }} type="hidden"
+                                                                    class="d-none"
+                                                                    name="{{ $fd->field_key }}[{{ $count }}][title]"
+                                                                    value="{{ file_title_from_url($url) }}">
                                                                 @if (!$disabled)
                                                                     <a
-                                                                        href="{{ route('pharmacy.kyc.file.delete', [$kyc->id, $a]) }}">
+                                                                        href="{{ route('kyc.file.delete', [
+                                                                            'id' => encrypt($kyc->id),
+                                                                            'key' => $a,
+                                                                            'url' => encrypt($url),
+                                                                        ]) }}">
                                                                         <span class="input-group-text text-danger h-100"><i
                                                                                 class="tim-icons icon-trash-simple"></i></span>
                                                                     </a>
                                                                 @endif
                                                             </div>
                                                         </div>
-                                                    @endif
-                                                </div>
-                                                @include('alerts.feedback', [
-                                                    'field' => $fd->field_key . '.url',
-                                                ])
-                                                @include('alerts.feedback', [
-                                                    'field' => $fd->field_key . '.title',
-                                                ])
-                                            </div>
-                                    @elseif($fd->type == 'file_multiple')
-                                            <div class="form-group">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
+                                                    @endforeach
                                                 @endif
-                                                <div class='temp-input'>
-                                                    <div class="input-group mb-3">
-                                                        <input type="hidden"
-                                                            name="{{$fd->field_key . '[1][title]'}}">
-                                                        <input type="hidden"
-                                                            name="{{$fd->field_key . '[1][url]'}}" >
-                                                    </div>
-                                                </div>
+                                            </div>
 
-                                                <div class="input-group mb-3">
-                                                    <input {{ $disabled ? 'disabled' : '' }} type="text"
-                                                        name="" class="form-control file_title"
-                                                        placeholder="{{ _('Enter file name') }}"
-                                                        {{ $errors->has($fd->field_key . '.*.title') ? 'is-invalid' : '' }}>
-                                                    <input {{ $disabled ? 'disabled' : '' }} type="file"
-                                                        name="" id="{{ $fd->field_key }}"
-                                                        class="form-control fileInput {{ $disabled ? 'disabled' : '' }} {{ $errors->has($fd->field_key . '.*.url') ? 'is-invalid' : '' }}"
-                                                        multiple
+                                            @include('alerts.feedback', [
+                                                'field' => $fd->field_key . '.*.url',
+                                            ])
+                                            @include('alerts.feedback', [
+                                                'field' => $fd->field_key . '.*.title',
+                                            ])
+                                        </div>
+                                    @elseif($fd->type == 'email')
+                                        <div class="form-group">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                            <input {{ $disabled ? 'disabled' : '' }} type="email"
+                                                name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
+                                                class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}"
+                                                value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
+                                            @include('alerts.feedback', ['field' => $fd->field_key])
+                                        </div>
+                                    @elseif($fd->type == 'option')
+                                        <div class="form-group">
+                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            @if (isset($fd->required) && $fd->required == 'required')
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                            <select {{ $disabled ? 'disabled' : '' }} name="{{ $fd->field_key }}"
+                                                id="{{ $fd->field_key }}"
+                                                class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}">
+                                                <option value=" " selected hidden>
+                                                    {{ __('Select ' . $fd->field_name) }}</option>
+                                                @foreach ($fd->option_data as $value => $label)
+                                                    <option value="{{ $value }}"
                                                         @if (isset($submitted_kyc->submitted_data) &&
                                                                 isset(json_decode($submitted_kyc->submitted_data)->$a) &&
-                                                                !empty(json_decode($submitted_kyc->submitted_data))) data-count="{{ collect(json_decode($submitted_kyc->submitted_data)->$a)->count() }}" @else data-count="1" @endif>
-                                                </div>
-
-
-                                                <div class="d-flex">
-                                                    <div class="progressBar bg-success"
-                                                        style="width: 0%; background: #ddd; height: 20px;"></div>
-                                                    <span class="cancelBtn"
-                                                        style="margin-left: 1rem; margin-right: 1rem; cursor: pointer; display:none;"><i
-                                                            class="fa-solid fa-xmark"></i></span>
-                                                </div>
-
-                                                <div class="show_file">
-                                                    @if (isset($submitted_kyc->submitted_data) &&
-                                                            isset(json_decode($submitted_kyc->submitted_data)->$a) &&
-                                                            !empty(json_decode($submitted_kyc->submitted_data)))
-                                                        @foreach (json_decode($submitted_kyc->submitted_data)->$a as $url)
-                                                            @php
-                                                                $count += 1;
-                                                            @endphp
-                                                            <div class="form-group">
-                                                                <label>{{ _('Uploded file - ' . $count) }}</label>
-                                                                <div class="input-group mb-3">
-                                                                    <input {{ $disabled ? 'disabled' : '' }}
-                                                                        type="text" class="form-control"
-                                                                        value="{{ file_title_from_url($url) }}" disabled>
-                                                                    <input {{ $disabled ? 'disabled' : '' }}
-                                                                        type="text" class="form-control"
-                                                                        value="{{ file_name_from_url($url) }}" disabled>
-                                                                    <input {{ $disabled ? 'disabled' : '' }}
-                                                                        type="hidden" class="d-none"
-                                                                        name="{{ $fd->field_key }}[{{ $count }}][url]"
-                                                                        value="{{ file_name_from_url($url) }}">
-                                                                    <input {{ $disabled ? 'disabled' : '' }}
-                                                                        type="hidden" class="d-none"
-                                                                        name="{{ $fd->field_key }}[{{ $count }}][title]"
-                                                                        value="{{ file_title_from_url($url) }}">
-                                                                    @if (!$disabled)
-                                                                        <a
-                                                                            href="{{ route('pharmacy.kyc.file.delete', [$kyc->id, $a, base64_encode($url)]) }}">
-                                                                            <span
-                                                                                class="input-group-text text-danger h-100"><i
-                                                                                    class="tim-icons icon-trash-simple"></i></span>
-                                                                        </a>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-
-                                                @include('alerts.feedback', [
-                                                    'field' => $fd->field_key . '.*.url',
-                                                ])
-                                                @include('alerts.feedback', [
-                                                    'field' => $fd->field_key . '.*.title',
-                                                ])
-                                            </div>
-                                    @elseif($fd->type == 'email')
-                                            <div class="form-group">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                                <input {{ $disabled ? 'disabled' : '' }} type="email"
-                                                    name="{{ $fd->field_key }}" id="{{ $fd->field_key }}"
-                                                    class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}"
-                                                    value="{{ isset($submitted_kyc->submitted_data) && isset(json_decode($submitted_kyc->submitted_data)->$a) ? json_decode($submitted_kyc->submitted_data)->$a : old($fd->field_key) }}">
-                                                @include('alerts.feedback', ['field' => $fd->field_key])
-                                            </div>
-                                    @elseif($fd->type == 'option')
-                                            <div class="form-group">
-                                                <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
-                                                @if (isset($fd->required) && $fd->required == 'required')
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                                <select {{ $disabled ? 'disabled' : '' }} name="{{ $fd->field_key }}"
-                                                    id="{{ $fd->field_key }}"
-                                                    class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}">
-                                                    <option value=" " selected hidden>{{__('Select '.$fd->field_name )}}</option>
-                                                    @foreach ($fd->option_data as $value => $label)
-                                                        <option value="{{ $value }}"
-                                                            @if (isset($submitted_kyc->submitted_data) &&
-                                                                    isset(json_decode($submitted_kyc->submitted_data)->$a) &&
-                                                                    (json_decode($submitted_kyc->submitted_data)->$a == $value || old($fd->field_key) == $value)) selected @endif>
-                                                            {{ $label }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @include('alerts.feedback', ['field' => $fd->field_key])
-                                            </div>
+                                                                (json_decode($submitted_kyc->submitted_data)->$a == $value || old($fd->field_key) == $value)) selected @endif>
+                                                        {{ $label }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @include('alerts.feedback', ['field' => $fd->field_key])
+                                        </div>
                                     @endif
                                 @endforeach
 
@@ -397,7 +402,7 @@
 
             </div>
         </div>
-        @if (!empty($submitted_kyc) &&  $submitted_kyc->status == -1)
+        @if (!empty($submitted_kyc) && $submitted_kyc->status == -1)
             <div class="col-md-4">
                 <div class="card card-user">
                     <div class="card-body">
@@ -467,9 +472,10 @@
                                 alert("File uploaded successfully.");
 
                                 let url = (
-                                    "{{ route('pharmacy.kyc.file.delete', ['url']) }}"
+                                    "{{ route('kyc.file.delete', ['url' => '_url']) }}"
                                 );
-                                let _url = url.replace('url', response.url);
+                                let _url = url.replace('_url', response
+                                    .url);
                                 if (isMultiple) {
                                     var file = `<div class="form-group">
                                                 <label>{{ _('Uploded file - ${count}') }}</label>
@@ -527,6 +533,26 @@
 
                 $(document).on("click", ".delete_file", function(e) {
                     e.preventDefault();
+
+
+                    let url = $(this).parent().attr('href');
+                    let this_ = $(this);
+
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            this_.closest('.show_file').siblings(
+                                '.input-group').find('.fileInput').val('')
+                            this_.closest('.form-group').remove();
+                            toastr.success(data.message);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching admin data:', error);
+                        }
+                    });
+
                 });
             });
         });

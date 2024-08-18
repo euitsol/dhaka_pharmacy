@@ -699,7 +699,8 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
 });
 
 
-
+// KYC FILE DELETE 
+Route::get('/kyc/file/delete', [FileUploadController::class, 'kycFileDelete'])->name('kyc.file.delete');
 
 // Pharmacy Auth Routes
 Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'pharmacy'], function () {
@@ -711,8 +712,8 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     Route::controller(PharmacyKycVerificationController::class)->prefix('kyc')->name('kyc.')->group(function () {
         Route::post('/store', 'kyc_store')->name('store');
         Route::get('/verification', 'kyc_verification')->name('verification');
-        Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
-        Route::get('/kyc/file/delete', 'delete')->name('file.delete');
+        Route::post('/file/upload', 'file_upload')->name('file.upload');
+        // Route::get('/file/delete', 'delete')->name('file.delete');
     });
 
     Route::controller(PharmacyProfileController::class)->prefix('profile')->name('profile.')->group(function () {
