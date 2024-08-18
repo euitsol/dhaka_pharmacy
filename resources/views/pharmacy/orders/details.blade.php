@@ -229,7 +229,6 @@
 
                             </div>
                         @endforeach
-                        {{ $do->getPharmacyStatus(pharmacy()->id) }}
                         @if ($do->getPharmacyStatus(pharmacy()->id) == 0 || $do->getPharmacyStatus(pharmacy()->id) == 1)
                             <div class="col-12 text-end mt-2">
                                 <input type="submit" value="Confirm" class="btn btn-success">

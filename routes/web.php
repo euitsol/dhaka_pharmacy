@@ -116,6 +116,7 @@ use App\Http\Controllers\Pharmacy\WithdrawMethodController as PharmacyWithdrawMe
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
 use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
+use Illuminate\Support\Facades\Broadcast;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,6 +132,9 @@ use App\Http\Controllers\User\PaymentController as UserPaymentController;
 // Route::get('/', function () {
 //     return redirect()->route('admin.login');
 // });
+
+
+Broadcast::routes();
 
 Route::controller(CartAjaxController::class)->prefix('cart')->name('cart.')->group(function () {
     Route::post('add', 'add')->name('add');

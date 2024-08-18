@@ -60,11 +60,9 @@
     <script>
         $(document).ready(function() {
             var id = {{ admin()->id }};
-            console.log(id);
-            Echo.private('App.Models.Admin.' + id)
-                .notification((notification) => {
-                    console.log(notification);
-                });
+
+
+
         });
     </script>
 @endpush

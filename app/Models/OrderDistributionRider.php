@@ -32,52 +32,19 @@ class OrderDistributionRider extends BaseModel
         }
     }
 
-    public function scopeStatus($query, $status)
-    {
-        switch ($status) {
-            case 'dispute':
-                $status = 0;
-                break;
-            case 'assigned':
-                $status = 1;
-                break;
-            case 'picking-up':
-                $status = 2;
-                break;
-            case 'picked-up':
-                $status = 3;
-                break;
-            case 'delivering':
-                $status = 4;
-                break;
-            case 'delivered':
-                $status = 5;
-                break;
-            default:
-                $status =  '';
-                break;
-        }
-        $query->where('status', $status);
-        if ($status == 0) {
-            $query->orWhere('status', -1);
-        }
-        return $query;
-    }
     public function statusBg()
     {
         switch ($this->status) {
             case 0:
-                return 'badge badge-secondary';
+                return 'badge badge-success';
             case 1:
                 return 'badge bg-warning';
             case 2:
                 return 'badge badge-primary';
             case 3:
                 return 'badge badge-dark';
-            case 4:
-                return 'badge badge-info';
-            case 5:
-                return 'badge badge-success';
+            default:
+                return 'badge badge-secondary';
         }
     }
     public function statusTitle()
@@ -90,11 +57,9 @@ class OrderDistributionRider extends BaseModel
             case 2:
                 return 'picked-up';
             case 3:
-                return 'picked-up';
-            case 4:
-                return 'delivering';
-            case 5:
                 return 'delivered';
+            default:
+                return 'not defined';
         }
     }
 }

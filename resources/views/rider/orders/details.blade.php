@@ -291,7 +291,7 @@
                             <form action="{{ route('rider.order_management.user.otp_verify') }}" method="POST"
                                 class="text-center">
                                 @csrf
-                                <input type="hidden" name="od" value="{{ $dor->od->id }}">
+                                <input type="hidden" name="od" value="{{  encrypt($dor->od->id) }}">
                                 <div class="field-set otp-field text-center">
                                     <input name=otp[] type="number" />
                                     <input name=otp[] type="number" disabled />

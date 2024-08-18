@@ -15,7 +15,7 @@ trait OTPTrait
 
         $do = new DeliveryOtp;
         $do->order_distribution_id = $data['order_distribution_id'];
-        $do->user_id = $data['user_id'];
+        $do->rider_id = $data['rider_id'];
         $do->otp = otp();
         $do->status = 1;
         // $do->created_by = $data['user_id'];

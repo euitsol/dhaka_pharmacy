@@ -1,5 +1,7 @@
 @extends('admin.layouts.master', ['pageSlug' => 'order_' . $status])
+
 @section('title', slugToTitle($status) . ' Orders')
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -63,18 +65,13 @@
                                         </td>
                                         <td>{!! remainingTime($do->pharmacy_prep_time, true) !!}</td>
                                     @elseif ($status == 'Assigned')
-                                        @php
-                                            $odr = $do->odrs
-                                                ->where('status', '!=', 0)
-                                                ->where('status', '!=', -1)
-                                                ->first();
-                                        @endphp
-                                        <td>{{ $odr->rider->name }}</td>
+                                        <td>{{ $do->assignedRider->first()->rider->name }}</td>
                                         <td><span
-                                                class="{{ $odr->statusBg() }}">{{ slugToTitle($odr->statusTitle()) }}</span>
+                                                class="{{ $do->statusBg() }}">{{ slugToTitle($do->statusTitle()) }}</span>
                                         </td>
                                     @endif
-                                    <td>{!! get_taka_icon() !!}{{ number_format(ceil($do->order->totalDiscountPrice + $do->order->delivery_fee)) }}
+                                    <td>
+                                        {!! get_taka_icon() !!}{{ number_format(ceil($do->order->totalDiscountPrice + $do->order->delivery_fee)) }}
                                     </td>
                                     <td>{{ $do->creater->name ?? 'System' }}</td>
 
@@ -97,10 +94,6 @@
 
                         </tbody>
                     </table>
-                </div>
-                <div class="card-footer py-4">
-                    <nav class="d-flex justify-content-end" aria-label="...">
-                    </nav>
                 </div>
             </div>
         </div>
