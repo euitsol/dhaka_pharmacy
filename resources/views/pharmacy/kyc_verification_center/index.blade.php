@@ -172,7 +172,7 @@
                                                 if (!empty($data)) {
                                                     $itemCount = count($data);
                                                     foreach ($data as $index => $url) {
-                                                        $result .= route([
+                                                        $result .= route('kyc.file.delete', [
                                                             'id' => encrypt($kyc->id),
                                                             'key' => $a,
                                                             'url' => encrypt($url),
