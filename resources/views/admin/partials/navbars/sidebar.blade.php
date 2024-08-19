@@ -78,7 +78,7 @@
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
                                     ['pageSlug' => 'user', 'routeName' => 'um.user.user_list', 'label' => 'Users'],
-                            
+
                                     [
                                         'pageSlug' => ['user_kyc_list', 'user_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -136,7 +136,7 @@
                                         'routeName' => 'pm.pharmacy.pharmacy_list',
                                         'label' => 'Pharmacies',
                                     ],
-                            
+
                                     [
                                         'pageSlug' => ['ps_kyc_list', 'p_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -550,6 +550,7 @@
                             $pageSlug == 'order_Submitted' ||
                             $pageSlug == 'order_Processed' ||
                             $pageSlug == 'order_Waiting-for-rider' ||
+                            $pageSlug == 'order_Delivered' ||
                             $pageSlug == 'order_Assigned') @else collapsed @endif" data-toggle="collapse"
                         href="#order_management"
                         @if (
@@ -557,6 +558,7 @@
                                 $pageSlug == 'order_Submitted' ||
                                 $pageSlug == 'order_Processed' ||
                                 $pageSlug == 'order_Waiting-for-rider' ||
+                                $pageSlug == 'order_Delivered' ||
                                 $pageSlug == 'order_Assigned') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-truck-fast"></i>
                         <span class="nav-link-text">{{ __('Order Management') }}</span>
@@ -568,6 +570,7 @@
                             $pageSlug == 'order_Submitted' ||
                             $pageSlug == 'order_Processed' ||
                             $pageSlug == 'order_Waiting-for-rider' ||
+                            $pageSlug == 'order_Delivered' ||
                             $pageSlug == 'order_Assigned') show @endif" id="order_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
@@ -605,21 +608,28 @@
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'assigned',
-                                        'label' => 'Assigned',
+                                        'label' => 'Assigned Orders',
+                                    ],
+                                    [
+                                        'pageSlug' => 'order_Delivered',
+                                        'routeName' => 'om.order.order_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'delivered',
+                                        'label' => 'Delivered Orders',
                                     ],
                                     [
                                         'pageSlug' => 'order_Failed',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'failed',
-                                        'label' => 'Order List (Failed)',
+                                        'label' => 'Failed Orders',
                                     ],
                                     [
                                         'pageSlug' => 'order_Cancel',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'cancel',
-                                        'label' => 'Order List (Cancel)',
+                                        'label' => 'Cancelled Orders',
                                     ],
                                 ],
                             ])

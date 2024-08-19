@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class OrderDistribution extends BaseModel
 {
@@ -39,7 +39,7 @@ class OrderDistribution extends BaseModel
 
     public function assignedRider()
     {
-        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id')->where('status', '!=', 0)->latest();
+        return $this->hasMany(OrderDistributionRider::class, 'order_distribution_id')->where('status', '!=', -1)->latest();
     }
 
     public function disputedRiders()
@@ -55,6 +55,16 @@ class OrderDistribution extends BaseModel
     public function active_otps()
     {
         return $this->hasMany(DistributionOtp::class, 'order_distribution_id')->where('status', 1)->latest();
+    }
+
+    public function delivery_otps()
+    {
+        return $this->hasMany(DeliveryOtp::class, 'order_distribution_id');
+    }
+
+    public function delivery_active_otps()
+    {
+        return $this->hasMany(DeliveryOtp::class, 'order_distribution_id')->where('status', 1)->latest();
     }
 
     public function getPharmacyStatus($pharmacy_id)
@@ -88,11 +98,9 @@ class OrderDistribution extends BaseModel
             case 4:
                 return 'badge bg-primary';
             case 5:
-                return 'badge bg-dark';
-            case 6:
                 return 'badge bg-success';
-            case 7:
-                return 'badge bg-danger';
+            default:
+                return 'badge bg-dark';
 
         }
     }
@@ -111,10 +119,8 @@ class OrderDistribution extends BaseModel
                 return 'Picked-up';
             case 5:
                 return 'Delivered';
-            case 6:
-                return 'Finish';
-            case 7:
-                return 'Cancel';
+            default:
+                return 'Not-defined';
             }
     }
 
