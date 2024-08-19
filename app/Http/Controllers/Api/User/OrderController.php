@@ -68,7 +68,7 @@ class OrderController extends BaseController
         $op->save();
         return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->id]);
     }
-    public function details(Request $request)
+    public function details(Request $request): JsonResponse
     {
         $user = $request->user();
         $order = Order::with([
@@ -93,7 +93,7 @@ class OrderController extends BaseController
         }
     }
 
-    public function order_confirm(OrderConfirmRequest $request)
+    public function order_confirm(OrderConfirmRequest $request): JsonResponse
     {
         $user = $request->user();
         $order = Order::with(['products'])
@@ -122,7 +122,7 @@ class OrderController extends BaseController
         }
     }
 
-    public function list(Request $request)
+    public function list(Request $request): JsonResponse
     {
         $user = $request->user();
         $status = $request->status;
