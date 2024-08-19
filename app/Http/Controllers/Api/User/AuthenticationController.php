@@ -51,7 +51,7 @@ class AuthenticationController extends BaseController
             if ($this->check_throttle($user)) {
                 return sendResponse(false, $this->check_throttle($user), null, 403);
             } else {
-                $user->otp = otp();
+                $user->otp = '123456';
                 $user->phone_verified_at = Carbon::now();
                 $user->save();
 
@@ -100,7 +100,7 @@ class AuthenticationController extends BaseController
         $user->name = $name;
         $user->phone = $phone;
         $user->password = $password;
-        $user->otp = otp();
+        $user->otp = '123456';
         $user->save();
         return sendResponse(true, 'Your registration was successful, and a verification code has been sent to your phone.', $user->only('id'), 200);
     }
@@ -113,7 +113,7 @@ class AuthenticationController extends BaseController
             if ($this->check_throttle($user)) {
                 return sendResponse(false, $this->check_throttle($user), null, 403);
             } else {
-                $user->otp = otp();
+                $user->otp = '123456';
                 $user->save();
 
                 $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
