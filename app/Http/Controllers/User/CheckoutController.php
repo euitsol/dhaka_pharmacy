@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SingleOrderRequest;
 use App\Http\Requests\User\OrderConfirmRequest;
+use App\Http\Requests\User\OrderIntRequest;
+use App\Http\Traits\LocationDistanceCalculateTrait;
 use App\Http\Traits\OrderTrait;
 use App\Models\Address;
 use App\Models\AddToCart;
@@ -22,27 +24,30 @@ use App\Models\Payment;
 
 class CheckoutController extends Controller
 {
-    use OrderNotificationTrait, TransformProductTrait, OrderTrait, TransformOrderItemTrait;
+    use OrderNotificationTrait, TransformProductTrait, OrderTrait, TransformOrderItemTrait, LocationDistanceCalculateTrait;
 
-    public function int_order(Request $request): RedirectResponse
+    public function int_order(OrderIntRequest $request)
     {
         $order = $this->createOrder();
 
-        if (isset($request->products) && !empty($request->products)) {   //for single orders & selected item checkout
-
-        } else { // for all cart item checkout
+        if (isset($request->product)) { // for single order int
+            $op = new OrderProduct();
+            $op->order_id = $order->id;
+            $op->product_id = $request->product;
+            $op->unit_id = $request->unit_id;
+            $op->quantity = $request->quantity;
+            $op->save();
+        } else { // for multiple order int
 
             $carts = AddToCart::currentCart()->get();
             foreach ($carts as $cart) {
-                $cart->status = -1;
-                $cart->update();
-
                 $op = new OrderProduct();
                 $op->order_id = $order->id;
                 $op->product_id = $cart->product_id;
                 $op->unit_id = $cart->unit_id;
                 $op->quantity = $cart->quantity;
                 $op->save();
+                $cart->forceDelete();
             }
         }
 
@@ -68,10 +73,10 @@ class CheckoutController extends Controller
     }
     public function order_confirm(OrderConfirmRequest $req, $order_id)
     {
-        $order = Order::with(['customer', 'address', 'ref_user', 'products'])->findOrFail(decrypt($order_id));
+        $order = Order::with(['products'])->self()->findOrFail(decrypt($order_id));
         $order->address_id = $req->address;
         $order->status = 1; //Order Submit
-        $order->delivery_type = $req->delivery_type;
+        $order->delivery_type = 0;
         $order->delivery_fee = $req->delivery_fee;
         $order->save();
         $this->calculateOrderTotalDiscountPrice($order);
@@ -81,7 +86,7 @@ class CheckoutController extends Controller
         $payment->payment_method = $req->payment_method;
         $payment->amount = $order->totalDiscountPrice + $order->delivery_fee;
         $payment->order_id = $order->id;
-        $payment->status = 0; //Initialize 
+        $payment->status = 0; //Initialize
         $payment->creater()->associate(user());
         $payment->save();
 
