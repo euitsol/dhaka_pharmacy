@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiInfoShareController;
 use App\Http\Controllers\Api\Frontend\CategoryController;
 use App\Http\Controllers\Api\Frontend\ProductController;
 use App\Http\Controllers\Api\User\AddressController;
@@ -60,7 +61,10 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 });
 
 
-
+Route::controller(ApiInfoShareController::class)->prefix('api-info')->name('api.')->group(function () {
+    Route::get('/secure', 'secureApiInfo')->middleware('auth:api-user')->name('secure.i');
+    Route::get('/social', 'socialApiInfo')->name('social.i');
+});
 
 Route::group(['as' => 'f.', 'prefix' => ''], function () {
     Route::controller(CategoryController::class)->prefix('categories')->name('cats.')->group(function () {
