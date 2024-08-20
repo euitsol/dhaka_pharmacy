@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\User\AuthenticationController;
 use App\Http\Controllers\Api\User\CartAjaxController;
 use App\Http\Controllers\Api\User\OrderController;
 use App\Http\Controllers\Api\User\PaymentController;
+use App\Http\Controllers\Api\User\SocialLoginController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\WishlistController;
 
@@ -23,6 +24,9 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::post('forgot-password/phone-check', 'fp_phone_check')->name('fp.pc');
         Route::post('forgot-password/verify-otp', 'fp_verify_otp')->name('fp.v.o');
         Route::post('forgot-password/update', 'fp_update')->name('fp.u');
+    });
+    Route::controller(SocialLoginController::class)->prefix('social-login')->name('social.')->group(function () {
+        Route::post('/', 'social_login')->name('l');
     });
 
     Route::controller(UserController::class)->middleware('auth:api-user')->prefix('profile')->name('p')->group(function () {
