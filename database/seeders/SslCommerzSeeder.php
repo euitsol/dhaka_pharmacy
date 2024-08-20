@@ -13,10 +13,10 @@ class SslCommerzSeeder extends Seeder
      */
     public function run(): void
     {
-        $datas = ['store_id'=>'SSLCZ_STORE_ID','store_password'=>'SSLCZ_STORE_PASSWORD','test_mode'=>'SSLCZ_TESTMODE'];
-        
-        
-        foreach($datas as $key=>$env_key){
+        $datas = ['store_id' => 'SSLCZ_STORE_ID', 'store_password' => 'SSLCZ_STORE_PASSWORD', 'mode' => 'SSLCZ_MODE'];
+
+
+        foreach ($datas as $key => $env_key) {
             PaymentGateway::create([
                 'key' => $key,
                 'env_key' => $env_key,
