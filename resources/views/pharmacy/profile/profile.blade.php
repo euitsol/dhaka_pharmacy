@@ -1,4 +1,5 @@
 @extends('pharmacy.layouts.master', ['pageSlug' => 'pharmacy_profile'])
+@section('title', 'My Profile')
 @push('css_link')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
         integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
@@ -40,18 +41,6 @@
                                                 placeholder="Enter Name" value="{{ $pharmacy->name }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label>{{ __('Father Name') }}</label>
-                                            <input type="text" name="father_name" class="form-control"
-                                                placeholder="Enter Father Name" value="{{ $pharmacy->father_name }}">
-                                            @include('alerts.feedback', ['field' => 'father_name'])
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label>{{ __('Nother Name') }}</label>
-                                            <input type="text" name="mother_name" class="form-control"
-                                                placeholder="Enter Mother Name" value="{{ $pharmacy->mother_name }}">
-                                            @include('alerts.feedback', ['field' => 'mother_name'])
-                                        </div>
 
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Phone') }}</label>
@@ -73,11 +62,23 @@
                                             @include('alerts.feedback', ['field' => 'emergency_phone'])
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Date of Birth') }}</label>
-                                            <input type="date" name="dob"
-                                                value="{{ $pharmacy->dob ? $pharmacy->dob : old('dob') }}"
+                                            <label>{{ __('Identification Type') }}</label>
+                                            <select name="identification_type" id="identification_type"
                                                 class="form-control">
-                                            @include('alerts.feedback', ['field' => 'dob'])
+                                                <option selected hidden value=" ">
+                                                    {{ __('Select Identification Type') }}
+                                                </option>
+                                                <option value="NID"
+                                                    {{ $pharmacy->identification_type == 'NID' ? 'selected' : '' }}>
+                                                    {{ __('National ID Card') }}</option>
+                                                <option value="DOB"
+                                                    {{ $pharmacy->identification_type == 'DOB' ? 'selected' : '' }}>
+                                                    {{ __('Birth Certificate No') }}</option>
+                                                <option value="Passport"
+                                                    {{ $pharmacy->identification_type == 'Passport' ? 'selected' : '' }}>
+                                                    {{ __('Passport NO') }}</option>
+                                            </select>
+                                            @include('alerts.feedback', ['field' => 'identification_type'])
                                         </div>
                                     </div>
                                 </div>
@@ -100,27 +101,6 @@
                                 </div>
                             </div>
                             <div class="row">
-
-
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Identification Type') }}</label>
-                                    <select name="identification_type" id="identification_type" class="form-control">
-                                        <option selected hidden value="">{{ __('Select Identification Type') }}
-                                        </option>
-                                        <option value="NID"
-                                            {{ $pharmacy->identification_type == 'NID' ? 'selected' : '' }}>
-                                            {{ __('National ID Card') }}</option>
-                                        <option value="DOB"
-                                            {{ $pharmacy->identification_type == 'DOB' ? 'selected' : '' }}>
-                                            {{ __('Birth Certificate No') }}</option>
-                                        <option value="Passport"
-                                            {{ $pharmacy->identification_type == 'Passport' ? 'selected' : '' }}>
-                                            {{ __('Passport NO') }}</option>
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'identification_type'])
-                                </div>
-
-
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Identification NO') }}</label>
                                     <input type="text" name="identification_no" id="identification_no"
@@ -129,30 +109,16 @@
                                     @include('alerts.feedback', ['field' => 'identification_no'])
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Gender') }}</label>
-                                    <select name="gender" class="form-control">
-                                        <option selected hidden value="">{{ __('Select Genger') }}</option>
-                                        <option value="Male" {{ $pharmacy->gender == 'Male' ? 'selected' : '' }}>
-                                            {{ __('Male') }}</option>
-                                        <option value="Female" {{ $pharmacy->gender == 'Female' ? 'selected' : '' }}>
-                                            {{ __('Female') }}</option>
-                                        <option value="Others" {{ $pharmacy->gender == 'Others' ? 'selected' : '' }}>
-                                            {{ __('Others') }}</option>
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'gender'])
-                                </div>
-
-
-                                <div class="form-group col-md-4">
                                     <label>{{ __('Operation Area') }}</label>
                                     @if (empty($pharmacy->oa_id))
                                         <select name="oa_id" class="form-control operation_area">
-                                            <option selected hidden>{{ __('Select Operation Area') }}</option>
+                                            <option selected hidden value=" ">{{ __('Select Operation Area') }}
+                                            </option>
                                             @foreach ($operation_areas as $area)
                                                 <option value="{{ $area->id }}">{{ $area->name }}</option>
                                             @endforeach
                                         </select>
-                                        @include('alerts.feedback', ['field' => 'osa_id'])
+                                        @include('alerts.feedback', ['field' => 'oa_id'])
                                     @else
                                         <input type="text" value="{{ $pharmacy->operation_area->name }}"
                                             class="form-control" disabled>
@@ -163,7 +129,8 @@
                                     <label>{{ __('Operation Sub Area') }}</label>
                                     @if (empty($pharmacy->osa_id))
                                         <select name="osa_id" class="form-control operation_sub_area" disabled>
-                                            <option selected hidden>{{ __('Select Operation Sub Area') }}</option>
+                                            <option selected hidden value=" ">{{ __('Select Operation Sub Area') }}
+                                            </option>
                                         </select>
                                         @include('alerts.feedback', ['field' => 'osa_id'])
                                     @else
@@ -171,32 +138,6 @@
                                             class="form-control" disabled>
                                     @endif
                                 </div>
-
-
-
-
-
-
-
-
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Age') }}</label>
-                                    <input type="text" name="age"
-                                        value="{{ $pharmacy->age ? $pharmacy->age : old('age') }}" class="form-control"
-                                        placeholder="Enter age">
-                                    @include('alerts.feedback', ['field' => 'age'])
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>{{ __('Upload CV') }}</label>
-                                        <input type="file" accept=".pdf" class="form-control" name="cv">
-                                        @include('alerts.feedback', ['field' => 'cv'])
-                                    </div>
-                                </div>
-
-
-
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Present Address') }}</label>
                                     <textarea name="present_address" class="form-control" placeholder="Enter present address">{{ $pharmacy->present_address ? $pharmacy->present_address : old('present_address') }}</textarea>
@@ -319,6 +260,12 @@
 @endpush
 @push('js')
     <script>
+        function handleErrors(response) {
+            var errors = response.errors;
+            for (var field in errors) {
+                toastr.error(errors[field][0]);
+            }
+        }
         $(document).ready(function() {
             var form = $('#updateForm');
             $('#imageInput').change(function() {
@@ -374,16 +321,32 @@
                                 'X-CSRF-TOKEN': csrfToken
                             },
                             success: function(response) {
-                                console.log('Image uploaded successfully');
+                                if (!response.success) {
+                                    $('.profile_image .img').removeClass(
+                                        'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src',
+                                        "{{ storage_url($pharmacy->image) }}");
+                                    handleErrors(response);
+                                }
+
                             },
                             complete: function(response) {
-                                // Remove animation classes after AJAX request is complete
-                                $('.profile_image .img').removeClass(
-                                    'div_animation overly');
-                                $('.profile_image .img img.avatar').removeClass(
-                                    'image_animation');
-                                $('.profile_image .camera-icon').css('display', 'block');
-                                toastr.success(response.responseJSON.message);
+                                if (response.responseJSON.message) {
+                                    console.log(response.responseJSON);
+                                    $('.profile_image .img').removeClass(
+                                        'div_animation overly');
+                                    $('.profile_image .img img.avatar').removeClass(
+                                        'image_animation');
+                                    $('.profile_image .camera-icon').css('display',
+                                        'block');
+                                    $('#previewImage').attr('src', response.responseJSON
+                                        .image);
+                                    toastr.success(response.responseJSON.message);
+                                }
                             },
                             error: function(xhr) {
                                 if (xhr.status === 422) {
@@ -394,20 +357,8 @@
                                     $('.profile_image .camera-icon').css('display',
                                         'block');
                                     $('#previewImage').attr('src',
-                                        "{{ $pharmacy->image ? storage_url($pharmacy->image) : asset('no_img/no_img.jpg') }}"
-                                    );
+                                        "{{ storage_url($pharmacy->image) }}");
                                     toastr.error('Something is wrong!');
-                                    var errors = xhr.responseJSON.errors;
-                                    $.each(errors, function(field, messages) {
-                                        var errorHtml = '';
-                                        $.each(messages, function(index, message) {
-                                            errorHtml +=
-                                                '<span class="invalid-feedback mt-4 d-block" role="alert">' +
-                                                message + '</span>';
-                                        });
-                                        $('.profile_image img').after(
-                                            errorHtml);
-                                    });
                                 } else {
                                     console.log('An error occurred.');
                                 }

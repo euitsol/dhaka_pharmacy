@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ajcastro/eager-load-pivot-relations": "^0.3.0",
         "barryvdh/laravel-translation-manager": "^0.6.5",
         "davcpas1234/laravelpdfviewer": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
@@ -19,9 +20,11 @@
         "league/csv": "^9.13",
         "livewire/livewire": "^3.3",
         "php-flasher/flasher-laravel": "^1.15",
+        "php-flasher/flasher-sweetalert-laravel": "^1.15",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-backup": "^8.4",
         "spatie/laravel-permission": "^6.2",
+        "stichoza/google-translate-php": "^5.1",
         "tanmuhittin/laravel-google-translate": "^2.2",
         "yajra/laravel-datatables-oracle": "^10.3.1"
     },

@@ -28,36 +28,36 @@
             <li>
                 <a class="@if (
                     $pageSlug == 'dispute_orders' ||
-                        $pageSlug == 'cancel_orders' ||
-                        $pageSlug == 'waiting-for-pickup_orders' ||
+                        $pageSlug == 'assigned_orders' ||
+                        $pageSlug == 'picking-up_orders' ||
                         $pageSlug == 'picked-up_orders' ||
                         $pageSlug == 'delivered_orders' ||
-                        $pageSlug == 'finish_orders') @else collapsed @endif" data-toggle="collapse"
+                        $pageSlug == 'delivering_orders') @else collapsed @endif" data-toggle="collapse"
                     href="#order_managements"
                     @if (
                         $pageSlug == 'dispute_orders' ||
-                            $pageSlug == 'cancel_orders' ||
-                            $pageSlug == 'waiting-for-pickup_orders' ||
+                            $pageSlug == 'assigned_orders' ||
+                            $pageSlug == 'picking-up_orders' ||
                             $pageSlug == 'picked-up_orders' ||
                             $pageSlug == 'delivered_orders' ||
-                            $pageSlug == 'finish_orders') aria-expanded="true" @else aria-expanded="false" @endif>
+                            $pageSlug == 'delivering_orders') aria-expanded="true" @else aria-expanded="false" @endif>
                     <i class="fa-solid fa-network-wired"></i>
                     <span class="nav-link-text">{{ __('Order Managements') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
                 <div class="collapse @if (
                     $pageSlug == 'dispute_orders' ||
-                        $pageSlug == 'cancel_orders' ||
-                        $pageSlug == 'waiting-for-pickup_orders' ||
+                        $pageSlug == 'assigned_orders' ||
+                        $pageSlug == 'picking-up_orders' ||
                         $pageSlug == 'picked-up_orders' ||
                         $pageSlug == 'delivered_orders' ||
-                        $pageSlug == 'finish_orders') show @endif" id="order_managements">
+                        $pageSlug == 'delivering_orders') show @endif" id="order_managements">
                     <ul class="nav pl-2">
 
-                        <li @if ($pageSlug == 'waiting-for-pickup_orders') class="active" @endif>
-                            <a href="{{ route('rider.order_management.index', 'waiting-for-pickup') }}">
-                                <i class="fa-solid fa-minus @if ($pageSlug == 'waiting-for-pickup_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Waiting for Pickup' }}</p>
+                        <li @if ($pageSlug == 'assigned_orders') class="active" @endif>
+                            <a href="{{ route('rider.order_management.index', 'assigned') }}">
+                                <i class="fa-solid fa-minus @if ($pageSlug == 'assigned_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Assigned Orders' }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'picked-up_orders') class="active" @endif>
@@ -67,37 +67,56 @@
                                 <p>{{ 'Picked Up Orders' }}</p>
                             </a>
                         </li>
+                        {{-- <li @if ($pageSlug == 'picking-up_orders') class="active" @endif>
+                            <a href="{{ route('rider.order_management.index', 'picking-up') }}">
+                                <i
+                                    class="fa-solid fa-minus @if ($pageSlug == 'picking-up_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Picking Up' }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'picked-up_orders') class="active" @endif>
+                            <a href="{{ route('rider.order_management.index', 'picked-up') }}">
+                                <i
+                                    class="fa-solid fa-minus @if ($pageSlug == 'picked-up_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Picked Up' }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'delivering_orders') class="active" @endif>
+                            <a href="{{ route('rider.order_management.index', 'delivering') }}">
+                                <i
+                                    class="fa-solid fa-minus @if ($pageSlug == 'delivering_orders') fa-beat-fade @endif"></i>
+                                <p>{{ 'Delivering' }}</p>
+                            </a>
+                        </li>
                         <li @if ($pageSlug == 'delivered_orders') class="active" @endif>
                             <a href="{{ route('rider.order_management.index', 'delivered') }}">
                                 <i
                                     class="fa-solid fa-minus @if ($pageSlug == 'delivered_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Delivered Orders' }}</p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug == 'finish_orders') class="active" @endif>
-                            <a href="{{ route('rider.order_management.index', 'finish') }}">
-                                <i
-                                    class="fa-solid fa-minus @if ($pageSlug == 'finish_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Finish Orders' }}</p>
+                                <p>{{ 'Delivered' }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'dispute_orders') class="active" @endif>
                             <a href="{{ route('rider.order_management.index', 'dispute') }}">
                                 <i
                                     class="fa-solid fa-minus @if ($pageSlug == 'dispute_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Dispute Orders' }}</p>
+                                <p>{{ 'Dispute' }}</p>
                             </a>
-                        </li>
-                        <li @if ($pageSlug == 'cancel_orders') class="active" @endif>
-                            <a href="{{ route('rider.order_management.index', 'cancel') }}">
-                                <i
-                                    class="fa-solid fa-minus @if ($pageSlug == 'cancel_orders') fa-beat-fade @endif"></i>
-                                <p>{{ 'Cancel Orders' }}</p>
-                            </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
+            </li>
+            <li @if ($pageSlug == 'wm') class="active" @endif>
+                <a href="{{ route('rider.wm.list') }}">
+                    <i class="fa-regular fa-credit-card @if ($pageSlug == 'wm') fa-beat-fade @endif"></i>
+                    <p>{{ 'Withdraw Method' }}</p>
+                </a>
+            </li>
+            <li @if ($pageSlug == 'earning') class="active" @endif>
+                <a href="{{ route('rider.earning.index') }}">
+                    <i
+                        class="fa-solid fa-hand-holding-dollar @if ($pageSlug == 'earning') fa-beat-fade @endif"></i>
+                    <p>{{ 'My Earnings' }}</p>
+                </a>
             </li>
             <li @if ($pageSlug == 'feedback') class="active" @endif>
                 <a href="{{ route('rider.fdk.index') }}">

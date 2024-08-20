@@ -59,6 +59,14 @@
     height: 300px;
  }
 
+ #map ol li, .map_direction ol li{
+    color: #fff !important;
+ }
+
+ .mapboxgl-ctrl-top-left .mapboxgl-ctrl {
+    max-width: 15rem;
+ }
+
  .mapboxgl-ctrl-top-left .directions-control .mapbox-directions-origin,
  .mapboxgl-ctrl-top-left .directions-control .mapbox-directions-destination {
      display: none;
@@ -71,12 +79,31 @@
 
  .mapbox-directions-steps ol li:first-child {
     display: block;
+    color: #fff !important;
   }
 
   .mapbox-directions-steps ol li:not(:first-child) {
     display: none;
+    color: #fff !important;
   }
 
   .mapbox-directions-instructions{
     max-height: 5rem;
+    background-color: #0b215f94;
+    overflow: auto;
+  }
+
+  .mapbox-directions-component.mapbox-directions-route-summary{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0px;
+    background-color: #25459d8c;
+  }
+
+  .mapbox-directions-component.mapbox-directions-route-summary h1, .mapbox-directions-component.mapbox-directions-route-summary span{
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 0px;
+    margin-right: .5rem;
   }

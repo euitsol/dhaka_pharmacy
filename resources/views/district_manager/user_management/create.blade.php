@@ -1,5 +1,5 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'user'])
-
+@section('title', 'Create User')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">

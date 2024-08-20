@@ -22,7 +22,7 @@ class CustomerOtpVerifyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'delivered_otp'=>'required',
+            'delivered_otp'=>'required|numeric',
         ];
     }
 }

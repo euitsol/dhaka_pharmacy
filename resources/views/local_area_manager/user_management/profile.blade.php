@@ -1,72 +1,100 @@
 @extends('local_area_manager.layouts.master', ['pageSlug' => 'user'])
-
+@section('title', 'User Profile')
 @section('content')
-    <div class="row">
+    <div class="row profile">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
+            <div class="card h-100 mb-0">
+                <div class="card-header px-4">
                     <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button class="nav-link active w-25" id="nav-home-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
-                                aria-selected="true">Data</button>
-                            <button class="nav-link w-25" id="nav-profile-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
-                                aria-selected="false">Data</button>
-                            <button class="nav-link w-25" id="nav-contact-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
-                                aria-selected="false">Data</button>
-                            <button class="nav-link w-25" id="nav-contact-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
-                                aria-selected="false">Data</button>
+                        <div class="nav nav-tabs row" id="nav-tab" role="tablist">
+                            <button class="nav-link active col" id="details-tab" data-bs-toggle="tab" data-bs-target="#details"
+                                type="button" role="tab" aria-controls="details"
+                                aria-selected="true">{{ __('Details') }}</button>
+                            <button class="nav-link col" id="kyc-tab" data-bs-toggle="tab" data-bs-target="#kyc"
+                                type="button" role="tab" aria-controls="kyc"
+                                aria-selected="false">{{ __('KYC') }}</button>
                         </div>
                     </nav>
+
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                            aria-labelledby="nav-home-tab">...</div>
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...
+                        <div class="tab-pane fade  show active" id="details" role="tabpanel"
+                            aria-labelledby="details-tab">
+                            @include('local_area_manager.user_management.includes.details')
                         </div>
-                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...
+                        <div class="tab-pane fade" id="kyc" role="tabpanel" aria-labelledby="kyc-tab">
+                            @include('local_area_manager.user_management.includes.kyc')
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card card-user">
+            <div class="card card-user mb-0">
                 <div class="card-body">
                     <p class="card-text">
                     <div class="author">
-                        <div class="block block-one"></div>
-                        <div class="block block-two"></div>
-                        <div class="block block-three"></div>
-                        <div class="block block-four"></div>
-                        <a href="#">
-                            <img class="avatar" src="{{ asset('white') }}/img/emilyz.jpg" alt="">
-                            <h5 class="title">{{ $user->name }}</h5>
-                        </a>
+                        <img class="avatar" src="{{ auth_storage_url($user->image, $user->gender) }}" alt="">
+                        <h5 class="title mb-0">{{ $user->name }}</h5>
                         <p class="description">
-                            {{ __('Ceo/Co-Founder') }}
+                            {{ __($user->designation ?? 'General User') }}
                         </p>
                     </div>
                     </p>
-                    <div class="card-description">
-                        {{ __('Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...') }}
+                    <div class="card-description bio my-2 text-justify">
+                        {!! $user->bio !!}
                     </div>
-                </div>
-                <div class="card-footer">
-                    <div class="button-container">
-                        <button class="btn btn-icon btn-round btn-facebook">
-                            <i class="fab fa-facebook"></i>
-                        </button>
-                        <button class="btn btn-icon btn-round btn-twitter">
-                            <i class="fab fa-twitter"></i>
-                        </button>
-                        <button class="btn btn-icon btn-round btn-google">
-                            <i class="fab fa-google-plus"></i>
-                        </button>
+                    <div class="earning_info py-3">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card bg-transparent p-0 mb-0">
+                                    <div class="card-body p-2">
+                                        <h5 class="title">{{ __('Total Orders') }}</h5>
+                                        <h5 class="m-0 amount">{{ number_format($orders->count()) }}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card bg-transparent p-0 mb-0">
+                                    <div class="card-body p-2">
+                                        <h5 class="title">{{ __('Total Payments') }}</h5>
+                                        <h5 class="m-0 amount">
+                                            {{ number_format($payments->count()) }}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card bg-transparent p-0 mb-0">
+                                    <div class="card-body p-2">
+                                        <h5 class="title">{{ __('Total Reviews') }}</h5>
+                                        <h5 class="m-0 amount">{{ number_format($reviews->count()) }}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact_info py-3">
+                        <ul class="m-0 px-3 list-unstyled">
+                            <li>
+                                <i class="fa-solid fa-phone-volume mr-2"></i>
+                                <span class="title">{{ __('Mobile : ') }}</span>
+                                <span class="content">{{ $user->phone ?? '--' }}</span>
+                            </li>
+                            <li>
+                                <i class="fa-regular fa-envelope mr-2"></i>
+                                <span class="title">{{ __('Email : ') }}</span>
+                                <span class="content">{{ $user->email ?? '--' }}</span>
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-location-dot mr-2"></i>
+                                <span class="title">{{ __('Address : ') }}</span>
+                                <span class="content">{!! $user->present_address ?? '--' !!}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

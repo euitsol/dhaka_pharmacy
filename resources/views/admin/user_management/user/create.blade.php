@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'user'])
-
+@section('title', 'Create User')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
@@ -18,9 +18,9 @@
                         </div>
                     </div>
                 </div>
+                <form method="POST" action="{{ route('um.user.user_create') }}">
+                    @csrf
                 <div class="card-body">
-                    <form method="POST" action="{{ route('um.user.user_create') }}">
-                        @csrf
                         <div class="form-group">
 
                             <label>{{__('Name')}}</label>
@@ -34,9 +34,11 @@
                                 value="{{ old('phone') }}">
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
+                    </div>
+                    <div class="card-footer text-end">
                         <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
         @include('admin.partials.documentation',['document'=>$document])

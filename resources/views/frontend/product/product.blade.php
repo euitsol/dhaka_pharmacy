@@ -1,6 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title', 'Home')
-
+@section('title', 'Products')
 @section('content')
     <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <title> @yield('title', 'Dhakha Pharmacy') - Dhakha Pharmacy </title>
+    <title> @yield('title', 'Rider Dashboard'){{ __(' - Dhakha Pharmacy') }} </title>
 
     <!-- Favicon -->
     <link rel="icon" href="{{ storage_url(settings('site_favicon')) }}">
@@ -15,15 +15,12 @@
     <link rel="icon" href="" type="image/png">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 
     {{-- White Dashboard --}}
     <link href="{{ asset('white') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
-    <!--======== toastr css ========-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
-        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('rider/css/custom.css') }}" rel="stylesheet">
     <link href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet' />
@@ -33,8 +30,15 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     @stack('css')
+    <!--======== toastr css ========-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
+        const rider_pin = `{{ asset('map/rider-pinpng.png') }}`;
+        const pharmacy_pin = `{{ asset('map/pharmacy-pin.png') }}`;
+        const user_pin = `{{ asset('map/user-pin.png') }}`;
     </script>
 </head>
 
@@ -80,7 +84,6 @@
     @stack('js')
 
 
-    <script src="{{ asset('rider/js/map.js') }}"></script>
 
 </body>
 

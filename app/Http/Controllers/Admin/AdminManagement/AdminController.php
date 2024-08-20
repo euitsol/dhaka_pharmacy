@@ -44,6 +44,13 @@ class AdminController extends Controller
     public function profile($id): View
     {
         $data['admin'] = Admin::with(['role', 'created_user', 'updated_user'])->findOrFail($id);
+        $ipsArray = json_decode($data['admin']->ip, true);
+        if (is_array($ipsArray)) {
+            $ips = implode(' | ', $ipsArray);
+            $data['admin']->ips = $ips;
+        } else {
+            $data['admin']->ips = '';
+        }
         return view('admin.admin_management.admin.profile', $data);
     }
     public function create(): View

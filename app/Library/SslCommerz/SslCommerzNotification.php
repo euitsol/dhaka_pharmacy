@@ -212,7 +212,7 @@ class SslCommerzNotification extends AbstractSslCommerz
                 if (strpos($formattedResponse['failedreason'], 'Store Credential') === false) {
                     $message = $formattedResponse['failedreason'];
                 } else {
-                    $message = "Check the SSLCZ_TESTMODE and SSLCZ_STORE_PASSWORD value in your .env; DO NOT USE MERCHANT PANEL PASSWORD HERE.";
+                    $message = "Check the SSLCZ_MODE and SSLCZ_STORE_PASSWORD value in your .env; DO NOT USE MERCHANT PANEL PASSWORD HERE.";
                 }
 
                 return $message;

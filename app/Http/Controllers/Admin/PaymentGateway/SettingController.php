@@ -15,13 +15,14 @@ class SettingController extends Controller
 {
 
 
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
     public function ssl_commerz(): View
     {
         $data['pg_settings'] = PaymentGateway::pluck('value', 'key')->all();
-        $data['document'] = Documentation::where('module_key','pg_settings')->first();
+        $data['document'] = Documentation::where('module_key', 'pg_settings')->first();
         return view('admin.payment_gateway.settings.ssl_commerz', $data);
     }
 
@@ -37,7 +38,7 @@ class SettingController extends Controller
             foreach ($data as $key => $value) {
                 $setting = PaymentGateway::updateOrCreate(['key' => $key], ['value' => $value]);
                 if (!empty($setting->env_key)) {
-                    $env = $this->set($setting->env_key, '"'.$value.'"', $env);
+                    $env = $this->set($setting->env_key, '"' . $value . '"', $env);
                 }
             }
 
@@ -63,6 +64,4 @@ class SettingController extends Controller
         }
         return $env;
     }
-
-
 }

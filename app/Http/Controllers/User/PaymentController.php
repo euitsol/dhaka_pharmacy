@@ -24,11 +24,10 @@ class PaymentController extends Controller
         return $this->middleware('auth');
     }
 
-    public function payment_list(Request $request)
+    public function list(Request $request)
     {
-        $data['pageNumber'] = $request->query('page', 1);
         $filter_val = $request->get('filter') ?? request('filter');
-        $data['filterValue'] = $filter_val;
+        $filter_val = $filter_val ?? 7;
         $perPage = 10;
 
         $query = Payment::where([
@@ -36,28 +35,36 @@ class PaymentController extends Controller
             ['customer_type', get_class(user())]
         ])->latest();
 
-        $query->with(['customer', 'order.od', 'order.ref_user']);
+        $query->with(['customer', 'order.od']);
         if ($filter_val && $filter_val != 'all') {
-            if ($filter_val == 5) {
-                $query->latest();
-                $perPage = 5;
-            } else {
-                $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
-            }
+            $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
         }
         $payments =  $query->paginate($perPage)->withQueryString();
-        $payments->getCollection()->each(function ($payment) {
+        $payments->getCollection()->each(function (&$payment) {
             $payment->date = date('d M Y h:m:s', strtotime($payment->created_at));
-            return $payment;
+            $payment->statusBg = $payment->statusBg();
+            $payment->statusTitle = slugToTitle($payment->statusTitle());
+            $payment->encrypted_id = encrypt($payment->id);
         });
-
-        $data['payments'] = $payments;
-        $data['pagination'] = $payments->links('vendor.pagination.bootstrap-5')->render();
+        $data = [
+            'payments' => $payments,
+            'filterValue' => $filter_val,
+            'pagination' => $payments->links('vendor.pagination.bootstrap-5')->render(),
+        ];
         if (request()->ajax()) {
             return response()->json($data);
         } else {
             return view('user.payment.payment_list', $data);
         }
+    }
+
+    public function details($id): View
+    {
+        $payment = Payment::with(['customer', 'order.address'])->findOrFail(decrypt($id));
+        $payment->place_date = date('M d,Y', strtotime($payment->created_at));
+        $payment->order->place_date = date('M d,Y', strtotime($payment->order->created_at));
+        $data['payment'] = $payment;
+        return view('user.payment.details', $data);
     }
 
     public function int_payment($payment_id)

@@ -1,5 +1,5 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'lam'])
-
+@section('title', 'Edit Local Area Manager')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Update Local Area Manager') }}</h4>
+                            <h4 class="card-title">{{ __('Edit Local Area Manager') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             <a href="{{ route('dm.lam.list') }}" class="btn btn-sm btn-primary">{{ _("Back") }}</a>
@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <label>{{ __('Local Area Manager Area') }}</label>
                             <select name="osa_id" class="form-control {{ $errors->has('osa_id') ? ' is-invalid' : '' }}">
-                                <option selected hidden value="">{{ __('Select Local Area Manager Area') }}</option>
+                                <option selected hidden value=" ">{{ __('Select Local Area Manager Area') }}</option>
                                 @foreach (dm()->operation_area->operation_sub_areas as $area)
                                     <option value="{{$area->id}}" {{($area->id==$lam->osa_id)? 'selected' : ''}}>{{ $area->name }}</option>
                                 @endforeach

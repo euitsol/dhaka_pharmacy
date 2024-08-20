@@ -11,11 +11,17 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\DetailsCommonDataTrait;
-
+use App\Http\Traits\TransformOrderItemTrait;
+use App\Models\KycSetting;
+use App\Models\Order;
+use App\Models\Payment;
+use App\Models\Review;
+use App\Models\SubmittedKyc;
+use App\Models\WishList;
 
 class UserController extends Controller
 {
-    use DetailsCommonDataTrait;
+    use DetailsCommonDataTrait, TransformOrderItemTrait;
 
     public function __construct()
     {
@@ -37,6 +43,14 @@ class UserController extends Controller
     public function profile($id): View
     {
         $data['user'] = User::with(['creater', 'updater'])->findOrFail($id);
+        $user_class = get_class($data['user']);
+        $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $user_class)->first();
+        $data['kyc_setting'] = KycSetting::where('type', 'user')->first();
+        $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od')->where('customer_id', $id)->where('customer_type', $user_class)->latest()->get()->each(function (&$order) {
+            $this->calculateOrderTotalDiscountPrice($order);
+        });
+        $data['reviews'] = Review::with('product')->where('customer_id', $id)->latest()->get();
+        $data['payments'] = Payment::with(['customer', 'order.od'])->where('customer_id', $id)->where('customer_type', $user_class)->latest()->get();
         return view('admin.user_management.user.profile', $data);
     }
     public function loginAs($id)

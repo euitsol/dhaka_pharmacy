@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'user_tips'])
+@section('title', 'Create User Tips')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">

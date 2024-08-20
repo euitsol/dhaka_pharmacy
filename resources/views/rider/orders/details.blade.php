@@ -1,4 +1,68 @@
 @extends('rider.layouts.master', ['pageSlug' => $dor->statusTitle() . '_orders'])
+@section('title', 'Order Details')
+@push('css')
+    <style>
+        .pharmacy-location-map,
+        .customer-location-map {
+            height: 400px;
+        }
+
+        .map_direction,
+        .c_map_direction {
+            height: 500px;
+        }
+
+        .otp-letter-input {
+            max-width: 100%;
+            height: 90px;
+            border: 1px solid #198754;
+            border-radius: 10px;
+            color: #198754;
+            font-size: 60px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .otp-field {
+            flex-direction: row;
+            column-gap: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .otp-field input {
+            height: 45px;
+            background-color: #e9e9e9 !important;
+            width: 42px;
+            border-radius: 6px;
+            outline: none;
+            font-size: 1.125rem;
+            text-align: center;
+            border: 1px solid var(--bg-1);
+            padding: unset !important;
+        }
+
+        .otp-field input:focus {
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .otp-field input::-webkit-inner-spin-button,
+        .otp-field input::-webkit-outer-spin-button {
+            display: none;
+        }
+
+        .submit_button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .verify-btn {
+            margin-top: 2rem;
+            width: 20rem;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -9,12 +73,7 @@
                             <h4 class="card-title">{{ __(ucwords($dor->statusTitle()) . ' Order Details') }}</h4>
                         </div>
                         <div class="col-6 text-end">
-                            @include('admin.partials.button', [
-                                'routeName' => 'rider.order_management.index',
-                                'className' => 'btn-primary',
-                                'params' => $dor->statusTitle(),
-                                'label' => 'Back',
-                            ])
+                            <a href="{{ URL::previous() }}" class="btn btn-success">Back</a>
                         </div>
                     </div>
                 </div>
@@ -22,247 +81,431 @@
                     <table class="table table-striped datatable">
                         <tbody>
                             <tr>
-                                <th>{{ __('Customer Name') }}</th>
+                                <td>{{ __('Order ID') }}</th>
                                 <td>:</td>
-                                <th>{{ $dor->od->order->address->name }}</th>
+                                <td>
+                                    {{ $dor->od->order->order_id }}
+                                    <span class="ml-1 badge badge-{{ $dor->statusBg() }}">{{ $dor->statusTitle() }}</span>
+                                    </th>
                                 <td>|</td>
-                                <th>{{ __('Customer Contact') }}</th>
+                                <td>{{ __('Remaining Time') }}</td>
                                 <td>:</td>
-                                <th>{{ $dor->od->order->address->phone }}</th>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Delivery Address') }}</th>
-                                <td>:</td>
-                                <th>{!! $dor->od->order->address->address !!}</th>
-                                <td>|</td>
-                                <th>{{ __('Order ID') }}</th>
-                                <td>:</td>
-                                <th>{{ $dor->od->order->order_id }}</th>
-
-                            </tr>
-                            <tr>
-                                <th>{{ __('Priority') }}</th>
-                                <td>:</td>
-                                <th>{{ $dor->priority() }}</th>
-                                <td>|</td>
-                                <th>{{ __('Total Price') }}</th>
-                                <td>:</td>
-                                <th>{!! get_taka_icon() !!}{{ number_format(ceil($dor->od->order->totalDiscountPrice + $dor->od->order->delivery_fee)) }}
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Delivery Instraction') }}</th>
-                                <td>:</td>
-                                <th colspan="5">{{ $dor->instraction }}</th>
+                                @if ($dor->status == 0 || $dor->status == 1)
+                                    <td>{!! remainingTime($dor->od->rider_collect_time, true) !!}</td>
+                                @elseif ($dor->status == 2)
+                                    <td>{!! remainingTime($dor->od->rider_delivery_time, true) !!}</td>
+                                @endif
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">{{ __('Pharmacies Details') }}</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row justify-center">
-                        @foreach ($dor->pharmacy as $pharmacy)
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">{{ $pharmacy->name }}</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table table-striped datatable">
-                                            <tbody>
-                                                <tr>
-                                                    <th>{{ __('Pharmacy Name') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ $pharmacy->name }}</th>
-                                                    <td>|</td>
-                                                    <th>{{ __('Pharmacy Contact') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ $pharmacy->phone }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>{{ __('Operational Area') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ optional($pharmacy->operation_area)->name }}</th>
-                                                    <td>|</td>
-                                                    <th>{{ __('Operational Sub Area') }}</th>
-                                                    <td>:</td>
-                                                    <th>{{ optional($pharmacy->operation_sub_area)->name }}</th>
 
-                                                </tr>
-                                                <tr>
-                                                    <th>{{ __('Pharmacy Address') }}</th>
-                                                    <td>:</td>
-                                                    <th colspan="5">{{ $pharmacy->present_address }}</th>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        @php
-                                            $pharmacyOtp = App\Models\DistributionOtp::where(
-                                                'order_distribution_id',
-                                                $dor->od->id,
-                                            )
-                                                ->where('otp_author_id', $pharmacy->id)
-                                                ->where('otp_author_type', get_class($pharmacy))
-                                                ->first();
-                                        @endphp
-                                        @if ($pharmacyOtp)
-                                            @if ($pharmacyOtp->status == 1)
-                                                @if ($dor->od->status == 5)
-                                                    <h4 class="text-success m-0 py-3">
-                                                        {{ __('Order successfully delivered.') }}</h4>
-                                                @elseif($dor->od->status == 6)
-                                                    <h4 class="text-success m-0 py-3">
-                                                        {{ __('Order successfully finished.') }}</h4>
-                                                @else
-                                                    <h4 class="text-success m-0 py-3">
-                                                        {{ __('Order successfully collected.') }}</h4>
-                                                @endif
-                                            @else
-                                                @if ($dor->status != 0 && $dor->status != -1)
-                                                    <form
-                                                        class="mt-3 form collect_form d-flex justify-content-between align-items-center"
-                                                        action="{{ route('rider.order_management.pharmacy.otp_verify') }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        <div class="form-group collect_otp">
-                                                            <input type="text" name="collect_otp" class="form-control"
-                                                                placeholder="Enter pharmacy verify otp">
-                                                            <input type="hidden" name="pid" class="form-control"
-                                                                value="{{ encrypt($pharmacy->id) }}">
-                                                            <input type="hidden" name="od_id" class="form-control"
-                                                                value="{{ encrypt($dor->od->id) }}">
-                                                        </div>
-                                                        @include('alerts.feedback', [
-                                                            'field' => 'collect_otp',
-                                                        ])
-                                                        @include('alerts.feedback', ['field' => 'pid'])
-                                                        @include('alerts.feedback', ['field' => 'od_id'])
-                                                        <div class="form-group text-end">
-                                                            <input type="submit" class="btn btn-secondary" value="Collect">
-                                                        </div>
-                                                    </form>
-                                                @endif
-                                            @endif
-                                        @endif
+            {{-- for pendind & picking up --}}
+            @if ($dor->status == 0 || $dor->status == 1)
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ __('Pharmacies Details') }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-center">
+                            @foreach ($dor->od->active_odps->unique('pharmacy_id') as $key => $odp)
+                                <div class="col-md-6">
+                                    <div class="card pharmacy-details">
+                                        <div class="card-header">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <h4 class="card-title">{{ $odp->pharmacy->name }}</h4>
+                                                </div>
+                                                <div>
+                                                    <a href="javascript:void(0)"
+                                                        class="btn btn-success text-white get-otp-btn"
+                                                        data-pharmacyId="{{ $odp->pharmacy->id }}"
+                                                        data-odrId="{{ $dor->id }}">
+                                                        Get OTP </a>
+                                                </div>
+                                                <div>
+                                                    <a href="javascript:void(0)"
+                                                        class="btn btn-info text-white pharmacy-direction-btn"
+                                                        data-longitude="{{ optional($odp->pharmacy->address)->longitude }}"
+                                                        data-latitude="{{ optional($odp->pharmacy->address)->latitude }}">
+                                                        Direction </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped datatable">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>{{ __('Pharmacy Name') }}</th>
+                                                        <td>:</td>
+                                                        <th>{{ $odp->pharmacy->name }}</th>
+                                                        <td>|</td>
+                                                        <th>{{ __('Pharmacy Contact') }}</th>
+                                                        <td>:</td>
+                                                        <th>{{ $odp->pharmacy->phone }}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>{{ __('Operational Area') }}</th>
+                                                        <td>:</td>
+                                                        <th>{{ optional($odp->pharmacy->operation_area)->name }}</th>
+                                                        <td>|</td>
+                                                        <th>{{ __('Operational Sub Area') }}</th>
+                                                        <td>:</td>
+                                                        <th>{{ optional($odp->pharmacy->operation_sub_area)->name }}</th>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th>{{ __('Pharmacy Address') }}</th>
+                                                        <td>:</td>
+                                                        <th colspan="5" class="pharmacy_address">
+                                                            {{ optional($odp->pharmacy->address)->address }}
+                                                        </th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="pharmacy-location">
+                                            <div class="pharmacy-location-map"
+                                                id="pharmacy_location_map_{{ $key }}"
+                                                data-longitude="{{ optional($odp->pharmacy->address)->longitude }}"
+                                                data-latitude="{{ optional($odp->pharmacy->address)->latitude }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @elseif ($dor->status == 2)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header ">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <h4 class="card-title">{{ __('Customer Details') }}</h4>
+                                        </div>
+                                        <div>
+                                            <a href="telto:{{ optional($dor->od->order->customer)->phone }}"
+                                                class="btn btn-success text-white">
+                                                Call </a>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:void(0)"
+                                                class="btn btn-info text-white customer-direction-btn"
+                                                data-longitude="{{ optional($dor->od->order->address)->longitude }}"
+                                                data-latitude="{{ optional($dor->od->order->address)->latitude }}">
+                                                Direction </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-body">
+                                    <div class="customer-location-map" id="cmap"
+                                        data-longitude="{{ optional($dor->od->order->address)->longitude }}"
+                                        data-latitude="{{ optional($dor->od->order->address)->latitude }}">
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="card-footer ms-auto">
-                    @if ($dor->status == 1)
-                        <div class="buttons text-end">
-                            <a href="javascript:void(0)" class="btn btn-danger dispute" data-name="dispute_reason"
-                                data-action="{{ route('rider.order_management.dispute', encrypt($dor->od->id)) }}"
-                                data-placeholder="Enter dispute reason" data-title="Dispute Form">{{ __('Dispute') }}</a>
                         </div>
-                    @endif
-                    @if ($dor->status == 2)
-                        <a href="javascript:void(0)" class="btn btn-danger cancel" data-name="cancel_reason"
-                            data-action="javascript:void(0)" data-placeholder="Enter cancel reason"
-                            data-title="Cancel Form">{{ __('Cancel') }}</a>
-                        <a href="javascript:void(0)" class="btn btn-primary delivered" data-name="delivered_otp"
-                            data-action="{{ route('rider.order_management.customer.otp_verify', encrypt($dor->od->id)) }}"
-                            data-placeholder="Enter user verify otp" data-title="Delivered Form">{{ __('Delivered') }}</a>
-                    @endif
-                    @if ($dor->status == 3)
-                        <a href="javascript:void(0)" class="btn btn-success finish" data-name="trans_id"
-                            data-action="javascript:void(0)" data-placeholder="Enter transaction details"
-                            data-title="Delivery Finish Form">{{ __('Delivery Finish') }}</a>
-                    @endif
-                </div>
-            </div>
+                    </div>
+                @else
+            @endif
         </div>
     </div>
 
+    </div>
 
-
-    {{-- Admin Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    {{-- OTP Modal  --}}
+    <div class="modal otpModal fade" id="otpModal" tabindex="-1" role="dialog" aria-labelledby="otpModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal_title"></h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="close btn btn-danger mt-2 mr-2" style="position: unset"
+                        data-bs-dismiss="modal" aria-label="Close">
+                        <span class="text-white" style="font-size: 15px" aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body modal_data">
+                    <div class="p-5">
+                        <div>
+                            <p class="text-center text-success" style="font-size: 5.5rem;">
+                                <i class="fa-solid fa-shop-lock"></i>
+                            </p>
+                            <p class="text-center text-center h5 ">Your OTP for <span id="pharmacy_name"></span>
+                            </p>
+                            <p class="text-muted text-center">Use this OTP to collect order from pharmacy. This OTP will be
+                                changed every time you click on get otp
+                                button.</p>
+                            <div class="row pt-4 pb-2 otp_div">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Map direction modal --}}
+    <div class="modal fade map-direction-modal" tabindex="-1" role="dialog" aria-labelledby="MapDirectionModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Pickup Direction') }}</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="" style="font-size: 15px" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="map_direction" id="map_direction"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- User OTP Verify --}}
+    <div class="modal fade user-otp-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('User OTP Verify') }}</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="" style="font-size: 15px" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <p class="text-center text-success" style="font-size: 5.5rem;">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </p>
+                        <p class="text-center text-center h5 ">{{ __('Verify OTP') }}
+                        </p>
+                        <p class="text-muted text-center">
+                            {{ __('User will provide you an OTP. Verify the OTP to deliver this order') }}
+                        </p>
+                        <div class="">
+                            <form action="{{ route('rider.order_management.user.otp_verify') }}" method="POST"
+                                class="text-center">
+                                @csrf
+                                <input type="hidden" name="od" value="{{  encrypt($dor->od->id) }}">
+                                <div class="field-set otp-field text-center">
+                                    <input name=otp[] type="number" />
+                                    <input name=otp[] type="number" disabled />
+                                    <input name=otp[] type="number" disabled />
+                                    <input name=otp[] type="number" disabled />
+                                    <input name=otp[] type="number" disabled />
+                                    <input name=otp[] type="number" disabled />
+                                </div>
+                                <button class="btn btn-success verify-btn mt-3 mb-1" type="submit">Verify</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- Customer Map direction modal --}}
+    <div class="modal fade c_map-direction-modal" tabindex="-1" role="dialog" aria-labelledby="MapDirectionModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Delivery Direction') }}</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="" style="font-size: 15px" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="c_map_direction" id="c_map_direction"></div>
+
+                    <div class="mt-3">
+                        @if ($dor->status == 2)
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>{{ __('Customer') }}</td>
+                                        <td>:</td>
+                                        <td>
+                                            <small> {{ __('Customer Name') }}:
+                                                {{ optional($dor->od->order->customer)->name }}</small>
+                                            <small>
+                                                {{ __('Customer Phone') }}:
+                                                {{ optional($dor->od->order->customer)->phone }}
+                                            </small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __('Receiver') }}</td>
+                                        <td>:</td>
+                                        <td>
+                                            <small> {{ __('Receiver Name') }}:
+                                                {{ optional($dor->od->order->address)->name }} </small>
+                                            <small>
+                                                {{ __('Receiver Phone') }}:
+                                                {{ optional($dor->od->order->address)->phone }}
+                                            </small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __('City Name') }}</td>
+                                        <td>:</td>
+                                        <td><small>{{ optional($dor->od->order->address)->city }}</small></td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __('Street Name') }}</td>
+                                        <td>:</td>
+                                        <td><small>{{ optional($dor->od->order->address)->street_address }}</small></td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __('Appartment') }}</td>
+                                        <td>:</td>
+                                        <td> <small>Name: {{ optional($dor->od->order->address)->apartment }} ;</small>
+                                            <small>Floor: {{ optional($dor->od->order->address)->floor }}</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __('Address') }}</td>
+                                        <td>:</td>
+                                        <td><small>{{ optional($dor->od->order->address)->address }}</small></td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __('Details') }}</td>
+                                        <td>:</td>
+                                        <td><small>{!! optional($dor->od->order->address)->delivery_instruction !!}</small></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </div>
+                <div class="modal-footer d-flex align-items-center justify-content-center">
+                    <button type="button" class="btn btn-success deliver w-50">Deliver</button>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('js_link')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('rider/js/remaining.js') }}"></script>
+    <script src="{{ asset('rider/js/direction.js') }}"></script>
+    <script src="{{ asset('rider/js/map.js') }}"></script>
+@endpush
+
 @push('js')
     <script>
-        function showForm(element) {
-            var title = element.data('title');
-            var name = element.data('name');
-            var action = element.data('action');
-            var placeholder = element.data('placeholder');
-            $('#modal_title').html(title);
-            var data_form = `<form id="myForm">
-                                @csrf
-                                <div class="form-group">
-                                    <textarea name="${name}" placeholder="${placeholder}" class="form-control"></textarea>
-                                </div>
-                                @include('alerts.feedback', ['field' => '${name}'])
-                                <div class="form-group text-end">
-                                    <span type="submit" data-action="${action}" id="updateEmailTemplate"  class="btn btn-primary formSubmit">{{ __('Submit') }}</span>
-                                </div>
-                            </form>`;
-            $('.modal_data').html(data_form);
-            $('.view_modal').modal('show');
-        }
         $(document).ready(function() {
-
-
-            $(document).on('click', '.formSubmit', function() {
-                var form = $('#myForm');
-                let _url = $(this).data('action');
+            $(document).on('click', '.get-otp-btn', function() {
+                var odrId = $(this).attr('data-odrId');
+                var pharmacyId = $(this).attr('data-pharmacyId');
                 $.ajax({
-                    type: 'POST',
-                    url: _url,
-                    data: form.serialize(),
-                    success: function(response) {
-                        $('.view_modal').modal('hide');
-                        // toastr.success(response.message);
-                        window.location.reload();
+                    type: 'GET',
+                    url: '{{ route('rider.order_management.get_otp') }}',
+                    data: {
+                        odrId: odrId,
+                        pharmacyId: pharmacyId,
                     },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            // Handle validation errors
-                            var errors = xhr.responseJSON.errors;
-                            $.each(errors, function(field, messages) {
-                                // Display validation errors
-                                var errorHtml = '';
-                                $.each(messages, function(index, message) {
-                                    errorHtml +=
-                                        '<span class="invalid-feedback d-block" role="alert">' +
-                                        message + '</span>';
-                                });
-                                $('[name="' + field + '"]').next('.invalid-feedback')
-                                    .remove();
-                                $('[name="' + field + '"]').after(errorHtml);
-                            });
-                        } else {
-                            // Handle other errors
-                            console.log('An error occurred.');
+                    success: function(response) {
+                        console.log(response);
+                        if (response.success) {
+                            $('.otpModal').modal('show');
+                            $('.otpModal .modal_data #pharmacy_name').html(response.data
+                                .pharmacy.name)
+                            var otp = response.data.otp.otp.toString();
+                            var append = ``;
+                            for (let i = 0; i < otp.length; i++) {
+                                textContent = otp[i];
+                                append += `
+                                    <div class="col-2">
+                                        <input class="otp-letter-input" type="text" disabled value="${textContent}">
+                                    </div>
+                                `;
+                            }
+                            $('.otpModal .modal_data .otp_div').html(append)
                         }
+                    }
+                })
+            });
+
+            $('.deliver').on('click', function() {
+                $('.c_map-direction-modal').modal('hide');
+                $('.user-otp-modal').modal('show');
+            });
+
+
+            const inputs = $(".otp-field > input");
+            const button = $(".verify-btn");
+
+            inputs.eq(0).focus();
+            button.prop("disabled", true);
+
+            inputs.eq(0).on("paste", function(event) {
+                event.preventDefault();
+
+                const pastedValue = (event.originalEvent.clipboardData || window.clipboardData)
+                    .getData(
+                        "text");
+                const otpLength = inputs.length;
+
+                for (let i = 0; i < otpLength; i++) {
+                    if (i < pastedValue.length) {
+                        inputs.eq(i).val(pastedValue[i]);
+                        inputs.eq(i).removeAttr("disabled");
+                        inputs.eq(i).focus();
+                    } else {
+                        inputs.eq(i).val(""); // Clear any remaining inputs
+                        inputs.eq(i).focus();
+                    }
+                }
+            });
+
+            inputs.each(function(index1) {
+                $(this).on("keyup", function(e) {
+                    const currentInput = $(this);
+                    const nextInput = currentInput.next();
+                    const prevInput = currentInput.prev();
+
+                    if (currentInput.val().length > 1) {
+                        currentInput.val("");
+                        return;
+                    }
+
+                    if (nextInput && nextInput.attr("disabled") && currentInput
+                        .val() !== "") {
+                        nextInput.removeAttr("disabled");
+                        nextInput.focus();
+                    }
+
+                    if (e.key === "Backspace") {
+                        inputs.each(function(index2) {
+                            if (index1 <= index2 && prevInput) {
+                                $(this).attr("disabled", true);
+                                $(this).val("");
+                                prevInput.focus();
+                            }
+                        });
+                    }
+
+                    button.prop("disabled", true);
+
+                    const inputsNo = inputs.length;
+                    if (!inputs.eq(inputsNo - 1).prop("disabled") && inputs.eq(
+                            inputsNo - 1)
+                        .val() !== "") {
+                        button.prop("disabled", false);
+                        return;
                     }
                 });
             });
-
-            $(document).on('click', '.dispute, .cancel, .delivered, .finish', function() {
-                showForm($(this));
-            });
-
 
         });
     </script>

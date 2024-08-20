@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
-
+use App\Models\Earning;
+use App\Models\KycSetting;
+use App\Models\OrderDistribution;
+use App\Models\SubmittedKyc;
 
 class PharmacyController extends Controller
 {
@@ -34,11 +37,24 @@ class PharmacyController extends Controller
     {
         $data = Pharmacy::with(['creater', 'updater'])->findOrFail(decrypt($id));
         $this->morphColumnData($data);
+        $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
     }
     public function profile($id): View
     {
-        $data['pharmacy'] = Pharmacy::with(['creater', 'updater'])->findOrFail(decrypt($id));
+        $pharmacy_id = decrypt($id);
+        $data['pharmacy'] = Pharmacy::with(['creater', 'address', 'updater'])->findOrFail($pharmacy_id);
+        $pharmacy_class = get_class($data['pharmacy']);
+        $data['submitted_kyc'] = SubmittedKyc::with('kyc')->where('creater_id', $pharmacy_id)->where('creater_type', $pharmacy_class)->first();
+        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
+            ->where('receiver_id', decrypt($id))->where('receiver_type', $pharmacy_class)->get();
+        $query =  OrderDistribution::with(['order', 'odps' => function ($query) use ($pharmacy_id) {
+            $query->where('pharmacy_id', $pharmacy_id);
+        }, 'odrs', 'order.products.discounts', 'order.products.pivot', 'order.products.pivot.unit'])->whereHas('odps', function ($query) use ($pharmacy_id) {
+            $query->where('pharmacy_id', $pharmacy_id);
+        });
+        $data['ods'] = $query->get();
+        $data['point_name'] = getPointName();
         return view('admin.pharmacy_management.pharmacy.profile', $data);
     }
     public function loginAs($id)

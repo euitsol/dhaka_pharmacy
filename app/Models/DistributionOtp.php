@@ -10,19 +10,14 @@ class DistributionOtp extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'status',
-        'rider_id',
-        'order_distribution_id',
-        'otp_author_id',
-        'otp_author_type',
-        'otp',
-    ];
     public function od(){
         return $this->belongsTo(OrderDistribution::class,'order_distribution_id');
     }
-    public function otp_author()
-    {
-        return $this->morphTo();
+
+    public function rider(){
+        return $this->belongsTo(Rider::class,'rider_id');
+    }
+    public function pharmacy(){
+        return $this->belongsTo(pharmacy()::class,'pharmacy_id');
     }
 }

@@ -1,7 +1,7 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine'])
-
+@section('title', 'Edit Product')
 @section('content')
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -9,7 +9,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif --}}
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
             <form method="POST" action="{{ route('product.medicine.medicine_edit', $medicine->id) }}"
@@ -56,7 +56,7 @@
                                 <label>{{ __('Product Category') }}</label>
                                 <select name="pro_cat_id"
                                     class="form-control {{ $errors->has('pro_cat_id') ? ' is-invalid' : '' }} pro_cat">
-                                    <option selected hidden>{{ __('Select product category') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select product category') }}</option>
                                     @foreach ($pro_cats as $cat)
                                         <option value="{{ $cat->id }}"
                                             {{ $cat->id == $medicine->pro_cat_id ? 'selected' : '' }}>
@@ -83,7 +83,7 @@
                                 <label>{{ __('Generic Name') }}</label>
                                 <select name="generic_id"
                                     class="form-control {{ $errors->has('generic_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select generic name') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select generic name') }}</option>
                                     @foreach ($generics as $generic)
                                         <option value="{{ $generic->id }}"
                                             {{ $generic->id == $medicine->generic_id ? 'selected' : '' }}>
@@ -96,7 +96,7 @@
                                 <label>{{ __('Company Name') }}</label>
                                 <select name="company_id"
                                     class="form-control {{ $errors->has('company_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select company name') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select company name') }}</option>
                                     @foreach ($companies as $company)
                                         <option value="{{ $company->id }}"
                                             {{ $company->id == $medicine->company_id ? 'selected' : '' }}>
@@ -109,7 +109,7 @@
                                 <label>{{ __('Medicine Dosage') }}</label>
                                 <select name="medicine_cat_id"
                                     class="form-control {{ $errors->has('medicine_cat_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select medicine dosage') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select medicine dosage') }}</option>
                                     @foreach ($medicine_cats as $medicine_cat)
                                         <option value="{{ $medicine_cat->id }}"
                                             {{ ($medicine_cat->id == $medicine->medicine_cat_id) ? 'selected' : '' }}>
@@ -122,7 +122,7 @@
                                 <label>{{ __('Medicine Strength') }}</label>
                                 <select name="strength_id"
                                     class="form-control {{ $errors->has('strength_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden value="">{{ __('Select medicine strength') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select medicine strength') }}</option>
                                     @foreach ($strengths as $strength)
                                         <option value="{{ $strength->id }}"
                                             {{ $strength->id == $medicine->strength_id ? 'selected' : '' }}>
@@ -340,7 +340,7 @@
                 </div>
 
 
-                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                <button type="submit" class="btn btn-primary float-end">{{ __('Update') }}</button>
             </form>
         </div>
 
@@ -364,7 +364,7 @@
                                     <th>{{ __('Discount Amount') }}</th>
                                     <th>{{ __('Discount Percentage') }}</th>
                                     <th>{{ __('Status') }}</th>
-                                    <th>{{ __('Creation date') }}</th>
+                                    <th>{{ __('Created date') }}</th>
                                     <th>{{ __('Created by') }}</th>
                                     <th>{{ __('Updated date') }}</th>
                                     <th>{{ __('Updated by') }}</th>

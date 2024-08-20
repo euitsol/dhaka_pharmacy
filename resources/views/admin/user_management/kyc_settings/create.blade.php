@@ -1,6 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'user_kyc_settings'])
-
-@section('title', 'KYC Settings')
+@section('title', 'User KYC Settings')
 @push('css_link')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
 @endpush
@@ -15,15 +14,17 @@
                 <form method="POST" action="{{ route('um.user_kyc.user_kyc_settings') }}" autocomplete="off">
                     @csrf
                     <div class="card-body">
-                        
+
                         <div class="form-group mb-3">
-                            <input type="checkbox" value="1" {{ optional($kyc_setting)->status == 1 ? 'checked' : '' }} class="valueToggle" name='status' data-toggle="toggle" data-onlabel="ON" data-offlabel="OFF" data-onstyle="success" data-offstyle="danger" data-style="ios">
+                            <input type="checkbox" value="1" {{ optional($kyc_setting)->status == 1 ? 'checked' : '' }}
+                                class="valueToggle" name='status' data-toggle="toggle" data-onlabel="ON"
+                                data-offlabel="OFF" data-onstyle="success" data-offstyle="danger" data-style="ios">
                             @include('alerts.feedback', ['field' => 'status'])
                         </div>
-                    
+
                         <div class="card">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <label class="m-0">{{__('KYC Requirements')}}</label>
+                                <label class="m-0">{{ __('KYC Requirements') }}</label>
                                 <a href="javascript:void(0)" class="btn btn-dark btn-sm btn-rounded p-6 ml-4 generate_atf"
                                     data-count="{{ isset($kyc_setting->form_data) && null !== json_decode($kyc_setting->form_data) ? count(json_decode($kyc_setting->form_data, true)) : '1' }}"><i
                                         class="fa fa-plus-circle"></i>
@@ -34,7 +35,7 @@
                             <div class="card-body">
                                 @if (isset($kyc_setting->form_data) && null !== json_decode($kyc_setting->form_data))
                                     @php
-                                        $count = 1
+                                        $count = 1;
                                     @endphp
                                     @foreach (json_decode($kyc_setting->form_data, true) as $key => $data)
                                         <div class="row">
@@ -46,7 +47,7 @@
                                                             value="{{ $data['field_name'] }}" required>
 
                                                         <select name="formdata[{{ $count }}][type]"
-                                                            class="form-control form-data">
+                                                            class="form-control form-data no-select">
                                                             <option value="text"
                                                                 {{ $data['type'] == 'text' ? 'selected' : '' }}>
                                                                 {{ trans('Input Text') }}</option>
@@ -83,7 +84,7 @@
                                                         </select>
 
                                                         <select name="formdata[{{ $count }}][required]"
-                                                            class="form-control  ">
+                                                            class="form-control  no-select">
                                                             <option value="required"
                                                                 {{ $data['required'] == 'required' ? 'selected' : '' }}>
                                                                 {{ trans('Required') }}</option>
@@ -92,32 +93,38 @@
                                                                 {{ trans('Optional') }}</option>
                                                         </select>
 
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-danger delete_desc" type="button"
-                                                                style=" margin-top: 0px; padding-bottom: 8px;">
-                                                                <i class="fa fa-times"></i>
-                                                            </button>
-                                                        </span>
+                                                        <button class="btn btn-danger delete_desc" type="button"
+                                                            style=" margin-top: 0px; padding-bottom: 8px;">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                    @php
-                                                        if($data['type'] == 'option'){
-                                                            $option_data = $data['option_data'];
-                                                            $string = implode('; ', array_map(function ($key, $value) {
-                                                                return "$key = $value";
-                                                            }, array_keys($option_data), $option_data));
-                                                        }
-                                                    @endphp
+                                                @php
+                                                    if ($data['type'] == 'option') {
+                                                        $option_data = $data['option_data'];
+                                                        $string = implode(
+                                                            '; ',
+                                                            array_map(
+                                                                function ($key, $value) {
+                                                                    return "$key = $value";
+                                                                },
+                                                                array_keys($option_data),
+                                                                $option_data,
+                                                            ),
+                                                        );
+                                                    }
+                                                @endphp
                                                 <div class="form-group select_option"
                                                     style="{{ $data['type'] == 'option' ? 'display:block' : 'display:none' }}">
-                                                    <label>Add select fields option and values (value = option) <small>(Eg. 0 =
+                                                    <label>Add select fields option and values (value = option) <small>(Eg.
+                                                            0 =
                                                             Off; 1 = On)</small> </label>
-                                                    <textarea class="form-control" name="formdata[{{ $count }}][option_data]">{{($data['type'] == 'option') ? $string : '' }}</textarea>
+                                                    <textarea class="form-control" name="formdata[{{ $count }}][option_data]">{{ $data['type'] == 'option' ? $string : '' }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
                                         @php
-                                            $count++
+                                            $count++;
                                         @endphp
                                     @endforeach
                                 @endif
@@ -127,13 +134,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer text-end">
                         <button type="submit" class="btn btn-fill btn-primary">{{ __('Save') }}</button>
                     </div>
                 </form>
             </div>
         </div>
-        @include('admin.partials.documentation',['document'=>$document])
+        @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection
 @push('js_link')
@@ -150,7 +157,7 @@
                                 <div class="input-group">
                                     <input name="formdata[${count}][field_name]" class="form-control " type="text" value="" required placeholder="{{ trans('Field Name') }}">
 
-                                    <select name="formdata[${count}][type]"  class="form-control form-data">
+                                    <select name="formdata[${count}][type]"  class="form-control form-data no-select">
                                         <option value="text">{{ trans('Input Text') }}</option>
                                         <option value="number">{{ trans('Input Number') }}</option>
                                         <option value="url">{{ trans('Input URL') }}</option>
@@ -164,16 +171,14 @@
                                         <option value="file_multiple">{{ trans('File Multiple') }}</option>
                                     </select>
 
-                                    <select name="formdata[${count}][required]"  class="form-control  ">
+                                    <select name="formdata[${count}][required]"  class="form-control no-select">
                                         <option value="required">{{ trans('Required') }}</option>
                                         <option value="nullable">{{ trans('Optional') }}</option>
                                     </select>
 
-                                    <span class="input-group-btn">
                                         <button class="btn btn-danger delete_desc" type="button" style=" margin-top: 0px; padding-bottom: 8px;">
                                             <i class="fa fa-times"></i>
                                         </button>
-                                    </span>
                                 </div>
                             </div>
                             <div class="form-group select_option" style="display:none">

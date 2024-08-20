@@ -1,20 +1,41 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use League\Csv\Writer;
 use App\Models\Permission;
+use App\Models\PointSetting;
 use App\Models\Review;
 use App\Models\SiteSetting;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 
 //This will retun the route prefix of the routes for permission check
 function get_permission_routes()
 {
     return [
-        'am.', 'um.', 'pm.', 'om.', 'rm.', 'opa.', 'do.', 'pym.', 'push.', 'settings.', 'dm_management.', 'lam_management.', 'product.', 'payment_gateway.', 'obp.'
+        // 'am.',
+        // 'um.',
+        // 'pm.',
+        // 'pm.',
+        // 'rm.',
+        // 'opa.',
+        // 'do.',
+        // 'pym.',
+        // 'push.',
+        // 'settings.',
+        // 'dm_management.',
+        // 'lam_management.',
+        // 'product.',
+        // 'payment_gateway.',
+        // 'obp.',
+        // 'om.',
+        // 'withdraw_method.',
+        // 'withdraw.'
     ];
 }
 
@@ -97,7 +118,7 @@ function createCSV($filename = 'permissions.csv'): string
 
 function storage_url($urlOrArray)
 {
-    $image = asset('frontend\default\cat_img.png');
+    $image = asset('frontend/default/default.png');
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
         $result = '';
         $count = 0;
@@ -121,11 +142,11 @@ function storage_url($urlOrArray)
 
 function auth_storage_url($urlOrArray, $gender)
 {
-    $image = asset('default_img\other-student.png');
+    $image = asset('default_img/other.png');
     if ($gender == 'Male') {
-        $image = asset('default_img\male-student.png');
+        $image = asset('default_img/male.png');
     } elseif ($gender == 'Male') {
-        $image = asset('default_img\female-student.png');
+        $image = asset('default_img/female.png');
     }
 
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
@@ -203,6 +224,9 @@ function mainMenuCheck($array)
                     break;
                 }
             }
+        } else {
+            $check = true;
+            break;
         }
     }
     return $check;
@@ -331,8 +355,8 @@ function formatPercentageNumber($number)
 
 function otp()
 {
-    // $otp =  mt_rand(100000, 999999);
-    $otp =  '000000';
+    $otp =  mt_rand(100000, 999999);
+    // $otp =  '000000';
     return $otp;
 }
 
@@ -348,20 +372,37 @@ function c_user_name($user)
 }
 function u_user_name($user)
 {
-    return $user->name ?? '--';
+    return $user->name ?? 'Null';
+}
+/**
+ * Calculate the remaining time until the end time.
+ *
+ * @param string $endTime The end time.
+ * @param bool $html Whether to return HTML formatted string.
+ * @return string
+ */
+function remainingTime($endTime, $html = false)
+{
+    $end = Carbon::parse($endTime);
+    $now = Carbon::now();
+    $difference = $now->diffForHumans($end, [
+        'parts' => 2,
+        'join' => ', ',
+        'syntax' => Carbon::DIFF_ABSOLUTE,
+        'short' => true,
+    ]);
+
+    if ($now->lessThan($end)) {
+        $result = $html ? "<span class='prep_time text-success' data-end-time='$endTime'>$difference remaining</span>" : "$difference remaining";
+    } else {
+        $result = $html ? "<span class='prep_time text-danger' data-end-time='$endTime'>Delayed</span>" : 0;
+    }
+    return $result;
 }
 
-function readablePrepTime($start_time, $end_time)
+function prepTimeConverter($end_time)
 {
-    $duration = Carbon::parse($end_time)->diff(Carbon::parse($start_time));
-    $formattedDuration = '';
-    if ($duration->h > 0) {
-        $formattedDuration .= $duration->h . ' hours ';
-    }
-    if ($duration->i > 0) {
-        $formattedDuration .= $duration->i . ' minutes';
-    }
-    return $formattedDuration;
+    $duration = Carbon::now()->diff(Carbon::parse($end_time));
 }
 
 function prepTotalSeconds($start_time, $end_time)
@@ -486,4 +527,99 @@ function getFormattedCountdown($pastDate)
     ];
 
     return $countdown;
+}
+
+//This function will check the if the given route is a route name or full url
+function is_valid_route($routeOrUrl)
+{
+    if (!empty($routeOrUrl) && (Route::has($routeOrUrl))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function slugToTitle($slug)
+{
+    return ucwords(strtolower(str_replace('-', ' ', $slug)));
+}
+function activatedTime($start_time, $end_time)
+{
+    if ($end_time != $start_time) {
+        return timeFormate($start_time) . ' - ' . timeFormate($end_time);
+    } else {
+        return timeFormate($start_time) . " - Running";
+    }
+}
+
+function getPointName()
+{
+    return PointSetting::where('key', 'point_name')->first()->value;
+}
+
+function translate($text)
+{
+    $locale = App::getLocale();
+    try {
+        $translatedText = GoogleTranslate::trans($text, $locale, null, ['verify' => false]);
+    } catch (Exception $e) {
+        $translatedText = $text;
+    }
+    return $translatedText;
+}
+function getEarningPoints($earnings)
+{
+    return ($earnings->where('activity', 1)->sum('point') - ($earnings->where('activity', 3)->sum('point') + $earnings->where('activity', 2)->sum('point')));
+}
+function getEarningEqAmounts($earnings)
+{
+    return ($earnings->where('activity', 1)->sum('eq_amount') - ($earnings->where('activity', 3)->sum('eq_amount') + $earnings->where('activity', 2)->sum('eq_amount')));
+}
+function getWithdrawPoints($earnings)
+{
+    return $earnings->where('activity', 3)->sum('point');
+}
+function getWithdrawEqAmounts($earnings)
+{
+    return $earnings->where('activity', 3)->sum('eq_amount');
+}
+function getPendingWithdrawPoints($earnings)
+{
+    return $earnings->where('activity', 2)->sum('point');
+}
+function getPendingWithdrawEqAmounts($earnings)
+{
+    return $earnings->where('activity', 2)->sum('eq_amount');
+}
+function getPendingEarningPoints($earnings)
+{
+    return $earnings->where('activity', 0)->sum('point');
+}
+function getPendingEarningEqAmounts($earnings)
+{
+    return $earnings->where('activity', 0)->sum('eq_amount');
+}
+
+function getSubmitterType($className)
+{
+    $className = basename(str_replace('\\', '/', $className));
+    return trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $className));
+}
+
+function formatPhoneNumber($phone)
+{
+    $phone = ltrim($phone, '0');
+    return '+880 ' . substr($phone, 0, 5) . '-' . substr($phone, 5);
+}
+
+function isFilePath($pathString)
+{
+    return Storage::exists('public/' . $pathString) || file_exists('public/' . $pathString) || preg_match('/\.(jpg|jpeg|png|gif|pdf|doc|docx|xls|xlsx|zip|rar)$/i', $pathString);
+}
+
+function isImage($path)
+{
+    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'];
+    $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    return in_array($extension, $imageExtensions);
 }

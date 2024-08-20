@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Medicine extends BaseModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, EagerLoadPivotTrait;
 
 
     public function pro_cat()
@@ -36,6 +37,11 @@ class Medicine extends BaseModel
     public function reviews()
     {
         return $this->hasMany(Review::class, 'product_id', 'id');
+    }
+    public function self_review()
+    {
+        return $this->hasOne(Review::class, 'product_id', 'id')
+            ->where('customer_id', auth()->id());
     }
 
     public function wish()
@@ -100,5 +106,16 @@ class Medicine extends BaseModel
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_products', 'medicine_id', 'order_id')->withPivot('unit_id', 'quantity');
+    }
+
+    public function scopeByCategory($query, $categoryId)
+    {
+        return $query->where('pro_cat_id', $categoryId);
+    }
+
+
+    public function scopeBySubCategory($query, $scategoryId)
+    {
+        return $query->where('pro_sub_cat_id', $scategoryId);
     }
 }

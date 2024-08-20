@@ -40,30 +40,30 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    let checkUnit = $(".item_quantity:checked");
-    $(".unit_name").html(checkUnit.data("name"));
-    $(".total_price").html(numberFormat(checkUnit.data("total_price"), 2));
-    $(".total_regular_price").html(
-        numberFormat(checkUnit.data("total_regular_price"), 2)
-    );
-    $(".product_price .item_quantity").on("change", function () {
-        var name = $(this).data("name");
-        var id = $(this).data("id");
-        $(this)
-            .closest(".product_content")
-            .find(".cart-btn")
-            .attr("data-unit_id", id);
-
-        var TotalPrice = numberFormat($(this).data("total_price"), 2);
-        var TotalRegularPrice = numberFormat(
-            $(this).data("total_regular_price"),
-            2
-        );
-        $(".total_price").html(TotalPrice);
-        $(".total_regular_price").html(TotalRegularPrice);
-        $(".unit_name").html(name);
+    $(document).on("click", ".review_read", function () {
+        let review = $(this).data("content");
+        let author = $(this).data("author");
+        let modal_content = `
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Author</th>
+                        <th>:</th>
+                        <td>${author}</td>
+                    </tr>
+                    <tr>
+                        <th>Review</th>
+                        <th>:</th>
+                        <td style="text-align: justify;">${review}</td>
+                    </tr>
+                </tbody>
+            </table>
+        `;
+        $(".review_details").html(modal_content);
+        $("#review_modal").modal("show");
     });
-
+});
+$(document).ready(function () {
     //Height Control Jquery
     var single_product_height = $(".single_product_card").height();
     $(".similar_products_card").css("max-height", single_product_height + "px");
@@ -101,27 +101,67 @@ $(document).ready(function () {
     });
 });
 
+function updatePrices(quantity, unit = false) {
+    checkUnit = unit == false ? $(".item_quantity:checked") : unit;
+    $(".unit_name").html(checkUnit.data("name"));
+    $(".total_price").html(
+        numberFormat(checkUnit.data("total_price") * quantity, 2)
+    );
+    $(".total_regular_price").html(
+        numberFormat(checkUnit.data("total_regular_price") * quantity, 2)
+    );
+}
+
+function QuantityUpdate(element, increment) {
+    var quantityInput = element.siblings(".quantity_input");
+    var quantity = parseInt(quantityInput.val()) || 1;
+
+    if (quantity <= 2 && !increment) {
+        element.addClass("disabled");
+        quantity = Math.max(1, quantity - 1);
+    } else {
+        element.siblings(".minus_qty").removeClass("disabled");
+        quantity = increment ? quantity + 1 : quantity - 1;
+    }
+
+    quantityInput.val(quantity);
+    $(".product_content").find(".cart-btn").attr("data-quantity", quantity);
+    updatePrices(quantity);
+}
+
 $(document).ready(function () {
-    $(document).on("click", ".review_read", function () {
-        let review = $(this).data("content");
-        let author = $(this).data("author");
-        let modal_content = `
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                        <th>Author</th>
-                        <th>:</th>
-                        <td>${author}</td>
-                    </tr>
-                    <tr>
-                        <th>Review</th>
-                        <th>:</th>
-                        <td style="text-align: justify;">${review}</td>
-                    </tr>
-                </tbody>
-            </table>
-        `;
-        $(".review_details").html(modal_content);
-        $("#review_modal").modal("show");
+    let quantity_value = parseInt($(".quantity_input").val()) ?? 1;
+    updatePrices(quantity_value);
+    $(".product_price .item_quantity").on("change", function () {
+        var id = $(this).data("id");
+        $(this)
+            .closest(".product_content")
+            .find(".cart-btn")
+            .attr("data-unit_id", id);
+        updatePrices(quantity_value, $(this));
+    });
+
+    $(".quantity_input").on("input", function () {
+        var quantity = parseInt($(this).val()) ?? 1;
+        $(this)
+            .siblings(".minus_qty")
+            .toggleClass("disabled", quantity <= 1);
+        $(".product_content").find(".cart-btn").attr("data-quantity", quantity);
+        updatePrices(quantity);
+    });
+
+    $(".plus_qty").on("click", function () {
+        QuantityUpdate($(this), true);
+    });
+
+    $(".minus_qty").on("click", function () {
+        QuantityUpdate($(this), false);
     });
 });
+
+function handleErrors(response) {
+    var errors = response.errors;
+    for (var field in errors) {
+        toastr.error(errors[field][0]);
+    }
+}

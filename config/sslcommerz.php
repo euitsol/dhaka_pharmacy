@@ -2,7 +2,7 @@
 
 // SSLCommerz configuration
 
-$apiDomain = env('SSLCZ_TESTMODE') ? "https://sandbox.sslcommerz.com" : "https://securepay.sslcommerz.com";
+$apiDomain = env('SSLCZ_MODE') ? "https://securepay.sslcommerz.com" : "https://sandbox.sslcommerz.com";
 return [
 	'apiCredentials' => [
 		'store_id' => env("SSLCZ_STORE_ID"),

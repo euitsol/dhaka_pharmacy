@@ -423,7 +423,7 @@ header{
 
   .header-section .right-col .offcanvas .wishes .details .details_btn, 
   .header-section .right-col .offcanvas .wishes .details .order_btn {
-    font-size: 13px;
+    font-size: 11px;
     border: 1px solid var(--border-2);
     display: block;
     text-align: center;

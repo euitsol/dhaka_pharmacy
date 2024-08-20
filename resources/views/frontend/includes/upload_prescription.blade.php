@@ -56,8 +56,8 @@
                         <label>{{ __('Shipping') }}<span class="text-danger">*</span></label>
                         <select name="delivery_type" class="form-control" id="delivery_type">
                             <option value="">{{ __('Select Delivery Type') }} </option>
-                            <option value="normal">{{ __('Normal-Delivery') }} </option>
-                            <option value="standard">{{ __('Standard-Delivery') }} </option>
+                            <option value="0">{{ __('Normal-Delivery') }} </option>
+                            <option value="1">{{ __('Standard-Delivery') }} </option>
                         </select>
                     </div>
                     <div class="form-group text-end mt-3">

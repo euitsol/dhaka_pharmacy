@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'role'])
+@section('title', 'Create Role')
 @push('css')
     <style>
         .groupName {
@@ -83,13 +84,13 @@
                         </div>
 
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer text-end">
                         <button type="submit" class="btn btn-fill btn-primary">{{ __('Create') }}</button>
                     </div>
                 </form>
             </div>
         </div>
-        @include('admin.partials.documentation',['document'=>$document])
+        @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection
 

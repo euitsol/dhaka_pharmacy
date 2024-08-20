@@ -1,5 +1,5 @@
 @extends('pharmacy.layouts.master', ['pageSlug' => 'operational_area'])
-
+@section('title', 'Operation Area List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -19,32 +19,29 @@
                                 <th>{{ __('Operation Areas') }}</th>
                                 <th>{{ __('Operation Sub Areas') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Created by') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($operational_areas as $key=>$area)
+                            @foreach ($operational_areas as $key => $area)
                                 @forelse ($area->operation_sub_areas as $sub_area)
                                     <tr>
                                         @if ($loop->first)
                                             <td rowspan="{{ count($area->operation_sub_areas) }}">{{ ++$key }}</td>
                                             <td rowspan="{{ count($area->operation_sub_areas) }}">{{ $area->name }}</td>
                                         @endif
-                                        <td>{{$sub_area->name }}</td>
+                                        <td>{{ $sub_area->name }}</td>
                                         <td>
-                                                <span class="{{ $sub_area->getMultiStatusClass() }}">
-                                                    {{ $sub_area->status == 1 ? 'Operational' : ($sub_area->status == 0 ? 'Pending' : 'Not Operational') }}
-                                                </span>
+                                            <span class="{{ $sub_area->getMultiStatusClass() }}">
+                                                {{ $sub_area->status == 1 ? 'Operational' : ($sub_area->status == 0 ? 'Pending' : 'Not Operational') }}
+                                            </span>
                                         </td>
-                                        <td>{{(c_user_name($sub_area->creater)) }}</td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td >{{ ++$key }}</td>
-                                        <td >{{ $area->name }}</td>
-                                        <td>{{'empty' }}</td>
-                                        <td>{{'empty' }}</td>
-                                        <td>{{'empty' }}</td>
+                                        <td>{{ ++$key }}</td>
+                                        <td>{{ $area->name }}</td>
+                                        <td>{{ 'empty' }}</td>
+                                        <td>{{ 'empty' }}</td>
                                     </tr>
                                 @endforelse
                             @endforeach
@@ -59,4 +56,3 @@
         </div>
     </div>
 @endsection
-

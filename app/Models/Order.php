@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
+use App\Observers\OrderModelObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
+#[ObservedBy([OrderModelObserver::class])]
 class Order extends BaseModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, EagerLoadPivotTrait;
     protected $fillable = [
         'status',
         'address_id',
@@ -37,19 +41,49 @@ class Order extends BaseModel
         return $this->hasMany(Payment::class, 'order_id', 'id');
     }
 
-    public function ref_user()
-    {
-        return $this->belongsTo(User::class, 'ref_user');
-    }
+    // public function ref_user()
+    // {
+    //     return $this->belongsTo(User::class, 'ref_user');
+    // }
     public function obp()
     {
         return $this->belongsTo(OrderPrescription::class, 'obp_id');
     }
+    public function deliveryType()
+    {
+        switch ($this->delivery_type) {
+            case 0:
+                return 'Normal';
+            case 1:
+                return 'Standard';
+        }
+    }
 
     public function scopeStatus($query, $status)
     {
-        $db_status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
-        return $query->where('status', $db_status);
+        // $status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
+
+        switch ($status) {
+            case 'initiated':
+                $status = 0;
+                break;
+            case 'submitted':
+                $status = 1;
+                break;
+            case 'processed':
+                $status = 2;
+                break;
+            case 'waiting-for-rider':
+                $status = 3;
+                break;
+            case 'assigned':
+                $status = 4;
+                break;
+            default:
+                $status =  'Unknown';
+                break;
+        }
+        return $query->where('status', $status);
     }
 
     public function od(): HasOne
@@ -62,19 +96,21 @@ class Order extends BaseModel
     {
         switch ($this->status) {
             case 0:
-                return 'badge badge-secondary';
+                return 'badge bg-secondary';
             case 1:
-                return 'badge badge-info';
+                return 'badge bg-info';
             case 2:
-                return 'badge badge-success';
-            case -1:
-                return 'badge badge-danger';
-            case -2:
-                return 'badge badge-warning';
-            case -3:
-                return 'badge badge-dark';
+                return 'badge bg-warning';
+            case 3:
+                return 'badge bg-danger';
+            case 4:
+                return 'badge bg-success';
+            case 5:
+                return 'badge bg-success';
+            case 6:
+                return 'badge bg-success';
             default:
-                return 'badge badge-primary';
+                return 'badge bg-dark';
         }
     }
 
@@ -84,17 +120,20 @@ class Order extends BaseModel
             case 0:
                 return 'Initiated';
             case 1:
-                return 'Pending';
+                return 'Submitted';
             case 2:
-                return 'Success';
-            case -1:
-                return 'Failed';
-            case -2:
-                return 'Cancel';
-            case -3:
-                return 'Distributed';
+                return 'Processed';
+            case 3:
+                return 'Waiting-for-rider';
+            case 4:
+                return 'Assigned';
+            case 5:
+                return 'Picked up';
+            case 6:
+                return 'Delivered';
+
             default:
-                return 'Processing';
+                return 'Not-defined';
         }
     }
     public function orderType()
@@ -104,7 +143,9 @@ class Order extends BaseModel
 
     public function products()
     {
-        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')->withPivot('id', 'unit_id', 'quantity')->using(OrderProduct::class);
+        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
+            ->using(OrderProduct::class)
+            ->withPivot('id', 'unit_id', 'quantity');
     }
 
     public function scopeInitiated($query)
@@ -116,5 +157,18 @@ class Order extends BaseModel
     {
         return $query->where('creater_type', User::class)
             ->where('creater_id', user()->id);
+    }
+
+    /**
+     * Scope to filter orders where at least one payment is paid.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePaid($query)
+    {
+        return $query->whereHas('payments', function ($subQuery) {
+            $subQuery->where('status', 1)->orWhere('payment_method', 'cod');
+        });
     }
 }

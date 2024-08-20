@@ -58,7 +58,7 @@
                                     <label for="medicine">Medicine</label>
                                     <select name="item[${count}][medicine]" id="medicine"
                                         class="form-control medicine select-${count}" >
-                                        <option value="" selected hidden>Select Medicine</option>
+                                        <option value=" " selected hidden>Select Medicine</option>
                                     </select>
                                     @include('alerts.feedback', [
                                         'field' => 'item.*.medicine',
@@ -68,7 +68,7 @@
                                     <label for="unit">Unit</label>
                                     <select name="item[${count}][unit]" id="unit"
                                         class="form-control unit" disabled>
-                                        <option value="" selected hidden>Select Unit</option>
+                                        <option value=" " selected hidden>Select Unit</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'item.*.unit'])
                                 </div>
@@ -119,7 +119,7 @@
         console.log(id);
         if (id === null || id === '') {
             $(this).parent().next('.form-group').find('.unit').html(
-                '<option value="" selected hidden>Select Unit</option>');
+                '<option value=" " selected hidden>Select Unit</option>');
             $(this).parent().next('.form-group').find('.unit').prop('disabled', true);
         } else {
             let url = `{{ route('obp.get_unit.obp_details', 'param') }}`;

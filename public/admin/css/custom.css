@@ -10,10 +10,13 @@
 
     --btn-bg-color: #263148;
     --btn-bg-image: linear-gradient(to bottom left, #344675, #263148, #344675) !important;
-    
+}
+body{
+    overflow-x: hidden;
+}
 
-    
-
+.sidebar .nav li>a, .off-canvas-sidebar .nav li>a{
+    font-size: 0.58rem;
 }
 
 .brand-link .brand-image {
@@ -25,6 +28,7 @@
     width: 100%;
     object-fit: cover;
 }
+
 .sidebar {
     background-color:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
@@ -34,12 +38,15 @@
     background-color:var(--secondary-color) !important;
     background-image:var(--secondary-bg-image) !important;
 }
+
 .white-content .footer .copyright a{
     color:var(--primary-color) !important;
 }
+
 .white-content .footer .copyright a:hover{
     color:var(--secondary-color) !important;
 }
+
 .main-panel {
     border-top: 2px solid var(--primary-color) !important;
     /* background-color:var(--primary-color) !important; */
@@ -50,34 +57,33 @@
     background:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
 }
+
 .form-control:focus {
     border-color: var(--primary-color) !important;
 }
+
 .form-group input[type=file] {
     height: auto !important;
 }
+
 .form-check input[type="checkbox"]:checked+.form-check-sign::before, .form-check input[type="checkbox"]:checked+.form-check-sign::before {
     background-color: var(--primary-color) !important;
 }
+
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:focus, .btn-primary.active:hover {
     background:var(--primary-color) !important;
     background-image:var(--primary-bg-image) !important;
 }
 
-
-
-
 .white-content .btn:not([data-action]):hover {
     box-shadow: none !important;
 }
+
 .btn:not([data-action]):hover, .navbar .navbar-nav>a.btn:not([data-action]):hover {
     box-shadow: none !important;
     transform: none !important;
     -webkit-transform: none !important;
 }
-
-
-
 
 /* Circle  */
 .toggle.ios,
@@ -85,15 +91,16 @@
 .toggle-off.ios {
     border-radius: 20rem;
 }
+
 .toggle.ios .toggle-handle {
     border-radius: 20rem;
 }
-
 
 /* Squer */
 .toggle.android {
     border-radius: 0px;
 }
+
 .toggle.android .toggle-handle {
     border-radius: 0px;
 }
@@ -101,6 +108,7 @@
 textarea.form-control {
     min-height: 20vh !important;
 }
+
 /*=============================================================
                 End Overwrite CSS
  =============================================================*/
@@ -130,7 +138,6 @@ textarea.form-control {
     border: 5px solid #2b3553;
     border-bottom-color: transparent;
     position: relative;
-
 }
 
 .profile-section .profile_image .overly::before {
@@ -146,12 +153,12 @@ textarea.form-control {
     opacity: .5;
     transition: .4s;
     z-index: 99;
-
 }
 
 .div_animation {
     animation: round 5s linear infinite;
 }
+
 .image_animation {
     animation: rounds 5s linear infinite reverse;
 }
@@ -184,7 +191,6 @@ textarea.form-control {
                 Start Site Settings CSS
  =============================================================*/
  .site_settings .tab {
-
     border-radius: 5px 0 0 5px;
     border: 1px solid #ccc;
     min-height: 80vh;
@@ -229,7 +235,6 @@ textarea.form-control {
     }
 }
 
-
 /*=============================================================
                 End Site Settings CSS
  =============================================================*/
@@ -263,10 +268,12 @@ textarea.form-control {
 .select2-container--default .select2-selection--multiple .select2-selection__arrow {
     top: 16% !important;
 }
+
 .select2-container .select2-selection--single .select2-selection__rendered ,
 .select2-container .select2-selection--multiple .select2-selection__rendered {
     margin: 0;
 }
+
 /*=============================================================
                 End Select2 CSS
  =============================================================*/
@@ -296,6 +303,7 @@ textarea.form-control {
     top: 10%;
     cursor: pointer;
 }
+
 /*=============================================================
                 End Image Upload CSS
  =============================================================*/
@@ -316,3 +324,109 @@ textarea.form-control {
                 End Product Management CSS
  =============================================================*/
 
+ .badge.badge-secondary{
+    color: #000;
+ }
+
+ /*=============================================================
+                Earning CSS
+ =============================================================*/
+ .earning .wrap{
+    min-height: 91vh;
+ }
+ .earning .box {
+    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%) !important;
+    border-color: rgba(0, 0, 0, 0.3);
+}
+ .earning .amount .my_amount {
+    font-size: 30px;
+    font-weight: 900;
+    margin: 15px 0;
+    font-family: auto;
+}
+ .earning .myTab.active {
+    color: var(--primary-color) !important;
+    border: 0;
+    border-bottom: 1px solid var(--primary) !important;
+    background: transparent !important;
+}
+ .earning .drp-buttons .cancelBtn.btn {
+    background: var(--bs-btn-bg) !important;
+}
+ .form-group > .select2-container {
+    width: 100% !important;
+ }
+
+
+
+  /*=============================================================
+                Admin > Profiles CSS
+ =============================================================*/
+ .profile #nav-tabContent .tab-pane {
+    display: none;
+}
+
+.profile #nav-tabContent .tab-pane.active {
+    display: block;
+}
+
+ .profile .card-user {
+    font-family: 'sans-serif';
+}
+
+.profile .card-user .contact_info {
+    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.profile .card-user .contact_info ul li {
+    color: #00000086;
+}
+
+.profile .card-user .contact_info ul li .title,
+.profile .card-user .contact_info ul li i {
+    color: #000000ab;
+}
+
+.profile .card-user .earning_info {
+    /* background: linear-gradient(to right, rgba(225, 78, 202, 0.6) 0%, rgba(225, 78, 202, 0) 100%); */
+    font-family: auto;
+}
+
+.profile .card-user .earning_info .title {
+    font-size: 13px;
+    color: #00000086;
+}
+
+.profile .card-user .earning_info .amount {
+    font-weight: 900;
+    font-size: 15px;
+}
+
+.profile .card-user .earning_info .card {
+    border-color: rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+.profile .card-user .card-body {
+    min-height: auto;
+}
+
+.profile .card-user .bio {
+    color: #00000086 !important;
+    line-height: 18px;
+}
+
+.profile .nav .nav-link {
+    color: #00000086;
+}
+
+.profile .nav .nav-link.active {
+    color: #000;
+}
+
+.profile .earning .box {
+    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%) !important;
+    border-color: rgba(0, 0, 0, 0.3);
+}
