@@ -1,8 +1,8 @@
-mapboxgl.accessToken = mapbox_token;
+mapboxgl.accessToken = mapbox_default.mapbox_token;
 
 //compare able location
-const default_longitude = 90.3636733401006;
-const default_latitude = 23.806853416250462;
+const default_longitude = mapbox_default.center_location_lng;
+const default_latitude = mapbox_default.center_location_lat;
 
 const per_km_charge = 20; //tk
 const min_charge = 60; //tk

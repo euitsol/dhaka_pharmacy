@@ -34,20 +34,46 @@ class UserController extends BaseController
                 $path = $image->storeAs($folderName, $imageName, 'public');
                 $user->image = $path;
             }
-            $user->name = $request->name;
-            $user->bio = $request->bio;
-            $user->designation = $request->designation;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->age = $request->age;
-            $user->identification_type = $request->identification_type;
-            $user->identification_no = $request->identification_no;
-            $user->present_address = $request->present_address;
-            $user->gender = $request->gender;
-            $user->dob = $request->dob;
-            $user->father_name = $request->father_name;
-            $user->mother_name = $request->mother_name;
-            $user->permanent_address = $request->permanent_address;
+            if (isset($request->name)) {
+                $user->name = $request->name;
+            }
+            if (isset($request->bio)) {
+                $user->bio = $request->bio;
+            }
+
+            if (isset($request->designation)) {
+                $user->designation = $request->designation;
+            }
+            if (isset($request->email)) {
+                $user->email = $request->email;
+            }
+            if (isset($request->age)) {
+                $user->age = $request->age;
+            }
+            if (isset($request->identification_type)) {
+                $user->identification_type = $request->identification_type;
+            }
+            if (isset($request->identification_no)) {
+                $user->identification_no = $request->identification_no;
+            }
+            if (isset($request->present_address)) {
+                $user->present_address = $request->present_address;
+            }
+            if (isset($request->gender)) {
+                $user->gender = $request->gender;
+            }
+            if (isset($request->dob)) {
+                $user->dob = $request->dob;
+            }
+            if (isset($request->father_name)) {
+                $user->father_name = $request->father_name;
+            }
+            if (isset($request->mother_name)) {
+                $user->mother_name = $request->mother_name;
+            }
+            if (isset($request->permanent_address)) {
+                $user->permanent_address = $request->permanent_address;
+            }
             $user->updater()->associate($user);
             $user->update();
             return sendResponse(true, 'User profile updated successfully.');

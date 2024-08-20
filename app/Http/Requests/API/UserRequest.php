@@ -22,13 +22,12 @@ class UserRequest extends BaseRequest
     public function rules(): array
     {
         $id = $this->user()->id;
-        return [
-            'name' => 'required|min:4',
+        return  [
+            'name' => 'sometimes|required|min:4',
             'image' => 'nullable|image|mimes:jpeg,png,gif,jpg,webp',
             'bio' => 'nullable',
             'designation' => 'nullable',
             'email' => 'nullable|unique:users,email,' . $id,
-            'phone' => 'required|numeric|digits:11|unique:users,phone,' . $id,
             'age' => 'nullable|numeric|digits:2',
             'identification_type' => 'nullable|in:NID,DOB,Passport',
             'identification_no' => 'nullable|numeric',

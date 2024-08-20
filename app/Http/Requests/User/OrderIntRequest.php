@@ -30,7 +30,7 @@ class OrderIntRequest extends FormRequest
             $rules = [
                 'product' => 'required|exists:medicines,name',
                 'unit_id' => 'required|exists:medicine_units,quantity',
-                'quantity' => 'required|numeric|min:6',
+                'quantity' => 'required|numeric|min:1',
             ];
         }
 

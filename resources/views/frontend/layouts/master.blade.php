@@ -46,6 +46,11 @@
     @stack('css')
     <script>
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
+        const mapbox_default = {
+            'mapbox_token': `{{ config('mapbox.mapbox_token') }}`,
+            'center_location_lat': `{{ config('mapbox.center_location_lat') }}`,
+            'center_location_lng': `{{ config('mapbox.center_location_lng') }}`,
+        };
         const routes = {
             'cart_products': `{{ route('cart.products') }}`,
             'cart_add': `{{ route('cart.add') }}`,
