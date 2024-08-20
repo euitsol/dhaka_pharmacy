@@ -3,7 +3,7 @@
         enctype="multipart/form-data">
         @csrf
         <div class="card-header">
-            <h4 class="title">{{ __('Socialite Facebook API') }}</h4>
+            <h4 class="title">{{ __('Socail Login Facebook API') }}</h4>
         </div>
         <div class="card-body">
             <div class="form-group {{ $errors->has('fb_client_id') ? ' has-danger' : '' }}">
@@ -41,7 +41,7 @@
         enctype="multipart/form-data">
         @csrf
         <div class="card-header">
-            <h4 class="title">{{ __('Socialite Google API') }}</h4>
+            <h4 class="title">{{ __('Socail Login Google API') }}</h4>
         </div>
         <div class="card-body">
             <div class="form-group {{ $errors->has('google_client_id') ? ' has-danger' : '' }}">
