@@ -51,6 +51,7 @@ function get_location(id, target) {
                     );
                     let cost = numberFormat(calculate_cost(distance));
                     $(target).append("(" + data.taka_icon + cost + ")");
+                    // $(target).append(distance + "KM");
                     $(target).attr("data-charge", cost);
                 }
             },
