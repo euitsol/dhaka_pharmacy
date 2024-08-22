@@ -8,11 +8,8 @@ use Illuminate\Support\Facades\Log;
 
 trait OrderTrait
 {
-    use LocationDistanceCalculateTrait;
-
     public function  createOrder()
     {
-        $this->updateUserDeliveryFee();
         $orderId = generateOrderId();
         $order = new Order();
 

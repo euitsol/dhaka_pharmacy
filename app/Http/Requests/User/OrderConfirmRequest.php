@@ -24,7 +24,6 @@ class OrderConfirmRequest extends FormRequest
         return [
             'address' => 'required|exists:addresses,id',
             'delivery_type' => 'nullable|numeric',
-            'delivery_fee' => 'required|numeric',
             'payment_method' => 'required',
         ];
     }

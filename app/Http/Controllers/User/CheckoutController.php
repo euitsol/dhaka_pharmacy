@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SingleOrderRequest;
 use App\Http\Requests\User\OrderConfirmRequest;
 use App\Http\Requests\User\OrderIntRequest;
-use App\Http\Traits\LocationDistanceCalculateTrait;
+use App\Http\Traits\DeliveryTrait;
 use App\Http\Traits\OrderTrait;
 use App\Models\Address;
 use App\Models\AddToCart;
@@ -24,7 +24,7 @@ use App\Models\Payment;
 
 class CheckoutController extends Controller
 {
-    use OrderNotificationTrait, TransformProductTrait, OrderTrait, TransformOrderItemTrait, LocationDistanceCalculateTrait;
+    use OrderNotificationTrait, TransformProductTrait, OrderTrait, TransformOrderItemTrait, DeliveryTrait;
 
     public function int_order(OrderIntRequest $request)
     {
@@ -63,21 +63,24 @@ class CheckoutController extends Controller
             'products.pro_sub_cat',
             'products.company',
             'products.discounts',
-            'products.units'
+            'products.units',
         ])->initiated()->self()->findOrFail(decrypt($order_id));
         $data['order']->products->each(function (&$product) {
             $product = $this->transformProduct($product);
         });
         $data['customer'] = User::with(['address'])->findOrFail(user()->id);
+        $data['customer']->address->each(function (&$address) {
+            $address->delivery_charge = $this->getDeliveryCharge($address->latitude, $address->longitude);
+        });
         return view('user.product_order.checkout', $data);
     }
     public function order_confirm(OrderConfirmRequest $req, $order_id)
     {
-        $order = Order::with(['products'])->self()->findOrFail(decrypt($order_id));
+        $order = Order::with(['products', 'address'])->self()->findOrFail(decrypt($order_id));
         $order->address_id = $req->address;
         $order->status = 1; //Order Submit
         $order->delivery_type = 0;
-        $order->delivery_fee = $req->delivery_fee;
+        $order->delivery_fee = $this->getDeliveryCharge($order->address->latitude, $order->address->longitude);
         $order->save();
         $this->calculateOrderTotalDiscountPrice($order);
 
