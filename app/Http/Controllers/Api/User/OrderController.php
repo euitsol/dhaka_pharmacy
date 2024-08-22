@@ -87,6 +87,7 @@ class OrderController extends BaseController
             $order->products->each(function (&$product) {
                 $product = $this->transformProduct($product);
             });
+            $this->calculateOrderTotalDiscountPrice($order);
             return sendResponse(true, 'Order details retrived successfully', ['order' => $order]);
         } else {
             return sendResponse(false, 'Something went wrong, please try again');
