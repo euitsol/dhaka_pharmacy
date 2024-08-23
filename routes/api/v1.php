@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiInfoShareController;
 use App\Http\Controllers\Api\Frontend\CategoryController;
 use App\Http\Controllers\Api\Frontend\ProductController;
 use App\Http\Controllers\Api\User\AddressController;
@@ -8,7 +9,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\AuthenticationController;
 use App\Http\Controllers\Api\User\CartAjaxController;
 use App\Http\Controllers\Api\User\OrderController;
+use App\Http\Controllers\Api\User\PaymentController;
 use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\Api\User\WishlistController;
 
 Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 
@@ -44,11 +47,24 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::post('initiat/single', 'int_single_order')->name('s.i');
         Route::get('details', 'details')->name('d');
         Route::post('confirm', 'order_confirm')->name('c');
+
+        Route::get('list', 'list')->name('l');
+    });
+    Route::controller(PaymentController::class)->middleware('auth:api-user')->prefix('payment')->name('payment.')->group(function () {
+        Route::get('list', 'list')->name('l');
+        Route::get('details', 'details')->name('d');
+    });
+    Route::controller(WishlistController::class)->middleware('auth:api-user')->prefix('wishlist')->name('wishlist.')->group(function () {
+        Route::get('list', 'list')->name('l');
+        Route::get('details', 'update')->name('d');
     });
 });
 
 
-
+Route::controller(ApiInfoShareController::class)->prefix('api-info')->name('api.')->group(function () {
+    Route::get('/secure', 'secureApiInfo')->middleware('auth:api-user')->name('secure.i');
+    Route::get('/social', 'socialApiInfo')->name('social.i');
+});
 
 Route::group(['as' => 'f.', 'prefix' => ''], function () {
     Route::controller(CategoryController::class)->prefix('categories')->name('cats.')->group(function () {

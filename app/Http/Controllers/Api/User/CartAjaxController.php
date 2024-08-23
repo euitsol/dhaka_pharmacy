@@ -20,14 +20,21 @@ class CartAjaxController extends BaseController
         $user = $request->user();
         if ($user) {
             $product = Medicine::activated()->where('slug', $request->product_slug)->first();
-            if (!empty($product)) {
-                $atc = new AddToCart();
-                $atc->product_id = $product->id;
-                $atc->customer_id = $user->id;
-                $atc->unit_id = $request->unit ?? null;
-                $atc->quantity = $request->quantity ?? 1;
-                $atc->save();
-                return sendResponse(true, $atc->product->name . ' has been added to your cart!');
+            if ($product) {
+                $cart = AddToCart::where('product_id', $product->id)->where('customer_id', $user->id)->first();
+                if ($cart) {
+                    return sendResponse(false, 'This product is already in your cart!', null);
+                } else {
+                    $cart = new AddToCart();
+                    $cart->product_id = $product->id;
+                    $cart->customer_id = $user->id;
+                    $cart->unit_id = $request->unit ?? null;
+                    $cart->quantity = $request->quantity ?? 1;
+                    $cart->save();
+                }
+                return sendResponse(true, $cart->product->name . ' has been added to your cart!');
+            } else {
+                return sendResponse(false, 'Oops! Something went wrong. Please try again.', null);
             }
         } else {
             return sendResponse(false, 'You need to log in to add items to your cart.', null);
@@ -38,7 +45,7 @@ class CartAjaxController extends BaseController
     {
         $user = $request->user();
         if ($user) {
-            $atc = AddToCart::with([
+            $carts = AddToCart::with([
                 'product',
                 'product.pro_cat',
                 'product.generic',
@@ -51,8 +58,8 @@ class CartAjaxController extends BaseController
                 }
             ])->where('customer_id', $user->id)->get();
 
-            $products = $atc->each(function (&$atc) {
-                $atc->product = $this->transformProduct($atc->product);
+            $products = $carts->each(function (&$cart) {
+                $cart->product = $this->transformProduct($cart->product);
             });
             return sendResponse(true, 'Cart items retrived successfully', $products);
         } else {
@@ -92,7 +99,7 @@ class CartAjaxController extends BaseController
         $user = $request->user();
         if ($user) {
             foreach ($request->carts as $cart) {
-                AddToCart::where('id', $cart)->first()->delete();
+                AddToCart::where('id', $cart)->first()->forceDelete();
             }
             return sendResponse(true, 'Item has been deleted successfully!');
         } else {

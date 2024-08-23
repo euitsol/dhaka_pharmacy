@@ -172,7 +172,7 @@
                         </div>
                     </div>
                     <div class="my-payment-feedback d-flex">
-                        <a href="#" class="single">
+                        <a href="{{ route('u.payment.list') }}" class="single">
                             <div class="my-payment d-flex align-items-center justify-content-center">
                                 <div class="img">
                                     <img src="{{ asset('user/asset/img/my-payment.png') }}" alt="">

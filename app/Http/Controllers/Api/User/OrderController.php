@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Traits\TransformProductTrait;
 use App\Http\Traits\TransformOrderItemTrait;
 use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends BaseController
@@ -67,7 +68,7 @@ class OrderController extends BaseController
         $op->save();
         return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->id]);
     }
-    public function details(Request $request)
+    public function details(Request $request): JsonResponse
     {
         $user = $request->user();
         $order = Order::with([
@@ -86,13 +87,14 @@ class OrderController extends BaseController
             $order->products->each(function (&$product) {
                 $product = $this->transformProduct($product);
             });
+            $this->calculateOrderTotalDiscountPrice($order);
             return sendResponse(true, 'Order details retrived successfully', ['order' => $order]);
         } else {
             return sendResponse(false, 'Something went wrong, please try again');
         }
     }
 
-    public function order_confirm(OrderConfirmRequest $request)
+    public function order_confirm(OrderConfirmRequest $request): JsonResponse
     {
         $user = $request->user();
         $order = Order::with(['products'])
@@ -119,5 +121,52 @@ class OrderController extends BaseController
         } else {
             return sendResponse(false, 'Something went wrong, please try again');
         }
+    }
+
+    public function list(Request $request): JsonResponse
+    {
+        $user = $request->user();
+        $status = $request->status;
+        $filter_val = $request->filter ?? 7;
+
+
+        $query = $this->buildOrderQuery($user, $status);
+        $query->with(['od', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength']);
+        if ($filter_val != 'all') {
+            $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
+        }
+        $orders =  $query->latest()->get();
+        $this->prepareOrderData($orders);
+        return sendResponse(true, 'Order list retrived successfully', ['orders' => $orders]);
+    }
+    private function buildOrderQuery($user, $status)
+    {
+        $query = Order::where([
+            ['status', '!=', 0],
+            ['customer_id', $user->id],
+            ['customer_type', get_class($user)]
+        ]);
+
+        if ($status == 'current-orders') {
+            $query->whereIn('status', [0, 1, 2, 3, 4]);
+        } elseif ($status == 'previous-orders') {
+            $query->whereIn('status', [-1, -2, -3]);
+        } elseif ($status == 'cancel-orders') {
+            $query->where('status', -2);
+        }
+
+        return $query;
+    }
+    private function prepareOrderData($orders)
+    {
+        $orders->each(function (&$order) {
+            $order->place_date = date('d M Y h:m:s', strtotime($order->created_at));
+            $this->calculateOrderTotalPrice($order);
+            $this->calculateOrderTotalDiscountPrice($order);
+            $order->totalRegularPrice = ($order->totalPrice - $order->totalDiscountPrice);
+            $order->products->each(function (&$product) {
+                $this->transformProduct($product, 30);
+            });
+        });
     }
 }
