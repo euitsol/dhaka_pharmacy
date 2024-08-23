@@ -233,7 +233,7 @@
                         @foreach ($do->odps as $key => $dop)
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="card card-2 mb-0 mt-3">
+                                    <div class="card card-2 mb-0 mt-3 mb-3">
                                         <div class="card-body">
                                             <div class="row align-items-center">
                                                 <div class="col-9">
@@ -265,7 +265,7 @@
                                                 </div>
 
                                                 <div class="col-3">
-                                                    @if ($dop->status == 3)
+                                                    @if ($dop->status == -1)
                                                         <input type="hidden" name="datas[{{ $key }}][op_id]"
                                                             value="{{ $dop->order_product->id }}">
                                                         <input type="hidden" name="datas[{{ $key }}][dop_id]"
@@ -341,15 +341,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if ($dop->status == 3 || $dop->status == -1)
-                                        <span><strong
+                                    @if ($dop->status == -1)
+                                        <span class=""><strong
                                                 class="text-danger">{{ __('Reason: ') }}</strong>{{ $dop->note }}</span>
                                     @endif
                                 </div>
 
                             </div>
                         @endforeach
-                        @if ($dop->status == 3)
+                        @if ($dop->status == -1)
                             <div class="row">
                                 <div class="form-group col-md-12 text-end">
                                     <input type="submit" value="Update" class="btn btn-primary">

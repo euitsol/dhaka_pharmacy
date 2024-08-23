@@ -138,7 +138,7 @@ class OrderManagementController extends Controller
         $od = OrderDistribution::with(['odps', 'order'])->findOrFail(decrypt($do_id));
 
         if ($od->odps->filter(function ($odp) {
-            return $odp->status == 0 || $odp->status == 1;
+            return $odp->status == 0 || $odp->status == 1 || $odp->status == -1;
         })->isEmpty()) {
             DB::transaction(function () use ($od) {
                 $od->status = 2;

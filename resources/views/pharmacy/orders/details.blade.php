@@ -203,7 +203,7 @@
                                                                                 type="radio"
                                                                                 name="data[{{ $key }}][status]"
                                                                                 id="status{{ $key }}"
-                                                                                value="3">
+                                                                                value="-1">
                                                                             {{ __('Dispute') }}
                                                                             <span class="form-check-sign"></span>
                                                                         </label>
@@ -219,10 +219,16 @@
                                 </div>
                                 @if ($dop->status == 0 || $dop->status == 1)
                                     <div class="form-group status_note mt-3" style="display: none">
-                                        <textarea name="data[{{ $key }}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
+                                        <textarea name="data[{{ $key }}][note]" class="form-control note" placeholder="Enter dispute reason"></textarea>
+
+                                        <div class="d-flex mt-2">
+                                            <div class="btn btn-primary p-2 entry" title="অত্যন্ত দুঃখের সাথে জানাতে চাচ্ছি যে এই পণ্যটি আমাদের কাছে নেই।">পণ্যটি নেই</div>
+                                            <div class="btn btn-primary p-2 entry l-2" title="আপনি যে পণ্যটি চেয়েছিলেন তা আমাদের স্টকে আছে, কিন্তু আপনি যে পরিমাণ চেয়েছিলেন তা আমাদের কাছে নেই।">পণ্য স্টকে আছে, কিন্তু পরিমাণ কম</div>
+                                            <div class="btn btn-primary p-2 entry l-2" title="আপনি যে পণ্যটি চেয়েছিলেন তা আমাদের স্টকে আছে। কিন্তু আপনি যে দাম বলছেন, তাতে পণ্য দেওয়া সম্ভব নয়।">দাম কম</div>
+                                        </div>
                                     </div>
                                     @include('alerts.feedback', ['field' => 'data.' . $key . '.note'])
-                                @elseif($dop->status == 3 || $dop->status == -1)
+                                @elseif($dop->status == -1)
                                     <span><strong
                                             class="text-danger">{{ __('Reason: ') }}</strong>{{ $dop->note }}</span>
                                 @endif
@@ -246,13 +252,17 @@
     <script>
         $(document).ready(function() {
             $('.do_status').on('change', function() {
-                if ($(this).val() == 3) {
+                if ($(this).val() == -1) {
                     $(this).closest('.status_wrap').find('.status_note').show();
                 } else {
                     $(this).closest('.status_wrap').find('.status_note').hide();
                     $(this).closest('.status_wrap').find('.status_note .form-control').val('');
                 }
             });
+
+            $('.entry').on('click', function() {
+                $(this).closest('.form-group').find('.note').val($(this).attr('title'));
+            })
 
 
             $(document).ready(function() {

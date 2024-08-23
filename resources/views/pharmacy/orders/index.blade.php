@@ -51,7 +51,7 @@
                                                 class="{{ $od->odps->where('status', 1)->count() > 0 ? 'badge badge-warning' : '' }}">{{ $od->odps->where('status', 1)->count() }}</span>
                                         </td>
                                         <td><span
-                                                class="{{ $od->odps->where('status', 3)->count() > 0 ? 'badge badge-danger' : '' }}">{{ $od->odps->where('status', 3)->count() }}</span>
+                                                class="{{ $od->odps->where('status', -1)->count() > 0 ? 'badge badge-danger' : '' }}">{{ $od->odps->where('status', -1)->count() }}</span>
                                         </td>
                                         <td>
                                             {!! remainingTime($od->pharmacy_prep_time, true) !!}
