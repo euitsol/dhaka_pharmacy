@@ -27,17 +27,17 @@
                                 value="{{ $pg_settings['store_password'] ?? '' }}">
                             @include('alerts.feedback', ['field' => 'store_password'])
                         </div>
-                        <div class="form-group{{ $errors->has('test_mode') ? ' has-danger' : '' }}">
-                            <label>{{ _('Test Mode') }}
+                        <div class="form-group{{ $errors->has('mode') ? ' has-danger' : '' }}">
+                            <label>{{ _('Mode') }}
                                 <small>({{ _('Best to keep in false') }})</small></label>
-                            <select name="test_mode"
-                                class="form-control no-select {{ $errors->has('test_mode') ? ' is-invalid' : '' }}">
-                                <option value="1" @if (isset($pg_settings['test_mode']) && $pg_settings['test_mode'] == '1') selected @endif>
+                            <select name="mode"
+                                class="form-control no-select {{ $errors->has('mode') ? ' is-invalid' : '' }}">
+                                <option value="1" @if (isset($pg_settings['mode']) && $pg_settings['mode'] == '1') selected @endif>
                                     {{ _('True') }}</option>
-                                <option value="0" @if (isset($pg_settings['test_mode']) && $pg_settings['test_mode'] == '0') selected @endif>
+                                <option value="0" @if (isset($pg_settings['mode']) && $pg_settings['mode'] == '0') selected @endif>
                                     {{ _('False') }}</option>
                             </select>
-                            @include('alerts.feedback', ['field' => 'test_mode'])
+                            @include('alerts.feedback', ['field' => 'mode'])
                         </div>
 
 

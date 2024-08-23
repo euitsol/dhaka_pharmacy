@@ -7,9 +7,11 @@ use App\Http\Requests\API\AddressRequest;
 use App\Models\Address;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Http\Traits\DeliveryTrait;
 
 class AddressController extends BaseController
 {
+    use DeliveryTrait;
     public function store(AddressRequest $request): JsonResponse
     {
         $user = $request->user();
@@ -71,6 +73,11 @@ class AddressController extends BaseController
         $user = $request->user();
         if ($user) {
             $address_list = Address::where('creater_id', $user->id)->where('creater_type', get_class($user))->orderBy('is_default', 'desc')->get();
+            if ($request->delivery) {
+                $address_list->each(function (&$address) {
+                    $address->delivery_charge = $this->getDeliveryCharge($address->latitude, $address->longitude);
+                });
+            }
             return sendResponse(true, $user->name . ' address list retrived successfully', $address_list);
         } else {
             return sendResponse(false, 'Invalid User', null);
