@@ -8,9 +8,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class OrderItemStatusCheck implements ValidationRule
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
     /**
      * Run the validation rule.
      *
@@ -21,6 +19,8 @@ class OrderItemStatusCheck implements ValidationRule
         $cart = AddToCart::where('id', $value)->where('status', 1)->first();
         if (!$cart) {
             $fail('One or more items on your card do not exist.');
+        } elseif ($cart->unit_id == null) {
+            $fail('One or more items on your card unit id do not exist.');
         }
         return;
     }

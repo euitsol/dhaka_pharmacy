@@ -25,7 +25,7 @@ class AddToCartRequest extends BaseRequest
         $user = $this->user();
         return [
             'product_slug' => 'required|string|exists:medicines,slug',
-            'unit' => 'nullable|exists:medicine_units,id',
+            'unit_id' => 'nullable|exists:medicine_units,id',
             'quantity' => 'nullable|numeric'
         ];
     }
