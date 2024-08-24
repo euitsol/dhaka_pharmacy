@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UploadPrescriptionRequest;
+use App\Http\Traits\DeliveryTrait;
 use App\Models\Address;
 use App\Models\OrderPrescription;
 use App\Models\TempFile;
@@ -13,11 +14,11 @@ use Illuminate\Support\Facades\Storage;
 
 class OrderByPrescriptionController extends Controller
 {
-    //
+    use DeliveryTrait;
 
     public function __construct()
     {
-        return $this->middleware('auth');
+        // return $this->middleware('auth');
     }
     public function prescription_upload(UploadPrescriptionRequest $request): JsonResponse
     {
@@ -25,6 +26,7 @@ class OrderByPrescriptionController extends Controller
         try {
             $data = [];
             $up = new OrderPrescription();
+            $address = Address::findOrFail($request->address_id);
             $temp_file = TempFile::findOrFail($request->image);
             if ($temp_file) {
                 $from_path = 'public/' . $temp_file->path . '/' . $temp_file->filename;
@@ -33,7 +35,7 @@ class OrderByPrescriptionController extends Controller
                 $up->image = $to_path;
                 $up->address_id = $request->address_id;
                 $up->delivery_type = $request->delivery_type;
-                $up->delivery_fee = $request->delivery_fee;
+                $up->delivery_fee = $this->getDeliveryCharge($address->latitude, $address->longitude);
                 $up->user_id = user()->id;
                 $up->save();
                 Storage::deleteDirectory('public/' . $temp_file->path);
@@ -47,9 +49,15 @@ class OrderByPrescriptionController extends Controller
             return response()->json(['message' => 'Somethings is wrong'], 500);
         }
     }
-    public function address($id): JsonResponse
+    public function check_auth()
     {
-        $data = Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->where('id', $id)->get()->first();
-        return response()->json($data);
+        if (!auth()->guard('web')->check()) {
+            return response()->json([
+                'requiresLogin' => true,
+                'message' => 'You need to log in to place an order.',
+            ]);
+        } else {
+            return response()->json(['success' => true]);
+        }
     }
 }

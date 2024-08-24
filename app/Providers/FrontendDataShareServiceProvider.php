@@ -2,15 +2,17 @@
 
 namespace App\Providers;
 
+use App\Http\Traits\DeliveryTrait;
 use Illuminate\Support\ServiceProvider;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\TransformProductTrait;
+use App\Models\User;
 use App\Models\WishList;
 
 class FrontendDataShareServiceProvider extends ServiceProvider
 {
-    use TransformProductTrait;
+    use TransformProductTrait, DeliveryTrait;
     public function register(): void
     {
         //
@@ -43,6 +45,10 @@ class FrontendDataShareServiceProvider extends ServiceProvider
                     return $wish;
                 });
                 $data['wishes'] = $wishes;
+                $data['customer'] = User::with(['address'])->findOrFail(user()->id);
+                $data['customer']->address->each(function (&$address) {
+                    $address->delivery_charge = $this->getDeliveryCharge($address->latitude, $address->longitude);
+                });
             }
 
             $view->with($data);
