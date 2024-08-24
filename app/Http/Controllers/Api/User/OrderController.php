@@ -32,7 +32,8 @@ class OrderController extends BaseController
         $order->save();
 
         foreach ($request->carts as $id) {
-            $cart = AddToCart::currentCart()->whereId('id', $id)->first();
+            $cart = AddToCart::where('customer_id', $user->id)
+                ->where('status', 1)->where('id', $id)->first();
 
             if ($cart) {
                 $op = new OrderProduct();
