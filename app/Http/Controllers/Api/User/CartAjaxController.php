@@ -28,7 +28,7 @@ class CartAjaxController extends BaseController
                     $cart = new AddToCart();
                     $cart->product_id = $product->id;
                     $cart->customer_id = $user->id;
-                    $cart->unit_id = $request->unit ?? null;
+                    $cart->unit_id = $request->unit_id ?? null;
                     $cart->quantity = $request->quantity ?? 1;
                     $cart->save();
                 }

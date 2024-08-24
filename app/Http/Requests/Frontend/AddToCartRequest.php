@@ -26,7 +26,7 @@ class AddToCartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug' => ['required','string','exists:medicines,slug',new CartProductRule()],
+            'slug' => ['required', 'string', 'exists:medicines,slug', new CartProductRule()],
             'unit' => 'nullable|exists:medicine_units,id',
             'quantity' => 'nullable|numeric'
         ];

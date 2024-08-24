@@ -19,9 +19,7 @@ class CartAjaxController extends Controller
 {
     use TransformProductTrait;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function add(AddToCartRequest $request): JsonResponse
     {
