@@ -24,7 +24,6 @@ class UploadPrescriptionRequest extends FormRequest
         return [
             'address_id' => 'required|exists:addresses,id',
             'delivery_type' => 'required|numeric',
-            'delivery_fee' => 'required',
         ];
     }
 }

@@ -93,9 +93,10 @@
                                 <select id="address{{ $key }}" name="address"
                                     class="mb-2 py-2 px-1 bg-white address">
                                     @foreach ($customer->address as $key => $address)
-                                        <option data-charge="" class="charge" value="{{ $address->id }}"
-                                            @if ($address->is_default == true) selected @endif>
-                                            {{ str_limit($address->address, 80) }}
+                                        <option data-charge="{{ $address->delivery_charge }}" class="charge"
+                                            value="{{ $address->id }}" @if ($address->is_default == true) selected @endif>
+                                            {{ str_limit($address->address, 45) }}
+                                            ({{ number_format($address->delivery_charge, 2) . ' TK' }})
                                         </option>
                                     @endforeach
                                 </select>
@@ -117,7 +118,6 @@
                                     <h5>{{ __('Delivery Charge') }}</h5>
                                     <p><span> {!! get_taka_icon() !!} </span>
                                         <span class="delivery_fee">0</span>
-                                        <input type="hidden" name="delivery_fee" class="delivery_input" value="0">
                                     </p>
                                 </div>
                                 <div class="d-flex justify-content-between">

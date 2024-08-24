@@ -5,9 +5,9 @@ namespace App\Http\Traits;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
+
 trait OrderTrait
 {
-
     public function  createOrder()
     {
         $orderId = generateOrderId();

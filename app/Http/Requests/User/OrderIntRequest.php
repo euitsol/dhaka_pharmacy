@@ -28,8 +28,8 @@ class OrderIntRequest extends FormRequest
 
         if ($this->has('product') || $this->has('unit_id') || $this->has('quantity')) {
             $rules = [
-                'product' => 'required|exists:medicines,name',
-                'unit_id' => 'required|exists:medicine_units,quantity',
+                'product' => 'required|exists:medicines,id',
+                'unit_id' => 'required|exists:medicine_units,id',
                 'quantity' => 'required|numeric|min:1',
             ];
         }
