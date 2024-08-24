@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'ps_kyc_list'])
-@section('title', c_user_name($submitted_kyc->creater).' KYC Details')
+@section('title', c_user_name($submitted_kyc->creater) . ' KYC Details')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 @endpush
@@ -72,7 +72,6 @@
                                     </tr>
                                 @endif
                                 @if ($form_data['type'] == 'date')
-                                
                                     <tr>
                                         <th>{{ $form_data['field_name'] }}</th>
                                         <th>:</th>
@@ -88,9 +87,9 @@
                                         <th>{{ $form_data['field_name'] }}</th>
                                         <th>:</th>
                                         <td>
-                                            
+
                                             @if (isset($save_datas[$form_data['field_key']]))
-                                                {{$form_data['option_data'][$save_datas[$form_data['field_key']]]}}
+                                                {{ $form_data['option_data'][$save_datas[$form_data['field_key']]] }}
                                             @endif
                                         </td>
                                     </tr>
@@ -112,11 +111,12 @@
                                         <th>:</th>
                                         <td>
                                             @if (isset($save_datas[$form_data['field_key']]))
-                                                @if(isImage($save_datas[$form_data['field_key']]))
+                                                @if (isImage($save_datas[$form_data['field_key']]))
                                                     <div class="imagePreviewDiv d-inline-block">
                                                         <div id="lightbox" class="lightbox">
                                                             <div class="lightbox-content">
-                                                                <img src="{{ storage_url($save_datas[$form_data['field_key']]) }}" class="lightbox_image">
+                                                                <img src="{{ storage_url($save_datas[$form_data['field_key']]) }}"
+                                                                    class="lightbox_image">
                                                             </div>
                                                             <div class="close_button fa-beat">X</div>
                                                         </div>
@@ -137,11 +137,12 @@
                                         <td>
                                             @if (isset($save_datas[$form_data['field_key']]))
                                                 @foreach ($save_datas[$form_data['field_key']] as $file)
-                                                    @if(isImage($file))
+                                                    @if (isImage($file))
                                                         <div class="imagePreviewDiv d-inline-block">
                                                             <div id="lightbox" class="lightbox">
                                                                 <div class="lightbox-content">
-                                                                    <img src="{{ storage_url($file) }}" class="lightbox_image">
+                                                                    <img src="{{ storage_url($file) }}"
+                                                                        class="lightbox_image">
                                                                 </div>
                                                                 <div class="close_button fa-beat">X</div>
                                                             </div>
@@ -165,7 +166,8 @@
                                                 <div class="imagePreviewDiv">
                                                     <div id="lightbox" class="lightbox">
                                                         <div class="lightbox-content">
-                                                            <img src="{{ storage_url($save_datas[$form_data['field_key']]) }}" class="lightbox_image">
+                                                            <img src="{{ storage_url($save_datas[$form_data['field_key']]) }}"
+                                                                class="lightbox_image">
                                                         </div>
                                                         <div class="close_button fa-beat">X</div>
                                                     </div>
@@ -184,7 +186,8 @@
                                                     <div class="imagePreviewDiv d-inline-block">
                                                         <div id="lightbox" class="lightbox">
                                                             <div class="lightbox-content">
-                                                                <img src="{{ storage_url($image) }}" class="lightbox_image">
+                                                                <img src="{{ storage_url($image) }}"
+                                                                    class="lightbox_image">
                                                             </div>
                                                             <div class="close_button fa-beat">X</div>
                                                         </div>
@@ -214,7 +217,7 @@
                             <a href="{{ route('pm.pharmacy_kyc.submitted_kyc.accept.ps_kyc_status', $submitted_kyc->id) }}"
                                 class="btn btn-sm btn-success">{{ __('Accept') }}</a>
                             <a href="javascript:void(0)" data-id="{{ $submitted_kyc->id }}"
-                                class="btn btn-sm btn-warning declined">{{ __('Declined') }}</a>
+                                class="btn btn-sm btn-warning declined">{{ __('Decline') }}</a>
                         @endif
 
                     </div>
@@ -266,53 +269,53 @@
     </script>
 
     <script>
-            // Declined On Click
-            $(document).ready(function() {
-                $('.declined').on('click', function() {
-                    let id = $(this).data('id');
-                    $('#updateDeclinedNote').attr('data-id', id)
-                    $('#exampleModal').modal('show');
-                });
+        // Declined On Click
+        $(document).ready(function() {
+            $('.declined').on('click', function() {
+                let id = $(this).data('id');
+                $('#updateDeclinedNote').attr('data-id', id)
+                $('#exampleModal').modal('show');
             });
+        });
 
-            // Declined Update
-            $(document).ready(function() {
-                $('#updateDeclinedNote').click(function() {
-                    var form = $('#declined_form');
-                    let id = $(this).data('id');
-                    let _url = (
-                        "{{ route('pm.pharmacy_kyc.submitted_kyc.declined.ps_kyc_status', ['_id']) }}");
-                    let __url = _url.replace('_id', id);
-                    $.ajax({
-                        type: 'PUT',
-                        url: __url,
-                        data: form.serialize(),
-                        success: function(response) {
-                            $('#exampleModal').modal('hide');
-                            console.log(response.message);
-                            window.location.reload();
-                        },
-                        error: function(xhr) {
-                            if (xhr.status === 422) {
-                                // Handle validation errors
-                                var errors = xhr.responseJSON.errors;
-                                $.each(errors, function(field, messages) {
-                                    // Display validation errors
-                                    var errorHtml = '';
-                                    $.each(messages, function(index, message) {
-                                        errorHtml +=
-                                            '<span class="invalid-feedback d-block" role="alert">' +
-                                            message + '</span>';
-                                    });
-                                    $('[name="' + field + '"]').after(errorHtml);
+        // Declined Update
+        $(document).ready(function() {
+            $('#updateDeclinedNote').click(function() {
+                var form = $('#declined_form');
+                let id = $(this).data('id');
+                let _url = (
+                    "{{ route('pm.pharmacy_kyc.submitted_kyc.declined.ps_kyc_status', ['_id']) }}");
+                let __url = _url.replace('_id', id);
+                $.ajax({
+                    type: 'PUT',
+                    url: __url,
+                    data: form.serialize(),
+                    success: function(response) {
+                        $('#exampleModal').modal('hide');
+                        console.log(response.message);
+                        window.location.reload();
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            // Handle validation errors
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function(field, messages) {
+                                // Display validation errors
+                                var errorHtml = '';
+                                $.each(messages, function(index, message) {
+                                    errorHtml +=
+                                        '<span class="invalid-feedback d-block" role="alert">' +
+                                        message + '</span>';
                                 });
-                            } else {
-                                // Handle other errors
-                                console.log('An error occurred.');
-                            }
+                                $('[name="' + field + '"]').after(errorHtml);
+                            });
+                        } else {
+                            // Handle other errors
+                            console.log('An error occurred.');
                         }
-                    });
+                    }
                 });
             });
-        </script>
+        });
+    </script>
 @endpush
