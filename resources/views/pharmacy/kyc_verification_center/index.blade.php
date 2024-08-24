@@ -52,7 +52,7 @@
                         <div class="col-4 text-right">
                             @if (!empty($submitted_kyc))
                                 @if ($submitted_kyc->status === 1)
-                                    <span class="badge badge-success">{{ __('Varified') }}</span>
+                                    <span class="badge badge-success">{{ __('Verified') }}</span>
                                 @elseif($submitted_kyc->status === 0)
                                     <span class="badge badge-info">{{ __('Pending') }}</span>
                                 @elseif($submitted_kyc->status === -1)

@@ -44,7 +44,7 @@ class LoginController extends Controller
 
 
     // Google Login
-    public function googleRedirect()
+    public function social_login()
     {
         return Socialite::driver('google')->redirect();
     }
@@ -68,6 +68,7 @@ class LoginController extends Controller
             $newUser->avatar_original = $user->avatar_original;
             $newUser->token           = $user->token;
             $newUser->refresh_token   = $user->refreshToken;
+            $newUser->is_verify   = 1;
             $newUser->save();
             Auth::guard('web')->login($newUser);
         }
@@ -75,35 +76,35 @@ class LoginController extends Controller
     }
 
 
-    // Github Login
-    public function githubRedirect()
-    {
-        return Socialite::driver('github')->redirect();
-    }
+    // // Github Login
+    // public function githubRedirect()
+    // {
+    //     return Socialite::driver('github')->redirect();
+    // }
 
-    public function githubCallback()
-    {
-        try {
-            $githubUser = Socialite::driver('github')->user();
-        } catch (Exception $e) {
-            return redirect('/login');
-        }
-        $existing = User::where('email', $githubUser->email)->first();
-        if ($existing) {
-            Auth::guard('web')->login($existing);
-        } else {
-            $newUser                  = new User;
-            $newUser->name            = $githubUser->name;
-            $newUser->email           = $githubUser->email;
-            $newUser->github_id       = $githubUser->id;
-            $newUser->avatar          = $githubUser->avatar;
-            $newUser->token           = $githubUser->token;
-            $newUser->refresh_token   = $githubUser->refreshToken;
-            $newUser->save();
-            Auth::guard('web')->login($newUser);
-        }
-        return redirect()->route('user.dashboard');
-    }
+    // public function githubCallback()
+    // {
+    //     try {
+    //         $githubUser = Socialite::driver('github')->user();
+    //     } catch (Exception $e) {
+    //         return redirect('/login');
+    //     }
+    //     $existing = User::where('email', $githubUser->email)->first();
+    //     if ($existing) {
+    //         Auth::guard('web')->login($existing);
+    //     } else {
+    //         $newUser                  = new User;
+    //         $newUser->name            = $githubUser->name;
+    //         $newUser->email           = $githubUser->email;
+    //         $newUser->github_id       = $githubUser->id;
+    //         $newUser->avatar          = $githubUser->avatar;
+    //         $newUser->token           = $githubUser->token;
+    //         $newUser->refresh_token   = $githubUser->refreshToken;
+    //         $newUser->save();
+    //         Auth::guard('web')->login($newUser);
+    //     }
+    //     return redirect()->route('user.dashboard');
+    // }
 
 
     // Facebook Login
@@ -130,6 +131,7 @@ class LoginController extends Controller
             $newUser->avatar          = $facebookUser->avatar;
             $newUser->token           = $facebookUser->token;
             $newUser->refresh_token   = $facebookUser->refreshToken;
+            $newUser->is_verify   = 1;
             $newUser->save();
             Auth::guard('web')->login($newUser);
         }

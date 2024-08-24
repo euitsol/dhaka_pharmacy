@@ -32,7 +32,8 @@ class OrderController extends BaseController
         $order->save();
 
         foreach ($request->carts as $id) {
-            $cart = AddToCart::currentCart()->whereId('id', $id)->first();
+            $cart = AddToCart::where('customer_id', $user->id)
+                ->where('status', 1)->where('id', $id)->first();
 
             if ($cart) {
                 $op = new OrderProduct();
@@ -142,7 +143,6 @@ class OrderController extends BaseController
     private function buildOrderQuery($user, $status)
     {
         $query = Order::where([
-            ['status', '!=', 0],
             ['customer_id', $user->id],
             ['customer_type', get_class($user)]
         ]);

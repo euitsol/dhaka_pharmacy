@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\API\Frontend;
+namespace App\Http\Requests\API;
 
-use App\Rules\ApiRules\CartProductRule;
 use App\Http\Requests\API\BaseRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Validator;
 
-class AddToCartRequest extends BaseRequest
+class SocialLoginRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +23,14 @@ class AddToCartRequest extends BaseRequest
      */
     public function rules(): array
     {
-        $user = $this->user();
         return [
-            'product_slug' => 'required|string|exists:medicines,slug',
-            'unit_id' => 'nullable|exists:medicine_units,id',
-            'quantity' => 'nullable|numeric'
+            'name' => 'required',
+            'email' => 'required|email',
+            'social_id' => 'required',
+            'avatar' => 'required',
+            'token' => 'required',
+            'refreshToken' => 'nullable',
+            'type' => 'required'
         ];
     }
 }

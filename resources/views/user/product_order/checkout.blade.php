@@ -9,6 +9,12 @@
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
         type="text/css" />
     <link rel="stylesheet" href="{{ asset('user/asset/css/address.css') }}">
+    <script>
+        const data = {
+            'details_url': `{{ route('u.ck.address', ['param']) }}`,
+            'taka_icon': `{!! get_taka_icon() !!}`,
+        };
+    </script>
 @endpush
 @section('content')
     @php
@@ -172,6 +178,8 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
+    <script src="{{ asset('frontend/asset/js/checkout.js') }}"></script>
 @endpush
 
 @push('js')
@@ -182,13 +190,5 @@
                 toastr.error(error);
             });
         }
-    </script>
-    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
-    <script src="{{ asset('frontend/asset/js/checkout.js') }}"></script>
-    <script>
-        const data = {
-            'details_url': `{{ route('u.ck.address', ['param']) }}`,
-            'taka_icon': `{!! get_taka_icon() !!}`,
-        };
     </script>
 @endpush

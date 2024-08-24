@@ -73,7 +73,6 @@ class UserOrderController extends Controller
     private function buildOrderQuery($status)
     {
         $query = Order::where([
-            ['status', '!=', 0],
             ['customer_id', user()->id],
             ['customer_type', get_class(user())]
         ])->latest();
