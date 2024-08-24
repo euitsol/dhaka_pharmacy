@@ -703,7 +703,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
 });
 
 
-// KYC FILE DELETE 
+// KYC FILE DELETE
 Route::get('/kyc/file/delete', [FileUploadController::class, 'kycFileDelete'])->name('kyc.file.delete');
 
 // Pharmacy Auth Routes

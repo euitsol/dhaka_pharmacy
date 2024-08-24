@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{__('Pharmacy KYC Details') }}</h4>
+                            <h4 class="card-title">{{ __('Pharmacy KYC Details') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -25,37 +25,39 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>{{__('SL')}}</th>
-                                <th>{{__('Field Name')}}</th>
-                                <th>{{__('Field Key')}}</th>
-                                <th>{{__('Filed Type')}}</th>
-                                <th>{{__('Filed Status')}}</th>
+                                <th>{{ __('SL') }}</th>
+                                <th>{{ __('Field Name') }}</th>
+                                <th>{{ __('Field Key') }}</th>
+                                <th>{{ __('Filed Type') }}</th>
+                                <th>{{ __('Filed Status') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($form_datas as $fd)
                                 <tr>
-                                   <td>{{$loop->iteration}}</td>
-                                   <td>{{$fd['field_name']}}</td>
-                                   <td>{{$fd['field_key']}}</td>
-                                   <td>
-                                    {{$fd['type']}} 
-                                    @if(isset($fd['option_data']))
-                                        ({{implode(', ',$fd['option_data'])}})
-                                    @endif
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $fd['field_name'] }}</td>
+                                    <td>{{ $fd['field_key'] }}</td>
+                                    <td>
+                                        {{ $fd['type'] }}
+                                        @if (isset($fd['option_data']))
+                                            ({{ implode(', ', $fd['option_data']) }})
+                                        @endif
 
-                                   </td>
-                                   <td>{{$fd['required']}}</td>
+                                    </td>
+                                    <td>{{ $fd['required'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer text-end">
-                    <a href="{{route('pm.pharmacy_kyc.settings.p_kyc_status',encrypt($kyc->id))}}" class="btn {{$kyc->getStatusClass()}}">{{$kyc->getBtnStatus()}}</a>
+                    @if ($kyc->status == 0)
+                        <a href="{{ route('pm.pharmacy_kyc.settings.p_kyc_status', encrypt($kyc->id)) }}"
+                            class="btn {{ $kyc->getStatusClass() }}">{{ $kyc->getBtnStatus() }}</a>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
