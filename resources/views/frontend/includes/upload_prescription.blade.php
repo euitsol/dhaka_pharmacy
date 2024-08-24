@@ -28,17 +28,19 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="address">{{ __('Delivery Address') }}<span class="text-danger">*</span></label>
-                        @if (user())
-                            @forelse (user()->address as $key => $address)
+                        @if (isset($customer))
+                            @forelse ($customer->address as $key => $address)
                                 <div class="form-check ms-2">
                                     <input class="form-check-input user_address" value="{{ $address->id }}"
                                         style="width: 1em" type="radio" name="address_id"
                                         id="user_address{{ $key }}"
                                         @if ($address->is_default == true) checked @endif>
                                     <label class="form-check-label ms-2" for="user_address{{ $key }}">
-                                        {{ str_limit($address->address, 70) }} (<span> {!! get_taka_icon() !!}
+                                        {{ str_limit($address->address, 70) }}
+                                        (<span>{!! get_taka_icon() !!}
                                         </span>
-                                        <span class="delivery_charge" data-delivery_charge=""></span>)
+                                        <span class="delivery_charge"
+                                            data-delivery_charge="">{{ $address->delivery_charge }}</span>)
                                     </label>
                                 </div>
                             @empty
@@ -48,8 +50,8 @@
                                         data-bs-target="#address_add_modal">{{ __('Add Address') }}</a>
                                 </div>
                             @endforelse
-                            <input type="hidden" name="delivery_fee" class="user_delivery_input"
-                                value="{{ ceil($default_delivery_fee) }}">
+                            {{-- <input type="hidden" name="delivery_fee" class="user_delivery_input"
+                                value="{{ ceil($default_delivery_fee) }}"> --}}
                         @endif
                     </div>
                     <div class="form-group mb-3">
@@ -82,10 +84,8 @@
     <script>
         file_upload(["#prescription"], "uploadfile", "user");
         const data = {
-            'auth': `{{ Auth::guard('web')->check() }}`,
-            'login_route': `{{ route('login') }}`,
+            'check_auth': `{{ route('u.obp.check.auth') }}`,
             'upload_route': `{{ route('u.obp.up') }}`,
-            'address_url': `{{ route('u.obp.address', ['param']) }}`,
         };
     </script>
 @endpush

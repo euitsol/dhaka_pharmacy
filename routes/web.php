@@ -950,6 +950,9 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
     });
 });
 
+//Order By Prescription Auth Check
+Route::get('/order-by-prescrition/check-auth', [UserOrderByPrescriptionController::class, 'check_auth'])->name('u.obp.check.auth');
+
 
 // User Routes
 Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'customer'], function () {
@@ -981,7 +984,6 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     //Order By Prescription
     Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
         Route::post('/upload-prescription', 'prescription_upload')->name('up');
-        Route::get('/address/{id}', 'address')->name('address');
     });
 
 
