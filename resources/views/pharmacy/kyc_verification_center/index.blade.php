@@ -159,7 +159,7 @@
                                                 @if (isset($submitted_kyc->submitted_data) &&
                                                         isset(json_decode($submitted_kyc->submitted_data)->$a) &&
                                                         !empty(json_decode($submitted_kyc->submitted_data))) data-existing-files="{{ storage_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
-                                        data-delete-url="{{ route('kyc.file.delete', ['id' => encrypt($kyc->id), 'key' => $a]) }}" @endif>
+                                        data-delete-url="{{ route('kyc.file.delete', ['id' => encrypt($submitted_kyc->id), 'key' => $a]) }}" @endif>
                                             @include('alerts.feedback', ['field' => $fd->field_key])
                                         </div>
                                     @elseif($fd->type == 'image_multiple')
@@ -173,7 +173,7 @@
                                                     $itemCount = count($data);
                                                     foreach ($data as $index => $url) {
                                                         $result .= route('kyc.file.delete', [
-                                                            'id' => encrypt($kyc->id),
+                                                            'id' => encrypt($submitted_kyc->id),
                                                             'key' => $a,
                                                             'url' => encrypt($url),
                                                         ]);
@@ -249,7 +249,7 @@
                                                             @if (!$disabled)
                                                                 <a
                                                                     href="{{ route('kyc.file.delete', [
-                                                                        'id' => encrypt($kyc->id),
+                                                                        'id' => encrypt($submitted_kyc->id),
                                                                         'key' => $a,
                                                                     ]) }}">
                                                                     <span class="input-group-text text-danger h-100"><i
@@ -331,7 +331,7 @@
                                                                 @if (!$disabled)
                                                                     <a
                                                                         href="{{ route('kyc.file.delete', [
-                                                                            'id' => encrypt($kyc->id),
+                                                                            'id' => encrypt($submitted_kyc->id),
                                                                             'key' => $a,
                                                                             'url' => encrypt($url),
                                                                         ]) }}">

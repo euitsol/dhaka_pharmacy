@@ -99,35 +99,36 @@ class FileUploadController extends Controller
             }
             if ($id != null && $key != null) {
                 $sp = SubmittedKyc::findOrFail($id);
-                $saved_data = json_decode($sp->saved_data, true);
-                if (isset($saved_data[$key])) {
-                    if (is_array($saved_data)) {
-                        $array = $saved_data[$key];
+                $submitted_data = json_decode($sp->submitted_data, true);
+                if (isset($submitted_data[$key])) {
+                    if (is_array($submitted_data)) {
+                        $array = $submitted_data[$key];
                         $index = array_search($acc_file_path, $array);
                         unset($array[$index]);
-                        $saved_data[$key] = $array;
+                        $submitted_data[$key] = $array;
                     } else {
-                        unset($saved_data[$key]);
+                        unset($submitted_data[$key]);
                     }
-                    dd($saved_data);
-                    $sp->submitted_kyc = json_encode($saved_data);
+                    $sp->submitted_data = json_encode($submitted_data);
                     $sp->save();
+                    flash()->addSuccess('File deleted successfully.');
                 }
             }
         } else {
             if ($id != null && $key != null) {
                 $kyc = SubmittedKyc::where('id', $id)->firstOrFail();
-                $saved_data = json_decode($kyc->saved_data, true);
-                if (isset($saved_data[$key])) {
-                    if (Storage::exists('public/' . $saved_data[$key])) {
-                        Storage::delete('public/' . $saved_data[$key]);
+                $submitted_data = json_decode($kyc->submitted_data, true);
+                if (isset($submitted_data[$key])) {
+                    if (Storage::exists('public/' . $submitted_data[$key])) {
+                        Storage::delete('public/' . $submitted_data[$key]);
                     }
-                    unset($saved_data[$key]);
-                    $kyc->submitted_kyc = json_encode($saved_data);
+                    unset($submitted_data[$key]);
+                    $kyc->submitted_data = json_encode($submitted_data);
                     $kyc->save();
+                    flash()->addSuccess('File deleted successfully.');
                 }
             }
         }
-        return response()->json(['message' => 'File deleted successfully.']);
+        return redirect()->back();
     }
 }
