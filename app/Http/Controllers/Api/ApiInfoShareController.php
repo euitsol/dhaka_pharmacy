@@ -27,7 +27,7 @@ class ApiInfoShareController extends BaseController
                 break;
         }
 
-        return sendResponse(true, 'Third party api Info retrived successfully', ['infos' => $infos]);
+        return sendResponse(true, 'Third party api Info retrived successfully', $infos);
     }
 
     public function socialApiInfo(Request $request): JsonResponse
@@ -43,6 +43,6 @@ class ApiInfoShareController extends BaseController
                 break;
         }
 
-        return sendResponse(true, 'Social login api Info retrived successfully', ['infos' => $infos]);
+        return sendResponse(true, 'Social login api Info retrived successfully', $infos);
     }
 }
