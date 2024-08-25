@@ -339,7 +339,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             });
         });
     });
-    //Admin District Manager Management Routes
+    //Admin Operational Area Management Routes
     Route::group(['as' => 'opa.', 'prefix' => 'operational-areas'], function () {
         //Oparetaion Area Route
         Route::controller(OperationAreaController::class)->prefix('operation-area')->name('operation_area.')->group(function () {
@@ -455,18 +455,20 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
 
         // KYC ROUTES
         Route::group(['as' => 'rider_kyc.', 'prefix' => 'rider-kyc'], function () {
-            Route::controller(RiderKycController::class)->prefix('kyc-list')->name('kyc_list.')->group(function () {
-                Route::get('index', 'index')->name('rider_kyc_list');
-                Route::get('details/{id}', 'details')->name('rider_kyc_details');
-                Route::get('file-download/{url}', 'view_or_download')->name('download.rider_kyc_details');
-                Route::get('accept/{id}', 'accept')->name('accept.rider_kyc_status');
-                Route::put('declined/{id}', 'declined')->name('declined.rider_kyc_status');
-                Route::get('delete/{id}', 'delete')->name('rider_kyc_delete');
+            Route::controller(RiderKycController::class)->prefix('submitted-kyc')->name('submitted_kyc.')->group(function () {
+                Route::get('index', 'index')->name('rs_kyc_list');
+                Route::get('details/{id}', 'details')->name('rs_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.rs_kyc_details');
+                Route::get('accept/{id}', 'accept')->name('accept.rs_kyc_status');
+                Route::put('declined/{id}', 'declined')->name('declined.rs_kyc_status');
+                Route::get('delete/{id}', 'delete')->name('rs_kyc_delete');
             });
-
-            Route::controller(RiderKycSettingsController::class)->prefix('settings')->group(function () {
-                Route::get('/', 'kycSettings')->name('rider_kyc_settings');
-                Route::post('/', 'kycSettingsUpdate')->name('rider_kyc_settings');
+            Route::controller(RiderKycSettingsController::class)->prefix('settings')->name('settings.')->group(function () {
+                Route::get('/list', 'list')->name('r_kyc_list');
+                Route::get('/create', 'create')->name('r_kyc_create');
+                Route::post('/create', 'store')->name('r_kyc_create');
+                Route::get('/details/{id}', 'details')->name('r_kyc_details');
+                Route::get('/status/{id}', 'status')->name('r_kyc_status');
             });
         });
     });

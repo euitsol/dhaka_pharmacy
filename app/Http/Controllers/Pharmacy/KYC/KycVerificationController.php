@@ -254,6 +254,10 @@ class KycVerificationController extends Controller
                             $file_path = $input_data['url'];
                             $directoryPath = 'public/pharmacy/kyc/' . pharmacy()->id . '/' . 'multiple-uploads';
 
+                            if (is_null($file_path) || !Storage::exists($file_path)) {
+                                continue;
+                            }
+
                             if (!Storage::exists($directoryPath)) {
                                 $path = Storage::makeDirectory($directoryPath, 0755, true);
                                 array_push($paths, $path);
@@ -317,13 +321,4 @@ class KycVerificationController extends Controller
 
         return response()->json(['success' => false, 'message' => 'File upload failed.']);
     }
-
-    // public function delete($id = null, $key = null, $file_path = null)
-    // public function delete(Request $request)
-    // {
-    //     $this->kycFileDelete($request);
-
-    //     flash()->addSuccess('File deleted successfully.');
-    //     return redirect()->back();
-    // }
 }

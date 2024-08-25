@@ -1,5 +1,8 @@
-@extends('admin.layouts.master', ['pageSlug' => 'rider_kyc_list'])
-@section('title', 'Rider KYC Details')
+@extends('admin.layouts.master', ['pageSlug' => 'rs_kyc_list'])
+@section('title', c_user_name($submitted_kyc->creater) . ' KYC Details')
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+@endpush
 @section('content')
     <div class="row px-3">
         <div class="col-md-12">
@@ -7,27 +10,27 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ c_user_name($data->creater) . __(' KYC Details') }}</h4>
+                            <h4 class="card-title">{{ c_user_name($submitted_kyc->creater) . __(' KYC Details') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'rm.rider_kyc.kyc_list.rider_kyc_list',
+                                'routeName' => 'rm.rider_kyc.submitted_kyc.rs_kyc_list',
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
                             ])
                         </div>
 
-                        @if (!empty($data->note))
+                        @if (!empty($submitted_kyc->note))
                             <div class="col-12">
                                 <strong
-                                    class="text-danger">{{ __('Previous Declined Reason: ') }}</strong>{!! $data->note !!}
+                                    class="text-danger">{{ __('Previous Declined Reason: ') }}</strong>{!! $submitted_kyc->note !!}
                             </div>
                         @endif
                     </div>
                 </div>
                 @php
-                    $save_datas = json_decode($data->submitted_data, true);
-                    $form_datas = json_decode($kyc_setting->form_data, true);
+                    $save_datas = json_decode($submitted_kyc->submitted_data, true);
+                    $form_datas = json_decode($submitted_kyc->kyc->form_data, true);
                 @endphp
                 <div class="card-body">
                     <table class="table table-striped">
@@ -84,9 +87,9 @@
                                         <th>{{ $form_data['field_name'] }}</th>
                                         <th>:</th>
                                         <td>
+
                                             @if (isset($save_datas[$form_data['field_key']]))
-                                                <span
-                                                    class="badge {{ $save_datas[$form_data['field_key']] == 1 ? 'badge-success' : 'badge-info' }}">{{ $save_datas[$form_data['field_key']] == 1 ? 'True' : 'False' }}</span>
+                                                {{ $form_data['option_data'][$save_datas[$form_data['field_key']]] }}
                                             @endif
                                         </td>
                                     </tr>
@@ -108,9 +111,21 @@
                                         <th>:</th>
                                         <td>
                                             @if (isset($save_datas[$form_data['field_key']]))
-                                                <a class="btn btn-info btn-sm"
-                                                    href="{{ route('rm.rider_kyc.kyc_list.download.rider_kyc_details', base64_encode($save_datas[$form_data['field_key']])) }}"><i
-                                                        class="fa-regular fa-circle-down"></i></a>
+                                                @if (isImage($save_datas[$form_data['field_key']]))
+                                                    <div class="imagePreviewDiv d-inline-block">
+                                                        <div id="lightbox" class="lightbox">
+                                                            <div class="lightbox-content">
+                                                                <img src="{{ storage_url($save_datas[$form_data['field_key']]) }}"
+                                                                    class="lightbox_image">
+                                                            </div>
+                                                            <div class="close_button fa-beat">X</div>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <a class="btn btn-info btn-sm"
+                                                        href="{{ route('rm.rider_kyc.submitted_kyc.download.rs_kyc_details', base64_encode($save_datas[$form_data['field_key']])) }}"><i
+                                                            class="fa-regular fa-circle-down"></i></a>
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>
@@ -122,9 +137,21 @@
                                         <td>
                                             @if (isset($save_datas[$form_data['field_key']]))
                                                 @foreach ($save_datas[$form_data['field_key']] as $file)
-                                                    <a class="imagePreviewDiv btn btn-info btn-sm"
-                                                        href="{{ route('rm.rider_kyc.kyc_list.download.rider_kyc_details', base64_encode($file)) }}"><i
-                                                            class="fa-regular fa-circle-down"></i></a>
+                                                    @if (isImage($file))
+                                                        <div class="imagePreviewDiv d-inline-block">
+                                                            <div id="lightbox" class="lightbox">
+                                                                <div class="lightbox-content">
+                                                                    <img src="{{ storage_url($file) }}"
+                                                                        class="lightbox_image">
+                                                                </div>
+                                                                <div class="close_button fa-beat">X</div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <a class="btn btn-info btn-sm"
+                                                            href="{{ route('rm.rider_kyc.submitted_kyc.download.rs_kyc_details', base64_encode($file)) }}"><i
+                                                                class="fa-regular fa-circle-down"></i></a>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </td>
@@ -137,9 +164,13 @@
                                         <td>
                                             @if (isset($save_datas[$form_data['field_key']]))
                                                 <div class="imagePreviewDiv">
-                                                    <img class="imagePreview"
-                                                        src="{{ storage_url($save_datas[$form_data['field_key']]) }}"
-                                                        alt="">
+                                                    <div id="lightbox" class="lightbox">
+                                                        <div class="lightbox-content">
+                                                            <img src="{{ storage_url($save_datas[$form_data['field_key']]) }}"
+                                                                class="lightbox_image">
+                                                        </div>
+                                                        <div class="close_button fa-beat">X</div>
+                                                    </div>
                                                 </div>
                                             @endif
                                         </td>
@@ -153,8 +184,13 @@
                                             @if (isset($save_datas[$form_data['field_key']]))
                                                 @foreach ($save_datas[$form_data['field_key']] as $image)
                                                     <div class="imagePreviewDiv d-inline-block">
-                                                        <img class="imagePreview" src="{{ storage_url($image) }}"
-                                                            alt="">
+                                                        <div id="lightbox" class="lightbox">
+                                                            <div class="lightbox-content">
+                                                                <img src="{{ storage_url($image) }}"
+                                                                    class="lightbox_image">
+                                                            </div>
+                                                            <div class="close_button fa-beat">X</div>
+                                                        </div>
                                                     </div>
                                                 @endforeach
                                             @endif
@@ -168,7 +204,7 @@
                                 <td class="d-flex justify-content-between align-items-center">
                                     <div class="status">
                                         <span
-                                            class="badge {{ $data->status === 1 ? 'badge-success' : ($data->status === 0 ? 'badge-info' : 'badge-warning') }}">{{ $data->status === 1 ? 'Accepted' : ($data->status === 0 ? 'Pending' : 'Declined') }}</span>
+                                            class="{{ $submitted_kyc->getStatusBadgeClass() }}">{{ $submitted_kyc->getStatus() }}</span>
                                     </div>
                                 </td>
                             </tr>
@@ -177,11 +213,11 @@
                 </div>
                 <div class="card-footer">
                     <div class="status_button text-end">
-                        @if ($data->status === 0)
-                            <a href="{{ route('rm.rider_kyc.kyc_list.accept.rider_kyc_status', $data->id) }}"
+                        @if ($submitted_kyc->status === 0)
+                            <a href="{{ route('rm.rider_kyc.submitted_kyc.accept.rs_kyc_status', $submitted_kyc->id) }}"
                                 class="btn btn-sm btn-success">{{ __('Accept') }}</a>
-                            <a href="javascript:void(0)" data-id="{{ $data->id }}"
-                                class="btn btn-sm btn-warning declined">{{ __('Declined') }}</a>
+                            <a href="javascript:void(0)" data-id="{{ $submitted_kyc->id }}"
+                                class="btn btn-sm btn-warning declined">{{ __('Decline') }}</a>
                         @endif
 
                     </div>
@@ -210,7 +246,7 @@
                                     @include('alerts.feedback', ['field' => 'note'])
                                 </div>
                                 <span type="submit" id="updateDeclinedNote"
-                                    class="btn btn-primary btn-sm">{{ __('Update') }}</span>
+                                    class="btn btn-primary btn-sm float-end">{{ __('Update') }}</span>
                             </form>
                         </div>
                     </div>
@@ -219,6 +255,9 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
+@endpush
 @push('js')
     <script>
         $(document).ready(function() {
@@ -229,59 +268,54 @@
         });
     </script>
 
-    @push('js')
-        <script>
-            // Declined On Click
-            $(document).ready(function() {
-                $('.declined').on('click', function() {
-                    let id = $(this).data('id');
-                    $('#updateDeclinedNote').attr('data-id', id)
-                    $('#exampleModal').modal('show');
-                });
+    <script>
+        // Declined On Click
+        $(document).ready(function() {
+            $('.declined').on('click', function() {
+                let id = $(this).data('id');
+                $('#updateDeclinedNote').attr('data-id', id)
+                $('#exampleModal').modal('show');
             });
+        });
 
-            // Declined Update
-            $(document).ready(function() {
-                $('#updateDeclinedNote').click(function() {
-                    var form = $('#declined_form');
-                    let id = $(this).data('id');
-                    let _url = ("{{ route('rm.rider_kyc.kyc_list.declined.rider_kyc_status', ['_id']) }}");
-                    let __url = _url.replace('_id', id);
-                    $.ajax({
-                        type: 'PUT',
-                        url: __url,
-                        data: form.serialize(),
-                        success: function(response) {
-                            $('#exampleModal').modal('hide');
-                            console.log(response.message);
-                            window.location.reload();
-                        },
-                        error: function(xhr) {
-                            if (xhr.status === 422) {
-                                // Handle validation errors
-                                var errors = xhr.responseJSON.errors;
-                                $.each(errors, function(field, messages) {
-                                    // Display validation errors
-                                    var errorHtml = '';
-                                    $.each(messages, function(index, message) {
-                                        errorHtml +=
-                                            '<span class="invalid-feedback d-block" role="alert">' +
-                                            message + '</span>';
-                                    });
-                                    $('[name="' + field + '"]').after(errorHtml);
+        // Declined Update
+        $(document).ready(function() {
+            $('#updateDeclinedNote').click(function() {
+                var form = $('#declined_form');
+                let id = $(this).data('id');
+                let _url = (
+                    "{{ route('rm.rider_kyc.submitted_kyc.declined.rs_kyc_status', ['_id']) }}");
+                let __url = _url.replace('_id', id);
+                $.ajax({
+                    type: 'PUT',
+                    url: __url,
+                    data: form.serialize(),
+                    success: function(response) {
+                        $('#exampleModal').modal('hide');
+                        console.log(response.message);
+                        window.location.reload();
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            // Handle validation errors
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function(field, messages) {
+                                // Display validation errors
+                                var errorHtml = '';
+                                $.each(messages, function(index, message) {
+                                    errorHtml +=
+                                        '<span class="invalid-feedback d-block" role="alert">' +
+                                        message + '</span>';
                                 });
-                            } else {
-                                // Handle other errors
-                                console.log('An error occurred.');
-                            }
+                                $('[name="' + field + '"]').after(errorHtml);
+                            });
+                        } else {
+                            // Handle other errors
+                            console.log('An error occurred.');
                         }
-                    });
+                    }
                 });
             });
-        </script>
-    @endpush
-
-
-
-
+        });
+    </script>
 @endpush
