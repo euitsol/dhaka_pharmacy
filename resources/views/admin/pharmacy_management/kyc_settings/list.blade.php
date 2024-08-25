@@ -11,11 +11,13 @@
                                 <h4 class="card-title">{{ __('Pharmacy ' . $group_kyc[0]->getStatus() . ' KYC') }}</h4>
                             </div>
                             <div class="col-4 text-right">
-                                @include('admin.partials.button', [
-                                    'routeName' => 'pm.pharmacy_kyc.settings.p_kyc_create',
-                                    'className' => 'btn-primary',
-                                    'label' => 'Add New KYC',
-                                ])
+                                @if ($group_kyc[0]->status == 1)
+                                    @include('admin.partials.button', [
+                                        'routeName' => 'pm.pharmacy_kyc.settings.p_kyc_create',
+                                        'className' => 'btn-primary',
+                                        'label' => 'Add New KYC',
+                                    ])
+                                @endif
                             </div>
                         </div>
                     </div>

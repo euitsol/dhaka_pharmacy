@@ -111,7 +111,6 @@ class FileUploadController extends Controller
                     }
                     $sp->submitted_data = json_encode($submitted_data);
                     $sp->save();
-                    flash()->addSuccess('File deleted successfully.');
                 }
             }
         } else {
@@ -125,10 +124,10 @@ class FileUploadController extends Controller
                     unset($submitted_data[$key]);
                     $kyc->submitted_data = json_encode($submitted_data);
                     $kyc->save();
-                    flash()->addSuccess('File deleted successfully.');
                 }
             }
         }
+        flash()->addSuccess('File deleted successfully.');
         return redirect()->back();
     }
 }

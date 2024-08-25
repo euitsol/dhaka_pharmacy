@@ -35,6 +35,13 @@
             width: auto;
         }
     </style>
+    @if (!empty($kyc->p_submitted_kyc) && $kyc->p_submitted_kyc->status != -1)
+        <style>
+            .imagePreviewDiv a {
+                display: none;
+            }
+        </style>
+    @endif
 @endpush
 
 @php
