@@ -56,8 +56,7 @@ class DistrictManagerController extends Controller
     {
         $data['dm'] = DistrictManager::with(['lams', 'operation_area', 'created_user', 'updated_user'])->findOrFail($id);
         $dm_class = get_class($data['dm']);
-        $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $dm_class)->first();
-        $data['kyc_setting'] = KycSetting::where('type', 'dm')->first();
+        $data['submitted_kyc'] = SubmittedKyc::with('kyc')->where('creater_id', $id)->where('creater_type', $dm_class)->first();
         $data['users'] = User::where('creater_id', $id)->where('creater_type', $dm_class)->latest()->get();
         $data['earnings'] = Earning::with(['receiver', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
             ->where('receiver_id', $id)->where('receiver_type', $dm_class)->latest()->get();

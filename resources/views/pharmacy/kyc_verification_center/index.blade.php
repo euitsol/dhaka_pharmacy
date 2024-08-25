@@ -49,7 +49,7 @@
 @endphp
 @section('content')
     <div class="row">
-        <div class="{{ !empty($submitted_kyc) && $submitted_kyc->status == -1 ? 'col-8' : 'col-12' }}">
+        <div class="{{ empty($submitted_kyc) || $submitted_kyc->status == -1 ? 'col-8' : 'col-12' }}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -409,7 +409,7 @@
 
             </div>
         </div>
-        @if (!empty($submitted_kyc) && $submitted_kyc->status == -1)
+        @if (empty($submitted_kyc) || $submitted_kyc->status == -1)
             <div class="col-md-4">
                 <div class="card card-user">
                     <div class="card-body">

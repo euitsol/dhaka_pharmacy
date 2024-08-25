@@ -381,28 +381,25 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('status/{id}', 'status')->name('status.district_manager_edit');
             Route::get('delete/{id}', 'delete')->name('district_manager_delete');
         });
-
-
-
-
-
         // KYC ROUTES
         Route::group(['as' => 'dm_kyc.', 'prefix' => 'district-manager-kyc'], function () {
-            Route::controller(DmKycController::class)->prefix('kyc-list')->name('kyc_list.')->group(function () {
-                Route::get('index', 'index')->name('district_manager_kyc_list');
-                Route::get('details/{id}', 'details')->name('district_manager_kyc_details');
-                Route::get('file-download/{url}', 'view_or_download')->name('download.district_manager_kyc_details');
-                Route::get('accept/{id}', 'accept')->name('accept.district_manager_kyc_status');
-                Route::put('declined/{id}', 'declined')->name('declined.district_manager_kyc_status');
-                Route::get('delete/{id}', 'delete')->name('district_manager_kyc_delete');
+            Route::controller(DmKycController::class)->prefix('submitted-kyc')->name('submitted_kyc.')->group(function () {
+                Route::get('index', 'index')->name('dms_kyc_list');
+                Route::get('details/{id}', 'details')->name('dms_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.dms_kyc_details');
+                Route::get('accept/{id}', 'accept')->name('accept.dms_kyc_status');
+                Route::put('declined/{id}', 'declined')->name('declined.dms_kyc_status');
+                Route::get('delete/{id}', 'delete')->name('dms_kyc_delete');
             });
-            Route::controller(DmKycSettingsController::class)->prefix('settings')->group(function () {
-                Route::get('/', 'kycSettings')->name('district_manager_kyc_settings');
-                Route::post('/', 'kycSettingsUpdate')->name('district_manager_kyc_settings');
+            Route::controller(DmKycSettingsController::class)->prefix('settings')->name('settings.')->group(function () {
+                Route::get('/list', 'list')->name('dm_kyc_list');
+                Route::get('/create', 'create')->name('dm_kyc_create');
+                Route::post('/create', 'store')->name('dm_kyc_create');
+                Route::get('/details/{id}', 'details')->name('dm_kyc_details');
+                Route::get('/status/{id}', 'status')->name('dm_kyc_status');
             });
         });
     });
-
     //Admin Local Area Manager Management Routes
     Route::group(['as' => 'lam_management.', 'prefix' => 'lam-management'], function () {
         Route::controller(LocalAreaManagerController::class)->prefix('local-area-manager')->name('local_area_manager.')->group(function () {

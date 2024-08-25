@@ -24,13 +24,12 @@ class DmKycController extends Controller
 
     public function index(): View
     {
-        $data['datas'] = SubmittedKyc::with('creater')->where('type', 'dm')->orderBy('status', 'desc')->get()->groupBy('status');
+        $data['submitted_kyc'] = SubmittedKyc::with('creater')->where('type', 'dm')->orderBy('status', 'desc')->get()->groupBy('status');
         return view('admin.dm_management.submitted_kyc.index', $data);
     }
     public function details($id): View
     {
-        $data['data'] = SubmittedKyc::with(['creater', 'updater'])->findOrFail($id);
-        $data['kyc_setting'] = KycSetting::where('type', 'dm')->first();
+        $data['submitted_kyc'] = SubmittedKyc::with('kyc')->findOrFail($id);
         return view('admin.dm_management.submitted_kyc.details', $data);
     }
     public function accept($id)
@@ -47,10 +46,10 @@ class DmKycController extends Controller
     {
         try {
             $data = SubmittedKyc::findOrFail($id);
-            $data->status = NULL;
+            $data->status = -1;
             $data->note = $req->note;
             $data->update();
-            $data->creater->update(['kyc_status' => 1]);
+            $data->creater->update(['kyc_status' => 0]);
             flash()->addSuccess('KYC declined succesfully');
             return response()->json(['message' => 'KYC declined succesfully']);
         } catch (\Exception $e) {

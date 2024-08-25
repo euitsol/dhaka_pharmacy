@@ -156,18 +156,18 @@
             {{-- DM Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['dm_management.'],
-                    'routes' => ['district_manager_list', 'district_manager_kyc_list', 'district_manager_kyc_settings'],
+                    'routes' => ['district_manager_list', 'dm_kyc_list', 'dms_kyc_list'],
                 ]))
                 <li>
-                    <a class="@if ($pageSlug == 'district_manager' || $pageSlug == 'dm_kyc_list' || $pageSlug == 'dm_kyc_settings') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'district_manager' || $pageSlug == 'dms_kyc_list' || $pageSlug == 'dm_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#district_manager"
-                        @if ($pageSlug == 'district_manager' || $pageSlug == 'dm_kyc_list' || $pageSlug == 'dm_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'district_manager' || $pageSlug == 'dms_kyc_list' || $pageSlug == 'dm_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-map-location-dot"></i>
                         <span class="nav-link-text">{{ __('DM Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'district_manager' || $pageSlug == 'dm_kyc_list' || $pageSlug == 'dm_kyc_settings') show @endif" id="district_manager">
+                    <div class="collapse @if ($pageSlug == 'district_manager' || $pageSlug == 'dms_kyc_list' || $pageSlug == 'dm_kyc_settings') show @endif" id="district_manager">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -177,21 +177,20 @@
                                         'label' => 'District Manager',
                                     ],
                                     [
-                                        'pageSlug' => ['dm_kyc_list', 'dm_kyc_settings'],
+                                        'pageSlug' => ['dms_kyc_list', 'dm_kyc_settings'],
                                         'routeName' => 'submenu',
                                         'label' => 'KYC Verification Center',
                                         'id' => 'district_manager_kyc',
                                         'subMenu' => [
                                             [
-                                                'subLabel' => 'KYC List',
+                                                'subLabel' => 'Submitted KYC List',
                                                 'subRouteName' =>
-                                                    'dm_management.dm_kyc.kyc_list.district_manager_kyc_list',
-                                                'subPageSlug' => 'dm_kyc_list',
+                                                    'dm_management.dm_kyc.submitted_kyc.dms_kyc_list',
+                                                'subPageSlug' => 'dms_kyc_list',
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
-                                                'subRouteName' =>
-                                                    'dm_management.dm_kyc.district_manager_kyc_settings',
+                                                'subRouteName' => 'dm_management.dm_kyc.settings.dm_kyc_list',
                                                 'subPageSlug' => 'dm_kyc_settings',
                                             ],
                                         ],
