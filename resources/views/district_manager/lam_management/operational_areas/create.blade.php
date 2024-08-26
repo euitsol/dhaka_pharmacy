@@ -23,21 +23,24 @@
                         @csrf
                         <div class="form-group">
                             <label>{{ __('Operation Area') }}</label>
-                            <input type="hidden" name="oa_id" class="form-control" value="{{ dm()->operation_area->id }}">
+                            <input type="hidden" name="oa_id" class="form-control"
+                                value="{{ dm()->operation_area->id }}">
                             <input type="text" class="form-control" value="{{ dm()->operation_area->name }}" disabled>
                         </div>
                         <div class="form-group">
                             <label>{{ __('Operation Sub Area') }}</label>
-                            <input type="text" id="title" name="name" class="form-control" placeholder="Enter name"
-                                value="{{ old('name') }}">
+                            <input type="text" id="title" name="name" class="form-control"
+                                placeholder="Enter name" value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
                             <label>{{ _('Slug') }}</label>
-                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" value="{{old('slug')}}" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}"
+                                id="slug" name="slug" value="{{ old('slug') }}"
+                                placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
                             @include('alerts.feedback', ['field' => 'slug'])
                         </div>
-                        <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                        <button type="submit" class="btn btn-primary float-end">{{ __('Create') }}</button>
                     </form>
                 </div>
             </div>

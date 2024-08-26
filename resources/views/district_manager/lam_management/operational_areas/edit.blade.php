@@ -42,7 +42,7 @@
                                 name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
                             @include('alerts.feedback', ['field' => 'slug'])
                         </div>
-                        <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                        <button type="submit" class="btn btn-primary float-end">{{ __('Update') }}</button>
                     </form>
                 </div>
             </div>

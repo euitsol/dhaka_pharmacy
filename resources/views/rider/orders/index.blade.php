@@ -8,7 +8,7 @@
                     <div class="row">
                         <div class="col-8">
                             <h4 class="card-title">
-                                {{ __(ucwords(strtolower(str_replace('-', ' ', $slug))) . ' Order List') }}</h4>
+                                {{ __(ucwords(strtolower(str_replace('_', ' ', $slug))) . ' List') }}</h4>
                         </div>
                     </div>
                 </div>

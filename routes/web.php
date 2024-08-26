@@ -924,6 +924,7 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
+        Route::get('cv/download/{url}', 'view_or_download')->name('cv.download');
 
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });

@@ -34,7 +34,7 @@
                                 value="{{ old('phone') }}">
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
-                        <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                        <button type="submit" class="btn btn-primary float-end">{{ __('Create') }}</button>
                     </form>
                 </div>
             </div>
