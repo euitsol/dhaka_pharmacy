@@ -47,13 +47,10 @@ class PharmacyKycSettingsController extends Controller
             return redirect()->back();
         }
         $data = $this->prepareKycData($request);
-        if (isset($request->status) &&  $request->status == 1) {
-            KycSetting::activated()->where('type', 'pharmacy')->update(['status' => 0, 'updated_by' => admin()->id]);
-        }
+        KycSetting::activated()->where('type', 'pharmacy')->update(['status' => 0, 'updated_by' => admin()->id]);
         KycSetting::create(
             [
                 'type' => 'pharmacy',
-                // 'status' => $request->status ?? 0,
                 'status' => 1,
                 'form_data' => json_encode($data, JSON_FORCE_OBJECT),
                 'created_by' => admin()->id,

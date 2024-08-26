@@ -18,16 +18,11 @@ class DmKycSettingsController extends Controller
     {
         return $this->middleware('admin');
     }
-
-
-    public function list(): View
-    {
-        $data['kycs'] = KycSetting::where('type', 'dm')->orderBy('status', 'desc')->latest()->get()->groupBy('status');
-        return view('admin.dm_management.kyc_settings.list', $data);
-    }
     public function create(): View
     {
         $data['document'] = Documentation::where('module_key', 'dm_kyc_settings')->first();
+        $data['kycs'] = KycSetting::where('type', 'dm')->latest()->get();
+        $data['kyc_setting'] = $data['kycs']->where('status', 1)->first();
         return view('admin.dm_management.kyc_settings.create', $data);
     }
     public function store(Request $request): RedirectResponse
@@ -37,27 +32,16 @@ class DmKycSettingsController extends Controller
             return redirect()->back();
         }
         $data = $this->prepareKycData($request);
-        if (isset($request->status) &&  $request->status == 1) {
-            KycSetting::activated()->where('type', 'dm')->update(['status' => 0, 'updated_by' => admin()->id]);
-        }
+        KycSetting::activated()->where('type', 'dm')->update(['status' => 0, 'updated_by' => admin()->id]);
         KycSetting::create(
             [
                 'type' => 'dm',
-                'status' => $request->status ?? 0,
+                'status' => 1,
                 'form_data' => json_encode($data, JSON_FORCE_OBJECT),
                 'created_by' => admin()->id,
             ]
         );
         flash()->addSuccess('New KYC created successfully.');
-        return redirect()->route('dm_management.dm_kyc.settings.dm_kyc_list');
-    }
-    public function status($id): RedirectResponse
-    {
-        $kyc = KycSetting::findOrFail(decrypt($id));
-        KycSetting::activated()->where('type', 'dm')->where('status', 1)->update(['status' => 0, 'updated_by' => admin()->id]);
-        $kyc->update(['status' => 1, 'updated_by' => admin()->id]);
-
-        flash()->addSuccess('KYC activated successfully.');
         return redirect()->route('dm_management.dm_kyc.settings.dm_kyc_list');
     }
     public function details($id): View

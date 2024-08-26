@@ -391,11 +391,10 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
                 Route::get('delete/{id}', 'delete')->name('dms_kyc_delete');
             });
             Route::controller(DmKycSettingsController::class)->prefix('settings')->name('settings.')->group(function () {
-                Route::get('/list', 'list')->name('dm_kyc_list');
                 Route::get('/create', 'create')->name('dm_kyc_create');
                 Route::post('/create', 'store')->name('dm_kyc_create');
                 Route::get('/details/{id}', 'details')->name('dm_kyc_details');
-                Route::get('/status/{id}', 'status')->name('dm_kyc_status');
+                // Route::get('/status/{id}', 'status')->name('dm_kyc_status');
             });
         });
     });

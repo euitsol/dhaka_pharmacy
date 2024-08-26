@@ -190,7 +190,7 @@
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
-                                                'subRouteName' => 'dm_management.dm_kyc.settings.dm_kyc_list',
+                                                'subRouteName' => 'dm_management.dm_kyc.settings.dm_kyc_create',
                                                 'subPageSlug' => 'dm_kyc_settings',
                                             ],
                                         ],
