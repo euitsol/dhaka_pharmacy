@@ -779,6 +779,8 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
+        Route::post('/update/image', 'updateImage')->name('update.image');
+        Route::get('cv/download/{url}', 'view_or_download')->name('cv.download');
     });
 
     //LAM Route
@@ -854,6 +856,7 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
+        Route::get('cv/download/{url}', 'view_or_download')->name('cv.download');
     });
 
     Route::controller(LamOperationalAreaController::class)->prefix('operational-area')->name('operational_area.')->group(function () {
