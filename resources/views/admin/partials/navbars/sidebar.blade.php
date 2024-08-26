@@ -141,7 +141,7 @@
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
-                                                'subRouteName' => 'pm.pharmacy_kyc.settings.p_kyc_list',
+                                                'subRouteName' => 'pm.pharmacy_kyc.settings.p_kyc_create',
                                                 'subPageSlug' => 'p_kyc_settings',
                                             ],
                                         ],
