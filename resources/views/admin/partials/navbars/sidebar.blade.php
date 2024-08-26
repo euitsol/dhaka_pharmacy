@@ -62,38 +62,42 @@
             {{-- User Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['um.'],
-                    'routes' => ['user_list', 'user_kyc_list', 'user_kyc_settings'],
+                    'routes' => ['user_list', 'us_kyc_list', 'u_kyc_list'],
                 ]))
                 <li>
-                    <a class="@if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'user_kyc_list' || $pageSlug == 'user_kyc_settings') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'user' || $pageSlug == 'us_kyc_list' || $pageSlug == 'u_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#user-management"
-                        @if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'user_kyc_list' || $pageSlug == 'user_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
-                        <i class="fa-solid fa-users"></i>
+                        @if ($pageSlug == 'user' || $pageSlug == 'us_kyc_list' || $pageSlug == 'u_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-kit-medical"></i>
                         <span class="nav-link-text">{{ __('User Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'user' || $pageSlug == 'kyc' || $pageSlug == 'user_kyc_list' || $pageSlug == 'user_kyc_settings') show @endif" id="user-management">
+                    <div class="collapse @if ($pageSlug == 'user' || $pageSlug == 'us_kyc_list' || $pageSlug == 'u_kyc_settings') show @endif" id="user-management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
-                                    ['pageSlug' => 'user', 'routeName' => 'um.user.user_list', 'label' => 'Users'],
+                                    [
+                                        'pageSlug' => 'user',
+                                        'routeName' => 'um.user.user_list',
+                                        'label' => 'users',
+                                    ],
 
                                     [
-                                        'pageSlug' => ['user_kyc_list', 'user_kyc_settings'],
+                                        'pageSlug' => ['us_kyc_list', 'u_kyc_settings'],
                                         'routeName' => 'submenu',
                                         'label' => 'KYC Verification Center',
                                         'id' => 'user_kyc',
                                         'subMenu' => [
                                             [
-                                                'subLabel' => 'KYC List',
-                                                'subRouteName' => 'um.user_kyc.kyc_list.user_kyc_list',
-                                                'subPageSlug' => 'user_kyc_list',
+                                                'subLabel' => 'Submitted KYC List',
+                                                'subRouteName' => 'um.user_kyc.submitted_kyc.us_kyc_list',
+                                                'subPageSlug' => 'us_kyc_list',
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
-                                                'subRouteName' => 'um.user_kyc.user_kyc_settings',
-                                                'subPageSlug' => 'user_kyc_settings',
+                                                'subRouteName' => 'um.user_kyc.settings.u_kyc_create',
+                                                'subPageSlug' => 'u_kyc_settings',
                                             ],
                                         ],
                                     ],

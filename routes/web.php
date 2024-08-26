@@ -280,23 +280,21 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('status/{id}', 'status')->name('status.user_edit');
             Route::get('delete/{id}', 'delete')->name('user_delete');
         });
-
         // KYC ROUTES
         Route::group(['as' => 'user_kyc.', 'prefix' => 'user-kyc'], function () {
-            Route::controller(UserKycController::class)->prefix('kyc-list')->name('kyc_list.')->group(function () {
-                Route::get('index', 'index')->name('user_kyc_list');
-                Route::get('details/{id}', 'details')->name('details.user_kyc_list');
-                Route::get('create', 'create')->name('user_kyc_create');
-                Route::post('create', 'store')->name('user_kyc_create');
-                Route::get('edit/{id}', 'edit')->name('user_kyc_edit');
-                Route::put('edit/{id}', 'update')->name('user_kyc_edit');
-                Route::get('status/{id}', 'status')->name('status.user_kyc_edit');
-                Route::get('delete/{id}', 'delete')->name('user_kyc_delete');
+            Route::controller(UserKycController::class)->prefix('submitted-kyc')->name('submitted_kyc.')->group(function () {
+                Route::get('index', 'index')->name('us_kyc_list');
+                Route::get('details/{id}', 'details')->name('us_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.us_kyc_details');
+                Route::get('accept/{id}', 'accept')->name('accept.us_kyc_status');
+                Route::put('declined/{id}', 'declined')->name('declined.us_kyc_status');
+                Route::get('delete/{id}', 'delete')->name('us_kyc_delete');
             });
-
-            Route::controller(UserKycSettingsController::class)->prefix('settings')->group(function () {
-                Route::get('/', 'kycSettings')->name('user_kyc_settings');
-                Route::post('/', 'kycSettingsUpdate')->name('user_kyc_settings');
+            Route::controller(UserKycSettingsController::class)->prefix('settings')->name('settings.')->group(function () {
+                Route::get('/create', 'create')->name('u_kyc_create');
+                Route::post('/create', 'store')->name('u_kyc_create');
+                Route::get('/details/{id}', 'details')->name('u_kyc_details');
+                // Route::get('/status/{id}', 'status')->name('u_kyc_status');
             });
         });
     });
