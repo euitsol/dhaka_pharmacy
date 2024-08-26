@@ -60,8 +60,8 @@
             <div class="dashboard_wrap d-flex flex-column justify-content-center align-items-center">
                 <h2>{{ __('DHAKA PHARMACY') }}</h2>
                 <h4>{{ __('RIDER') }}</h4>
-                <h4>{{ __(strtoupper(optional(pharmacy()->operation_area)->name)) }}</h4>
-                <h4>{{ __(strtoupper(optional(pharmacy()->operation_sub_area)->name)) }}</h4>
+                <h4>{{ __(strtoupper(optional(rider()->operation_area)->name)) }}</h4>
+                <h4>{{ __(strtoupper(optional(rider()->operation_sub_area)->name)) }}</h4>
             </div>
         </div>
     </div>

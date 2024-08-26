@@ -240,7 +240,7 @@ class KycVerificationController extends Controller
                         array_push($rules[$fd->field_key . '.*.title'], 'nullable');
                         array_push($rules[$fd->field_key . '.*.title'], 'string');
                     }
-                    $this->validate($request, $rules);
+                    // $this->validate($request, $rules);
                     $paths = [];
 
                     if (isset($request->$input_name) && !empty($request->$input_name)) {

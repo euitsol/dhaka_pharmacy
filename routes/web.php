@@ -416,20 +416,22 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
 
             Route::get('get-operation-area/{dm_id}', 'get_operation_area')->name('operation_area.local_area_manager_list');
         });
-
         // KYC ROUTES
         Route::group(['as' => 'lam_kyc.', 'prefix' => 'local-area-manager-kyc'], function () {
-            Route::controller(LamKycController::class)->prefix('kyc-list')->name('kyc_list.')->group(function () {
-                Route::get('index', 'index')->name('local_area_manager_kyc_list');
-                Route::get('details/{id}', 'details')->name('local_area_manager_kyc_details');
-                Route::get('file-download/{url}', 'view_or_download')->name('download.local_area_manager_kyc_details');
-                Route::get('accept/{id}', 'accept')->name('accept.local_area_manager_kyc_status');
-                Route::put('declined/{id}', 'declined')->name('declined.local_area_manager_kyc_status');
-                Route::get('delete/{id}', 'delete')->name('local_area_manager_kyc_delete');
+            Route::controller(LamKycController::class)->prefix('submitted-kyc')->name('submitted_kyc.')->group(function () {
+                Route::get('index', 'index')->name('lams_kyc_list');
+                Route::get('details/{id}', 'details')->name('lams_kyc_details');
+                Route::get('file-download/{url}', 'view_or_download')->name('download.lams_kyc_details');
+                Route::get('accept/{id}', 'accept')->name('accept.lams_kyc_status');
+                Route::put('declined/{id}', 'declined')->name('declined.lams_kyc_status');
+                Route::get('delete/{id}', 'delete')->name('lams_kyc_delete');
             });
-            Route::controller(LamKycSettingsController::class)->prefix('settings')->group(function () {
-                Route::get('/', 'kycSettings')->name('local_area_manager_kyc_settings');
-                Route::post('/', 'kycSettingsUpdate')->name('local_area_manager_kyc_settings');
+            Route::controller(LamKycSettingsController::class)->prefix('settings')->name('settings.')->group(function () {
+                Route::get('/list', 'list')->name('lam_kyc_list');
+                Route::get('/create', 'create')->name('lam_kyc_create');
+                Route::post('/create', 'store')->name('lam_kyc_create');
+                Route::get('/details/{id}', 'details')->name('lam_kyc_details');
+                Route::get('/status/{id}', 'status')->name('lam_kyc_status');
             });
         });
     });

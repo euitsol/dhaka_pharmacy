@@ -14,57 +14,77 @@ use Illuminate\Support\Str;
 
 class LamKycSettingsController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
 
 
-    public function kycSettings():View
+    public function list(): View
     {
-        $data['kyc_setting'] = KycSetting::where('type','lam')->first();
-        $data['document'] = Documentation::where('module_key','lam_kyc_settings')->first();
-        return view('admin.lam_management.kyc_settings.create',$data);
+        $data['kycs'] = KycSetting::where('type', 'lam')->orderBy('status', 'desc')->latest()->get()->groupBy('status');
+        return view('admin.lam_management.kyc_settings.list', $data);
     }
-
-    public function kycSettingsUpdate(Request $request): RedirectResponse
+    public function create(): View
     {
+        $data['document'] = Documentation::where('module_key', 'lam_kyc_settings')->first();
+        return view('admin.lam_management.kyc_settings.create', $data);
+    }
+    public function store(Request $request): RedirectResponse
+    {
+        if (is_null($request->formdata)) {
+            flash()->addWarning('Please add KYC requirements.');
+            return redirect()->back();
+        }
         $data = $this->prepareKycData($request);
-
-        $status = $request->status ?? 0;
-        KycSetting::updateOrCreate(
-            ['type' => 'lam'],
+        if (isset($request->status) &&  $request->status == 1) {
+            KycSetting::activated()->where('type', 'lam')->update(['status' => 0, 'updated_by' => admin()->id]);
+        }
+        KycSetting::create(
             [
-                'status' => $status,
-                'form_data' => json_encode($data),
+                'type' => 'lam',
+                'status' => $request->status ?? 0,
+                'form_data' => json_encode($data, JSON_FORCE_OBJECT),
+                'created_by' => admin()->id,
             ]
         );
-        flash()->addSuccess('KYC settings updated successfully.');
-        return redirect()->route('lam_management.lam_kyc.local_area_manager_kyc_settings');
+        flash()->addSuccess('New KYC created successfully.');
+        return redirect()->route('lam_management.lam_kyc.settings.lam_kyc_list');
     }
-    
+    public function status($id): RedirectResponse
+    {
+        $kyc = KycSetting::findOrFail(decrypt($id));
+        KycSetting::activated()->where('type', 'lam')->where('status', 1)->update(['status' => 0, 'updated_by' => admin()->id]);
+        $kyc->update(['status' => 1, 'updated_by' => admin()->id]);
+
+        flash()->addSuccess('KYC activated successfully.');
+        return redirect()->route('lam_management.lam_kyc.settings.lam_kyc_list');
+    }
+    public function details($id): View
+    {
+        $data['kyc'] = KycSetting::findOrFail(decrypt($id));
+        return view('admin.lam_management.kyc_settings.details', $data);
+    }
+
     private function prepareKycData(Request $request): array
     {
         $data = [];
-        if(!is_null($request->formdata)){
-            foreach($request->formdata as $key => $formdata) {
-                if(isset($formdata['field_name'])) {
+        if (!is_null($request->formdata)) {
+            foreach ($request->formdata as $key => $formdata) {
+                if (isset($formdata['field_name'])) {
                     $data[$key]['field_key'] = Str::slug($formdata['field_name']);
                     $data[$key]['field_name'] = $formdata['field_name'];
                     $data[$key]['type'] = $formdata['type'];
                     $data[$key]['required'] = $formdata['required'];
-        
-                    if($formdata['type'] == 'option') {
+
+                    if ($formdata['type'] == 'option') {
                         $data[$key]['option_data']  = $this->convertOptionDataToArray($formdata['option_data']) ?? [];
                     }
                 }
             }
         }
-        
-    
         return $data;
-    } 
-
-
+    }
     private function convertOptionDataToArray($optionData): array
     {
         $optionsArray = [];
@@ -75,10 +95,9 @@ class LamKycSettingsController extends Controller
             if (count($parts) === 2) {
                 $key = trim($parts[0]);
                 $value = trim($parts[1]);
-                $optionsArray[$key] = $value;
+                $optionsArray[strval($key)] = $value;
             }
         }
-
         return $optionsArray;
     }
 }

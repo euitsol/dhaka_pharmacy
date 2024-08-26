@@ -78,7 +78,7 @@
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
                                     ['pageSlug' => 'user', 'routeName' => 'um.user.user_list', 'label' => 'Users'],
-                            
+
                                     [
                                         'pageSlug' => ['user_kyc_list', 'user_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -127,7 +127,7 @@
                                         'routeName' => 'pm.pharmacy.pharmacy_list',
                                         'label' => 'Pharmacies',
                                     ],
-                            
+
                                     [
                                         'pageSlug' => ['ps_kyc_list', 'p_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -205,18 +205,18 @@
             {{-- LAM Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['lam_management.'],
-                    'routes' => ['local_area_manager_list', 'local_area_manager_kyc_list', 'local_area_manager_kyc_settings'],
+                    'routes' => ['local_area_manager_list', 'lam_kyc_list', 'lams_kyc_list'],
                 ]))
                 <li>
-                    <a class="@if ($pageSlug == 'local_area_manager' || $pageSlug == 'lam_kyc_list' || $pageSlug == 'lam_kyc_settings') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'local_area_manager' || $pageSlug == 'lams_kyc_list' || $pageSlug == 'lam_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#local_area_manager"
-                        @if ($pageSlug == 'local_area_manager' || $pageSlug == 'lam_kyc_list' || $pageSlug == 'lam_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
-                        <i class="fa-solid fa-map"></i>
+                        @if ($pageSlug == 'local_area_manager' || $pageSlug == 'lams_kyc_list' || $pageSlug == 'lam_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-map-location-dot"></i>
                         <span class="nav-link-text">{{ __('LAM Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'local_area_manager' || $pageSlug == 'lam_kyc_list' || $pageSlug == 'lam_kyc_settings') show @endif" id="local_area_manager">
+                    <div class="collapse @if ($pageSlug == 'local_area_manager' || $pageSlug == 'lams_kyc_list' || $pageSlug == 'lam_kyc_settings') show @endif" id="local_area_manager">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -226,21 +226,20 @@
                                         'label' => 'Local Area Manager',
                                     ],
                                     [
-                                        'pageSlug' => ['lam_kyc_list', 'lam_kyc_settings'],
+                                        'pageSlug' => ['lams_kyc_list', 'lam_kyc_settings'],
                                         'routeName' => 'submenu',
                                         'label' => 'KYC Verification Center',
                                         'id' => 'local_area_manager_kyc',
                                         'subMenu' => [
                                             [
-                                                'subLabel' => 'KYC List',
+                                                'subLabel' => 'Submitted KYC List',
                                                 'subRouteName' =>
-                                                    'lam_management.lam_kyc.kyc_list.local_area_manager_kyc_list',
-                                                'subPageSlug' => 'lam_kyc_list',
+                                                    'lam_management.lam_kyc.submitted_kyc.lams_kyc_list',
+                                                'subPageSlug' => 'lams_kyc_list',
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
-                                                'subRouteName' =>
-                                                    'lam_management.lam_kyc.local_area_manager_kyc_settings',
+                                                'subRouteName' => 'lam_management.lam_kyc.settings.lam_kyc_list',
                                                 'subPageSlug' => 'lam_kyc_settings',
                                             ],
                                         ],
@@ -275,7 +274,7 @@
                                         'routeName' => 'rm.rider.rider_list',
                                         'label' => 'Riders',
                                     ],
-                            
+
                                     [
                                         'pageSlug' => ['rs_kyc_list', 'r_kyc_settings'],
                                         'routeName' => 'submenu',
