@@ -239,7 +239,7 @@
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
-                                                'subRouteName' => 'lam_management.lam_kyc.settings.lam_kyc_list',
+                                                'subRouteName' => 'lam_management.lam_kyc.settings.lam_kyc_create',
                                                 'subPageSlug' => 'lam_kyc_settings',
                                             ],
                                         ],

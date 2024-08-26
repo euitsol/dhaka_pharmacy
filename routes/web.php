@@ -425,11 +425,10 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
                 Route::get('delete/{id}', 'delete')->name('lams_kyc_delete');
             });
             Route::controller(LamKycSettingsController::class)->prefix('settings')->name('settings.')->group(function () {
-                Route::get('/list', 'list')->name('lam_kyc_list');
                 Route::get('/create', 'create')->name('lam_kyc_create');
                 Route::post('/create', 'store')->name('lam_kyc_create');
                 Route::get('/details/{id}', 'details')->name('lam_kyc_details');
-                Route::get('/status/{id}', 'status')->name('lam_kyc_status');
+                // Route::get('/status/{id}', 'status')->name('lam_kyc_status');
             });
         });
     });
