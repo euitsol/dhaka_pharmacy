@@ -1,4 +1,10 @@
 @if ($submitted_kyc)
+    @push('css')
+        <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+    @endpush
+    @push('js')
+        <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
+    @endpush
     @php
         $save_datas = json_decode($submitted_kyc->submitted_data, true);
         $form_datas = json_decode($submitted_kyc->kyc->form_data, true);
