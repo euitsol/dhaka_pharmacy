@@ -460,11 +460,10 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
                 Route::get('delete/{id}', 'delete')->name('rs_kyc_delete');
             });
             Route::controller(RiderKycSettingsController::class)->prefix('settings')->name('settings.')->group(function () {
-                Route::get('/list', 'list')->name('r_kyc_list');
                 Route::get('/create', 'create')->name('r_kyc_create');
                 Route::post('/create', 'store')->name('r_kyc_create');
                 Route::get('/details/{id}', 'details')->name('r_kyc_details');
-                Route::get('/status/{id}', 'status')->name('r_kyc_status');
+                // Route::get('/status/{id}', 'status')->name('r_kyc_status');
             });
         });
     });

@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'rm.rider_kyc.settings.r_kyc_list',
+                                'routeName' => 'rm.rider_kyc.settings.r_kyc_create',
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
                             ])
@@ -22,6 +22,22 @@
                     $form_datas = json_decode($kyc->form_data, true);
                 @endphp
                 <div class="card-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-striped mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>{{ __('Created By') }}</td>
+                                        <td>{{ __(':') }}</td>
+                                        <td class="border-end">{{ c_user_name($kyc->created_user) }}</td>
+                                        <td>{{ __('Created Date') }}</td>
+                                        <td>{{ __(':') }}</td>
+                                        <td>{{ timeFormate($kyc->created_at) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -50,12 +66,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-                <div class="card-footer text-end">
-                    @if ($kyc->status == 0)
-                        <a href="{{ route('rm.rider_kyc.settings.r_kyc_status', encrypt($kyc->id)) }}"
-                            class="btn {{ $kyc->getStatusClass() }}">{{ $kyc->getBtnStatus() }}</a>
-                    @endif
                 </div>
             </div>
         </div>

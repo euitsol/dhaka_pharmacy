@@ -288,7 +288,7 @@
                                             ],
                                             [
                                                 'subLabel' => 'KYC Settings',
-                                                'subRouteName' => 'rm.rider_kyc.settings.r_kyc_list',
+                                                'subRouteName' => 'rm.rider_kyc.settings.r_kyc_create',
                                                 'subPageSlug' => 'r_kyc_settings',
                                             ],
                                         ],
