@@ -42,7 +42,7 @@ class RiderKycSettingsController extends Controller
             ]
         );
         flash()->addSuccess('New KYC created successfully.');
-        return redirect()->route('rm.rider_kyc.settings.r_kyc_list');
+        return redirect()->route('rm.rider_kyc.settings.r_kyc_create');
     }
     public function details($id): View
     {

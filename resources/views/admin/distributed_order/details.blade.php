@@ -240,7 +240,7 @@
                                                     <div class="media">
                                                         <div class="sq align-self-center "> <img
                                                                 class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
-                                                                src="{{ storage_url($dop->order_product->product->image) }}"
+                                                                src="{{ product_image($dop->order_product->product->image) }}"
                                                                 width="135" height="135" /> </div>
                                                         <div class="media-body my-auto text-center">
                                                             <div class="row  my-auto flex-column flex-md-row px-3">
@@ -277,33 +277,13 @@
                                                                     {{ __('Select Pharmacy') }}
                                                                 </option>
                                                                 @foreach ($pharmacies as $pharmacy)
-                                                                    @php
-                                                                        $area = $pharmacy->operation_area
-                                                                            ? ($pharmacy->operation_sub_area
-                                                                                ? '( ' .
-                                                                                    $pharmacy->operation_area->name .
-                                                                                    ' - '
-                                                                                : '( ' .
-                                                                                    $pharmacy->operation_area->name .
-                                                                                    ' )')
-                                                                            : '';
-                                                                        $sub_area = $pharmacy->operation_sub_area
-                                                                            ? ($pharmacy->operation_area
-                                                                                ? $pharmacy->operation_sub_area->name .
-                                                                                    ' )'
-                                                                                : '( ' .
-                                                                                    $pharmacy->operation_sub_area
-                                                                                        ->name .
-                                                                                    ' )')
-                                                                            : '';
-                                                                    @endphp
                                                                     <option
                                                                         @if (
                                                                             (isset($do->odps) && $do->odps[$key]->pharmacy_id == $pharmacy->id) ||
                                                                                 old('datas.' . $key . '.pharmacy_id') == $pharmacy->id) selected @endif
-                                                                        value="{{ $pharmacy->id }}"
-                                                                        data-location="[{{ optional($pharmacy->address)->longitude }}, {{ optional($pharmacy->address)->latitude }}]">
-                                                                        {{ $pharmacy->name . $area . $sub_area }}</option>
+                                                                        value="{{ $pharmacy->id }}">
+                                                                        {{ $pharmacy->name . $pharmacy->area . $pharmacy->sub_area }}({{ number_format($pharmacy->distance, 2) . 'km' }})
+                                                                    </option>
                                                                 @endforeach
                                                             </select>
                                                             @include('alerts.feedback', [
@@ -312,29 +292,12 @@
                                                         </div>
                                                     @else
                                                         @php
-                                                            $area = $do->odps[$key]->pharmacy->operation_area
-                                                                ? ($do->odps[$key]->pharmacy->operation_sub_area
-                                                                    ? '( ' .
-                                                                        $do->odps[$key]->pharmacy->operation_area
-                                                                            ->name .
-                                                                        ' - '
-                                                                    : '( ' .
-                                                                        $do->odps[$key]->pharmacy->operation_area
-                                                                            ->name .
-                                                                        ' )')
-                                                                : '';
-                                                            $sub_area = $do->odps[$key]->pharmacy->operation_sub_area
-                                                                ? ($do->odps[$key]->pharmacy->operation_area
-                                                                    ? $do->odps[$key]->pharmacy->operation_sub_area
-                                                                            ->name . ' )'
-                                                                    : '( ' .
-                                                                        $do->odps[$key]->pharmacy->operation_sub_area
-                                                                            ->name .
-                                                                        ' )')
-                                                                : '';
+                                                            $pharmacy = $pharmacies
+                                                                ->where('id', $do->odps[$key]->pharmacy_id)
+                                                                ->first();
                                                         @endphp
                                                         <input type="text" class="form-control" disabled
-                                                            value="{{ $do->odps[$key]->pharmacy->name . $area . $sub_area }}">
+                                                            value="{{ $pharmacy->name . $pharmacy->area . $pharmacy->sub_area }}({{ number_format($pharmacy->distance, 2) . 'km' }})">
                                                     @endif
                                                 </div>
 

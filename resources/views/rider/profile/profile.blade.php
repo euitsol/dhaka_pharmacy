@@ -1,15 +1,15 @@
 @extends('rider.layouts.master', ['pageSlug' => 'rider_profile'])
 @section('title', 'My Profile')
-@push('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
-        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+@push('css_link')
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.css"
+        type="text/css">
 @endpush
 @section('content')
     <div class="profile-section">
         <div class="row">
             <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-header">
                         <h5 class="title">{{ __('Map') }}</h5>
                     </div>
@@ -18,7 +18,7 @@
                         <div id="map" style="height: 500px"></div>
                     </div>
 
-                </div>
+                </div> --}}
                 <div class="card">
                     <div class="card-header">
                         <h5 class="title">{{ __('Update Profile') }}</h5>
@@ -252,15 +252,7 @@
     </div>
 @endsection
 @push('js_link')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
     <script src="{{ asset('rider/js/direction.js') }}"></script>
-    <link rel="stylesheet"
-        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.css"
-        type="text/css">
 @endpush
 @push('js')
     <script>

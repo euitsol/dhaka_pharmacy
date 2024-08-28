@@ -57,7 +57,7 @@ class PharmacyKycSettingsController extends Controller
             ]
         );
         flash()->addSuccess('New KYC created successfully.');
-        return redirect()->route('pm.pharmacy_kyc.settings.p_kyc_list');
+        return redirect()->route('pm.pharmacy_kyc.settings.p_kyc_create');
     }
     // public function status($id): RedirectResponse
     // {
@@ -66,7 +66,7 @@ class PharmacyKycSettingsController extends Controller
     //     $kyc->update(['status' => 1, 'updated_by' => admin()->id]);
 
     //     flash()->addSuccess('KYC activated successfully.');
-    //     return redirect()->route('pm.pharmacy_kyc.settings.p_kyc_list');
+    //     return redirect()->route('pm.pharmacy_kyc.settings.p_kyc_create');
     // }
     public function details($id): View
     {

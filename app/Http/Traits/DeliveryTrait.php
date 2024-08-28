@@ -16,10 +16,10 @@ trait DeliveryTrait
      * @param float $user_lng The longitude of the user's location
      * @return float The distance between the user and the default location in km
      */
-    function calculateDistance($user_lat, $user_lng)
+    function calculateDistance($user_lat, $user_lng, $default_lat = false, $default_lng = false)
     {
-        $default_lat = config('mapbox.center_location_lat');
-        $default_lng = config('mapbox.center_location_lng');
+        $default_lat = $default_lat ? $default_lat : config('mapbox.center_location_lat');
+        $default_lng = $default_lng ? $default_lng : config('mapbox.center_location_lng');
         // convert from degrees to radians
         $earthRadius = 6371000;
         $latFrom = deg2rad($default_lat);

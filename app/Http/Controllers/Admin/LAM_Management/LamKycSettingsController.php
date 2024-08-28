@@ -42,7 +42,7 @@ class LamKycSettingsController extends Controller
             ]
         );
         flash()->addSuccess('New KYC created successfully.');
-        return redirect()->route('lam_management.lam_kyc.settings.lam_kyc_list');
+        return redirect()->route('lam_management.lam_kyc.settings.lam_kyc_create');
     }
     public function details($id): View
     {

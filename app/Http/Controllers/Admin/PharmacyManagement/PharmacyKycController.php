@@ -38,7 +38,7 @@ class PharmacyKycController extends Controller
         $data->update();
         $data->creater->update(['kyc_status' => 1]);
         flash()->addSuccess('KYC accepted succesfully');
-        return redirect()->back();
+        return redirect()->route('pm.pharmacy_kyc.submitted_kyc.ps_kyc_list');
     }
 
     public function declined(SubmittedKycRequest $req, $id)

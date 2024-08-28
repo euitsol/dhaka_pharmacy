@@ -1,10 +1,6 @@
 @extends('pharmacy.layouts.master', ['pageSlug' => 'pharmacy_profile'])
 @section('title', 'My Profile')
 @push('css_link')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
-        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
     <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
@@ -36,20 +32,20 @@
                                 <div class="col-xl-7 col-xxl-8">
                                     <div class="row">
                                         <div class="form-group col-md-12">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('Pharmacy Name') }}</label>
                                             <input type="text" name="name" class="form-control"
-                                                placeholder="Enter Name" value="{{ $pharmacy->name }}">
+                                                placeholder="Enter pharmacy name" value="{{ $pharmacy->name }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Phone') }}</label>
+                                            <label>{{ __('Pharmacy/Responsible Person Phone') }}</label>
                                             <input type="text" name="phone" class="form-control"
                                                 placeholder="Enter Phone" value="{{ $pharmacy->phone }}">
                                             @include('alerts.feedback', ['field' => 'phone'])
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Email') }}</label>
+                                            <label>{{ __('PharmacyEmail') }}</label>
                                             <input type="text" name="email" class="form-control"
                                                 placeholder="Enter Email" value="{{ $pharmacy->email }}">
                                             @include('alerts.feedback', ['field' => 'email'])
@@ -68,15 +64,12 @@
                                                 <option selected hidden value=" ">
                                                     {{ __('Select Identification Type') }}
                                                 </option>
-                                                <option value="NID"
-                                                    {{ $pharmacy->identification_type == 'NID' ? 'selected' : '' }}>
-                                                    {{ __('National ID Card') }}</option>
-                                                <option value="DOB"
-                                                    {{ $pharmacy->identification_type == 'DOB' ? 'selected' : '' }}>
-                                                    {{ __('Birth Certificate No') }}</option>
-                                                <option value="Passport"
-                                                    {{ $pharmacy->identification_type == 'Passport' ? 'selected' : '' }}>
-                                                    {{ __('Passport NO') }}</option>
+                                                <option value="TIN"
+                                                    {{ $pharmacy->identification_type == 'TIN' ? 'selected' : '' }}>
+                                                    {{ __('TIN Certificate') }}</option>
+                                                <option value="Trade"
+                                                    {{ $pharmacy->identification_type == 'Trade' ? 'selected' : '' }}>
+                                                    {{ __('Trade License') }}</option>
                                             </select>
                                             @include('alerts.feedback', ['field' => 'identification_type'])
                                         </div>
@@ -248,9 +241,6 @@
 @endsection
 
 @push('js_link')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
     </script>
