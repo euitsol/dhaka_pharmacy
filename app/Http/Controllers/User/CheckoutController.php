@@ -76,11 +76,12 @@ class CheckoutController extends Controller
     }
     public function order_confirm(OrderConfirmRequest $req, $order_id)
     {
+        $address =  Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->where('id', $req->address)->first();
         $order = Order::with(['products', 'address'])->self()->findOrFail(decrypt($order_id));
         $order->address_id = $req->address;
         $order->status = 1; //Order Submit
         $order->delivery_type = 0;
-        $order->delivery_fee = $this->getDeliveryCharge($order->address->latitude, $order->address->longitude);
+        $order->delivery_fee = $this->getDeliveryCharge($address->latitude, $address->longitude);
         $order->save();
         $this->calculateOrderTotalDiscountPrice($order);
 

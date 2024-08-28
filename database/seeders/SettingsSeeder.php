@@ -144,6 +144,5 @@ class SettingsSeeder extends Seeder
             'value' => 'ujgo7ajnfh8g',
             'env_key' => 'DB_PASSWORD',
         ]);
-
     }
 }

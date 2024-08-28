@@ -115,7 +115,7 @@
                                             </h4>
                                             <div class="add_to_card">
                                                 <a class="cart-btn" data-product_slug="{{ $product->slug }}"
-                                                    data-unit_id="{{ $product->units[0]['id'] }}"
+                                                    data-unit_id="{{ $product->units->first()->id }}"
                                                     href="javascript:void(0)">
                                                     <i class="fa-solid fa-cart-plus"></i>
                                                 </a>

@@ -15,37 +15,37 @@ class MapboxSettingsSeeder extends Seeder
     {
         MapboxSetting::create([
             'key' => 'mapbox_token',
-            'value' => '',
+            'value' => 'pk.eyJ1IjoicXdhc3p4MzQyNDMyIiwiYSI6ImNsd2t4ZnU2ZTA3emYyam54aXdqdTFocWYifQ.tXzncKk2GtbOXVtZvqZOIA',
             'env_key' => 'MAPBOX_TOKEN'
         ]);
         MapboxSetting::create([
             'key' => 'mapbox_style_id',
-            'value' => '',
+            'value' => 'mapbox://styles/mapbox/streets-v9',
             'env_key' => 'MAPBOX_STYLE_ID',
         ]);
         MapboxSetting::create([
             'key' => 'per_km_delivery_charge',
-            'value' => '',
-            'env_key' => '',
+            'value' => 30,
+            'env_key' => 'PER_KM_DELIVERY_CHARGE',
         ]);
         MapboxSetting::create([
             'key' => 'min_delivery_charge',
-            'value' => '',
-            'env_key' => 60,
+            'value' => 60,
+            'env_key' => 'MIN_DELIVERY_CHARGE',
         ]);
         MapboxSetting::create([
             'key' => 'miscellaneous_charge',
-            'value' => '',
-            'env_key' => '',
+            'value' => 10,
+            'env_key' => 'MISCELLANEOUS_CHARGE',
         ]);
         MapboxSetting::create([
             'key' => 'center_location_lat',
-            'value' => '',
+            'value' => '23.80709010170405',
             'env_key' => 'MAP_CENTER_LAT',
         ]);
         MapboxSetting::create([
             'key' => 'center_location_lng',
-            'value' => '',
+            'value' => '90.36861120637',
             'env_key' => 'MAP_CENTER_LNG',
         ]);
         MapboxSetting::create([
