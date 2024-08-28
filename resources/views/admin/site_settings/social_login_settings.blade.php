@@ -10,7 +10,7 @@
                 <label>{{ _('Client ID') }}</label>
                 <input type="text" name="fb_client_id"
                     class="form-control {{ $errors->has('fb_client_id') ? ' is-invalid' : '' }}"
-                    placeholder="{{ _('Client ID') }}" value="{{ $SiteSettings['fb_client_id'] ?? '' }}">
+                    placeholder="{{ _('Client id') }}" value="{{ $SiteSettings['fb_client_id'] ?? '' }}">
                 @include('alerts.feedback', ['field' => 'fb_client_id'])
             </div>
 
