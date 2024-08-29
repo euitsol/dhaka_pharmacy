@@ -62,7 +62,7 @@
             {{-- User Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['um.'],
-                    'routes' => ['user_list', 'us_kyc_list', 'u_kyc_list'],
+                    'routes' => ['user_list', 'us_kyc_list', 'u_kyc_create'],
                 ]))
                 <li>
                     <a class="@if ($pageSlug == 'user' || $pageSlug == 'us_kyc_list' || $pageSlug == 'u_kyc_settings') @else collapsed @endif" data-toggle="collapse"
@@ -111,7 +111,7 @@
             {{-- Pharmacy Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['pm.'],
-                    'routes' => ['pharmacy_list', 'ps_kyc_list', 'p_kyc_list'],
+                    'routes' => ['pharmacy_list', 'ps_kyc_list', 'p_kyc_create'],
                 ]))
                 <li>
                     <a class="@if ($pageSlug == 'pharmacy' || $pageSlug == 'ps_kyc_list' || $pageSlug == 'p_kyc_settings') @else collapsed @endif" data-toggle="collapse"
@@ -160,7 +160,7 @@
             {{-- DM Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['dm_management.'],
-                    'routes' => ['district_manager_list', 'dm_kyc_list', 'dms_kyc_list'],
+                    'routes' => ['district_manager_list', 'dm_kyc_create', 'dms_kyc_list'],
                 ]))
                 <li>
                     <a class="@if ($pageSlug == 'district_manager' || $pageSlug == 'dms_kyc_list' || $pageSlug == 'dm_kyc_settings') @else collapsed @endif" data-toggle="collapse"
@@ -209,7 +209,7 @@
             {{-- LAM Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['lam_management.'],
-                    'routes' => ['local_area_manager_list', 'lam_kyc_list', 'lams_kyc_list'],
+                    'routes' => ['local_area_manager_list', 'lam_kyc_create', 'lams_kyc_list'],
                 ]))
                 <li>
                     <a class="@if ($pageSlug == 'local_area_manager' || $pageSlug == 'lams_kyc_list' || $pageSlug == 'lam_kyc_settings') @else collapsed @endif" data-toggle="collapse"
@@ -254,11 +254,10 @@
                     </div>
                 </li>
             @endif
-
             {{-- Rider Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['rm.'],
-                    'routes' => ['rider_list', 'rs_kyc_list', 'r_kyc_list'],
+                    'routes' => ['rider_list', 'rs_kyc_list', 'r_kyc_create'],
                 ]))
                 <li>
                     <a class="@if ($pageSlug == 'rider' || $pageSlug == 'rs_kyc_list' || $pageSlug == 'r_kyc_settings') @else collapsed @endif" data-toggle="collapse"

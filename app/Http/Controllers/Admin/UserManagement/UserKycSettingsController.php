@@ -46,7 +46,7 @@ class UserKycSettingsController extends Controller
             ]
         );
         flash()->addSuccess('New KYC created successfully.');
-        return redirect()->route('um.user_kyc.settings.u_kyc_list');
+        return redirect()->route('um.user_kyc.settings.u_kyc_create');
     }
     public function details($id): View
     {

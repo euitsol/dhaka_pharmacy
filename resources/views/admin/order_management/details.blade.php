@@ -30,8 +30,8 @@
                                                         <div class="media">
                                                             <div class="sq align-self-center "> <img
                                                                     class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
-                                                                    src="{{ storage_url($product->image) }}" width="135"
-                                                                    height="135" /> </div>
+                                                                    src="{{ product_image($product->image) }}"
+                                                                    width="135" height="135" /> </div>
                                                             <div class="media-body my-auto text-center">
                                                                 <div class="row  my-auto flex-column flex-md-row px-3">
                                                                     <div class="col my-auto">

@@ -22,7 +22,7 @@
         <tr>
             <td class="fw-bolder">{{ __('Emergency Contact') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $rider->parent_phone ?? '--' }}</td>
+            <td>{{ $rider->emergency_phone ?? '--' }}</td>
             <td>|</td>
             <td class="fw-bolder">{{ __('Birth Date') }}</td>
             <td>{{ __(':') }}</td>

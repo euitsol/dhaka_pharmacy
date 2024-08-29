@@ -42,7 +42,7 @@ class DmKycSettingsController extends Controller
             ]
         );
         flash()->addSuccess('New KYC created successfully.');
-        return redirect()->route('dm_management.dm_kyc.settings.dm_kyc_list');
+        return redirect()->route('dm_management.dm_kyc.settings.dm_kyc_create');
     }
     public function details($id): View
     {

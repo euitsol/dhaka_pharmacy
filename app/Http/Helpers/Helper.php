@@ -628,3 +628,18 @@ function isImage($path)
     $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
     return in_array($extension, $imageExtensions);
 }
+
+function getPharmacyArea($pharmacy)
+{
+    $area = $pharmacy->operation_area ?
+        ($pharmacy->operation_sub_area ? '( ' . $pharmacy->operation_area->name . ' - ' : '( ' . $pharmacy->operation_area->name . ' )')
+        : '';
+    return $area;
+}
+function getPharmacySubArea($pharmacy)
+{
+    $sub_area = $pharmacy->operation_sub_area ?
+        ($pharmacy->operation_area ? $pharmacy->operation_sub_area->name . ' )' : '( ' . $pharmacy->operation_sub_area->name . ' )')
+        : '';
+    return $sub_area;
+}

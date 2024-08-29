@@ -22,7 +22,7 @@ class RiderKycController extends Controller
 
     public function index(): View
     {
-        $data['submitted_kyc'] = SubmittedKyc::with('creater')->where('type', 'rider')->orderBy('status', 'desc')->get()->groupBy('status');
+        $data['submitted_kyc'] = SubmittedKyc::with('creater')->where('type', 'rider')->orderBy('status', 'asc')->get()->groupBy('status');
         return view('admin.rider_management.submitted_kyc.index', $data);
     }
     public function details($id): View
@@ -37,7 +37,7 @@ class RiderKycController extends Controller
         $data->update();
         $data->creater->update(['kyc_status' => 1]);
         flash()->addSuccess('KYC accepted succesfully');
-        return redirect()->back();
+        return redirect()->route('rm.rider_kyc.submitted_kyc.rs_kyc_list');
     }
 
     public function declined(SubmittedKycRequest $req, $id)

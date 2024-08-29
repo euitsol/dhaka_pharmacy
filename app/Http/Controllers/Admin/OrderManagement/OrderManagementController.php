@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DisputeOrderRequest;
 use App\Http\Requests\OrderDistributionRequest;
 use App\Http\Requests\OrderDistributionRiderRequest;
+use App\Http\Traits\DeliveryTrait;
 use App\Http\Traits\OTPTrait;
 use App\Models\AddToCart;
 use App\Models\DistributionOtp;
@@ -26,7 +27,7 @@ use App\Models\Rider;
 
 class OrderManagementController extends Controller
 {
-    use TransformOrderItemTrait, OTPTrait;
+    use TransformOrderItemTrait, OTPTrait, DeliveryTrait;
 
     public function __construct()
     {
@@ -66,7 +67,7 @@ class OrderManagementController extends Controller
                     });
                 return view('admin.distributed_order.index', $data);
             case 'waiting-for-rider':
-                $data['dos'] = OrderDistribution::with(['order','order.products','order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'odps', 'creater'])
+                $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'odps', 'creater'])
                     ->withCount(['odps' => function ($query) {
                         $query->where('status', '!=', -1);
                     }])
@@ -80,7 +81,7 @@ class OrderManagementController extends Controller
                     });
                 return view('admin.distributed_order.index', $data);
             case 'assigned':
-                $data['dos'] = OrderDistribution::with(['order','order.products','order.products.units', 'order.products.discounts', 'order.products.pivot.unit','assignedRider', 'assignedRider.rider', 'creater'])
+                $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'assignedRider', 'assignedRider.rider', 'creater'])
                     ->withCount(['odps' => function ($query) {
                         $query->where('status', '!=', -1);
                     }])
@@ -93,17 +94,17 @@ class OrderManagementController extends Controller
                     });
                 return view('admin.distributed_order.index', $data);
             case 'delivered':
-                $data['dos'] = OrderDistribution::with(['order','order.products','order.products.units', 'order.products.discounts', 'order.products.pivot.unit','assignedRider', 'assignedRider.rider', 'creater'])
-                ->withCount(['odps' => function ($query) {
-                    $query->where('status', '!=', -1);
-                }])
-                ->whereHas('order', function ($query) {
-                    $query->where('status', 6);
-                })
-                ->latest()->get()
-                ->each(function (&$do) {
-                    $this->calculateOrderTotalDiscountPrice($do->order);
-                });
+                $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'assignedRider', 'assignedRider.rider', 'creater'])
+                    ->withCount(['odps' => function ($query) {
+                        $query->where('status', '!=', -1);
+                    }])
+                    ->whereHas('order', function ($query) {
+                        $query->where('status', 6);
+                    })
+                    ->latest()->get()
+                    ->each(function (&$do) {
+                        $this->calculateOrderTotalDiscountPrice($do->order);
+                    });
                 return view('admin.distributed_order.index', $data);
             default:
                 flash()->addError('Something went wrong');
@@ -121,7 +122,19 @@ class OrderManagementController extends Controller
     public function order_distribution($id)
     {
         $data['order'] = Order::with(['address', 'od.odps.order_product', 'od.odps.pharmacy', 'products', 'products.pivot.unit', 'payments'])->paid()->find(decrypt($id));
-        $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
+        $data['pharmacies'] = Pharmacy::with(['operation_area', 'operation_sub_area', 'address'])->activated()->kycVerified()->latest()->get()->reject(function ($pharmacy) use ($data) {
+            $pharmacy->area = getPharmacyArea($pharmacy);
+            $pharmacy->sub_area = getPharmacySubArea($pharmacy);
+            $pharmacy->distance = $this->calculateDistance(
+                $pharmacy->address->latitude,
+                $pharmacy->address->longitude,
+                $data['order']->address->latitude,
+                $data['order']->address->longitude
+            );
+
+            // Reject the pharmacy if the distance exceeds the configured radius
+            return $pharmacy->distance > config('mapbox.pharmacy_radious');
+        });
 
         if (!empty($data['order'])) {
             $this->calculateOrderTotalPrice($data['order']);
@@ -138,7 +151,7 @@ class OrderManagementController extends Controller
         $order_id = decrypt($order_id);
         $order = Order::findOrFail($order_id);
 
-        if($order->status == 1){
+        if ($order->status == 1) {
             //Update order status to distributed
             $order->status = 2;
             $order->save();
@@ -172,7 +185,7 @@ class OrderManagementController extends Controller
 
             flash()->addSuccess('Order Processed Successfully.');
             return redirect()->route('om.order.order_list', 'processed');
-        }else{
+        } else {
             flash()->addSuccess('Cannot process this order');
             return redirect()->route('om.order.order_list', 'submitted');
         }
@@ -205,9 +218,14 @@ class OrderManagementController extends Controller
         // $data['do'] = $query;
 
         $data['do'] = OrderDistribution::with([
-            'assignedRider','disputedRiders','order.customer','odrs', 'odps', 'order'
+            'assignedRider',
+            'disputedRiders',
+            'order.customer',
+            'odrs',
+            'odps',
+            'order'
         ])
-        ->findOrFail(decrypt($do_id));
+            ->findOrFail(decrypt($do_id));
 
         $data['do']->each(function (&$od) {
             $this->calculateOrderTotalDiscountPrice($od->order);
@@ -228,7 +246,16 @@ class OrderManagementController extends Controller
                 break;
         }
 
-        $data['pharmacies'] = Pharmacy::activated()->kycVerified()->latest()->get();
+        $data['pharmacies'] = Pharmacy::with(['operation_area', 'operation_sub_area', 'address'])->activated()->kycVerified()->latest()->get()->reject(function ($pharmacy) use ($data) {
+            $pharmacy->area = getPharmacyArea($pharmacy);
+            $pharmacy->sub_area = getPharmacySubArea($pharmacy);
+            $pharmacy->distance = $this->calculateDistance(
+                $pharmacy->address->latitude,
+                $pharmacy->address->longitude,
+                $data['do']->order->address->latitude,
+                $data['do']->order->address->longitude
+            );
+        });
 
 
         return view('admin.distributed_order.details', $data);
@@ -250,7 +277,7 @@ class OrderManagementController extends Controller
         $do_rider->save();
 
         $do = OrderDistribution::with('order')->findOrFail($do_id);
-        $do->update(['status' => 3, 'rider_collect_time' => Carbon::now()->addMinutes($req->pick_up_time)->toDateTimeString(), 'rider_delivery_time' =>Carbon::now()->addMinutes($req->pick_up_time + $interval_time + $req->delivery_time)->toDateTimeString()]);
+        $do->update(['status' => 3, 'rider_collect_time' => Carbon::now()->addMinutes($req->pick_up_time)->toDateTimeString(), 'rider_delivery_time' => Carbon::now()->addMinutes($req->pick_up_time + $interval_time + $req->delivery_time)->toDateTimeString()]);
         $do->order->update(['status' => 4]);
 
         //Delivery OTP
