@@ -65,7 +65,7 @@ class OrderManagementController extends Controller
                     ->each(function (&$do) {
                         $this->calculateOrderTotalDiscountPrice($do->order);
                     });
-                return view('admin.distributed_order.index', $data);
+                return view('admin.order_management.distributed_order.index', $data);
             case 'waiting-for-rider':
                 $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'odps', 'creater'])
                     ->withCount(['odps' => function ($query) {
@@ -79,7 +79,7 @@ class OrderManagementController extends Controller
                     ->each(function (&$do) {
                         $this->calculateOrderTotalDiscountPrice($do->order);
                     });
-                return view('admin.distributed_order.index', $data);
+                return view('admin.order_management.distributed_order.index', $data);
             case 'assigned':
                 $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'assignedRider', 'assignedRider.rider', 'creater'])
                     ->withCount(['odps' => function ($query) {
@@ -92,7 +92,7 @@ class OrderManagementController extends Controller
                     ->each(function (&$do) {
                         $this->calculateOrderTotalDiscountPrice($do->order);
                     });
-                return view('admin.distributed_order.index', $data);
+                return view('admin.order_management.distributed_order.index', $data);
             case 'delivered':
                 $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'assignedRider', 'assignedRider.rider', 'creater'])
                     ->withCount(['odps' => function ($query) {
@@ -105,7 +105,7 @@ class OrderManagementController extends Controller
                     ->each(function (&$do) {
                         $this->calculateOrderTotalDiscountPrice($do->order);
                     });
-                return view('admin.distributed_order.index', $data);
+                return view('admin.order_management.distributed_order.index', $data);
             default:
                 flash()->addError('Something went wrong');
                 return redirect()->back();
@@ -113,7 +113,7 @@ class OrderManagementController extends Controller
     }
     public function details($id): View
     {
-        $data['order'] = Order::with('products')->findOrFail(decrypt($id));
+        $data['order'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit')->findOrFail(decrypt($id));
         $this->calculateOrderTotalPrice($data['order']);
         $this->calculateOrderTotalDiscountPrice($data['order']);
         return view('admin.order_management.details', $data);
@@ -221,17 +221,18 @@ class OrderManagementController extends Controller
             'assignedRider',
             'disputedRiders',
             'order.customer',
+            'order.products',
+            'order.products.units',
+            'order.products.discounts',
+            'order.products.pivot.unit',
             'odrs',
             'odps',
             'order'
         ])
             ->findOrFail(decrypt($do_id));
 
-        $data['do']->each(function (&$od) {
-            $this->calculateOrderTotalDiscountPrice($od->order);
-        });
 
-
+        $this->calculateOrderTotalDiscountPrice($data['do']->order);
         switch ($data['do']->status) {
             case 1:
                 break;
@@ -258,7 +259,7 @@ class OrderManagementController extends Controller
         });
 
 
-        return view('admin.distributed_order.details', $data);
+        return view('admin.order_management.distributed_order.details', $data);
     }
 
     public function assign_order(OrderDistributionRiderRequest $req, $do_id): RedirectResponse
@@ -274,6 +275,7 @@ class OrderManagementController extends Controller
         $do_rider->order_distribution_id = $do_id;
         $do_rider->priority = $req->priority;
         $do_rider->instraction = $req->instraction;
+        $do_rider->creater()->associate(admin());
         $do_rider->save();
 
         $do = OrderDistribution::with('order')->findOrFail($do_id);

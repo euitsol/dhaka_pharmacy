@@ -16,7 +16,9 @@ class OrderDistribution extends BaseModel
         'distribution_type',
         'prep_time',
         'note',
-        'status'
+        'status',
+        'rider_collect_time',
+        'rider_delivery_time',
     ];
 
     public function order()
@@ -73,7 +75,7 @@ class OrderDistribution extends BaseModel
             return $odp->status == 0 || $odp->status == 1;
         })->isEmpty()) {
             return 2;
-        }else{
+        } else {
             return $this->status;
         }
     }
@@ -101,11 +103,11 @@ class OrderDistribution extends BaseModel
                 return 'badge bg-success';
             default:
                 return 'badge bg-dark';
-
         }
     }
 
-    public function statusTitle() {
+    public function statusTitle()
+    {
         switch ($this->status) {
             case 0:
                 return 'Pending';
@@ -121,7 +123,7 @@ class OrderDistribution extends BaseModel
                 return 'Delivered';
             default:
                 return 'Not-defined';
-            }
+        }
     }
 
     public function paymentType()
