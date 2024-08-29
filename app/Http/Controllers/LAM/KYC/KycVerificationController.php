@@ -26,7 +26,7 @@ class KycVerificationController extends Controller
     {
         $query = KycSetting::with('lam_submitted_kyc')->where('type', 'lam');
         $kyc = $query->first();
-        if (!$kyc->lam_submitted_kyc) {
+        if ($kyc && !$kyc->lam_submitted_kyc) {
             $kyc = $query->activated()->first();
         }
         return view('local_area_manager.kyc_verification_center.index', ['kyc' => $kyc]);

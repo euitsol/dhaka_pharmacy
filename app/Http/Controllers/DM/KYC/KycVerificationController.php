@@ -26,7 +26,7 @@ class KycVerificationController extends Controller
     {
         $query = KycSetting::with('dm_submitted_kyc')->where('type', 'dm');
         $kyc = $query->first();
-        if (!$kyc->dm_submitted_kyc) {
+        if ($kyc && !$kyc->dm_submitted_kyc) {
             $kyc = $query->activated()->first();
         }
         return view('district_manager.kyc_verification_center.index', ['kyc' => $kyc]);

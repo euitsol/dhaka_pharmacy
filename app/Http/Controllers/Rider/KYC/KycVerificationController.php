@@ -23,7 +23,7 @@ class KycVerificationController extends Controller
     {
         $query = KycSetting::with('r_submitted_kyc')->where('type', 'rider');
         $kyc = $query->first();
-        if (!$kyc->r_submitted_kyc) {
+        if ($kyc && !$kyc->r_submitted_kyc) {
             $kyc = $query->activated()->first();
         }
         return view('rider.kyc_verification_center.index', ['kyc' => $kyc]);
