@@ -141,6 +141,11 @@
                                         <input type="file" accept=".pdf" class="form-control" name="cv">
                                         @include('alerts.feedback', ['field' => 'cv'])
                                     </div>
+                                    @if (!empty($dm->cv))
+                                        <a class="btn btn-primary" target="_blank"
+                                            href="{{ route('dm.profile.cv.download', base64_encode($dm->cv)) }}"><i
+                                                class="fa-solid fa-download"></i></a>
+                                    @endif
                                 </div>
 
 
@@ -154,7 +159,7 @@
                                     <textarea name="permanent_address" class="form-control" placeholder="Enter permanent address">{{ $dm->permanent_address ? $dm->permanent_address : old('permanent_address') }}</textarea>
                                     @include('alerts.feedback', ['field' => 'permanent_address'])
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 text-end">
                                     <button type="submit" class="btn btn-sm btn-primary">{{ __('Update') }}</button>
                                 </div>
                     </form>
@@ -188,7 +193,7 @@
                             placeholder="Confirm New Password">
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer text-end">
                     <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
                 </div>
             </form>

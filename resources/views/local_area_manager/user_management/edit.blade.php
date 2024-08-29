@@ -34,7 +34,7 @@
                                 value="{{ $user->phone }}">
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
-                        <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                        <button type="submit" class="btn btn-primary float-end">{{ __('Update') }}</button>
                     </form>
                 </div>
             </div>

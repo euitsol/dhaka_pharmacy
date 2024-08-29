@@ -172,6 +172,11 @@ function auth_storage_url($urlOrArray, $gender)
 
 function product_image($url)
 {
+    // For Fake Image
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+        return $url;
+    }
+    // For Fake Image
     return $url ? asset('storage/' . $url) : asset('frontend/default/product.png');
 }
 

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SubmittedKyc;
 use App\Models\TempFile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FileUploadController extends Controller
 {
@@ -70,5 +72,62 @@ class FileUploadController extends Controller
             case 'dm':
                 return dm();
         }
+    }
+
+    /**
+     * Deletes a KYC file based on the provided request parameters.
+     *
+     * @param Request $request The request containing the file path, ID, and key.
+     * @return void
+     */
+    public function kycFileDelete(Request $request)
+    {
+        $file_path = $request->get('url') ? decrypt($request->get('url')) : null;
+        $id = $request->get('id') ? decrypt($request->get('id')) : null;
+        $key = $request->get('key') ?? null;
+
+        if ($file_path) {
+            $acc_file_path = $file_path;
+
+            if (!Str::startsWith($acc_file_path, 'public/')) {
+                $file_path = 'public/' . $acc_file_path;
+            }
+        }
+        if ($file_path != null) {
+            if (Storage::exists($file_path)) {
+                Storage::delete($file_path);
+            }
+            if ($id != null && $key != null) {
+                $sp = SubmittedKyc::findOrFail($id);
+                $submitted_data = json_decode($sp->submitted_data, true);
+                if (isset($submitted_data[$key])) {
+                    if (is_array($submitted_data)) {
+                        $array = $submitted_data[$key];
+                        $index = array_search($acc_file_path, $array);
+                        unset($array[$index]);
+                        $submitted_data[$key] = $array;
+                    } else {
+                        unset($submitted_data[$key]);
+                    }
+                    $sp->submitted_data = json_encode($submitted_data);
+                    $sp->save();
+                }
+            }
+        } else {
+            if ($id != null && $key != null) {
+                $kyc = SubmittedKyc::where('id', $id)->firstOrFail();
+                $submitted_data = json_decode($kyc->submitted_data, true);
+                if (isset($submitted_data[$key])) {
+                    if (Storage::exists('public/' . $submitted_data[$key])) {
+                        Storage::delete('public/' . $submitted_data[$key]);
+                    }
+                    unset($submitted_data[$key]);
+                    $kyc->submitted_data = json_encode($submitted_data);
+                    $kyc->save();
+                }
+            }
+        }
+        flash()->addSuccess('File deleted successfully.');
+        return redirect()->back();
     }
 }

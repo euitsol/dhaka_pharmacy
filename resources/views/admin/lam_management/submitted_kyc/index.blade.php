@@ -1,15 +1,15 @@
-@extends('admin.layouts.master', ['pageSlug' => 'lam_kyc_list'])
-@section('title', 'Local Area Manager KYC List')
+@extends('admin.layouts.master', ['pageSlug' => 'lams_kyc_list'])
+@section('title', 'Submitted KYC List')
 @section('content')
     <div class="row">
-        @forelse ($datas as $groupDatas)
+        @forelse ($submitted_kyc as $kyc_group)
             <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-8">
                                 <h4 class="card-title">
-                                    {{ __('Local Area Manager ' . ($groupDatas[0]['status'] === 1 ? 'Accepted' : ($groupDatas[0]['status'] === 0 ? 'Pending' : 'Declined')) . ' KYC') }}
+                                    {{ __('Submitted ' . $kyc_group[0]->getStatus() . ' KYC List') }}
                                 </h4>
                             </div>
                         </div>
@@ -29,25 +29,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($groupDatas as $data)
+                                @foreach ($kyc_group as $kyc)
                                     <tr>
                                         <td> {{ $loop->iteration }} </td>
-                                        <td> {{ c_user_name($data->creater) }} </td>
-                                        <td> {{ strtoupper($data->type) }} </td>
+                                        <td> {{ c_user_name($kyc->creater) }} </td>
+                                        <td> {{ ucfirst($kyc->type) }} </td>
                                         <td>
-                                            <span
-                                                class="badge {{ $data->status === 1 ? 'badge-success' : ($data->status === 0 ? 'badge-info' : 'badge-warning') }}">{{ $data->status === 1 ? 'Accepted' : ($data->status === 0 ? 'Pending' : 'Declined') }}</span>
+                                            <span class="{{ $kyc->getStatusBadgeClass() }}">{{ $kyc->getStatus() }}</span>
                                         </td>
-                                        <td>{{ timeFormate($data->created_at) }}</td>
+                                        <td>{{ timeFormate($kyc->created_at) }}</td>
 
-                                        <td> {{ c_user_name($data->creater) }} </td>
+                                        <td> {{ c_user_name($kyc->creater) }} </td>
                                         <td>
                                             @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
                                                     [
                                                         'routeName' =>
-                                                            'lam_management.lam_kyc.kyc_list.local_area_manager_kyc_details',
-                                                        'params' => [$data->id],
+                                                            'lam_management.lam_kyc.submitted_kyc.lams_kyc_details',
+                                                        'params' => [$kyc->id],
                                                         'label' => 'View Details',
                                                     ],
                                                 ],
@@ -71,12 +70,11 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-8">
-                                <h4 class="card-title">{{ __('Local Area Manager KYC List') }}</h4>
+                                <h4 class="card-title">{{ __('Submitted KYC List') }}</h4>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-
                         <table class="table table-striped datatable">
                             <thead>
                                 <tr>

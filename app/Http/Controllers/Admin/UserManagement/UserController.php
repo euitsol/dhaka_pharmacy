@@ -44,8 +44,7 @@ class UserController extends Controller
     {
         $data['user'] = User::with(['creater', 'updater'])->findOrFail($id);
         $user_class = get_class($data['user']);
-        $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $user_class)->first();
-        $data['kyc_setting'] = KycSetting::where('type', 'user')->first();
+        $data['submitted_kyc'] = SubmittedKyc::with('kyc')->where('creater_id', $id)->where('creater_type', $user_class)->first();
         $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od')->where('customer_id', $id)->where('customer_type', $user_class)->latest()->get()->each(function (&$order) {
             $this->calculateOrderTotalDiscountPrice($order);
         });

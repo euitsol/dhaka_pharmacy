@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             ProductCategorySeeder::class,
             ProductSubCategorySeeder::class,
             MedicineSeeder::class,
+            MedicineUnitBkdnSeeder::class,
             PushNtSeeder::class,
             PushNotificationSeeder::class,
             SslCommerzSeeder::class,

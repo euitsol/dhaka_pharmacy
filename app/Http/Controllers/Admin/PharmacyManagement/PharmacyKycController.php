@@ -23,7 +23,7 @@ class PharmacyKycController extends Controller
 
     public function index(): View
     {
-        $s['submitted_kyc'] = SubmittedKyc::with('creater')->where('type', 'pharmacy')->orderBy('status')->get()->groupBy('status');
+        $s['submitted_kyc'] = SubmittedKyc::with('creater')->where('type', 'pharmacy')->orderBy('status')->latest()->get()->groupBy('status');
         return view('admin.pharmacy_management.submitted_kyc.index', $s);
     }
     public function details($id): View

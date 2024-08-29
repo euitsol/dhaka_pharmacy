@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\PharmacyManagement;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\DetailsCommonDataTrait;
 use App\Models\Documentation;
 use App\Models\KycSetting;
 use Illuminate\Support\Str;
@@ -14,80 +15,85 @@ use Illuminate\View\View;
 
 class PharmacyKycSettingsController extends Controller
 {
-     public function __construct() {
+    use DetailsCommonDataTrait;
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
 
-    public function list():View
+    // public function history(): JsonResponse
+    // {
+    //     $data['kycs'] = KycSetting::where('type', 'pharmacy')->orderBy('status', 'desc')->latest()->get()
+    //         ->each(function (&$kyc) {
+    //             $kyc->encrypted_id = encrypt($kyc->id);
+    //             $kyc->statusBg = $kyc->getStatusBadgeClass();
+    //             $kyc->statusTitle = $kyc->getStatus();
+    //             $kyc->type = Str::ucfirst($kyc->type);
+    //             $this->simpleColumnData($kyc);
+    //         });
+    //     return response()->json($data);
+    // }
+    public function create(): View
     {
-        $data['kycs'] = KycSetting::where('type','pharmacy')->orderBy('status','desc')->latest()->get()->groupBy('status');
-        return view('admin.pharmacy_management.kyc_settings.list',$data);
+        $data['document'] = Documentation::where('module_key', 'pharmacy_kyc_settings')->first();
+        $data['kycs'] = KycSetting::where('type', 'pharmacy')->latest()->get();
+        $data['kyc_setting'] = $data['kycs']->where('status', 1)->first();
+        return view('admin.pharmacy_management.kyc_settings.create', $data);
     }
-    public function create():View
+    public function store(Request $request): RedirectResponse
     {
-        $data['document'] = Documentation::where('module_key','pharmacy_kyc_settings')->first();
-        return view('admin.pharmacy_management.kyc_settings.create',$data);
-    }
-    public function store(Request $request):RedirectResponse
-    {
-        if(is_null($request->formdata)){
+        if (is_null($request->formdata)) {
             flash()->addWarning('Please add KYC requirements.');
             return redirect()->back();
         }
         $data = $this->prepareKycData($request);
-        if(isset($request->status) &&  $request->status == 1){
-            KycSetting::activated()->where('type','pharmacy')->update(['status'=>0,'updated_by'=>admin()->id]);
-        }
+        KycSetting::activated()->where('type', 'pharmacy')->update(['status' => 0, 'updated_by' => admin()->id]);
         KycSetting::create(
             [
                 'type' => 'pharmacy',
-                'status' => $request->status ?? 0,
-                'form_data' => json_encode($data,JSON_FORCE_OBJECT),
+                'status' => 1,
+                'form_data' => json_encode($data, JSON_FORCE_OBJECT),
                 'created_by' => admin()->id,
             ]
         );
         flash()->addSuccess('New KYC created successfully.');
         return redirect()->route('pm.pharmacy_kyc.settings.p_kyc_list');
     }
-    public function status($id):RedirectResponse
-    {
-        $kyc = KycSetting::findOrFail(decrypt($id));
-        if($kyc->status == 1){
-            $kyc->update(['status'=>0,'updated_by'=>admin()->id]);
-            flash()->addSuccess('KYC deactivated successfully.');
-        }else{
-            KycSetting::activated()->where('type','pharmacy')->update(['status'=>0,'updated_by'=>admin()->id]);
-            $kyc->update(['status'=>1,'updated_by'=>admin()->id]);
-            flash()->addSuccess('KYC activated successfully.');
-        }
-        return redirect()->route('pm.pharmacy_kyc.settings.p_kyc_list');
-    }
-    public function details($id):View
+    // public function status($id): RedirectResponse
+    // {
+    //     $kyc = KycSetting::findOrFail(decrypt($id));
+    //     KycSetting::activated()->where('type', 'pharmacy')->where('status', 1)->update(['status' => 0, 'updated_by' => admin()->id]);
+    //     $kyc->update(['status' => 1, 'updated_by' => admin()->id]);
+
+    //     flash()->addSuccess('KYC activated successfully.');
+    //     return redirect()->route('pm.pharmacy_kyc.settings.p_kyc_list');
+    // }
+    public function details($id): View
     {
         $data['kyc'] = KycSetting::findOrFail(decrypt($id));
-        return view('admin.pharmacy_management.kyc_settings.details',$data);
+        return view('admin.pharmacy_management.kyc_settings.details', $data);
     }
-    
-    private function prepareKycData(Request $request):array
+
+    private function prepareKycData(Request $request): array
     {
         $data = [];
-        if(!is_null($request->formdata)){
-            foreach($request->formdata as $key => $formdata) {
-                if(isset($formdata['field_name'])) {
+        if (!is_null($request->formdata)) {
+            foreach ($request->formdata as $key => $formdata) {
+                if (isset($formdata['field_name'])) {
                     $data[$key]['field_key'] = Str::slug($formdata['field_name']);
                     $data[$key]['field_name'] = $formdata['field_name'];
                     $data[$key]['type'] = $formdata['type'];
                     $data[$key]['required'] = $formdata['required'];
-        
-                    if($formdata['type'] == 'option') {
+
+                    if ($formdata['type'] == 'option') {
                         $data[$key]['option_data']  = $this->convertOptionDataToArray($formdata['option_data']) ?? [];
                     }
                 }
             }
         }
         return $data;
-    } 
-    private function convertOptionDataToArray($optionData):array
+    }
+    private function convertOptionDataToArray($optionData): array
     {
         $optionsArray = [];
         $options = explode(';', $optionData);

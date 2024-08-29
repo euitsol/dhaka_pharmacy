@@ -35,6 +35,13 @@
             width: auto;
         }
     </style>
+    @if (!empty($kyc->p_submitted_kyc) && $kyc->p_submitted_kyc->status != -1)
+        <style>
+            .imagePreviewDiv a {
+                display: none;
+            }
+        </style>
+    @endif
 @endpush
 
 @php
@@ -42,7 +49,7 @@
 @endphp
 @section('content')
     <div class="row">
-        <div class="{{ !empty($submitted_kyc) && $submitted_kyc->status == -1 ? 'col-8' : 'col-12' }}">
+        <div class="{{ empty($submitted_kyc) || $submitted_kyc->status == -1 ? 'col-8' : 'col-12' }}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -159,7 +166,7 @@
                                                 @if (isset($submitted_kyc->submitted_data) &&
                                                         isset(json_decode($submitted_kyc->submitted_data)->$a) &&
                                                         !empty(json_decode($submitted_kyc->submitted_data))) data-existing-files="{{ storage_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
-                                        data-delete-url="{{ route('pharmacy.kyc.file.delete', [$kyc->id, $a]) }}" @endif>
+                                        data-delete-url="{{ route('kyc.file.delete', ['id' => encrypt($submitted_kyc->id), 'key' => $a]) }}" @endif>
                                             @include('alerts.feedback', ['field' => $fd->field_key])
                                         </div>
                                     @elseif($fd->type == 'image_multiple')
@@ -172,10 +179,10 @@
                                                 if (!empty($data)) {
                                                     $itemCount = count($data);
                                                     foreach ($data as $index => $url) {
-                                                        $result .= route('pharmacy.kyc.file.delete', [
-                                                            $kyc->id,
-                                                            $a,
-                                                            base64_encode($url),
+                                                        $result .= route('kyc.file.delete', [
+                                                            'id' => encrypt($submitted_kyc->id),
+                                                            'key' => $a,
+                                                            'url' => encrypt($url),
                                                         ]);
                                                         if ($index === $itemCount - 1) {
                                                             $result .= '';
@@ -248,7 +255,10 @@
                                                                 disabled>
                                                             @if (!$disabled)
                                                                 <a
-                                                                    href="{{ route('pharmacy.kyc.file.delete', [$kyc->id, $a]) }}">
+                                                                    href="{{ route('kyc.file.delete', [
+                                                                        'id' => encrypt($submitted_kyc->id),
+                                                                        'key' => $a,
+                                                                    ]) }}">
                                                                     <span class="input-group-text text-danger h-100"><i
                                                                             class="tim-icons icon-trash-simple"></i></span>
                                                                 </a>
@@ -327,7 +337,11 @@
                                                                     value="{{ file_title_from_url($url) }}">
                                                                 @if (!$disabled)
                                                                     <a
-                                                                        href="{{ route('pharmacy.kyc.file.delete', [$kyc->id, $a, base64_encode($url)]) }}">
+                                                                        href="{{ route('kyc.file.delete', [
+                                                                            'id' => encrypt($submitted_kyc->id),
+                                                                            'key' => $a,
+                                                                            'url' => encrypt($url),
+                                                                        ]) }}">
                                                                         <span class="input-group-text text-danger h-100"><i
                                                                                 class="tim-icons icon-trash-simple"></i></span>
                                                                     </a>
@@ -395,7 +409,7 @@
 
             </div>
         </div>
-        @if (!empty($submitted_kyc) && $submitted_kyc->status == -1)
+        @if (empty($submitted_kyc) || $submitted_kyc->status == -1)
             <div class="col-md-4">
                 <div class="card card-user">
                     <div class="card-body">
@@ -465,9 +479,10 @@
                                 alert("File uploaded successfully.");
 
                                 let url = (
-                                    "{{ route('pharmacy.kyc.file.delete', ['url']) }}"
+                                    "{{ route('kyc.file.delete', ['url' => '_url']) }}"
                                 );
-                                let _url = url.replace('url', response.url);
+                                let _url = url.replace('_url', response
+                                    .url);
                                 if (isMultiple) {
                                     var file = `<div class="form-group">
                                                 <label>{{ _('Uploded file - ${count}') }}</label>
@@ -525,6 +540,26 @@
 
                 $(document).on("click", ".delete_file", function(e) {
                     e.preventDefault();
+
+
+                    let url = $(this).parent().attr('href');
+                    let this_ = $(this);
+
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            this_.closest('.show_file').siblings(
+                                '.input-group').find('.fileInput').val('')
+                            this_.closest('.form-group').remove();
+                            toastr.success(data.message);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching admin data:', error);
+                        }
+                    });
+
                 });
             });
         });

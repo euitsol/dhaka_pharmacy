@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AddToCart;
+use App\Models\SubmittedKyc;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;

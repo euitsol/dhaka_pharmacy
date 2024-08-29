@@ -14,57 +14,61 @@ use Illuminate\Support\Str;
 
 class RiderKycSettingsController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
-
-
-    public function kycSettings():View
+    public function create(): View
     {
-        $data['kyc_setting'] = KycSetting::where('type','rider')->first();
-        $data['document'] = Documentation::where('module_key','rider_kyc_settings')->first();
-        return view('admin.rider_management.kyc_settings.create',$data);
+        $data['document'] = Documentation::where('module_key', 'rider_kyc_settings')->first();
+        $data['kycs'] = KycSetting::where('type', 'rider')->latest()->get();
+        $data['kyc_setting'] = $data['kycs']->where('status', 1)->first();
+        return view('admin.rider_management.kyc_settings.create', $data);
     }
-
-    public function kycSettingsUpdate(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
+        if (is_null($request->formdata)) {
+            flash()->addWarning('Please add KYC requirements.');
+            return redirect()->back();
+        }
         $data = $this->prepareKycData($request);
-
-        $status = $request->status ?? 0;
-        KycSetting::updateOrCreate(
-            ['type' => 'rider'],
+        KycSetting::activated()->where('type', 'rider')->update(['status' => 0, 'updated_by' => admin()->id]);
+        KycSetting::create(
             [
-                'status' => $status,
-                'form_data' => json_encode($data),
+                'type' => 'rider',
+                'status' => 1,
+                'form_data' => json_encode($data, JSON_FORCE_OBJECT),
+                'created_by' => admin()->id,
             ]
         );
-        flash()->addSuccess('KYC settings updated successfully.');
-        return redirect()->route('rm.rider_kyc.rider_kyc_settings');
+        flash()->addSuccess('New KYC created successfully.');
+        return redirect()->route('rm.rider_kyc.settings.r_kyc_list');
     }
-    
+    public function details($id): View
+    {
+        $data['kyc'] = KycSetting::findOrFail(decrypt($id));
+        return view('admin.rider_management.kyc_settings.details', $data);
+    }
+
     private function prepareKycData(Request $request): array
     {
         $data = [];
-        if(!is_null($request->formdata)){
-            foreach($request->formdata as $key => $formdata) {
-                if(isset($formdata['field_name'])) {
+        if (!is_null($request->formdata)) {
+            foreach ($request->formdata as $key => $formdata) {
+                if (isset($formdata['field_name'])) {
                     $data[$key]['field_key'] = Str::slug($formdata['field_name']);
                     $data[$key]['field_name'] = $formdata['field_name'];
                     $data[$key]['type'] = $formdata['type'];
                     $data[$key]['required'] = $formdata['required'];
-        
-                    if($formdata['type'] == 'option') {
+
+                    if ($formdata['type'] == 'option') {
                         $data[$key]['option_data']  = $this->convertOptionDataToArray($formdata['option_data']) ?? [];
                     }
                 }
             }
         }
-        
-    
         return $data;
-    } 
-
-
+    }
     private function convertOptionDataToArray($optionData): array
     {
         $optionsArray = [];
@@ -75,10 +79,9 @@ class RiderKycSettingsController extends Controller
             if (count($parts) === 2) {
                 $key = trim($parts[0]);
                 $value = trim($parts[1]);
-                $optionsArray[$key] = $value;
+                $optionsArray[strval($key)] = $value;
             }
         }
-
         return $optionsArray;
     }
 }

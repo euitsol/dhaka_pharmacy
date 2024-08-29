@@ -24,9 +24,7 @@ pharmacy_list,admin,Pharmacy
 pharmacy_create,admin,Pharmacy
 pharmacy_edit,admin,Pharmacy
 pharmacy_delete,admin,Pharmacy
-p_kyc_list,admin,"Pharmacy KYC Settings"
 p_kyc_create,admin,"Pharmacy KYC Settings"
-p_kyc_status,admin,"Pharmacy KYC Settings"
 p_kyc_details,admin,"Pharmacy KYC Settings"
 ps_kyc_list,admin,"Pharmacy KYC"
 ps_kyc_details,admin,"Pharmacy Submitted KYC"

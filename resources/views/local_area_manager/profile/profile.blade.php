@@ -146,6 +146,11 @@
                                         <input type="file" accept=".pdf" class="form-control" name="cv">
                                         @include('alerts.feedback', ['field' => 'cv'])
                                     </div>
+                                    @if (!empty($lam->cv))
+                                        <a class="btn btn-primary" target="_blank"
+                                            href="{{ route('lam.profile.cv.download', base64_encode($lam->cv)) }}"><i
+                                                class="fa-solid fa-download"></i></a>
+                                    @endif
                                 </div>
 
 

@@ -13,26 +13,26 @@ class MedicineGenericSeeder extends Seeder
         GenericName::create([
             'name' => 'Paracetamol',
             'slug' => 'paracetamol',
-            ]);
+        ]);
         GenericName::create([
             'name' => 'FLUOXETINE',
             'slug' => 'FLUOXETINE',
-            ]);
+        ]);
         GenericName::create([
             'name' => 'SODIUM VALPROATE+VALPORIC ACID',
             'slug' => 'SODIUM-VALPROATE+VALPORIC-ACID',
-            ]);
+        ]);
         GenericName::create([
             'name' => 'MIDAZOLAM',
             'slug' => 'MIDAZOLAM',
-            ]);
+        ]);
         GenericName::create([
             'name' => 'LUBRICATING',
             'slug' => 'LUBRICATING',
-            ]);
+        ]);
         GenericName::create([
             'name' => 'ARIPIPRAZOLE',
             'slug' => 'ARIPIPRAZOLE',
-            ]);
+        ]);
     }
 }

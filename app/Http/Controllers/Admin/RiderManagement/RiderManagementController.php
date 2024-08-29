@@ -55,8 +55,7 @@ class RiderManagementController extends Controller
     {
         $data['rider'] = Rider::with(['creater', 'odrs.od.order.address', 'operation_area', 'operation_sub_area', 'updater'])->findOrFail($id);
         $rider_class = get_class($data['rider']);
-        $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $rider_class)->first();
-        $data['kyc_setting'] = KycSetting::where('type', 'rider')->first();
+        $data['submitted_kyc'] = SubmittedKyc::with('kyc')->where('creater_id', $id)->where('creater_type', $rider_class)->first();
         $data['earnings'] = Earning::with(['receiver', 'order', 'point_history', 'withdraw_earning.withdraw.withdraw_method'])
             ->where('receiver_id', $id)->where('receiver_type', $rider_class)->get();
         $data['dors'] = $data['rider']->odrs()->orderBy('priority', 'desc')->latest()->get();

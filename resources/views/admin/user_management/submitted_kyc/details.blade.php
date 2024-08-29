@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'rs_kyc_list'])
+@extends('admin.layouts.master', ['pageSlug' => 'us_kyc_list'])
 @section('title', c_user_name($submitted_kyc->creater) . ' KYC Details')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
@@ -14,7 +14,7 @@
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'rm.rider_kyc.submitted_kyc.rs_kyc_list',
+                                'routeName' => 'um.user_kyc.submitted_kyc.us_kyc_list',
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
                             ])
@@ -123,7 +123,7 @@
                                                     </div>
                                                 @else
                                                     <a class="btn btn-info btn-sm"
-                                                        href="{{ route('rm.rider_kyc.submitted_kyc.download.rs_kyc_details', base64_encode($save_datas[$form_data['field_key']])) }}"><i
+                                                        href="{{ route('um.user_kyc.submitted_kyc.download.us_kyc_details', base64_encode($save_datas[$form_data['field_key']])) }}"><i
                                                             class="fa-regular fa-circle-down"></i></a>
                                                 @endif
                                             @endif
@@ -149,7 +149,7 @@
                                                         </div>
                                                     @else
                                                         <a class="btn btn-info btn-sm"
-                                                            href="{{ route('rm.rider_kyc.submitted_kyc.download.rs_kyc_details', base64_encode($file)) }}"><i
+                                                            href="{{ route('um.user_kyc.submitted_kyc.download.us_kyc_details', base64_encode($file)) }}"><i
                                                                 class="fa-regular fa-circle-down"></i></a>
                                                     @endif
                                                 @endforeach
@@ -214,7 +214,7 @@
                 <div class="card-footer">
                     <div class="status_button text-end">
                         @if ($submitted_kyc->status === 0)
-                            <a href="{{ route('rm.rider_kyc.submitted_kyc.accept.rs_kyc_status', $submitted_kyc->id) }}"
+                            <a href="{{ route('um.user_kyc.submitted_kyc.accept.us_kyc_status', $submitted_kyc->id) }}"
                                 class="btn btn-sm btn-success">{{ __('Accept') }}</a>
                             <a href="javascript:void(0)" data-id="{{ $submitted_kyc->id }}"
                                 class="btn btn-sm btn-warning declined">{{ __('Decline') }}</a>
@@ -284,7 +284,7 @@
                 var form = $('#declined_form');
                 let id = $(this).data('id');
                 let _url = (
-                    "{{ route('rm.rider_kyc.submitted_kyc.declined.rs_kyc_status', ['_id']) }}");
+                    "{{ route('um.user_kyc.submitted_kyc.declined.us_kyc_status', ['_id']) }}");
                 let __url = _url.replace('_id', id);
                 $.ajax({
                     type: 'PUT',

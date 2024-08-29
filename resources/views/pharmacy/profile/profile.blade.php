@@ -160,38 +160,6 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h5 class="title">{{ __('Password') }}</h5>
-            </div>
-            <form method="POST" action="{{ route('pharmacy.profile.update.password') }}" autocomplete="off"
-                enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="card-body">
-                    <div class="form-group">
-                        <label>{{ __('Current Password') }}</label>
-                        <input type="password" name="old_password" class="form-control" placeholder="Current Password">
-                        @include('alerts.feedback', ['field' => 'old_password'])
-                    </div>
-                    <div class="form-group">
-                        <label>{{ __('New Password') }}</label>
-                        <input type="password" name="password" class="form-control" placeholder="New Password">
-                        @include('alerts.feedback', ['field' => 'password'])
-
-                    </div>
-                    <div class="form-group">
-                        <label>{{ __('Confirm New Password') }}</label>
-                        <input type="password" name="password_confirmation" class="form-control"
-                            placeholder="Confirm New Password">
-                    </div>
-                </div>
-                <div class="card-footer float-end">
-                    <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
-                </div>
-            </form>
-        </div>
-
-        <div class="card">
-            <div class="card-header">
                 <h5 class="title">{{ __('My Location') }}</h5>
             </div>
             <form method="POST" action="{{ route('pharmacy.profile.address') }}" autocomplete="off">
@@ -240,6 +208,37 @@
                 </div>
                 <div class="card-footer float-end">
                     <button type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
+                </div>
+            </form>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">{{ __('Password') }}</h5>
+            </div>
+            <form method="POST" action="{{ route('pharmacy.profile.update.password') }}" autocomplete="off"
+                enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>{{ __('Current Password') }}</label>
+                        <input type="password" name="old_password" class="form-control" placeholder="Current Password">
+                        @include('alerts.feedback', ['field' => 'old_password'])
+                    </div>
+                    <div class="form-group">
+                        <label>{{ __('New Password') }}</label>
+                        <input type="password" name="password" class="form-control" placeholder="New Password">
+                        @include('alerts.feedback', ['field' => 'password'])
+
+                    </div>
+                    <div class="form-group">
+                        <label>{{ __('Confirm New Password') }}</label>
+                        <input type="password" name="password_confirmation" class="form-control"
+                            placeholder="Confirm New Password">
+                    </div>
+                </div>
+                <div class="card-footer float-end">
+                    <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
                 </div>
             </form>
         </div>

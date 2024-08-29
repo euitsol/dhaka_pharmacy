@@ -17,21 +17,23 @@ class UserSeeder extends Seeder
     {
 
         // Create Users
-       User::create([
+        User::create([
             'name' => 'User1',
             'phone' => '01711122231',
+            'is_verify' => 1,
             'password' => Hash::make('01711122231'),
         ]);
-       User::create([
+        User::create([
             'name' => 'User2',
             'phone' => '01711122232',
+            'is_verify' => 1,
             'password' => Hash::make('01711122232'),
         ]);
-       User::create([
+        User::create([
             'name' => 'User3',
             'phone' => '01711122233',
+            'is_verify' => 1,
             'password' => Hash::make('01711122233'),
         ]);
-
     }
 }

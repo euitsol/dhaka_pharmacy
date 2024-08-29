@@ -30,7 +30,7 @@
                     $pageSlug == 'dispute_orders' ||
                         $pageSlug == 'assigned_orders' ||
                         $pageSlug == 'picking-up_orders' ||
-                        $pageSlug == 'picked-up_orders' ||
+                        $pageSlug == 'picked_up_orders' ||
                         $pageSlug == 'delivered_orders' ||
                         $pageSlug == 'delivering_orders') @else collapsed @endif" data-toggle="collapse"
                     href="#order_managements"
@@ -38,7 +38,7 @@
                         $pageSlug == 'dispute_orders' ||
                             $pageSlug == 'assigned_orders' ||
                             $pageSlug == 'picking-up_orders' ||
-                            $pageSlug == 'picked-up_orders' ||
+                            $pageSlug == 'picked_up_orders' ||
                             $pageSlug == 'delivered_orders' ||
                             $pageSlug == 'delivering_orders') aria-expanded="true" @else aria-expanded="false" @endif>
                     <i class="fa-solid fa-network-wired"></i>
@@ -49,7 +49,7 @@
                     $pageSlug == 'dispute_orders' ||
                         $pageSlug == 'assigned_orders' ||
                         $pageSlug == 'picking-up_orders' ||
-                        $pageSlug == 'picked-up_orders' ||
+                        $pageSlug == 'picked_up_orders' ||
                         $pageSlug == 'delivered_orders' ||
                         $pageSlug == 'delivering_orders') show @endif" id="order_managements">
                     <ul class="nav pl-2">
@@ -60,10 +60,10 @@
                                 <p>{{ 'Assigned Orders' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'picked-up_orders') class="active" @endif>
+                        <li @if ($pageSlug == 'picked_up_orders') class="active" @endif>
                             <a href="{{ route('rider.order_management.index', 'picked-up') }}">
                                 <i
-                                    class="fa-solid fa-minus @if ($pageSlug == 'picked-up_orders') fa-beat-fade @endif"></i>
+                                    class="fa-solid fa-minus @if ($pageSlug == 'picked_up_orders') fa-beat-fade @endif"></i>
                                 <p>{{ 'Picked Up Orders' }}</p>
                             </a>
                         </li>
@@ -74,10 +74,10 @@
                                 <p>{{ 'Picking Up' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'picked-up_orders') class="active" @endif>
+                        <li @if ($pageSlug == 'picked_up_orders') class="active" @endif>
                             <a href="{{ route('rider.order_management.index', 'picked-up') }}">
                                 <i
-                                    class="fa-solid fa-minus @if ($pageSlug == 'picked-up_orders') fa-beat-fade @endif"></i>
+                                    class="fa-solid fa-minus @if ($pageSlug == 'picked_up_orders') fa-beat-fade @endif"></i>
                                 <p>{{ 'Picked Up' }}</p>
                             </a>
                         </li>

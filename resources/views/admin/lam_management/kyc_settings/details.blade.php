@@ -1,5 +1,5 @@
-@extends('admin.layouts.master', ['pageSlug' => 'p_kyc_settings'])
-@section('title', 'Pharmacy KYC Details')
+@extends('admin.layouts.master', ['pageSlug' => 'lam_kyc_settings'])
+@section('title', 'Local Area Manager KYC Details')
 @section('content')
     <div class="row px-3">
         <div class="col-md-12">
@@ -7,11 +7,11 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Pharmacy KYC Details') }}</h4>
+                            <h4 class="card-title">{{ __('Local Area Manager KYC Details') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'pm.pharmacy_kyc.settings.p_kyc_create',
+                                'routeName' => 'lam_management.lam_kyc.settings.lam_kyc_create',
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
                             ])
@@ -66,12 +66,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-                <div class="card-footer text-end">
-                    {{-- @if ($kyc->status == 0)
-                        <a href="{{ route('pm.pharmacy_kyc.settings.p_kyc_status', encrypt($kyc->id)) }}"
-                            class="btn {{ $kyc->getStatusClass() }}">{{ $kyc->getBtnStatus() }}</a>
-                    @endif --}}
                 </div>
             </div>
         </div>

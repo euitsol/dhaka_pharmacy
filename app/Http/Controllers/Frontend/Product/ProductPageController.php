@@ -30,17 +30,16 @@ class ProductPageController extends Controller
 
         $sub_cat_query = ProductSubCategory::with(['pro_cat'])->activated();
 
-        $query->when(($category_slug !== 'all' && !empty($category_slug)), fn ($q) => $q->whereHas('pro_cat', fn ($qs) => $qs->where('slug', $category_slug)));
+        $query->when(($category_slug !== 'all' && !empty($category_slug)), fn($q) => $q->whereHas('pro_cat', fn($qs) => $qs->where('slug', $category_slug)));
 
-        $query->when(($sub_category_slug !== null), fn ($q) => $q->whereHas('pro_sub_cat', fn ($qs) => $qs->where('slug', $sub_category_slug)));
+        $query->when(($sub_category_slug !== null), fn($q) => $q->whereHas('pro_sub_cat', fn($qs) => $qs->where('slug', $sub_category_slug)));
 
-        $query->when(($offset !== null), fn ($q) => $q->offset($offset)->limit(1));
+        $query->when(($offset !== null), fn($q) => $q->offset($offset)->limit(12));
 
-        $sub_cat_query->when(($category_slug !== 'all' && !empty($category_slug)), fn ($q) => $q->whereHas('pro_cat', fn ($qs) => $qs->where('slug', $category_slug)));
+        $sub_cat_query->when(($category_slug !== 'all' && !empty($category_slug)), fn($q) => $q->whereHas('pro_cat', fn($qs) => $qs->where('slug', $category_slug)));
 
-        $data['products'] = $query->limit(1)->get()->shuffle()->each(function ($product) {
+        $data['products'] = $query->limit(12)->get()->shuffle()->each(function ($product) {
             $product = $this->transformProduct($product, 25);
-            // $product->units = $this->getSortedUnits($product->unit);
             return $product;
         });
         if ($category_slug !== 'all') {
