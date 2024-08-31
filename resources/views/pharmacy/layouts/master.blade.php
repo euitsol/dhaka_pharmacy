@@ -42,6 +42,14 @@
             <div class="main-panel">
                 @include('pharmacy.partials.navbars.navbar')
                 <div class="content">
+                    @if (pharmacy()->is_verify == 0 && $pageSlug != 'email_verify')
+                        <div
+                            class="email_verify_alert alert alert-danger py-2 d-flex justify-content-between align-items-center">
+                            <span>{{ __('Verify your email to avoid account restrictions.') }}</span> <a
+                                href="{{ route('pharmacy.email.send.otp') }}"
+                                class="btn btn-primary btn-sm">{{ __('Verify') }}</a>
+                        </div>
+                    @endif
                     @yield('content')
                 </div>
                 @include('pharmacy.partials.footer')

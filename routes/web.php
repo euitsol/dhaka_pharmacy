@@ -111,6 +111,7 @@ use App\Http\Controllers\Frontend\PrivacyPolicyPageController;
 use App\Http\Controllers\Frontend\TermsAndConditionsPageController;
 use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
 use App\Http\Controllers\LAM\WithdrawMethodController as LamWithdrawMethodController;
+use App\Http\Controllers\Pharmacy\Auth\EmailVerificationController as PharmacyEmailVerificationController;
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
 use App\Http\Controllers\Pharmacy\WithdrawMethodController as PharmacyWithdrawMethodController;
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
@@ -705,8 +706,6 @@ Route::get('/kyc/file/delete', [FileUploadController::class, 'kycFileDelete'])->
 // Pharmacy Auth Routes
 Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'pharmacy'], function () {
     Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('profile');
-
-
     Route::get('/dashboard', [PharmacyDashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::controller(PharmacyKycVerificationController::class)->prefix('kyc')->name('kyc.')->group(function () {
@@ -714,6 +713,12 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
         Route::get('/verification', 'kyc_verification')->name('verification');
         Route::post('/file/upload', 'file_upload')->name('file.upload');
         // Route::get('/file/delete', 'delete')->name('file.delete');
+    });
+
+    Route::controller(PharmacyEmailVerificationController::class)->prefix('email')->name('email.')->group(function () {
+        Route::get('/send-otp', 'send_otp')->name('send.otp');
+        Route::get('/verification', 'index')->name('verify');
+        Route::post('/verification', 'verify')->name('verify');
     });
 
     Route::controller(PharmacyProfileController::class)->prefix('profile')->name('profile.')->group(function () {
