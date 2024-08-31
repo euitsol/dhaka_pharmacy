@@ -64,11 +64,11 @@
                                                 <option selected hidden value=" ">
                                                     {{ __('Select Identification Type') }}
                                                 </option>
-                                                <option value="TIN"
-                                                    {{ $pharmacy->identification_type == 'TIN' ? 'selected' : '' }}>
+                                                <option value="1"
+                                                    {{ $pharmacy->identification_type == 1 ? 'selected' : '' }}>
                                                     {{ __('TIN Certificate') }}</option>
-                                                <option value="Trade"
-                                                    {{ $pharmacy->identification_type == 'Trade' ? 'selected' : '' }}>
+                                                <option value="2"
+                                                    {{ $pharmacy->identification_type == 2 ? 'selected' : '' }}>
                                                     {{ __('Trade License') }}</option>
                                             </select>
                                             @include('alerts.feedback', ['field' => 'identification_type'])
@@ -94,12 +94,18 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-4">
-                                    <label>{{ __('Identification NO') }}</label>
-                                    <input type="text" name="identification_no" id="identification_no"
-                                        value="{{ $pharmacy->identification_no ? $pharmacy->identification_no : old('identification_no') }}"
-                                        class="form-control" placeholder="Enter identification number">
-                                    @include('alerts.feedback', ['field' => 'identification_no'])
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{ __('Identifucatuion Document') }}</label>
+                                        <input type="file" accept=".pdf" class="form-control"
+                                            name="identification_file">
+                                        @include('alerts.feedback', ['field' => 'identification_file'])
+                                    </div>
+                                    @if (!empty($pharmacy->identification_file))
+                                        <a class="btn btn-primary" target="_blank"
+                                            href="{{ route('pharmacy.profile.file.download', base64_encode($pharmacy->identification_file)) }}"><i
+                                                class="fa-solid fa-download"></i></a>
+                                    @endif
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operational Area') }}</label>

@@ -21,6 +21,14 @@ class Pharmacy extends AuthenticateBaseModel
         'password' => 'hashed',
     ];
 
+    public function identificationType()
+    {
+        if ($this->identificationType == 1) {
+            return 'TIN Certificate';
+        } elseif ($this->identificationType == 2) {
+            return 'Trade License';
+        }
+    }
     public function operation_area()
     {
         return $this->belongsTo(OperationArea::class, 'oa_id');
@@ -30,12 +38,14 @@ class Pharmacy extends AuthenticateBaseModel
         return $this->belongsTo(OperationSubArea::class, 'osa_id');
     }
 
-    public function odps(){
-        return $this->hasMany(OrderDistributionPharmacy::class,'pharmacy_id','id');
+    public function odps()
+    {
+        return $this->hasMany(OrderDistributionPharmacy::class, 'pharmacy_id', 'id');
     }
 
-    public function pharmacyDiscounts(){
-        return $this->hasMany(PharmacyDiscount::class,'pharmacy_id');
+    public function pharmacyDiscounts()
+    {
+        return $this->hasMany(PharmacyDiscount::class, 'pharmacy_id');
     }
 
     public function address()
