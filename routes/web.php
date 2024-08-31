@@ -780,7 +780,7 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
         Route::post('/update/image', 'updateImage')->name('update.image');
-        Route::get('cv/download/{url}', 'view_or_download')->name('cv.download');
+        Route::get('cv/download/{url}', 'view_or_download')->name('file.download');
     });
 
     //LAM Route
