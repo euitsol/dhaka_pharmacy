@@ -39,13 +39,13 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Pharmacy/Responsible Person Phone') }}</label>
+                                            <label>{{ __('Pharmacy / Responsible Person Phone') }}</label>
                                             <input type="text" name="phone" class="form-control"
                                                 placeholder="Enter Phone" value="{{ $pharmacy->phone }}">
                                             @include('alerts.feedback', ['field' => 'phone'])
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('PharmacyEmail') }}</label>
+                                            <label>{{ __('Pharmacy Email') }}</label>
                                             <input type="text" name="email" class="form-control"
                                                 placeholder="Enter Email" value="{{ $pharmacy->email }}">
                                             @include('alerts.feedback', ['field' => 'email'])
@@ -102,7 +102,7 @@
                                     @include('alerts.feedback', ['field' => 'identification_no'])
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Operation Area') }}</label>
+                                    <label>{{ __('Operational Area') }}</label>
                                     @if (empty($pharmacy->oa_id))
                                         <select name="oa_id" class="form-control operation_area">
                                             <option selected hidden value=" ">{{ __('Select Operation Area') }}
@@ -119,7 +119,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>{{ __('Operation Sub Area') }}</label>
+                                    <label>{{ __('Operational Sub Area') }}</label>
                                     @if (empty($pharmacy->osa_id))
                                         <select name="osa_id" class="form-control operation_sub_area" disabled>
                                             <option selected hidden value=" ">{{ __('Select Operation Sub Area') }}
@@ -130,16 +130,6 @@
                                         <input type="text" value="{{ $pharmacy->operation_sub_area->name }}"
                                             class="form-control" disabled>
                                     @endif
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label>{{ __('Present Address') }}</label>
-                                    <textarea name="present_address" class="form-control" placeholder="Enter present address">{{ $pharmacy->present_address ? $pharmacy->present_address : old('present_address') }}</textarea>
-                                    @include('alerts.feedback', ['field' => 'present_address'])
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label>{{ __('Permanent Address') }}</label>
-                                    <textarea name="permanent_address" class="form-control" placeholder="Enter permanent address">{{ $pharmacy->permanent_address ? $pharmacy->permanent_address : old('permanent_address') }}</textarea>
-                                    @include('alerts.feedback', ['field' => 'permanent_address'])
                                 </div>
                                 <div class="col-md-12">
                                     <button type="submit"
@@ -165,43 +155,50 @@
                     <input type="hidden" name="long" value="{{ optional($pharmacy->address)->longitude }}">
                     <div class="row mt-3">
                         <div class="form-group col-md-12">
-                            <label for="address">Full Address <small class="text-danger">*</small></label>
+                            <label for="address">{{ __('Full Address ') }}<small class="text-danger">*</small></label>
                             <input type="text" class="form-control mt-1" id="address" name="address"
-                                value="{{ optional($pharmacy->address)->address }}"
-                                placeholder="Enter your full address">
+                                value="{{ optional($pharmacy->address)->address }}" placeholder="Enter your full address"
+                                {{ isset($pharmacy->address) ? 'disabled' : '' }}>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="city">City <small class="text-danger">*</small></label>
+                            <label for="city">{{ __('City ') }}<small class="text-danger">*</small></label>
                             <input type="text" class="form-control mt-1" id="city" name="city"
-                                value="{{ optional($pharmacy->address)->city }}" placeholder="Enter your city name">
+                                value="{{ optional($pharmacy->address)->city }}" placeholder="Enter your city name"
+                                {{ isset($pharmacy->address) ? 'disabled' : '' }}>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="street">Street Name <small class="text-danger">*</small></label>
+                            <label for="street">{{ __('Street Name ') }}<small class="text-danger">*</small></label>
                             <input type="text" class="form-control mt-1" id="street" name="street"
                                 value="{{ optional($pharmacy->address)->street_address }}"
-                                placeholder="Enter your street name">
+                                placeholder="Enter your street name" {{ isset($pharmacy->address) ? 'disabled' : '' }}>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="apartment">Apartment Name <small class="text-danger">*</small></label>
+                            <label for="apartment">{{ __('Apartment Name ') }}<small
+                                    class="text-danger">*</small></label>
                             <input type="text" class="form-control mt-1" id="apartment" name="apartment"
                                 value="{{ optional($pharmacy->address)->apartment }}"
-                                placeholder="Enter your apartment name">
+                                placeholder="Enter your apartment name" {{ isset($pharmacy->address) ? 'disabled' : '' }}>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="floor">Floor <small class="text-danger">*</small></label>
+                            <label for="floor">{{ __('Floor ') }}<small class="text-danger">*</small></label>
                             <input type="text" class="form-control mt-1" id="floor" name="floor"
                                 value="{{ optional($pharmacy->address)->floor }}"
-                                placeholder="Enter your apartment floor">
+                                placeholder="Enter your apartment floor"
+                                {{ isset($pharmacy->address) ? 'disabled' : '' }}>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="instruction">Delivery Man Instruction <small>(optional)</small></label>
-                            <textarea type="text" class="form-control mt-1" id="instruction" name="instruction">{{ optional($pharmacy->address)->delivery_instruction }}</textarea>
+                            <label
+                                for="instruction">{{ __('Delivery Man Instruction ') }}<small>{{ __('(optional)') }}</small></label>
+                            <textarea type="text" class="form-control mt-1" id="instruction" name="instruction"
+                                {{ isset($pharmacy->address) ? 'disabled' : '' }}>{{ optional($pharmacy->address)->delivery_instruction }}</textarea>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer float-end">
-                    <button type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
-                </div>
+                @if (!isset($pharmacy->address))
+                    <div class="card-footer float-end">
+                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Update') }}</button>
+                    </div>
+                @endif
             </form>
         </div>
         <div class="card">
