@@ -13,16 +13,16 @@
                         <label>{{ _('Mailer') }}</label>
                         <select name="mail_mailer"
                             class="form-control  no-select  {{ $errors->has('mail_mailer') ? ' is-invalid' : '' }}">
-                            <option value="smtp" @if (isset($SiteSettings['mail_mailer']) && $SiteSettings['mail_mailer'] == 'smtp') selected @endif>SMTP
-                                Mailer</option>
+                            <option value="smtp" @if (isset($SiteSettings['mail_mailer']) && $SiteSettings['mail_mailer'] == 'smtp') selected @endif>
+                                {{ __('SMTP Mailer') }}</option>
                             <option value="sendmail" @if (isset($SiteSettings['mail_mailer']) && $SiteSettings['mail_mailer'] == 'sendmail') selected @endif>
-                                Sendmail Mailer</option>
+                                {{ __('Sendmail Mailer') }}</option>
                             <option value="mailgun" @if (isset($SiteSettings['mail_mailer']) && $SiteSettings['mail_mailer'] == 'mailgun') selected @endif>
-                                Mailgun Mailer</option>
+                                {{ __('Mailgun Mailer') }}</option>
                             <option value="ses" @if (isset($SiteSettings['mail_mailer']) && $SiteSettings['mail_mailer'] == 'ses') selected @endif>
-                                Amazon SES</option>
+                                {{ __('Amazon SES') }}</option>
                             <option value="postmark" @if (isset($SiteSettings['mail_mailer']) && $SiteSettings['mail_mailer'] == 'postmark') selected @endif>
-                                Postmark Mailer</option>
+                                {{ __('Postmark Mailer') }}</option>
                         </select>
                         @include('alerts.feedback', ['field' => 'mail_mailer'])
                     </div>
@@ -31,8 +31,7 @@
                         <label>{{ _('Host') }}</label>
                         <input type="text" name="mail_host"
                             class="form-control {{ $errors->has('mail_host') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Host') }}"
-                            value="{{ $SiteSettings['mail_host'] ?? '' }}">
+                            placeholder="{{ _('Host') }}" value="{{ $SiteSettings['mail_host'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'mail_host'])
                     </div>
 
@@ -40,8 +39,7 @@
                         <label>{{ _('Port') }}</label>
                         <input type="text" name="mail_port"
                             class="form-control {{ $errors->has('mail_port') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Port') }}"
-                            value="{{ $SiteSettings['mail_port'] ?? '' }}">
+                            placeholder="{{ _('Port') }}" value="{{ $SiteSettings['mail_port'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'mail_port'])
                     </div>
 
@@ -49,8 +47,8 @@
                         <label>{{ _('Mail Username') }}</label>
                         <input type="text" name="mail_username"
                             class="form-control{{ $errors->has('mail_username') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Username') }}"
-                            value="{{ $SiteSettings['mail_username'] ?? '' }}" autocomplete="off">
+                            placeholder="{{ _('Username') }}" value="{{ $SiteSettings['mail_username'] ?? '' }}"
+                            autocomplete="off">
                         @include('alerts.feedback', ['field' => 'mail_username'])
                     </div>
 
@@ -58,8 +56,8 @@
                         <label>{{ _('Mail Password') }}</label>
                         <input type="password" name="mail_password"
                             class="form-control{{ $errors->has('mail_password') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Mail Password') }}"
-                            value="{{ $SiteSettings['mail_password'] ?? '' }}" autocomplete="off">
+                            placeholder="{{ _('Mail Password') }}" value="{{ $SiteSettings['mail_password'] ?? '' }}"
+                            autocomplete="off">
                         @include('alerts.feedback', ['field' => 'mail_password'])
                     </div>
 
@@ -68,11 +66,14 @@
                         <label>{{ _('Mail Encription') }}</label>
                         <select name="mail_encription"
                             class="form-control  no-select {{ $errors->has('mail_encription') ? ' is-invalid' : '' }}">
-                            <option value="ssl" @if (isset($SiteSettings['mail_encription']) && $SiteSettings['mail_encription'] == 'ssl') selected @endif>SSL
+                            <option value="ssl" @if (isset($SiteSettings['mail_encription']) && $SiteSettings['mail_encription'] == 'ssl') selected @endif>
+                                {{ __('SSL') }}
                             </option>
-                            <option value="tls" @if (isset($SiteSettings['mail_encription']) && $SiteSettings['mail_encription'] == 'tls') selected @endif>TLS
+                            <option value="tls" @if (isset($SiteSettings['mail_encription']) && $SiteSettings['mail_encription'] == 'tls') selected @endif>
+                                {{ __('TLS') }}
                             </option>
-                            <option value="" @if (isset($SiteSettings['mail_encription']) && $SiteSettings['mail_encription'] == '') selected @endif>None
+                            <option value="" @if (isset($SiteSettings['mail_encription']) && $SiteSettings['mail_encription'] == '') selected @endif>
+                                {{ __('None') }}
                             </option>
 
                         </select>
@@ -84,8 +85,7 @@
                         <label>{{ _('Mail From Address') }}</label>
                         <input type="email" name="mail_from"
                             class="form-control {{ $errors->has('mail_from') ? ' is-invalid' : '' }}"
-                            placeholder="noreply@example.com"
-                            value="{{ $SiteSettings['mail_from'] ?? '' }}">
+                            placeholder="noreply@example.com" value="{{ $SiteSettings['mail_from'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'mail_from'])
                     </div>
 
@@ -106,5 +106,5 @@
             </form>
         </div>
     </div>
-    @include('admin.partials.documentation',['document'=>$document])
+    @include('admin.partials.documentation', ['document' => $document])
 </div>
