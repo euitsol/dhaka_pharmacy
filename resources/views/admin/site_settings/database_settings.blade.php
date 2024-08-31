@@ -14,13 +14,13 @@
                         <select name="database_driver"
                             class="form-control  no-select {{ $errors->has('database_driver') ? ' is-invalid' : '' }}">
                             <option value="mysql" @if (isset($SiteSettings['database_driver']) && $SiteSettings['database_driver'] == 'mysql') selected @endif>
-                                MySQL</option>
+                                {{ __('MySQL') }}</option>
                             <option value="pgsql" @if (isset($SiteSettings['database_driver']) && $SiteSettings['database_driver'] == 'pgsql') selected @endif>
-                                PostgreSQL</option>
+                                {{ __('PostgreSQL') }}</option>
                             <option value="sqlite" @if (isset($SiteSettings['database_driver']) && $SiteSettings['database_driver'] == 'sqlite') selected @endif>
-                                SQLite</option>
-                            <option value="sqlsrv" @if (isset($SiteSettings['database_driver']) && $SiteSettings['database_driver'] == 'sqlsrv') selected @endif>SQL
-                                Server</option>
+                                {{ __('SQLite') }}</option>
+                            <option value="sqlsrv" @if (isset($SiteSettings['database_driver']) && $SiteSettings['database_driver'] == 'sqlsrv') selected @endif>
+                                {{ __('SQL Server') }}</option>
                         </select>
                         @include('alerts.feedback', ['field' => 'database_driver'])
                     </div>
@@ -29,8 +29,7 @@
                         <label>{{ _('Database Host') }}</label>
                         <input type="text" name="database_host"
                             class="form-control {{ $errors->has('database_host') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Database Host') }}"
-                            value="{{ $SiteSettings['database_host'] ?? '' }}">
+                            placeholder="{{ _('Database Host') }}" value="{{ $SiteSettings['database_host'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'database_host'])
                     </div>
 
@@ -38,8 +37,7 @@
                         <label>{{ _('Database Port') }}</label>
                         <input type="text" name="database_port"
                             class="form-control {{ $errors->has('database_port') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Database Port') }}"
-                            value="{{ $SiteSettings['database_port'] ?? '' }}">
+                            placeholder="{{ _('Database Port') }}" value="{{ $SiteSettings['database_port'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'database_port'])
                     </div>
 
@@ -47,8 +45,7 @@
                         <label>{{ _('Database Name') }}</label>
                         <input type="" name="database_name"
                             class="form-control {{ $errors->has('database_name') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Database Name') }}"
-                            value="{{ $SiteSettings['database_name'] ?? '' }}">
+                            placeholder="{{ _('Database Name') }}" value="{{ $SiteSettings['database_name'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'database_name'])
                     </div>
 
@@ -76,5 +73,5 @@
             </form>
         </div>
     </div>
-    @include('admin.partials.documentation',['document'=>$document])
+    @include('admin.partials.documentation', ['document' => $document])
 </div>

@@ -13,21 +13,21 @@
                         <label>{{ _('API URL') }}</label>
                         <input type="text" name="api_url"
                             class="form-control{{ $errors->has('api_url') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('ENTER SMS API URL') }}" value="{{ $SiteSettings['api_url'] ?? '' }}">
+                            placeholder="{{ _('Enter sms api url') }}" value="{{ $SiteSettings['api_url'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'api_url'])
                     </div>
                     <div class="form-group">
                         <label>{{ _('API KEY') }}</label>
                         <input type="text" name="api_key"
                             class="form-control{{ $errors->has('api_key') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('ENTER SMS API KEY') }}" value="{{ $SiteSettings['api_key'] ?? '' }}">
+                            placeholder="{{ _('Enter sms api key') }}" value="{{ $SiteSettings['api_key'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'api_key'])
                     </div>
                     <div class="form-group">
                         <label>{{ _('API SECRET') }}</label>
                         <input type="text" name="api_secret"
                             class="form-control{{ $errors->has('api_secret') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('ENTER SMS API SECRET') }}"
+                            placeholder="{{ _('Enter sms api secret') }}"
                             value="{{ $SiteSettings['api_secret'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'api_secret'])
                     </div>
@@ -35,7 +35,7 @@
                         <label>{{ _('API SENDER ID') }}</label>
                         <input type="text" name="api_sender_id"
                             class="form-control{{ $errors->has('api_sender_id') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('ENTER SMS API SENDER ID') }}"
+                            placeholder="{{ _('Enter sms api sender id') }}"
                             value="{{ $SiteSettings['api_sender_id'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'api_sender_id'])
                     </div>
@@ -43,7 +43,7 @@
                         <label>{{ _('API STATUS CODE') }}</label>
                         <input type="text" name="api_status_code"
                             class="form-control{{ $errors->has('api_status_code') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('ENTER SMS API SECRET') }}"
+                            placeholder="{{ _('Enter sms api secret') }}"
                             value="{{ $SiteSettings['api_status_code'] ?? '' }}">
                         @include('alerts.feedback', ['field' => 'api_status_code'])
                     </div>

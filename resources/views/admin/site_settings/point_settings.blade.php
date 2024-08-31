@@ -13,11 +13,11 @@
                             <input type="text" name="point_name"
                                 style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
                                 class="form-control{{ $errors->has('point_name') ? ' is-invalid' : '' }}"
-                                placeholder="{{ _('ENTER POINT NAME') }}"
+                                placeholder="{{ _('Enter point name') }}"
                                 value="{{ $point_settings['point_name'] ?? '' }}">
                             <input type="text" name="equivalent_amount"
                                 class="form-control{{ $errors->has('equivalent_amount') ? ' is-invalid' : '' }}"
-                                placeholder="{{ _('ENTER BDT EQUIVALENT AMOUNT') }}"
+                                placeholder="{{ _('Enter equivalent amount (BDT)') }}"
                                 value="{{ $point_settings['equivalent_amount'] ?? '' }}">
                             <input type="button" class="btn btn-secondary disabled m-0" value="BDT">
                         </div>
