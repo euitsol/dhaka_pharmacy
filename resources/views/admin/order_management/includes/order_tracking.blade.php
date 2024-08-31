@@ -86,7 +86,7 @@
                         <div class="status_details pb-2">
                             <h5>{{ __('Order Submitted') }}</h5>
                             @if ($order->status >= 1)
-                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->created_at)) }}</p>
+                                <p class="m-0">{{ orderTimeFormat($order->created_at) }}</p>
                             @endif
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                                 <p class="m-0">{{ __('Processed by - ') }} {{ c_user_name($order->od->creater) }}
                                 </p>
                                 <p class="m-0">{{ __('Processed at - ') }}
-                                    {{ date('M d, h:ma', strtotime($order->od->created_at)) }}</p>
+                                    {{ orderTimeFormat($order->od->created_at) }}</p>
                                 @if ($order->status < 3)
                                     <p class="m-0">
                                         <span>{{ __('Preparation time left') }} ( {!! remainingTime($order->od->pharmacy_prep_time, true) !!} )</span>
@@ -115,7 +115,7 @@
                                 @else
                                     <p class="m-0"><span>
                                             {{ __('Prepared at - ') }}
-                                            {{ date('M d, h:ma', strtotime($order->od->pharmacy_preped_at)) }}
+                                            {{ orderTimeFormat($order->od->pharmacy_preped_at) }}
                                         </span></p>
                                 @endif
                             @endif
@@ -139,7 +139,7 @@
                                     {{ c_user_name($order->od->odrs->where('status', '!=', -1)->first()->creater) }}
                                 </p>
                                 <p class="m-0">{{ __('Assined at - ') }}
-                                    {{ date('M d, h:ma', strtotime($order->od->odrs->where('status', '!=', -1)->first()->created_at)) }}
+                                    {{ orderTimeFormat($order->od->odrs->where('status', '!=', -1)->first()->created_at) }}
                                 </p>
                                 @if ($order->status < 5)
                                     <p class="m-0">
@@ -164,7 +164,7 @@
                             <h5>{{ __('Order Collected') }}</h5>
                             @if ($order->status >= 5)
                                 <p class="m-0">
-                                    {{ date('M d, h:ma', strtotime($order->od->rider_collected_at)) }}
+                                    {{ orderTimeFormat($order->od->rider_collected_at) }}
                                 </p>
                                 @if ($order->status < 6)
                                     <p class="m-0">

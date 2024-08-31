@@ -191,6 +191,11 @@ function timeFormate($time)
     return date($dateFormat . " " . $timeFormat, strtotime($time));
 }
 
+function orderTimeFormat($time)
+{
+    return date('M d, h:i A', strtotime($time));
+}
+
 function user()
 {
     return auth()->guard('web')->user();
