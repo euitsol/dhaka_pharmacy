@@ -369,7 +369,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('details/{id}', 'details')->name('details.district_manager_list');
             Route::get('profile/{id}', 'profile')->name('district_manager_profile');
             Route::get('profile/{id}', 'profile')->name('district_manager_profile');
-            Route::get('cv/download/{url}', 'view_or_download')->name('download.district_manager_profile');
+            Route::get('file/download/{url}', 'view_or_download')->name('download.district_manager_profile');
             Route::get('dashboard/{id}', 'loginAs')->name('login_as.district_manager_profile');
             Route::get('create', 'create')->name('district_manager_create');
             Route::post('create', 'store')->name('district_manager_create');
@@ -781,7 +781,7 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
         Route::post('/update/image', 'updateImage')->name('update.image');
-        Route::get('cv/download/{url}', 'view_or_download')->name('file.download');
+        Route::get('file/download/{url}', 'view_or_download')->name('file.download');
     });
 
     //LAM Route
@@ -857,7 +857,7 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
-        Route::get('cv/download/{url}', 'view_or_download')->name('file.download');
+        Route::get('file/download/{url}', 'view_or_download')->name('file.download');
     });
 
     Route::controller(LamOperationalAreaController::class)->prefix('operational-area')->name('operational_area.')->group(function () {
@@ -925,7 +925,7 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
-        Route::get('cv/download/{url}', 'view_or_download')->name('file.download');
+        Route::get('file/download/{url}', 'view_or_download')->name('file.download');
 
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });
