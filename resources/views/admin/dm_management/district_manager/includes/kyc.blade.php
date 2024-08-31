@@ -70,9 +70,9 @@
                         <th>{{ $form_data['field_name'] }}</th>
                         <th>:</th>
                         <td>
+
                             @if (isset($save_datas[$form_data['field_key']]))
-                                <span
-                                    class="badge {{ $save_datas[$form_data['field_key']] == 1 ? 'badge-success' : 'badge-info' }}">{{ $save_datas[$form_data['field_key']] == 1 ? 'True' : 'False' }}</span>
+                                {{ $form_data['option_data'][$save_datas[$form_data['field_key']]] }}
                             @endif
                         </td>
                     </tr>
@@ -94,9 +94,21 @@
                         <th>:</th>
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
-                                <a class="btn btn-info btn-sm"
-                                    href="{{ route('dm_management.dm_kyc.kyc_list.download.district_manager_kyc_details', base64_encode($save_datas[$form_data['field_key']])) }}"><i
-                                        class="fa-regular fa-circle-down"></i></a>
+                                @if (isImage($save_datas[$form_data['field_key']]))
+                                    <div class="imagePreviewDiv d-inline-block">
+                                        <div id="lightbox" class="lightbox">
+                                            <div class="lightbox-content">
+                                                <img src="{{ storage_url($save_datas[$form_data['field_key']]) }}"
+                                                    class="lightbox_image">
+                                            </div>
+                                            <div class="close_button fa-beat">X</div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <a class="btn btn-info btn-sm"
+                                        href="{{ route('dm_management.dm_kyc.submitted_kyc.download.dms_kyc_details', base64_encode($save_datas[$form_data['field_key']])) }}"><i
+                                            class="fa-regular fa-circle-down"></i></a>
+                                @endif
                             @endif
                         </td>
                     </tr>
@@ -108,9 +120,20 @@
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
                                 @foreach ($save_datas[$form_data['field_key']] as $file)
-                                    <a class="imagePreviewDiv btn btn-info btn-sm"
-                                        href="{{ route('dm_management.dm_kyc.kyc_list.download.district_manager_kyc_details', base64_encode($file)) }}"><i
-                                            class="fa-regular fa-circle-down"></i></a>
+                                    @if (isImage($file))
+                                        <div class="imagePreviewDiv d-inline-block">
+                                            <div id="lightbox" class="lightbox">
+                                                <div class="lightbox-content">
+                                                    <img src="{{ storage_url($file) }}" class="lightbox_image">
+                                                </div>
+                                                <div class="close_button fa-beat">X</div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <a class="btn btn-info btn-sm"
+                                            href="{{ route('dm_management.dm_kyc.submitted_kyc.download.dms_kyc_details', base64_encode($file)) }}"><i
+                                                class="fa-regular fa-circle-down"></i></a>
+                                    @endif
                                 @endforeach
                             @endif
                         </td>
@@ -123,8 +146,13 @@
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
                                 <div class="imagePreviewDiv">
-                                    <img class="imagePreview"
-                                        src="{{ storage_url($save_datas[$form_data['field_key']]) }}" alt="">
+                                    <div id="lightbox" class="lightbox">
+                                        <div class="lightbox-content">
+                                            <img src="{{ storage_url($save_datas[$form_data['field_key']]) }}"
+                                                class="lightbox_image">
+                                        </div>
+                                        <div class="close_button fa-beat">X</div>
+                                    </div>
                                 </div>
                             @endif
                         </td>
@@ -138,7 +166,12 @@
                             @if (isset($save_datas[$form_data['field_key']]))
                                 @foreach ($save_datas[$form_data['field_key']] as $image)
                                     <div class="imagePreviewDiv d-inline-block">
-                                        <img class="imagePreview" src="{{ storage_url($image) }}" alt="">
+                                        <div id="lightbox" class="lightbox">
+                                            <div class="lightbox-content">
+                                                <img src="{{ storage_url($image) }}" class="lightbox_image">
+                                            </div>
+                                            <div class="close_button fa-beat">X</div>
+                                        </div>
                                     </div>
                                 @endforeach
                             @endif
