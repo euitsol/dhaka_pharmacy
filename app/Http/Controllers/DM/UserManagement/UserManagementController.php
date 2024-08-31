@@ -45,8 +45,7 @@ class UserManagementController extends Controller
     {
         $data['user'] = User::with(['creater', 'updater'])->findOrFail($id);
         $user_class = get_class($data['user']);
-        $data['kyc'] = SubmittedKyc::where('creater_id', $id)->where('creater_type', $user_class)->first();
-        $data['kyc_setting'] = KycSetting::where('type', 'user')->first();
+        $data['submitted_kyc'] = SubmittedKyc::with('kyc')->where('creater_id', $id)->where('creater_type', $user_class)->first();
         $data['orders'] = Order::where('customer_id', $id)->where('customer_type', $user_class)->latest()->get();
         $data['reviews'] = Review::where('customer_id', $id)->latest()->get();
         $data['payments'] = Payment::where('customer_id', $id)->where('customer_type', $user_class)->latest()->get();

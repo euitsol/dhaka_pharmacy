@@ -177,7 +177,7 @@
                                     </div>
                                     @if (!empty($rider->cv))
                                         <a class="btn btn-primary" target="_blank"
-                                            href="{{ route('rider.profile.cv.download', base64_encode($rider->cv)) }}"><i
+                                            href="{{ route('rider.profile.file.download', base64_encode($rider->cv)) }}"><i
                                                 class="fa-solid fa-download"></i></a>
                                     @endif
                                 </div>
