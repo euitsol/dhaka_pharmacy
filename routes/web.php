@@ -316,6 +316,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('delete/{id}', 'delete')->name('pharmacy_delete');
             Route::get('discount/{id}', 'pharmacyDiscount')->name('pharmacy_discount');
             Route::post('discount/update/{id}', 'pharmacyDiscountUpdate')->name('update.pharmacy_discount');
+            Route::get('file-download/{url}', 'view_or_download')->name('download.pharmacy_list');
         });
 
         // KYC ROUTES

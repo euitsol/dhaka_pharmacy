@@ -18,6 +18,7 @@ use App\Models\Earning;
 use App\Models\KycSetting;
 use App\Models\OrderDistribution;
 use App\Models\SubmittedKyc;
+use Illuminate\Support\Facades\Storage;
 
 class PharmacyController extends Controller
 {
@@ -35,7 +36,15 @@ class PharmacyController extends Controller
     }
     public function details($id): JsonResponse
     {
-        $data = Pharmacy::with(['creater', 'updater'])->findOrFail(decrypt($id));
+        $data = Pharmacy::with(['creater', 'updater', 'operation_area', 'operation_sub_area'])->findOrFail(decrypt($id));
+        $data->statusBg = $data->getStatusBadgeClass();
+        $data->statusTitle = $data->getStatus();
+        $data->kycStatusBg = $data->getKycStatusClass();
+        $data->kycStatusTitle = $data->getKycStatus();
+        $data->verifyStatusBg = $data->getEmailVerifyClass();
+        $data->verifyStatusTitle = $data->getEmailVerifyStatus();
+        $data->identificationType = $data->identification_type ? $data->identificationType() : 'null';
+        $data->identificationDocument = $data->identification_file ? base64_encode($data->identification_file) : null;
         $this->morphColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
@@ -139,5 +148,22 @@ class PharmacyController extends Controller
         }
         flash()->addSuccess('Pharmacy discount updated successfully.');
         return redirect()->back();
+    }
+    public function view_or_download($file_url)
+    {
+        $file_url = base64_decode($file_url);
+        if (Storage::exists('public/' . $file_url)) {
+            $fileExtension = pathinfo($file_url, PATHINFO_EXTENSION);
+
+            if (strtolower($fileExtension) === 'pdf') {
+                return response()->file(storage_path('app/public/' . $file_url), [
+                    'Content-Disposition' => 'inline; filename="' . basename($file_url) . '"'
+                ]);
+            } else {
+                return response()->download(storage_path('app/public/' . $file_url), basename($file_url));
+            }
+        } else {
+            return response()->json(['error' => 'File not found'], 404);
+        }
     }
 }

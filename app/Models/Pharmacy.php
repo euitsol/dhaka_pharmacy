@@ -23,9 +23,9 @@ class Pharmacy extends AuthenticateBaseModel
 
     public function identificationType()
     {
-        if ($this->identificationType == 1) {
+        if ($this->identification_type == 1) {
             return 'TIN Certificate';
-        } elseif ($this->identificationType == 2) {
+        } elseif ($this->identification_type == 2) {
             return 'Trade License';
         }
     }
