@@ -32,20 +32,21 @@
                                 <div class="col-xl-7 col-xxl-8">
                                     <div class="row">
                                         <div class="form-group col-md-12">
-                                            <label>{{ __('Pharmacy Name') }}</label>
+                                            <label>{{ __('Pharmacy Name') }}<span class="text-danger">*</span></label>
                                             <input type="text" name="name" class="form-control"
                                                 placeholder="Enter pharmacy name" value="{{ $pharmacy->name }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Pharmacy / Responsible Person Phone') }}</label>
+                                            <label>{{ __('Pharmacy / Responsible Person Phone') }}<span
+                                                    class="text-danger">*</span></label>
                                             <input type="text" name="phone" class="form-control"
                                                 placeholder="Enter Phone" value="{{ $pharmacy->phone }}">
                                             @include('alerts.feedback', ['field' => 'phone'])
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Pharmacy Email') }}</label>
+                                            <label>{{ __('Pharmacy Email') }}<span class="text-danger">*</span></label>
                                             <input type="text" name="email" class="form-control"
                                                 placeholder="Enter Email" value="{{ $pharmacy->email }}">
                                             @include('alerts.feedback', ['field' => 'email'])
@@ -54,7 +55,7 @@
                                             <label>{{ __('Emergency Phone') }}</label>
                                             <input type="text" name="emergency_phone" class="form-control"
                                                 placeholder="Enter emergency Phone"
-                                                value="{{ $pharmacy->emergency_phone }}">
+                                                value="{{ $pharmacy->emergency_phone ?? old('emergency_phone') }}">
                                             @include('alerts.feedback', ['field' => 'emergency_phone'])
                                         </div>
                                         <div class="form-group col-md-6">
@@ -65,10 +66,10 @@
                                                     {{ __('Select Identification Type') }}
                                                 </option>
                                                 <option value="1"
-                                                    {{ $pharmacy->identification_type == 1 ? 'selected' : '' }}>
+                                                    {{ ($pharmacy->identification_type || old('identification_type')) == 1 ? 'selected' : '' }}>
                                                     {{ __('TIN Certificate') }}</option>
                                                 <option value="2"
-                                                    {{ $pharmacy->identification_type == 2 ? 'selected' : '' }}>
+                                                    {{ ($pharmacy->identification_type || old('identification_type')) == 2 ? 'selected' : '' }}>
                                                     {{ __('Trade License') }}</option>
                                             </select>
                                             @include('alerts.feedback', ['field' => 'identification_type'])
@@ -96,7 +97,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>{{ __('Identifucatuion Document') }}</label>
+                                        <label>{{ __('Identification Document') }}</label>
                                         <input type="file" accept=".pdf" class="form-control"
                                             name="identification_file">
                                         @include('alerts.feedback', ['field' => 'identification_file'])
@@ -114,7 +115,9 @@
                                             <option selected hidden value=" ">{{ __('Select Operation Area') }}
                                             </option>
                                             @foreach ($operation_areas as $area)
-                                                <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                                <option value="{{ $area->id }}"
+                                                    {{ (optional($pharmacy->operation_area)->id || old('oa_id')) == $area->id ? 'selected' : '' }}>
+                                                    {{ $area->name }}</option>
                                             @endforeach
                                         </select>
                                         @include('alerts.feedback', ['field' => 'oa_id'])

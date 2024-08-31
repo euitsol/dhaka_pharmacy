@@ -23,19 +23,10 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4',
-            'phone' => 'nullable|numeric|digits:11|unique:pharmacies,phone,' . pharmacy()->id,
+            'phone' => 'required|numeric|digits:11|unique:pharmacies,phone,' . pharmacy()->id,
             'email' => 'required|email|unique:pharmacies,email,' . pharmacy()->id,
-            'age' => 'nullable|numeric|digits:2',
-            'identification_type' => 'nullable|in:NID,DOB,Passport',
-            'identification_no' => 'nullable|numeric',
-            'present_address' => 'nullable',
-            'cv' => 'nullable|file|mimes:pdf',
-
-            'gender' => 'nullable|in:Male,Female,Others',
-            'dob' => 'nullable|date|before:today',
-            'father_name' => 'nullable|min:6',
-            'mother_name' => 'nullable|min:6',
-            'permanent_address' => 'nullable',
+            'identification_type' => 'nullable|numeric',
+            'identification_file' => 'nullable|file|mimes:pdf',
             'emergency_phone' => 'nullable|numeric|digits:11',
             'oa_id' => 'nullable|exists:operation_areas,id',
             'osa_id' => 'nullable|exists:operation_sub_areas,id',
