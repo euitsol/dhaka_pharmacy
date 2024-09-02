@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pharmacy\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmailVerifyRequest;
+use App\Http\Traits\PharmacyMailTrait;
 use App\Models\Pharmacy;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -14,6 +15,7 @@ use Illuminate\View\View;
 
 class EmailVerificationController extends Controller
 {
+    use PharmacyMailTrait;
     public function __construct()
     {
         return $this->middleware('pharmacy');
@@ -24,6 +26,9 @@ class EmailVerificationController extends Controller
         $pharmacy = Pharmacy::findOrFail(pharmacy()->id);
         $pharmacy->otp = otp();
         $pharmacy->save();
+        $subject = 'Email verification code';
+        $message = 'Your email verification code is ' . $pharmacy->otp;
+        $this->sendOtpMail($pharmacy->email, $subject, $message);
         flash()->addSuccess('The verification code has been successfully sent to your email');
         return redirect()->route('pharmacy.email.verify');
     }
