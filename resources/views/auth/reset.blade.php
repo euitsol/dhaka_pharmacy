@@ -13,23 +13,25 @@
                         <div class="form-title">
                             <h1 class="otp_title">{{ __('UPDATE YOUR PASSWORD') }}</h1>
                             <h3>{{ __('Follow the instructions to make it easier to reset password and you will be able to explore
-                                                            inside.') }}
+                                                                                                                    inside.') }}
                             </h3>
                         </div>
-                        <form action="{{ route('user.reset.password') }}" method="POST">
+                        <form action="{{ route('user.reset.password') }}" method="POST" autocomplete="off">
                             @csrf
                             @include('alerts.feedback', ['field' => 'phone'])
                             <div class="phn input-box password_input">
                                 <span class="icon"><i class="fa-solid fa-lock"></i></span>
                                 <input type="password" name="password" placeholder="Enter new password"
-                                    class="password pass-n">
+                                    class="password pass-n" autocomplete="off" readonly
+                                    onfocus="this.removeAttribute('readonly');">
                                 <span class="icon eye"><i id="eye-icon" class="fa-solid fa-eye"></i></i></span>
                             </div>
                             @include('alerts.feedback', ['field' => 'password'])
                             <div class="pass input-box password_input mb-3">
                                 <span class="icon"><i class="fa-solid fa-lock"></i></span>
                                 <input type="password" name="password_confirmation" placeholder="Confirm password"
-                                    class="password pass-c">
+                                    class="password pass-c" autocomplete="off" readonly
+                                    onfocus="this.removeAttribute('readonly');">
                             </div>
                             <input class="reset_pass_button submit_button" type="submit" value="UPDATE">
 

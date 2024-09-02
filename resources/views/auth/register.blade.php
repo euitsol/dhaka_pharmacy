@@ -15,28 +15,32 @@
                             <h3>{{ __('Follow the instructions to make it easier to register and you will be able to explore inside.') }}
                             </h3>
                         </div>
-                        <form action="{{ route('use.register') }}" method="POST">
+                        <form action="{{ route('use.register') }}" method="POST" autocomplete="off">
                             @csrf
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-user"></i></span>
-                                <input type="text" name="name" placeholder="Name" class="name">
+                                <input type="text" name="name" placeholder="Name" class="name" autocomplete="off"
+                                    readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'name'])
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                                <input type="text" name="phone" placeholder="Phone" class="phone">
+                                <input type="text" name="phone" placeholder="Phone" class="phone" autocomplete="off"
+                                    readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
                             <div class="phn input-box password_input">
                                 <span class="icon"><i class="fa-solid fa-lock"></i></span>
-                                <input type="password" name="password" placeholder="Password" class="password pass-n">
+                                <input type="password" name="password" placeholder="Password" class="password pass-n"
+                                    autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                                 <span class="icon eye"><i id="eye-icon" class="fa-solid fa-eye"></i></i></span>
                             </div>
                             @include('alerts.feedback', ['field' => 'password'])
                             <div class="pass input-box password_input">
                                 <span class="icon"><i class="fa-solid fa-lock"></i></span>
                                 <input type="password" name="password_confirmation" placeholder="Confirm Password"
-                                    class="password pass-c">
+                                    class="password pass-c" autocomplete="off" readonly
+                                    onfocus="this.removeAttribute('readonly');">
                             </div>
                             <p class="get-otp">{{ __('Already have an account? ') }}<a class="otp_switch"
                                     href="{{ route('login') }}">{{ __('Login') }}</a></p>

@@ -13,14 +13,15 @@
                         <div class="form-title">
                             <h1 class="otp_title">{{ __('FORGOT PASSWORD') }}</h1>
                             <h3>{{ __('Follow the instructions to make it easier to reset password and you will be able to explore
-                                                        inside.') }}
+                                                                                    inside.') }}
                             </h3>
                         </div>
-                        <form method="POST" action="{{ route('user.forgot.password') }}">
+                        <form method="POST" action="{{ route('user.forgot.password') }}" autocomplete="off">
                             @csrf
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                                <input type="text" name="phone" placeholder="Phone" class="phone">
+                                <input type="text" name="phone" placeholder="Phone" class="phone" autocomplete="off"
+                                    readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
 
