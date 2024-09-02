@@ -717,7 +717,6 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
 
     Route::controller(PharmacyEmailVerificationController::class)->prefix('email')->name('email.')->group(function () {
         Route::get('/send-otp', 'send_otp')->name('send.otp');
-        Route::get('/verification', 'index')->name('verify');
         Route::post('/verification', 'verify')->name('verify');
     });
 
