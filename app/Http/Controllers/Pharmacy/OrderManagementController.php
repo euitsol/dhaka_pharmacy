@@ -37,18 +37,22 @@ class OrderManagementController extends Controller
 
         switch ($status) {
             case 'assigned':
-                $query =  OrderDistribution::with(['order', 'odps' => function($query) use ($pharmacy_id) {$query->where('pharmacy_id', $pharmacy_id);}, 'odrs', 'order.products.discounts', 'order.products.pivot','order.products.pivot.unit'])->whereHas('odps', function ($query) use($pharmacy_id) {
-                            $query->where(function ($subQuery) {
-                                $subQuery->where('status', 0)->orWhere('status', 1);
-                            })->where('pharmacy_id', $pharmacy_id);
-                        })->where(function ($subQuery) {
-                            $subQuery->where('status', 0)->orWhere('status', 1);
-                        });
+                $query =  OrderDistribution::with(['order', 'odps' => function ($query) use ($pharmacy_id) {
+                    $query->where('pharmacy_id', $pharmacy_id);
+                }, 'odrs', 'order.products.discounts', 'order.products.pivot', 'order.products.pivot.unit'])->whereHas('odps', function ($query) use ($pharmacy_id) {
+                    $query->where(function ($subQuery) {
+                        $subQuery->where('status', 0)->orWhere('status', 1);
+                    })->where('pharmacy_id', $pharmacy_id);
+                })->where(function ($subQuery) {
+                    $subQuery->where('status', 0)->orWhere('status', 1);
+                });
                 break;
 
             case 'prepared':
 
-                $query =  OrderDistribution::with(['order', 'odps' => function($query) use ($pharmacy_id) {$query->where('pharmacy_id', $pharmacy_id);}, 'odrs', 'order.products.discounts', 'order.products.pivot','order.products.pivot.unit'])->whereHas('odps', function ($query) use($pharmacy_id) {
+                $query =  OrderDistribution::with(['order', 'odps' => function ($query) use ($pharmacy_id) {
+                    $query->where('pharmacy_id', $pharmacy_id);
+                }, 'odrs', 'order.products.discounts', 'order.products.pivot', 'order.products.pivot.unit'])->whereHas('odps', function ($query) use ($pharmacy_id) {
                     $query->where(function ($subQuery) {
                         $subQuery->where('status', 2);
                     })->where('pharmacy_id', $pharmacy_id);
@@ -60,7 +64,7 @@ class OrderManagementController extends Controller
         }
 
 
-        $data['ods'] = $query->get()->each(function(&$od){
+        $data['ods'] = $query->get()->each(function (&$od) {
             $this->calculateOrderTotalDiscountPrice($od->order);
         });
 
@@ -72,12 +76,14 @@ class OrderManagementController extends Controller
     {
         $pharmacy_id = pharmacy()->id;
         $data['do'] = OrderDistribution::with(['order', 'odr', 'odps' => function ($query) {
-                $query->where('pharmacy_id', pharmacy()->id);
-            }, 'odps.order_product','active_otps'])->findOrFail(decrypt($od_id));
+            $query->where('pharmacy_id', pharmacy()->id);
+        }, 'odps.order_product', 'active_otps'])->findOrFail(decrypt($od_id));
 
         // $data['otp'] = DistributionOtp::where('order_distribution_id', $data['do']->id)->where('otp_author_id', pharmacy()->id)->where('otp_author_type', get_class(pharmacy()))->first();
 
         //odp pending -> preparing
+
+
         $this->updateODPStatus($data['do'], $pharmacy_id, 1);
         $this->calculateOrderTotalDiscountPrice($data['do']->order);
         $this->calculatePharmacyTotalAmount($data['do']);
@@ -167,7 +173,7 @@ class OrderManagementController extends Controller
         $otp = $od->active_otps->where('pharmacy_id', pharmacy()->id)->first();
         $reqOtp = implode('', $request->otp);
 
-        if(!empty($otp) && $otp->otp == $reqOtp){
+        if (!empty($otp) && $otp->otp == $reqOtp) {
             DB::transaction(function () use ($od, $otp) {
                 $od->status = 4; // rider picked up
                 $od->save();
@@ -188,8 +194,7 @@ class OrderManagementController extends Controller
 
                 flash()->addSuccess('Order delivered successfully.');
             });
-
-        }else{
+        } else {
             flash()->addError('Something went wrong. Please try again');
         }
 

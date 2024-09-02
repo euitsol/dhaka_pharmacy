@@ -54,188 +54,164 @@
     </style>
 @endpush
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-6">
-                            <h4 class="card-title">
-                                {{ __('Order Details') }}
-                            </h4>
-                        </div>
-                        <div class="col-6 text-end">
-                            <a href="{{ URL::previous() }}" class="btn btn-primary">{{ __('Back') }}</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped datatable">
-                        <tbody>
-                            <tr>
-                                <th>{{ __('Order ID') }}</th>
-                                <td>:</td>
-                                <th>{{ $do->order->order_id }}</th>
-                                <td>|</td>
-                                @if ($do->status == 0 || $do->status == 1)
-                                    <td class="fw-bold">{{ __('Preparation Time') }}</td>
-                                    <td>:</td>
-                                    <td>{!! remainingTime($do->pharmacy_prep_time, true) !!}</td>
-                                @else
-                                    <td class="fw-bold">{{ __('Prepared At') }}</td>
-                                    <td>:</td>
-                                    <td>{{ timeFormate($do->pharmacy_preped_at) }}</td>
-                                @endif
-                            </tr>
-                            <tr>
-                                <th>{{ __('Total Product') }}</th>
-                                <td>:</td>
-                                <th>{{ $do->odps->count() }}</th>
-                                <td>|</td>
-                                <th>{{ __('Total Price') }}</th>
-                                <td>:</td>
-                                <th>
-                                    {!! get_taka_icon() !!}{{ number_format(ceil($do->totalPharmacyAmount)) }}
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Payment Type') }}</th>
-                                <td>:</td>
-                                <th>{{ $do->paymentType() }}</th>
-                                <td>|</td>
-                                <th>{{ __('Distribution Type') }}</th>
-                                <td>:</td>
-                                <th>{{ $do->distributionType() }}</th>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Note') }}</th>
-                                <td>:</td>
-                                <th colspan="5">{!! $do->note !!}</th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer">
-                    @include('pharmacy.orders.includes.otp-verify')
-                    <form action="{{ route('pharmacy.order_management.update', encrypt($do->id)) }}" method="POST">
-                        @csrf
-                        <div class="row mb-3">
-                            <div class="col-12 px-4 text-end">
-                                <span class="{{ $do->statusBg() }}">{{ __(ucfirst($do->statusTitle())) }}</span>
-                            </div>
-                        </div>
-                        @foreach ($do->odps as $key => $dop)
-                            <div class="col-12 status_wrap">
-                                <div class="card card-2 mb-0 mt-3">
-                                    <div class="card-body">
-                                        <div class="media">
-                                            <div class="sq align-self-center "> <img
-                                                    class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
-                                                    src="{{ product_image($dop->order_product->product->image) }}"
-                                                    width="135" height="135" /> </div>
-                                            <div class="media-body my-auto text-center">
-                                                <div class="row  my-auto flex-column flex-md-row px-3">
-                                                    <div class="col text-start">
-                                                        <h6 class="mb-0 text-start">
-                                                            {{ $dop->order_product->product->name }}</h6>
-                                                        <small>{{ $dop->order_product->product->pro_cat->name }} </small>
-                                                    </div>
-                                                    <div class="col my-auto d-flex justify-content-around"> Quantity :
-                                                        {{ $dop->order_product->quantity }} &nbsp; &nbsp; Pack :
-                                                        {{ $dop->order_product->unit->name ?? 'Piece' }}
-                                                    </div>
-                                                    <div class="col my-auto">
-                                                        <h6 class="my-auto text-center">
-                                                            <span>{{ __('Total Price : ') }}{!! get_taka_icon() !!}
+    @php
+        $odps_status = $do->odps->pluck('status')->first();
+    @endphp
+    <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-2">
+                <h4 class="card-title">
+                    {{ __('Order Details ') }}
+                </h4>
+                @if ($odps_status < 2)
+                    <h4> {!! ' - ' . remainingTime($do->pharmacy_prep_time, true) !!} </h4>
+                @endif
+            </div>
 
-                                                                <span
-                                                                    class="">{{ number_format(ceil($dop->discounted_price)) }}
-                                                                </span>
-                                                                @if ($dop->discounted_price != $dop->selling_price)
-                                                                    <del
-                                                                        class="text-danger">{{ number_format($dop->selling_price, 2) }}</del>
-                                                                @endif
-                                                            </span>
-                                                            @if ($dop->discount)
-                                                                <sup><span class='badge badge-danger'>
-                                                                        {{ $dop->discount . '% off' }}
-                                                                    </span></sup>
-                                                            @endif
-                                                        </h6>
-                                                        @if ($do->payment_type == 1 && ($dop->status == 0 || $dop->status == 1))
-                                                            <div class="input-group">
-                                                                <input type="text"
-                                                                    name="data[{{ $key }}][open_amount]"
-                                                                    class="form-control" placeholder="Enter product price">
+            <a href="{{ URL::previous() }}" class="btn btn-primary">{{ __('Back') }}</a>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    @include('pharmacy.orders.includes.order_details', [
+                        'do' => $do,
+                        'odps_status' => $odps_status,
+                    ])
+                </div>
+                <div class="col-md-4">
+                    @include('pharmacy.orders.includes.order_tracking', ['do' => $do])
+                </div>
+                <div class="col-md-12">
+                    <div class="card ">
+                        <div class="card-body">
+                            @include('pharmacy.orders.includes.otp-verify')
+                            <form action="{{ route('pharmacy.order_management.update', encrypt($do->id)) }}" method="POST">
+                                @csrf
+                                <div class="row mb-3">
+                                    <div class="col-12 px-4 text-end">
+                                        <span class="{{ $do->statusBg() }}">{{ __(slugToTitle($do->statusTitle())) }}</span>
+                                    </div>
+                                </div>
+                                @foreach ($do->odps as $key => $dop)
+                                    <div class="col-12 status_wrap">
+                                        <div class="card card-2 mb-0 mt-3">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="sq align-self-center "> <img
+                                                            class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
+                                                            src="{{ product_image($dop->order_product->product->image) }}"
+                                                            width="135" height="135" /> </div>
+                                                    <div class="media-body my-auto text-center">
+                                                        <div class="row  my-auto flex-column flex-md-row px-3">
+                                                            <div class="col text-start">
+                                                                <h6 class="mb-0 text-start">
+                                                                    {{ $dop->order_product->product->name }}</h6>
+                                                                <small>{{ $dop->order_product->product->pro_cat->name }}
+                                                                </small>
                                                             </div>
-                                                        @endif
-                                                    </div>
-                                                    @if ($do->payment_type == 1 && $dop->status == 2 && $dop->open_amount > 0)
-                                                        <div class="col my-auto">
-                                                            <h6 class="my-auto text-center">
-                                                                <span><strong>{{ __('Bit Price : ') }}</strong>{!! get_taka_icon() !!}
-                                                                    {{ number_format($dop->open_amount, 2) }}</span>
-                                                            </h6>
-                                                        </div>
-                                                    @endif
-                                                    @if ($dop->status == 0 || $dop->status == 1)
-                                                        <div class="col my-auto mt-3">
-                                                            <div class="card mb-0">
-                                                                <div class="card-body">
-                                                                    <input type="hidden"
-                                                                        name="data[{{ $key }}][dop_id]"
-                                                                        value="{{ $dop->id }}">
+                                                            <div class="col my-auto d-flex justify-content-around"> Quantity
+                                                                :
+                                                                {{ $dop->order_product->quantity }} &nbsp; &nbsp; Pack :
+                                                                {{ $dop->order_product->unit->name ?? 'Piece' }}
+                                                            </div>
+                                                            <div class="col my-auto">
+                                                                <h6 class="my-auto text-center">
+                                                                    <span>{{ __('Total Price : ') }}{!! get_taka_icon() !!}
 
-                                                                    <div class="form-check form-check-radio">
-                                                                        <label class="form-check-label me-2"
-                                                                            for="status_{{ $key }}">
-                                                                            <input class="form-check-input do_status"
-                                                                                type="radio"
-                                                                                name="data[{{ $key }}][status]"
-                                                                                id="status_{{ $key }}"
-                                                                                value="2" checked>
-                                                                            {{ __('Accept') }}
-                                                                            <span class="form-check-sign"></span>
-                                                                        </label>
-                                                                        <label class="form-check-label"
-                                                                            for="status{{ $key }}">
-                                                                            <input class="form-check-input do_status"
-                                                                                type="radio"
-                                                                                name="data[{{ $key }}][status]"
-                                                                                id="status{{ $key }}"
-                                                                                value="3">
-                                                                            {{ __('Dispute') }}
-                                                                            <span class="form-check-sign"></span>
-                                                                        </label>
+                                                                        <span
+                                                                            class="">{{ number_format(ceil($dop->discounted_price)) }}
+                                                                        </span>
+                                                                        @if ($dop->discounted_price != $dop->selling_price)
+                                                                            <del
+                                                                                class="text-danger">{{ number_format($dop->selling_price, 2) }}</del>
+                                                                        @endif
+                                                                    </span>
+                                                                    @if ($dop->discount)
+                                                                        <sup><span class='badge badge-danger'>
+                                                                                {{ $dop->discount . '% off' }}
+                                                                            </span></sup>
+                                                                    @endif
+                                                                </h6>
+                                                                @if ($do->payment_type == 1 && ($dop->status == 0 || $dop->status == 1))
+                                                                    <div class="input-group">
+                                                                        <input type="text"
+                                                                            name="data[{{ $key }}][open_amount]"
+                                                                            class="form-control"
+                                                                            placeholder="Enter product price">
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+                                                            @if ($do->payment_type == 1 && $dop->status == 2 && $dop->open_amount > 0)
+                                                                <div class="col my-auto">
+                                                                    <h6 class="my-auto text-center">
+                                                                        <span><strong>{{ __('Bit Price : ') }}</strong>{!! get_taka_icon() !!}
+                                                                            {{ number_format($dop->open_amount, 2) }}</span>
+                                                                    </h6>
+                                                                </div>
+                                                            @endif
+                                                            @if ($dop->status == 0 || $dop->status == 1)
+                                                                <div class="col my-auto mt-3">
+                                                                    <div class="card mb-0">
+                                                                        <div class="card-body">
+                                                                            <input type="hidden"
+                                                                                name="data[{{ $key }}][dop_id]"
+                                                                                value="{{ $dop->id }}">
+
+                                                                            <div class="form-check form-check-radio">
+                                                                                <label class="form-check-label me-2"
+                                                                                    for="status_{{ $key }}">
+                                                                                    <input
+                                                                                        class="form-check-input do_status"
+                                                                                        type="radio"
+                                                                                        name="data[{{ $key }}][status]"
+                                                                                        id="status_{{ $key }}"
+                                                                                        value="2" checked>
+                                                                                    {{ __('Accept') }}
+                                                                                    <span class="form-check-sign"></span>
+                                                                                </label>
+                                                                                <label class="form-check-label"
+                                                                                    for="status{{ $key }}">
+                                                                                    <input
+                                                                                        class="form-check-input do_status"
+                                                                                        type="radio"
+                                                                                        name="data[{{ $key }}][status]"
+                                                                                        id="status{{ $key }}"
+                                                                                        value="3">
+                                                                                    {{ __('Dispute') }}
+                                                                                    <span class="form-check-sign"></span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        @if ($dop->status == 0 || $dop->status == 1)
+                                            <div class="form-group status_note mt-3" style="display: none">
+                                                <textarea name="data[{{ $key }}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
+                                            </div>
+                                            @include('alerts.feedback', [
+                                                'field' => 'data.' . $key . '.note',
+                                            ])
+                                        @elseif($dop->status == -1)
+                                            <span><strong
+                                                    class="text-danger">{{ __('Reason: ') }}</strong>{{ $dop->note }}</span>
+                                        @endif
+
                                     </div>
-                                </div>
-                                @if ($dop->status == 0 || $dop->status == 1)
-                                    <div class="form-group status_note mt-3" style="display: none">
-                                        <textarea name="data[{{ $key }}][note]" class="form-control" placeholder="Enter dispute reason"></textarea>
+                                @endforeach
+                                @if ($do->getPharmacyStatus(pharmacy()->id) == 0 || $do->getPharmacyStatus(pharmacy()->id) == 1)
+                                    <div class="col-12 text-end mt-2">
+                                        <input type="submit" value="Confirm" class="btn btn-success">
                                     </div>
-                                    @include('alerts.feedback', ['field' => 'data.' . $key . '.note'])
-                                @elseif($dop->status == 3 || $dop->status == -1)
-                                    <span><strong
-                                            class="text-danger">{{ __('Reason: ') }}</strong>{{ $dop->note }}</span>
                                 @endif
-
-                            </div>
-                        @endforeach
-                        @if ($do->getPharmacyStatus(pharmacy()->id) == 0 || $do->getPharmacyStatus(pharmacy()->id) == 1)
-                            <div class="col-12 text-end mt-2">
-                                <input type="submit" value="Confirm" class="btn btn-success">
-                            </div>
-                        @endif
-                    </form>
-
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
