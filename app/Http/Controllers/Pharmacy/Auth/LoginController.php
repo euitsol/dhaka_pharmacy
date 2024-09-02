@@ -19,7 +19,7 @@ class LoginController extends Controller
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
             return redirect()->route('pharmacy.dashboard');
         }
-        return view('pharmacy.login');
+        return view('pharmacy.auth.login');
     }
 
     public function pharmacyLoginCheck(Request $request): RedirectResponse

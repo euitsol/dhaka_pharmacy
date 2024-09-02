@@ -24,7 +24,7 @@ class LoginController extends Controller
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
             return redirect()->route('lam.dashboard');
         }
-        return view('local_area_manager.login');
+        return view('local_area_manager.auth.login');
     }
 
     public function lamLoginCheck(Request $request): RedirectResponse

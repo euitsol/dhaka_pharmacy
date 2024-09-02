@@ -16,6 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Traits\TransformOrderItemTrait;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 
@@ -89,6 +90,7 @@ class OrderManagementController extends Controller
         if (!empty($otp) && $otp->otp == $reqOtp) {
             DB::transaction(function () use ($od, $otp) {
                 $od->status = 5; // rider delivered
+                $od->rider_delivered_at = Carbon::now(); // rider delivered
                 $od->save();
 
                 $od->order->status = 6; //delivered
@@ -199,7 +201,7 @@ class OrderManagementController extends Controller
 
             OrderDistributionRider::where([['rider_id', rider()->id], ['order_distribution_id', $od_id], ['status', 2]])
                 ->update(['status' => 3]);
-            $od->update(['status' => 5]);
+            $od->update(['status' => 5, 'rider_collected_at' => Carbon::now()]);
 
             OrderDistributionPharmacy::where([['order_distribution_id', $od_id], ['status', 4]])->update(['status' => 5]);
             flash()->addSuccess('Order delivered successfully.');

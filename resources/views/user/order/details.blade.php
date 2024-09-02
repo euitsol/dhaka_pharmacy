@@ -30,7 +30,7 @@
                             </div>
                             <h5>{{ __('Order Submitted') }}</h5>
                             @if ($order->status >= 1)
-                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->created_at)) }}</p>
+                                <p class="m-0">{{ orderTimeFormat($order->created_at) }}</p>
                             @endif
                         </div>
                         <div class="step step-2 text-center">
@@ -41,7 +41,7 @@
                             </div>
                             <h5>{{ __('Order Proccesing') }}</h5>
                             @if ($order->status >= 2)
-                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->od->created_at)) }}</p>
+                                <p class="m-0">{{ orderTimeFormat($order->od->created_at) }}</p>
                             @endif
                         </div>
                         <div class="step step-3 text-center">
@@ -52,7 +52,9 @@
                             </div>
                             <h5>{{ __('Order Shipped') }}</h5>
                             @if ($order->status >= 4)
-                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->od->odrs->where('status','!=',0)->first()->created_at)) }}</p>
+                                <p class="m-0">
+                                    {{ orderTimeFormat($order->od->odrs->where('status', '!=', 0)->first()->created_at) }}
+                                </p>
                             @endif
                         </div>
                         <div class="step step-4 text-center">
@@ -62,8 +64,8 @@
                                 @endif
                             </div>
                             <h5>{{ __('Out For Delivery') }}</h5>
-                            @if ($order->status == 5)
-                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->od->rider_collected_at)) }}</p>
+                            @if ($order->status >= 5)
+                                <p class="m-0">{{ orderTimeFormat($order->od->rider_collected_at) }}</p>
                             @endif
                         </div>
                         <div class="step step-5 text-center">
@@ -74,7 +76,7 @@
                             </div>
                             <h5>{{ __('Delivered') }}</h5>
                             @if ($order->status >= 6)
-                                <p class="m-0">{{ date('M d, h:ma', strtotime($order->od->rider_delivered_at)) }}</p>
+                                <p class="m-0">{{ orderTimeFormat($order->od->rider_delivered_at) }}</p>
                             @endif
                         </div>
                     </div>
@@ -189,8 +191,8 @@
                                         @foreach ($order->payments as $payment)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $payment->transaction_id}}</td>
-                                                <td>{!! get_taka_icon(). number_format(ceil($payment->amount),2) !!}
+                                                <td>{{ $payment->transaction_id }}</td>
+                                                <td>{!! get_taka_icon() . number_format(ceil($payment->amount), 2) !!}
                                                 </td>
                                                 <td><span
                                                         class="{{ $payment->statusBg() }}">{{ $payment->statusTitle() }}</span>

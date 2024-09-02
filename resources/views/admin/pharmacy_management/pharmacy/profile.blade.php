@@ -100,63 +100,45 @@
                             <li>
                                 <i class="fa-solid fa-phone-volume mr-2"></i>
                                 <span class="title">{{ __('Mobile : ') }}</span>
-                                <span class="content">{{ $pharmacy->phone ?? '--' }}</span>
+                                <span class="content">{{ $pharmacy->phone ?? 'null' }}</span>
                             </li>
                             <li>
                                 <i class="fa-regular fa-envelope mr-2"></i>
                                 <span class="title">{{ __('Email : ') }}</span>
-                                <span class="content">{{ $pharmacy->email ?? '--' }}</span>
+                                <span class="content">{{ $pharmacy->email ?? 'null' }}</span>
                             </li>
                             <li>
                                 <i class="fa-solid fa-location-dot mr-2"></i>
                                 <span class="title">{{ __('Address : ') }}</span>
-                                <span class="content">{!! $pharmacy->address ? $pharmacy->address->address : '--' !!}</span>
+                                <span class="content">{!! $pharmacy->address ? $pharmacy->address->address : 'null' !!}</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="card card-user mt-3 mb-0">
-                <div class="card-header p-0">
-                    <div class="map" id="map" data-lat="{{ optional($pharmacy->address)->latitude }}"
-                        data-lng="{{ optional($pharmacy->address)->longitude }}"></div>
-                </div>
-                <div class="card-body contact_info"
-                    style="border: 0;
-                        border-radius: 0 0 5px 5px;">
-                    <ul class="m-0 list-unstyled">
-                        <li>
-                            <i class="fa-solid fa-mountain-city mr-2"></i>
-                            <span class="title">{{ __('City : ') }}</span>
-                            <span class="content">{{ $pharmacy->address ? $pharmacy->address->city : '--' }}</span>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-road mr-2"></i>
-                            <span class="title">{{ __('Street Name : ') }}</span>
-                            <span
-                                class="content">{{ $pharmacy->address ? $pharmacy->address->street_address : '--' }}</span>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-door-open mr-2"></i>
-                            <span class="title">{{ __('Apartment Name : ') }}</span>
-                            <span class="content">{{ $pharmacy->address ? $pharmacy->address->apartment : '--' }}</span>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-stairs mr-2"></i>
-                            <span class="title">{{ __('Floor : ') }}</span>
-                            <span class="content">{{ $pharmacy->address ? $pharmacy->address->floor : '--' }}</span>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-hand-point-right mr-2"></i>
-                            <span class="title">{{ __('Delivery Man Instruction : ') }}</span>
-                            <span class="content">{!! $pharmacy->address ? $pharmacy->address->delivery_instruction : '--' !!}</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
+        @include('admin.pharmacy_management.pharmacy.includes.location_map')
+
+
     </div>
 @endsection
+@push('js')
+    <script>
+        function location_map() {
+            if ($('#details').hasClass('active')) {
+                $('#location_map').show();
+            } else {
+                $('#location_map').hide();
+            }
+        }
+        location_map();
+        $(document).ready(function() {
+            $('.nav-tabs .nav-link').on('click', function() {
+                location_map();
+            });
+        });
+    </script>
+@endpush
 @push('js_link')
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">

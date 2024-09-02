@@ -17,8 +17,12 @@ class OrderDistribution extends BaseModel
         'prep_time',
         'note',
         'status',
+        'pharmacy_prep_time',
         'rider_collect_time',
         'rider_delivery_time',
+        'pharmacy_preped_at	',
+        'rider_collected_at',
+        'rider_delivered_at',
     ];
 
     public function order()

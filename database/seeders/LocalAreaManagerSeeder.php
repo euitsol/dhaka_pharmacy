@@ -19,18 +19,21 @@ class LocalAreaManagerSeeder extends Seeder
             'name' => 'Test LAM-1',
             'phone' => '01711122231',
             'password' => Hash::make('01711122231'),
-            ]);
+            'is_verify' => 1,
+        ]);
         LocalAreaManager::create([
-                'dm_id' => 2,
-                'name' => 'Test LAM-2',
-                'phone' => '01711122232',
-                'password' => Hash::make('01711122232'),
-            ]);
+            'dm_id' => 2,
+            'name' => 'Test LAM-2',
+            'phone' => '01711122232',
+            'password' => Hash::make('01711122232'),
+            'is_verify' => 1,
+        ]);
         LocalAreaManager::create([
-                'dm_id' => 3,
-                'name' => 'Test LAM-3',
-                'phone' => '01711122233',
-                'password' => Hash::make('01711122233'),
-            ]);
+            'dm_id' => 3,
+            'name' => 'Test LAM-3',
+            'phone' => '01711122233',
+            'password' => Hash::make('01711122233'),
+            'is_verify' => 1,
+        ]);
     }
 }

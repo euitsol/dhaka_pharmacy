@@ -15,6 +15,7 @@ use App\Models\Pharmacy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
@@ -31,7 +32,7 @@ class PharmacyProfileController extends Controller
     public function profile(): View
     {
         $data['document'] = Documentation::where('module_key', 'pharmacy_profile_documentation')->first();
-        $data['pharmacy'] = Pharmacy::with(['address'])->findOrFail(pharmacy()->id);
+        $data['pharmacy'] = Pharmacy::with(['address', 'operation_area', 'operation_sub_area'])->findOrFail(pharmacy()->id);
         $data['operation_areas'] = OperationArea::activated()->latest()->get();
         $data['operation_sub_areas'] = OperationSubArea::activated()->latest()->get();
 
@@ -66,20 +67,33 @@ class PharmacyProfileController extends Controller
     {
 
         $pharmacy = Pharmacy::findOrFail(pharmacy()->id);
+
+        if ($request->hasFile('identification_file')) {
+            $file = $request->file('identification_file');
+            $fileName = pharmacy()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $folderName = 'pharmacy/identification-file/' . pharmacy()->id;
+            $path = $file->storeAs($folderName, $fileName, 'public');
+            if (!empty($pharmacy->identification_file)) {
+                $this->fileDelete($pharmacy->identification_file);
+            }
+            $pharmacy->identification_file = $path;
+        }
+
+        $pharmacy->name = $request->name;
+        $pharmacy->phone = $request->phone;
+        $pharmacy->email = $request->email;
         if (empty($pharmacy->oa_id)) {
             $pharmacy->oa_id = $request->oa_id;
         }
         if (empty($pharmacy->osa_id)) {
             $pharmacy->osa_id = $request->osa_id;
         }
-        $pharmacy->name = $request->name;
-        $pharmacy->phone = $request->phone;
-        $pharmacy->email = $request->email;
-        $pharmacy->identification_type = $request->identification_type;
-        $pharmacy->identification_no = $request->identification_no;
-        $pharmacy->present_address = $request->present_address;
-        $pharmacy->permanent_address = $request->permanent_address;
-        $pharmacy->emergency_phone = $request->emergency_phone;
+        if (!empty($request->identification_type)) {
+            $pharmacy->identification_type = $request->identification_type;
+        }
+        if (!empty($request->emergency_phone)) {
+            $pharmacy->emergency_phone = $request->emergency_phone;
+        }
         $pharmacy->update();
         flash()->addSuccess('Profile updated successfully.');
         return redirect()->back();
@@ -116,5 +130,23 @@ class PharmacyProfileController extends Controller
             return $sub_area->status == 1;
         });
         return response()->json($data);
+    }
+
+    public function view_or_download($file_url)
+    {
+        $file_url = base64_decode($file_url);
+        if (Storage::exists('public/' . $file_url)) {
+            $fileExtension = pathinfo($file_url, PATHINFO_EXTENSION);
+
+            if (strtolower($fileExtension) === 'pdf') {
+                return response()->file(storage_path('app/public/' . $file_url), [
+                    'Content-Disposition' => 'inline; filename="' . basename($file_url) . '"'
+                ]);
+            } else {
+                return response()->download(storage_path('app/public/' . $file_url), basename($file_url));
+            }
+        } else {
+            return response()->json(['error' => 'File not found'], 404);
+        }
     }
 }

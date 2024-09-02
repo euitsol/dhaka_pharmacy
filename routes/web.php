@@ -111,6 +111,7 @@ use App\Http\Controllers\Frontend\PrivacyPolicyPageController;
 use App\Http\Controllers\Frontend\TermsAndConditionsPageController;
 use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
 use App\Http\Controllers\LAM\WithdrawMethodController as LamWithdrawMethodController;
+use App\Http\Controllers\Pharmacy\Auth\EmailVerificationController as PharmacyEmailVerificationController;
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
 use App\Http\Controllers\Pharmacy\WithdrawMethodController as PharmacyWithdrawMethodController;
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
@@ -316,6 +317,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('delete/{id}', 'delete')->name('pharmacy_delete');
             Route::get('discount/{id}', 'pharmacyDiscount')->name('pharmacy_discount');
             Route::post('discount/update/{id}', 'pharmacyDiscountUpdate')->name('update.pharmacy_discount');
+            Route::get('file-download/{url}', 'view_or_download')->name('download.pharmacy_list');
         });
 
         // KYC ROUTES
@@ -369,7 +371,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('details/{id}', 'details')->name('details.district_manager_list');
             Route::get('profile/{id}', 'profile')->name('district_manager_profile');
             Route::get('profile/{id}', 'profile')->name('district_manager_profile');
-            Route::get('cv/download/{url}', 'view_or_download')->name('download.district_manager_profile');
+            Route::get('file/download/{url}', 'view_or_download')->name('download.district_manager_profile');
             Route::get('dashboard/{id}', 'loginAs')->name('login_as.district_manager_profile');
             Route::get('create', 'create')->name('district_manager_create');
             Route::post('create', 'store')->name('district_manager_create');
@@ -704,8 +706,6 @@ Route::get('/kyc/file/delete', [FileUploadController::class, 'kycFileDelete'])->
 // Pharmacy Auth Routes
 Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'pharmacy'], function () {
     Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('profile');
-
-
     Route::get('/dashboard', [PharmacyDashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::controller(PharmacyKycVerificationController::class)->prefix('kyc')->name('kyc.')->group(function () {
@@ -715,12 +715,19 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
         // Route::get('/file/delete', 'delete')->name('file.delete');
     });
 
+    Route::controller(PharmacyEmailVerificationController::class)->prefix('email')->name('email.')->group(function () {
+        Route::get('/send-otp', 'send_otp')->name('send.otp');
+        Route::get('/verification', 'index')->name('verify');
+        Route::post('/verification', 'verify')->name('verify');
+    });
+
     Route::controller(PharmacyProfileController::class)->prefix('profile')->name('profile.')->group(function () {
         Route::get('/', 'profile')->name('index');
         Route::put('/update', 'update')->name('update');
         Route::post('/address/store', 'address')->name('address');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
+        Route::get('file/download/{url}', 'view_or_download')->name('file.download');
 
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });
@@ -780,7 +787,7 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
         Route::post('/update/image', 'updateImage')->name('update.image');
-        Route::get('cv/download/{url}', 'view_or_download')->name('file.download');
+        Route::get('file/download/{url}', 'view_or_download')->name('file.download');
     });
 
     //LAM Route
@@ -856,7 +863,7 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
-        Route::get('cv/download/{url}', 'view_or_download')->name('file.download');
+        Route::get('file/download/{url}', 'view_or_download')->name('file.download');
     });
 
     Route::controller(LamOperationalAreaController::class)->prefix('operational-area')->name('operational_area.')->group(function () {
@@ -924,7 +931,7 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::put('/update', 'update')->name('update');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
-        Route::get('cv/download/{url}', 'view_or_download')->name('file.download');
+        Route::get('file/download/{url}', 'view_or_download')->name('file.download');
 
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });

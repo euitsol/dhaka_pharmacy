@@ -147,26 +147,23 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status == 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status == 1 ? 'badge-success' :
-                            'badge-danger';
-                        let kycStatus = data.kyc_status == 1 ? 'Complete' : 'Pending';
-                        let kycStatusClass = data.kyc_status == 1 ? 'badge-info' :
-                            'badge-warning';
-                        let verifyStatus = data.is_verify == 1 ? 'Success' : 'Pending';
-                        let verifyStatusClass = data.is_verify == 1 ? 'badge-primary' :
-                            'badge-dark';
+                        console.log(data.identificationDocument);
+
+                        let document = 'null'
+                        if (data.identificationDocument) {
+                            let download_route =
+                                "{{ route('pm.pharmacy.download.pharmacy_list', ['path']) }}";
+                            download_route = download_route.replace('path', data
+                                .identificationDocument);
+                            document = `<a class="btn btn-info btn-sm" href="${download_route}"><i
+                                                            class="fa-regular fa-circle-down"></i></a>`;
+                        }
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
                                         <td>${data.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Email</th>
-                                        <th>:</th>
-                                        <td>${data.email}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Image</th>
@@ -181,19 +178,54 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">Email</th>
+                                        <th>:</th>
+                                        <td>${data.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Pharmacy / Responsible Person Phone</th>
+                                        <th>:</th>
+                                        <td>${data.phone ?? 'null'}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Emergency Phone</th>
+                                        <th>:</th>
+                                        <td>${data.emergency_phone ?? 'null'}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identification Type</th>
+                                        <th>:</th>
+                                        <td>${data.identificationType ?? 'null'}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identification Document</th>
+                                        <th>:</th>
+                                        <td>${document}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
-                                        <td><span class="badge ${statusClass}">${status}</span></td>
+                                        <td><span class="badge ${data.statusBg}">${data.statusTitle}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">KYC Status</th>
                                         <th>:</th>
-                                        <td><span class="badge ${kycStatusClass}">${kycStatus}</span></td>
+                                        <td><span class="badge ${data.kycStatusBg}">${data.kycStatusTitle}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Email Verify</th>
                                         <th>:</th>
-                                        <td><span class="badge ${verifyStatusClass}">${verifyStatus}</span></td>
+                                        <td><span class="badge ${data.verifyStatusBg}">${data.verifyStatusTitle}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Operational Area</th>
+                                        <th>:</th>
+                                        <td>${data.operation_area ? data.operation_area.name : 'null'}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Operational Sub Area</th>
+                                        <th>:</th>
+                                        <td>${data.operation_sub_area ? data.operation_sub_area.name : 'null'}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created Date</th>
