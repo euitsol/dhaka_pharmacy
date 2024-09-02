@@ -24,7 +24,7 @@ class KycVerificationController extends Controller
     {
         $query = KycSetting::with('p_submitted_kyc')->where('type', 'pharmacy');
         $kyc = $query->first();
-        if (!$kyc->p_submitted_kyc) {
+        if ($kyc && !$kyc->p_submitted_kyc) {
             $kyc = $query->activated()->first();
         }
         return view('pharmacy.kyc_verification_center.index', ['kyc' => $kyc]);

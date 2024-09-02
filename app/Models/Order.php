@@ -79,9 +79,14 @@ class Order extends BaseModel
             case 'assigned':
                 $status = 4;
                 break;
-            default:
-                $status =  'Unknown';
+            case 'picked-up':
+                return 5;
                 break;
+            case 'delivered':
+                return 6;
+                break;
+            default:
+                return 'Not-defined';
         }
         return $query->where('status', $status);
     }

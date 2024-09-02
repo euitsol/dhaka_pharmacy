@@ -42,7 +42,7 @@ class DistributedOrderController extends Controller
     //     //     ->each(function (&$do) {
     //     //         $this->calculateOrderTotalDiscountPrice($do->order);
     //     //     });
-    //     // return view('admin.distributed_order.index', $data);
+    //     // return view('admin.order_management.distributed_order.index', $data);
     // }
     // public function dispute($status): View
     // {
@@ -59,7 +59,7 @@ class DistributedOrderController extends Controller
     //         })->filter(function ($do) {
     //             return $do->odps->where('status', 3)->isNotEmpty();
     //         });
-    //     return view('admin.distributed_order.index', $data);
+    //     return view('admin.order_management.distributed_order.index', $data);
     // }
 
     // public function details($do_id): View
@@ -86,7 +86,7 @@ class DistributedOrderController extends Controller
     //         $data['do_rider'] = $query->odrs->where('status', '!=', 0)->where('status', '!=', -1)->first();
     //         $data['dispute_do_riders'] = $query->odrs()->where('status', '=', 0)->where('status', '=', -1)->latest()->get();
     //     }
-    //     return view('admin.distributed_order.details', $data);
+    //     return view('admin.order_management.distributed_order.details', $data);
     // }
     // public function update(DisputeOrderRequest $req): RedirectResponse
     // {

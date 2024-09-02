@@ -148,7 +148,7 @@
                                     </div>
                                     @if (!empty($lam->cv))
                                         <a class="btn btn-primary" target="_blank"
-                                            href="{{ route('lam.profile.cv.download', base64_encode($lam->cv)) }}"><i
+                                            href="{{ route('lam.profile.file.download', base64_encode($lam->cv)) }}"><i
                                                 class="fa-solid fa-download"></i></a>
                                     @endif
                                 </div>
