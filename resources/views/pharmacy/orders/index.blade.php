@@ -39,7 +39,7 @@
                         </thead>
                         <tbody>
 
-                            @foreach ($ods as $od)
+                            @foreach ($ods as $key => $od)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $od->order->order_id }} </td>
@@ -64,7 +64,8 @@
                                     <td> {{ $od->paymentType() }} </td>
                                     <td> {{ $od->distributionType() }} </td>
                                     <td>
-                                        <span class="{{ $od->statusBg() }}">{{ $od->statusTitle() }}</span>
+                                        <span
+                                            class="{{ $od->odps->first()->pStatusBg() }}">{{ slugTotitle($od->odps->first()->pStatusTitle()) }}</span>
                                     </td>
                                     <td>
                                         <div class="dropdown">

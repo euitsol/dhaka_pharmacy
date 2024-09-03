@@ -1,85 +1,36 @@
-@extends('pharmacy.layouts.master', ['pageSlug' => $do->statusTitle() . '_orders'])
+@extends('pharmacy.layouts.master', ['pageSlug' => $do->odps->first()->pStatusSlug() . '_orders'])
 @section('title', 'Order Details')
-@push('css')
-    <style>
-        .rider_image {
-            text-align: center;
-        }
-
-        .rider_image img {
-            height: 250px;
-            width: 250px;
-            border-radius: 50%;
-        }
-
-
-        .otp-field {
-            flex-direction: row;
-            column-gap: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .otp-field input {
-            height: 45px;
-            background-color: #e9e9e9 !important;
-            width: 42px;
-            border-radius: 6px;
-            outline: none;
-            font-size: 1.125rem;
-            text-align: center;
-            border: 1px solid var(--bg-1);
-            padding: unset !important;
-        }
-
-        .otp-field input:focus {
-            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        .otp-field input::-webkit-inner-spin-button,
-        .otp-field input::-webkit-outer-spin-button {
-            display: none;
-        }
-
-        .submit_button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .verify-btn {
-            margin-top: 2rem;
-            width: 20rem;
-        }
-    </style>
+@push('css_link')
+    <link href="https://pbutcher.uk/flipdown/css/flipdown/flipdown.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('pharmacy/css/order_details.css') }}">
 @endpush
 @section('content')
-    @php
-        $odps_status = $do->odps->pluck('status')->first();
-    @endphp
     <div class="card">
-        <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="card-header d-flex align-items-center justify-content-between flex-wrap">
             <div class="d-flex align-items-center gap-2">
-                <h4 class="card-title">
+                <h4 class="card-title mb-0">
                     {{ __('Order Details ') }}
                 </h4>
-                @if ($odps_status < 2)
-                    <h4> {!! ' - ' . remainingTime($do->pharmacy_prep_time, true) !!} </h4>
-                @endif
             </div>
+            @if ($odps_status < 2)
+                <div class="flipdown" id="flipdown"></div>
+            @endif
 
-            <a href="{{ URL::previous() }}" class="btn btn-primary">{{ __('Back') }}</a>
+            <a href="{{ route('pharmacy.order_management.index', $do->odps->first()->pStatusSlug()) }}"
+                class="btn btn-primary">{{ __('Back') }}</a>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8">
                     @include('pharmacy.orders.includes.order_details', [
                         'do' => $do,
-                        'odps_status' => $odps_status,
                     ])
                 </div>
                 <div class="col-md-4">
-                    @include('pharmacy.orders.includes.order_tracking', ['do' => $do])
+                    @include('pharmacy.orders.includes.order_tracking', [
+                        'do' => $do,
+                        'odps_status' => $odps_status,
+                    ])
                 </div>
                 <div class="col-md-12">
                     <div class="card ">
@@ -87,11 +38,6 @@
                             @include('pharmacy.orders.includes.otp-verify')
                             <form action="{{ route('pharmacy.order_management.update', encrypt($do->id)) }}" method="POST">
                                 @csrf
-                                <div class="row mb-3">
-                                    <div class="col-12 px-4 text-end">
-                                        <span class="{{ $do->statusBg() }}">{{ __(slugToTitle($do->statusTitle())) }}</span>
-                                    </div>
-                                </div>
                                 @foreach ($do->odps as $key => $dop)
                                     <div class="col-12 status_wrap">
                                         <div class="card card-2 mb-0 mt-3">
@@ -113,6 +59,9 @@
                                                                 :
                                                                 {{ $dop->order_product->quantity }} &nbsp; &nbsp; Pack :
                                                                 {{ $dop->order_product->unit->name ?? 'Piece' }}
+                                                            </div>
+                                                            <div class="col my-auto text-end"><span
+                                                                    class="{{ $dop->statusBg() }}">{{ slugToTitle($dop->statusTitle()) }}</span>
                                                             </div>
                                                             <div class="col my-auto">
                                                                 <h6 class="my-auto text-center">
@@ -218,92 +167,16 @@
     </div>
     @include('pharmacy.orders.includes.otp-modal')
 @endsection
-@push('js')
-    <script>
-        $(document).ready(function() {
-            $('.do_status').on('change', function() {
-                if ($(this).val() == 3) {
-                    $(this).closest('.status_wrap').find('.status_note').show();
-                } else {
-                    $(this).closest('.status_wrap').find('.status_note').hide();
-                    $(this).closest('.status_wrap').find('.status_note .form-control').val('');
-                }
-            });
-
-
-            $(document).ready(function() {
-                const inputs = $(".otp-field > input");
-                const button = $(".verify-btn");
-
-                inputs.eq(0).focus();
-                button.prop("disabled", true);
-
-                inputs.eq(0).on("paste", function(event) {
-                    event.preventDefault();
-
-                    const pastedValue = (event.originalEvent.clipboardData || window.clipboardData)
-                        .getData(
-                            "text");
-                    const otpLength = inputs.length;
-
-                    for (let i = 0; i < otpLength; i++) {
-                        if (i < pastedValue.length) {
-                            inputs.eq(i).val(pastedValue[i]);
-                            inputs.eq(i).removeAttr("disabled");
-                            inputs.eq(i).focus();
-                        } else {
-                            inputs.eq(i).val(""); // Clear any remaining inputs
-                            inputs.eq(i).focus();
-                        }
-                    }
-                });
-
-                inputs.each(function(index1) {
-                    $(this).on("keyup", function(e) {
-                        const currentInput = $(this);
-                        const nextInput = currentInput.next();
-                        const prevInput = currentInput.prev();
-
-                        if (currentInput.val().length > 1) {
-                            currentInput.val("");
-                            return;
-                        }
-
-                        if (nextInput && nextInput.attr("disabled") && currentInput
-                            .val() !== "") {
-                            nextInput.removeAttr("disabled");
-                            nextInput.focus();
-                        }
-
-                        if (e.key === "Backspace") {
-                            inputs.each(function(index2) {
-                                if (index1 <= index2 && prevInput) {
-                                    $(this).attr("disabled", true);
-                                    $(this).val("");
-                                    prevInput.focus();
-                                }
-                            });
-                        }
-
-                        button.prop("disabled", true);
-
-                        const inputsNo = inputs.length;
-                        if (!inputs.eq(inputsNo - 1).prop("disabled") && inputs.eq(
-                                inputsNo - 1)
-                            .val() !== "") {
-                            button.prop("disabled", false);
-                            return;
-                        }
-                    });
-                });
-            });
-        });
-    </script>
-@endpush
 @push('js_link')
+    <script>
+        const data = {
+            'prepTime': `{{ $do->pharmacy_prep_time }}`,
+        };
+    </script>
+    <script src="https://pbutcher.uk/flipdown/js/flipdown/flipdown.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script src="{{ asset('pharmacy/js/remaining.js') }}"></script>
+    <script src="{{ asset('pharmacy/js/order_details.js') }}"></script>
 @endpush

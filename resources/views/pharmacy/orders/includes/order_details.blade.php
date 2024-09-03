@@ -5,8 +5,9 @@
                 <tr>
                     <td class="fw-bold">{{ __('Order ID') }} </td>
                     <td>:</td>
-                    <td>{{ $do->order->order_id }} <sup><span
-                                class="{{ $do->order->statusBg() }}">{{ slugToTitle($do->order->statusTitle()) }}</span></sup>
+                    <td>{{ $do->order->order_id }}
+                        <sup><span
+                                class="{{ $do->odps->first()->pStatusBg() }}">{{ slugToTitle($do->odps->first()->pStatusTitle()) }}</span></sup>
                     </td>
                 </tr>
                 <tr>
