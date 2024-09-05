@@ -13,12 +13,11 @@ class BaseRequest extends FormRequest
         $errors = $validator->errors();
         $response = response()->json([
             'success' => false,
-            'message' => 'Invalid data sent',
+            // 'message' => 'Invalid data sent',
+            'message' => $errors->messages(),
             'token' => null,
-            'data' => $errors->messages(),
+            // 'data' => $errors->messages(),
         ], 422);
         throw new HttpResponseException($response);
-
     }
-
 }
