@@ -14,7 +14,7 @@ class BaseRequest extends FormRequest
         $response = response()->json([
             'success' => false,
             // 'message' => 'Invalid data sent',
-            'message' => $errors->messages(),
+            'message' => implode(' ', $errors->all()),
             'token' => null,
             // 'data' => $errors->messages(),
         ], 422);
