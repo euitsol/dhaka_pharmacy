@@ -62,7 +62,7 @@
                         <div class="status_details pb-2">
                             <h5>{{ __('Order Delivered') }}</h5>
                             @if ($odps_status >= 3)
-                                <span>{{ orderTimeFormat($do->rider_collected_at, true) }}
+                                <span>{{ orderTimeFormat($do->odps->pluck('updated_at')->max(), true) }}
                                 </span>
                             @endif
                         </div>

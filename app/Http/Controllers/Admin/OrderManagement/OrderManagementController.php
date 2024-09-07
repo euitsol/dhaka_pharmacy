@@ -125,12 +125,15 @@ class OrderManagementController extends Controller
         $data['pharmacies'] = Pharmacy::with(['operation_area', 'operation_sub_area', 'address'])->activated()->kycVerified()->latest()->get()->reject(function ($pharmacy) use ($data) {
             $pharmacy->area = getPharmacyArea($pharmacy);
             $pharmacy->sub_area = getPharmacySubArea($pharmacy);
-            $pharmacy->distance = $this->calculateDistance(
-                $pharmacy->address->latitude,
-                $pharmacy->address->longitude,
-                $data['order']->address->latitude,
-                $data['order']->address->longitude
-            );
+            if ($pharmacy->address) {
+                $pharmacy->distance = $this->calculateDistance(
+                    $pharmacy->address->latitude,
+                    $pharmacy->address->longitude,
+                    $data['order']->address->latitude,
+                    $data['order']->address->longitude
+                );
+            }
+
 
             // Reject the pharmacy if the distance exceeds the configured radius
             return $pharmacy->distance > config('mapbox.pharmacy_radious');
@@ -250,12 +253,14 @@ class OrderManagementController extends Controller
         $data['pharmacies'] = Pharmacy::with(['operation_area', 'operation_sub_area', 'address'])->activated()->kycVerified()->latest()->get()->reject(function ($pharmacy) use ($data) {
             $pharmacy->area = getPharmacyArea($pharmacy);
             $pharmacy->sub_area = getPharmacySubArea($pharmacy);
-            $pharmacy->distance = $this->calculateDistance(
-                $pharmacy->address->latitude,
-                $pharmacy->address->longitude,
-                $data['do']->order->address->latitude,
-                $data['do']->order->address->longitude
-            );
+            if ($pharmacy->address) {
+                $pharmacy->distance = $this->calculateDistance(
+                    $pharmacy->address->latitude,
+                    $pharmacy->address->longitude,
+                    $data['do']->order->address->latitude,
+                    $data['do']->order->address->longitude
+                );
+            }
         });
 
 

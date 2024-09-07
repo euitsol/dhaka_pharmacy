@@ -6,8 +6,8 @@
                     <td class="fw-bold">{{ __('Order ID') }} </td>
                     <td>:</td>
                     <td>{{ $do->order->order_id }}
-                        <sup><span
-                                class="{{ $do->odps->first()->pStatusBg() }}">{{ slugToTitle($do->odps->first()->pStatusTitle()) }}</span></sup>
+                        {{-- <sup><span
+                                class="{{ $do->odps->first()->pStatusBg() }}">{{ slugToTitle($do->odps->first()->pStatusTitle()) }}</span></sup> --}}
                     </td>
                 </tr>
                 <tr>
