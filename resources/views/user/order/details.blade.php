@@ -109,7 +109,7 @@
                     <div class="col-3">
                         <div class="order-details">
                             <span>{{ __('Delivery Address') }}</span>
-                            <p>{{ __($order->address->address) }}</p>
+                            <p>{{ __(optional($order->address)->address) }}</p>
                         </div>
                     </div>
                 </div>

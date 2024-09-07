@@ -41,7 +41,7 @@
                                             <div class="d-flex gap-3 align-items-center">
                                                 <span
                                                     class="{{ $order->statusBg }} badge-lg">{{ __($order->statusTitle) }}</span>
-                                                @if ($order->od->status == 4)
+                                                @if (isset($order->od) && $order->od->status == 4)
                                                     <p class="fw-bold"><span>{{ __('OTP: ') }}</span> <span
                                                             class="badge bg-info">{{ $order->od->delivery_active_otps->first()->otp }}</span>
                                                     </p>
