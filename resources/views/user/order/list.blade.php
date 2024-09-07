@@ -38,10 +38,17 @@
                                             </p>
                                         </div>
                                         <div class="status ms-3">
-                                            <span
-                                                class="{{ $order->statusBg }} badge-lg">{{ __($order->statusTitle) }}</span>
+                                            <div class="d-flex gap-3 align-items-center">
+                                                <span
+                                                    class="{{ $order->statusBg }} badge-lg">{{ __($order->statusTitle) }}</span>
+                                                @if (isset($order->od) && $order->od->status == 4)
+                                                    <p class="fw-bold"><span>{{ __('OTP: ') }}</span> <span
+                                                            class="badge bg-info">{{ $order->od->delivery_active_otps->first()->otp }}</span>
+                                                    </p>
+                                                @endif
+                                            </div>
 
-                                            <p class="total text-center p-0">
+                                            <p class="total p-0">
                                                 {{ __('Total Amount: ') }}<span
                                                     class="fw-bold">{{ number_format($order->totalPrice, 2) }}{{ __('tk') }}</span>
                                             </p>

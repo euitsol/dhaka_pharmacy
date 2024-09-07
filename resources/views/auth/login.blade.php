@@ -14,17 +14,18 @@
                             <h1 class="otp_title">{{ __('LOGIN IN WITH OTP') }}</h1>
                             <h1 class="login_title" style="display: none;">{{ __('LOGIN WITH PASSWORD') }}</h1>
                             <h3>{{ __('Follow the instructions to make it easier to register and you will be able to explore
-                                                                                                                                                                                                                                                                                                                                                                                inside.') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                inside.') }}
                             </h3>
                         </div>
 
 
                         {{-- Sent OTP --}}
-                        <form class="otp_form">
+                        <form class="otp_form" autocomplete="off">
                             @csrf
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                                <input type="text" name="phone" placeholder="Phone" class="phone">
+                                <input type="text" name="phone" placeholder="Phone" class="phone" autocomplete="off"
+                                    readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
 
@@ -43,16 +44,19 @@
 
 
                         {{-- login With Password --}}
-                        <form action="{{ route('login') }}" method="POST" class="login_form" style="display: none;">
+                        <form action="{{ route('login') }}" method="POST" class="login_form" style="display: none;"
+                            autocomplete="off">
                             @csrf
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                                <input type="text" name="phone" placeholder="Phone" class="phone">
+                                <input type="text" name="phone" placeholder="Phone" class="phone" autocomplete="off"
+                                    readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
                             <div class="pass input-box password_input">
                                 <span class="icon"><i class="fa-solid fa-lock"></i></span>
-                                <input type="password" name="password" placeholder="Password" class="password">
+                                <input type="password" name="password" placeholder="Password" class="password"
+                                    autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                                 <span class="icon eye"><i id="eye-icon" class="fa-solid fa-eye"></i></i></span>
                             </div>
                             @include('alerts.feedback', ['field' => 'password'])
@@ -65,7 +69,7 @@
                             <input class="login_button submit_button" type="submit" value="LOGIN">
                             <p class="get-otp">{{ __('Not yet registered? ') }}<a
                                     href="{{ route('use.register') }}">{{ __('Create an
-                                                                                                                                                                                    account') }}</a>
+                                                                                                                                                                                                                                                                                                                                    account') }}</a>
                             </p>
                         </form>
                         {{-- login With Password --}}
@@ -83,7 +87,7 @@
                             </h1>
                             <h3>{{ __('We have sent a verification code to your mobile number') }}</h3>
                         </div>
-                        <form action="{{ route('use.otp.verify') }}" method="POST">
+                        <form action="{{ route('use.otp.verify') }}" method="POST" autocomplete="off">
                             @csrf
                             <div class="field-set otp-field text-center">
                                 <input name=otp[] type="number" />

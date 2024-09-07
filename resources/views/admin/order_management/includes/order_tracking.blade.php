@@ -143,7 +143,7 @@
                                 </p>
                                 @if ($order->status < 5)
                                     <p class="m-0">
-                                        <span>{{ __('Rider collection time left') }} ( {!! remainingTime($order->od->rider_collect_time, true) !!} )</span>
+                                        <span>{{ __('Order collection time left') }} ( {!! remainingTime($order->od->rider_collect_time, true) !!} )</span>
                                     </p>
                                 @endif
                             @endif
@@ -168,7 +168,7 @@
                                 </p>
                                 @if ($order->status < 6)
                                     <p class="m-0">
-                                        <span>{{ __('Rider delivery time left') }} ( {!! remainingTime($order->od->rider_delivery_time, true) !!} )</span>
+                                        <span>{{ __('Order delivery time left') }} ( {!! remainingTime($order->od->rider_delivery_time, true) !!} )</span>
                                     </p>
                                 @endif
                             @endif

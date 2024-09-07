@@ -37,20 +37,24 @@ class OrderManagementController extends Controller
 
         switch ($status) {
             case 'assigned':
-                $query =  OrderDistribution::with(['order', 'odps' => function($query) use ($pharmacy_id) {$query->where('pharmacy_id', $pharmacy_id);}, 'odrs', 'order.products.discounts', 'order.products.pivot','order.products.pivot.unit'])->whereHas('odps', function ($query) use($pharmacy_id) {
-                            $query->where(function ($subQuery) {
-                                $subQuery->where('status', 0)->orWhere('status', 1);
-                            })->where('pharmacy_id', $pharmacy_id);
-                        })->where(function ($subQuery) {
-                            $subQuery->where('status', 0)->orWhere('status', 1);
-                        });
+                $query =  OrderDistribution::with(['order', 'odps' => function ($query) use ($pharmacy_id) {
+                    $query->where('pharmacy_id', $pharmacy_id);
+                }, 'odrs', 'order.products.discounts', 'order.products.pivot', 'order.products.pivot.unit'])->whereHas('odps', function ($query) use ($pharmacy_id) {
+                    $query->where(function ($subQuery) {
+                        $subQuery->where('status', 0)->orWhere('status', 1);
+                    })->where('pharmacy_id', $pharmacy_id);
+                })->where(function ($subQuery) {
+                    $subQuery->where('status', 0)->orWhere('status', 1);
+                });
                 break;
 
             case 'prepared':
 
-                $query =  OrderDistribution::with(['order', 'odps' => function($query) use ($pharmacy_id) {$query->where('pharmacy_id', $pharmacy_id);}, 'odrs', 'order.products.discounts', 'order.products.pivot','order.products.pivot.unit'])->whereHas('odps', function ($query) use($pharmacy_id) {
+                $query =  OrderDistribution::with(['order', 'odps' => function ($query) use ($pharmacy_id) {
+                    $query->where('pharmacy_id', $pharmacy_id);
+                }, 'odrs', 'order.products.discounts', 'order.products.pivot', 'order.products.pivot.unit'])->whereHas('odps', function ($query) use ($pharmacy_id) {
                     $query->where(function ($subQuery) {
-                        $subQuery->where('status', 2);
+                        $subQuery->where('status', 2)->orWhere('status', 3);
                     })->where('pharmacy_id', $pharmacy_id);
                 });
                 break;
@@ -60,7 +64,7 @@ class OrderManagementController extends Controller
         }
 
 
-        $data['ods'] = $query->get()->each(function(&$od){
+        $data['ods'] = $query->latest()->get()->each(function (&$od) {
             $this->calculateOrderTotalDiscountPrice($od->order);
         });
 
@@ -68,16 +72,20 @@ class OrderManagementController extends Controller
         return view('pharmacy.orders.index', $data);
     }
 
+
     public function details($od_id): View
     {
         $pharmacy_id = pharmacy()->id;
         $data['do'] = OrderDistribution::with(['order', 'odr', 'odps' => function ($query) {
-                $query->where('pharmacy_id', pharmacy()->id);
-            }, 'odps.order_product','active_otps'])->findOrFail(decrypt($od_id));
+            $query->where('pharmacy_id', pharmacy()->id);
+        }, 'odps.order_product', 'active_otps'])->findOrFail(decrypt($od_id));
 
+        // $data['do']->update(['status' => 1]);
         // $data['otp'] = DistributionOtp::where('order_distribution_id', $data['do']->id)->where('otp_author_id', pharmacy()->id)->where('otp_author_type', get_class(pharmacy()))->first();
 
         //odp pending -> preparing
+
+        $data['odps_status'] = $data['do']->odps->pluck('status')->max();
         $this->updateODPStatus($data['do'], $pharmacy_id, 1);
         $this->calculateOrderTotalDiscountPrice($data['do']->order);
         $this->calculatePharmacyTotalAmount($data['do']);
@@ -118,8 +126,6 @@ class OrderManagementController extends Controller
         // $data['statusTitle'] = $this->statusTitle($this->getStatus($status));
         // $data['statusBg'] = $this->statusBg($this->getStatus($status));
         // $data['odr'] = $data['do']->odr->first();
-
-
         return view('pharmacy.orders.details', $data);
     }
 
@@ -163,33 +169,40 @@ class OrderManagementController extends Controller
 
     public function verify(Request $request): RedirectResponse
     {
-        $od = OrderDistribution::findOrFail($request->od);
+        $od = OrderDistribution::with(['odps', 'order'])->findOrFail($request->od);
         $otp = $od->active_otps->where('pharmacy_id', pharmacy()->id)->first();
         $reqOtp = implode('', $request->otp);
 
-        if(!empty($otp) && $otp->otp == $reqOtp){
-            DB::transaction(function () use ($od, $otp) {
-                $od->status = 4; // rider picked up
-                $od->save();
+        if (!empty($otp) && $otp->otp == $reqOtp) {
 
-                $od->order->status = 5; //picked up
-                $od->order->save();
+            $odps = OrderDistributionPharmacy::where('order_distribution_id', $od->id)->where('pharmacy_id', pharmacy()->id)->where('status', 2);
 
+            DB::transaction(function () use ($od, $otp, $odps) {
+                $odps->update(['status' => 3, 'updated_at' => Carbon::now()]); // pharmacy delivered
+                $od->load(['odps', 'order']);
+                if ($od->odps->filter(function ($odp) {
+                    return $odp->status == 2;
+                })->isEmpty()) {
+                    $od->status = 4; // rider picked up
+                    $od->save();
+
+                    $od->order->status = 5; //picked up
+                    $od->order->save();
+
+                    if ($od->assignedRider) {
+                        $assignedRider = $od->assignedRider->first();
+                        if ($assignedRider) {
+                            $assignedRider->status = 2; // picked up
+                            $assignedRider->save();
+                        }
+                    }
+                }
                 $otp->status = 2; //verified
                 $otp->save();
 
-                if ($od->assignedRider) {
-                    $assignedRider = $od->assignedRider->first();
-                    if ($assignedRider) {
-                        $assignedRider->status = 2; // picked up
-                        $assignedRider->save();
-                    }
-                }
-
                 flash()->addSuccess('Order delivered successfully.');
             });
-
-        }else{
+        } else {
             flash()->addError('Something went wrong. Please try again');
         }
 

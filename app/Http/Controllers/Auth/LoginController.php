@@ -210,7 +210,7 @@ class LoginController extends Controller
                     $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
                     $result = $this->sms_send($user->phone, $verification_sms);
 
-                    if ($result == true) {
+                    if ($result === true) {
                         $data['success'] = true;
                         $data['message'] = 'The verification code has been sent successfully.';
                         $data['url'] = route('use.send_otp');
@@ -220,7 +220,7 @@ class LoginController extends Controller
                     } else {
                         $data['success'] = false;
                         $data['error'] = '';
-                        $data['message'] = 'Oops! Something went wrong. Please try again.';
+                        $data['message'] = $result;
                     }
                 }
             } else {
@@ -281,12 +281,13 @@ class LoginController extends Controller
             $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
             $result = $this->sms_send($user->phone, $verification_sms);
 
-            if ($result == true) {
+
+            if ($result === true) {
                 $data['success'] = true;
                 $data['message'] = 'The verification code has been sent successfully.';
             } else {
                 $data['success'] = false;
-                $data['message'] = ' Oops! Something went wrong. Please try again.';
+                $data['message'] = $result;
             }
         }
         return response()->json($data);

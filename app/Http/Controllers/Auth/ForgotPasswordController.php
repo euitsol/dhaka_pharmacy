@@ -42,7 +42,7 @@ class ForgotPasswordController extends Controller
             // SMS SEND
             $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
             $result = $this->sms_send($user->phone, $verification_sms);
-            if ($result == true) {
+            if ($result === true) {
                 $s['uid'] = encrypt($user->id);
                 $s['message'] = 'The verification code has been sent successfully.';
                 $s['forgot'] = true;
@@ -51,7 +51,7 @@ class ForgotPasswordController extends Controller
                 Session::put('data', $s);
                 return redirect()->route('use.send_otp');
             } else {
-                flash()->addError('Oops! Something went wrong. Please try again.');
+                flash()->addError($result);
                 return redirect()->back();
             }
         }

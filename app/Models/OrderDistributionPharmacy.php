@@ -13,7 +13,8 @@ class OrderDistributionPharmacy extends BaseModel
         'order_distribution_id',
         'op_id',
         'pharmacy_id',
-        'status'
+        'status',
+        'updated_at'
     ];
 
     public function od()
@@ -62,6 +63,55 @@ class OrderDistributionPharmacy extends BaseModel
                 return 'Disputed';
             default:
                 return 'Not-defined';
+        }
+    }
+    public function pStatusSlug()
+    {
+        $status = $this->status;
+        switch ($status) {
+            case $status == 0 || $status == 1:
+                return 'assigned';
+                break;
+            case $status == 2 || $status == 3:
+                return 'prepared';
+                break;
+        }
+    }
+    public function pStatusTitle()
+    {
+        $status = $this->status;
+        switch ($status) {
+            case $status == 0:
+                return 'assigned';
+                break;
+            case $status == 1:
+                return 'assigned';
+                break;
+            case $status == 2:
+                return 'prepared';
+                break;
+            case $status == 3:
+                return 'delivered';
+                break;
+        }
+    }
+    public function pStatusBg()
+    {
+        $status = $this->status;
+        switch ($status) {
+            case $status == 0:
+                return 'badge bg-secondary';
+                break;
+            case $status == 1:
+                return 'badge bg-secondary';
+                break;
+
+            case $status == 2:
+                return 'badge badge-primary';
+                break;
+            case $status == 3:
+                return 'badge badge-success';
+                break;
         }
     }
 }
