@@ -122,24 +122,23 @@ class OrderManagementController extends Controller
     public function order_distribution($id)
     {
         $data['order'] = Order::with(['address', 'od.odps.order_product', 'od.odps.pharmacy', 'products', 'products.pivot.unit', 'payments'])->paid()->find(decrypt($id));
-        $data['pharmacies'] = Pharmacy::with(['operation_area', 'operation_sub_area', 'address'])->activated()->kycVerified()->latest()->get()->reject(function ($pharmacy) use ($data) {
-            $pharmacy->area = getPharmacyArea($pharmacy);
-            $pharmacy->sub_area = getPharmacySubArea($pharmacy);
-            if ($pharmacy->address) {
-                $pharmacy->distance = $this->calculateDistance(
-                    $pharmacy->address->latitude,
-                    $pharmacy->address->longitude,
-                    $data['order']->address->latitude,
-                    $data['order']->address->longitude
-                );
-            }
-
-
-            // Reject the pharmacy if the distance exceeds the configured radius
-            return $pharmacy->distance > config('mapbox.pharmacy_radious');
-        });
-
         if (!empty($data['order'])) {
+            $data['pharmacies'] = Pharmacy::with(['operation_area', 'operation_sub_area', 'address'])->activated()->kycVerified()->latest()->get()->reject(function ($pharmacy) use ($data) {
+                $pharmacy->area = getPharmacyArea($pharmacy);
+                $pharmacy->sub_area = getPharmacySubArea($pharmacy);
+                if ($pharmacy->address) {
+                    $pharmacy->distance = $this->calculateDistance(
+                        $pharmacy->address->latitude,
+                        $pharmacy->address->longitude,
+                        $data['order']->address->latitude,
+                        $data['order']->address->longitude
+                    );
+                }
+
+
+                // Reject the pharmacy if the distance exceeds the configured radius
+                return $pharmacy->distance > config('mapbox.pharmacy_radious');
+            });
             $this->calculateOrderTotalPrice($data['order']);
             $this->calculateOrderTotalDiscountPrice($data['order']);
             return view('admin.order_management.order_distribution', $data);
