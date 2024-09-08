@@ -19,7 +19,7 @@
                     <div class="show-order d-flex align-items-center">
                         <h4 class="me-2">{{ __('Show:') }}</h4>
                         <select class="form-select order_filter" aria-label="Default select example">
-                            <option value="all" {{ $filterValue == 'all' ? 'selected' : '' }}>{{ __('All orders') }}
+                            <option value="all" {{ $filterValue == 'all' ? 'selected' : '' }}>{{ __('All payments') }}
                             </option>
                             <option value="7" {{ $filterValue == '7' ? 'selected' : '' }}>{{ __('Last 7 days') }}
                             </option>
