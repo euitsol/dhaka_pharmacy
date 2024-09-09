@@ -113,7 +113,8 @@
                                 </div>
                             </div>
                         </a>
-                        <a href="#">
+                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"
+                            aria-controls="offcanvasRight">
                             <div class="single  d-flex align-items-center justify-content-center">
                                 <div class="content text-center">
                                     <img src="{{ asset('user/asset/img/my-cart.png') }}" alt="">

@@ -24,7 +24,7 @@ class PharmacyOrderRequest extends FormRequest
         return [
             'data.*.dop_id' => 'required|exists:order_distribution_pharmacies,id',
             'data.*.status' => 'required|numeric',
-            'data.*.open_amount' => 'nullable|numeric',
+            'data.*.open_amount' => 'required|sometimes|numeric',
             'data.*.note' => 'nullable|required_if:data.*.status,3', // Make note required if status is 3
         ];
     }

@@ -30,8 +30,8 @@
             </div> -->
             <div class="col-3 d-flex flex-row align-items-center justify-content-end">
                 <div class="right-col me-4">
-                    <a href="javascript:void(0)" class="cart-icon" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"
-                        aria-controls="offcanvasRight">
+                    <a href="javascript:void(0)" class="cart-icon d-flex" data-bs-toggle="offcanvas"
+                        data-bs-target="#cartbtn" aria-controls="offcanvasRight">
                         <img src="{{ asset('user/asset/img/my-cart1.png') }}" alt="">
                         <sup><strong id="cart_btn_quantity"></strong></sup>
                     </a>

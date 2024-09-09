@@ -85,8 +85,12 @@
                                                                     <div class="input-group">
                                                                         <input type="text"
                                                                             name="data[{{ $key }}][open_amount]"
-                                                                            class="form-control"
+                                                                            class="form-control open_amount"
                                                                             placeholder="Enter product price">
+                                                                        @include('alerts.feedback', [
+                                                                            'field' =>
+                                                                                'data.' . $key . '.open_amount',
+                                                                        ])
                                                                     </div>
                                                                 @endif
                                                             </div>
