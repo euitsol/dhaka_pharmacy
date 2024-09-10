@@ -8,21 +8,21 @@
                 <div class="step step-1">
                     <div class="d-inline-flex">
                         <div class="icon_wrap">
-                            <div class="icon {{ $odps_status >= 0 ? 'confirm' : '' }} text-center">
-                                @if ($odps_status >= 0)
+                            <div class="icon {{ $dor->status >= 0 ? 'confirm' : '' }} text-center">
+                                @if ($dor->status >= 0)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <div class="after {{ $odps_status >= 2 ? 'active' : '' }}"></div>
+                            <div class="after {{ $dor->status >= 2 ? 'active' : '' }}"></div>
                         </div>
                         <div class="status_details pb-2">
                             <h5>{{ __('Order Assigned') }}</h5>
-                            @if ($odps_status >= 0)
+                            @if ($dor->status >= 0)
                                 <p class="m-0">{{ __('Assigned at - ') }}
-                                    {{ orderTimeFormat($do->created_at) }}</p>
-                                @if ($odps_status < 2)
+                                    {{ orderTimeFormat($dor->created_at) }}</p>
+                                @if ($dor->status < 2)
                                     <p class="m-0">
-                                        <span>{{ __('Preparation time left') }} ( {!! remainingTime($do->pharmacy_prep_time, true) !!} )</span>
+                                        <span>{{ __('Collection time left') }} ( {!! remainingTime($dor->od->rider_collect_time, true) !!} )</span>
                                     </p>
                                 @endif
                             @endif
@@ -32,20 +32,25 @@
                 <div class="step step-3">
                     <div class="d-inline-flex">
                         <div class="icon_wrap">
-                            <div class="icon {{ $odps_status >= 2 ? 'confirm' : '' }} text-center">
-                                @if ($odps_status >= 2)
+                            <div class="icon {{ $dor->status >= 2 ? 'confirm' : '' }} text-center">
+                                @if ($dor->status >= 2)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <div class="after {{ $odps_status > 2 ? 'active' : '' }}"></div>
+                            <div class="after {{ $dor->status > 2 ? 'active' : '' }}"></div>
                         </div>
                         <div class="status_details pb-2">
-                            <h5>{{ __('Order Prepared') }}</h5>
-                            @if ($odps_status >= 2)
+                            <h5>{{ __('Order Collected') }}</h5>
+                            @if ($dor->status >= 2)
                                 <p class="m-0"><span>
-                                        {{ __('Prepared at - ') }}
-                                        {{ orderTimeFormat($do->pharmacy_preped_at) }}
+                                        {{ __('Collected at - ') }}
+                                        {{ orderTimeFormat($do->rider_collected_at) }}
                                     </span></p>
+                                @if ($dor->status < 3)
+                                    <p class="m-0">
+                                        <span>{{ __('Delivery time left') }} ( {!! remainingTime($dor->od->rider_delivery_time, true) !!} )</span>
+                                    </p>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -53,16 +58,16 @@
                 <div class="step step-4">
                     <div class="d-inline-flex">
                         <div class="icon_wrap">
-                            <div class="icon {{ $odps_status >= 3 ? 'confirm' : '' }} text-center">
-                                @if ($odps_status >= 3)
+                            <div class="icon {{ $dor->status >= 3 ? 'confirm' : '' }} text-center">
+                                @if ($dor->status >= 3)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
                         </div>
                         <div class="status_details pb-2">
                             <h5>{{ __('Order Delivered') }}</h5>
-                            @if ($odps_status >= 3)
-                                <span>{{ orderTimeFormat($do->odps->pluck('updated_at')->max(), true) }}
+                            @if ($dor->status >= 3)
+                                <span>{{ orderTimeFormat($dor->od->rider_delivered_at, true) }}
                                 </span>
                             @endif
                         </div>

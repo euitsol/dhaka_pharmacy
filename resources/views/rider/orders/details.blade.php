@@ -23,7 +23,9 @@
                             ])
                         </div>
                         <div class="col-md-4">
-
+                            @include('rider.orders.includes.order_tracking', [
+                                'dor' => $dor,
+                            ])
                         </div>
                     </div>
 
@@ -484,6 +486,11 @@
         $(document).ready(function() {
             initializeFlipDown(`{{ $dor->od->rider_collect_time }}`);
             $(".flipdown").show();
+        });
+
+        // Order Tracking
+        $(document).ready(function() {
+            $(".tracking_card").height($(".order_details_card").height() + "px");
         });
     </script>
 @endpush
