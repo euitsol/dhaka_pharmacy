@@ -73,7 +73,7 @@ class OrderManagementController extends Controller
 
     public function details($dor_id)
     {
-        $data['dor'] = OrderDistributionRider::with(['od.active_odps', 'od.order.address', 'rider'])->findORFail(decrypt($dor_id));
+        $data['dor'] = OrderDistributionRider::with(['od.active_odps', 'od.order.products', 'od.order.address', 'rider'])->findORFail(decrypt($dor_id));
         if ($data['dor']->status == 0) {
             $data['dor']->update(['status' => 1]);
         }
@@ -184,32 +184,32 @@ class OrderManagementController extends Controller
     // }
 
 
-    public function cOtpVerify(CustomerOtpVerifyRequest $req, $od_id)
-    {
-        $od_id = decrypt($od_id);
-        $od = OrderDistribution::with('order.customer')->findOrFail($od_id);
-        $check = DistributionOtp::where([
-            ['order_distribution_id', $od_id],
-            ['otp_author_id', $od->order->customer->id],
-            ['otp_author_type', get_class($od->order->customer)],
-            ['otp', $req->delivered_otp]
-        ])->first();
-        if ($check) {
-            $check->status = 1;
-            $check->rider_id = rider()->id;
-            $check->update();
+    // public function cOtpVerify(CustomerOtpVerifyRequest $req, $od_id)
+    // {
+    //     $od_id = decrypt($od_id);
+    //     $od = OrderDistribution::with('order.customer')->findOrFail($od_id);
+    //     $check = DistributionOtp::where([
+    //         ['order_distribution_id', $od_id],
+    //         ['otp_author_id', $od->order->customer->id],
+    //         ['otp_author_type', get_class($od->order->customer)],
+    //         ['otp', $req->delivered_otp]
+    //     ])->first();
+    //     if ($check) {
+    //         $check->status = 1;
+    //         $check->rider_id = rider()->id;
+    //         $check->update();
 
-            OrderDistributionRider::where([['rider_id', rider()->id], ['order_distribution_id', $od_id], ['status', 2]])
-                ->update(['status' => 3]);
-            $od->update(['status' => 5, 'rider_collected_at' => Carbon::now()]);
+    //         OrderDistributionRider::where([['rider_id', rider()->id], ['order_distribution_id', $od_id], ['status', 2]])
+    //             ->update(['status' => 3]);
+    //         $od->update(['status' => 5, 'rider_collected_at' => Carbon::now()]);
 
-            OrderDistributionPharmacy::where([['order_distribution_id', $od_id], ['status', 4]])->update(['status' => 5]);
-            flash()->addSuccess('Order delivered successfully.');
-        } else {
-            flash()->addError('Something is wrong please try again.');
-        }
-        return redirect()->back();
-    }
+    //         OrderDistributionPharmacy::where([['order_distribution_id', $od_id], ['status', 4]])->update(['status' => 5]);
+    //         flash()->addSuccess('Order delivered successfully.');
+    //     } else {
+    //         flash()->addError('Something is wrong please try again.');
+    //     }
+    //     return redirect()->back();
+    // }
     public function dispute(RiderDisputeRequest $req, $od_id)
     {
         // OrderDistribution::findOrFail(decrypt($od_id))->update(['status' => -1]);
