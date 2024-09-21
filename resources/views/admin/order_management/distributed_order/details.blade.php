@@ -339,7 +339,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @if ($dop->status == 3 || $dop->status == -1)
+                                            @if ($dop->status == -1)
                                                 <span><strong
                                                         class="text-danger">{{ __('Reason: ') }}</strong>{{ $dop->note }}</span>
                                             @endif
