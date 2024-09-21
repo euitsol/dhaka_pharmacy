@@ -41,11 +41,19 @@
                         </div>
                         <div class="status_details pb-2">
                             <h5>{{ __('Order Collected') }}</h5>
+                            @foreach ($dor->od->odps->where('status', '!=', '-1')->unique('pharmacy_id') as $odp)
+                                @if ($odp->status == 3)
+                                    <p class="m-0"><span>
+                                            {{ __($odp->pharmacy->name . ' order collected at - ') }}
+                                            {{ orderTimeFormat($odp->updated_at) }}
+                                        </span></p>
+                                @endif
+                            @endforeach
                             @if ($dor->status >= 2)
-                                <p class="m-0"><span>
+                                {{-- <p class="m-0"><span>
                                         {{ __('Collected at - ') }}
-                                        {{ orderTimeFormat($do->rider_collected_at) }}
-                                    </span></p>
+                                        {{ orderTimeFormat($dor->od->rider_collected_at) }}
+                                    </span></p> --}}
                                 @if ($dor->status < 3)
                                     <p class="m-0">
                                         <span>{{ __('Delivery time left') }} ( {!! remainingTime($dor->od->rider_delivery_time, true) !!} )</span>
@@ -67,8 +75,8 @@
                         <div class="status_details pb-2">
                             <h5>{{ __('Order Delivered') }}</h5>
                             @if ($dor->status >= 3)
-                                <span>{{ orderTimeFormat($dor->od->rider_delivered_at, true) }}
-                                </span>
+                                <p><span>{{ orderTimeFormat($dor->od->rider_delivered_at, true) }}
+                                    </span></p>
                             @endif
                         </div>
                     </div>

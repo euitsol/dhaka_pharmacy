@@ -193,7 +193,7 @@ function timeFormate($time)
 
 function orderTimeFormat($time)
 {
-    return date('M d, h:i A', strtotime($time));
+    return date('M d,Y h:i A', strtotime($time));
 }
 
 function user()

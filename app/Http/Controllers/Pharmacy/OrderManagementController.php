@@ -183,6 +183,7 @@ class OrderManagementController extends Controller
                 if ($od->odps->filter(function ($odp) {
                     return $odp->status == 2;
                 })->isEmpty()) {
+                    $od->rider_collected_at = Carbon::now();
                     $od->status = 4; // rider picked up
                     $od->save();
 
