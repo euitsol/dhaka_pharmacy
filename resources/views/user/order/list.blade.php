@@ -31,23 +31,21 @@
                                 <div class="col-10">
                                     <div class="d-flex">
                                         <div class="text">
-                                            <h3 class="order-num">{{ __('Order: ') }}<span>{{ $order->order_id }}</span>
+                                            <h3 class="order-num">
+                                                {{ __('Order: ') }}<span>{{ $order->order_id }}</span>
                                             </h3>
                                             <p class="date-time">
                                                 {{ __('Placed on ') }}<span>{{ $order->place_date }}</span>
                                             </p>
                                         </div>
-                                        <div class="status ms-3">
-                                            <div class="d-flex gap-3 align-items-center">
-                                                <span
-                                                    class="{{ $order->statusBg }} badge-lg">{{ __($order->statusTitle) }}</span>
-                                                @if (isset($order->od) && $order->od->status == 4)
-                                                    <p class="fw-bold"><span>{{ __('OTP: ') }}</span> <span
-                                                            class="badge bg-info">{{ $order->od->delivery_active_otps->first()->otp }}</span>
+                                        <div class="status ms-3 order-info-section">
+                                            <div class="order-status-row d-flex gap-3 align-items-center">
+                                                <span class="{{ $order->statusBg }}">{{ __($order->statusTitle) }}</span>
+                                                @if (isset($order->otp))
+                                                    <p class="fw-bold">{{ __('OTP: ') }}{{ $order->otp }}
                                                     </p>
                                                 @endif
                                             </div>
-
                                             <p class="total p-0">
                                                 {{ __('Total Amount: ') }}<span
                                                     class="fw-bold">{{ number_format($order->totalPrice, 2) }}{{ __('tk') }}</span>

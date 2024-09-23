@@ -81,7 +81,7 @@
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <div class="after {{ $order->status > 1 ? 'active' : '' }}"></div>
+                            <div class="after {{ $order->status >= 1 ? 'active' : '' }}"></div>
                         </div>
                         <div class="status_details pb-2">
                             <h5>{{ __('Order Submitted') }}</h5>
@@ -99,7 +99,7 @@
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <div class="after {{ $order->status > 2 ? 'active' : '' }}"></div>
+                            <div class="after {{ $order->status >= 2 ? 'active' : '' }}"></div>
                         </div>
                         <div class="status_details pb-2">
                             <h5>{{ __('Order ') }}{{ $order->status == 2 ? __('Processing') : __('Processed') }}</h5>
@@ -130,7 +130,7 @@
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <div class="after {{ $order->status > 4 ? 'active' : '' }}"></div>
+                            <div class="after {{ $order->status >= 4 ? 'active' : '' }}"></div>
                         </div>
                         <div class="status_details pb-2">
                             <h5>{{ __('Rider Assigned') }}</h5>
@@ -158,7 +158,7 @@
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <div class="after {{ $order->status > 5 ? 'active' : '' }}"></div>
+                            <div class="after {{ $order->status >= 5 ? 'active' : '' }}"></div>
                         </div>
                         <div class="status_details pb-2">
                             <h5>{{ __('Order Collected') }}</h5>

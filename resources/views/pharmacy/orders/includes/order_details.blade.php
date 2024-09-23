@@ -29,7 +29,14 @@
                     <td class="fw-bold">{{ __('Payable Amount') }}</td>
                     <td>:</td>
                     <td>
-                        {!! get_taka_icon() !!}{{ number_format(ceil($do->totalPharmacyAmount)) }}
+                        {!! get_taka_icon() !!}
+                        @if (empty(
+                                $do->odps->where('status', '!=', -1)->pluck('open_amount')->first()
+                            ))
+                            {{ number_format(ceil($do->totalPharmacyAmount)) }}
+                        @else
+                            {{ number_format(ceil($do->odps->where('status', '!=', -1)->sum('open_amount'))) }}
+                        @endif
                     </td>
                 </tr>
                 <tr>

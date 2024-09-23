@@ -12,7 +12,7 @@
                                 <img src="{{ asset('user/asset/img/order-status.png') }}" alt="">
                             </div>
                             <h2 class="mb-0 me-4">{{ __('Order ID: ') }}<span>{{ $order->order_id }}</span></h2>
-                            <p class="mb-0 ">{{ slugToTitle($order->statusTitle) }}</p>
+                            <p class="mb-0 fw-bold">{{ slugToTitle($order->statusTitle) }}</p>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,16 @@
 
                 <!-- Order Tracking row start-->
                 <div class="order-traking-row">
-                    <h2 class="title mb-4">{{ __('Order Tracking') }}</h2>
+                    <div class="d-flex align-items-center mb-4 gap-4">
+                        <h2 class="title">{{ __('Order Tracking') }}</h2>
+                        @if ($order->otp)
+                            <div class="order-status-row">
+                                <p class="mb-0 fw-bold">{{ __('OTP: ') }}{{ $order->otp }}</p>
+                            </div>
+                        @endif
+                    </div>
+
+
                     <div class="progress-box d-flex justify-content-between">
                         <div class="step step-1 text-center">
                             <div class="icon {{ $order->status >= 1 ? 'confirm' : '' }} text-center mb-2">

@@ -291,6 +291,14 @@
                                                                         <div class="col my-auto text-end"><span
                                                                                 class="{{ $dop->statusBg() }}">{{ slugToTitle($dop->statusTitle()) }}</span>
                                                                         </div>
+                                                                        @if (!empty($dop->open_amount))
+                                                                            <div class="col my-auto">
+                                                                                <h6 class="my-auto text-center">
+                                                                                    <span><strong>{{ __('Bit Price : ') }}</strong>{!! get_taka_icon() !!}
+                                                                                        {{ number_format($dop->open_amount, 2) }}</span><sup><del>{{ number_format($dop->open_amount, 2) }}</del></sup>
+                                                                                </h6>
+                                                                            </div>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </div>

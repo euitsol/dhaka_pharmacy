@@ -63,7 +63,9 @@ class UserOrderController extends Controller
         $order->products->each(function (&$product) {
             $this->transformProduct($product, 60);
         });
-
+        if (isset($order->od) && $order->od->status == 4) {
+            $order->otp = $order->od->delivery_active_otps->first()->otp;
+        }
         $data['order'] = $order;
         return view('user.order.details', $data);
     }
@@ -101,6 +103,9 @@ class UserOrderController extends Controller
             $order->products->each(function (&$product) {
                 $this->transformProduct($product, 30);
             });
+            if (isset($order->od) && $order->od->status == 4) {
+                $order->otp = $order->od->delivery_active_otps->first()->otp;
+            }
         });
     }
 }

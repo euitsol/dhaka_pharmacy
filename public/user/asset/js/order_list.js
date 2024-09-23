@@ -17,25 +17,23 @@ function getHtml(orders) {
                                             <div class="col-10">
                                                  <div class="d-flex">
                                                     <div class="text">
-                                                        <h3 class="order-num">Order: <span>${
-                                                            order.order_id
-                                                        }</span>
+                                                        <h3 class="order-num">Order: <span>${order.order_id}</span>
                                                         </h3>
                                                         <p class="date-time">
-                                                            Placed on <span>${
-                                                                order.place_date
-                                                            }</span>
+                                                            Placed on <span>${order.place_date}</span>
                                                         </p>
                                                     </div>
-                                                    <div class="status ms-3">
+                                                    <div class="status ms-3 order-info-section">
+                                                    <div class="order-status-row d-flex gap-3 align-items-center">
                                                         <span
-                                                            class="${
-                                                                order.statusBg
-                                                            }">${
-            order.statusTitle
-        }</span>
+                                                            class="${order.statusBg}">${order.statusTitle}</span>`;
+        if (order.otp) {
+            result += `<p class="fw-bold">OTP: ${order.otp}</p>`;
+        }
 
-                                                        <p class="total text-center p-0">
+        result += `</div>
+
+                                                        <p class="total p-0">
                                                             Total Amount: <span class='fw-bold'>${numberFormat(
                                                                 order.totalPrice,
                                                                 2
@@ -44,16 +42,17 @@ function getHtml(orders) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-2 text-end"> 
+                                            <div class="col-2 text-end">
 
                                             <div class="order-status">
                                                 <div class="btn p-0">
                                                     <a
-                                                        href="${
-                                                            myDatas[
-                                                                "details_route"
-                                                            ].replace('order_id',order.encrypt_oid)
-                                                        }">Details</a>
+                                                        href="${myDatas[
+                                                            "details_route"
+                                                        ].replace(
+                                                            "order_id",
+                                                            order.encrypt_oid
+                                                        )}">Details</a>
                                                 </div>
                                             </div>
 
@@ -119,7 +118,7 @@ function getHtml(orders) {
                                                                             .unit
                                                                             .name
                                                                     }</span></p>
-                                                                </div> 
+                                                                </div>
                                                             </div>
 
                                                 `;
@@ -135,7 +134,7 @@ function getHtml(orders) {
 }
 
 $(document).ready(function () {
-    updateUrlParameter('filter',myDatas["filter"]);
+    updateUrlParameter("filter", myDatas["filter"]);
 
     $(".order_filter").on("change", function () {
         var filter_value = $(this).val();
@@ -144,6 +143,17 @@ $(document).ready(function () {
         let _url = url.replace("_status", status);
         let __url = _url.replace("filter_value", filter_value);
         __url = __url.replace(/&amp;/g, "&");
+        let order_wrap = $(".order_wrap");
+        let paginate = $(".paginate");
+        paginate.hide();
+        order_wrap.html(
+            `
+            <div class="d-flex align-items-center justify-content-between my-4">
+                <strong class="text-info">Loading...</strong>
+                <div class="spinner-border text-info" role="status" aria-hidden="true"></div>
+            </div>
+            `
+        );
         $.ajax({
             url: __url,
             method: "GET",
@@ -157,8 +167,9 @@ $(document).ready(function () {
                     result = getHtml(orders);
                 }
 
-                $(".order_wrap").html(result);
-                $(".paginate").html(data.pagination);
+                order_wrap.html(result);
+                paginate.show();
+                paginate.html(data.pagination);
                 if (data.filterValue) {
                     updateUrlParameter("filter", data.filterValue);
                 }
