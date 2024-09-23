@@ -297,7 +297,8 @@
                                                         </div>
 
                                                         <div class="col-3">
-                                                            @if ($dop->status == 3)
+                                                            @if ($dop->status == -3)
+                                                                {{-- Dispute --}}
                                                                 <input type="hidden"
                                                                     name="datas[{{ $key }}][op_id]"
                                                                     value="{{ $dop->order_product->id }}">
@@ -347,7 +348,8 @@
 
                                     </div>
                                 @endforeach
-                                @if ($dop->status == 3)
+                                @if ($dop->status == -3)
+                                    {{-- Dispute --}}
                                     <div class="row">
                                         <div class="form-group col-md-12 text-end">
                                             <input type="submit" value="Update" class="btn btn-primary">
