@@ -143,21 +143,14 @@
                     <div class="medicine-slider">
                         <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
                             <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <h3><span>Napa Extra</span>(500 mg+65 mg)</h3>
-                                    <p><span>Efficacy:</span> It might be more effective in treating the targeted
-                                        condition or symptom compared to other similar medications.</p>
-                                </div>
-                                <div class="carousel-item active">
-                                    <h3><span>Napa Extra</span>(500 mg+65 mg)</h3>
-                                    <p><span>Efficacy:</span> It might be more effective in treating the targeted
-                                        condition or symptom compared to other similar medications.</p>
-                                </div>
-                                <div class="carousel-item active">
-                                    <h3><span>Napa Extra</span>(500 mg+65 mg)</h3>
-                                    <p><span>Efficacy:</span> It might be more effective in treating the targeted
-                                        condition or symptom compared to other similar medications.</p>
-                                </div>
+                                @foreach ($order_products as $key => $product)
+                                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                        <h3><span>{{ $product->name }}</span>({{ $product->strength->quantity . ' ' . $product->strength->unit }})
+                                        </h3>
+                                        <p><span>{{ __('Efficacy: ') }}</span>
+                                            {{ str_limit($product->precaution->description, 110) }}</p>
+                                    </div>
+                                @endforeach
                             </div>
                             <button class="carousel-control-prev" type="button"
                                 data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
