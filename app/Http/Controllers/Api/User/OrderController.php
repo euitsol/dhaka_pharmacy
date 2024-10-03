@@ -101,6 +101,9 @@ class OrderController extends BaseController
     {
         $user = $request->user();
         $address =  Address::where('creater_id', $user->id)->where('creater_type', get_class($user))->where('id', $request->address)->first();
+        if (!$address) {
+            return sendResponse(false, 'Address not found');
+        }
         $order = Order::with(['products', 'address'])
             ->where('creater_type', get_class($user))
             ->where('creater_id', $user->id)
