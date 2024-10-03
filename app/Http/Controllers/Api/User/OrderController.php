@@ -6,19 +6,21 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\API\Order\InitiatedRequest;
 use App\Http\Requests\API\Order\IntSingleOrderRequest;
 use App\Http\Requests\API\Order\OrderConfirmRequest;
+use App\Http\Traits\DeliveryTrait;
 use App\Models\AddToCart;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use Illuminate\Http\JsonResponse;
 use App\Http\Traits\TransformProductTrait;
 use App\Http\Traits\TransformOrderItemTrait;
+use App\Models\Address;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends BaseController
 {
-    use TransformProductTrait, TransformOrderItemTrait;
+    use TransformProductTrait, TransformOrderItemTrait, DeliveryTrait;
     public function int_order(InitiatedRequest $request): JsonResponse
     {
         $user = $request->user();
@@ -98,15 +100,16 @@ class OrderController extends BaseController
     public function order_confirm(OrderConfirmRequest $request): JsonResponse
     {
         $user = $request->user();
-        $order = Order::with(['products'])
+        $address =  Address::where('creater_id', $user->id)->where('creater_type', get_class($user))->where('id', $request->address)->first();
+        $order = Order::with(['products', 'address'])
             ->where('creater_type', get_class($user))
             ->where('creater_id', $user->id)
             ->where('id', $request->order_id)->first();
         if ($order) {
             $order->address_id = $request->address;
             $order->status = 1; //Order Submit
-            $order->delivery_type = $request->delivery_type;
-            $order->delivery_fee = $request->delivery_fee;
+            $order->delivery_type = 0;
+            $order->delivery_fee = $this->getDeliveryCharge($address->latitude, $address->longitude);
             $order->save();
             $this->calculateOrderTotalDiscountPrice($order);
 
@@ -118,7 +121,7 @@ class OrderController extends BaseController
             $payment->status = 0; //Initialize
             $payment->creater()->associate($user);
             $payment->save();
-            return sendResponse(true, 'Order confirm successfully', ['payment_id' => $payment->id]);
+            return sendResponse(true, 'Order confirm successfully', ['payment_id' => $payment->id, 'amount' => $payment->amount, 'tran_id' => generateTranId()]);
         } else {
             return sendResponse(false, 'Something went wrong, please try again');
         }
