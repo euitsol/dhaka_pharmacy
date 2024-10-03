@@ -85,7 +85,7 @@ class OrderManagementController extends Controller
 
         //odp pending -> preparing
 
-        $data['odps_status'] = $data['do']->odps->pluck('status')->max();
+        $data['odps_status'] = $data['do']->odps->where('status', '!=', -1)->pluck('status')->max();
         $this->updateODPStatus($data['do'], $pharmacy_id, 1);
         $this->calculateOrderTotalDiscountPrice($data['do']->order);
         $this->calculatePharmacyTotalAmount($data['do']);
@@ -133,7 +133,7 @@ class OrderManagementController extends Controller
     {
         foreach ($req->data as $data) {
             $dop = OrderDistributionPharmacy::findOrFail($data['dop_id']);
-            $dop->open_amount = $data['dop_id'];
+            $dop->open_amount = $data['open_amount'];
             $dop->status = $data['status'];
             $dop->note = $data['note'];
             $dop->updated_at = Carbon::now();
@@ -183,6 +183,7 @@ class OrderManagementController extends Controller
                 if ($od->odps->filter(function ($odp) {
                     return $odp->status == 2;
                 })->isEmpty()) {
+                    $od->rider_collected_at = Carbon::now();
                     $od->status = 4; // rider picked up
                     $od->save();
 

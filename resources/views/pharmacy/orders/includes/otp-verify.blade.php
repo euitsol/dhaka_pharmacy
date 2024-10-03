@@ -1,8 +1,5 @@
-@if ($do->assignedRider->first() && $do->status == 3)
-    @if ($do->status == 4)
-        <h4 class="text-success m-0 py-3">{{ __('Order successfully collected.') }}</h4>
-    @endif
-    @if ($do->status == 5)
+@if ($do->assignedRider->first())
+    @if ($odps_status == 3)
         <h4 class="text-success m-0 py-3">{{ __('Order successfully delivered.') }}</h4>
     @endif
 
@@ -64,14 +61,20 @@
                                 <th>{{ __('OTP') }}</th>
                                 <td>:</td>
                                 <th>
-                                    <span class="text-success">
-                                        {{ __('Please verify your delivery man before handing the order to the rider.') }}
-                                    </span>
-                                    {{-- <strong
+                                    @if ($odps_status < 3)
+                                        <span class="text-danger">
+                                            {{ __('Please verify your delivery man before handing the order to the rider.') }}
+                                        </span>
+                                        {{-- <strong
                                         class="text-success">{{ optional($do->active_otps->first())->otp }}</strong> --}}
 
-                                    <button type="button" class="btn btn-success ml-1" data-bs-toggle="modal"
-                                        data-bs-target="#otpVerifyModal">{{ __('Deliver') }}</button>
+                                        <button type="button" class="btn btn-success ml-1" data-bs-toggle="modal"
+                                            data-bs-target="#otpVerifyModal">{{ __('Deliver') }}</button>
+                                    @else
+                                        <span class="text-success">
+                                            {{ __('Delivery man has been verified.') }}
+                                        </span>
+                                    @endif
                                 </th>
                             </tr>
                         </tbody>

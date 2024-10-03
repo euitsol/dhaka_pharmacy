@@ -100,6 +100,17 @@ $(document).ready(function () {
         let url = myDatas["url"];
         let _url = url.replace("filter_value", filter_value);
         __url = _url.replace(/&amp;/g, "&");
+        let review_wrap = $("#review_wrap");
+        let paginate = $(".paginate");
+        paginate.hide();
+        review_wrap.html(
+            `
+            <div class="d-flex align-items-center justify-content-between my-4">
+                <strong class="text-info">Loading...</strong>
+                <div class="spinner-border text-info" role="status" aria-hidden="true"></div>
+            </div>
+            `
+        );
         $.ajax({
             url: __url,
             method: "GET",
@@ -113,8 +124,9 @@ $(document).ready(function () {
                     result = getHtml(products);
                 }
 
-                $("#review_wrap").html(result);
-                $(".paginate").html(data.pagination);
+                review_wrap.html(result);
+                paginate.show();
+                paginate.html(data.pagination);
                 if (data.filterValue) {
                     updateUrlParameter("filter", data.filterValue);
                 }

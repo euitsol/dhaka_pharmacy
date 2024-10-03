@@ -109,9 +109,9 @@ class Order extends BaseModel
             case 3:
                 return 'badge bg-danger';
             case 4:
-                return 'badge bg-success';
+                return 'badge bg-info';
             case 5:
-                return 'badge bg-success';
+                return 'badge bg-primary';
             case 6:
                 return 'badge bg-success';
             default:

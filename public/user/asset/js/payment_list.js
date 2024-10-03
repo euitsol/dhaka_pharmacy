@@ -76,6 +76,17 @@ $(document).ready(function () {
         let url = myDatas["url"];
         let _url = url.replace("filter_value", filter_value);
         _url = _url.replace(/&amp;/g, "&");
+        let payment_wrap = $(".payment_wrap");
+        let paginate = $(".paginate");
+        paginate.hide();
+        payment_wrap.html(
+            `
+            <div class="d-flex align-items-center justify-content-between my-4">
+                <strong class="text-info">Loading...</strong>
+                <div class="spinner-border text-info" role="status" aria-hidden="true"></div>
+            </div>
+            `
+        );
         $.ajax({
             url: _url,
             method: "GET",
@@ -89,8 +100,9 @@ $(document).ready(function () {
                     result = getHtml(payments);
                 }
 
-                $(".payment_wrap").html(result);
-                $(".paginate").html(data.pagination);
+                payment_wrap.html(result);
+                paginate.show();
+                paginate.html(data.pagination);
                 if (data.filterValue) {
                     updateUrlParameter("filter", data.filterValue);
                 }

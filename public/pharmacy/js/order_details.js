@@ -2,12 +2,22 @@ $(document).ready(function () {
     $(".do_status").on("change", function () {
         if ($(this).val() == 3) {
             $(this).closest(".status_wrap").find(".status_note").show();
+            $(this)
+                .closest(".media")
+                .find(".open_amount")
+                .prop("disabled", true);
+            $(this).closest(".media").find(".open_amount").parent().hide();
         } else {
             $(this).closest(".status_wrap").find(".status_note").hide();
             $(this)
                 .closest(".status_wrap")
                 .find(".status_note .form-control")
                 .val("");
+            $(this)
+                .closest(".media")
+                .find(".open_amount")
+                .prop("disabled", false);
+            $(this).closest(".media").find(".open_amount").parent().show();
         }
     });
 

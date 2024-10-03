@@ -118,4 +118,9 @@ class Medicine extends BaseModel
     {
         return $query->where('pro_sub_cat_id', $scategoryId);
     }
+
+    public function precaution()
+    {
+        return $this->hasOne(ProductPrecaution::class, 'product_id');
+    }
 }

@@ -13,7 +13,7 @@
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <div class="after {{ $odps_status >= 2 ? 'active' : '' }}"></div>
+                            <div class="after {{ $odps_status >= 1 ? 'active' : '' }}"></div>
                         </div>
                         <div class="status_details pb-2">
                             <h5>{{ __('Order Assigned') }}</h5>
@@ -37,7 +37,7 @@
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <div class="after {{ $odps_status > 2 ? 'active' : '' }}"></div>
+                            <div class="after {{ $odps_status >= 2 ? 'active' : '' }}"></div>
                         </div>
                         <div class="status_details pb-2">
                             <h5>{{ __('Order Prepared') }}</h5>

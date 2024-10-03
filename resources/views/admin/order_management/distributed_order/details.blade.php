@@ -291,13 +291,22 @@
                                                                         <div class="col my-auto text-end"><span
                                                                                 class="{{ $dop->statusBg() }}">{{ slugToTitle($dop->statusTitle()) }}</span>
                                                                         </div>
+                                                                        @if (!empty($dop->open_amount))
+                                                                            <div class="col my-auto">
+                                                                                <h6 class="my-auto text-center">
+                                                                                    <span><strong>{{ __('Bit Price : ') }}</strong>{!! get_taka_icon() !!}
+                                                                                        {{ number_format($dop->open_amount, 2) }}</span><sup><del>{{ number_format($dop->open_amount, 2) }}</del></sup>
+                                                                                </h6>
+                                                                            </div>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-3">
-                                                            @if ($dop->status == 3)
+                                                            @if ($dop->status == -3)
+                                                                {{-- Dispute --}}
                                                                 <input type="hidden"
                                                                     name="datas[{{ $key }}][op_id]"
                                                                     value="{{ $dop->order_product->id }}">
@@ -339,7 +348,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @if ($dop->status == 3 || $dop->status == -1)
+                                            @if ($dop->status == -1)
                                                 <span><strong
                                                         class="text-danger">{{ __('Reason: ') }}</strong>{{ $dop->note }}</span>
                                             @endif
@@ -347,7 +356,8 @@
 
                                     </div>
                                 @endforeach
-                                @if ($dop->status == 3)
+                                @if ($dop->status == -3)
+                                    {{-- Dispute --}}
                                     <div class="row">
                                         <div class="form-group col-md-12 text-end">
                                             <input type="submit" value="Update" class="btn btn-primary">

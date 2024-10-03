@@ -284,7 +284,7 @@ body{
     background-color: rgba(40, 163, 73, 1);
 }
 .order-info-section .order-traking-row .step{
-    min-width: 123px;
+    min-width: 20%;
 }
 .order-info-section .order-traking-row .step-1 .icon::before{
     position: absolute;
@@ -297,10 +297,10 @@ body{
 .order-info-section .order-traking-row .step .icon::after{
     position: absolute;
     content: "";
-    width: 233px;
+    width: 195px;
     height: 5px;
     background-color: rgba(40, 163, 73, 1);
-    right: -240px;
+    right: -202px;
 }
 .order-info-section .order-traking-row .step-5 .icon::after{
     width: 48px;

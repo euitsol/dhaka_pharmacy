@@ -16,7 +16,7 @@
                 <div class="flipdown" id="flipdown"></div>
             @endif
 
-            <a href="{{ route('pharmacy.order_management.index', $do->odps->first()->pStatusSlug()) }}"
+            <a href="{{ route('pharmacy.order_management.index',$do->odps->where('status', '!=', -1)->first()->pStatusSlug()) }}"
                 class="btn btn-primary">{{ __('Back') }}</a>
         </div>
         <div class="card-body">
@@ -35,7 +35,10 @@
                 <div class="col-md-12">
                     <div class="card ">
                         <div class="card-body">
-                            @include('pharmacy.orders.includes.otp-verify')
+                            @include('pharmacy.orders.includes.otp-verify', [
+                                'do' => $do,
+                                'odps_status' => $odps_status,
+                            ])
                             <form action="{{ route('pharmacy.order_management.update', encrypt($do->id)) }}" method="POST">
                                 @csrf
                                 @foreach ($do->odps as $key => $dop)
@@ -85,8 +88,12 @@
                                                                     <div class="input-group">
                                                                         <input type="text"
                                                                             name="data[{{ $key }}][open_amount]"
-                                                                            class="form-control"
+                                                                            class="form-control open_amount"
                                                                             placeholder="Enter product price">
+                                                                        @include('alerts.feedback', [
+                                                                            'field' =>
+                                                                                'data.' . $key . '.open_amount',
+                                                                        ])
                                                                     </div>
                                                                 @endif
                                                             </div>

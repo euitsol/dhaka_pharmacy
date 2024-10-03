@@ -63,7 +63,9 @@ class UserOrderController extends Controller
         $order->products->each(function (&$product) {
             $this->transformProduct($product, 60);
         });
-
+        if (isset($order->od) && $order->od->status == 4) {
+            $order->otp = $order->od->delivery_active_otps->first()->otp;
+        }
         $data['order'] = $order;
         return view('user.order.details', $data);
     }
@@ -78,11 +80,11 @@ class UserOrderController extends Controller
         ])->latest();
 
         if ($status == 'current-orders') {
-            $query->whereIn('status', [0, 1, 2, 3, 4]);
+            $query->whereBetween('status', [1, 5]);
         } elseif ($status == 'previous-orders') {
-            $query->whereIn('status', [-1, -2, -3]);
+            $query->where('status', 6);
         } elseif ($status == 'cancel-orders') {
-            $query->where('status', -2);
+            $query->where('status', -1);
         }
 
         return $query;
@@ -101,6 +103,9 @@ class UserOrderController extends Controller
             $order->products->each(function (&$product) {
                 $this->transformProduct($product, 30);
             });
+            if (isset($order->od) && $order->od->status == 4) {
+                $order->otp = $order->od->delivery_active_otps->first()->otp;
+            }
         });
     }
 }
