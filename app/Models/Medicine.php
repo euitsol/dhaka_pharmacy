@@ -46,10 +46,8 @@ class Medicine extends BaseModel
 
     public function wish()
     {
-        if (Auth::guard('web')->check()) {
-            return $this->hasOne(WishList::class, 'product_id', 'id')
-                ->where('user_id', user()->id);
-        }
+        return $this->hasOne(WishList::class, 'product_id', 'id')
+            ->where('user_id', auth()->id());
     }
     public function units()
     {
