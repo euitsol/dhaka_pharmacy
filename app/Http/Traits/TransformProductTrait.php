@@ -9,7 +9,6 @@ trait TransformProductTrait
 {
     private function transformProduct($product, $limit = 30)
     {
-        $this->setProductImage($product);
         $this->setStrengthInfo($product);
         $this->setProductNames($product, $limit);
         $this->setDiscountInformation($product);

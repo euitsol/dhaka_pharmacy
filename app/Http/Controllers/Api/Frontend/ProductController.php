@@ -23,7 +23,15 @@ class ProductController extends BaseController
     {
         if ($request->has('slug') && !empty($request->slug)) {
             $sp = Medicine::with([
-                'pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
+                'pro_cat',
+                'pro_sub_cat',
+                'generic',
+                'company',
+                'strength',
+                'discounts',
+                'reviews.customer',
+                'wish',
+                'units' => function ($q) {
                     $q->orderBy('quantity', 'asc');
                 }
             ])->activated()->where('slug', $request->slug)->first();
@@ -35,7 +43,14 @@ class ProductController extends BaseController
             $sp = $this->transformProduct($sp, 100);
 
             $simps = Medicine::with([
-                'pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
+                'pro_cat',
+                'pro_sub_cat',
+                'generic',
+                'company',
+                'strength',
+                'discounts',
+                'reviews.customer',
+                'units' => function ($q) {
                     $q->orderBy('quantity', 'asc');
                 }
             ])->activated()->where('generic_id', $sp->generic_id)
