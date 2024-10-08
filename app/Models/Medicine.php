@@ -44,10 +44,12 @@ class Medicine extends BaseModel
             ->where('customer_id', auth()->id());
     }
 
-    public function wish()
+    public function wish($user_id = null)
     {
         return $this->hasOne(WishList::class, 'product_id', 'id')
-            ->where('user_id', auth()->id());
+            ->when($user_id, function ($query, $user_id) {
+                $query->where('user_id', $user_id)->where('status', 1);
+            });
     }
     public function units()
     {

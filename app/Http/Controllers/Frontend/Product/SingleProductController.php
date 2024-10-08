@@ -15,7 +15,11 @@ class SingleProductController extends Controller
     public function singleProduct($slug): View
     {
 
-        $single_product = Medicine::with(['pro_cat', 'wish', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
+        $single_product = Medicine::with(['pro_cat', 'wish' => function ($query) {
+            if (auth()->guard('web')->check()) {
+                $query->where('user_id', auth()->guard('web')->user()->id)->where('status', 1);
+            }
+        }, 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
             $q->orderBy('quantity', 'asc');
         }])->activated()->where('slug', $slug)->first();
         $data['single_product'] = $this->transformProduct($single_product, 100);
