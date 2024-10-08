@@ -30,7 +30,11 @@ class ProductController extends BaseController
                 'strength',
                 'discounts',
                 'reviews.customer',
-                'wish',
+                'wish' => function ($query) {
+                    if (auth()->guard('api-user')->check()) {
+                        $query->where('user_id', auth()->guard('api-user')->user()->id)->where('status', 1);
+                    }
+                },
                 'units' => function ($q) {
                     $q->orderBy('quantity', 'asc');
                 }
