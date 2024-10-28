@@ -82,7 +82,7 @@ class OrderController extends BaseController
             'products.company',
             'products.discounts',
             'products.units',
-        ])->initiated()
+        ])
             ->where('creater_type', get_class($user))
             ->where('creater_id', $user->id)
             ->where('id', $request->order_id)->first();
