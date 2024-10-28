@@ -75,13 +75,18 @@ class OrderController extends BaseController
     {
         $user = $request->user();
         $order = Order::with([
-            'products',
+            'customer',
+            'address',
+            'payments',
+            'od.odrs',
             'products.pro_cat',
-            'products.generic',
             'products.pro_sub_cat',
-            'products.company',
-            'products.discounts',
             'products.units',
+            'products.discounts',
+            'products.pivot.unit',
+            'products.company',
+            'products.generic',
+            'products.strength'
         ])
             ->where('creater_type', get_class($user))
             ->where('creater_id', $user->id)
