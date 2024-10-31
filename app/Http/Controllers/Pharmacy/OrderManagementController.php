@@ -133,7 +133,7 @@ class OrderManagementController extends Controller
     {
         foreach ($req->data as $data) {
             $dop = OrderDistributionPharmacy::findOrFail($data['dop_id']);
-            $dop->open_amount = $data['open_amount'];
+            $dop->open_amount = $data['open_amount'] ?? NULL;
             $dop->status = $data['status'];
             $dop->note = $data['note'];
             $dop->updated_at = Carbon::now();
