@@ -19,7 +19,7 @@ jobs:
           username: "dhaka6191"
           password: "dhaka6191"
           script: |
-            cd home/dhaka6191/dhakapharmacy.com.bd/public_html
+            cd home/dhakapharmacy.com.bd
             git fetch --all
             git reset --hard origin/live
             git pull
