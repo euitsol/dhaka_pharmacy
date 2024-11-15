@@ -14,10 +14,10 @@ jobs:
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
         with:
-          host: "dhakapharmacy.com.bd"
-          port: "22"
-          username: "dhaka4337"
-          password: "dhaka4337"
+          host: ${{ secrets.LIVE_HOST }}
+          port: ${{ secrets.LIVE_PORT }}
+          username: ${{ secrets.LIVE_USERNAME }}
+          password: ${{ secrets.LIVE_PASSWORD }}
           script: |
             cd home
             cd dhakapharmacy.com.bd
@@ -25,4 +25,4 @@ jobs:
             git fetch --all
             git reset --hard origin/live
             git pull
-            /usr/local/lsws/lsphp82/bin/php artisan optimize:clear
+            php artisan optimize:clear
