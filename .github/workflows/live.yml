@@ -1,0 +1,28 @@
+name: Deploy Application to Live Server
+
+on:
+  push:
+    branches: ["live"]
+  pull_request:
+    branches: ["live"]
+
+jobs:
+  laravel-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: "dhakapharmacy.com.bd"
+          port: "22"
+          username: "dhaka4337"
+          password: "dhaka4337"
+          script: |
+            cd home
+            cd dhakapharmacy.com.bd
+            cd public_html
+            git fetch --all
+            git reset --hard origin/live
+            git pull
+            /usr/local/lsws/lsphp82/bin/php artisan optimize:clear
