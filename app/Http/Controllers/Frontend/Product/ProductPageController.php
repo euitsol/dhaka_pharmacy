@@ -24,6 +24,7 @@ class ProductPageController extends Controller
 
         $data['sub_category'] =  ProductSubCategory::where('slug', $sub_category_slug)->activated()->first();
 
+
         $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units' => function ($q) {
             $q->orderBy('quantity', 'asc');
         }])->activated();
@@ -34,11 +35,11 @@ class ProductPageController extends Controller
 
         $query->when(($sub_category_slug !== null), fn($q) => $q->whereHas('pro_sub_cat', fn($qs) => $qs->where('slug', $sub_category_slug)));
 
-        $query->when(($offset !== null), fn($q) => $q->offset($offset)->limit(12));
+        $query->when(($offset !== null), fn($q) => $q->latest()->offset($offset));
 
         $sub_cat_query->when(($category_slug !== 'all' && !empty($category_slug)), fn($q) => $q->whereHas('pro_cat', fn($qs) => $qs->where('slug', $category_slug)));
 
-        $data['products'] = $query->limit(12)->get()->shuffle()->each(function ($product) {
+        $data['products'] = $query->limit(6)->get()->shuffle()->each(function ($product) {
             $product = $this->transformProduct($product, 25);
             return $product;
         });

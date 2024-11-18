@@ -77,7 +77,7 @@ $(document).ready(function () {
 
         let cat_slug = $(this).data("cat_slug");
         let sub_cat_slug = $(this).data("sub_cat_slug");
-        $(".more").attr("data-offset", 12);
+        $(".more").attr("data-offset", 6);
         $(".more").attr("data-sub_cat_slug", sub_cat_slug);
 
         let url = datas.cat_products;
@@ -109,7 +109,7 @@ $(document).ready(function () {
     });
 
     $(".more").on("click", function () {
-        let limit = 12;
+        let limit = 6;
         let offset = parseInt($(this).attr("data-offset"));
         let cat_slug = $(this).attr("data-cat_slug");
         let sub_cat_slug = $(this).attr("data-sub_cat_slug");
