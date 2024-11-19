@@ -13,6 +13,15 @@
             width: 100%;
             height: 500;
         }
+
+        .ps {
+            overflow: unset !important;
+        }
+
+        .ps--active-x>.ps__rail-x,
+        .ps--active-y>.ps__rail-y {
+            display: none !important;
+        }
     </style>
 @endpush
 @section('content')
