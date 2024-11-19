@@ -19,13 +19,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navigation">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="javascript:void(0)" class="nav-link" data-toggle="modal" data-target=".map-modal">
                             <div class="photo">
                                 <img src="{{ asset('rider/img/map-pin.png') }}" alt="{{ __('Map pin') }}">
                             </div>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="dropdown nav-item">
                         <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <div class="photo">
@@ -45,7 +45,7 @@
             </div>
         </div>
     </nav>
-    <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal"
+    {{-- <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -57,5 +57,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endauth

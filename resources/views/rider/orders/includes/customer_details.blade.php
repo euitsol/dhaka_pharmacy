@@ -6,7 +6,7 @@
                     <h4 class="card-title">{{ __('Customer Details') }}</h4>
                 </div>
                 <div>
-                    <a href="telto:{{ optional($dor->od->order->customer)->phone }}" class="btn btn-success text-white">
+                    <a href="tel:{{ optional($dor->od->order->customer)->phone }}" class="btn btn-success text-white">
                         Call </a>
                 </div>
                 <div>
