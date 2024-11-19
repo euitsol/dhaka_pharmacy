@@ -9,14 +9,15 @@
     <div class="profile-section">
         <div class="row">
             <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="title">{{ __('Update Profile') }}</h5>
-                    </div>
-                    <form method="POST" action="{{ route('lam.profile.update') }}" autocomplete="off"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+                <form method="POST" action="{{ route('lam.profile.update') }}" autocomplete="off"
+                    enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="title">{{ __('Update Profile') }}</h5>
+                        </div>
+
                         <div class="card-body">
                             <div class="row flex-xl-row flex-column-reverse">
                                 <div class="col-xl-7 col-xxl-8">
@@ -185,164 +186,165 @@
                                     @include('alerts.feedback', ['field' => 'permanent_address'])
                                 </div>
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-sm btn-primary">{{ __('Update') }}</button>
+                                    <button type="submit"
+                                        class="btn btn-sm btn-primary float-end">{{ __('Update') }}</button>
                                 </div>
-                    </form>
-                </div>
-            </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form method="POST" action="{{ route('lam.profile.update.password') }}" autocomplete="off"
+                    enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="title">{{ __('Password') }}</h5>
+                        </div>
 
-        </div>
-        <div class="card">
-            <div class="card-header">
-                <h5 class="title">{{ __('Password') }}</h5>
-            </div>
-            <form method="POST" action="{{ route('lam.profile.update.password') }}" autocomplete="off"
-                enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="card-body">
-                    <div class="form-group">
-                        <label>{{ __('Current Password') }}</label>
-                        <input type="password" name="old_password" class="form-control" placeholder="Current Password">
-                        @include('alerts.feedback', ['field' => 'old_password'])
-                    </div>
-                    <div class="form-group">
-                        <label>{{ __('New Password') }}</label>
-                        <input type="password" name="password" class="form-control" placeholder="New Password">
-                        @include('alerts.feedback', ['field' => 'password'])
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>{{ __('Current Password') }}</label>
+                                <input type="password" name="old_password" class="form-control"
+                                    placeholder="Current Password">
+                                @include('alerts.feedback', ['field' => 'old_password'])
+                            </div>
+                            <div class="form-group">
+                                <label>{{ __('New Password') }}</label>
+                                <input type="password" name="password" class="form-control" placeholder="New Password">
+                                @include('alerts.feedback', ['field' => 'password'])
 
+                            </div>
+                            <div class="form-group">
+                                <label>{{ __('Confirm New Password') }}</label>
+                                <input type="password" name="password_confirmation" class="form-control"
+                                    placeholder="Confirm New Password">
+                            </div>
+                            <button type="submit"
+                                class="btn btn-fill btn-primary float-end">{{ __('Change password') }}</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>{{ __('Confirm New Password') }}</label>
-                        <input type="password" name="password_confirmation" class="form-control"
-                            placeholder="Confirm New Password">
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
-                </div>
-            </form>
+                </form>
+            </div>
+            @include('district_manager.partials.documentation', ['document' => $document])
         </div>
-    </div>
-    @include('district_manager.partials.documentation', ['document' => $document])
-    </div>
-@endsection
-@push('js_link')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-@endpush
-@push('js')
-    <script>
-        function handleErrors(response) {
-            var errors = response.errors;
-            for (var field in errors) {
-                toastr.error(errors[field][0]);
+    @endsection
+    @push('js_link')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+            integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @endpush
+    @push('js')
+        <script>
+            function handleErrors(response) {
+                var errors = response.errors;
+                for (var field in errors) {
+                    toastr.error(errors[field][0]);
+                }
             }
-        }
-        $(document).ready(function() {
-            var form = $('#updateForm');
-            $('#imageInput').change(function() {
-                var preview = $('#previewImage')[0];
-                var fileInput = $(this)[0];
-                var file = fileInput.files[0];
+            $(document).ready(function() {
+                var form = $('#updateForm');
+                $('#imageInput').change(function() {
+                    var preview = $('#previewImage')[0];
+                    var fileInput = $(this)[0];
+                    var file = fileInput.files[0];
 
-                var reader = new FileReader();
+                    var reader = new FileReader();
 
-                reader.onloadend = function() {
-                    preview.src = reader.result;
-                }
+                    reader.onloadend = function() {
+                        preview.src = reader.result;
+                    }
 
-                if (file) {
-                    reader.readAsDataURL(file);
-                    uploadImage();
-                } else {
-                    preview.src = "{{ asset('no_img/no_img.jpg') }}";
-                }
+                    if (file) {
+                        reader.readAsDataURL(file);
+                        uploadImage();
+                    } else {
+                        preview.src = "{{ asset('no_img/no_img.jpg') }}";
+                    }
+                });
             });
-        });
 
-        function uploadImage() {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            var formData = new FormData();
-            formData.append('image', $("#imageInput")[0].files[0]);
-            console.log(formData);
-            var _url = "{{ route('lam.profile.update.image') }}";
+            function uploadImage() {
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                var formData = new FormData();
+                formData.append('image', $("#imageInput")[0].files[0]);
+                console.log(formData);
+                var _url = "{{ route('lam.profile.update.image') }}";
 
-            $.ajax({
-                url: _url,
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                beforeSend: function() {
-                    $('.profile_image .img').addClass('div_animation overly');
-                    $('.profile_image .img img.avatar').addClass('image_animation');
-                    $('.profile_image .camera-icon').css('display', 'none');
+                $.ajax({
+                    url: _url,
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    beforeSend: function() {
+                        $('.profile_image .img').addClass('div_animation overly');
+                        $('.profile_image .img img.avatar').addClass('image_animation');
+                        $('.profile_image .camera-icon').css('display', 'none');
 
-                    setTimeout(function() {
-                        // Continue with the AJAX request
-                        $.ajax({
-                            url: _url,
-                            method: 'POST',
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            headers: {
-                                'X-CSRF-TOKEN': csrfToken
-                            },
-                            success: function(response) {
-                                if (!response.success) {
-                                    $('.profile_image .img').removeClass(
-                                        'div_animation overly');
-                                    $('.profile_image .img img.avatar').removeClass(
-                                        'image_animation');
-                                    $('.profile_image .camera-icon').css('display',
-                                        'block');
-                                    $('#previewImage').attr('src',
-                                        "{{ storage_url($lam->image) }}");
-                                    handleErrors(response);
+                        setTimeout(function() {
+                            // Continue with the AJAX request
+                            $.ajax({
+                                url: _url,
+                                method: 'POST',
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': csrfToken
+                                },
+                                success: function(response) {
+                                    if (!response.success) {
+                                        $('.profile_image .img').removeClass(
+                                            'div_animation overly');
+                                        $('.profile_image .img img.avatar').removeClass(
+                                            'image_animation');
+                                        $('.profile_image .camera-icon').css('display',
+                                            'block');
+                                        $('#previewImage').attr('src',
+                                            "{{ storage_url($lam->image) }}");
+                                        handleErrors(response);
+                                    }
+
+                                },
+                                complete: function(response) {
+                                    if (response.responseJSON.message) {
+                                        $('.profile_image .img').removeClass(
+                                            'div_animation overly');
+                                        $('.profile_image .img img.avatar').removeClass(
+                                            'image_animation');
+                                        $('.profile_image .camera-icon').css('display',
+                                            'block');
+                                        $('#previewImage').attr('src', response.responseJSON
+                                            .image);
+                                        toastr.success(response.responseJSON.message);
+                                    }
+                                },
+                                error: function(xhr) {
+                                    if (xhr.status === 422) {
+                                        $('.profile_image .img').removeClass(
+                                            'div_animation overly');
+                                        $('.profile_image .img img.avatar').removeClass(
+                                            'image_animation');
+                                        $('.profile_image .camera-icon').css('display',
+                                            'block');
+                                        $('#previewImage').attr('src',
+                                            "{{ storage_url($lam->image) }}");
+                                        toastr.error('Something is wrong!');
+                                    } else {
+                                        console.log('An error occurred.');
+                                    }
+                                    toastr.error(response.responseJSON.message);
                                 }
-
-                            },
-                            complete: function(response) {
-                                if (response.responseJSON.message) {
-                                    $('.profile_image .img').removeClass(
-                                        'div_animation overly');
-                                    $('.profile_image .img img.avatar').removeClass(
-                                        'image_animation');
-                                    $('.profile_image .camera-icon').css('display',
-                                        'block');
-                                    $('#previewImage').attr('src', response.responseJSON
-                                        .image);
-                                    toastr.success(response.responseJSON.message);
-                                }
-                            },
-                            error: function(xhr) {
-                                if (xhr.status === 422) {
-                                    $('.profile_image .img').removeClass(
-                                        'div_animation overly');
-                                    $('.profile_image .img img.avatar').removeClass(
-                                        'image_animation');
-                                    $('.profile_image .camera-icon').css('display',
-                                        'block');
-                                    $('#previewImage').attr('src',
-                                        "{{ storage_url($lam->image) }}");
-                                    toastr.error('Something is wrong!');
-                                } else {
-                                    console.log('An error occurred.');
-                                }
-                                toastr.error(response.responseJSON.message);
-                            }
-                        });
-                    }, 5000); // 5 seconds delay
+                            });
+                        }, 5000); // 5 seconds delay
 
 
-                },
-            });
-        }
-    </script>
-@endpush
+                    },
+                });
+            }
+        </script>
+    @endpush
