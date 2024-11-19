@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'withdraw_method.w_list',
+                                'routeName' => 'withdraw.w_list',
                                 'params' => strtolower($withdraw->statusTitle()),
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
