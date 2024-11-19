@@ -69,18 +69,24 @@
                         <div class="col-8">
                             <h4 class="card-title">{{ __('Order By Prescription Details') }}</h4>
                         </div>
-                        @if ($up->status == 0)
-                            <div class="col-4">
-                                <div class="buttons text-end">
+                        <div class="col-4">
+                            <div class="buttons text-end">
+                                @if ($up->status == 0)
                                     @include('admin.partials.button', [
                                         'routeName' => 'obp.status_update',
                                         'className' => 'btn-primary',
                                         'params' => ['status' => 'cancel', 'id' => Crypt::encrypt($up->id)],
                                         'label' => 'Cancel',
                                     ])
-                                </div>
+                                @endif
+                                @include('admin.partials.button', [
+                                    'routeName' => 'obp.obp_list',
+                                    'className' => 'btn-primary',
+                                    'params' => $up->statusTitle(),
+                                    'label' => 'Back',
+                                ])
                             </div>
-                        @endif
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
