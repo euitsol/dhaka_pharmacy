@@ -81,8 +81,8 @@ class ProductController extends BaseController
         $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units', 'reviews.customer']);
 
         //By Category
-        if ($request->has('category') && !empty($request->category)) {
-            $category = ProductCategory::where('slug', $request->category)->first();
+        if ($request->has('category') && $request->category !== 'all') {
+            $category = ProductCategory::with('pro_sub_cat')->where('slug', $request->category)->first();
             if (!empty($category)) {
                 $query = $query->byCategory($category->id);
             } else {
@@ -91,7 +91,7 @@ class ProductController extends BaseController
         }
 
         //By Sub Category
-        if ($request->has('sub-category') && !empty($request->{'sub-category'})) {
+        if ($request->has('sub-category') && $request->{'sub-category'} !== 'all') {
             $scategory = ProductSubCategory::where('slug', $request->{'sub-category'})->first();
             if (!empty($scategory)) {
                 $query = $query->bySubCategory($scategory->id);
