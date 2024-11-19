@@ -82,7 +82,7 @@ class ProductController extends BaseController
 
         //By Category
         if ($request->has('category') && $request->category !== 'all') {
-            $category = ProductCategory::with('pro_sub_cat')->where('slug', $request->category)->first();
+            $category = ProductCategory::with('pro_sub_cats')->where('slug', $request->category)->first();
             if (!empty($category)) {
                 $query = $query->byCategory($category->id);
             } else {
