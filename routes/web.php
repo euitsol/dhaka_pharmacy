@@ -116,6 +116,7 @@ use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController
 use App\Http\Controllers\Pharmacy\WithdrawMethodController as PharmacyWithdrawMethodController;
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
 use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodController;
+use App\Http\Controllers\User\KYC\KycVerificationController as UserKycVerificationController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -967,6 +968,13 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     // Checkout Routes
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
         Route::post('/single-order', 'single_order')->name('product.single_order');
+    });
+    // KYC Verification Center Routes
+    Route::controller(UserKycVerificationController::class)->prefix('kyc')->name('u.kyc.')->group(function () {
+        Route::post('/store', 'kyc_store')->name('store');
+        Route::get('/verification', 'kyc_verification')->name('verification');
+        Route::post('/file/upload', 'file_upload')->name('file.upload');
+        // Route::get('/file/delete', 'delete')->name('file.delete');
     });
 
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {

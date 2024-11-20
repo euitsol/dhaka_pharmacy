@@ -57,19 +57,24 @@
                             alt="">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#"><img
+                        <li><a class="dropdown-item d-flex align-items-center" href="#"><img
                                     src="{{ asset('user/asset/img/manage-account.png') }}" alt="">
                                 <span>{{ __('Manage My Account') }}</span></a></li>
-                        <li><a class="dropdown-item" href="{{ route('u.order.list') }}"><img
+                        <li><a class="dropdown-item d-flex align-items-center"
+                                href="{{ route('u.kyc.verification') }}"><img src="{{ asset('default_img/kyc.png') }}"
+                                    alt="">
+                                <span>{{ __('KYC Verification Center') }}</span></a></li>
+                        <li><a class="dropdown-item d-flex align-items-center" href="{{ route('u.order.list') }}"><img
                                     src="{{ asset('user/asset/img/setting.png') }}"
                                     alt=""><span>{{ __('My Orders') }}</span></a></li>
-                        <li><a class="dropdown-item" href="{{ route('u.wishlist.list') }}"><img
+                        <li><a class="dropdown-item d-flex align-items-center"
+                                href="{{ route('u.wishlist.list') }}"><img
                                     src="{{ asset('user/asset/img/wishlist.png') }}"
                                     alt=""><span>{{ __('My Wishlist') }}</span></a></li>
-                        <li><a class="dropdown-item" href="{{ route('u.review.list') }}"><img
+                        <li><a class="dropdown-item d-flex align-items-center" href="{{ route('u.review.list') }}"><img
                                     src="{{ asset('user/asset/img/reviews.png') }}"
                                     alt=""><span>{{ __('My Reviews') }}</span></a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0)"
+                        <li><a class="dropdown-item d-flex align-items-center" href="javascript:void(0)"
                                 onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"><img
                                     src="{{ asset('user/asset/img/logout.png') }}"
