@@ -171,3 +171,8 @@ function numberFormat(value, decimals) {
 
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+$(document).ready(function () {
+    $(".navbar-toggler").on("click", function () {
+        $(".sidebar").toggleClass("sidebar_show");
+    });
+});
