@@ -1,18 +1,9 @@
-
+/* Datatable Print Update */
 @media print {
-    body {
-        color: #000 !important;
-        background: transparent;
-    }
-    table {
-        color: #000 !important;
-    }
-    tr, th, td {
+    .dataTable.table>thead>tr>th,
+    .dataTable.table>tbody>tr>td {
         color: #000 !important;
         background: transparent !important;
-    }
-    *{
-        color: #000 !important;
     }
 }
 
