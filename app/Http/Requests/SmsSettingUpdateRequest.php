@@ -22,11 +22,11 @@ class SmsSettingUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'api_url' => 'required|url',
-            'api_key' => 'required',
-            'api_secret' => 'nullable',
-            'api_status_code' => 'required',
-            'api_sender_id' => 'required',
+            'sms_api_url' => 'required|url',
+            'sms_api_key' => 'required',
+            'sms_api_secret' => 'nullable',
+            'sms_api_status_code' => 'required',
+            'sms_api_sender_id' => 'required',
         ];
     }
 }
