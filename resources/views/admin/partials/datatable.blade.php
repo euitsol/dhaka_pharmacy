@@ -43,7 +43,7 @@
                             extend: 'print',
                             exportOptions: {
                                 columns: columnsToShow,
-                            }
+                            },
                         }, 'excel', 'csv', 'pageLength',
                     ]
                 });

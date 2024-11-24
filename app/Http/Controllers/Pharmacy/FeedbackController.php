@@ -28,15 +28,17 @@ class FeedbackController extends Controller
     {
         $files = [];
         $fdk = new Feedback();
-        foreach ($req['files'] as $file) {
-            $temp_file = TempFile::findOrFail($file);
-            if ($temp_file) {
-                $from_path = 'public/' . $temp_file->path . '/' . $temp_file->filename;
-                $to_path = 'feedback/pharmacy/' . str_replace(' ', '-', pharmacy()->name) . '/' . time() . '/' . $temp_file->filename;
-                Storage::move($from_path, 'public/' . $to_path);
-                array_push($files, $to_path);
-                Storage::deleteDirectory('public/' . $temp_file->path);
-                $temp_file->forceDelete();
+        if (!empty($req['files'])) {
+            foreach ($req['files'] as $file) {
+                $temp_file = TempFile::findOrFail($file);
+                if ($temp_file) {
+                    $from_path = 'public/' . $temp_file->path . '/' . $temp_file->filename;
+                    $to_path = 'feedback/pharmacy/' . str_replace(' ', '-', pharmacy()->name) . '/' . time() . '/' . $temp_file->filename;
+                    Storage::move($from_path, 'public/' . $to_path);
+                    array_push($files, $to_path);
+                    Storage::deleteDirectory('public/' . $temp_file->path);
+                    $temp_file->forceDelete();
+                }
             }
         }
         $fdk->files = json_encode($files);

@@ -21,6 +21,8 @@ class User extends AuthenticateBaseModel
         'password',
         'oa_id',
         'osa_id',
+        'status',
+        'kyc_status',
     ];
     protected $hidden = [
         'password',

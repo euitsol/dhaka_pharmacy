@@ -14,7 +14,6 @@
             <!--========= Product-Section-Start ========-->
             <section class="product-section pb-4 mb-5">
                 <div class="row">
-                    {{-- @if ($featuredItems->isNotEmpty()) --}}
                     <div class="col-12">
                         <div class="row cat-filter-row gx-4">
                             <div class="col-12">
@@ -126,16 +125,15 @@
                                 </div>
                             @endforeach
                         </div>
-                        @if (count($products) >= 1)
+                        @if (count($products) > 5)
                             <div class="row show-more mt-5">
                                 <a class="all-pdct-btn text-center more"
                                     data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
                                     data-sub_cat_slug="{{ isset($sub_category) ? $sub_category->slug : '' }}"
-                                    data-offset="1" href="javascript:void(0)">{{ __('SEE MORE') }}</a>
+                                    data-offset="6" href="javascript:void(0)">{{ __('SEE MORE') }}</a>
                             </div>
                         @endif
                     </div>
-                    {{-- @endif --}}
                 </div>
             </section>
 

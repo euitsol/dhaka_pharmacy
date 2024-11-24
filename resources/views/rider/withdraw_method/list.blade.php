@@ -92,7 +92,7 @@
 @push('js')
     <script>
         const details = {
-            'my_route': `{{ route('rider.wm.details', ['id']) }}`,
+            'my_route': `{{ route('rider.wm.details', ['_id']) }}`,
         };
     </script>
     <script src="{{ asset('withdraw_method/details.js') }}"></script>

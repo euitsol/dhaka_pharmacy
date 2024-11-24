@@ -55,7 +55,7 @@ class OrderManagementController extends Controller
                     });
                 break;
             case 'picked-up':
-                $data['slug'] = 'picked_up_orders';
+                $data['slug'] = 'picked-up_orders';
                 $data['dors'] = OrderDistributionRider::with(['od.active_odps.pharmacy', 'od.order.address', 'rider'])->where('rider_id', rider()->id)
                     ->where('status', 2)->orWhere('status', 3)
                     ->orderBy('priority', 'desc')

@@ -1,4 +1,4 @@
-<table class="table table-striped datatable">
+<table class="table table-striped odr_datatable">
     <thead>
         <tr>
             <th>{{ __('SL') }}</th>
@@ -37,3 +37,7 @@
 
     </tbody>
 </table>
+@include('admin.partials.datatable', [
+    'columns_to_show' => [0, 1, 2, 3, 4],
+    'mainClass' => 'odr_datatable',
+])

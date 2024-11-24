@@ -1,3 +1,50 @@
+/* Datatable Print Update */
+@media print {
+    .dataTable.table>thead>tr>th,
+    .dataTable.table>tbody>tr>td {
+        color: #000 !important;
+        background: transparent !important;
+    }
+}
+
+/* Dashboard */
+.sidebar {
+    background: var(--primary-color) !important;
+}
+
+.main-panel {
+    border-color: var(--primary-color) !important;
+}
+
+.btn-primary {
+    background: var(--primary-color) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.btn-primary.active:focus,
+.btn-primary.active:hover {
+    background: var(--primary-hover-color) !important;
+}
+@media only screen and (max-width: 991px) {
+    .navbar button.navbar-toggler[data-target="#navigation"] {
+        padding-top: 6px;
+    }
+    .sidebar_show{
+        top: 97px !important;
+        left: 260px !important;
+    }
+    .main-panel>.navbar{
+        position: fixed;
+        width: 260px;
+    }
+}
+
+
 /*=============================================================
                 Start Overwrite CSS
  =============================================================*/

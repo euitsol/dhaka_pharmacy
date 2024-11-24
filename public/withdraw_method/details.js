@@ -2,7 +2,7 @@ $(document).ready(function () {
     $(".view").on("click", function () {
         let id = $(this).data("id");
         let url = details["my_route"];
-        let _url = url.replace("id", id);
+        let _url = url.replace("_id", id);
         $.ajax({
             url: _url,
             method: "GET",
