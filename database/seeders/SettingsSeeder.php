@@ -169,5 +169,5 @@ class SettingsSeeder extends Seeder
             'value' => '',
             'env_key' => 'SMS_API_STATUS',
         ]);
-
+    }
 }
