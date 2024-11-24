@@ -100,9 +100,6 @@
                                                     <div class="form-group col-md-3">
                                                         <label>{{ __('Priority') }}</label>
                                                         <select name="priority" class="form-control">
-                                                            <option selected hidden value=" ">
-                                                                {{ __('Select Priority') }}
-                                                            </option>
                                                             <option value="0">{{ __('Normal') }}</option>
                                                             <option value="1">{{ __('Medium') }}</option>
                                                             <option value="2">{{ __('High') }}</option>

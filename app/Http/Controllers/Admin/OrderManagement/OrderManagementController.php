@@ -86,7 +86,7 @@ class OrderManagementController extends Controller
                         $query->where('status', '!=', -1);
                     }])
                     ->whereHas('order', function ($query) {
-                        $query->where('status', 4);
+                        $query->whereIn('status', [4, 5]);
                     })
                     ->latest()->get()
                     ->each(function (&$do) {
