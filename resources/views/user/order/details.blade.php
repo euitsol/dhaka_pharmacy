@@ -48,7 +48,7 @@
                         </div>
                         <div class="step step-2 text-center">
                             <div
-                                class="icon {{ $order->status >= 2 ? 'confirm' : '' }} {{ $order->status > 2 ? 'active' : '' }} text-center mb-2">
+                                class="icon {{ $order->status >= 2 ? 'confirm' : '' }} {{ $order->status > 3 ? 'active' : '' }} text-center mb-2">
                                 @if ($order->status >= 2)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
