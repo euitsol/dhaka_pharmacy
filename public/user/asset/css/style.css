@@ -575,7 +575,7 @@ body{
 
 .removeImage {
     position: absolute;
-    left: 88%;
+    left: 80%;
     top: 10%;
     cursor: pointer;
 }
