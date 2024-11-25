@@ -241,6 +241,10 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('index', 'index')->name('admin_list');
             Route::get('details/{id}', 'details')->name('details.admin_list');
             Route::get('profile/{id}', 'profile')->name('admin_profile');
+            Route::put('profile/update', 'u_profile')->name('update.admin_profile');
+            Route::put('profile/password/update', 'profile_pu')->name('pupdate.admin_profile');
+            Route::post('profile/image/update', 'profile_imgupdate')->name('imgupdate.admin_profile');
+            Route::get('profile/download/{file_url}', 'view_or_download')->name('download.admin_profile');
             Route::get('create', 'create')->name('admin_create');
             Route::post('create', 'store')->name('admin_create');
             Route::get('edit/{id}', 'edit')->name('admin_edit');

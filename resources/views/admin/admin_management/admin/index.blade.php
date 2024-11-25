@@ -47,13 +47,21 @@
 
                                     <td> {{ c_user_name($admin->created_user) }} </td>
                                     <td>
-                                        @include('admin.partials.action_buttons', [
-                                            'menuItems' => [
-                                                [
+                                        @php
+                                            $profile = [];
+                                        @endphp
+                                        @if ($admin->id == admin()->id)
+                                            @php
+                                                $profile = [
                                                     'routeName' => 'am.admin.admin_profile',
                                                     'params' => [$admin->id],
                                                     'label' => 'Profile',
-                                                ],
+                                                ];
+                                            @endphp
+                                        @endif
+                                        @include('admin.partials.action_buttons', [
+                                            'menuItems' => [
+                                                $profile,
                                                 [
                                                     'routeName' => 'javascript:void(0)',
                                                     'params' => [$admin->id],
@@ -135,14 +143,70 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Email</th>
+                                        <th class="text-nowrap">Father Name</th>
                                         <th>:</th>
-                                        <td>${data.email}</td>
+                                        <td>${data.father_name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Mother Name</th>
+                                        <th>:</th>
+                                        <td>${data.mother_name}</td>
+                                    </tr>
+                                     <tr>
+                                        <th class="text-nowrap">Designation</th>
+                                        <th>:</th>
+                                        <td>${data.designation}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Role</th>
                                         <th>:</th>
                                         <td>${data.role.name}</td>
+                                    </tr>
+                                     <tr>
+                                        <th class="text-nowrap">Status</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${statusClass}">${status}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Email</th>
+                                        <th>:</th>
+                                        <td>${data.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Phone</th>
+                                        <th>:</th>
+                                        <td>${data.phone}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Emergency Phone</th>
+                                        <th>:</th>
+                                        <td>${data.emergency_phone}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identifiation Type</th>
+                                        <th>:</th>
+                                        <td>${data.identificationType}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identifiation No</th>
+                                        <th>:</th>
+                                        <td>${data.identification_no}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identifiation File</th>
+                                        <th>:</th>
+                                        <td>${data.identification_file_url ? `<a class='btn btn-primary' target='_blank' href='${data.identification_file_url}'><i
+                        class='fa-solid fa-download'></i></a>` : `null`}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Gender</th>
+                                        <th>:</th>
+                                        <td>${data.getGender}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Date Of Birth</th>
+                                        <th>:</th>
+                                        <td>${data.dob}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">IP Address</th>
@@ -150,10 +214,22 @@
                                         <td>${data.ips}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Status</th>
+                                        <th class="text-nowrap">Bio</th>
                                         <th>:</th>
-                                        <td><span class="badge ${statusClass}">${status}</span></td>
+                                        <td>${data.bio}</td>
                                     </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Present Address</th>
+                                        <th>:</th>
+                                        <td>${data.present_address}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Permanent Address</th>
+                                        <th>:</th>
+                                        <td>${data.permanent_address}</td>
+                                    </tr>
+
+
                                     <tr>
                                         <th class="text-nowrap">Created Date</th>
                                         <th>:</th>
