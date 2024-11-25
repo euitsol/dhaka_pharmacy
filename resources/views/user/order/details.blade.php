@@ -5,34 +5,38 @@
         <div class="container">
             <div class="order-info-cont">
                 <!-- Order-status-row-start -->
-                <div class="row py-4">
-                    <div class="col">
-                        <div class="order-status-row d-flex align-items-center">
+                <div class="row flex-column-reverse flex-md-row">
+                    <div class="col-md-8 col-12">
+                        <div class="order-status-row d-flex align-items-center py-4">
                             <div class="img me-3">
                                 <img src="{{ asset('user/asset/img/order-status.png') }}" alt="">
                             </div>
                             <h2 class="mb-0 me-4">{{ __('Order ID: ') }}<span>{{ $order->order_id }}</span></h2>
                             <p class="mb-0 fw-bold">{{ slugToTitle($order->statusTitle) }}</p>
                         </div>
+                        <div class="d-flex align-items-center mb-4 gap-4">
+                            <h2 class="title">{{ __('Order Tracking') }}</h2>
+
+                        </div>
                     </div>
+                    @if ($order->otp)
+                        <div class="col-md-4 col-12 fs-1 pb-4">
+                            <div class="order-status-row py-5 otp d-flex justify-content-center align-items-center">
+                                <p class="mb-0 fw-bold">{{ __('OTP: ') }}{{ $order->otp }}</p>
+                            </div>
+                        </div>
+                    @endif
+
+
                 </div>
                 <!-- Order-status-row-end -->
 
                 <!-- Order Tracking row start-->
                 <div class="order-traking-row">
-                    <div class="d-flex align-items-center mb-4 gap-4">
-                        <h2 class="title">{{ __('Order Tracking') }}</h2>
-                        @if ($order->otp)
-                            <div class="order-status-row">
-                                <p class="mb-0 fw-bold">{{ __('OTP: ') }}{{ $order->otp }}</p>
-                            </div>
-                        @endif
-                    </div>
-
-
                     <div class="progress-box d-flex justify-content-between">
                         <div class="step step-1 text-center">
-                            <div class="icon {{ $order->status >= 1 ? 'confirm' : '' }} text-center mb-2">
+                            <div
+                                class="icon {{ $order->status >= 1 ? 'confirm' : '' }} {{ $order->status > 1 ? 'active' : '' }} text-center mb-2">
                                 @if ($order->status >= 1)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
@@ -43,7 +47,8 @@
                             @endif
                         </div>
                         <div class="step step-2 text-center">
-                            <div class="icon {{ $order->status >= 2 ? 'confirm' : '' }} text-center mb-2">
+                            <div
+                                class="icon {{ $order->status >= 2 ? 'confirm' : '' }} {{ $order->status > 2 ? 'active' : '' }} text-center mb-2">
                                 @if ($order->status >= 2)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
@@ -54,7 +59,8 @@
                             @endif
                         </div>
                         <div class="step step-3 text-center">
-                            <div class="icon {{ $order->status >= 4 ? 'confirm' : '' }} text-center mb-2">
+                            <div
+                                class="icon {{ $order->status >= 4 ? 'confirm' : '' }} {{ $order->status > 4 ? 'active' : '' }} text-center mb-2">
                                 @if ($order->status >= 4)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
@@ -67,7 +73,8 @@
                             @endif
                         </div>
                         <div class="step step-4 text-center">
-                            <div class="icon {{ $order->status >= 5 ? 'confirm' : '' }} text-center mb-2">
+                            <div
+                                class="icon {{ $order->status >= 5 ? 'confirm' : '' }} {{ $order->status > 5 ? 'active' : '' }} text-center mb-2">
                                 @if ($order->status >= 5)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
@@ -78,7 +85,8 @@
                             @endif
                         </div>
                         <div class="step step-5 text-center">
-                            <div class="icon {{ $order->status >= 6 ? 'confirm' : '' }} text-center mb-2">
+                            <div
+                                class="icon {{ $order->status >= 6 ? 'confirm' : '' }} {{ $order->status > 6 ? 'active' : '' }} text-center mb-2">
                                 @if ($order->status >= 6)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
