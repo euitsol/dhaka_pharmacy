@@ -16,23 +16,43 @@ use Illuminate\View\View;
 class EmailVerificationController extends Controller
 {
     use PharmacyMailTrait;
+
+    private $otpResentTime = 1;
     public function __construct()
     {
         return $this->middleware('pharmacy');
     }
 
+    private function check_throttle($pharmacy)
+    {
+        if ($pharmacy->email_verified_at !== null) {
+            $timeSinceLastOtp = now()->diffInMinutes($pharmacy->email_verified_at);
+            if ($timeSinceLastOtp < $this->otpResentTime) {
+                return 'Please wait before requesting another verification otp as one has already been sent recently';
+            }
+        }
+        return false;
+    }
+
     public function send_otp()
     {
         $pharmacy = Pharmacy::findOrFail(pharmacy()->id);
-        $pharmacy->otp = otp();
-        $pharmacy->save();
-        $mail = $this->sendOtpMail($pharmacy);
-        $message = 'The verification code has been successfully sent to your email';
-        if (!$mail) {
-            $message = 'Something went wrong. Please try again.';
+        if ($this->check_throttle($pharmacy)) {
+            $data['success'] = false;
+            $data['message'] = $this->check_throttle($pharmacy);
         } else {
+            $pharmacy->otp = otp();
+            $pharmacy->email_verified_at = Carbon::now();
+            $pharmacy->save();
+            $mail = $this->sendOtpMail($pharmacy);
+            $data['success'] = true;
+            $data['message'] = 'The verification code has been successfully sent to your email';
+            if (!$mail) {
+                $data['success'] = false;
+                $data['message'] = 'Something went wrong. Please try again.';
+            }
         }
-        return response()->json(['success' => true, 'message' => $message]);
+        return response()->json($data);
     }
     public function verify(EmailVerifyRequest $request): RedirectResponse
     {
