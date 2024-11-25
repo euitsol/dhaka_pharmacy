@@ -30,6 +30,7 @@ trait PharmacyMailTrait
         ];
         if (!empty($pharmacy)) {
             Mail::to($pharmacy->email)->send(new OtpVerifyMail($mailData));
+            return true;
         } else {
             return false;
         }
