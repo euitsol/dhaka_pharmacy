@@ -80,5 +80,18 @@
             <td>{{ __(':') }}</td>
             <td colspan="5">{{ $rider->permanent_address ?? '--' }}</td>
         </tr>
+        <tr>
+            <td class="fw-bolder">{{ __('CV') }}</td>
+            <td>{{ __(':') }}</td>
+            <td colspan="5">
+                @if (!empty($rider->cv))
+                    <a class="btn btn-primary" target="_blank"
+                        href="{{ route('rm.rider.download.rider_profile', base64_encode($rider->cv)) }}"><i
+                            class="fa-solid fa-download"></i></a>
+                @else
+                    {{ __('--') }}
+                @endif
+            </td>
+        </tr>
     </tbody>
 </table>
