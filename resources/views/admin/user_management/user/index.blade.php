@@ -163,10 +163,20 @@
                                         <th>:</th>
                                         <td>${data.name}</td>
                                     </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Phone</th>
+                                     <tr>
+                                        <th class="text-nowrap">Father Name</th>
                                         <th>:</th>
-                                        <td>${data.phone}</td>
+                                        <td>${data.father_name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Mother Name</th>
+                                        <th>:</th>
+                                        <td>${data.mother_name}</td>
+                                    </tr>
+                                     <tr>
+                                        <th class="text-nowrap">Occupation</th>
+                                        <th>:</th>
+                                        <td>${data.occupation}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Image</th>
@@ -179,6 +189,16 @@
                                                 <div class="close_button fa-beat">X</div>
                                             </div>
                                         </td>
+                                    </tr>
+                                     <tr>
+                                        <th class="text-nowrap">Phone</th>
+                                        <th>:</th>
+                                        <td>${data.phone}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Emergency Phone</th>
+                                        <th>:</th>
+                                        <td>${data.emergency_phone}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Email</th>
@@ -199,6 +219,47 @@
                                         <th class="text-nowrap">Phone Verify</th>
                                         <th>:</th>
                                         <td><span class="badge ${verifyStatusClass}">${verifyStatus}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Date of Birth</th>
+                                        <th>:</th>
+                                        <td>${data.dob}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identifiation Type</th>
+                                        <th>:</th>
+                                        <td>${data.identificationType}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identifiation No</th>
+                                        <th>:</th>
+                                        <td>${data.identification_no}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identifiation File</th>
+                                        <th>:</th>
+                                        <td>${data.identification_file_url ? `<a class='btn btn-primary' target='_blank' href='${data.identification_file_url}'><i
+                                                        class='fa-solid fa-download'></i></a>` : `null`}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Gender</th>
+                                        <th>:</th>
+                                        <td>${data.getGender}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Bio</th>
+                                        <th>:</th>
+                                        <td>${data.bio}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Present Address</th>
+                                        <th>:</th>
+                                        <td>${data.present_address}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Permanent Address</th>
+                                        <th>:</th>
+                                        <td>${data.permanent_address}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created Date</th>

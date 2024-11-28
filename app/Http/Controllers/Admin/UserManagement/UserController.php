@@ -18,6 +18,7 @@ use App\Models\Payment;
 use App\Models\Review;
 use App\Models\SubmittedKyc;
 use App\Models\WishList;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -36,6 +37,10 @@ class UserController extends Controller
     public function details($id): JsonResponse
     {
         $data = User::with(['creater', 'updater'])->findOrFail($id);
+        $data->dob = $data->dob ? date('d M, Y', strtotime($data->dob)) : "null";
+        $data->identificationType = $data->identificationType();
+        $data->getGender = $data->getGender() ?? null;
+        $data->identification_file_url = !empty($data->identification_file) ? route("um.user.download.user_profile", base64_encode($data->identification_file)) : null;
         $this->morphColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
@@ -107,5 +112,23 @@ class UserController extends Controller
         $user->delete();
         flash()->addSuccess('User ' . $user->name . ' deleted successfully.');
         return redirect()->route('um.user.user_list');
+    }
+
+    public function view_or_download($file_url)
+    {
+        $file_url = base64_decode($file_url);
+        if (Storage::exists('public/' . $file_url)) {
+            $fileExtension = pathinfo($file_url, PATHINFO_EXTENSION);
+
+            if (strtolower($fileExtension) === 'pdf') {
+                return response()->file(storage_path('app/public/' . $file_url), [
+                    'Content-Disposition' => 'inline; filename="' . basename($file_url) . '"'
+                ]);
+            } else {
+                return response()->download(storage_path('app/public/' . $file_url), basename($file_url));
+            }
+        } else {
+            return response()->json(['error' => 'File not found'], 404);
+        }
     }
 }

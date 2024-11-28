@@ -147,17 +147,6 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        console.log(data.identificationDocument);
-
-                        let document = 'null'
-                        if (data.identificationDocument) {
-                            let download_route =
-                                "{{ route('pm.pharmacy.download.pharmacy_list', ['path']) }}";
-                            download_route = download_route.replace('path', data
-                                .identificationDocument);
-                            document = `<a class="btn btn-info btn-sm" href="${download_route}"><i
-                                                            class="fa-regular fa-circle-down"></i></a>`;
-                        }
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -198,9 +187,9 @@
                                         <td>${data.identificationType ?? 'null'}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Identification Document</th>
+                                        <th class="text-nowrap">Identifiation File</th>
                                         <th>:</th>
-                                        <td>${document}</td>
+                                        <td>${data.identification_file_url ? `<a class='btn btn-primary' target='_blank' href='${data.identification_file_url}'><i class='fa-solid fa-download'></i></a>` : `null`}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

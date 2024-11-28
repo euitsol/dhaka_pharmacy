@@ -279,6 +279,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('details/{id}', 'details')->name('details.user_list');
             Route::get('dashboard/{id}', 'loginAs')->name('login_as.user_profile');
             Route::get('profile/{id}', 'profile')->name('user_profile');
+            Route::get('profile/download/{file_url}', 'view_or_download')->name('download.user_profile');
             Route::get('create', 'create')->name('user_create');
             Route::post('create', 'store')->name('user_create');
             Route::get('edit/{id}', 'edit')->name('user_edit');
@@ -410,6 +411,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('details/{id}', 'details')->name('details.local_area_manager_list');
             Route::get('profile/{id}', 'profile')->name('local_area_manager_profile');
             Route::get('dashboard/{id}', 'loginAs')->name('login_as.local_area_manager_profile');
+            Route::get('file/download/{url}', 'view_or_download')->name('download.local_area_manager_profile');
             Route::get('create', 'create')->name('local_area_manager_create');
             Route::post('create', 'store')->name('local_area_manager_create');
             Route::get('edit/{id}', 'edit')->name('local_area_manager_edit');
@@ -445,6 +447,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('details/{id}', 'details')->name('details.rider_list');
             Route::get('profile/{id}', 'profile')->name('rider_profile');
             Route::get('dashboard/{id}', 'loginAs')->name('login_as.rider_profile');
+            Route::get('file/download/{url}', 'view_or_download')->name('download.rider_profile');
             Route::get('create', 'create')->name('rider_create');
             Route::post('create', 'store')->name('rider_create');
             Route::get('edit/{id}', 'edit')->name('rider_edit');

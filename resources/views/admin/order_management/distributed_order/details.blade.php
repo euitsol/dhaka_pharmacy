@@ -204,7 +204,7 @@
                                                                 <td class="fw-bold">{{ __('Rider Gender') }}</td>
                                                                 <td>:</td>
                                                                 <td class="fw-bold">
-                                                                    {{ $do->assignedRider->first()->rider->gender }}
+                                                                    {{ $do->assignedRider->first()->rider->getGender() }}
                                                                 </td>
                                                             </tr>
                                                             <tr>

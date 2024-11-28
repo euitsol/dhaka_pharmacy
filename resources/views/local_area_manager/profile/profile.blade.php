@@ -81,12 +81,11 @@
                                     <select name="identification_type" id="identification_type" class="form-control">
                                         <option selected hidden value=" ">{{ __('Select Identification Type') }}
                                         </option>
-                                        <option value="NID" {{ $lam->identification_type == 'NID' ? 'selected' : '' }}>
+                                        <option value="1" {{ $lam->identification_type == '1' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
-                                        <option value="DOB" {{ $lam->identification_type == 'DOB' ? 'selected' : '' }}>
+                                        <option value="2" {{ $lam->identification_type == '2' ? 'selected' : '' }}>
                                             {{ __('Birth Certificate No') }}</option>
-                                        <option value="Passport"
-                                            {{ $lam->identification_type == 'Passport' ? 'selected' : '' }}>
+                                        <option value="3" {{ $lam->identification_type == '3' ? 'selected' : '' }}>
                                             {{ __('Passport NO') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'identification_type'])
@@ -131,11 +130,11 @@
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
                                         <option selected hidden value=" ">{{ __('Select Genger') }}</option>
-                                        <option value="Male" {{ $lam->gender == 'Male' ? 'selected' : '' }}>
+                                        <option value="1" {{ $lam->gender == '1' || old('gender') == '1' ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
-                                        <option value="Female" {{ $lam->gender == 'Female' ? 'selected' : '' }}>
+                                        <option value="2" {{ $lam->gender == '2' || old('gender') == '2' ? 'selected' : '' }}>
                                             {{ __('Female') }}</option>
-                                        <option value="Others" {{ $lam->gender == 'Others' ? 'selected' : '' }}>
+                                        <option value="3" {{ $lam->gender == '3' || old('gender') == '3' ? 'selected' : '' }}>
                                             {{ __('Others') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'gender'])

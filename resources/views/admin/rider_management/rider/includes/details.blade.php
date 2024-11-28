@@ -35,7 +35,7 @@
             <td>|</td>
             <td class="fw-bolder">{{ __('Identification Type') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $rider->identification_type ?? '--' }}</td>
+            <td>{{ $rider->identificationType() ?? '--' }}</td>
         </tr>
         <tr>
             <td class="fw-bolder">{{ __('Identification No') }}</td>
@@ -44,7 +44,7 @@
             <td>|</td>
             <td class="fw-bolder">{{ __('Gender') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $rider->gender ?? '--' }}</td>
+            <td>{{ $rider->getGender() ?? '--' }}</td>
         </tr>
         <tr>
             <td class="fw-bolder">{{ __('Operational Area') }}</td>

@@ -80,11 +80,14 @@
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
                                         <option selected hidden value=" ">{{ __('Select Genger') }}</option>
-                                        <option value="Male" {{ $dm->gender == 'Male' ? 'selected' : '' }}>
+                                        <option value="1"
+                                            {{ $dm->gender == '1' || old('gender') == 1 ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
-                                        <option value="Female" {{ $dm->gender == 'Female' ? 'selected' : '' }}>
+                                        <option value="2"
+                                            {{ $dm->gender == '2' || old('gender') == 2 ? 'selected' : '' }}>
                                             {{ __('Female') }}</option>
-                                        <option value="Others" {{ $dm->gender == 'Others' ? 'selected' : '' }}>
+                                        <option value="3"
+                                            {{ $dm->gender == '3' || old('gender') == 3 ? 'selected' : '' }}>
                                             {{ __('Others') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'gender'])
@@ -111,12 +114,11 @@
                                     <select name="identification_type" id="identification_type" class="form-control">
                                         <option selected hidden value=" ">{{ __('Select Identification Type') }}
                                         </option>
-                                        <option value="NID" {{ $dm->identification_type == 'NID' ? 'selected' : '' }}>
+                                        <option value="1" {{ $dm->identification_type == '1' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
-                                        <option value="DOB" {{ $dm->identification_type == 'DOB' ? 'selected' : '' }}>
+                                        <option value="2" {{ $dm->identification_type == '2' ? 'selected' : '' }}>
                                             {{ __('Birth Certificate No') }}</option>
-                                        <option value="Passport"
-                                            {{ $dm->identification_type == 'Passport' ? 'selected' : '' }}>
+                                        <option value="3" {{ $dm->identification_type == '3' ? 'selected' : '' }}>
                                             {{ __('Passport NO') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'identification_type'])
