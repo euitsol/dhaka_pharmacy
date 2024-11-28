@@ -113,8 +113,10 @@ function populateImagePreview(file, deleteUrl, container) {
     previewImage.setAttribute("alt", "Uploaded Image");
 
     //Create a Tag
-    const anchorLink = document.createElement("a");
-    anchorLink.setAttribute("href", deleteUrl);
+    if (deleteUrl) {
+        const anchorLink = document.createElement("a");
+        anchorLink.setAttribute("href", deleteUrl);
+    }
 
     // Create the remove button
     const removeButton = document.createElement("i");
@@ -134,9 +136,12 @@ function populateImagePreview(file, deleteUrl, container) {
     });
 
     imagePreviewDiv.appendChild(previewImage);
-    anchorLink.appendChild(removeButton);
-    imagePreviewDiv.appendChild(anchorLink);
-
+    if (!deleteUrl) {
+        imagePreviewDiv.appendChild(removeButton);
+    } else {
+        anchorLink.appendChild(removeButton);
+        imagePreviewDiv.appendChild(anchorLink);
+    }
     container.appendChild(imagePreviewDiv);
     // });
 }
