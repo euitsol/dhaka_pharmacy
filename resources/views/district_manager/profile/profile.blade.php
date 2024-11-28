@@ -1,10 +1,5 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'district_manager_profile'])
 @section('title', 'My Profile')
-@push('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
-        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-@endpush
 @section('content')
     <div class="profile-section">
         <div class="row">
@@ -85,11 +80,14 @@
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
                                         <option selected hidden value=" ">{{ __('Select Genger') }}</option>
-                                        <option value="Male" {{ $dm->gender == 'Male' ? 'selected' : '' }}>
+                                        <option value="1"
+                                            {{ $dm->gender == '1' || old('gender') == 1 ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
-                                        <option value="Female" {{ $dm->gender == 'Female' ? 'selected' : '' }}>
+                                        <option value="2"
+                                            {{ $dm->gender == '2' || old('gender') == 2 ? 'selected' : '' }}>
                                             {{ __('Female') }}</option>
-                                        <option value="Others" {{ $dm->gender == 'Others' ? 'selected' : '' }}>
+                                        <option value="3"
+                                            {{ $dm->gender == '3' || old('gender') == 3 ? 'selected' : '' }}>
                                             {{ __('Others') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'gender'])
@@ -116,12 +114,11 @@
                                     <select name="identification_type" id="identification_type" class="form-control">
                                         <option selected hidden value=" ">{{ __('Select Identification Type') }}
                                         </option>
-                                        <option value="NID" {{ $dm->identification_type == 'NID' ? 'selected' : '' }}>
+                                        <option value="1" {{ $dm->identification_type == '1' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
-                                        <option value="DOB" {{ $dm->identification_type == 'DOB' ? 'selected' : '' }}>
+                                        <option value="2" {{ $dm->identification_type == '2' ? 'selected' : '' }}>
                                             {{ __('Birth Certificate No') }}</option>
-                                        <option value="Passport"
-                                            {{ $dm->identification_type == 'Passport' ? 'selected' : '' }}>
+                                        <option value="3" {{ $dm->identification_type == '3' ? 'selected' : '' }}>
                                             {{ __('Passport NO') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'identification_type'])
@@ -202,11 +199,6 @@
     @include('district_manager.partials.documentation', ['document' => $document])
     </div>
 @endsection
-@push('js_link')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-@endpush
 @push('js')
     <script>
         function handleErrors(response) {

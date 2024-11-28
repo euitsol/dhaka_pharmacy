@@ -29,12 +29,12 @@ class UserRequest extends FormRequest
             'name' => 'required|min:4',
 
             'age' => 'nullable|numeric|digits:2',
-            'identification_type' => 'nullable|in:NID,DOB,Passport',
+            'identification_type' => 'nullable|numeric',
             'identification_no' => 'nullable|numeric',
             'present_address' => 'nullbale',
 
 
-            'gender' => 'nullable|in:Male,Female,Others',
+            'gender' => 'nullable|numeric',
             'dob' => 'nullable|date|before:today',
             'father_name' => 'nullable|min:6',
             'mother_name' => 'nullable|min:6',

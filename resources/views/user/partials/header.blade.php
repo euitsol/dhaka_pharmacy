@@ -1,7 +1,7 @@
 <header class="header-section">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-9 flex-row d-flex align-items-center">
+            <div class="col-8 flex-row d-flex align-items-center">
                 <div class="logo">
                     <a href="{{ route('home') }}">
                         <img class="w-100" src="{{ asset('user/asset/img/dashboard-logo.png') }}"
@@ -28,7 +28,7 @@
             <!-- <div class="col-7">
 
             </div> -->
-            <div class="col-3 d-flex flex-row align-items-center justify-content-end">
+            <div class="col-4 d-flex flex-row align-items-center justify-content-end">
                 <div class="right-col me-4">
                     <a href="javascript:void(0)" class="cart-icon d-flex" data-bs-toggle="offcanvas"
                         data-bs-target="#cartbtn" aria-controls="offcanvasRight">
@@ -37,11 +37,7 @@
                     </a>
                     @include('frontend.includes.add_to_cart_slide')
                 </div>
-                <div class="setting me-4">
-                    <a href="#">
-                        <img src="{{ asset('user/asset/img/setting.png') }}" alt="">
-                    </a>
-                </div>
+
                 <div class="notification me-4">
                     <a href="#">
                         <img src="{{ asset('user/asset/img/notification.png') }}" alt="">
@@ -51,34 +47,55 @@
                     <a href="{{ route('user.dashboard') }}">{{ abbreviateName(user()->name) }}</a>
                 </div>
                 <div class="profile">
-                    <a href="javascript:void(0)" class="nav-link dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-expanded="false" id="dropdownMenuButton">
-                        <img src="{{ user()->image ? storage_url(user()->image) : asset('user/asset/img/user.png') }}"
-                            alt="">
+                    <a href="javascript:void(0)" class="nav-link dropdown-toggle d-inline-block" type="button"
+                        data-toggle="dropdown" aria-expanded="false" id="dropdownMenuButton">
+                        <img src="{{ auth_storage_url(user()->image, user()->gender) }}" alt=""
+                            class="rounded-circle img-fluid" style="object-fit: fill; height: 50px; width: 50px">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item d-flex align-items-center" href="#"><img
-                                    src="{{ asset('user/asset/img/manage-account.png') }}" alt="">
-                                <span>{{ __('Manage My Account') }}</span></a></li>
-                        <li><a class="dropdown-item d-flex align-items-center"
-                                href="{{ route('u.kyc.verification') }}"><img src="{{ asset('default_img/kyc.png') }}"
-                                    alt="">
-                                <span>{{ __('KYC Verification Center') }}</span></a></li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="{{ route('u.order.list') }}"><img
-                                    src="{{ asset('user/asset/img/setting.png') }}"
-                                    alt=""><span>{{ __('My Orders') }}</span></a></li>
-                        <li><a class="dropdown-item d-flex align-items-center"
-                                href="{{ route('u.wishlist.list') }}"><img
-                                    src="{{ asset('user/asset/img/wishlist.png') }}"
-                                    alt=""><span>{{ __('My Wishlist') }}</span></a></li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="{{ route('u.review.list') }}"><img
-                                    src="{{ asset('user/asset/img/reviews.png') }}"
-                                    alt=""><span>{{ __('My Reviews') }}</span></a></li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="javascript:void(0)"
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center @if (isset($pageSlug) && $pageSlug == 'profile') active @endif"
+                                href="{{ route('u.profile.index') }}">
+                                <i class="fa-solid fa-user-gear fs-3 me-3" style="width: 30px"></i>
+                                <span>{{ __('Manage My Account') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center @if (isset($pageSlug) && $pageSlug == 'kyc_verification') active @endif"
+                                href="{{ route('u.kyc.verification') }}">
+                                <i class="fa-solid fa-shield-halved fs-3 me-3" style="width: 30px"></i>
+                                <span>{{ __('KYC Verification Center') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center @if (isset($pageSlug) && $pageSlug == 'order') active @endif"
+                                href="{{ route('u.order.list') }}">
+                                <i class="fa-solid fa-truck-fast fs-3 me-3" style="width: 30px"></i>
+                                <span>{{ __('My Orders') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center @if (isset($pageSlug) && $pageSlug == 'wishlist') active @endif"
+                                href="{{ route('u.wishlist.list') }}">
+                                <i class="fa-solid fa-heart fs-3 me-3" style="width: 30px"></i>
+                                <span>{{ __('My Wishlist') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center @if (isset($pageSlug) && $pageSlug == 'review') active @endif"
+                                href="{{ route('u.review.list') }}">
+                                <i class="fa-regular fa-star-half-alt  fs-3 me-3" style="width: 30px"></i>
+                                <span>{{ __('My Reviews') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)"
                                 onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();"><img
-                                    src="{{ asset('user/asset/img/logout.png') }}"
-                                    alt=""><span>{{ __('Logout') }}</span></a></li>
+                            document.getElementById('logout-form').submit();">
+                                <img src="{{ asset('user/asset/img/logout.png') }}" alt="">
+                                <span>{{ __('Logout') }}</span>
+                            </a>
+                        </li>
                     </ul>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf

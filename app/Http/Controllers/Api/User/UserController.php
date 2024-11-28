@@ -18,6 +18,7 @@ class UserController extends BaseController
         $user = $request->user();
 
         if ($user) {
+            $user->image = auth_storage_url($user->image, $user->gender);
             return sendResponse(true, 'User information retrived successfully', $user);
         } else {
             return sendResponse(false, 'User is invalid', null);

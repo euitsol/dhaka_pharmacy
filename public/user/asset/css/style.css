@@ -603,3 +603,114 @@ body{
     line-height: 29px;
     color: var(--text);
 }
+
+
+/*=============================================================
+                Start Profile CSS
+ =============================================================*/
+
+ .profile-section .form-control {
+    color: #222a42;
+    border-color: rgba(29, 37, 59, 0.5);
+}
+
+.profile-section .p-title{
+    background-color: var(--secondary-bg);
+    padding: 20px 25px;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.profile-section h3{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29px;
+    color: var(--text);
+}
+
+.profile-section .card{
+    background-color: var(--secondary-bg);
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 0;
+    border: none;
+}
+.profile-section .card .submit_btn{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    text-decoration: none;
+    color: var(--white);
+    background: var(--btn_bg);
+    padding: 7px 11px;
+    border-radius: 5px;
+    border: 1px solid var(--btn_bg);
+    transition: 0.4s;
+}
+.profile-section .card .submit_btn:hover {
+    background: transparent;
+    color: var(--btn_bg);
+}
+ .profile-section .profile_image .camera-icon {
+    position: absolute;
+    bottom: -10%;
+    font-size: 15px;
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid var(--primary-color);
+}
+
+.profile-section .profile_image .img,
+.profile-section .profile_image .overly {
+    height: 215px;
+    width: 215px;
+    border: 5px solid #2b3553;
+    border-bottom-color: transparent;
+    position: relative;
+}
+
+.profile-section .profile_image .overly::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #000;
+    display: block;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    opacity: .5;
+    transition: .4s;
+    z-index: 99;
+}
+
+.div_animation {
+    animation: round 5s linear infinite;
+}
+
+.image_animation {
+    animation: rounds 5s linear infinite reverse;
+}
+
+@keyframes round {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rounds {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+

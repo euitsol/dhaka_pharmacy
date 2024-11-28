@@ -83,8 +83,17 @@
     margin-right: 15px;
 }
 
-.header-section .profile ul.dropdown-menu li{
-    margin-bottom: 15px;
+.header-section .profile ul.dropdown-menu li a{
+    padding: 15px;
+    transition: .4s;
+}
+.header-section .profile ul.dropdown-menu li a.active{
+    background-color: #DEEBCF;
+    color: var(--bs-dropdown-link-color);
+}
+
+.header-section .profile ul.dropdown-menu li a:hover{
+    background-color: #DEEBCF;
 }
 
 .header-section .profile ul.dropdown-menu li:last-child{

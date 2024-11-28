@@ -143,9 +143,9 @@ function storage_url($urlOrArray)
 function auth_storage_url($urlOrArray, $gender)
 {
     $image = asset('default_img/other.png');
-    if ($gender == 'Male') {
+    if ($gender == '1') {
         $image = asset('default_img/male.png');
-    } elseif ($gender == 'Male') {
+    } elseif ($gender == '2') {
         $image = asset('default_img/female.png');
     }
 

@@ -34,7 +34,7 @@
             <td>|</td>
             <td class="fw-bolder">{{ __('Identification Type') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $lam->identification_type ?? '--' }}</td>
+            <td>{{ $lam->identificationType() ?? '--' }}</td>
         </tr>
         <tr>
             <td class="fw-bolder">{{ __('Identification No') }}</td>
@@ -43,7 +43,7 @@
             <td>|</td>
             <td class="fw-bolder">{{ __('Gender') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $lam->gender ?? '--' }}</td>
+            <td>{{ $lam->getGender() ?? '--' }}</td>
         </tr>
         <tr>
             <td class="fw-bolder">{{ __('District Manager') }}</td>

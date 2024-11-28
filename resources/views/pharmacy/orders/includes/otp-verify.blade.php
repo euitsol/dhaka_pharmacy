@@ -33,7 +33,7 @@
                             <tr>
                                 <th>{{ __('Rider Gender') }}</th>
                                 <td>:</td>
-                                <th>{{ $do->assignedRider->first()->rider->gender }}</th>
+                                <th>{{ $do->assignedRider->first()->rider->getGender() }}</th>
                             </tr>
                             <tr>
                                 <th>{{ __('Rider Contact') }}</th>
