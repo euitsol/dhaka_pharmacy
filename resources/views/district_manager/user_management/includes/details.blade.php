@@ -36,7 +36,7 @@
             <td>|</td>
             <td class="fw-bolder">{{ __('Identification Type') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $user->identification_type ?? '--' }}</td>
+            <td>{{ $user->identificationType() ?? '--' }}</td>
 
         </tr>
         <tr>
@@ -46,7 +46,7 @@
             <td>|</td>
             <td class="fw-bolder">{{ __('Gender') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $user->gender ?? '--' }}</td>
+            <td>{{ $user->getGender() ?? '--' }}</td>
 
         </tr>
         <tr>

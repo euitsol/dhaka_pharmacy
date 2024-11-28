@@ -47,36 +47,55 @@
                     <a href="{{ route('user.dashboard') }}">{{ abbreviateName(user()->name) }}</a>
                 </div>
                 <div class="profile">
-                    <a href="javascript:void(0)" class="nav-link dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-expanded="false" id="dropdownMenuButton">
-                        <img src="{{ user()->image ? storage_url(user()->image) : asset('user/asset/img/user.png') }}"
-                            alt="">
+                    <a href="javascript:void(0)" class="nav-link dropdown-toggle d-inline-block" type="button"
+                        data-toggle="dropdown" aria-expanded="false" id="dropdownMenuButton">
+                        <img src="{{ auth_storage_url(user()->image, user()->gender) }}" alt=""
+                            class="rounded-circle img-fluid" style="object-fit: fill; height: 50px; width: 50px">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item d-flex align-items-center" href="#"><i
-                                    class="fa-solid fa-user-gear fs-3 me-3" style="width: 30px"></i>
-                                <span>{{ __('Manage My Account') }}</span></a></li>
-                        <li><a class="dropdown-item d-flex align-items-center"
-                                href="{{ route('u.kyc.verification') }}"><i class="fa-solid fa-shield-halved fs-3 me-3"
-                                    style="width: 30px"></i>
-                                <span>{{ __('KYC Verification Center') }}</span></a></li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="{{ route('u.order.list') }}"><i
-                                    class="fa-solid fa-truck-fast fs-3 me-3"
-                                    style="width: 30px"></i><span>{{ __('My Orders') }}</span></a>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center @if (isset($pageSlug) && $pageSlug == 'profile') active @endif"
+                                href="{{ route('u.profile.index') }}">
+                                <i class="fa-solid fa-user-gear fs-3 me-3" style="width: 30px"></i>
+                                <span>{{ __('Manage My Account') }}</span>
+                            </a>
                         </li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="{{ route('u.wishlist.list') }}"><i
-                                    class="fa-solid fa-heart fs-3 me-3"
-                                    style="width: 30px"></i><span>{{ __('My Wishlist') }}</span></a>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center @if (isset($pageSlug) && $pageSlug == 'kyc_verification') active @endif"
+                                href="{{ route('u.kyc.verification') }}">
+                                <i class="fa-solid fa-shield-halved fs-3 me-3" style="width: 30px"></i>
+                                <span>{{ __('KYC Verification Center') }}</span>
+                            </a>
                         </li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="{{ route('u.review.list') }}"><i
-                                    class="fa-regular fa-star-half-alt  fs-3 me-3"
-                                    style="width: 30px"></i><span>{{ __('My Reviews') }}</span></a>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center @if (isset($pageSlug) && $pageSlug == 'order') active @endif"
+                                href="{{ route('u.order.list') }}">
+                                <i class="fa-solid fa-truck-fast fs-3 me-3" style="width: 30px"></i>
+                                <span>{{ __('My Orders') }}</span>
+                            </a>
                         </li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="javascript:void(0)"
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center @if (isset($pageSlug) && $pageSlug == 'wishlist') active @endif"
+                                href="{{ route('u.wishlist.list') }}">
+                                <i class="fa-solid fa-heart fs-3 me-3" style="width: 30px"></i>
+                                <span>{{ __('My Wishlist') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center @if (isset($pageSlug) && $pageSlug == 'review') active @endif"
+                                href="{{ route('u.review.list') }}">
+                                <i class="fa-regular fa-star-half-alt  fs-3 me-3" style="width: 30px"></i>
+                                <span>{{ __('My Reviews') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)"
                                 onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();"><img
-                                    src="{{ asset('user/asset/img/logout.png') }}"
-                                    alt=""><span>{{ __('Logout') }}</span></a></li>
+                            document.getElementById('logout-form').submit();">
+                                <img src="{{ asset('user/asset/img/logout.png') }}" alt="">
+                                <span>{{ __('Logout') }}</span>
+                            </a>
+                        </li>
                     </ul>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf

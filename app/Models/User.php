@@ -37,4 +37,27 @@ class User extends AuthenticateBaseModel
     {
         return $this->morphMany(Address::class, 'creater');
     }
+
+    public function identificationType()
+    {
+        switch ($this->identification_type) {
+            case 1:
+                return "National ID Card";
+            case 2:
+                return "Birth Certificate No";
+            case 3:
+                return "Passport No";
+        }
+    }
+    public function getGender()
+    {
+        switch ($this->gender) {
+            case 1:
+                return "Male";
+            case 2:
+                return "Female";
+            case 3:
+                return "Other";
+        }
+    }
 }

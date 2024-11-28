@@ -76,13 +76,13 @@ use App\Http\Controllers\Pharmacy\OrderManagementController as PharmacyOrderMana
 use App\Http\Controllers\Auth\LoginController as UserLoginController;
 use App\Http\Controllers\Auth\RegisterController as UserRegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController as UserForgotPasswordController;
-use App\Http\Controllers\User\UserProfileController;
+use App\Http\Controllers\User\ProfileController as UserProfileController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\PaymentGateway\SslCommerzController;
-use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
 use App\Http\Controllers\User\CartAjaxController;
-use App\Http\Controllers\User\UserOrderController;
+use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\WishlistController as UserWishlistController;
 use App\Http\Controllers\User\ReviewController as UserReviewController;
 use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
@@ -967,8 +967,15 @@ Route::get('/order-by-prescrition/check-auth', [UserOrderByPrescriptionControlle
 
 // User Routes
 Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'customer'], function () {
-    Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
+    // Profile Routes
+    Route::controller(UserProfileController::class)->prefix('profile')->name('u.profile.')->group(function () {
+        Route::get('/', 'profile')->name('index');
+        Route::put('/update', 'update')->name('update');
+        Route::put('/update/password', 'updatePassword')->name('update.password');
+        Route::post('/update/image', 'updateImage')->name('update.img');
+        Route::get('file/download/{url}', 'view_or_download')->name('file.download');
+    });
     // Checkout Routes
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
         Route::post('/single-order', 'single_order')->name('product.single_order');
