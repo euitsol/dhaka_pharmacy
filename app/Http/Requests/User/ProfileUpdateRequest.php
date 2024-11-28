@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\DistrictManager;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,20 +23,20 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4',
-            'phone' => 'required|numeric|digits:11|unique:district_managers,phone,' . dm()->id,
-            'age' => 'nullable|numeric|digits:2',
-            'area' => 'nullable',
-            'identification_type' => 'nullable|numeric',
-            'identification_no' => 'nullable|numeric',
-            'present_address' => 'nullable',
-            'cv' => 'nullable|file|mimes:pdf',
-
-            'gender' => 'nullable|numeric',
-            'dob' => 'nullable|date|before:today',
             'father_name' => 'nullable|min:6',
             'mother_name' => 'nullable|min:6',
-            'permanent_address' => 'nullable',
-            'parent_phone' => 'nullable|numeric|digits:11',
+            'age' => 'nullable|numeric|digits:2',
+            'identification_type' => 'nullable|numeric',
+            'identification_no' => 'nullable|numeric',
+            'identification_file' => 'nullable|file|mimes:pdf',
+            'present_address' => 'nullable|string',
+            'permanent_address' => 'nullable|string',
+            'gender' => 'nullable|numeric',
+            'dob' => 'nullable|date|before:today',
+            'emergency_phone' => 'nullable|numeric|digits:11',
+            'occupation' => 'nullable|string',
+            'bio' => 'nullable|string',
+            'email' => 'nullable|email|unique:users,email,' . user()->id,
         ];
     }
 }

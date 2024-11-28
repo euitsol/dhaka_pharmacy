@@ -22,7 +22,7 @@
         <tr>
             <td class="fw-bolder">{{ __('Emergency Contact') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $user->parent_phone ?? '--' }}</td>
+            <td>{{ $user->emergency_phone ?? '--' }}</td>
             <td>|</td>
             <td class="fw-bolder">{{ __('Birth Date') }}</td>
             <td>{{ __(':') }}</td>
@@ -36,7 +36,7 @@
             <td>|</td>
             <td class="fw-bolder">{{ __('Identification Type') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $user->identification_type ?? '--' }}</td>
+            <td>{{ $user->identificationType() ?? '--' }}</td>
 
         </tr>
         <tr>
@@ -46,7 +46,7 @@
             <td>|</td>
             <td class="fw-bolder">{{ __('Gender') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $user->gender ?? '--' }}</td>
+            <td>{{ $user->getGender() ?? '--' }}</td>
 
         </tr>
         <tr>
@@ -73,6 +73,24 @@
             <td>
                 <span class="{{ $user->getPhoneVerifyClass() }}">{{ $user->getPhoneVerifyStatus() }}</span>
             </td>
+        </tr>
+        <tr>
+            <td class="fw-bolder">{{ __('Identification File') }}</td>
+            <td>{{ __(':') }}</td>
+            <td colspan="5">
+                @if (!empty($user->identification_file))
+                    <a class="btn btn-primary" target="_blank"
+                        href="{{ route('um.user.download.user_profile', base64_encode($user->identification_file)) }}"><i
+                            class="fa-solid fa-download"></i></a>
+                @else
+                    {{ __('--') }}
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <td class="fw-bolder">{{ __('Bio') }}</td>
+            <td>{{ __(':') }}</td>
+            <td colspan="5">{{ $user->bio ?? '--' }}</td>
         </tr>
         <tr>
             <td class="fw-bolder">{{ __('Present Address') }}</td>

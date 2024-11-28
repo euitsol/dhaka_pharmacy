@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class UserDashboardController extends Controller
+class DashboardController extends Controller
 {
     //
 

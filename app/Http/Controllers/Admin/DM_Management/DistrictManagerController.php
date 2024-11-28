@@ -36,6 +36,9 @@ class DistrictManagerController extends Controller
     {
         $data = DistrictManager::with('operation_area')->findOrFail($id);
         $data->total_lams = count($data->lams);
+        $data->getGender = $data->getGender() ?? null;
+        $data->identificationType = $data->identificationType() ?? null;
+        $data->cv = !empty($data->cv) ? route("dm_management.district_manager.download.district_manager_profile", base64_encode($data->cv)) : null;
         $this->simpleColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);

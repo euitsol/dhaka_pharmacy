@@ -17,6 +17,7 @@ use App\Models\Earning;
 use App\Models\KycSetting;
 use App\Models\SubmittedKyc;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class LocalAreaManagerController extends Controller
 {
@@ -36,6 +37,9 @@ class LocalAreaManagerController extends Controller
     public function details($id): JsonResponse
     {
         $data = LocalAreaManager::with(['dm.operation_area', 'creater', 'operation_sub_area', 'updater'])->findOrFail($id);
+        $data->getGender = $data->getGender() ?? null;
+        $data->identificationType = $data->identificationType();
+        $data->cv = !empty($data->cv) ? route("lam_management.local_area_manager.download.local_area_manager_profile", base64_encode($data->cv)) : null;
         $this->morphColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
@@ -134,5 +138,22 @@ class LocalAreaManagerController extends Controller
             return $sub_area->status == 1;
         });
         return response()->json($data);
+    }
+    public function view_or_download($file_url)
+    {
+        $file_url = base64_decode($file_url);
+        if (Storage::exists('public/' . $file_url)) {
+            $fileExtension = pathinfo($file_url, PATHINFO_EXTENSION);
+
+            if (strtolower($fileExtension) === 'pdf') {
+                return response()->file(storage_path('app/public/' . $file_url), [
+                    'Content-Disposition' => 'inline; filename="' . basename($file_url) . '"'
+                ]);
+            } else {
+                return response()->download(storage_path('app/public/' . $file_url), basename($file_url));
+            }
+        } else {
+            return response()->json(['error' => 'File not found'], 404);
+        }
     }
 }

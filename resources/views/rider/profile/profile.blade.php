@@ -90,14 +90,11 @@
                                     <select name="identification_type" id="identification_type" class="form-control">
                                         <option selected hidden value=" ">{{ __('Select Identification Type') }}
                                         </option>
-                                        <option value="NID"
-                                            {{ $rider->identification_type == 'NID' ? 'selected' : '' }}>
+                                        <option value="1" {{ $rider->identification_type == '1' ? 'selected' : '' }}>
                                             {{ __('National ID Card') }}</option>
-                                        <option value="DOB"
-                                            {{ $rider->identification_type == 'DOB' ? 'selected' : '' }}>
+                                        <option value="2" {{ $rider->identification_type == '2' ? 'selected' : '' }}>
                                             {{ __('Birth Certificate No') }}</option>
-                                        <option value="Passport"
-                                            {{ $rider->identification_type == 'Passport' ? 'selected' : '' }}>
+                                        <option value="3" {{ $rider->identification_type == '3' ? 'selected' : '' }}>
                                             {{ __('Passport NO') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'identification_type'])
@@ -115,11 +112,14 @@
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
                                         <option selected hidden value=" ">{{ __('Select Genger') }}</option>
-                                        <option value="Male" {{ $rider->gender == 'Male' ? 'selected' : '' }}>
+                                        <option value="1"
+                                            {{ $rider->gender == '1' || old('gender') == '1' ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
-                                        <option value="Female" {{ $rider->gender == 'Female' ? 'selected' : '' }}>
+                                        <option value="2"
+                                            {{ $rider->gender == '2' || old('gender') == '2' ? 'selected' : '' }}>
                                             {{ __('Female') }}</option>
-                                        <option value="Others" {{ $rider->gender == 'Others' ? 'selected' : '' }}>
+                                        <option value="3"
+                                            {{ $rider->gender == '3' || old('gender') == '3' ? 'selected' : '' }}>
                                             {{ __('Others') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'gender'])

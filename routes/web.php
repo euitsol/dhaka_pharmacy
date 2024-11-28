@@ -76,13 +76,13 @@ use App\Http\Controllers\Pharmacy\OrderManagementController as PharmacyOrderMana
 use App\Http\Controllers\Auth\LoginController as UserLoginController;
 use App\Http\Controllers\Auth\RegisterController as UserRegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController as UserForgotPasswordController;
-use App\Http\Controllers\User\UserProfileController;
+use App\Http\Controllers\User\ProfileController as UserProfileController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\PaymentGateway\SslCommerzController;
-use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\AddressController as UserAddressController;
 use App\Http\Controllers\User\CartAjaxController;
-use App\Http\Controllers\User\UserOrderController;
+use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\WishlistController as UserWishlistController;
 use App\Http\Controllers\User\ReviewController as UserReviewController;
 use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
@@ -279,6 +279,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('details/{id}', 'details')->name('details.user_list');
             Route::get('dashboard/{id}', 'loginAs')->name('login_as.user_profile');
             Route::get('profile/{id}', 'profile')->name('user_profile');
+            Route::get('profile/download/{file_url}', 'view_or_download')->name('download.user_profile');
             Route::get('create', 'create')->name('user_create');
             Route::post('create', 'store')->name('user_create');
             Route::get('edit/{id}', 'edit')->name('user_edit');
@@ -410,6 +411,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('details/{id}', 'details')->name('details.local_area_manager_list');
             Route::get('profile/{id}', 'profile')->name('local_area_manager_profile');
             Route::get('dashboard/{id}', 'loginAs')->name('login_as.local_area_manager_profile');
+            Route::get('file/download/{url}', 'view_or_download')->name('download.local_area_manager_profile');
             Route::get('create', 'create')->name('local_area_manager_create');
             Route::post('create', 'store')->name('local_area_manager_create');
             Route::get('edit/{id}', 'edit')->name('local_area_manager_edit');
@@ -445,6 +447,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('details/{id}', 'details')->name('details.rider_list');
             Route::get('profile/{id}', 'profile')->name('rider_profile');
             Route::get('dashboard/{id}', 'loginAs')->name('login_as.rider_profile');
+            Route::get('file/download/{url}', 'view_or_download')->name('download.rider_profile');
             Route::get('create', 'create')->name('rider_create');
             Route::post('create', 'store')->name('rider_create');
             Route::get('edit/{id}', 'edit')->name('rider_edit');
@@ -967,8 +970,15 @@ Route::get('/order-by-prescrition/check-auth', [UserOrderByPrescriptionControlle
 
 // User Routes
 Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'customer'], function () {
-    Route::get('/profile', [UserProfileController::class, 'profile'])->name('user.profile');
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
+    // Profile Routes
+    Route::controller(UserProfileController::class)->prefix('profile')->name('u.profile.')->group(function () {
+        Route::get('/', 'profile')->name('index');
+        Route::put('/update', 'update')->name('update');
+        Route::put('/update/password', 'updatePassword')->name('update.password');
+        Route::post('/update/image', 'updateImage')->name('update.img');
+        Route::get('file/download/{url}', 'view_or_download')->name('file.download');
+    });
     // Checkout Routes
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
         Route::post('/single-order', 'single_order')->name('product.single_order');

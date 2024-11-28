@@ -43,8 +43,8 @@ class PharmacyController extends Controller
         $data->kycStatusTitle = $data->getKycStatus();
         $data->verifyStatusBg = $data->getEmailVerifyClass();
         $data->verifyStatusTitle = $data->getEmailVerifyStatus();
-        $data->identificationType = $data->identification_type ? $data->identificationType() : 'null';
-        $data->identificationDocument = $data->identification_file ? base64_encode($data->identification_file) : null;
+        $data->identificationType = $data->identificationType();
+        $data->identification_file_url = !empty($data->identification_file) ? route("pm.pharmacy.download.pharmacy_list", base64_encode($data->identification_file)) : null;
         $this->morphColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);

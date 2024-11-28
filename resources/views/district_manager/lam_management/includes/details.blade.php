@@ -43,7 +43,7 @@
             <td>|</td>
             <td class="fw-bolder">{{ __('Gender') }}</td>
             <td>{{ __(':') }}</td>
-            <td>{{ $lam->gender ?? '--' }}</td>
+            <td>{{ $lam->getGender() ?? '--' }}</td>
         </tr>
         <tr>
             <td class="fw-bolder">{{ __('District Manager') }}</td>

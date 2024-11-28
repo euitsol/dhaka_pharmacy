@@ -11,7 +11,7 @@ use App\Http\Traits\TransformProductTrait;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\URL;
 
-class UserOrderController extends Controller
+class OrderController extends Controller
 {
     use TransformOrderItemTrait, TransformProductTrait;
 

@@ -183,11 +183,16 @@
                                         <td>${data.email ?? '--'}</td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">Gender</th>
+                                        <th>:</th>
+                                        <td>${data.getGender ?? '--'}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Operation Area</th>
                                         <th>:</th>
                                         <td>${oa}</td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <th class="text-nowrap">Operation Sub Area</th>
                                         <th>:</th>
@@ -207,6 +212,22 @@
                                         <th class="text-nowrap">Phone Verify</th>
                                         <th>:</th>
                                         <td><span class="badge ${verifyStatusClass}">${verifyStatus}</span></td>
+                                    </tr>
+                                     <tr>
+                                        <th class="text-nowrap">Identification Type</th>
+                                        <th>:</th>
+                                        <td>${data.identificationType}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identification No</th>
+                                        <th>:</th>
+                                        <td>${data.identification_no}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">CV</th>
+                                        <th>:</th>
+                                        <td>${data.cv ? `<a class='btn btn-primary' target='_blank' href='${data.cv}'><i
+                                                                class='fa-solid fa-download'></i></a>` : `null`}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created Date</th>
