@@ -115,6 +115,7 @@ use App\Http\Controllers\Pharmacy\Auth\EmailVerificationController as PharmacyEm
 use App\Http\Controllers\Pharmacy\EarningController as PharmacyEarningController;
 use App\Http\Controllers\Pharmacy\WithdrawMethodController as PharmacyWithdrawMethodController;
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
+use App\Http\Controllers\Rider\OperationalAreaController as RiderOperationalAreaController;
 use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodController;
 use App\Http\Controllers\User\KYC\KycVerificationController as UserKycVerificationController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
@@ -961,6 +962,10 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
         Route::get('/details/{id}', 'details')->name('details');
         Route::get('/create', 'create')->name('create');
         Route::post('/create', 'store')->name('create');
+    });
+
+    Route::controller(RiderOperationalAreaController::class)->prefix('operational-area')->name('operational_area.')->group(function () {
+        Route::get('index', 'index')->name('list');
     });
 });
 
