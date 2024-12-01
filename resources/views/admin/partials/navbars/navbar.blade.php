@@ -22,7 +22,7 @@
                     <li class="dropdown nav-item">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <div class="photo">
-                                <img src="{{ admin()->image ? storage_url(admin()->image) : asset('white/img/anime3.png') }}"
+                                <img src="{{ auth_storage_url(admin()->image, admin()->gender) }}"
                                     alt="{{ __('Profile Photo') }}">
                             </div>
                             <p class="d-lg-none">{{ __('Log out') }}</p>

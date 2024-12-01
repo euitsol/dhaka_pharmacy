@@ -1,5 +1,8 @@
 @extends('admin.layouts.master', ['pageSlug' => 'admin'])
 @section('title', 'Admin List')
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -121,6 +124,9 @@
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
 @push('js')
+    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
+@endpush
+@push('js')
     <script>
         $(document).ready(function() {
             $('.view').on('click', function() {
@@ -141,6 +147,18 @@
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
                                         <td>${data.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Image</th>
+                                        <th>:</th>
+                                        <td>
+                                            <div id="lightbox" class="lightbox">
+                                                <div class="lightbox-content">
+                                                    <img src="${data.image}" class="lightbox_image">
+                                                </div>
+                                                <div class="close_button fa-beat">X</div>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Father Name</th>
@@ -196,7 +214,7 @@
                                         <th class="text-nowrap">Identifiation File</th>
                                         <th>:</th>
                                         <td>${data.identification_file_url ? `<a class='btn btn-primary' target='_blank' href='${data.identification_file_url}'><i
-                        class='fa-solid fa-download'></i></a>` : `null`}</td>
+                                                                class='fa-solid fa-download'></i></a>` : `null`}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Gender</th>
