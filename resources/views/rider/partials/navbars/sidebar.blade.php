@@ -67,6 +67,7 @@
                                 <p>{{ 'Picked Up Orders' }}</p>
                             </a>
                         </li>
+
                         {{-- <li @if ($pageSlug == 'picking-up_orders') class="active" @endif>
                             <a href="{{ route('rider.order_management.index', 'picking-up') }}">
                                 <i
@@ -104,6 +105,12 @@
                         </li> --}}
                     </ul>
                 </div>
+            </li>
+            <li @if ($pageSlug == 'operational_area') class="active" @endif>
+                <a href="{{ route('rider.operational_area.list') }}">
+                    <i class="fa-solid fa-earth-americas @if ($pageSlug == 'operational_area') fa-beat-fade @endif"></i>
+                    <p>{{ 'Operation Areas' }}</p>
+                </a>
             </li>
             <li @if ($pageSlug == 'wm') class="active" @endif>
                 <a href="{{ route('rider.wm.list') }}">
