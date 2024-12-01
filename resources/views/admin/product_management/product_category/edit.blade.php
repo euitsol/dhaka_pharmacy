@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label>{{ __('Image') }}</label>
                             <input type="file" accept="image/*" name="image" class="form-control image-upload"
-                                value="{{ old('image') }}" multiple
+                                value="{{ old('image') }}"
                                 @if (isset($product_category->image)) data-existing-files="{{ storage_url($product_category->image) }}"
                                     data-delete-url="" @endif>
                             @include('alerts.feedback', ['field' => 'image'])
