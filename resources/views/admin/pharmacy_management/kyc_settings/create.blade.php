@@ -27,7 +27,8 @@
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <label class="m-0">{{ __('KYC Requirements') }}</label>
                                 <a href="javascript:void(0)" class="btn btn-dark btn-sm btn-rounded p-6 ml-4 generate_atf"
-                                    data-count="1"><i class="fa fa-plus-circle"></i>
+                                    data-count="{{ isset($kyc_setting->form_data) && null !== json_decode($kyc_setting->form_data) ? count(json_decode($kyc_setting->form_data, true)) : 1 }}"><i
+                                        class="fa fa-plus-circle"></i>
                                     {{ trans('Add Field') }}
                                 </a>
 

@@ -56,7 +56,7 @@
                                         <div class="profile_image">
                                             <div class="img mx-auto mt-4 rounded-circle">
                                                 <img class="avatar mb-0 rounded-circle w-100 h-100" id="previewImage"
-                                                    src="{{ storage_url($dm->image) }}" alt="">
+                                                    src="{{ auth_storage_url($dm->image, $dm->gender) }}" alt="">
                                                 <label for="imageInput" class="camera-icon text-center rounded-circle">
                                                     <i class="fa-solid fa-camera-retro" style="cursor: pointer;"></i>
                                                     <input type="file" id="imageInput" name="image" accept="image/*"

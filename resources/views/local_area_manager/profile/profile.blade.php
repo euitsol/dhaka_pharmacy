@@ -61,8 +61,7 @@
                                         <div class="profile_image">
                                             <div class="img mx-auto mt-4 rounded-circle">
                                                 <img class="avatar mb-0 rounded-circle w-100 h-100" id="previewImage"
-                                                    src="{{ $lam->image ? storage_url($lam->image) : asset('no_img/no_img.jpg') }}"
-                                                    alt="">
+                                                    src="{{ auth_storage_url($lam->image, $lam->gender) }}" alt="">
                                                 <label for="imageInput" class="camera-icon text-center rounded-circle">
                                                     <i class="fa-solid fa-camera-retro" style="cursor: pointer;"></i>
                                                     <input type="file" id="imageInput" name="image" accept="image/*"
@@ -130,11 +129,14 @@
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
                                         <option selected hidden value=" ">{{ __('Select Genger') }}</option>
-                                        <option value="1" {{ $lam->gender == '1' || old('gender') == '1' ? 'selected' : '' }}>
+                                        <option value="1"
+                                            {{ $lam->gender == '1' || old('gender') == '1' ? 'selected' : '' }}>
                                             {{ __('Male') }}</option>
-                                        <option value="2" {{ $lam->gender == '2' || old('gender') == '2' ? 'selected' : '' }}>
+                                        <option value="2"
+                                            {{ $lam->gender == '2' || old('gender') == '2' ? 'selected' : '' }}>
                                             {{ __('Female') }}</option>
-                                        <option value="3" {{ $lam->gender == '3' || old('gender') == '3' ? 'selected' : '' }}>
+                                        <option value="3"
+                                            {{ $lam->gender == '3' || old('gender') == '3' ? 'selected' : '' }}>
                                             {{ __('Others') }}</option>
                                     </select>
                                     @include('alerts.feedback', ['field' => 'gender'])

@@ -19,17 +19,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navigation">
                 <ul class="navbar-nav ml-auto">
-                    {{-- <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link" data-toggle="modal" data-target=".map-modal">
-                            <div class="photo">
-                                <img src="{{ asset('rider/img/map-pin.png') }}" alt="{{ __('Map pin') }}">
-                            </div>
-                        </a>
-                    </li> --}}
                     <li class="dropdown nav-item">
                         <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <div class="photo">
-                                <img src="{{ asset('white') }}/img/anime3.png" alt="{{ __('Profile Photo') }}">
+                                <img src="{{ auth_storage_url(rider()->image, rider()->gender) }}"
+                                    alt="{{ __('Profile Photo') }}">
                             </div>
                             <p class="d-lg-none">{{ __('Log out') }}</p>
                         </a>

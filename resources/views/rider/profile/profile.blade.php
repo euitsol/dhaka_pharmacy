@@ -70,7 +70,7 @@
                                         <div class="profile_image">
                                             <div class="img mx-auto mt-4 rounded-circle">
                                                 <img class="avatar mb-0 rounded-circle w-100 h-100" id="previewImage"
-                                                    src="{{ $rider->image ? storage_url($rider->image) : asset('no_img/no_img.jpg') }}"
+                                                    src="{{ auth_storage_url($rider->image, $rider->gender) }}"
                                                     alt="">
                                                 <label for="imageInput" class="camera-icon text-center rounded-circle">
                                                     <i class="fa-solid fa-camera-retro" style="cursor: pointer;"></i>

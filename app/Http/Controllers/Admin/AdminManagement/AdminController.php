@@ -45,6 +45,7 @@ class AdminController extends Controller
         $data->identificationType = $data->identificationType();
         $data->getGender = $data->getGender() ?? null;
         $data->identification_file_url = !empty($data->identification_file) ? route("am.admin.download.admin_profile", base64_encode($data->identification_file)) : null;
+        $data->image = auth_storage_url($data->image, $data->gender);
         $this->simpleColumnData($data);
         return response()->json($data);
     }
