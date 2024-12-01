@@ -114,7 +114,7 @@ function populateImagePreview(file, deleteUrl, container) {
 
     //Create a Tag
     if (deleteUrl) {
-        const anchorLink = document.createElement("a");
+        var anchorLink = document.createElement("a");
         anchorLink.setAttribute("href", deleteUrl);
     }
 

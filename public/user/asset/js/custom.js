@@ -82,8 +82,6 @@ $(document).on("change", ".image-upload", function () {
         );
         removeButton.addEventListener("click", function () {
             const imageContainer = this.parentNode;
-            const imagePreview = imageContainer.querySelector(".imagePreview");
-
             imageContainer.remove();
         });
 
@@ -114,7 +112,7 @@ function populateImagePreview(file, deleteUrl, container) {
 
     //Create a Tag
     if (deleteUrl) {
-        const anchorLink = document.createElement("a");
+        var anchorLink = document.createElement("a");
         anchorLink.setAttribute("href", deleteUrl);
     }
 
@@ -136,11 +134,11 @@ function populateImagePreview(file, deleteUrl, container) {
     });
 
     imagePreviewDiv.appendChild(previewImage);
-    if (!deleteUrl) {
-        imagePreviewDiv.appendChild(removeButton);
-    } else {
+    if (deleteUrl) {
         anchorLink.appendChild(removeButton);
         imagePreviewDiv.appendChild(anchorLink);
+    } else {
+        imagePreviewDiv.appendChild(removeButton);
     }
     container.appendChild(imagePreviewDiv);
     // });
