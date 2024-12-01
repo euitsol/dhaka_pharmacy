@@ -22,9 +22,9 @@ class ProductCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'nullable|image|mimes:jpeg,png,gif,jpg,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,gif,jpg,webp,svg|max:2048',
         ]
-        +
+            +
             ($this->isMethod('POST') ? $this->store() : $this->update());
     }
 

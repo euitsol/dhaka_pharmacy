@@ -39,7 +39,7 @@
   --border-1: #2D98DA;
   --border-2: #28A349;
 
-  --secondry-font: "Poppins", sans-serif; 
+  --secondry-font: "Poppins", sans-serif;
 
 }
 
@@ -392,7 +392,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 
 .sidebar-cat-section .row .single-cat .icon {
-  max-width: 25px;
+  max-width: 40px;
   min-height: 40px;
   transition: 0.4s;
   display: flex;
@@ -414,7 +414,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   border-radius: 10px;
   cursor: pointer;
   transition: .4s;
-  
+
 }
 .sidebar-cat-section .upload_prescription .cat-title:hover{
   color: var(--text-secondary-color);
@@ -1655,11 +1655,11 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   display: inline-block;
 }
 .product-section .sub_categories .sub_cat_link .sub_cat_img {
-  
+
   object-fit: contain;
   transition: .4s;
   height: 100%;
-  width: 100%; 
+  width: 100%;
 }
 
 /* .product-section .sub_categories .sub_cat_item .card::after{
@@ -1705,7 +1705,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .product-section .sub_categories .sub_cat_item:hover .card-title{
   transform: scale(1.1);
   font-weight: bold;
-  
+
 }
 .product-section .sub_categories .sub_cat_item .card.active{
   border-color: var(--asent-color);
@@ -1731,7 +1731,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .product-section .sub_categories .sub_cat_item .card.active .card-title{
   transform: scale(1.2);
   font-weight: bold;
-  
+
 }
 .product-section .sub_categories .card{
   transition: .4s;
