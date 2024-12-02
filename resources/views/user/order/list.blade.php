@@ -48,7 +48,11 @@
                                             </div>
                                             <p class="total p-0">
                                                 {{ __('Total Amount: ') }}<span
-                                                    class="fw-bold">{{ number_format(ceil($order->totalPrice + $order->delivery_fee), 2) }}{{ __('tk') }}</span>
+                                                    class="fw-bold">{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee), 2) }}{{ __('tk') }}</span>
+                                                @if ($order->totalPrice != $order->totalDiscountPrice)
+                                                    <sup
+                                                        class="text-danger"><del>{{ number_format(ceil($order->totalPrice + $order->delivery_fee), 2) }}{{ __('tk') }}</del></sup>
+                                                @endif
                                             </p>
                                         </div>
                                     </div>
