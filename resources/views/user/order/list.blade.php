@@ -48,7 +48,7 @@
                                             </div>
                                             <p class="total p-0">
                                                 {{ __('Total Amount: ') }}<span
-                                                    class="fw-bold">{{ number_format($order->totalPrice, 2) }}{{ __('tk') }}</span>
+                                                    class="fw-bold">{{ number_format(ceil($order->totalPrice + $order->delivery_fee), 2) }}{{ __('tk') }}</span>
                                             </p>
                                         </div>
                                     </div>
