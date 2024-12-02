@@ -18,11 +18,12 @@ use Illuminate\View\View;
 use App\Http\Traits\TransformOrderItemTrait;
 use SebastianBergmann\Type\VoidType;
 use Illuminate\Support\Facades\DB;
+use App\Http\Traits\IncomeTrait;
 
 
 class OrderManagementController extends Controller
 {
-    use TransformOrderItemTrait;
+    use TransformOrderItemTrait, IncomeTrait;
 
     public function __construct()
     {
@@ -200,6 +201,8 @@ class OrderManagementController extends Controller
                 }
                 $otp->status = 2; //verified
                 $otp->save();
+                $this->calculatePharmacyTotalAmount($od);
+                $this->addIncome(pharmacy(), $od->totalPharmacyAmount, 'tk', $od->order->id);
 
                 flash()->addSuccess('Order delivered successfully.');
             });

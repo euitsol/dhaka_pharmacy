@@ -41,19 +41,18 @@ trait TransformOrderItemTrait
     private function calculatePharmacyTotalAmount(&$od)
     {
         $this->calculateOrderTotalDiscountPrice($od->order);
-        $discount = $od->odps->first()->pharmacy->pharmacyDiscounts->where('status', 1)->first() ? $od->odps->first()->pharmacy->pharmacyDiscounts->where('status', 1)->first()->discount_percent: 0;
-        $totalPharmacyAmount = 0;
+        $discount = $od->odps->first()->pharmacy->pharmacyDiscounts->where('status', 1)->first() ? $od->odps->first()->pharmacy->pharmacyDiscounts->where('status', 1)->first()->discount_percent : 0;
 
         //add discounted product price to odp
-        $od->odps->each(function (&$odp) use($discount, $totalPharmacyAmount){
+        $od->odps->each(function (&$odp) use ($discount) {
+            if ($odp->status == -1) return;
             $this->setDiscountInformation($odp->order_product->product);
             $price = $odp->order_product->quantity * $odp->order_product->unit->quantity * $odp->order_product->product->discounted_price;
-            $odp->discounted_price = $price - ($price *($discount/100));
+            $odp->discounted_price = $price - ($price * ($discount / 100));
             $odp->selling_price = $price;
         });
 
         //add discounted total amount to od
         $od->totalPharmacyAmount = $od->odps->sum('discounted_price');
-
     }
 }
