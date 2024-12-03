@@ -144,31 +144,6 @@ class AdminController extends Controller
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function create(): View
     {
         $data['roles'] = Role::latest()->get();

@@ -947,7 +947,7 @@
                     ],
                 ],
             ])
-            {{-- Feedback --}}
+            {{-- Review --}}
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [
                     [
@@ -989,6 +989,18 @@
                     </div>
                 </li>
             @endif
+
+            {{-- Documentation --}}
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'doc',
+                        'routeName' => 'doc.doc_list',
+                        'iconClass' => 'fa-solid fa-bullhorn',
+                        'label' => 'Documentation',
+                    ],
+                ],
+            ])
 
             {{-- Site Settings --}}
             @include('admin.partials.menu_buttons', [

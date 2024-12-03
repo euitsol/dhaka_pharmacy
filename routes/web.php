@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\DistributedOrder\DistributedOrderController;
 use App\Http\Controllers\Admin\DM_Management\DistrictManagerController;
 use App\Http\Controllers\Admin\DM_Management\DmKycController;
 use App\Http\Controllers\Admin\DM_Management\DmKycSettingsController;
+use App\Http\Controllers\Admin\DocumentationController;
 use App\Http\Controllers\Admin\LAM_Management\LamKycController;
 use App\Http\Controllers\Admin\LAM_Management\LamKycSettingsController;
 use App\Http\Controllers\Admin\LAM_Management\LocalAreaManagerController;
@@ -235,6 +236,19 @@ Route::controller(UserForgotPasswordController::class)->prefix('user')->group(fu
 //Admin Auth Routes
 Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+
+    // Documentaiton Routes
+    Route::controller(DocumentationController::class)->prefix('documentation')->name('doc.')->group(function () {
+        Route::get('index', 'index')->name('doc_list');
+        Route::get('details/{id}', 'details')->name('details.doc_list');
+        Route::get('create', 'create')->name('doc_create');
+        Route::post('create', 'store')->name('doc_create');
+        Route::get('edit/{id}', 'edit')->name('doc_edit');
+        Route::put('edit/{id}', 'update')->name('doc_edit');
+        Route::get('delete/{id}', 'delete')->name('doc_delete');
+    });
+
+
 
     // Admin Management Routes
     Route::group(['as' => 'am.', 'prefix' => 'admin-management'], function () {
