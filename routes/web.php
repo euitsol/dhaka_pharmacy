@@ -153,6 +153,7 @@ Route::controller(FileUploadController::class)->prefix('file-upload')->name('fil
     Route::post('/uploads', 'uploads')->name('upload');
     Route::delete('/delete-temp-file', 'deleteTempFile')->name('delete');
     Route::post('/reset', 'resetFilePond')->name('reset');
+    Route::post('/content-image/upload', 'content_image_upload')->name('ci_upload');
 });
 
 // Admin Login Routes

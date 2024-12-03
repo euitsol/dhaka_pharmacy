@@ -36,6 +36,7 @@
         const mapbox_style_id = `{{ config('mapbox.pharmacy_radious') }}`;
         const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
         const admin_id = `{{ admin() ? admin()->id : false }}`;
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
 </head>
 
