@@ -63,6 +63,3 @@
         @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection
-@push('js')
-    <script src="{{ asset('ckEditor5/main.js') }}"></script>
-@endpush

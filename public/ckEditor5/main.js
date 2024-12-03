@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const textAreas = $("textarea:not(.no-ckeditor5)");
+    const textAreas = $("textarea.form-control:not(.no-ckeditor5)");
     textAreas.each((index, textArea) => {
         const currentConfig = { ...CkEditorConfig };
         currentConfig.initialData = textArea.value;
