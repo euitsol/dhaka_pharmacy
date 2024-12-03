@@ -60,147 +60,85 @@
                             <a class="dropdown-item d-flex align-items-center active"
                                 href="{{ route('u.profile.index') }}">
                                 <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
+                                    <i class="fa-regular fa-bell fs-3 me-3 "
+                                        style="width: 50px; text-align: center"></i>
                                 </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
+                                <div class="details px-2">
+                                    <span
+                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
+                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
+                                </div>
+
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
                                 <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
+                                    <i class="fa-regular fa-bell fs-3 me-3 "
+                                        style="width: 50px; text-align: center"></i>
                                 </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
+                                <div class="details px-2">
+                                    <span
+                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
+                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
+                                </div>
+
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
                                 <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
+                                    <i class="fa-regular fa-bell fs-3 me-3 "
+                                        style="width: 50px; text-align: center"></i>
                                 </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
+                                <div class="details px-2">
+                                    <span
+                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
+                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
+                                </div>
+
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
                                 <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
+                                    <i class="fa-regular fa-bell fs-3 me-3 "
+                                        style="width: 50px; text-align: center"></i>
                                 </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
+                                <div class="details px-2">
+                                    <span
+                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
+                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
+                                </div>
+
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
                                 <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
+                                    <i class="fa-regular fa-bell fs-3 me-3 "
+                                        style="width: 50px; text-align: center"></i>
                                 </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
+                                <div class="details px-2">
+                                    <span
+                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
+                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
+                                </div>
+
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
                                 <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
+                                    <i class="fa-regular fa-bell fs-3 me-3 "
+                                        style="width: 50px; text-align: center"></i>
                                 </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
+                                <div class="details px-2">
+                                    <span
+                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
+                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
                                 </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
-                                </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center active"
-                                href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
-                                </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
-                                </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
-                                </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
-                                </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center active"
-                                href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
-                                </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
-                                </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
-                                </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 " style="width: 30px"></i>
-                                </div>
-                                <span
-                                    class="notification-title">{{ __('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy') }}</span>
+
                             </a>
                         </li>
                     </ul>
