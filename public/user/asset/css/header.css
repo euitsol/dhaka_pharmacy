@@ -185,6 +185,7 @@
 .header-section .notification ul.dropdown-menu li a{
     padding: 15px;
     transition: .4s;
+    line-height: 20px;
 }
 .header-section .notification ul.dropdown-menu li a.active{
     background-color: #DEEBCF;
@@ -221,7 +222,10 @@
     width: 7px;
     border-radius: 50%;
     top: 0;
-    right: 18px;
+    right: 25px;
+}
+.header-section .notification ul.dropdown-menu li a.active .notify-time{
+    font-weight: 700;
 }
 .header-section .notification ul.dropdown-menu .dropdown-item .notification-title{
     text-wrap: auto;
