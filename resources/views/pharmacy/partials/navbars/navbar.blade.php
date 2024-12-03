@@ -22,7 +22,9 @@
                     <li class="dropdown nav-item">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <div class="photo">
-                                <img src="{{ asset('white/img/anime3.png') }}" alt="{{ __('Profile Photo') }}">
+                                <img style="object-fit: cover; height:100%"
+                                    src="{{ pharmacy()->image ? storage_url(pharmacy()->image) : asset('white/img/anime3.png') }}"
+                                    alt="{{ __('Profile Photo') }}">
                             </div>
                             <p class="d-lg-none">{{ __('Log out') }}</p>
                         </a>
