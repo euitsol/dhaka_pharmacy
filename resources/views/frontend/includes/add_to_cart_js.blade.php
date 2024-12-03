@@ -294,7 +294,17 @@
     // Subtotal Refresh Function
     function refreshSubtotal() {
         $('.total_check_item').html($('.item_count_price').length);
-        if ($('#cart_btn_quantity').html($('.item_count_price').length));
+        if ($('.item_count_price').length > 0) {
+            if ($('.item_count_price').length > 99) {
+                $('#cart_btn_quantity').html('99+');
+            } else {
+                $('#cart_btn_quantity').html($('.item_count_price').length);
+            }
+            $('#cart_btn_quantity').show();
+        } else {
+            $('#cart_btn_quantity').hide();
+        }
+
         var total_price = 0;
         $('.item_count_price').each(function(e) {
             item_price = parseFloat($(this).attr('data-total'));
