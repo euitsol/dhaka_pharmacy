@@ -717,6 +717,11 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     Route::get('/profile', [PharmacyProfileController::class, 'profile'])->name('profile');
     Route::get('/dashboard', [PharmacyDashboardController::class, 'dashboard'])->name('dashboard');
 
+    // KYC Notice
+    Route::get('/kyc-notice', function () {
+        return view('pharmacy.kyc_notice');
+    })->name('kyc.notice');
+
     Route::controller(PharmacyKycVerificationController::class)->prefix('kyc')->name('kyc.')->group(function () {
         Route::post('/store', 'kyc_store')->name('store');
         Route::get('/verification', 'kyc_verification')->name('verification');
@@ -758,7 +763,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
         Route::post('/store', 'store')->name('store');
     });
     //Pharmacy Earning
-    Route::controller(PharmacyEarningController::class)->prefix('my-earning')->name('earning.')->group(function () {
+    Route::controller(PharmacyEarningController::class)->prefix('my-earning')->name('earning.')->middleware('check_kyc:pharmacy')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/report', 'report')->name('report');
         Route::get('/withdraw', 'withdraw')->name('withdraw');
@@ -779,6 +784,11 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
 Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager'], function () {
 
     Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dashboard');
+
+    // KYC Notice
+    Route::get('/kyc-notice', function () {
+        return view('district_manager.kyc_notice');
+    })->name('kyc.notice');
 
     Route::controller(DmKycVerificationController::class)->prefix('kyc')->name('kyc.')->group(function () {
         Route::post('/store', 'kyc_store')->name('store');
@@ -859,6 +869,11 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-manager'], function () {
     Route::get('/dashboard', [LamDashboardController::class, 'dashboard'])->name('dashboard');
 
+    // KYC Notice
+    Route::get('/kyc-notice', function () {
+        return view('local-area-manager.kyc_notice');
+    })->name('kyc.notice');
+
     Route::controller(LamKycVerificationController::class)->prefix('kyc')->name('kyc.')->group(function () {
         Route::post('/store', 'kyc_store')->name('store');
         Route::get('/verification', 'kyc_verification')->name('verification');
@@ -914,6 +929,11 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
 // Rider Auth Routes
 Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], function () {
     Route::get('/dashboard', [RiderDashboardController::class, 'dashboard'])->name('dashboard');
+
+    // KYC Notice
+    Route::get('/kyc-notice', function () {
+        return view('rider.kyc_notice');
+    })->name('kyc.notice');
 
     Route::controller(RiderKycVerificationController::class)->prefix('kyc')->name('kyc.')->group(function () {
         Route::post('/store', 'kyc_store')->name('store');
@@ -976,6 +996,13 @@ Route::get('/order-by-prescrition/check-auth', [UserOrderByPrescriptionControlle
 // User Routes
 Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'customer'], function () {
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
+
+    // KYC Notice
+    Route::get('/kyc-notice', function () {
+        return view('user.kyc_notice');
+    })->name('web.kyc.notice');
+
+
     // Profile Routes
     Route::controller(UserProfileController::class)->prefix('profile')->name('u.profile.')->group(function () {
         Route::get('/', 'profile')->name('index');
