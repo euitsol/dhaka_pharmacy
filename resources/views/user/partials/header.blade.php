@@ -37,18 +37,19 @@
                     </a>
                     @include('frontend.includes.add_to_cart_slide')
                 </div>
-
                 <div class="notification me-4">
                     <a href="javascript:void(0)" class="dropdown-toggle d-flex" data-toggle="dropdown"
                         aria-expanded="false" id="dropdownNotification">
                         <img src="{{ asset('user/asset/img/notification.png') }}" alt="">
-                        <sup><strong class="notiucation_quantity">99+</strong></sup>
+                        <sup><strong
+                                class="notiucation_quantity">{{ user()->notifications->count() ? (user()->notifications->count() > 99 ? '99+' : user()->notifications->count()) : '' }}</strong></sup>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownNotification">
                         <li>
                             <div class="notification-top d-flex justify-content-between align-items-center px-3">
                                 <div class="notification-count active">
-                                    <span>{{ __('Notifications') }}</span><span class="count">(10)</span>
+                                    <span>{{ __('Notifications') }}</span><span
+                                        class="count">({{ user()->notifications->count() }})</span>
                                 </div>
                                 <div class="mark-as-read active">
                                     <span>{{ __('Mark all as read') }}</span>
@@ -56,91 +57,26 @@
                             </div>
                         </li>
                         <hr class="my-1">
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center active"
-                                href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 "
-                                        style="width: 50px; text-align: center"></i>
-                                </div>
-                                <div class="details px-2">
-                                    <span
-                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
-                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
-                                </div>
+                        @foreach (user()->unreadNotifications as $notification)
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center active"
+                                    href="{{ $notification->data['url'] ?? 'javascript:void(0)' }}">
+                                    <div class="notification-icon">
+                                        <i class="fa-regular fa-bell fs-3 me-3 "
+                                            style="width: 50px; text-align: center"></i>
+                                    </div>
+                                    <div class="details px-2">
+                                        <p class="fw-semibold">{{ $notification->data['title'] }}</p>
+                                        <span
+                                            class="notification-title d-block">{{ str_limit($notification->data['message'], 60) }}</span>
+                                        <span
+                                            class="notify-time d-block mt-1 text-muted">{{ $notification->created_at->diffForHumans() }}</span>
+                                    </div>
 
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 "
-                                        style="width: 50px; text-align: center"></i>
-                                </div>
-                                <div class="details px-2">
-                                    <span
-                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
-                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
-                                </div>
+                                </a>
+                            </li>
+                        @endforeach
 
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 "
-                                        style="width: 50px; text-align: center"></i>
-                                </div>
-                                <div class="details px-2">
-                                    <span
-                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
-                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
-                                </div>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 "
-                                        style="width: 50px; text-align: center"></i>
-                                </div>
-                                <div class="details px-2">
-                                    <span
-                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
-                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
-                                </div>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 "
-                                        style="width: 50px; text-align: center"></i>
-                                </div>
-                                <div class="details px-2">
-                                    <span
-                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
-                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
-                                </div>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('u.profile.index') }}">
-                                <div class="notification-icon">
-                                    <i class="fa-regular fa-bell fs-3 me-3 "
-                                        style="width: 50px; text-align: center"></i>
-                                </div>
-                                <div class="details px-2">
-                                    <span
-                                        class="notification-title d-block">{{ str_limit('Order has been placed to pharmacy Order has been placed to pharmacy Order has been placed to pharmacy', 60) }}</span>
-                                    <span class="notify-time d-block mt-1 text-muted">{{ __('2 hours ago') }}</span>
-                                </div>
-
-                            </a>
-                        </li>
                     </ul>
                 </div>
                 <div class="name me-3">
