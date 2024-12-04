@@ -36,6 +36,7 @@
 
     <script>
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
+        const mark_as_read = `{{ route('u.notification.read_all') }}`;
     </script>
 </head>
 
@@ -67,6 +68,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @stack('js_link')
     <script src="{{ asset('user/asset/js/custom.js') }}"></script>
+    <script src="{{ asset('user/asset/js/notificaiton.js') }}"></script>
     <script>
         const routes = {
             'cart_products': `{{ route('cart.products') }}`,

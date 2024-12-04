@@ -180,17 +180,19 @@
     margin-right: 15px;
 }
 .header-section .notification ul.dropdown-menu li{
-    border-bottom: 2px solid #F7F7F7;
+    border-bottom: 1px solid #0000004a;
 }
 .header-section .notification ul.dropdown-menu li a{
     padding: 15px;
     transition: .4s;
     line-height: 20px;
+    background-color: #F7F7F7;
 }
 .header-section .notification ul.dropdown-menu li a.active{
     background-color: #DEEBCF;
     color: var(--bs-dropdown-link-color);
 }
+
 
 .header-section .notification ul.dropdown-menu li a:hover{
     background-color: #DEEBCF;

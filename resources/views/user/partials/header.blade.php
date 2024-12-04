@@ -42,25 +42,28 @@
                         aria-expanded="false" id="dropdownNotification">
                         <img src="{{ asset('user/asset/img/notification.png') }}" alt="">
                         <sup><strong
-                                class="notiucation_quantity">{{ user()->notifications->count() ? (user()->notifications->count() > 99 ? '99+' : user()->notifications->count()) : '' }}</strong></sup>
+                                class="notiucation_quantity">{{ user()->unreadNotifications->count() ? (user()->unreadNotifications->count() > 99 ? '99+' : user()->unreadNotifications->count()) : '' }}</strong></sup>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownNotification">
                         <li>
                             <div class="notification-top d-flex justify-content-between align-items-center px-3">
                                 <div class="notification-count active">
                                     <span>{{ __('Notifications') }}</span><span
-                                        class="count">({{ user()->notifications->count() }})</span>
+                                        class="count">({{ user()->unreadNotifications->count() }})</span>
                                 </div>
-                                <div class="mark-as-read active">
-                                    <span>{{ __('Mark all as read') }}</span>
-                                </div>
+                                @if (user()->unreadNotifications->count() > 0)
+                                    <div class="mark-as-read active">
+                                        <span id="read_all">{{ __('Mark all as read') }}</span>
+                                    </div>
+                                @endif
                             </div>
                         </li>
                         <hr class="my-1">
-                        @foreach (user()->unreadNotifications as $notification)
+                        @foreach (user()->notifications as $notification)
                             <li>
-                                <a class="dropdown-item d-flex align-items-center active"
-                                    href="{{ $notification->data['url'] ?? 'javascript:void(0)' }}">
+                                <a class="dropdown-item d-flex align-items-center notification-item {{ $notification->read_at ? '' : 'active' }} "
+                                    href='javascript:void(0)' data-id="{{ $notification->id }}"
+                                    data-url="{{ $notification->data['url'] }}">
                                     <div class="notification-icon">
                                         <i class="fa-regular fa-bell fs-3 me-3 "
                                             style="width: 50px; text-align: center"></i>
