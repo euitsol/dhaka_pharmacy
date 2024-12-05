@@ -182,13 +182,13 @@
 .header-section .notification ul.dropdown-menu li{
     border-bottom: 1px solid #0000004a;
 }
-.header-section .notification ul.dropdown-menu li a{
+.header-section .notification ul.dropdown-menu li .notification-item{
     padding: 15px;
     transition: .4s;
     line-height: 20px;
     background-color: #F7F7F7;
 }
-.header-section .notification ul.dropdown-menu li a.active{
+.header-section .notification ul.dropdown-menu li .notification-item.active{
     background-color: #DEEBCF;
     color: var(--bs-dropdown-link-color);
 }
@@ -202,13 +202,17 @@
     margin-bottom: 0;
     border-bottom: none;
 }
-.header-section .notification ul.dropdown-menu li:first-child{
+.header-section .notification>ul.dropdown-menu>li:first-child{
     border-bottom: none;
 }
-.header-section .notification ul.dropdown-menu .notification-count.active{
+.header-section .notification.active ul.dropdown-menu .count{
     font-weight: 700;
 }
-.header-section .notification ul.dropdown-menu .mark-as-read.active{
+.header-section .notification ul.dropdown-menu .mark-as-read{
+    display: none;
+}
+.header-section .notification.active ul.dropdown-menu .mark-as-read{
+    display: block;
     font-weight: 700;
     color: var(--btn_bg);
     cursor: pointer;
@@ -216,7 +220,7 @@
 .header-section .notification ul.dropdown-menu .dropdown-item .notification-icon{
     position: relative;
 }
-.header-section .notification ul.dropdown-menu li a.active .notification-icon::after {
+.header-section .notification ul.dropdown-menu li .notification-item.active .notification-icon::after {
     content: '';
     position: absolute;
     background-color: var(--asent-color);
@@ -226,15 +230,19 @@
     top: 0;
     right: 25px;
 }
-.header-section .notification ul.dropdown-menu li a.active .notify-time{
+.header-section .notification ul.dropdown-menu li .notification-item.active .notify-time{
     font-weight: 700;
 }
 .header-section .notification ul.dropdown-menu .dropdown-item .notification-title{
     text-wrap: auto;
 }
-.header-section .notification .notiucation_quantity{
+.header-section .notification .notification_count{
+    display: none;
+}
+.header-section .notification.active .notification_count{
     display: block !important;
     color: var(--asent-color);
     font-size: 15px;
 }
+
 

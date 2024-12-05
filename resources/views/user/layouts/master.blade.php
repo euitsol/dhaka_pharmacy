@@ -37,6 +37,8 @@
     <script>
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
         const mark_as_read = `{{ route('u.notification.read_all') }}`;
+        const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
+        const user_id = `{{ user() ? user()->id : false }}`;
     </script>
 </head>
 

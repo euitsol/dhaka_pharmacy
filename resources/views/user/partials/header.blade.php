@@ -37,48 +37,51 @@
                     </a>
                     @include('frontend.includes.add_to_cart_slide')
                 </div>
-                <div class="notification me-4">
+                <div class="notification {{ user()->unreadNotifications->count() > 0 ? 'active' : '' }} me-4">
                     <a href="javascript:void(0)" class="dropdown-toggle d-flex" data-toggle="dropdown"
                         aria-expanded="false" id="dropdownNotification">
                         <img src="{{ asset('user/asset/img/notification.png') }}" alt="">
                         <sup><strong
-                                class="notiucation_quantity">{{ user()->unreadNotifications->count() ? (user()->unreadNotifications->count() > 99 ? '99+' : user()->unreadNotifications->count()) : '' }}</strong></sup>
+                                class="notification_count">{{ user()->unreadNotifications->count() > 99 ? '99+' : user()->unreadNotifications->count() }}</strong></sup>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownNotification">
                         <li>
                             <div class="notification-top d-flex justify-content-between align-items-center px-3">
-                                <div class="notification-count active">
-                                    <span>{{ __('Notifications') }}</span><span
-                                        class="count">({{ user()->unreadNotifications->count() }})</span>
+                                <div class="count">
+                                    <span>{{ __('Notifications') }}</span>(<span
+                                        class="notification_quantity">{{ user()->unreadNotifications->count() > 99 ? '99+' : user()->unreadNotifications->count() }}</span>)
                                 </div>
-                                @if (user()->unreadNotifications->count() > 0)
-                                    <div class="mark-as-read active">
-                                        <span id="read_all">{{ __('Mark all as read') }}</span>
-                                    </div>
-                                @endif
+                                <div class="mark-as-read">
+                                    <span id="read_all">{{ __('Mark all as read') }}</span>
+                                </div>
                             </div>
                         </li>
                         <hr class="my-1">
-                        @foreach (user()->notifications as $notification)
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center notification-item {{ $notification->read_at ? '' : 'active' }} "
-                                    href='javascript:void(0)' data-id="{{ $notification->id }}"
-                                    data-url="{{ $notification->data['url'] }}">
-                                    <div class="notification-icon">
-                                        <i class="fa-regular fa-bell fs-3 me-3 "
-                                            style="width: 50px; text-align: center"></i>
-                                    </div>
-                                    <div class="details px-2">
-                                        <p class="fw-semibold">{{ $notification->data['title'] }}</p>
-                                        <span
-                                            class="notification-title d-block">{{ str_limit($notification->data['message'], 60) }}</span>
-                                        <span
-                                            class="notify-time d-block mt-1 text-muted">{{ $notification->created_at->diffForHumans() }}</span>
-                                    </div>
+                        <li>
+                            <ul class="notification-list">
+                                @foreach (user()->notifications as $notification)
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center notification-item {{ $notification->read_at ? '' : 'active' }}"
+                                            href='javascript:void(0)' data-id="{{ $notification->id }}"
+                                            data-url="{{ $notification->data['url'] ?? null }}">
+                                            <div class="notification-icon">
+                                                <i class="fa-regular fa-bell fs-3 me-3 "
+                                                    style="width: 50px; text-align: center"></i>
+                                            </div>
+                                            <div class="details px-2">
+                                                <p class="fw-semibold">{{ $notification->data['title'] }}</p>
+                                                <span
+                                                    class="notification-title d-block">{{ str_limit($notification->data['message'], 60) }}</span>
+                                                <span
+                                                    class="notify-time d-block mt-1 text-muted">{{ $notification->created_at->diffForHumans() }}</span>
+                                            </div>
 
-                                </a>
-                            </li>
-                        @endforeach
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+
 
                     </ul>
                 </div>
