@@ -58,6 +58,10 @@
     background-color: transparent !important;
 }
 
+strong{
+    font-weight: bold !important;
+}
+
 
 /*=============================================================
                 Start Overwrite CSS

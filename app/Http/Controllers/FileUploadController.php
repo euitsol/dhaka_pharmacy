@@ -146,16 +146,16 @@ class FileUploadController extends Controller
             $file->storeAs('content_image/' . $folder, $filename, 'public');
             $path = "content_image/" . $folder;
 
-            $save = new ContentImage();
-            $save->path = $path;
-            $save->filename = $filename;
-            $save->created_at = Carbon::now()->toDateTimeString();
-            $save->creater()->associate(admin());
-            $save->save();
+            // $save = new ContentImage();
+            // $save->path = $path;
+            // $save->filename = $filename;
+            // $save->created_at = Carbon::now()->toDateTimeString();
+            // $save->creater()->associate(admin());
+            // $save->save();
             return response()->json([
                 'success' => 'File upload successfully',
                 'url' => asset('storage/' . $path . '/' . $filename),
-                'data_id' => $save->id,
+                // 'data_id' => $save->id,
             ]);
         }
         return response()->json(['error' => 'File upload failed'], 400);

@@ -147,7 +147,7 @@ class AdminController extends Controller
     public function create(): View
     {
         $data['roles'] = Role::latest()->get();
-        $data['document'] = Documentation::where('module_key', 'admin')->first();
+        $data['document'] = Documentation::where([['module_key', 'admin'], ['type', 'create']])->first();
         return view('admin.admin_management.admin.create', $data);
     }
     public function store(AdminRequest $req): RedirectResponse
@@ -170,7 +170,7 @@ class AdminController extends Controller
     {
         $data['admin'] = Admin::with('role')->findOrFail($id);
         $data['roles'] = Role::latest()->get();
-        $data['document'] = Documentation::where('module_key', 'admin')->first();
+        $data['document'] = Documentation::where([['module_key', 'admin'], ['type', 'update']])->first();
         return view('admin.admin_management.admin.edit', $data);
     }
     public function update(AdminRequest $req, $id): RedirectResponse
