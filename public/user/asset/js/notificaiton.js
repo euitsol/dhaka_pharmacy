@@ -6,12 +6,10 @@ $(document).ready(function () {
             type: "GET",
             success: function (response) {
                 if (response.success) {
-                    $(".notification_quantity", ".notification_count").text(
-                        "0"
-                    );
-                    $(".notification", ".notification-item").removeClass(
-                        "active"
-                    );
+                    $(".notification_quantity").text("0");
+                    $(".notification_count").text("0");
+                    $(".notification").removeClass("active");
+                    $(".notification-item").removeClass("active");
                 } else {
                     toastr("error", "Something went wrong! Please try again.");
                 }
@@ -35,15 +33,15 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.success) {
                         if (url == null) {
-                            if ($this.hasClass("active")) {
-                                $this.removeClass("active");
-                                $(
-                                    ".notification_quantity",
-                                    ".notification_count"
-                                ).text(
-                                    parseInt($(".notification_count").text()) -
-                                        1
-                                );
+                            $this.removeClass("active");
+                            $(".notification_quantity").text(
+                                parseInt($(".notification_quantity").text()) - 1
+                            );
+                            $(".notification_count").text(
+                                parseInt($(".notification_count").text()) - 1
+                            );
+                            if ($(".notification_count").text() == 0) {
+                                $(".notification").removeClass("active");
                             }
                         } else {
                             window.location.href = url;
@@ -59,6 +57,10 @@ $(document).ready(function () {
                     console.error(xhr.responseText);
                 },
             });
+        } else {
+            if (url != null) {
+                window.location.href = url;
+            }
         }
     });
 });
@@ -100,6 +102,12 @@ $(document).ready(function () {
 
                                         </a>
                                     </li>`;
+                    let notification_empty = $(".notification-list").find(
+                        ".notification-empty"
+                    );
+                    if (notification_empty.length > 0) {
+                        notification_empty.remove();
+                    }
                     $(".notification-list").prepend(result);
                     $(".notification_count").text(
                         parseInt($(".notification_count").text()) + 1

@@ -55,11 +55,12 @@
                                     <span id="read_all">{{ __('Mark all as read') }}</span>
                                 </div>
                             </div>
+                            <hr class="my-1">
                         </li>
-                        <hr class="my-1">
+
                         <li>
                             <ul class="notification-list">
-                                @foreach (user()->notifications as $notification)
+                                @forelse (user()->notifications as $notification)
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center notification-item {{ $notification->read_at ? '' : 'active' }}"
                                             href='javascript:void(0)' data-id="{{ $notification->id }}"
@@ -78,7 +79,11 @@
 
                                         </a>
                                     </li>
-                                @endforeach
+                                @empty
+                                    <li class="text-center notification-empty">
+                                        <span class="text-muted">{{ __('You have no notifications') }}</span>
+                                    </li>
+                                @endforelse
                             </ul>
                         </li>
 
