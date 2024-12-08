@@ -35,7 +35,7 @@ class ProductCategoryController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'product_category')->first();
+        $data['document'] = Documentation::where([['module_key', 'product_category'], ['type', 'create']])->first();
         return view('admin.product_management.product_category.create', $data);
     }
     public function store(ProductCategoryRequest $req): RedirectResponse
@@ -60,7 +60,7 @@ class ProductCategoryController extends Controller
     public function edit($slug): View
     {
         $data['product_category'] = ProductCategory::where('slug', $slug)->first();
-        $data['document'] = Documentation::where('module_key', 'product_category')->first();
+        $data['document'] = Documentation::where([['module_key', 'product_category'], ['type', 'update']])->first();
         return view('admin.product_management.product_category.edit', $data);
     }
     public function update(ProductCategoryRequest $req, $id): RedirectResponse

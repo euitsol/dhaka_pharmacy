@@ -32,7 +32,7 @@ class DocumentationController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'documentation')->first();
+        $data['document'] = Documentation::where([['module_key', 'documentation'], ['type', 'create']])->first();
         return view('admin.documentation.create', $data);
     }
     public function store(DocumentationRequest $req): RedirectResponse
@@ -49,7 +49,7 @@ class DocumentationController extends Controller
     }
     public function edit($id): View
     {
-        $data['document'] = Documentation::where('module_key', 'documentation')->first();
+        $data['document'] = Documentation::where([['module_key', 'documentation'], ['type', 'update']])->first();
         $data['doc'] = Documentation::findOrFail($id);
         return view('admin.documentation.edit', $data);
     }

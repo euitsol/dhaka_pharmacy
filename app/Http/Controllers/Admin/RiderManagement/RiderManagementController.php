@@ -71,7 +71,7 @@ class RiderManagementController extends Controller
     public function create(): View
     {
         $data['operational_areas'] = OperationArea::activated()->latest()->get();
-        $data['document'] = Documentation::where('module_key', 'rider')->first();
+        $data['document'] = Documentation::where([['module_key', 'rider'], ['type', 'create']])->first();
         return view('admin.rider_management.rider.create', $data);
     }
     public function store(RiderRequest $req): RedirectResponse
@@ -92,7 +92,7 @@ class RiderManagementController extends Controller
         $data['rider'] = Rider::findOrFail($id);
         $data['operation_areas'] = OperationArea::activated()->latest()->get();
         $data['operation_sub_areas'] = OperationSubArea::activated()->latest()->get();
-        $data['document'] = Documentation::where('module_key', 'rider')->first();
+        $data['document'] = Documentation::where([['module_key', 'rider'], ['type', 'update']])->first();
         return view('admin.rider_management.rider.edit', $data);
     }
     public function update(RiderRequest $req, $id): RedirectResponse
