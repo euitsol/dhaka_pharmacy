@@ -118,6 +118,7 @@ use App\Http\Controllers\Rider\EarningController as RiderEarningController;
 use App\Http\Controllers\Rider\OperationalAreaController as RiderOperationalAreaController;
 use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodController;
 use App\Http\Controllers\User\KYC\KycVerificationController as UserKycVerificationController;
+use App\Http\Controllers\User\NotificationController as UserNotificationController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -993,7 +994,7 @@ Route::group(['middleware' => 'rider', 'as' => 'rider.', 'prefix' => 'rider'], f
 Route::get('/order-by-prescrition/check-auth', [UserOrderByPrescriptionController::class, 'check_auth'])->name('u.obp.check.auth');
 
 
-// User Routes
+// User Auth Routes
 Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'customer'], function () {
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
 
@@ -1075,6 +1076,10 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     Route::controller(UserReviewController::class)->prefix('review')->name('u.review.')->group(function () {
         Route::get('/list', 'list')->name('list');
         Route::post('/store', 'store')->name('store');
+    });
+
+    Route::controller(UserNotificationController::class)->prefix('notification')->name('u.notification.')->group(function () {
+        Route::get('/read-all', 'read_all')->name('read_all');
     });
 });
 Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {

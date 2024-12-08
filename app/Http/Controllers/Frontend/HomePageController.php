@@ -9,14 +9,13 @@ use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\URL;
-use App\Http\Traits\OrderNotificationTrait;
 use App\Http\Traits\TransformProductTrait;
 use App\Models\Order;
 
 class HomePageController extends Controller
 {
 
-    use OrderNotificationTrait, TransformProductTrait;
+    use TransformProductTrait;
     public function home(): View
     {
         $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'units' => function ($q) {

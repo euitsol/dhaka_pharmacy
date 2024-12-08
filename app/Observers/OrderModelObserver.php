@@ -6,24 +6,26 @@ use App\Events\OrderStatusChangeEvent;
 use App\Models\Order;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 use Illuminate\Support\Facades\Log;
+use App\Http\Traits\UserNotificationTrait;
 
 class OrderModelObserver implements ShouldHandleEventsAfterCommit
 {
+    use UserNotificationTrait;
     /**
      * Handle the Order "created" event.
      */
-    public function created(Order $order): void
-    {
-        //
-    }
+    public function created(Order $order): void {}
 
     /**
      * Handle the Order "updated" event.
      */
     public function updated(Order $order): void
     {
-        $od = $order->load('od');
-        if ($order->wasChanged('status') && (isset($od->od) && !empty($od->od))) {
+        $order = $order->load(['od', 'customer']);
+        if ($order->wasChanged('status') && $order->status > 0) {
+            $this->order_notification($order, 'order');
+        }
+        if ($order->wasChanged('status') && (isset($order->od) && !empty($order->od))) {
             event(new OrderStatusChangeEvent($order));
         }
     }

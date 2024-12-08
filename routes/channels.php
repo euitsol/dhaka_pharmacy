@@ -19,3 +19,7 @@ use Illuminate\Support\Facades\Log;
 Broadcast::channel('order-status-changed.{id}', function ($user, $id) {
     return  $user->id === (int) $id;
 }, ['guards' => ['admin']]);
+
+Broadcast::channel('user-notification.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
+}, ['guards' => ['web']]);
