@@ -68,7 +68,7 @@
                             <h5>{{ __('Order Shipped') }}</h5>
                             @if ($order->status >= 4)
                                 <p class="m-0">
-                                    {{ orderTimeFormat($order->od->odrs->where('status', '!=', 0)->first()->created_at) }}
+                                    {{ orderTimeFormat($order->od->odrs->where('status', '!=', -1)->first()->created_at) }}
                                 </p>
                             @endif
                         </div>

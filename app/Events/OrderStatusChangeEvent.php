@@ -53,8 +53,8 @@ class OrderStatusChangeEvent implements ShouldBroadcast
     {
 
         return [
-            'title' => 'Order ID: '.$this->order->order_id,
-            'text' => 'Status changed: '.$this->order->statusTitle(),
+            'title' => 'Order ID: ' . $this->order->order_id,
+            'text' => 'Status changed: ' . $this->order->statusTitle(),
             'url' => URL::signedRoute('om.order.details.order_distribution', encrypt($this->order->od->id)),
         ];
     }
