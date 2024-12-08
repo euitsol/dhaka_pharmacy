@@ -746,7 +746,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
         Route::get('/get-operation-sub-area/{oa_id}', 'get_osa')->name('get_osa');
     });
 
-    Route::controller(PharmacyOrderManagementController::class)->prefix('order-management')->name('order_management.')->group(function () {
+    Route::controller(PharmacyOrderManagementController::class)->prefix('order-management')->middleware('check_kyc:pharmacy')->name('order_management.')->group(function () {
         Route::get('/{status}', 'index')->name('index');
         Route::get('details/{od_id}/', 'details')->name('details');
         Route::post('update/{do_id}', 'update')->name('update');
@@ -759,7 +759,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     });
 
     //Pharmacy Feedback
-    Route::controller(PharmacyFeedbackController::class)->prefix('feedback')->name('fdk.')->group(function () {
+    Route::controller(PharmacyFeedbackController::class)->prefix('feedback')->name('fdk.')->middleware('check_kyc:pharmacy')->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
     });
@@ -772,7 +772,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     });
 
     //Pharmacy Withdraw Method
-    Route::controller(PharmacyWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->group(function () {
+    Route::controller(PharmacyWithdrawMethodController::class)->prefix('withdraw-method')->name('wm.')->middleware('check_kyc:pharmacy')->group(function () {
         Route::get('/list', 'list')->name('list');
         Route::get('/details/{id}', 'details')->name('details');
         Route::get('/create', 'create')->name('create');
