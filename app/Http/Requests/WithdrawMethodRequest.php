@@ -24,7 +24,7 @@ class WithdrawMethodRequest extends FormRequest
         return [
             'bank_name' => 'required|string',
             'bank_brunch_name' => 'required|string',
-            'routing_number' => 'required|numeric',
+            'routing_number' => 'required|numeric|digits:9',
             'account_name' => 'required|string',
             'type' => 'required|integer',
             'note' => 'nullable|string',

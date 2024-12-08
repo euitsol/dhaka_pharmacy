@@ -53,7 +53,7 @@ class UserManagementController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'user')->first();
+        $data['document'] = Documentation::where([['module_key', 'user'], ['type', 'create']])->first();
         return view('district_manager.user_management.create', $data);
     }
     public function store(UserRequest $req): RedirectResponse
@@ -69,7 +69,7 @@ class UserManagementController extends Controller
     public function edit($id): View
     {
         $data['user'] = User::findOrFail($id);
-        $data['document'] = Documentation::where('module_key', 'user')->first();
+        $data['document'] = Documentation::where([['module_key', 'user'], ['type', 'update']])->first();
         return view('district_manager.user_management.edit', $data);
     }
     public function update(UserRequest $req, $id): RedirectResponse
