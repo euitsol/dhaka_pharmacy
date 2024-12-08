@@ -1,0 +1,25 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Documentation;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+use function PHPSTORM_META\type;
+
+class DocumentationSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        Documentation::create([
+            'title' => 'Admin Create Documentation',
+            'module_key' => 'admin',
+            'type' => 'create',
+            'documentation' => '<p><strong>Name : </strong>This field is required. It is a text field with character limit of 4-50 characters</p><p><strong>Email : </strong>This field is required and unique. It is a email field with a maximum character limit of 255. The entered value must follow the standard email format (e.g., user@example.com).</p><p><strong>Role :</strong> This field is required. <span style="background-color:rgb(255,255,255);color:rgb(29,37,59);font-family:Nunito, sans-serif;font-size:14.4px;"><span style="-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">It is a dropdown field where you can select admin role.</span></span></p><p><strong>Password :</strong> This field is required and should be entered as a password. To ensure the security of your account, the password must adhere to the following requirements-</p><ul style="list-style-type:square;"><li><span style="background-color:rgb(255,255,255);color:rgb(29,37,59);font-family:Poppins, sans-serif;font-size:14px;"><span style="-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:left;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">The password must be at least 8 characters long.</span></span></li><li><span style="background-color:rgb(255,255,255);color:rgb(29,37,59);font-family:Poppins, sans-serif;font-size:14px;"><span style="-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:left;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">It must include at least one uppercase letter (A-Z) and one lowercase letter (a-z) to enhance complexity.</span></span></li><li><span style="background-color:rgb(255,255,255);color:rgb(29,37,59);font-family:Poppins, sans-serif;font-size:14px;"><span style="-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:left;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">At least one digit (0-9) must be present in the password.</span></span></li><li><span style="background-color:rgb(255,255,255);color:rgb(29,37,59);font-family:Poppins, sans-serif;font-size:14px;"><span style="-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:left;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">The password must contain at least one special character (e.g., !, @, #, $, %, ^, &amp;, *) to increase its strength.</span></span></li><li><span style="background-color:rgb(255,255,255);color:rgb(29,37,59);font-family:Poppins, sans-serif;font-size:14px;"><span style="-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:left;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">The password should not have been found in any known data breaches. This ensures it hasn’t been compromised in past security incidents.</span></span></li></ul><p><strong>Confirm Password : </strong>This field is required. It is a password field. It should match the entered password in the "Password" field.</p><p><strong>IP : </strong>This field is optional. It allows entering admin IP addresses.</p>'
+        ]);
+    }
+}
