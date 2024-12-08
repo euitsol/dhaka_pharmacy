@@ -39,6 +39,7 @@
         const mark_as_read = `{{ route('u.notification.read_all') }}`;
         const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
         const user_id = `{{ user() ? user()->id : false }}`;
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
 </head>
 

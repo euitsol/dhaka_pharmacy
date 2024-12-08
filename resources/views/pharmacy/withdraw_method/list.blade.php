@@ -90,7 +90,7 @@
 @push('js')
     <script>
         const details = {
-            'my_route': `{{ route('pharmacy.wm.details', ['id']) }}`,
+            'my_route': `{{ route('pharmacy.wm.details', ['_id']) }}`,
         };
     </script>
     <script src="{{ asset('withdraw_method/details.js') }}"></script>

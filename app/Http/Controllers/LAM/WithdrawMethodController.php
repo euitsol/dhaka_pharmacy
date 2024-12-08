@@ -53,7 +53,7 @@ class WithdrawMethodController extends Controller
                 'creater_type' => get_class(lam()),
             ]
         );
-        flash()->addSuccess('Withdraw method created successfully.');
+        flash()->addSuccess('Withdraw method add request submitted successfully.');
         return redirect()->route('lam.wm.list');
     }
 }
