@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             AddressSeeder::class,
             PointSettingSeeder::class,
             MapboxSettingsSeeder::class,
+            DocumentationSeeder::class,
         ]);
     }
 }
