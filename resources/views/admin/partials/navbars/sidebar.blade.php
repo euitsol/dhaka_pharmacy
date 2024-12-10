@@ -68,7 +68,7 @@
                     <a class="@if ($pageSlug == 'user' || $pageSlug == 'us_kyc_list' || $pageSlug == 'u_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#user-management"
                         @if ($pageSlug == 'user' || $pageSlug == 'us_kyc_list' || $pageSlug == 'u_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
-                        <i class="fa-solid fa-kit-medical"></i>
+                        <i class="fa-solid fa-user-check"></i>
                         <span class="nav-link-text">{{ __('User Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
@@ -82,7 +82,7 @@
                                         'routeName' => 'um.user.user_list',
                                         'label' => 'users',
                                     ],
-
+                            
                                     [
                                         'pageSlug' => ['us_kyc_list', 'u_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -131,7 +131,7 @@
                                         'routeName' => 'pm.pharmacy.pharmacy_list',
                                         'label' => 'Pharmacies',
                                     ],
-
+                            
                                     [
                                         'pageSlug' => ['ps_kyc_list', 'p_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -166,7 +166,7 @@
                     <a class="@if ($pageSlug == 'district_manager' || $pageSlug == 'dms_kyc_list' || $pageSlug == 'dm_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#district_manager"
                         @if ($pageSlug == 'district_manager' || $pageSlug == 'dms_kyc_list' || $pageSlug == 'dm_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
-                        <i class="fa-solid fa-map-location-dot"></i>
+                        <i class="fa-solid fa-people-roof"></i>
                         <span class="nav-link-text">{{ __('DM Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
@@ -215,7 +215,7 @@
                     <a class="@if ($pageSlug == 'local_area_manager' || $pageSlug == 'lams_kyc_list' || $pageSlug == 'lam_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#local_area_manager"
                         @if ($pageSlug == 'local_area_manager' || $pageSlug == 'lams_kyc_list' || $pageSlug == 'lam_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
-                        <i class="fa-solid fa-map-location-dot"></i>
+                        <i class="fa-solid fa-people-group"></i>
                         <span class="nav-link-text">{{ __('LAM Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
@@ -263,7 +263,7 @@
                     <a class="@if ($pageSlug == 'rider' || $pageSlug == 'rs_kyc_list' || $pageSlug == 'r_kyc_settings') @else collapsed @endif" data-toggle="collapse"
                         href="#rider-management"
                         @if ($pageSlug == 'rider' || $pageSlug == 'rs_kyc_list' || $pageSlug == 'r_kyc_settings') aria-expanded="true" @else aria-expanded="false" @endif>
-                        <i class="fa-solid fa-kit-medical"></i>
+                        <i class="fa-solid fa-person-biking"></i>
                         <span class="nav-link-text">{{ __('Rider Management') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
@@ -277,7 +277,7 @@
                                         'routeName' => 'rm.rider.rider_list',
                                         'label' => 'Riders',
                                     ],
-
+                            
                                     [
                                         'pageSlug' => ['rs_kyc_list', 'r_kyc_settings'],
                                         'routeName' => 'submenu',

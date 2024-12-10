@@ -236,6 +236,7 @@ Route::controller(UserForgotPasswordController::class)->prefix('user')->group(fu
 //Admin Auth Routes
 Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/chart-update', [DashboardController::class, 'chartUpdate'])->name('admin.chart.update');
 
     // Admin Management Routes
     Route::group(['as' => 'am.', 'prefix' => 'admin-management'], function () {
