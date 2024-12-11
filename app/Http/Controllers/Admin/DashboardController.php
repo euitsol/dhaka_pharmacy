@@ -70,49 +70,47 @@ class DashboardController extends Controller
         $daysInMonth = Carbon::create($currentYear, $currentMonth)->daysInMonth;
         $chart_labels = range(1, $daysInMonth);
 
-        $query = Order::with('od.odrs');
+        $query = Order::query(); // Use query() instead of with() unless eager loading is necessary.
 
         switch ($status) {
             case 1:
-                $query->select('DAY(created_at) as day', DB::raw('COUNT(*) as count'))
-                    ->groupBy('created_at');
+                $query->whereMonth('created_at', $currentMonth)
+                    ->select(DB::raw('DAY(created_at) as day'), DB::raw('COUNT(*) as count'))
+                    ->groupBy(DB::raw('DAY(created_at)'));
                 break;
 
             case 2:
                 $query->join('order_distributions as od', 'od.order_id', '=', 'orders.id')
-                    ->select('DAY(od.created_at) as day', DB::raw('COUNT(*) as count'))
-                    ->groupBy('od.created_at');
+                    ->whereMonth('od.created_at', $currentMonth)
+                    ->select(DB::raw('DAY(od.created_at) as day'), DB::raw('COUNT(*) as count'))
+                    ->groupBy(DB::raw('DAY(od.created_at)'));
                 break;
 
             case 4:
                 $query->join('order_distributions as od', 'od.order_id', '=', 'orders.id')
-                    ->join('order_distribution_riders as odrs', 'odrs.order_id', '=', 'od.order_id')
-                    ->select('DAY(odrs.created_at) as day', DB::raw('COUNT(*) as count'))
-                    ->groupBy('odrs.created_at')
-                    ->where('odrs.status', '!=', -1);  // Assuming that `-1` is an invalid status
+                    ->join('order_distribution_riders as odrs', 'odrs.order_distribution_id', '=', 'od.id')
+                    ->where('odrs.status', '!=', -1)
+                    ->whereMonth('odrs.created_at', $currentMonth)
+                    ->select(DB::raw('DAY(odrs.created_at) as day'), DB::raw('COUNT(*) as count'))
+                    ->groupBy(DB::raw('DAY(odrs.created_at)'));
                 break;
 
             case 5:
                 $query->join('order_distributions as od', 'od.order_id', '=', 'orders.id')
-                    ->select('DAY(od.rider_collected_at) as day', DB::raw('COUNT(*) as count'))
-                    ->groupBy('od.rider_collected_at');
+                    ->whereMonth('od.rider_collected_at', $currentMonth)
+                    ->select(DB::raw('DAY(od.rider_collected_at) as day'), DB::raw('COUNT(*) as count'))
+                    ->groupBy(DB::raw('DAY(od.rider_collected_at)'));
                 break;
 
             case 6:
                 $query->join('order_distributions as od', 'od.order_id', '=', 'orders.id')
-                    ->select('DAY(od.rider_delivered_at) as day', DB::raw('COUNT(*) as count'))
-                    ->groupBy('od.rider_delivered_at');
-                break;
-
-            default:
-                // If no valid status, just return the base query
+                    ->whereMonth('od.rider_delivered_at', $currentMonth)
+                    ->select(DB::raw('DAY(od.rider_delivered_at) as day'), DB::raw('COUNT(*) as count'))
+                    ->groupBy(DB::raw('DAY(od.rider_delivered_at)'));
                 break;
         }
+
         $dailyCounts = $query->pluck('count', 'day')->toArray();
-
-        dd($dailyCounts);
-
-
         // Populate data for each day, ensure days are included even with no data
         $chart_data = array_map(function ($day) use ($dailyCounts) {
             return $dailyCounts[$day] ?? 0;
@@ -121,6 +119,7 @@ class DashboardController extends Controller
         // Return data for chart rendering
         $data['chart_labels'] = $chart_labels;
         $data['chart_data'] = $chart_data;
+        $data['success'] = true;
 
         return response()->json($data);
     }

@@ -440,250 +440,6 @@
 @endsection
 @push('js')
     <script src="{{ asset('white/js/plugins/chartjs.min.js') }}"></script>
-    {{-- <script>
-        gradientChartOptionsConfigurationWithTooltipPurple = {
-            maintainAspectRatio: false,
-            legend: {
-                display: false
-            },
-
-            tooltips: {
-                backgroundColor: '#f5f5f5',
-                titleFontColor: '#333',
-                bodyFontColor: '#666',
-                bodySpacing: 4,
-                xPadding: 12,
-                mode: "nearest",
-                intersect: 0,
-                position: "nearest"
-            },
-            responsive: true,
-            scales: {
-                yAxes: [{
-                    barPercentage: 1.6,
-                    gridLines: {
-                        drawBorder: false,
-                        color: 'rgba(29,140,248,0.0)',
-                        zeroLineColor: "transparent",
-                    },
-                    ticks: {
-                        suggestedMin: 60,
-                        suggestedMax: 125,
-                        padding: 20,
-                        fontColor: "#9a9a9a"
-                    }
-                }],
-
-                xAxes: [{
-                    barPercentage: 1.6,
-                    gridLines: {
-                        drawBorder: false,
-                        color: 'rgba(225,78,202,0.1)',
-                        zeroLineColor: "transparent",
-                    },
-                    ticks: {
-                        padding: 20,
-                        fontColor: "#9a9a9a"
-                    }
-                }]
-            }
-        };
-        var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-        var chart_data = [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100];
-
-
-        var ctx = document.getElementById("chartBig1").getContext('2d');
-
-        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-        gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-        gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-        gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
-        var config = {
-            type: 'line',
-            data: {
-                labels: chart_labels,
-                datasets: [{
-                    label: "My First dataset",
-                    fill: true,
-                    backgroundColor: gradientStroke,
-                    borderColor: '#d346b1',
-                    borderWidth: 2,
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    pointBackgroundColor: '#d346b1',
-                    pointBorderColor: 'rgba(255,255,255,0)',
-                    pointHoverBackgroundColor: '#d346b1',
-                    pointBorderWidth: 20,
-                    pointHoverRadius: 4,
-                    pointHoverBorderWidth: 15,
-                    pointRadius: 4,
-                    data: chart_data,
-                }]
-            },
-            options: gradientChartOptionsConfigurationWithTooltipPurple
-        };
-        var myChartData = new Chart(ctx, config);
-        $("#0").click(function() {
-            var data = myChartData.config.data;
-            data.datasets[0].data = chart_data;
-            data.labels = chart_labels;
-            myChartData.update();
-        });
-        $("#1").click(function() {
-            var chart_data = [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120];
-            var data = myChartData.config.data;
-            data.datasets[0].data = chart_data;
-            data.labels = chart_labels;
-            myChartData.update();
-        });
-
-        $("#2").click(function() {
-            var chart_data = [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130];
-            var data = myChartData.config.data;
-            data.datasets[0].data = chart_data;
-            data.labels = chart_labels;
-            myChartData.update();
-        });
-    </script> --}}
-    {{-- <script>
-        gradientChartOptionsConfigurationWithTooltipPurple = {
-            maintainAspectRatio: false,
-            legend: {
-                display: false
-            },
-
-            tooltips: {
-                backgroundColor: '#f5f5f5',
-                titleFontColor: '#333',
-                bodyFontColor: '#666',
-                bodySpacing: 4,
-                xPadding: 12,
-                mode: "nearest",
-                intersect: 0,
-                position: "nearest"
-            },
-            responsive: true,
-            scales: {
-                yAxes: [{
-                    barPercentage: 1.6,
-                    gridLines: {
-                        drawBorder: false,
-                        color: 'rgba(29,140,248,0.0)',
-                        zeroLineColor: "transparent",
-                    },
-                    ticks: {
-                        suggestedMin: 0,
-                        suggestedMax: 150,
-                        padding: 20,
-                        fontColor: "#2a2f5b"
-                    }
-                }],
-
-                xAxes: [{
-                    barPercentage: 1.6,
-                    gridLines: {
-                        drawBorder: false,
-                        color: 'rgba(225,78,202,0.1)',
-                        zeroLineColor: "transparent",
-                    },
-                    ticks: {
-                        padding: 20,
-                        fontColor: "#2a2f5b"
-                    }
-                }]
-            }
-        };
-
-        // Days of the month labels
-        var chart_labels = Array.from({
-            length: 31
-        }, (_, i) => i + 1);
-        var chart_data = [10, 20, 15, 30, 45, 25, 40, 35, 50, 55, 45, 30, 60, 65, 70, 75, 80, 85, 70, 55, 60, 65, 75, 80,
-            90, 100, 95, 85, 70, 65, 60
-        ];
-
-        var ctx = document.getElementById("chartBig1").getContext('2d');
-
-        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-        gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-        gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-        gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); // purple colors
-
-        var config = {
-            type: 'line',
-            data: {
-                labels: chart_labels,
-                datasets: [{
-                    label: "Daily Data",
-                    fill: true,
-                    backgroundColor: gradientStroke,
-                    borderColor: '#0093E9',
-                    borderWidth: 2,
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    pointBackgroundColor: '#0093E9',
-                    pointBorderColor: 'rgba(255,255,255,0)',
-                    pointHoverBackgroundColor: '#0093E9',
-                    pointBorderWidth: 20,
-                    pointHoverRadius: 4,
-                    pointHoverBorderWidth: 15,
-                    pointRadius: 4,
-                    data: chart_data,
-                }]
-            },
-            options: gradientChartOptionsConfigurationWithTooltipPurple
-        };
-
-        var myChartData = new Chart(ctx, config);
-
-        // Example button interactions to switch datasets
-        $("#submitted").click(function() {
-            var data = myChartData.config.data;
-            data.datasets[0].data = chart_data; // Reset to original data
-            data.labels = chart_labels;
-            myChartData.update();
-        });
-
-        $("#processing").click(function() {
-            var new_data = Array.from({
-                length: 31
-            }, () => Math.floor(Math.random() * 100)); // Random daily data
-            var data = myChartData.config.data;
-            data.datasets[0].data = new_data;
-            data.labels = chart_labels;
-            myChartData.update();
-        });
-        $("#assigned").click(function() {
-            var new_data = Array.from({
-                length: 31
-            }, () => Math.floor(Math.random() * 50)); // Random daily data
-            var data = myChartData.config.data;
-            data.datasets[0].data = new_data;
-            data.labels = chart_labels;
-            myChartData.update();
-        });
-        $("#shiped").click(function() {
-            var new_data = Array.from({
-                length: 31
-            }, () => Math.floor(Math.random() * 100)); // Random daily data
-            var data = myChartData.config.data;
-            data.datasets[0].data = new_data;
-            data.labels = chart_labels;
-            myChartData.update();
-        });
-        $("#delivered").click(function() {
-            var new_data = Array.from({
-                length: 31
-            }, () => Math.floor(Math.random() * 50)); // Random daily data
-            var data = myChartData.config.data;
-            data.datasets[0].data = new_data;
-            data.labels = chart_labels;
-            myChartData.update();
-        });
-    </script> --}}
-
     <script>
         gradientChartOptionsConfigurationWithTooltipPurple = {
             maintainAspectRatio: false,
@@ -778,30 +534,12 @@
         };
 
         var myChartData = new Chart(ctx, config);
-
-        // Function to update chart
-        // function updateChart(month, year, dataFunction) {
-        //     var daysInMonth = getDaysInMonth(month, year);
-        //     chart_labels = Array.from({
-        //         length: daysInMonth
-        //     }, (_, i) => i + 1);
-        //     var new_data = Array.from({
-        //         length: daysInMonth
-        //     }, dataFunction);
-
-        //     var data = myChartData.config.data;
-        //     data.labels = chart_labels;
-        //     data.datasets[0].data = new_data;
-        //     myChartData.update();
-        // }
         var chart_labels = {!! json_encode($chart_labels) !!};
         var chart_data = {!! json_encode($chart_data) !!};
 
         function updateChart(chart_labels, chart_data) {
             var data = myChartData.config.data;
             data.labels = chart_labels;
-            console.log(chart_data);
-
             data.datasets[0].data = chart_data;
             myChartData.update();
         }
@@ -809,16 +547,17 @@
         updateChart(chart_labels, chart_data);
 
         // Button interactions
-        function fetchChartData(status, month, year) {
+        function fetchChartData(status, month) {
             $.ajax({
                 url: "{{ route('admin.chart.update') }}",
                 method: "GET",
                 data: {
                     status: status, // Pass the status to the server
                     month: month, // Pass the selected month
-                    year: year // Pass the selected year
                 },
                 success: function(response) {
+                    console.log(response);
+
                     if (response.success) {
                         // Update the chart with new data from the server
                         updateChart(response.chart_labels, response.chart_data);
@@ -843,13 +582,6 @@
         $("#monthSelect").change(function() {
             currentMonth = parseInt(this.value);
             // Call fetchChartData with the selected month and current year
-            fetchChartData($(".chart_status.active").data("status"), currentMonth, currentYear);
-        });
-
-        // Handle year change (if you want to add a year dropdown)
-        $("#yearSelect").change(function() {
-            currentYear = parseInt(this.value);
-            // Call fetchChartData with the selected year and current month
             fetchChartData($(".chart_status.active").data("status"), currentMonth, currentYear);
         });
     </script>
