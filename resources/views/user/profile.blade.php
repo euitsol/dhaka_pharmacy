@@ -279,6 +279,38 @@
 @endsection
 @push('js')
     <script>
+        $(document).ready(function() {
+            const defaultTabId = '#pills-home'; // Default tab ID
+            const tabStorageKey = 'activeTab';
+
+            // Clear active tab on cross-page navigation
+            // Call this function where you're navigating to this page
+            function clearActiveTab() {
+                localStorage.removeItem(tabStorageKey);
+            }
+
+            // Save the active tab ID to localStorage when a tab is clicked
+            $('.nav-link[data-bs-toggle="pill"]').on('click', function() {
+                const tabId = $(this).data('bs-target');
+                localStorage.setItem(tabStorageKey, tabId);
+            });
+
+            // Restore the active tab on page load
+            const savedTab = localStorage.getItem(tabStorageKey);
+
+            if (savedTab) {
+                // Activate the saved tab
+                $('.nav-link[data-bs-target="' + savedTab + '"]').tab('show');
+            } else {
+                // Activate the default tab
+                $(defaultTabId).tab('show');
+            }
+
+            // Example usage: Uncomment this if you're resetting tab state on cross-page navigation
+            // clearActiveTab();
+        });
+    </script>
+    <script>
         function handleErrors(response) {
             var errors = response.errors;
             for (var field in errors) {
