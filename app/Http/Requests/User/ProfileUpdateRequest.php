@@ -22,7 +22,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:4',
+            'name' => 'required|sometimes|min:4',
             'father_name' => 'nullable|min:6',
             'mother_name' => 'nullable|min:6',
             'age' => 'nullable|numeric|digits:2',
