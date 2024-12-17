@@ -41,6 +41,13 @@
 
   --secondry-font: "Poppins", sans-serif;
 
+  --commoninner_bg: #D9D9D922;
+
+  /* Adding this new global variable */
+  --bg-2: #f4f4f4;
+  --bg-3: #EAF1FB;
+  --btn-bg-2: #7DB6E3;
+
 }
 
 

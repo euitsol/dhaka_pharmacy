@@ -1,0 +1,112 @@
+/* this code only for the pharmacy login page  */
+
+
+.pharmacy-section .pharmacy-container{
+    max-width: 1377px;
+    margin: 0 auto;
+}
+.pharmacy-section .image-col img{
+    background: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+.pharmacy-section .form{
+    padding: 60px 30px;
+    background: var(--bg-2);
+    border-radius: 15px;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0px 2px 10px hsla(0, 0%, 0%, 25%);
+}
+.pharmacy-section .image-col{
+    height: 100%;
+}
+.pharmacy-section  h2{
+    font-family: var(--secondry-font);
+}
+.pharmacy-section p{
+    color: #00000080;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: var(--secondry-font);
+}
+.pharmacy-section .input-group{
+    padding: 16px 3px;
+    background: var(--bg-3);
+    border-radius: 5px;
+    border: 1px solid #dcdcdc;
+}
+.pharmacy-section .form-control{
+    padding-left: 0px;
+}
+.pharmacy-section .form-control,
+.pharmacy-section .input-group-text{
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 14px;
+    font-family: var(--secondry-font);
+    font-weight: 400;
+}
+.pharmacy-section .input-group-text{
+    font-size: 18px;
+}
+.pharmacy-section .form-control:focus {
+    outline: none;
+    box-shadow: none;
+}
+.pharmacy-section .login-button{
+    font-size: 24px;
+    text-transform: uppercase;
+    color: var(--white);
+    background-color: var(--btn-bg-2);
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 16px 0;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-family: var(--secondry-font);
+    font-weight: 700;
+}
+.pharmacy-section .login-button:hover{
+    background: var(--green);
+}
+.pharmacy-section .form-check-input{
+    font-size: 16px;
+    margin-right: 10px;
+    border-radius: 0px;
+    border: 1px solid #00000060;
+}
+.pharmacy-section .form-check{
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+.pharmacy-section .form-check-label{
+    font-size: 14px;
+    font-weight: 400;
+    font-family: var(--secondry-font);
+}
+/***************** Pharmacy otp verify css code here *****************/
+.pharmacy-section .otp-input {
+	padding: 16px 3px;
+    background: var(--bg-3);;
+    border-radius: 5px;
+    border: 1px solid #dcdcdc;
+	margin: 20px 0px;
+    max-width: 60px;
+    text-align: center;
+}
+.pharmacy-section .otp-input:focus {
+    border-color: var(--green);
+    outline: none;
+}
+
+/**********frontend rider loging page  responsive css code here  ************/
+
+@media screen and (max-width: 576px) {
+    .pharmacy-section .form {
+        padding: 40px 20px !important;
+    }
+}

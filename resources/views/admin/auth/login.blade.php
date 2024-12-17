@@ -1,30 +1,30 @@
 @extends('frontend.layouts.master')
-@section('title', 'Local Area Manager Login')
+@section('title', 'Admin Login')
 @push('css')
-    <link rel="stylesheet" href="{{ asset('lam/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/css/login.css') }}">
 @endpush
 @section('content')
-    <section class="lam-section py-5">
+    <section class="adminlogin-section py-5">
         <div class="container">
             <div class="row">
-                <div class="lam-container">
+                <div class="admin-container">
                     <div class="row row-gap-4">
-                        <div class="col-lg-5 d-none d-lg-block">
-                            <div class="image-col pe-lg-4 pe-0 ">
-                                <img src="{{ asset('lam/image/lam.png') }}" alt="dsitrict login">
+                        <div class="col-lg-4 d-none d-lg-block">
+                            <div class="image-col d-flex align-items-center justify-content-between">
+                                <img src="{{ asset('admin/image/adminlogin.png') }}" alt="adminloginimage">
                             </div>
                         </div>
-                        <div class="col-lg-7 col-12">
+                        <div class="col-lg-8 col-12">
                             <div class="form">
-                                <h2 class="text-center mb-3">{{ __('Local Area Manager') }}</h2>
+                                <h2 class="text-center mb-3">{{ __('Admin Login') }}</h2>
                                 <p class="text-center mb-4">{{ __('Login to access your account') }}</p>
-                                <form method="POST" action="{{ route('local_area_manager.login') }}">
+                                <form method="POST" action="{{ route('admin.login') }}">
                                     @csrf
                                     <div class="mb-4">
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-                                            <input type="text" id="number" name="phone" class="form-control"
-                                                placeholder="Enter your Phone Number" required>
+                                            <span class="input-group-text"><i class="fa-regular fa-envelope"></i></span>
+                                            <input type="email" id="email" name="email" class="form-control"
+                                                placeholder="Enter your email" required>
                                         </div>
                                     </div>
                                     <div class="mb-4">
