@@ -1,36 +1,36 @@
 @extends('frontend.layouts.master')
-@section('title', 'Local Area Manager Login')
+@section('title', 'Rider Login')
 @push('css')
-    <link rel="stylesheet" href="{{ asset('lam/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('rider/css/login.css') }}">
 @endpush
 @section('content')
-    <section class="lam-section py-5">
+    <section class="rider-section py-5">
         <div class="container">
             <div class="row">
-                <div class="lam-container">
+                <div class="rider-container">
                     <div class="row row-gap-4">
                         <div class="col-lg-5 d-none d-lg-block">
-                            <div class="image-col pe-lg-4 pe-0 ">
-                                <img src="{{ asset('lam/image/lam.png') }}" alt="dsitrict login">
+                            <div class="image-col">
+                                <img src="{{ asset('rider/img/rider.png') }}" alt="rider login">
                             </div>
                         </div>
                         <div class="col-lg-7 col-12">
                             <div class="form">
-                                <h2 class="text-center mb-3">{{ __('Local Area Manager') }}</h2>
+                                <h2 class="text-center mb-3">{{ __('Rider Login') }}</h2>
                                 <p class="text-center mb-4">{{ __('Login to access your account') }}</p>
-                                <form method="POST" action="{{ route('local_area_manager.login') }}">
+                                <form action="{{ route('rider.login') }}" method="POST">
                                     @csrf
                                     <div class="mb-4">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
                                             <input type="text" id="number" name="phone" class="form-control"
-                                                placeholder="Enter your Phone Number" required>
+                                                placeholder="Enter your phone" required>
                                         </div>
                                     </div>
                                     <div class="mb-4">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                            <input type="password" id="password" name="password" class="form-control"
+                                            <input type="password" name="password" id="password" class="form-control"
                                                 placeholder="Enter your password" required>
                                         </div>
                                     </div>

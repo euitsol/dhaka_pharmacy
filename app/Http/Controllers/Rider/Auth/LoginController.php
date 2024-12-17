@@ -20,7 +20,7 @@ class LoginController extends Controller
             flash()->addSuccess('Welcome to Dhaka Pharmacy');
             return redirect()->route('rider.dashboard');
         }
-        return view('rider.login');
+        return view('rider.auth.login');
     }
 
     public function riderLoginCheck(Request $request): RedirectResponse
