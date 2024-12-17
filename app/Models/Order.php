@@ -10,7 +10,7 @@ use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use App\Observers\OrderModelObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
-#[ObservedBy([OrderModelObserver::class])]
+// #[ObservedBy([OrderModelObserver::class])]
 class Order extends BaseModel
 {
     use HasFactory, SoftDeletes, EagerLoadPivotTrait;

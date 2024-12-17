@@ -17,14 +17,13 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Traits\OrderNotificationTrait;
 use App\Http\Traits\TransformProductTrait;
 use App\Http\Traits\TransformOrderItemTrait;
 use App\Models\Payment;
 
 class CheckoutController extends Controller
 {
-    use OrderNotificationTrait, TransformProductTrait, OrderTrait, TransformOrderItemTrait, DeliveryTrait;
+    use TransformProductTrait, OrderTrait, TransformOrderItemTrait, DeliveryTrait;
 
     public function int_order(OrderIntRequest $request)
     {

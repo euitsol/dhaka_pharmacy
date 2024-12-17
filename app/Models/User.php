@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends AuthenticateBaseModel
 {
-    use HasRoles, HasApiTokens;
+    use HasRoles, HasApiTokens, Notifiable;
     protected $fillable = [
         'name',
         'email',

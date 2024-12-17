@@ -41,8 +41,9 @@ class ProfileController extends Controller
             }
             $user->identification_file = $path;
         }
-        $user->name = $request->name;
-        $user->father_name = $request->father_name;
+        if ($request->name) {
+            $user->name = $request->name;
+        }
         $user->mother_name = $request->mother_name;
         $user->age = $request->age;
         $user->dob = $request->dob;
