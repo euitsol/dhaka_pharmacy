@@ -36,22 +36,42 @@
             <div class="col-3">
                 <div class="col-left d-flex flex-column">
                     <div class="single-box current-order">
-                        <div class="processing d-flex align-items-center justify-content-between">
-                            <div class="title">
-                                <h3>{{ __('Processing') }}</h3>
-                                {{-- <h4>{{ __('Est. Delivery 01 apr 23') }}</h4> --}}
+                        @if ($total_current_orders > 0)
+                            <div class="processing d-flex align-items-center justify-content-between">
+                                <div class="title">
+                                    <h3>{{ __('Processing') }}</h3>
+                                    {{-- <h4>{{ __('Est. Delivery 01 apr 23') }}</h4> --}}
+                                </div>
+                                <div class="btn">
+                                    <a
+                                        href="{{ route('u.order.list', ['status' => 'current-orders']) }}">{{ __('Details') }}</a>
+                                </div>
                             </div>
-                            <div class="btn">
-                                <a
-                                    href="{{ route('u.order.list', ['status' => 'current-orders']) }}">{{ __('Details') }}</a>
+                            <div class="progress-box">
+                                <div class="progress" role="progressbar" aria-label="Basic example" aria-valuemin="0"
+                                    aria-valuemax="100">
+                                    <div class="progress-bar"
+                                        style="width: {{ $last_current_order->status == 1
+                                            ? '20%'
+                                            : ($last_current_order->status == 2
+                                                ? '30%'
+                                                : ($last_current_order->status == 3
+                                                    ? '40%'
+                                                    : ($last_current_order->status == 4
+                                                        ? '60%'
+                                                        : ($last_current_order->status == 5
+                                                            ? '80%'
+                                                            : ($last_current_order->status == 6
+                                                                ? '100%'
+                                                                : ''))))) }}">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="progress-box">
-                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75"
-                                aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar w-25"></div>
+                        @else
+                            <div class="count">
+                                <span>0</span>
                             </div>
-                        </div>
+                        @endif
                         <div class="title">
                             <h2>{{ __('Current Orders') }}</h2>
                         </div>
