@@ -30,7 +30,7 @@
                     <div class="col-3">
                         <div class="order-details">
                             <span>{{ __('Order ID') }}</span>
-                            <p>{{ $payment->order->order_id }}</p>
+                            <p>{{ optional($payment->order)->order_id }}</p>
                         </div>
                     </div>
                     <div class="col-3">
@@ -96,27 +96,27 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Delivery Address') }}</h5>
-                                    <p class="text-end">{{ $payment->order->address->address }}</p>
+                                    <p class="text-end">{{ optional($payment->order)->address->address }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('City') }}</h5>
-                                    <p class="text-end">{{ $payment->order->address->city }}</p>
+                                    <p class="text-end">{{ optional($payment->order)->address->city }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Street Address') }}</h5>
-                                    <p class="text-end">{{ $payment->order->address->street_address }}</p>
+                                    <p class="text-end">{{ optional($payment->order)->address->street_address }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Apartment') }}</h5>
-                                    <p class="text-end">{{ $payment->order->address->apartment }}</p>
+                                    <p class="text-end">{{ optional($payment->order)->address->apartment }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Floor') }}</h5>
-                                    <p class="text-end">{{ $payment->order->address->floor }}</p>
+                                    <p class="text-end">{{ optional($payment->order)->address->floor }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Delivery Instruction') }}</h5>
-                                    <p class="text-end">{{ $payment->order->address->delivery_instruction }}</p>
+                                    <p class="text-end">{{ optional($payment->order)->address->delivery_instruction }}</p>
                                 </div>
                             </div>
                         </div>
