@@ -29,7 +29,7 @@ class OrderController extends Controller
 
 
         $query = $this->buildOrderQuery($status);
-        $perPage = 2;
+        $perPage = 10;
         $query->with(['od', 'od.delivery_active_otps', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength']);
         if ($filter_val && $filter_val != 'all') {
             $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
