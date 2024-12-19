@@ -37,6 +37,6 @@ class DashboardController extends Controller
         $data['order_products'] = (clone $query)->with('products.precaution', 'products.strength')->get()->pluck('products')->flatten()->where('precaution', '!=', null)->shuffle();
         $data['latest_offers'] = LatestOffer::activated()->latest()->get();
         $data['user_tips'] = UserTips::activated()->latest()->get()->shuffle()->take(1);
-        return view('user.dashboard', $data);
+        return view('user.dashboard.dashboard', $data);
     }
 }
