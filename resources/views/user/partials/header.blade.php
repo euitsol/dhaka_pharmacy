@@ -1,7 +1,7 @@
 <header class="header-section">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-8">
+            <div class="col-lg-8 col-3">
                 <div class="row align-items-center">
                     <div class="col-xl-1 col-lg-2">
                         <div class="logo">
@@ -34,7 +34,7 @@
             <!-- <div class="col-7">
 
             </div> -->
-            <div class="col-4 d-flex flex-row align-items-center justify-content-end">
+            <div class="col-lg-4 col-9 d-flex flex-row align-items-center justify-content-end">
                 <div class="right-col me-4">
                     <a href="javascript:void(0)" class="cart-icon d-flex" data-bs-toggle="offcanvas"
                         data-bs-target="#cartbtn" aria-controls="offcanvasRight">
@@ -96,7 +96,7 @@
 
                     </ul>
                 </div>
-                <div class="name me-3">
+                <div class="name me-3 d-none d-sm-block">
                     <a href="{{ route('user.dashboard') }}">{{ abbreviateName(user()->name) }}</a>
                 </div>
                 <div class="profile">

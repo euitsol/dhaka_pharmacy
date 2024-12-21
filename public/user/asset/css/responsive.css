@@ -59,6 +59,15 @@
     .header-section .nav-menu{
         display: none;
     }
+
+    .header-section .notification ul.dropdown-menu {
+        width: 310px;
+        right: -99px !important;
+    }
+
+    .header-section .right-col .offcanvas {
+        width: 95% !important;
+    }
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
@@ -129,6 +138,9 @@
     /* Header CSS  */
     .header-section .nav-menu{
         display: none;
+    }
+    .header-section .notification ul.dropdown-menu {
+        right: -80px !important;
     }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
