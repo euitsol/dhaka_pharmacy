@@ -80,6 +80,13 @@
     .address .accordion .accordion-body{
         font-size: 12px;
     }
+
+    /* Payment & Order Details CSS  */
+    .order-info-section .order-status-row h2 {
+        line-height: 18px;
+        font-size: 15px;
+    }
+
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
@@ -153,6 +160,12 @@
     }
     .header-section .notification ul.dropdown-menu {
         right: -80px !important;
+    }
+
+    /* Payment & Order Details CSS  */
+    .order-info-section .order-status-row h2 {
+        line-height: 25px;
+        font-size: 20px;
     }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {

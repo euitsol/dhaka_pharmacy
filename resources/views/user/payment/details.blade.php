@@ -21,19 +21,19 @@
 
                 <!-- payment-details-row-start -->
                 <div class="row py-2 pt-4">
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Payment Date') }}</span>
                             <p>{{ $payment->place_date }}</p>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Order ID') }}</span>
                             <p>{{ $payment->order->order_id }}</p>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Customer') }} </span>
                             <p class="mb-0">{{ $payment->customer->name }}</p>
@@ -42,7 +42,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Payment Method') }}</span>
                             <p>{{ strtoupper($payment->payment_method) }}</p>
@@ -52,8 +52,8 @@
                 <!-- payment-details-row-end -->
                 <!-- payment-information-row-start -->
                 <div class="order-info-row">
-                    <div class="row">
-                        <div class="col-6">
+                    <div class="row flex-column-reverse flex-lg-row">
+                        <div class="col-lg-6 col-12">
                             <h4 class="mb-3 title">{{ __('Payment Information') }}</h4>
                             <div class="right d-flex flex-column justify-content-center">
                                 <div class="d-flex justify-content-between">
@@ -79,42 +79,42 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12 mb-lg-0 mb-3">
                             <h4 class="mb-3 title">{{ __('Customer Information') }}</h4>
                             <div class="right d-flex flex-column justify-content-center">
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between border-bottom">
                                     <h5>{{ __('Customer Name') }}</h5>
                                     <p class="text-end">{{ $payment->customer->name }}</p>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between border-bottom">
                                     <h5>{{ __('Phone') }}</h5>
                                     <p class="text-end">{{ formatPhoneNumber($payment->customer->phone) }}</p>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between border-bottom">
                                     <h5>{{ __('Email') }}</h5>
                                     <p class="text-end">{{ $payment->customer->email }}</p>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between border-bottom">
                                     <h5>{{ __('Delivery Address') }}</h5>
                                     <p class="text-end">{{ optional($payment->order->address)->address }}</p>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between border-bottom">
                                     <h5>{{ __('City') }}</h5>
                                     <p class="text-end">{{ optional($payment->order->address)->city }}</p>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between border-bottom">
                                     <h5>{{ __('Street Address') }}</h5>
                                     <p class="text-end">{{ optional($payment->order->address)->street_address }}</p>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between border-bottom">
                                     <h5>{{ __('Apartment') }}</h5>
                                     <p class="text-end">{{ optional($payment->order->address)->apartment }}</p>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between border-bottom">
                                     <h5>{{ __('Floor') }}</h5>
                                     <p class="text-end">{{ optional($payment->order->address)->floor }}</p>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between ">
                                     <h5>{{ __('Delivery Instruction') }}</h5>
                                     <p class="text-end">{{ optional($payment->order->address)->delivery_instruction }}</p>
                                 </div>
