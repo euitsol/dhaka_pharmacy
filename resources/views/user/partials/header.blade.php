@@ -1,34 +1,40 @@
 <header class="header-section">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-8 flex-row d-flex align-items-center">
-                <div class="logo">
-                    <a href="{{ route('home') }}">
-                        <img class="w-100" src="{{ asset('user/asset/img/dashboard-logo.png') }}"
-                            alt="{{ config('app.name') }}">
-                    </a>
-                </div>
-                <div class="nav-menu ps-5">
-                    <ul class="navbar-nav flex-row">
-                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'dashboard') active @endif"
-                                href="{{ route('user.dashboard') }}">{{ __('Dashboard') }}</a></li>
-                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'address') active @endif"
-                                href="{{ route('u.as.list') }}">{{ __('Address') }}</a></li>
-                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'order') active @endif"
-                                href="{{ route('u.order.list') }}">{{ __('Orders') }}</a></li>
-                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'wishlist') active @endif"
-                                href="{{ route('u.wishlist.list') }}">{{ __('Wishlists') }}</a></li>
-                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'payment') active @endif"
-                                href="{{ route('u.payment.list') }}">{{ __('Payments') }}</a></li>
-                        <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'review') active @endif"
-                                href="{{ route('u.review.list') }}">{{ __('Reviews') }}</a></li>
-                    </ul>
+            <div class="col-lg-8 col-3">
+                <div class="row align-items-center">
+                    <div class="col-xl-1 col-lg-2">
+                        <div class="logo">
+                            <a href="{{ route('home') }}">
+                                <img class="w-100" src="{{ asset('user/asset/img/dashboard-logo.png') }}"
+                                    alt="{{ config('app.name') }}">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-11 col-lg-10">
+                        <div class="nav-menu ps-xl-5">
+                            <ul class="navbar-nav flex-row align-items-center">
+                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'dashboard') active @endif"
+                                        href="{{ route('user.dashboard') }}">{{ __('Dashboard') }}</a></li>
+                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'address') active @endif"
+                                        href="{{ route('u.as.list') }}">{{ __('Address') }}</a></li>
+                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'order') active @endif"
+                                        href="{{ route('u.order.list') }}">{{ __('Orders') }}</a></li>
+                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'wishlist') active @endif"
+                                        href="{{ route('u.wishlist.list') }}">{{ __('Wishlists') }}</a></li>
+                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'payment') active @endif"
+                                        href="{{ route('u.payment.list') }}">{{ __('Payments') }}</a></li>
+                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'review') active @endif"
+                                        href="{{ route('u.review.list') }}">{{ __('Reviews') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- <div class="col-7">
 
             </div> -->
-            <div class="col-4 d-flex flex-row align-items-center justify-content-end">
+            <div class="col-lg-4 col-9 d-flex flex-row align-items-center justify-content-end">
                 <div class="right-col me-4">
                     <a href="javascript:void(0)" class="cart-icon d-flex" data-bs-toggle="offcanvas"
                         data-bs-target="#cartbtn" aria-controls="offcanvasRight">
@@ -90,7 +96,7 @@
 
                     </ul>
                 </div>
-                <div class="name me-3">
+                <div class="name me-3 d-none d-sm-block">
                     <a href="{{ route('user.dashboard') }}">{{ abbreviateName(user()->name) }}</a>
                 </div>
                 <div class="profile">
