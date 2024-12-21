@@ -15,15 +15,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documentations', function (Blueprint $table) {
+        Schema::create('content_images', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
-            $table->string('module_key');
-            $table->enum('type', ['create', 'update'])->nullable();
-            $table->longText('documentation')->nullable();
+            $table->text("path");
+            $table->text("filename");
             $table->timestamps();
             $table->softDeletes();
-            $this->addAuditColumns($table);
+            $this->addMorphedAuditColumns($table);
         });
     }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documentations');
+        Schema::dropIfExists('content_images');
     }
 };

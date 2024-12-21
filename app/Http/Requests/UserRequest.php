@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:4',
+            'name' => 'required|min:4|max:50',
 
             'age' => 'nullable|numeric|digits:2',
             'identification_type' => 'nullable|numeric',

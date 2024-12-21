@@ -34,7 +34,7 @@ class MedicineStrengthController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'medicine_strength')->first();
+        $data['document'] = Documentation::where([['module_key', 'medicine_strength'], ['type', 'create']])->first();
         return view('admin.product_management.medicine_strength.create', $data);
     }
     public function store(MedicineStrengthRequest $req): RedirectResponse
@@ -50,7 +50,7 @@ class MedicineStrengthController extends Controller
     public function edit($id): View
     {
         $data['medicine_strength'] = MedicineStrength::findOrFail($id);
-        $data['document'] = Documentation::where('module_key', 'medicine_strength')->first();
+        $data['document'] = Documentation::where([['module_key', 'medicine_strength'], ['type', 'update']])->first();
         return view('admin.product_management.medicine_strength.edit', $data);
     }
     public function update(MedicineStrengthRequest $req, $id): RedirectResponse

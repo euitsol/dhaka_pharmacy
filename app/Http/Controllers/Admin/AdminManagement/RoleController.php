@@ -41,7 +41,7 @@ class RoleController extends Controller
     public function create(): View
     {
         $permissions = Permission::orderBy('name')->get();
-        $data['document'] = Documentation::where('module_key', 'roll')->first();
+        $data['document'] = Documentation::where([['module_key', 'role'], ['type', 'create']])->first();
         $data['groupedPermissions'] = $permissions->groupBy(function ($permission) {
             return $permission->prefix;
         });
@@ -63,7 +63,7 @@ class RoleController extends Controller
     {
         $data['role'] = Role::with('permissions')->findOrFail($id);
         $data['permissions'] = Permission::orderBy('name')->get();
-        $data['document'] = Documentation::where('module_key', 'roll')->first();
+        $data['document'] = Documentation::where([['module_key', 'role'], ['type', 'update']])->first();
         $data['groupedPermissions'] = $data['permissions']->groupBy(function ($permission) {
             return $permission->prefix;
         });

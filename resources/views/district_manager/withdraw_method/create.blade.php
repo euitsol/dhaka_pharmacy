@@ -1,5 +1,5 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'wm'])
-@section('title', 'Withdraw Method Create')
+@section('title', 'Add Withdraw Method')
 @section('content')
     <div class="row">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }} ">
@@ -8,7 +8,7 @@
                     <div class="row">
                         <div class="col-8">
                             <h4 class="card-title">
-                                {{ __('Withdraw Method Create') }}</h4>
+                                {{ __('Add Withdraw Method') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -61,7 +61,7 @@
                             </select>
                             @include('alerts.feedback', ['field' => 'type'])
                         </div>
-                        <input class="btn btn-primary float-end" type="submit" name="submit" value="Create">
+                        <input class="btn btn-primary float-end" type="submit" name="submit" value="Submit">
                     </form>
                 </div>
             </div>

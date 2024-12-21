@@ -37,7 +37,7 @@ class ProductSubCategoryController extends Controller
     public function create(): View
     {
         $data['pro_cats'] = ProductCategory::activated()->latest()->get();
-        $data['document'] = Documentation::where('module_key', 'product_sub_category')->first();
+        $data['document'] = Documentation::where([['module_key', 'product_sub_category'], ['type', 'create']])->first();
         return view('admin.product_management.product_sub_category.create', $data);
     }
     public function store(ProductSubCategoryRequest $req): RedirectResponse
@@ -62,7 +62,7 @@ class ProductSubCategoryController extends Controller
     {
         $data['product_sub_category'] = ProductSubCategory::with('pro_cat')->where('slug', $slug)->first();
         $data['pro_cats'] = ProductCategory::activated()->latest()->get();
-        $data['document'] = Documentation::where('module_key', 'product_sub_category')->first();
+        $data['document'] = Documentation::where([['module_key', 'product_sub_category'], ['type', 'update']])->first();
         return view('admin.product_management.product_sub_category.edit', $data);
     }
     public function update(ProductSubCategoryRequest $req, $id): RedirectResponse

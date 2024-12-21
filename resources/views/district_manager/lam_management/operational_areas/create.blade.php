@@ -1,5 +1,5 @@
 @extends('district_manager.layouts.master', ['pageSlug' => 'lam_area'])
-@section('title', 'Create Operation Area')
+@section('title', 'Create Operation Sub Area')
 @section('content')
     <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Create Operation Area') }}</h4>
+                            <h4 class="card-title">{{ __('Create Operation Sub Area') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [

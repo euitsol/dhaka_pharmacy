@@ -35,7 +35,7 @@ class OperationSubAreaController extends Controller
     public function create(): View
     {
         $data['op_areas'] = OperationArea::activated()->latest()->get();
-        $data['document'] = Documentation::where('module_key', 'operation-sub-area')->first();
+        $data['document'] = Documentation::where([['module_key', 'operation_sub_area'], ['type', 'create']])->first();
         return view('admin.operational_area.operation_sub_area.create', $data);
     }
     public function store(OperationSubAreaRequest $req): RedirectResponse
@@ -53,7 +53,7 @@ class OperationSubAreaController extends Controller
     {
         $data['operation_sub_area'] = OperationSubArea::where('slug', $slug)->first();
         $data['operation_areas'] = OperationArea::activated()->latest()->get();
-        $data['document'] = Documentation::where('module_key', 'operation-sub-area')->first();
+        $data['document'] = Documentation::where([['module_key', 'operation_sub_area'], ['type', 'update']])->first();
         return view('admin.operational_area.operation_sub_area.edit', $data);
     }
     public function update(OperationSubAreaRequest $req, $id): RedirectResponse

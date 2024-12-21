@@ -34,7 +34,7 @@ class OparetionalAreaController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'operation-sub-area')->first();
+        $data['document'] = Documentation::where([['module_key', 'operation_sub_area'], ['type', 'create']])->first();
         return view('district_manager.lam_management.operational_areas.create', $data);
     }
     public function store(OperationSubAreaRequest $req): RedirectResponse
@@ -46,13 +46,13 @@ class OparetionalAreaController extends Controller
         $lam_area->status = 0;
         $lam_area->creater()->associate(dm());
         $lam_area->save();
-        flash()->addSuccess('Operation Sub Area ' . $lam_area->name . ' created successfully.');
+        flash()->addSuccess('Operation sub area ' . $lam_area->name . ' create request submitted successfully.');
         return redirect()->route('dm.lam_area.list');
     }
     public function edit($slug): View
     {
         $data['lam_area'] = OperationSubArea::where('slug', $slug)->first();
-        $data['document'] = Documentation::where('module_key', 'operation-sub-area')->first();
+        $data['document'] = Documentation::where([['module_key', 'operation_sub_area'], ['type', 'update']])->first();
         return view('district_manager.lam_management.operational_areas.edit', $data);
     }
     public function update(OperationSubAreaRequest $req, $id): RedirectResponse
@@ -64,7 +64,7 @@ class OparetionalAreaController extends Controller
         $lam_area->status = 0;
         $lam_area->updater()->associate(dm());
         $lam_area->update();
-        flash()->addSuccess('Operation Sub Area ' . $lam_area->name . ' updated successfully.');
+        flash()->addSuccess('Operation sub area ' . $lam_area->name . ' update request submitted successfully.');
         return redirect()->route('dm.lam_area.list');
     }
 }

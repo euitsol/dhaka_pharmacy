@@ -34,7 +34,7 @@ class LatestOfferController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'latest_offer')->first();
+        $data['document'] = Documentation::where([['module_key', 'latest_offer'], ['type', 'create']])->first();
         return view('admin.latest_offer.create', $data);
     }
     public function store(LatestOfferRequest $req): RedirectResponse
@@ -56,7 +56,7 @@ class LatestOfferController extends Controller
     public function edit($id): View
     {
         $data['latest_offer'] = LatestOffer::findOrFail($id);
-        $data['document'] = Documentation::where('module_key', 'latest_offer')->first();
+        $data['document'] = Documentation::where([['module_key', 'latest_offer'], ['type', 'update']])->first();
         return view('admin.latest_offer.edit', $data);
     }
 

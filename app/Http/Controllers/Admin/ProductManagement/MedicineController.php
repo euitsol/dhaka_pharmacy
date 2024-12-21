@@ -54,7 +54,7 @@ class MedicineController extends Controller
         $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->get();
         $data['strengths'] = MedicineStrength::activated()->orderBy('quantity')->get();
         $data['units'] = MedicineUnit::activated()->orderBy('name')->get();
-        $data['document'] = Documentation::where('module_key', 'medicine')->first();
+        $data['document'] = Documentation::where([['module_key', 'product'], ['type', 'create']])->first();
         return view('admin.product_management.medicine.create', $data);
     }
     public function store(MedicineRequest $req): RedirectResponse
@@ -124,7 +124,7 @@ class MedicineController extends Controller
         $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->get();
         $data['strengths'] = MedicineStrength::activated()->orderBy('quantity')->get();
         $data['units'] = MedicineUnit::activated()->orderBy('name')->get();
-        $data['document'] = Documentation::where('module_key', 'medicine')->first();
+        $data['document'] = Documentation::where([['module_key', 'product'], ['type', 'update']])->first();
         $data['discounts'] = $data['medicine']->discounts->where('status', 0) ?? [];
         $data['precaution'] = ProductPrecaution::where('product_id', $data['medicine']->id)->first();
 

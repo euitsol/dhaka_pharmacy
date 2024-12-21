@@ -33,7 +33,7 @@ class OperationAreaController extends Controller
     }
     public function create(): view
     {
-        $data['document'] = Documentation::where('module_key', 'operation-area')->first();
+        $data['document'] = Documentation::where([['module_key', 'operation_area'], ['type', 'create']])->first();
         return view('admin.operational_area.operation_area.create', $data);
     }
     public function store(OperationAreaRequest $req): RedirectResponse
@@ -49,7 +49,7 @@ class OperationAreaController extends Controller
     public function edit($slug): view
     {
         $data['operation_area'] = OperationArea::where('slug', $slug)->first();
-        $data['document'] = Documentation::where('module_key', 'operation-area')->first();
+        $data['document'] = Documentation::where([['module_key', 'operation_area'], ['type', 'update']])->first();
         return view('admin.operational_area.operation_area.edit', $data);
     }
     public function update(OperationAreaRequest $req, $id): RedirectResponse

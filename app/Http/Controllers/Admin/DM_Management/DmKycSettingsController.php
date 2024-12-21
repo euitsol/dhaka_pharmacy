@@ -20,7 +20,7 @@ class DmKycSettingsController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'dm_kyc_settings')->first();
+        $data['document'] = Documentation::where('module_key', 'kyc_setting')->first();
         $data['kycs'] = KycSetting::where('type', 'dm')->latest()->get();
         $data['kyc_setting'] = $data['kycs']->where('status', 1)->first();
         return view('admin.dm_management.kyc_settings.create', $data);

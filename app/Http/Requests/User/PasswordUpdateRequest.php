@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class PasswordUpdateRequest extends FormRequest
 {
@@ -24,14 +25,22 @@ class PasswordUpdateRequest extends FormRequest
         return [
             'old_password' => [
                 'required',
-                'min:4',
                 function ($attribute, $value, $fail) {
                     if (!$this->checkOldPassword($value)) {
                         $fail("The $attribute doesn't match the current password.");
                     }
                 },
             ],
-            'password' => 'required|min:6|confirmed',
+            'password' => [
+                'required',
+                Password::min(8) // Minimum length of 8 characters
+                    ->mixedCase() // Requires at least one uppercase and one lowercase letter
+                    ->letters() // Requires at least one letter
+                    ->numbers() // Requires at least one digit
+                    ->symbols() // Requires at least one special character
+                    ->uncompromised(), // Ensures the password has not been compromised in data leaks
+                'confirmed',
+            ],
         ];
     }
 

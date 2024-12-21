@@ -32,6 +32,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
 </head>
 
