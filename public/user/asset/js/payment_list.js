@@ -4,7 +4,7 @@ function getHtml(payments) {
         result += `<div class="order-row">
                 <div class="order-id-row border-0 p-4">
                     <div class="row align-items-center">
-                        <div class="col-4">
+                        <div class="col-lg-4 col-12">
                             <h3 class="order-num">
                                 Transaction ID: '<span>${
                                     payment.transaction_id
@@ -17,9 +17,9 @@ function getHtml(payments) {
                                 payment.date
                             }</span></p>
                         </div>
-                        <div class="col-8">
+                        <div class="col-lg-8 col-12 mt-2 mt-lg-0">
                             <div class="row align-items-center">
-                                <div class="col-3 text-center">
+                                <div class="col-md-4 col-lg-3 col-6 text-center">
                                     <div class="order-status pe-0">
                                         <div class="total">
                                             <p class="total text-start">
@@ -28,7 +28,7 @@ function getHtml(payments) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-md-3 col-4">
                                     <div class="order-status pe-0">
                                         <div class="total">
                                             <p class="total text-start">
@@ -41,13 +41,13 @@ function getHtml(payments) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-2 text-center">
+                                <div class="col-md-1 ps-0 ps-sm-3 col-2 col-lg-2 text-md-center text-end">
                                     <span
                                         class="${payment.statusBg}">${
             payment.statusTitle
         }</span>
                                 </div>
-                                <div class="col-4 text-end">
+                                <div class="col-md-4 mt-2 mt-md-0 col-12 text-end">
                                     <div class="order-status">
                                         <div class="btn p-0">
                                             <a href="${myDatas[

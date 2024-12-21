@@ -68,6 +68,25 @@
     .header-section .right-col .offcanvas {
         width: 95% !important;
     }
+
+    /* User Address Page CSS  */
+    .address .accordion .accordion-header .accordion-button{
+            line-height: 20px;
+            font-size: 12px;
+    }
+    .address .accordion .edit-btn, .address .accordion .dlt-btn {
+        padding: 0rem .5rem;
+    }
+    .address .accordion .accordion-body{
+        font-size: 12px;
+    }
+
+    /* Payment & Order Details CSS  */
+    .order-info-section .order-status-row h2 {
+        line-height: 18px;
+        font-size: 15px;
+    }
+
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
@@ -141,6 +160,12 @@
     }
     .header-section .notification ul.dropdown-menu {
         right: -80px !important;
+    }
+
+    /* Payment & Order Details CSS  */
+    .order-info-section .order-status-row h2 {
+        line-height: 25px;
+        font-size: 20px;
     }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
