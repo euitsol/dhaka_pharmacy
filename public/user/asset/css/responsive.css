@@ -1,0 +1,414 @@
+@media screen and (max-width: 575px) {
+    .dashboard-main-section .col-mid .my-payment-feedback{
+        margin-top: 20px !important;
+    }
+    .dashboard-main-section .col-right .google-map .address {
+        padding: 12px 20px;
+    }
+    .dashboard-main-section .col-right .google-map .btn a {
+        font-size: 16px;
+        padding: 7px 7px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn {
+        padding: 16px 15px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn a span {
+        font-size: 12px;
+    }
+    .dashboard-main-section .col-left .single-box .count {
+        width: 70px;
+        height: 70px;
+        margin-top: 0;
+    }
+    .dashboard-main-section .col-left .single-box .count span {
+        font-size: 40px;
+    }
+    .dashboard-main-section .col-left .single-box.cancel-order h2, .dashboard-main-section .col-left .single-box.previous-order h2 {
+        margin-top: 5px;
+    }
+    .dashboard-main-section .col-left .single-box {
+        padding: 15px 20px;
+    }
+    .dashboard-main-section .col-left .single-box .title h2 {
+        margin-top: 10px;
+        font-size: 20px;
+    }
+    .dashboard-main-section .col-left .current-order .progress-box .progress {
+        margin-top: 15px;
+    }
+    .dashboard-main-section .col-mid .my-payment-feedback .my-payment h3, .dashboard-main-section .col-mid .my-payment-feedback .feedback h3{
+        font-size: 20px;
+    }
+    .dashboard-main-section .col-mid .order-cart-wish .single h2{
+        font-size: 20px;
+    }
+    .dashboard-main-section .col-right .customer-supporrt a h3 {
+        font-size: 15px;
+        line-height: 20px;
+    }
+    .dashboard-main-section .col-right .customer-supporrt a img{
+        width: 60px;
+    }
+    .dashboard-main-section .col-right .log-out img{
+        width: 100%;
+    }
+    .socket p {
+        font-size: 15px;
+    }
+    /* Header CSS  */
+    .header-section .nav-menu{
+        display: none;
+    }
+
+    .header-section .notification ul.dropdown-menu {
+        width: 310px;
+        right: -99px !important;
+    }
+
+    .header-section .right-col .offcanvas {
+        width: 95% !important;
+    }
+
+    /* User Address Page CSS  */
+    .address .accordion .accordion-header .accordion-button{
+            line-height: 20px;
+            font-size: 12px;
+    }
+    .address .accordion .edit-btn, .address .accordion .dlt-btn {
+        padding: 0rem .5rem;
+    }
+    .address .accordion .accordion-body{
+        font-size: 12px;
+    }
+
+    /* Payment & Order Details CSS  */
+    .order-info-section .order-status-row h2 {
+        line-height: 18px;
+        font-size: 15px;
+    }
+    /* Order Details  */
+    .order-info-section .order-traking-row .step-1::before {
+        display: none;
+    }
+    .order-info-section .order-traking-row .step-5::after {
+        display: none;
+    }
+    .order-info-section .order-traking-row .icon {
+        margin: 0;
+    }
+    .order-info-section .order-traking-row .step {
+        min-height: 60px;
+    }
+    .order-info-section .order-traking-row .step.active::after {
+        width: 5px;
+        top: 25px;
+        height: 30px;
+        display: block;
+        left: 8px;
+    }
+
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+
+
+    .offer_image img {
+        height: 140px !important;
+        /* width: 252px !important; */
+    }
+    .dashboard-main-section .col-mid .my-payment-feedback{
+        margin-top: 20px !important;
+    }
+    .dashboard-main-section .col-right .google-map .address {
+        padding: 12px 20px;
+    }
+    .dashboard-main-section .col-right .google-map .btn a {
+        font-size: 16px;
+        padding: 7px 7px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn {
+        padding: 16px 15px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn a span {
+        font-size: 12px;
+    }
+    .dashboard-main-section .col-left .single-box .count {
+        width: 70px;
+        height: 70px;
+        margin-top: 5px;
+    }
+    .dashboard-main-section .col-left .single-box .count span {
+        font-size: 40px;
+    }
+    .dashboard-main-section .col-left .single-box.cancel-order h2, .dashboard-main-section .col-left .single-box.previous-order h2 {
+        margin-top: 5px;
+    }
+    .dashboard-main-section .col-left .single-box {
+        padding: 15px 20px;
+    }
+    .dashboard-main-section .col-left .single-box .title h2 {
+        margin-top: 0px;
+        font-size: 14px;
+    }
+    .dashboard-main-section .col-left .current-order .progress-box .progress {
+        margin-top: 5px;
+        height: 10px;
+    }
+    .dashboard-main-section .col-left .current-order .title h3 {
+        font-size: 18px;
+    }
+    .dashboard-main-section .col-left .current-order .processing{
+        flex-direction: column;
+    }
+    .dashboard-main-section .col-left .current-order .processing .btn a {
+        font-size: 11px;
+        padding: 5px 20px;
+    }
+    .dashboard-main-section .col-mid .my-payment-feedback .my-payment h3, .dashboard-main-section .col-mid .my-payment-feedback .feedback h3{
+        font-size: 20px;
+    }
+    .dashboard-main-section .col-mid .order-cart-wish .single h2{
+        font-size: 20px;
+    }
+    .dashboard-main-section .col-right .customer-supporrt a h3{
+        font-size: 20px;
+        line-height: 20px;
+    }
+    /* Header CSS  */
+    .header-section .nav-menu{
+        display: none;
+    }
+    .header-section .notification ul.dropdown-menu {
+        right: -80px !important;
+    }
+
+    /* Payment & Order Details CSS  */
+    .order-info-section .order-status-row h2 {
+        line-height: 25px;
+        font-size: 20px;
+    }
+
+    /* Order Details  */
+    .order-info-section .order-traking-row .step-1::before {
+        display: none !important;
+    }
+    .order-info-section .order-traking-row .step-5::after {
+        display: none !important;
+    }
+    .order-info-section .order-traking-row .icon {
+        margin: 0;
+    }
+    .order-info-section .order-traking-row .step.active::after {
+        width: 5px;
+        top: 25px;
+        height: 30px;
+        display: block;
+        left: 8px;
+    }
+    .order-info-section .order-traking-row .step {
+        min-height: 60px;
+    }
+
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .dashboard-main-section .col-left .single-box .title h2 {
+        font-size: 20px;
+    }
+    .dashboard-main-section .col-left .current-order .title h3 {
+        font-size: 18px;
+    }
+    .dashboard-main-section .col-left .current-order .processing .btn a {
+        font-size: 11px;
+        padding: 5px 20px;
+    }
+    .offer_image img {
+        height: 130px !important;
+        /* width: 136px !important; */
+    }
+    .dashboard-main-section .col-mid .my-payment-feedback{
+        margin-top: 20px !important;
+    }
+    .dashboard-main-section .col-right .google-map .address {
+        padding: 12px 20px;
+    }
+    .dashboard-main-section .col-right .google-map .btn a {
+        font-size: 16px;
+        padding: 7px 7px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn {
+        padding: 16px 15px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn a span {
+        font-size: 12px;
+    }
+    .dashboard-main-section .col-left .single-box .count {
+        width: 70px;
+        height: 70px;
+        margin-top: 0;
+    }
+    .dashboard-main-section .col-left .single-box .count span {
+        font-size: 40px;
+    }
+    .dashboard-main-section .col-left .single-box.cancel-order h2, .dashboard-main-section .col-left .single-box.previous-order h2 {
+        margin-top: 5px;
+    }
+    .dashboard-main-section .col-left .single-box {
+        padding: 15px 20px;
+    }
+    .dashboard-main-section .col-left .single-box .title h2 {
+        margin-top: 10px;
+        font-size: 20px;
+    }
+    .dashboard-main-section .col-left .current-order .progress-box .progress {
+        margin-top: 15px;
+    }
+    /* Header CSS  */
+    .header-section .nav-menu{
+        display: none;
+    }
+
+    /* Order Details  */
+    .order-info-section .order-traking-row .step-1::before {
+        right: 64%;
+    }
+
+    .order-info-section .order-traking-row .step.active::after {
+        width: 72%;
+        left: 64%;
+    }
+    .order-info-section .order-traking-row .step-5.active::after {
+        left: 64% ;
+        width: 40%;
+    }
+}
+@media screen and (min-width: 992px) and (max-width: 1023px) {
+
+    .dashboard-main-section .col-right .google-map .address {
+        padding: 10px 20px;
+    }
+    .dashboard-main-section .col-right .map {
+        height: 60px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn {
+        padding: 10px 15px;
+    }
+    .dashboard-main-section .col-mid .my-payment-feedback{
+        margin-top: 20px !important;
+    }
+    .dashboard-main-section .col-right .google-map .address {
+        padding: 5px 20px;
+    }
+    .dashboard-main-section .col-right .google-map .btn a {
+        font-size: 12px;
+        padding: 5px 7px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn {
+        padding: 12px 15px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn a span {
+        font-size: 10px;
+    }
+    .dashboard-main-section .col-right .log-out a{
+        display: inline-block;
+    }
+    .dashboard-main-section .col-left .current-order .title h3 {
+        font-size: 18px;
+    }
+    .dashboard-main-section .col-left .current-order .processing .btn a {
+        font-size: 11px;
+        padding: 5px 20px;
+    }
+
+    /* Header CSS  */
+    .header-section .nav-menu{
+        display: none;
+    }
+}
+@media screen and (min-width: 1024px) and (max-width: 1199px) {
+    /* Header CSS  */
+    .header-section .nav-menu ul li a {
+        font-size: 15px;
+    }
+
+    .header-section .name a {
+        font-size: 15px;
+    }
+    .header-section .right-col img, .header-section .notification img {
+        width: 20px;
+    }
+
+    .header-section .profile img {
+        height: 40px !important;
+        width: 40px !important;
+    }
+
+    .header-section .nav-menu ul li a {
+        font-size: 15px;
+        padding: 10px 15px;
+    }
+
+
+    /* Dashboard CSS  */
+    .dashboard-main-section .col-right .google-map .address {
+        padding: 10px 20px;
+    }
+    .dashboard-main-section .col-right .map {
+        height: 60px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn {
+        padding: 10px 15px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    .dashboard-main-section .col-mid .order-cart-wish .single h2 {
+        font-size: 25px;
+    }
+    .dashboard-main-section .col-left .current-order .title h3 {
+        font-size: 18px;
+    }
+    .dashboard-main-section .col-left .current-order .processing .btn a {
+        font-size: 11px;
+        padding: 5px 20px;
+    }
+    .dashboard-main-section .col-mid .my-payment-feedback{
+        margin-top: 20px !important;
+    }
+
+}
+@media screen and (min-width: 1200px) and (max-width: 1439px) {
+    .dashboard-main-section .col-mid .order-cart-wish .single {
+        height: 130px;
+    }
+    .dashboard-main-section .col-mid .my-payment-feedback {
+        margin-top: -165px !important;
+    }
+    .dashboard-main-section .col-mid .order-cart-wish .single h2 {
+        font-size: 18px;
+        margin-top: 4px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+
+    .dashboard-main-section .col-right .google-map .address {
+        padding: 5px 20px;
+    }
+    .dashboard-main-section .col-right .google-map .btn a {
+        font-size: 12px;
+        padding: 5px 7px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn {
+        padding: 12px 15px;
+    }
+    .dashboard-main-section .col-right .google-map .address-btn a span {
+        font-size: 10px;
+    }
+    .dashboard-main-section .col-right .log-out a{
+        display: inline-block;
+        margin-top: 30px;
+    }
+}
+@media screen and (min-width: 1440px) {
+
+}

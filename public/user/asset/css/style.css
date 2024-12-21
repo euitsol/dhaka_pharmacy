@@ -291,26 +291,29 @@ body{
 }
 .order-info-section .order-traking-row .step{
     min-width: 20%;
+    position: relative;
 }
-.order-info-section .order-traking-row .step-1 .icon::before{
+.order-info-section .order-traking-row .step-1::before{
     position: absolute;
     content: "";
-    width: 48px;
+    width: 40%;
     height: 5px;
     background-color: rgba(40, 163, 73, 1);
-    left: -55px;
+    right: 60%;
+    top: 8px;
 }
-.order-info-section .order-traking-row .step .icon.active::after{
-    position: absolute;
-    content: "";
-    width: 195px;
-    height: 5px;
-    background-color: rgba(40, 163, 73, 1);
-    right: -202px;
+.order-info-section .order-traking-row .step.active::after {
+	position: absolute;
+	content: "";
+	width: 80%;
+	height: 5px;
+	background-color: rgba(40, 163, 73, 1);
+	left: 60%;
+	top: 8px;
 }
-.order-info-section .order-traking-row .step-5 .icon.active::after{
-    width: 48px;
-    right: -55px;
+.order-info-section .order-traking-row .step-5.active::after{
+    width: 40%;
+    left: 60%;
 }
 .order-info-section .order-traking-row .step h5{
     font-family: var(--secondry-font);
