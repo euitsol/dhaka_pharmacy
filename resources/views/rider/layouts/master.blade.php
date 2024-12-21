@@ -39,6 +39,7 @@
         const rider_pin = `{{ asset('map/rider-pinpng.png') }}`;
         const pharmacy_pin = `{{ asset('map/pharmacy-pin.png') }}`;
         const user_pin = `{{ asset('map/user-pin.png') }}`;
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
 </head>
 

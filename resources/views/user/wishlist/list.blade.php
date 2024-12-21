@@ -30,14 +30,14 @@
                 @forelse ($wishes as $wish)
                     <div class="order-row wish_item">
                         <div class="row px-4">
-                            <div class="col-8">
+                            <div class="col-lg-8 col-md-6 col-12">
                                 <div class="row py-3">
-                                    <div class="col-2">
+                                    <div class="col-xl-2 col-lg-3 col-4 ">
                                         <div class="img">
                                             <img class="w-100" src="{{ $wish->product->image }}" alt="">
                                         </div>
                                     </div>
-                                    <div class="col-10">
+                                    <div class="col-xl-10 col-lg-9 col-8">
                                         <div class="product-info">
                                             <h2 class="name" title="{{ $wish->product->attr_title }}">
                                                 {{ $wish->product->name }}</h2>
@@ -48,8 +48,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 d-flex justify-content-end align-items-center py-3 px-4">
-                                <div class="order-status p-0">
+                            <div
+                                class="col-lg-4 col-md-6 col-12 d-flex justify-content-md-end align-items-center py-3 px-4">
+                                <div class="order-status p-0 d-md-block d-flex flex-column flex-sm-row-reverse flex-md-row">
                                     <div class="total mb-2">
                                         <p class="total text-center ms-3">{{ __('Total:') }}
                                             <span>{{ number_format($wish->product->discounted_price, 2) }}{{ __('tk') }}</span>

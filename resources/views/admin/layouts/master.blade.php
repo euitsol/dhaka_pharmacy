@@ -36,6 +36,7 @@
         const mapbox_style_id = `{{ config('mapbox.pharmacy_radious') }}`;
         const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
         const admin_id = `{{ admin() ? admin()->id : false }}`;
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
 </head>
 
@@ -72,6 +73,7 @@
     <script src="{{ asset('admin/js/custom.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('admin/js/realtime-notification.js') }}"></script>
+    <script src="{{ asset('ckEditor5/main.js') }}"></script>
 
     @stack('js')
 

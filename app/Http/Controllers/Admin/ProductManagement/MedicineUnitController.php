@@ -34,7 +34,7 @@ class MedicineUnitController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'medicine_unit')->first();
+        $data['document'] = Documentation::where([['module_key', 'medicine_unit'], ['type', 'create']])->first();
         return view('admin.product_management.medicine_unit.create', $data);
     }
     public function store(MedicineUnitRequest $req): RedirectResponse
@@ -58,7 +58,7 @@ class MedicineUnitController extends Controller
     public function edit($id): View
     {
         $data['medicine_unit'] = MedicineUnit::findOrFail($id);
-        $data['document'] = Documentation::where('module_key', 'medicine_unit')->first();
+        $data['document'] = Documentation::where([['module_key', 'medicine_unit'], ['type', 'update']])->first();
         return view('admin.product_management.medicine_unit.edit', $data);
     }
     public function update(MedicineUnitRequest $req, $id): RedirectResponse

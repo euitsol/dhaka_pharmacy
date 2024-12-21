@@ -79,7 +79,7 @@ class PharmacyController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'pharmacy')->first();
+        $data['document'] = Documentation::where([['module_key', 'pharmacy'], ['type', 'create']])->first();
         return view('admin.pharmacy_management.pharmacy.create', $data);
     }
     public function store(PharmacyRequest $req): RedirectResponse
@@ -96,7 +96,7 @@ class PharmacyController extends Controller
     public function edit($id): View
     {
         $data['pharmacy'] = Pharmacy::findOrFail(decrypt($id));
-        $data['document'] = Documentation::where('module_key', 'pharmacy')->first();
+        $data['document'] = Documentation::where([['module_key', 'pharmacy'], ['type', 'update']])->first();
         return view('admin.pharmacy_management.pharmacy.edit', $data);
     }
     public function update(PharmacyRequest $req, $id): RedirectResponse

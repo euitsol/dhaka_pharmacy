@@ -69,7 +69,7 @@ class DistrictManagerController extends Controller
     public function create(): View
     {
         $data['operation_areas'] = OperationArea::activated()->orderBy('name')->get();
-        $data['document'] = Documentation::where('module_key', 'district_manager')->first();
+        $data['document'] = Documentation::where([['module_key', 'dm'], ['type', 'create']])->first();
         return view('admin.dm_management.district_manager.create', $data);
     }
     public function store(DistrictManagerRequest $req): RedirectResponse
@@ -88,7 +88,7 @@ class DistrictManagerController extends Controller
     {
         $data['dm'] = DistrictManager::findOrFail($id);
         $data['operation_areas'] = OperationArea::activated()->orderBy('name')->get();
-        $data['document'] = Documentation::where('module_key', 'district_manager')->first();
+        $data['document'] = Documentation::where([['module_key', 'dm'], ['type', 'update']])->first();
         return view('admin.dm_management.district_manager.edit', $data);
     }
     public function update(DistrictManagerRequest $req, $id): RedirectResponse

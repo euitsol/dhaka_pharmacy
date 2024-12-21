@@ -24,7 +24,7 @@ class UserKycSettingsController extends Controller
 
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'user_kyc_settings')->first();
+        $data['document'] = Documentation::where('module_key', 'kyc_setting')->first();
         $data['kycs'] = KycSetting::where('type', 'user')->latest()->get();
         $data['kyc_setting'] = $data['kycs']->where('status', 1)->first();
         return view('admin.user_management.kyc_settings.create', $data);

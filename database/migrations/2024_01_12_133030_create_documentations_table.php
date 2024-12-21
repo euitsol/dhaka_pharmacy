@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
-    use AuditColumnsTrait,SoftDeletes;
+    use AuditColumnsTrait, SoftDeletes;
 
     /**
      * Run the migrations.
@@ -17,8 +17,9 @@ return new class extends Migration
     {
         Schema::create('documentations', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique()->nullable();
-            $table->string('module_key')->unique();
+            $table->string('title')->unique();
+            $table->string('module_key');
+            $table->enum('type', ['create', 'update'])->nullable();
             $table->longText('documentation')->nullable();
             $table->timestamps();
             $table->softDeletes();

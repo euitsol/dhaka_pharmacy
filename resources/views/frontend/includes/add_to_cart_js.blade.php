@@ -194,12 +194,12 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="image col-2 item_${cart.id}">
+                        <div class="image col-3 col-sm-2 item_${cart.id}">
                             <a href="${product.slug}">
                                 <img class="border border-1 rounded-1" src="${product.image}" alt="${product.name}">
                             </a>
                         </div>
-                        <div class="col-8 info">
+                        <div class="col-sm-8 col-9 info">
                             <h4 class="product_title" title="${product.attr_title}">
                                 <a href="${product.slug}">${product.name}</a>
                             </h4>
@@ -207,7 +207,7 @@
                             <p><a href="#">${product.generic.name}</a></p>
                             <p><a href="#">${product.company.name}</a></p>
                         </div>
-                        <div class="item_price col-2 ps-0">
+                        <div class="item_price col-sm-2 mt-2 mt-sm-5 col-12 ps-0">
                             ${product.discounted_price != product.price ?
                                 `<h4 class="text-end">
                                     <del class="text-danger">৳ <span class="item_count_regular_price">${Number(product.price).toFixed(2)}</span></del>
@@ -219,7 +219,7 @@
                         </div>
                     </div>
                     <div class="row align-items-center atc_functionality">
-                        <div class="item_units col-8">
+                        <div class="item_units col-sm-8 col-6">
                             <div class="form-group my-1 boxed">
                                 ${product.units.map((unit, u_key) => `
                                     <input type="radio" data-cart_id="${cart.id}" data-id="${unit.id}" data-name="${unit.name}"
@@ -233,7 +233,7 @@
                                 `).join('')}
                             </div>
                         </div>
-                        <div class="plus_minus col-4 ps-md-4 d-flex align-items-center justify-between">
+                        <div class="plus_minus col-sm-4 col-6 ps-md-4 d-flex align-items-center justify-between">
                             <div class="form-group">
                                 <div class="input-group" role="group">
                                     <a href="javascript:void(0)" data-id="${cart.id}" class="btn btn-sm minus_btn ${cart.quantity <= 1 ? 'disabled':''}">

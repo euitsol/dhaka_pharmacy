@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class PharmacyRequest extends FormRequest
 {
@@ -22,18 +23,28 @@ class PharmacyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:4',
+            'name' => 'required|min:4|max:50',
 
         ]
-        +
-        ($this->isMethod('POST') ? $this->store() : $this->update());
+            +
+            ($this->isMethod('POST') ? $this->store() : $this->update());
     }
 
     protected function store(): array
     {
         return [
             'email' => 'required|unique:pharmacies,email',
-            'password' => 'required|min:6|confirmed',
+            'password' => [
+                'required',
+                'string',
+                'confirmed',
+                Password::min(8) // Minimum length of 8 characters
+                    ->mixedCase() // Requires at least one uppercase and one lowercase letter
+                    ->letters() // Requires at least one letter
+                    ->numbers() // Requires at least one digit
+                    ->symbols() // Requires at least one special character
+                    ->uncompromised(), // Ensures the password has not been compromised in data leaks
+            ],
         ];
     }
 
@@ -41,7 +52,17 @@ class PharmacyRequest extends FormRequest
     {
         return [
             'email' => 'required|unique:pharmacies,email,' . $this->route('id'),
-            'password' => 'nullable|min:6|confirmed',
+            'password' => [
+                'nullable',
+                'string',
+                'confirmed',
+                Password::min(8) // Minimum length of 8 characters
+                    ->mixedCase() // Requires at least one uppercase and one lowercase letter
+                    ->letters() // Requires at least one letter
+                    ->numbers() // Requires at least one digit
+                    ->symbols() // Requires at least one special character
+                    ->uncompromised(), // Ensures the password has not been compromised in data leaks
+            ],
         ];
     }
 }

@@ -35,7 +35,7 @@ class PermissionController extends Controller
     }
     public function create()
     {
-        $data['document'] = Documentation::where('module_key', 'permission')->first();
+        $data['document'] = Documentation::where([['module_key', 'permission'], ['type', 'create']])->first();
         return view('admin.admin_management.permission.create', $data);
     }
 
@@ -53,7 +53,7 @@ class PermissionController extends Controller
     public function edit($id): View
     {
         $data['permission'] = Permission::findOrFail($id);
-        $data['document'] = Documentation::where('module_key', 'permission')->first();
+        $data['document'] = Documentation::where([['module_key', 'permission'], ['type', 'update']])->first();
         return view('admin.admin_management.permission.edit', $data);
     }
     public function update(PermissionRequest $req, $id): RedirectResponse

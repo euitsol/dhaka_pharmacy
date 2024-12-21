@@ -4,6 +4,7 @@ namespace App\Http\Requests\API;
 
 use App\Http\Requests\API\BaseRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class PasswordUpdateRequest extends BaseRequest
 {
@@ -18,8 +19,17 @@ class PasswordUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'old_password' => 'required|min:6',
-            'new_password' => 'required|min:6|confirmed',
+            'old_password' => 'required',
+            'new_password' => [
+                'required',
+                Password::min(8) // Minimum length of 8 characters
+                    ->mixedCase() // Requires at least one uppercase and one lowercase letter
+                    ->letters() // Requires at least one letter
+                    ->numbers() // Requires at least one digit
+                    ->symbols() // Requires at least one special character
+                    ->uncompromised(), // Ensures the password has not been compromised in data leaks
+                'confirmed',
+            ],
         ];
     }
 

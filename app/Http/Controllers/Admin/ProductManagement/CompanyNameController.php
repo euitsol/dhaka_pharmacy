@@ -35,7 +35,7 @@ class CompanyNameController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'company_name')->first();
+        $data['document'] = Documentation::where([['module_key', 'company'], ['type', 'create']])->first();
         return view('admin.product_management.company_name.create', $data);
     }
     public function store(CompanyNameRequest $req): RedirectResponse
@@ -53,7 +53,7 @@ class CompanyNameController extends Controller
     public function edit($slug): View
     {
         $data['company_name'] = CompanyName::where('slug', $slug)->first();
-        $data['document'] = Documentation::where('module_key', 'company_name')->first();
+        $data['document'] = Documentation::where([['module_key', 'company'], ['type', 'update']])->first();
         return view('admin.product_management.company_name.edit', $data);
     }
     public function update(CompanyNameRequest $req, $id): RedirectResponse

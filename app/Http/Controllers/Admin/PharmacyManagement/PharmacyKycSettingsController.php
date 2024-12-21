@@ -35,7 +35,7 @@ class PharmacyKycSettingsController extends Controller
     // }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'pharmacy_kyc_settings')->first();
+        $data['document'] = Documentation::where('module_key', 'kyc_setting')->first();
         $data['kycs'] = KycSetting::where('type', 'pharmacy')->latest()->get();
         $data['kyc_setting'] = $data['kycs']->where('status', 1)->first();
         return view('admin.pharmacy_management.kyc_settings.create', $data);

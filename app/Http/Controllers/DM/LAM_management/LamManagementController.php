@@ -54,7 +54,7 @@ class LamManagementController extends Controller
 
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'local_area_manager')->first();
+        $data['document'] = Documentation::where([['module_key', 'lam'], ['type', 'create']])->first();
         return view('district_manager.lam_management.create', $data);
     }
     public function store(LocalAreaManagerRequest $req): RedirectResponse
@@ -74,7 +74,7 @@ class LamManagementController extends Controller
     {
         $data['lam'] = LocalAreaManager::findOrFail($id);
         $data['dms'] = DistrictManager::latest()->get();
-        $data['document'] = Documentation::where('module_key', 'local_area_manager')->first();
+        $data['document'] = Documentation::where([['module_key', 'lam'], ['type', 'update']])->first();
         return view('district_manager.lam_management.edit', $data);
     }
     public function update(LocalAreaManagerRequest $req, $id): RedirectResponse

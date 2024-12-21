@@ -37,7 +37,7 @@ class TipsController extends Controller
     public function create(): View
     {
         $data['products'] = Medicine::orderBy('name', 'asc')->get();
-        $data['document'] = Documentation::where('module_key', 'user_tips')->first();
+        $data['document'] = Documentation::where([['module_key', 'user_tips'], ['type', 'create']])->first();
         return view('admin.user_tips.create', $data);
     }
     public function store(UserTipsRequest $req): RedirectResponse
@@ -69,7 +69,7 @@ class TipsController extends Controller
         $data['user_tips'] = UserTips::findOrFail($id);
         $data['products'] = Medicine::orderBy('name', 'asc')->get();
         $data['tip_product_ids'] = TipProduct::where('tips_id', $id)->pluck('product_id')->toArray();
-        $data['document'] = Documentation::where('module_key', 'user_tips')->first();
+        $data['document'] = Documentation::where([['module_key', 'user_tips'], ['type', 'update']])->first();
         return view('admin.user_tips.edit', $data);
     }
 

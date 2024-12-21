@@ -33,7 +33,7 @@ class GenericNameController extends Controller
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'generic_name')->first();
+        $data['document'] = Documentation::where([['module_key', 'generic_name'], ['type', 'create']])->first();
         return view('admin.product_management.generic_name.create', $data);
     }
     public function store(GenericNameRequest $req): RedirectResponse
@@ -49,7 +49,7 @@ class GenericNameController extends Controller
     public function edit($slug): View
     {
         $data['generic_name'] = GenericName::where('slug', $slug)->first();
-        $data['document'] = Documentation::where('module_key', 'generic_name')->first();
+        $data['document'] = Documentation::where([['module_key', 'generic_name'], ['type', 'update']])->first();
         return view('admin.product_management.generic_name.edit', $data);
     }
     public function update(GenericNameRequest $req, $id): RedirectResponse

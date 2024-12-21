@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContentImage;
 use App\Models\SubmittedKyc;
 use App\Models\TempFile;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -129,5 +131,33 @@ class FileUploadController extends Controller
         }
         flash()->addSuccess('File deleted successfully.');
         return redirect()->back();
+    }
+
+
+    public function content_image_upload(Request $request): JsonResponse
+    {
+        $request->validate([
+            'upload' => 'required|image|mimes:jpeg,png,jpg,gif',
+        ]);
+        if ($request->hasFile('upload')) {
+            $file = $request->file('upload');
+            $filename = $file->getClientOriginalName();
+            $folder = uniqid();
+            $file->storeAs('content_image/' . $folder, $filename, 'public');
+            $path = "content_image/" . $folder;
+
+            // $save = new ContentImage();
+            // $save->path = $path;
+            // $save->filename = $filename;
+            // $save->created_at = Carbon::now()->toDateTimeString();
+            // $save->creater()->associate(admin());
+            // $save->save();
+            return response()->json([
+                'success' => 'File upload successfully',
+                'url' => asset('storage/' . $path . '/' . $filename),
+                // 'data_id' => $save->id,
+            ]);
+        }
+        return response()->json(['error' => 'File upload failed'], 400);
     }
 }

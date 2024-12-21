@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\DistributedOrder\DistributedOrderController;
 use App\Http\Controllers\Admin\DM_Management\DistrictManagerController;
 use App\Http\Controllers\Admin\DM_Management\DmKycController;
 use App\Http\Controllers\Admin\DM_Management\DmKycSettingsController;
+use App\Http\Controllers\Admin\DocumentationController;
 use App\Http\Controllers\Admin\LAM_Management\LamKycController;
 use App\Http\Controllers\Admin\LAM_Management\LamKycSettingsController;
 use App\Http\Controllers\Admin\LAM_Management\LocalAreaManagerController;
@@ -153,6 +154,7 @@ Route::controller(FileUploadController::class)->prefix('file-upload')->name('fil
     Route::post('/uploads', 'uploads')->name('upload');
     Route::delete('/delete-temp-file', 'deleteTempFile')->name('delete');
     Route::post('/reset', 'resetFilePond')->name('reset');
+    Route::post('/content-image/upload', 'content_image_upload')->name('ci_upload');
 });
 
 // Admin Login Routes
@@ -237,6 +239,19 @@ Route::controller(UserForgotPasswordController::class)->prefix('user')->group(fu
 Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/chart-update', [DashboardController::class, 'chartUpdate'])->name('admin.chart.update');
+
+    // Documentaiton Routes
+    Route::controller(DocumentationController::class)->prefix('documentation')->name('doc.')->group(function () {
+        Route::get('index', 'index')->name('doc_list');
+        Route::get('details/{id}', 'details')->name('details.doc_list');
+        Route::get('create', 'create')->name('doc_create');
+        Route::post('create', 'store')->name('doc_create');
+        Route::get('edit/{id}', 'edit')->name('doc_edit');
+        Route::put('edit/{id}', 'update')->name('doc_edit');
+        Route::get('delete/{id}', 'delete')->name('doc_delete');
+    });
+
+
 
     // Admin Management Routes
     Route::group(['as' => 'am.', 'prefix' => 'admin-management'], function () {

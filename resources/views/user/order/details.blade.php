@@ -8,10 +8,10 @@
                 <div class="row flex-column-reverse flex-md-row">
                     <div class="col-md-8 col-12">
                         <div class="order-status-row d-flex align-items-center py-4">
-                            <div class="img me-3">
+                            <div class="img me-sm-3 me-2">
                                 <img src="{{ asset('user/asset/img/order-status.png') }}" alt="">
                             </div>
-                            <h2 class="mb-0 me-4">{{ __('Order ID: ') }}<span>{{ $order->order_id }}</span></h2>
+                            <h2 class="mb-0 me-sm-4">{{ __('Order ID: ') }}<span>{{ $order->order_id }}</span></h2>
                             <p class="mb-0 fw-bold">{{ slugToTitle($order->statusTitle) }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-4 gap-4">
@@ -112,19 +112,19 @@
 
                 <!-- Order-details-row-start -->
                 <div class="row py-2 pt-4">
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Order Date') }}</span>
                             <p>{{ $order->place_date }}</p>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Delivery Time') }}</span>
                             <p>Est. delivery 00 min</p>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Receiver Name') }} </span>
                             <p class="mb-0">{{ $order->customer->name }}</p>
@@ -133,7 +133,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Delivery Address') }}</span>
                             <p>{{ __(optional($order->address)->address) }}</p>
@@ -145,7 +145,7 @@
                 <!-- Order-information-row-start -->
                 <div class="order-info-row">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12 mb-lg-0 mb-3">
                             <h4 class="mb-3 title">{{ __('Order Information') }}</h4>
                             <div class="left">
                                 @foreach ($order->products as $product)
@@ -172,7 +172,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12">
                             <h4 class="mb-3 title">{{ __('Order Summary') }}</h4>
                             <div class="right d-flex flex-column justify-content-center">
                                 <div class="d-flex justify-content-between">
@@ -203,7 +203,7 @@
                     <div class="row">
                         <div class="col">
                             <h4 class="mb-3 title">{{ __('Payment Information') }}</h4>
-                            <div class="wrap">
+                            <div class="wrap overflow-auto">
                                 <table class="table table-striped table-responsive">
                                     <thead>
                                         <tr>

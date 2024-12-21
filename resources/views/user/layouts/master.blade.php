@@ -26,11 +26,9 @@
         integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!------ Custom-CSS ------->
-    <link rel="stylesheet" href="{{ asset('user/asset/css/header.css') }}">
-    <link rel="stylesheet" href="{{ asset('user/asset/css/footer.css') }}">
-    <link rel="stylesheet" href="{{ asset('user/asset/css/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ asset('user/asset/css/style.css') }}">
     @stack('css_link')
+    <link rel="stylesheet" href="{{ asset('user/asset/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('user/asset/css/responsive.css') }}">
     @stack('css')
 
 
@@ -39,6 +37,7 @@
         const mark_as_read = `{{ route('u.notification.read_all') }}`;
         const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
         const user_id = `{{ user() ? user()->id : false }}`;
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
 </head>
 
