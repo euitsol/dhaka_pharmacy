@@ -48,8 +48,8 @@
             <div class="review_wrap" id="review_wrap">
                 @forelse ($products as $product)
                     <div class="order-row">
-                        <div class="row align-items-center py-4">
-                            <div class="col-1">
+                        <div class="row align-items-center py-4 px-xl-3 px-xxl-0 px-3">
+                            <div class="col-lg-1 col-md-2 col-sm-2 col-3">
                                 <div class="img w-100 text-center">
                                     <div id="lightbox" class="lightbox tips_image">
                                         <div class="lightbox-content">
@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-lg col-md-5 col-sm-10 col-9">
                                 <div class="product-info">
                                     <h5 class="mb-0" title="{{ $product->attr_title }}">
                                         {{ $product->name }}</h5>
@@ -67,7 +67,7 @@
                                     <p class="mb-0">{{ $product->pro_cat->name }}</p>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-lg col-md-5 col-12">
                                 <div class="product-info">
                                     <p class="mb-0">
                                         <strong>{{ __('Generic Name: ') }}</strong>{{ $product->generic->name }}
@@ -77,16 +77,16 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="product-info text-center">
-                                    <p class="mb-0">
+                            <div class="col-lg-2 col-md-5 ms-auto col-xl col-sm-6 col-12">
+                                <div class="product-info">
+                                    <p class="mb-0 text-md-start text-lg-center">
                                         <strong>{{ __('Strength: ') }}</strong>{{ $product->strength->quantity . '-' . Str::upper($product->strength->unit) }}
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <div class="product-info text-center">
-                                    <p class="mb-0">
+                            <div class="col-lg-2 col-md-5 col-xl col-sm-6 ms-auto ms-md-0 col-12">
+                                <div class="product-info">
+                                    <p class="mb-0 text-md-start text-lg-center">
                                         <strong>{{ __('Price: ') }}</strong>
                                         <span>{{ number_format($product->discounted_price, 2) }}{{ __('tk') }}</span><sup
                                             class="text-danger"><del>{{ $product->discounted_price != $product->price ? number_format($product->price, 2) . 'tk' : '' }}</del></sup>

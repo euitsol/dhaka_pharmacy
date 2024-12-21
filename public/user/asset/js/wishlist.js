@@ -4,16 +4,16 @@ function getHtml(wishes) {
         result += `
         <div class="order-row wish_item">
                         <div class="row px-4">
-                            <div class="col-8">
+                            <div class="col-lg-8 col-md-6 col-12">
                                 <div class="row py-3">
-                                    <div class="col-2">
+                                    <div class="col-xl-2 col-lg-3 col-4">
                                         <div class="img">
                                             <img class="w-100" src="${
                                                 wish.product.image
                                             }" alt="">
                                         </div>
                                     </div>
-                                    <div class="col-10">
+                                    <div class="col-xl-10 col-lg-9 col-8">
                                         <div class="product-info">
                                             <h2 class="name" title="${
                                                 wish.product.attr_title
@@ -32,8 +32,8 @@ function getHtml(wishes) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 d-flex justify-content-end align-items-center py-3 px-4">
-                                <div class="order-status p-0">
+                            <div class="col-lg-4 col-md-6 col-12 d-flex justify-content-md-end align-items-center py-3 px-4">
+                                <div class="order-status p-0 d-md-block d-flex flex-column flex-sm-row-reverse flex-md-row">
                                     <div class="total mb-2">
                                         <p class="total text-center ms-3">Total:
                                             <span>${numberFormat(
@@ -117,7 +117,7 @@ $(document).ready(function () {
                 var result = "";
                 var wishes = data.wishes.data;
                 if (wishes.length === 0) {
-                    result = `<h3 class="my-5 text-danger text-center wish_empty_alert">{{ __('Wished Item Not Found') }}</h3>`;
+                    result = `<h3 class="my-5 text-danger text-center wish_empty_alert">Wished Item Not Found</h3>`;
                 } else {
                     result = getHtml(wishes);
                 }
