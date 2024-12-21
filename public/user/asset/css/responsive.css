@@ -86,6 +86,26 @@
         line-height: 18px;
         font-size: 15px;
     }
+    /* Order Details  */
+    .order-info-section .order-traking-row .step-1::before {
+        display: none;
+    }
+    .order-info-section .order-traking-row .step-5::after {
+        display: none;
+    }
+    .order-info-section .order-traking-row .icon {
+        margin: 0;
+    }
+    .order-info-section .order-traking-row .step {
+        min-height: 60px;
+    }
+    .order-info-section .order-traking-row .step.active::after {
+        width: 5px;
+        top: 25px;
+        height: 30px;
+        display: block;
+        left: 8px;
+    }
 
 }
 
@@ -167,6 +187,28 @@
         line-height: 25px;
         font-size: 20px;
     }
+
+    /* Order Details  */
+    .order-info-section .order-traking-row .step-1::before {
+        display: none !important;
+    }
+    .order-info-section .order-traking-row .step-5::after {
+        display: none !important;
+    }
+    .order-info-section .order-traking-row .icon {
+        margin: 0;
+    }
+    .order-info-section .order-traking-row .step.active::after {
+        width: 5px;
+        top: 25px;
+        height: 30px;
+        display: block;
+        left: 8px;
+    }
+    .order-info-section .order-traking-row .step {
+        min-height: 60px;
+    }
+
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
     .dashboard-main-section .col-left .single-box .title h2 {
@@ -223,6 +265,20 @@
     /* Header CSS  */
     .header-section .nav-menu{
         display: none;
+    }
+
+    /* Order Details  */
+    .order-info-section .order-traking-row .step-1::before {
+        right: 64%;
+    }
+
+    .order-info-section .order-traking-row .step.active::after {
+        width: 72%;
+        left: 64%;
+    }
+    .order-info-section .order-traking-row .step-5.active::after {
+        left: 64% ;
+        width: 40%;
     }
 }
 @media screen and (min-width: 992px) and (max-width: 1023px) {

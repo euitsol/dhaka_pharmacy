@@ -33,68 +33,78 @@
 
                 <!-- Order Tracking row start-->
                 <div class="order-traking-row">
-                    <div class="progress-box d-flex justify-content-between">
-                        <div class="step step-1 text-center">
-                            <div
-                                class="icon {{ $order->status >= 1 ? 'confirm' : '' }} {{ $order->status > 1 ? 'active' : '' }} text-center mb-2">
+                    <div class="progress-box d-md-flex justify-content-between">
+                        <div
+                            class="step d-flex d-md-block gap-4 gap-md-0 step-1 text-md-center {{ $order->status > 1 ? 'active' : '' }}">
+                            <div class="icon {{ $order->status >= 1 ? 'confirm' : '' }} text-md-center mb-2">
                                 @if ($order->status >= 1)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <h5>{{ __('Order Submitted') }}</h5>
-                            @if ($order->status >= 1)
-                                <p class="m-0">{{ orderTimeFormat($order->created_at) }}</p>
-                            @endif
+                            <div class="content-wrap">
+                                <h5>{{ __('Order Submitted') }}</h5>
+                                @if ($order->status >= 1)
+                                    <p class="m-0">{{ orderTimeFormat($order->created_at) }}</p>
+                                @endif
+                            </div>
                         </div>
-                        <div class="step step-2 text-center">
-                            <div
-                                class="icon {{ $order->status >= 2 ? 'confirm' : '' }} {{ $order->status > 3 ? 'active' : '' }} text-center mb-2">
+                        <div
+                            class="step d-flex d-md-block gap-4 gap-md-0 step-2 text-md-center {{ $order->status > 3 ? 'active' : '' }}">
+                            <div class="icon {{ $order->status >= 2 ? 'confirm' : '' }} text-md-center mb-2">
                                 @if ($order->status >= 2)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <h5>{{ __('Order Proccesing') }}</h5>
-                            @if ($order->status >= 2)
-                                <p class="m-0">{{ orderTimeFormat($order->od->created_at) }}</p>
-                            @endif
+                            <div class="content-wrap">
+                                <h5>{{ __('Order Proccesing') }}</h5>
+                                @if ($order->status >= 2)
+                                    <p class="m-0">{{ orderTimeFormat($order->od->created_at) }}</p>
+                                @endif
+                            </div>
                         </div>
-                        <div class="step step-3 text-center">
-                            <div
-                                class="icon {{ $order->status >= 4 ? 'confirm' : '' }} {{ $order->status > 4 ? 'active' : '' }} text-center mb-2">
+                        <div
+                            class="step d-flex d-md-block gap-4 gap-md-0 step-3 text-md-center {{ $order->status > 4 ? 'active' : '' }}">
+                            <div class="icon {{ $order->status >= 4 ? 'confirm' : '' }}  text-md-center mb-2">
                                 @if ($order->status >= 4)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <h5>{{ __('Order Shipped') }}</h5>
-                            @if ($order->status >= 4)
-                                <p class="m-0">
-                                    {{ orderTimeFormat($order->od->odrs->where('status', '!=', -1)->first()->created_at) }}
-                                </p>
-                            @endif
+                            <div class="content-wrap">
+                                <h5>{{ __('Order Shipped') }}</h5>
+                                @if ($order->status >= 4)
+                                    <p class="m-0">
+                                        {{ orderTimeFormat($order->od->odrs->where('status', '!=', -1)->first()->created_at) }}
+                                    </p>
+                                @endif
+                            </div>
                         </div>
-                        <div class="step step-4 text-center">
-                            <div
-                                class="icon {{ $order->status >= 5 ? 'confirm' : '' }} {{ $order->status > 5 ? 'active' : '' }} text-center mb-2">
+                        <div
+                            class="step d-flex d-md-block gap-4 gap-md-0 step-4 text-md-center {{ $order->status > 5 ? 'active' : '' }}">
+                            <div class="icon {{ $order->status >= 5 ? 'confirm' : '' }}  text-md-center mb-2">
                                 @if ($order->status >= 5)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <h5>{{ __('Out For Delivery') }}</h5>
-                            @if ($order->status >= 5)
-                                <p class="m-0">{{ orderTimeFormat($order->od->rider_collected_at) }}</p>
-                            @endif
+                            <div class="content-wrap">
+                                <h5>{{ __('Out For Delivery') }}</h5>
+                                @if ($order->status >= 5)
+                                    <p class="m-0">{{ orderTimeFormat($order->od->rider_collected_at) }}</p>
+                                @endif
+                            </div>
                         </div>
-                        <div class="step step-5 text-center">
-                            <div
-                                class="icon {{ $order->status >= 6 ? 'confirm' : '' }} {{ $order->status >= 6 ? 'active' : '' }} text-center mb-2">
+                        <div
+                            class="step d-flex d-md-block gap-4 gap-md-0 step-5 text-md-center {{ $order->status >= 6 ? 'active' : '' }}">
+                            <div class="icon {{ $order->status >= 6 ? 'confirm' : '' }} text-md-center mb-2">
                                 @if ($order->status >= 6)
                                     <img src="{{ asset('user/asset/img/check.png') }}" alt="">
                                 @endif
                             </div>
-                            <h5>{{ __('Delivered') }}</h5>
-                            @if ($order->status >= 6)
-                                <p class="m-0">{{ orderTimeFormat($order->od->rider_delivered_at) }}</p>
-                            @endif
+                            <div class="content-wrap">
+                                <h5>{{ __('Delivered') }}</h5>
+                                @if ($order->status >= 6)
+                                    <p class="m-0">{{ orderTimeFormat($order->od->rider_delivered_at) }}</p>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -140,18 +150,18 @@
                             <div class="left">
                                 @foreach ($order->products as $product)
                                     <div class="row align-items-center py-2">
-                                        <div class="col-2">
+                                        <div class="col-sm-3 col-4">
                                             <div class="img">
                                                 <img src="{{ $product->image }}" alt="">
                                             </div>
                                         </div>
-                                        <div class="col-7 ps-4">
+                                        <div class="col-sm-6 col-8">
                                             <h5 class="mb-1" title="{{ $product->attr_title }}">{{ $product->name }}
                                             </h5>
                                             <p class="mb-0">{{ $product->generic->name }}</p>
                                             <p class="mb-0">{{ $product->company->name }}</p>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-3 col-8 ms-auto d-flex d-sm-block gap-sm-0 gap-3">
                                             <p class="qt mb-1">
                                                 {{ __('Qty: ') }}<span>{{ $product->pivot->quantity }}</span></p>
                                             <p class="qt mb-0">
