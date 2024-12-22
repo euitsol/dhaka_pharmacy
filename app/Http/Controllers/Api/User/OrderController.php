@@ -158,7 +158,7 @@ class OrderController extends BaseController
         $order = Order::where('creater_type', get_class($user))
             ->where('creater_id', $user->id)
             ->where('id', $request->order_id)->first();
-        if ($order && $order->status < 2) {
+        if ($order && $order->status < 2 && $order->status != -1) {
             $order->update(['status' => -1]);
             return sendResponse(true, 'Order canceled successfully');
         } else {

@@ -73,7 +73,7 @@ class OrderController extends Controller
     public function cancel($id): RedirectResponse
     {
         $order = Order::findOrFail(decrypt($id));
-        if ($order->status < 2) {
+        if ($order->status < 2 && $order->status != -1) {
             $order->update(['status' => -1]);
         } else {
             flash()->addWarning('You can not cancel order which is in progress. Please contact with our customer care team.');

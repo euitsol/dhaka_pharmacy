@@ -50,6 +50,7 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::post('initiat', 'int_order')->name('i');
         Route::post('initiat/single', 'int_single_order')->name('s.i');
         Route::get('details', 'details')->name('d');
+        Route::get('cancel', 'cancel')->name('cancel');
         Route::post('confirm', 'order_confirm')->name('c');
 
         Route::get('list', 'list')->name('l');
