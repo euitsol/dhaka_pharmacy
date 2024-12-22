@@ -1032,7 +1032,7 @@ margin: 0;
 .my-order-section .order-row .qty span{
     color: #000;
 }
-.my-order-section .order-row .order-status .btn a {
+.my-order-section .order-row .order-status .btn a, .order-info-section .order-status a{
     width: 130px;
     border: 2px solid #000;
     border-radius: 10px;
@@ -1044,10 +1044,10 @@ margin: 0;
     display: inline-block;
     transition: 0.4s;
 }
-.my-order-section .order-row .order-status .btn a.cancle {
+.my-order-section .order-row .order-status .btn a.cancle, .order-info-section .order-status a.cancle {
     border: 2px solid red;
 }
-.my-order-section .order-row .order-status .btn a:hover{
+.my-order-section .order-row .order-status .btn a:hover, .order-info-section .order-status a:hover{
     background: var(--primary);
     border-color: var(--primary);;
 }

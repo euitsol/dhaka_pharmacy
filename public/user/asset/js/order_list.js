@@ -45,15 +45,25 @@ function getHtml(orders) {
                                             <div class="col-xl-2 col-md-4 text-md-end text-start pb-3">
 
                                             <div class="order-status">
-                                                <div class="btn p-0">
+                                                <div class="btn p-0 d-flex gap-1">
                                                     <a
                                                         href="${myDatas[
                                                             "details_route"
                                                         ].replace(
                                                             "order_id",
                                                             order.encrypt_oid
-                                                        )}">Details</a>
-                                                </div>
+                                                        )}">Details</a>`;
+        if (order.status < 2 && order.status != -1) {
+            result += `<a class="cancle text-danger"
+                                            href="${myDatas[
+                                                "cancel_route"
+                                            ].replace(
+                                                "order_id",
+                                                order.encrypt_oid
+                                            )}">Cancel</a>`;
+        }
+
+        result += `</div>
                                             </div>
 
                                             </div>

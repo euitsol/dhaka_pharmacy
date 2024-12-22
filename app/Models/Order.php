@@ -64,7 +64,7 @@ class Order extends BaseModel
         // $status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
 
         switch ($status) {
-            case 'cancel':
+            case 'canceled':
                 $status = -1;
                 break;
             case 'initiated':
@@ -128,7 +128,7 @@ class Order extends BaseModel
     {
         switch ($this->status) {
             case -1:
-                return 'Cancled';
+                return 'Canceled';
             case 0:
                 return 'Initiated';
             case 1:

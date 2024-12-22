@@ -121,6 +121,7 @@
             'filter': `{{ $filterValue }}`,
             'url': `{{ route('u.order.list', ['status' => '_status', 'filter' => 'filter_value', 'page' => '1']) }}`,
             'details_route': `{{ route('u.order.details', ['order_id']) }}`,
+            'cancel_route': `{{ route('u.order.cancel', ['order_id']) }}`,
         };
     </script>
     <script src="{{ asset('user/asset/js/order_list.js') }}"></script>

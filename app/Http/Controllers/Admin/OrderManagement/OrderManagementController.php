@@ -106,6 +106,14 @@ class OrderManagementController extends Controller
                         $this->calculateOrderTotalDiscountPrice($do->order);
                     });
                 return view('admin.order_management.distributed_order.index', $data);
+            case 'canceled':
+                $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od',)->status($status)->latest()->get()
+                    ->each(
+                        function (&$order) {
+                            $this->calculateOrderTotalDiscountPrice($order);
+                        }
+                    );
+                return view('admin.order_management.index', $data);
             default:
                 flash()->addError('Something went wrong');
                 return redirect()->back();
@@ -335,7 +343,7 @@ class OrderManagementController extends Controller
                 return 'badge badge-success';
             case 'waiting-for-rider':
                 return 'badge badge-warning';
-            case -1:
+            case 'canceled':
                 return 'badge badge-danger';
             case -2:
                 return 'badge badge-warning';
