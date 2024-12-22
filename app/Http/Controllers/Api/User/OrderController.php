@@ -162,8 +162,9 @@ class OrderController extends BaseController
             $order->update(['status' => -1]);
             return sendResponse(true, 'Order canceled successfully');
         } else {
-            return sendResponse(false, 'You can not cancel order which is in progress. Please contact with our customer care team.');
+            return sendResponse(true, 'You can not cancel order which is in progress. Please contact with our customer care team.');
         }
+        return sendResponse(false, 'Something went wrong, please try again');
     }
 
     private function buildOrderQuery($user, $status)
