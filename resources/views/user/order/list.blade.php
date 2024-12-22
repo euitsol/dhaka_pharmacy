@@ -59,9 +59,13 @@
                                 </div>
                                 <div class="col-xl-2 col-md-4 text-md-end text-start pb-3">
                                     <div class="order-status">
-                                        <div class="btn p-0">
+                                        <div class="btn p-0 d-flex gap-1">
                                             <a
                                                 href="{{ route('u.order.details', $order->encrypt_oid) }}">{{ __('Details') }}</a>
+                                            @if ($order->status < 2 && $order->status != -1)
+                                                <a class="cancle text-danger"
+                                                    href="{{ route('u.order.cancel', $order->encrypt_oid) }}">{{ __('Cancel') }}</a>
+                                            @endif
                                         </div>
 
                                     </div>

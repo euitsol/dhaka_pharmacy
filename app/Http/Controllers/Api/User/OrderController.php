@@ -151,6 +151,21 @@ class OrderController extends BaseController
         $this->prepareOrderData($orders);
         return sendResponse(true, 'Order list retrived successfully', ['orders' => $orders]);
     }
+
+    public function cancel(Request $request): JsonResponse
+    {
+        $user = $request->user();
+        $order = Order::where('creater_type', get_class($user))
+            ->where('creater_id', $user->id)
+            ->where('id', $request->order_id)->first();
+        if ($order && $order->status < 2 && $order->status != -1) {
+            $order->update(['status' => -1]);
+            return sendResponse(true, 'Order canceled successfully');
+        } else {
+            return sendResponse(false, 'You can not cancel order which is in progress. Please contact with our customer care team.');
+        }
+    }
+
     private function buildOrderQuery($user, $status)
     {
         $query = Order::where([

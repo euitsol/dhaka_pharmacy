@@ -1044,6 +1044,9 @@ margin: 0;
     display: inline-block;
     transition: 0.4s;
 }
+.my-order-section .order-row .order-status .btn a.cancle {
+    border: 2px solid red;
+}
 .my-order-section .order-row .order-status .btn a:hover{
     background: var(--primary);
     border-color: var(--primary);;
