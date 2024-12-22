@@ -8,8 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Traits\TransformOrderItemTrait;
 use App\Http\Traits\TransformProductTrait;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\URL;
 
 class OrderController extends Controller
 {
@@ -64,12 +64,22 @@ class OrderController extends Controller
             $this->transformProduct($product, 60);
         });
         if (isset($order->od) && $order->od->status == 4) {
-            $order->otp = $order->od->delivery_active_otps->first()->otp;
+            $order->otp = $order->od->delivery_active_otps->first()?->otp;
         }
         $data['order'] = $order;
         return view('user.order.details', $data);
     }
 
+    public function cancel($id): RedirectResponse
+    {
+        $order = Order::findOrFail(decrypt($id));
+        if ($order->status < 2) {
+            $order->update(['status' => -1]);
+        } else {
+            flash()->addWarning('You can not cancel order which is in progress. Please contact with our customer care team.');
+        }
+        return redirect()->back();
+    }
 
 
     private function buildOrderQuery($status)
@@ -104,7 +114,7 @@ class OrderController extends Controller
                 $this->transformProduct($product, 30);
             });
             if (isset($order->od) && $order->od->status == 4) {
-                $order->otp = $order->od->delivery_active_otps->first()->otp;
+                $order->otp = $order->od->delivery_active_otps->first()?->otp;
             }
         });
     }

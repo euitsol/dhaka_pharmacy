@@ -64,6 +64,9 @@ class Order extends BaseModel
         // $status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
 
         switch ($status) {
+            case 'cancel':
+                $status = -1;
+                break;
             case 'initiated':
                 $status = 0;
                 break;
@@ -100,6 +103,8 @@ class Order extends BaseModel
     public function statusBg()
     {
         switch ($this->status) {
+            case -1:
+                return 'badge bg-danger';
             case 0:
                 return 'badge bg-secondary';
             case 1:
@@ -122,6 +127,8 @@ class Order extends BaseModel
     public function statusTitle()
     {
         switch ($this->status) {
+            case -1:
+                return 'Cancled';
             case 0:
                 return 'Initiated';
             case 1:
