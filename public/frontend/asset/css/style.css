@@ -1913,8 +1913,185 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 
 /*====================================
-    Order Status Page CSS Start
+    Chat Bubble CSS
 ======================================*/
+/*
+#chat_bubble {
+    height: 60px;
+    width: 60px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #5AC15B, #92D46B);
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#chat_bubble:hover {
+    background: linear-gradient(145deg, #4BAE4F, #83C860);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.12);
+    transform: scale(1.1);
+} */
+
+/* #chat_bubble {
+    height: 60px;
+    width: 60px;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 9999;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #5AC15B, #92D46B);
+    color: #fff;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(102, 201, 76, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#chat_bubble:hover {
+    background: linear-gradient(145deg, #4BAE4F, #83C860);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4), 0 6px 12px rgba(102, 201, 76, 0.8), 0 0 10px rgba(102, 201, 76, 0.6);
+    transform: scale(1.15);
+} */
+.support_wrap{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.support_wrap #chat {
+    /* display: flex;
+    position: relative; */
 
 
+  }
+.support_wrap #chat .background {
+    background-color: #2D98DA;
+    border-radius: 50%;
+    box-shadow: 0 2.1px 1.3px rgba(0, 0, 0, 0.044),
+      0 5.9px 4.2px rgba(0, 0, 0, 0.054), 0 12.6px 9.5px rgba(0, 0, 0, 0.061),
+      0 25px 20px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+  .support_wrap #chat .chat-bubble {
+    cursor: pointer;
+    position: relative;
+  }
+  .support_wrap #chat .bubble {
+    transform-origin: 50%;
+    transition: transform 500ms cubic-bezier(0.17, 0.61, 0.54, 0.9);
+  }
+  .support_wrap #chat .line {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2.75;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .support_wrap #chat .line1 {
+    stroke-dasharray: 60 90;
+    stroke-dashoffset: -20;
+  }
+  .support_wrap #chat .line2 {
+    stroke-dasharray: 67 87;
+    stroke-dashoffset: -18;
+  }
+  .support_wrap #chat .circle {
+    fill: #ffffff;
+    stroke: none;
+    transform-origin: 50%;
+    transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .support_wrap #chat.active .bubble {
+    transform: translateX(24px) translateY(4px) rotate(45deg);
+  }
+  .support_wrap #chat.active .line1 {
+    stroke-dashoffset: 21;
+  }
+  .support_wrap #chat.active .line2 {
+    stroke-dashoffset: 30;
+  }
+  .support_wrap #chat.active .circle {
+    transform: scale(0);
+  }
+
+
+
+/* CSS talk bubble */
+.default-talk-bubble {
+    display: inline-block;
+    position: absolute;
+    width: 320px;
+    height: auto;
+    background-color: #fff;
+    bottom: 99px;
+    right: 41px;
+}
+.default-talk-bubble.border{
+  border: 5px solid #2D98DA !important;
+}
+
+
+
+/* Right triangle, placed bottom right side slightly in */
+.default-talk-bubble.tri-right.border.btm-right-in:before {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: auto;
+	right: 30px;
+	bottom: -40px;
+	border: 20px solid;
+	border-color: #2D98DA #2D98DA transparent transparent;
+}
+.default-talk-bubble.tri-right.btm-right-in:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: 36px;
+    bottom: -26px;
+    border: 14px solid;
+    border-color: #fff #fff transparent transparent;
+}
+
+/* talk bubble contents */
+.default-talk-bubble .talktext{
+  padding: 1em;
+	text-align: left;
+  line-height: 1.5em;
+}
+.default-talk-bubble .talktext p{
+  /* remove webkit p margins */
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  color:#00204B;
+}
 

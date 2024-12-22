@@ -61,45 +61,47 @@
     </script>
 </head>
 
-<header>
-    @include('frontend.includes.header')
-</header>
+<body>
+    @include('frontend.includes.chat_bubble.support')
+    <header>
+        @include('frontend.includes.header')
+    </header>
+    <main>
+        <div class="container-fluid">
+            @yield('content')
+        </div>
+    </main>
+    <footer>
+        @include('frontend.includes.footer')
+    </footer>
 
-<main>
-    <div class="container-fluid">
-        @yield('content')
-    </div>
-</main>
+    <!--========= jquery-cdn ===========-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!--======== toastr script ========-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-@include('frontend.includes.footer')
-
-<!--========= jquery-cdn ===========-->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<!--======== toastr script ========-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!--======== bootstrap script ========-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-</script>
-<!--========= uikit-js ===========-->
-<script src="{{ asset('frontend/vendor/uikit/js/uikit.min.js') }}"></script>
-@stack('js_link')
-<!--========== custom-js ===========-->
-<script src="{{ asset('frontend/asset/js/custom.js') }}"></script>
-@include('frontend.includes.add_to_cart_js')
-@include('frontend.includes.search_js')
-@include('frontend.includes.wishlist_js')
-<script>
-    $(document).ready(function() {
-        refreshCart();
-    });
-</script>
-{{-- @livewireScripts <!-- Include Livewire scripts here --> --}}
-@stack('js')
+    <!--======== bootstrap script ========-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+    <!--========= uikit-js ===========-->
+    <script src="{{ asset('frontend/vendor/uikit/js/uikit.min.js') }}"></script>
+    @stack('js_link')
+    <!--========== custom-js ===========-->
+    <script src="{{ asset('frontend/asset/js/custom.js') }}"></script>
+    @include('frontend.includes.add_to_cart_js')
+    @include('frontend.includes.search_js')
+    @include('frontend.includes.wishlist_js')
+    <script>
+        $(document).ready(function() {
+            refreshCart();
+        });
+    </script>
+    {{-- @livewireScripts <!-- Include Livewire scripts here --> --}}
+    @stack('js')
 </body>
 
 </html>
