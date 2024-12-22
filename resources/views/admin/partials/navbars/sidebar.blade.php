@@ -82,7 +82,7 @@
                                         'routeName' => 'um.user.user_list',
                                         'label' => 'users',
                                     ],
-                            
+
                                     [
                                         'pageSlug' => ['us_kyc_list', 'u_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -131,7 +131,7 @@
                                         'routeName' => 'pm.pharmacy.pharmacy_list',
                                         'label' => 'Pharmacies',
                                     ],
-                            
+
                                     [
                                         'pageSlug' => ['ps_kyc_list', 'p_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -277,7 +277,7 @@
                                         'routeName' => 'rm.rider.rider_list',
                                         'label' => 'Riders',
                                     ],
-                            
+
                                     [
                                         'pageSlug' => ['rs_kyc_list', 'r_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -544,7 +544,8 @@
                             $pageSlug == 'order_Processed' ||
                             $pageSlug == 'order_Waiting-for-rider' ||
                             $pageSlug == 'order_Delivered' ||
-                            $pageSlug == 'order_Assigned') @else collapsed @endif" data-toggle="collapse"
+                            $pageSlug == 'order_Assigned' ||
+                            $pageSlug == 'order_Canceled') @else collapsed @endif" data-toggle="collapse"
                         href="#order_management"
                         @if (
                             $pageSlug == 'order_Initiated' ||
@@ -552,7 +553,8 @@
                                 $pageSlug == 'order_Processed' ||
                                 $pageSlug == 'order_Waiting-for-rider' ||
                                 $pageSlug == 'order_Delivered' ||
-                                $pageSlug == 'order_Assigned') aria-expanded="true" @else aria-expanded="false" @endif>
+                                $pageSlug == 'order_Assigned' ||
+                                $pageSlug == 'order_Canceled') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-truck-fast"></i>
                         <span class="nav-link-text">{{ __('Order Management') }}</span>
                         <b class="caret mt-1"></b>
@@ -564,7 +566,8 @@
                             $pageSlug == 'order_Processed' ||
                             $pageSlug == 'order_Waiting-for-rider' ||
                             $pageSlug == 'order_Delivered' ||
-                            $pageSlug == 'order_Assigned') show @endif" id="order_management">
+                            $pageSlug == 'order_Assigned' ||
+                            $pageSlug == 'order_Canceled') show @endif" id="order_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -610,18 +613,18 @@
                                         'params' => 'delivered',
                                         'label' => 'Delivered Orders',
                                     ],
+                                    // [
+                                    //     'pageSlug' => 'order_Failed',
+                                    //     'routeName' => 'om.order.order_list',
+                                    //     'iconClass' => 'fa-solid fa-minus',
+                                    //     'params' => 'failed',
+                                    //     'label' => 'Failed Orders',
+                                    // ],
                                     [
-                                        'pageSlug' => 'order_Failed',
+                                        'pageSlug' => 'order_Canceled',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'failed',
-                                        'label' => 'Failed Orders',
-                                    ],
-                                    [
-                                        'pageSlug' => 'order_Cancel',
-                                        'routeName' => 'om.order.order_list',
-                                        'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'cancel',
+                                        'params' => 'canceled',
                                         'label' => 'Cancelled Orders',
                                     ],
                                 ],

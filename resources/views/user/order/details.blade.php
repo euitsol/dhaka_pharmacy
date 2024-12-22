@@ -5,36 +5,43 @@
         <div class="container">
             <div class="order-info-cont">
                 <!-- Order-status-row-start -->
-                <div class="row flex-column-reverse flex-md-row">
+                <div class="row  align-items-center">
                     <div class="col-md-8 col-12">
-                        <div class="order-status-row d-flex align-items-center py-4">
-                            <div class="img me-sm-3 me-2">
-                                <img src="{{ asset('user/asset/img/order-status.png') }}" alt="">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="order-status-row d-flex align-items-center py-4">
+                                <div class="img me-sm-3 me-2">
+                                    <img src="{{ asset('user/asset/img/order-status.png') }}" alt="">
+                                </div>
+                                <h2 class="mb-0 me-sm-4">{{ __('Order ID: ') }}<span>{{ $order->order_id }}</span></h2>
+                                <p class="mb-0 fw-bold">{{ slugToTitle($order->statusTitle) }}</p>
                             </div>
-                            <h2 class="mb-0 me-sm-4">{{ __('Order ID: ') }}<span>{{ $order->order_id }}</span></h2>
-                            <p class="mb-0 fw-bold">{{ slugToTitle($order->statusTitle) }}</p>
                         </div>
-                        @if ($order->status != -1)
-                            <div class="d-flex align-items-center mb-4 gap-4">
-                                <h2 class="title">{{ __('Order Tracking') }}</h2>
-
-                            </div>
                     </div>
-                    @if ($order->otp)
-                        <div class="col-md-4 col-12 fs-1 pb-4">
-                            <div class="order-status-row py-5 otp d-flex justify-content-center align-items-center">
-                                <p class="mb-0 fw-bold">{{ __('OTP: ') }}{{ $order->otp }}</p>
-                            </div>
-                        </div>
-                    @endif
-                    @endif
 
-
+                    <div class="col-md-4 col-12 fs-1 pb-4">
+                        @if ($order->status != -1)
+                            @if ($order->otp)
+                                <div class="order-status-row py-5 otp d-flex justify-content-center align-items-center">
+                                    <p class="mb-0 fw-bold">{{ __('OTP: ') }}{{ $order->otp }}</p>
+                                </div>
+                            @elseif($order->status < 2)
+                                <div class="order-status m-0 text-end">
+                                    <a class="cancle text-center text-danger"
+                                        href="{{ route('u.order.cancel', encrypt($order->id)) }}">{{ __('Cancel') }}</a>
+                                </div>
+                            @endif
+                        @endif
+                    </div>
                 </div>
+
                 <!-- Order-status-row-end -->
 
                 <!-- Order Tracking row start-->
                 @if ($order->status != -1)
+                    <div class="d-flex align-items-center mb-4 gap-4">
+                        <h2 class="title">{{ __('Order Tracking') }}</h2>
+
+                    </div>
                     <div class="order-traking-row">
 
                         <div class="progress-box d-md-flex justify-content-between">
