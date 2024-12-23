@@ -90,7 +90,7 @@ class OrderController extends Controller
         ])->latest();
 
         if ($status == 'current-orders') {
-            $query->whereBetween('status', [1, 5]);
+            $query->whereBetween('status', [0, 5]);
         } elseif ($status == 'previous-orders') {
             $query->where('status', 6);
         } elseif ($status == 'cancel-orders') {
