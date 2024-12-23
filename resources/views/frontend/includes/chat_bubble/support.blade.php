@@ -7,7 +7,7 @@
 
 </div> --}}
 <div class="support_wrap">
-    <div class="chat" id="chat" onclick="this.classList.toggle('active')">
+    <div class="chat" id="chat">
         <div class="background"></div>
         <svg class="chat-bubble" width="100" height="100" viewBox="0 0 100 100">
             <g class="bubble">
@@ -28,6 +28,46 @@
         <div class="talktext">
             <p>👋 Need any help?
                 We're here to assist you! Click the chat bubble to start a conversation</p>
+        </div>
+    </div>
+
+    <div class="message_box">
+        <div class="head-text">
+            Let's chat? - Online
+        </div>
+        <div class="chat-box">
+            <div class="message w-100 h-100">
+                @if (!auth()->guard('web')->check())
+                    <div
+                        class="chat_initial_form w-100 h-100 d-flex align-items-center justify-content-center flex-column">
+                        <div class="desc-text w-100">
+                            Please fill out the form below to start chatting with the next available agent.
+                        </div>
+                        <form class="w-100" action="#">
+                            <div class="field">
+                                <input type="text" placeholder="Your Name" required>
+                            </div>
+                            <div class="field">
+                                <input type="email" placeholder="Your Phone" required>
+                            </div>
+                            <div class="field">
+                                <button type="submit">Start Chat</button>
+                            </div>
+                        </form>
+                    </div>
+                @else
+                    <div class="conversation"></div>
+                    <div class="send_box">
+                        <form action="" class="pt-2 h-100">
+                            <div class="input-group h-100">
+                                <textarea class="form-control message-input" rows="1" placeholder="Enter your message"></textarea>
+                                <input type="submit" value="Send" class="btn send_btn">
+                            </div>
+                        </form>
+                    </div>
+                @endif
+
+            </div>
         </div>
     </div>
 </div>

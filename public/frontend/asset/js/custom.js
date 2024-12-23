@@ -107,3 +107,31 @@ function formatPercentageNumber(number) {
         : formattedNumber;
     return formattedNumber;
 }
+
+// support JS
+
+document.addEventListener("DOMContentLoaded", () => {
+    const talkBubble = document.querySelector(".default-talk-bubble");
+    const lastShownTime = localStorage.getItem("talkBubbleLastShown");
+    const currentTime = new Date().getTime();
+
+    // if (!lastShownTime || currentTime - lastShownTime > 3600000) {
+    setTimeout(() => {
+        talkBubble.classList.add("show");
+        setTimeout(() => {
+            talkBubble.classList.remove("show");
+        }, 10000);
+        localStorage.setItem("talkBubbleLastShown", currentTime);
+    }, 2000);
+
+    // }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    $("#chat").on("click", function () {
+        const talkBubble = $(".default-talk-bubble");
+        talkBubble.remove();
+        $(this).toggleClass("active");
+        $(".message_box").toggleClass("active");
+    });
+});
