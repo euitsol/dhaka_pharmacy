@@ -3,9 +3,13 @@
 @section('content')
     <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
-        @if ($menuItems->isNotEmpty())
-            @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
-        @endif
+        <section class="col-md-3 col-lg-2 d-lg-block d-none">
+            @if ($menuItems->isNotEmpty())
+                @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
+            @endif
+        </section>
+
+        
         <!--=========== Sidebar-Category-Section-Include  ==============-->
 
 
@@ -14,6 +18,15 @@
             <!--========= Slider-Section-Include ========-->
             @include('frontend.includes.home.slider')
             <!--========= Slider-Section-Include ========-->
+            <!--===========  Sidebar-Category-Section-Include ==============-->
+            <div class="d-block d-lg-none">
+                @if ($menuItems->isNotEmpty())
+                    @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
+                @endif
+            </div>
+                    
+            <!--=========== Sidebar-Category-Section-Include  ==============-->
+
 
             <!--========= Product-Section-Start ========-->
             <section class="product-section pb-4 mb-5">
@@ -25,7 +38,7 @@
                                 <div class="all-product">
                                     @foreach ($bsItems as $item)
                                         <div class="col-12 single-item">
-                                            <div class="row align-items-center">
+                                            <div class="row align-items-center row-gap-2">
                                                 <div class="col-4 img">
                                                     <a href="{{ route('product.single_product', $item->slug) }}"></a>
                                                     <img height="90" class="w-100 border border-1 rounded-1"
@@ -57,8 +70,8 @@
                         </div>
                     @endif
                     @if ($featuredCategories->isNotEmpty())
-                        <div class="col-9">
-                            <div class="row cat-filter-row gx-4">
+                        <div class="col-9 feature-product">
+                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center">
                                 <div class="col-3">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>
@@ -69,12 +82,12 @@
                                             <div class="uk-slider-container uk-light">
                                                 <ul
                                                     class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
-                                                    <li class="text-right active" style="text-align: right;">
+                                                    <li class=" active d-flex align-content-center justify-content-center m-auto ">
                                                         <a href="javascript:void(0)" class="featured_category"
                                                             data-slug="all">{{ _('All') }}</a>
                                                     </li>
                                                     @foreach ($featuredCategories as $category)
-                                                        <li><a href="javascript:void(0)" class="featured_category"
+                                                        <li class="d-flex align-content-center justify-content-center m-auto"><a href="javascript:void(0)" class="featured_category"
                                                                 data-slug="{{ $category->slug }}">{{ __($category->name) }}</a>
                                                         </li>
                                                     @endforeach
@@ -88,8 +101,7 @@
                                                     uk-slider-item="next"></a>
                                             </div>
 
-                                            <div class="uk-visible@s
-btn-arrow">
+                                            <div class="uk-visible@s btn-arrow">
                                                 <a class="uk-position-center-left-out uk-position-small" href
                                                     uk-slidenav-previous uk-slider-item="previous"></a>
                                                 <a class="uk-position-center-right-out uk-position-small" href
@@ -99,7 +111,6 @@ btn-arrow">
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row all-products mt-3">
                                 @foreach ($products as $product)
