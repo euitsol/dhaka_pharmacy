@@ -74,7 +74,7 @@
                 {{-- ++++++++++++++++++++++++++/ --}}
 
 
-                <div class="conversation">
+                <div class="conversation d-none">
                     <div class="conversation-list">
                         <div class="conversation-item sent d-flex align-items-start justify-content-start">
                             <div class="author_logo">

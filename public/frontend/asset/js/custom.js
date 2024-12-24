@@ -150,7 +150,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 $this.parent().remove();
-                $(".message_box").addClass("active");
+                $(".conversation").removeClass("d-none");
             },
             error: function (xhr) {
                 // if (xhr.status === 422) {
