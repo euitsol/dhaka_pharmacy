@@ -9,14 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Ticket extends BaseModel
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = ['subject', 'status', 'ticketable_id', 'ticketable_type', 'assigned_admin'];
 
     public function ticketable()
     {
         return $this->morphTo();
     }
 
-    public function assigned_admin()
+    public function messages()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->hasMany(Message::class);
     }
 }

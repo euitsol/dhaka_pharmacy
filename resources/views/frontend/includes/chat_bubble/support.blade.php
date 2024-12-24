@@ -37,143 +37,156 @@
         </div>
         <div class="chat-box">
             <div class="message w-100 h-100">
-                @if (!auth()->guard('web')->check())
-                    <div
-                        class="chat_initial_form w-100 h-100 d-flex align-items-center justify-content-center flex-column">
-                        <div class="desc-text w-100">
-                            Please fill out the form below to start chatting with the next available agent.
-                        </div>
-                        <form class="w-100" action="#">
+                <div class="chat_initial_form w-100 h-100 d-flex align-items-center justify-content-center flex-column">
+                    <div class="desc-text w-100">
+                        Please fill out the form below to start chatting with the next available agent.
+                    </div>
+                    @if (!auth()->guard('web')->check())
+                        <form class="w-100" id="guestChatStartForm">
                             <div class="field">
-                                <input type="text" placeholder="Your Name" required>
+                                <input type="text" class="p-4" placeholder="Your Name" required>
                             </div>
                             <div class="field">
-                                <input type="email" placeholder="Your Phone" required>
+                                <input type="email" class="p-4" placeholder="Your Phone" required>
                             </div>
                             <div class="field">
-                                <button type="submit">Start Chat</button>
+                                <input type="text" class="p-4" placeholder="Your Subject" required>
+                            </div>
+                            <div class="field">
+                                <button type="submit" class="start_btn">Start Chat</button>
                             </div>
                         </form>
-                    </div>
-                @else
-                    <div class="conversation">
-                        <div class="conversation-list">
-                            <div class="conversation-item sent d-flex align-items-start justify-content-start">
-                                <div class="author_logo">
-                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
-                                </div>
-                                <div class="sms_text w-auto">
-                                    <div class="message">
-                                        Hello, how are you?
-                                    </div>
-                                    <div class="time">
-                                        10:30 AM
-                                    </div>
-                                </div>
+                    @else
+                        <form class="w-100" id="authChatStartForm" action="{{ route('u.ticket.create') }}"
+                            method="POST">
+                            @csrf
+                            <div class="field">
+                                <input type="text" name="subject" class="p-4" placeholder="Your Subject" required>
                             </div>
-                            <div class="conversation-item d-flex align-items-start justify-content-end">
-                                <div class="sms_text w-auto">
-                                    <div class="message">
-                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
-                                        thanks! What about you?
-                                    </div>
-                                    <div class="time">
-                                        10:31 AM
-                                    </div>
-                                </div>
-                                <div class="author_logo">
-                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
-                                </div>
+                            <div class="field">
+                                <button type="submit" class="start_btn">Start Chat</button>
                             </div>
-                            <div class="conversation-item d-flex align-items-start justify-content-end">
-                                <div class="sms_text w-auto">
-                                    <div class="message">
-                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
-                                        thanks! What about you?
-                                    </div>
-                                    <div class="time">
-                                        10:31 AM
-                                    </div>
-                                </div>
-                                <div class="author_logo">
-                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
-                                </div>
+                        </form>
+                    @endif
+                </div>
+
+
+                {{-- ++++++++++++++++++++++++++/ --}}
+
+
+                <div class="conversation">
+                    <div class="conversation-list">
+                        <div class="conversation-item sent d-flex align-items-start justify-content-start">
+                            <div class="author_logo">
+                                <img src="{{ asset('default_img/male.png') }}" alt="avatar">
                             </div>
-                            <div class="conversation-item d-flex align-items-start justify-content-end">
-                                <div class="sms_text w-auto">
-                                    <div class="message">
-                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
-                                        thanks! What about you?
-                                    </div>
-                                    <div class="time">
-                                        10:31 AM
-                                    </div>
-                                </div>
-                                <div class="author_logo">
-                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
-                                </div>
-                            </div>
-                            <div class="conversation-item d-flex align-items-start justify-content-end">
-                                <div class="sms_text w-auto">
-                                    <div class="message">
-                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
-                                        thanks! What about you?
-                                    </div>
-                                    <div class="time">
-                                        10:31 AM
-                                    </div>
-                                </div>
-                                <div class="author_logo">
-                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
-                                </div>
-                            </div>
-                            <div class="conversation-item d-flex align-items-start justify-content-end">
-                                <div class="sms_text w-auto">
-                                    <div class="message">
-                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
-                                        thanks! What about you?
-                                    </div>
-                                    <div class="time">
-                                        10:31 AM
-                                    </div>
-                                </div>
-                                <div class="author_logo">
-                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
-                                </div>
-                            </div>
-                            <div class="conversation-item d-flex align-items-start justify-content-end">
-                                <div class="sms_text w-auto">
-                                    <div class="message">
-                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
-                                        thanks! What about you?
-                                    </div>
-                                    <div class="time">
-                                        10:31 AM
-                                    </div>
-                                </div>
-                                <div class="author_logo">
-                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
-                                </div>
-                            </div>
-                            {{-- <div class="conversation-item sent">
+                            <div class="sms_text w-auto">
                                 <div class="message">
-                                    Doing great. Let’s catch up later.
+                                    Hello, how are you?
                                 </div>
                                 <div class="time">
-                                    10:32 AM
+                                    10:30 AM
                                 </div>
-                            </div> --}}
+                            </div>
+                        </div>
+                        <div class="conversation-item d-flex align-items-start justify-content-end">
+                            <div class="sms_text w-auto">
+                                <div class="message">
+                                    I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                    thanks! What about you?
+                                </div>
+                                <div class="time">
+                                    10:31 AM
+                                </div>
+                            </div>
+                            <div class="author_logo">
+                                <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                            </div>
+                        </div>
+                        <div class="conversation-item d-flex align-items-start justify-content-end">
+                            <div class="sms_text w-auto">
+                                <div class="message">
+                                    I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                    thanks! What about you?
+                                </div>
+                                <div class="time">
+                                    10:31 AM
+                                </div>
+                            </div>
+                            <div class="author_logo">
+                                <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                            </div>
+                        </div>
+                        <div class="conversation-item d-flex align-items-start justify-content-end">
+                            <div class="sms_text w-auto">
+                                <div class="message">
+                                    I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                    thanks! What about you?
+                                </div>
+                                <div class="time">
+                                    10:31 AM
+                                </div>
+                            </div>
+                            <div class="author_logo">
+                                <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                            </div>
+                        </div>
+                        <div class="conversation-item d-flex align-items-start justify-content-end">
+                            <div class="sms_text w-auto">
+                                <div class="message">
+                                    I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                    thanks! What about you?
+                                </div>
+                                <div class="time">
+                                    10:31 AM
+                                </div>
+                            </div>
+                            <div class="author_logo">
+                                <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                            </div>
+                        </div>
+                        <div class="conversation-item d-flex align-items-start justify-content-end">
+                            <div class="sms_text w-auto">
+                                <div class="message">
+                                    I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                    thanks! What about you?
+                                </div>
+                                <div class="time">
+                                    10:31 AM
+                                </div>
+                            </div>
+                            <div class="author_logo">
+                                <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                            </div>
+                        </div>
+                        <div class="conversation-item d-flex align-items-start justify-content-end">
+                            <div class="sms_text w-auto">
+                                <div class="message">
+                                    I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                    thanks! What about you?
+                                </div>
+                                <div class="time">
+                                    10:31 AM
+                                </div>
+                            </div>
+                            <div class="author_logo">
+                                <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                            </div>
                         </div>
                     </div>
-                    <div class="send_box">
-                        <form action="" class="pt-2 h-100">
-                            <div class="input-group h-100">
-                                <textarea class="form-control message-input" rows="1" placeholder="Enter your message"></textarea>
-                                <input type="submit" value="Send" class="btn send_btn">
-                            </div>
-                        </form>
-                    </div>
-                @endif
+                </div>
+                <div class="send_box">
+                    <form action="" class="pt-2 h-100">
+                        <div class="input-group h-100">
+                            <textarea class="form-control message-input" rows="1" placeholder="Enter your message"></textarea>
+                            <input type="submit" value="Send" class="btn send_btn">
+                        </div>
+                    </form>
+                </div>
+
+
+
+                {{-- ++++++++++++++++++++++++++++++++++++ --}}
 
             </div>
         </div>

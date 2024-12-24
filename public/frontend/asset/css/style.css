@@ -2104,16 +2104,18 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
     height: 50px;
     width: 100%;
     margin-top: 20px;
-  }
+    line-height: 50px;
+    text-align: center;
+      }
   .support_wrap .message_box .chat-box .chat_initial_form .field:last-child{
     margin-bottom: 15px;
   }
   .support_wrap .message_box .chat_initial_form .field input,
-  .support_wrap .message_box .chat_initial_form .field button,
+  .support_wrap .message_box .chat_initial_form .field .start_btn,
   .support_wrap .message_box .chat_initial_form .textarea textarea{
     width: 100%;
     height: 100%;
-    padding-left: 20px;
+    /* padding-left: 20px; */
     border: 1px solid lightgrey;
     outline: none;
     border-radius: 25px;
@@ -2144,7 +2146,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
     padding: 15px 20px;
     font-size: 16px;
   }
-  .support_wrap .message_box .chat-box .chat_initial_form .field button{
+  .support_wrap .message_box .chat-box .chat_initial_form .field .start_btn{
     border: none;
     outline: none;
     cursor: pointer;
@@ -2154,7 +2156,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
     background: -webkit-linear-gradient(left, #28A349, #2487BD);
     transition: all 0.3s ease;
   }
-  .support_wrap .message_box .chat-box .chat_initial_form .field button:hover{
+  .support_wrap .message_box .chat-box .chat_initial_form .field .start_btn:hover{
     transform: scale(0.97);
   }
 
@@ -2203,7 +2205,6 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .support_wrap .message_box .chat-box .message .send_box .message-input:focus,.support_wrap .message_box .chat-box .message .send_box .send_btn:focus {
     box-shadow: none;
 }
-
 
 .support_wrap .message_box .conversation {
     max-height: 400px;
@@ -2261,23 +2262,6 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
                                               transparent,
                                               transparent)
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .support_wrap .message_box .conversation-item {
     margin-bottom: 15px;

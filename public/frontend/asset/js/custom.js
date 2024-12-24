@@ -137,3 +137,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     $(".conversation").scrollTop($(".conversation")[0].scrollHeight);
 });
+
+// Auth Chat Ticket Create
+$(document).ready(function () {
+    $("#authChatStartForm").on("submit", function (event) {
+        event.preventDefault();
+        let $this = $(this);
+        $.ajax({
+            url: $this.attr("action"),
+            method: "POST",
+            data: $this.serialize(),
+            dataType: "json",
+            success: function (response) {
+                $this.parent().remove();
+                $(".message_box").addClass("active");
+            },
+            error: function (xhr) {
+                // if (xhr.status === 422) {
+                //     // Handle validation errors
+                //     var errors = xhr.responseJSON.errors;
+                //     $(".invalid-feedback").remove();
+                //     $.each(errors, function (field, messages) {
+                //         // Display validation errors
+                //         var errorHtml = "";
+                //         $.each(messages, function (index, message) {
+                //             errorHtml +=
+                //                 '<span class="invalid-feedback d-block" role="alert">' +
+                //                 message +
+                //                 "</span>";
+                //         });
+                //         $('[name="' + field + '"]').after(errorHtml);
+                //         // Handle other errors.
+                //         let imageError =
+                //             '<span class="invalid-feedback d-block" role="alert">Image field is required</span>';
+                //         $('[name="uploadfile"]').parent().after(imageError);
+                //     });
+                // } else {
+                //     $(".invalid-feedback").remove();
+                //     // Handle other errors.
+                //     let imageError =
+                //         '<span class="invalid-feedback d-block" role="alert">Image field is required</span>';
+                //     $('[name="uploadfile"]').parent().after(imageError);
+                // }
+            },
+        });
+    });
+});

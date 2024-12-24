@@ -25,5 +25,5 @@ Broadcast::channel('user-notification.{id}', function ($user, $id) {
 }, ['guards' => ['web']]);
 
 Broadcast::channel('ticket.{ticket_id}', function ($ticket, $ticketId) {
-    return true; // Adjust logic for authorization if needed
+    return (int) $ticket->id === (int) $ticketId;
 });

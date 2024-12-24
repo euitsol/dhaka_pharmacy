@@ -10,10 +10,15 @@ class Message extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['message', 'sender_id', 'sender_type'];
+    protected $fillable = ['message', 'sender_id', 'sender_type', 'ticket_id'];
 
     public function sender()
     {
-        $this->morphTo();
+        return $this->morphTo();
+    }
+
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class);
     }
 }

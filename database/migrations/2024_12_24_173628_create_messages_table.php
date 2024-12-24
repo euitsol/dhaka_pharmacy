@@ -19,8 +19,11 @@ return new class extends Migration
             $table->longText('message');
             $table->unsignedBigInteger('sender_id');
             $table->string('sender_type');
+            $table->unsignedBigInteger('ticket_id'); // Ticket association
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
