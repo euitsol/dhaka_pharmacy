@@ -31,4 +31,10 @@ class Admin extends AuthenticateBaseModel
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
 }
