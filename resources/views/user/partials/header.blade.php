@@ -154,6 +154,11 @@
                         @csrf
                     </form>
                 </div>
+
+                <div class="toggle_bar ms-3">
+                    {{-- <i class="fa-solid fa-bars-staggered fs-1"></i> --}}
+                    <i class="fa-solid fa-bars fs-1 toggle_icon"></i>
+                </div>
             </div>
         </div>
     </div>
