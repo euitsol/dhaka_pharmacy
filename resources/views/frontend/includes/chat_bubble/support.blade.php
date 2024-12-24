@@ -56,7 +56,115 @@
                         </form>
                     </div>
                 @else
-                    <div class="conversation"></div>
+                    <div class="conversation">
+                        <div class="conversation-list">
+                            <div class="conversation-item sent d-flex align-items-start justify-content-start">
+                                <div class="author_logo">
+                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                                </div>
+                                <div class="sms_text w-auto">
+                                    <div class="message">
+                                        Hello, how are you?
+                                    </div>
+                                    <div class="time">
+                                        10:30 AM
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="conversation-item d-flex align-items-start justify-content-end">
+                                <div class="sms_text w-auto">
+                                    <div class="message">
+                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                        thanks! What about you?
+                                    </div>
+                                    <div class="time">
+                                        10:31 AM
+                                    </div>
+                                </div>
+                                <div class="author_logo">
+                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                                </div>
+                            </div>
+                            <div class="conversation-item d-flex align-items-start justify-content-end">
+                                <div class="sms_text w-auto">
+                                    <div class="message">
+                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                        thanks! What about you?
+                                    </div>
+                                    <div class="time">
+                                        10:31 AM
+                                    </div>
+                                </div>
+                                <div class="author_logo">
+                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                                </div>
+                            </div>
+                            <div class="conversation-item d-flex align-items-start justify-content-end">
+                                <div class="sms_text w-auto">
+                                    <div class="message">
+                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                        thanks! What about you?
+                                    </div>
+                                    <div class="time">
+                                        10:31 AM
+                                    </div>
+                                </div>
+                                <div class="author_logo">
+                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                                </div>
+                            </div>
+                            <div class="conversation-item d-flex align-items-start justify-content-end">
+                                <div class="sms_text w-auto">
+                                    <div class="message">
+                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                        thanks! What about you?
+                                    </div>
+                                    <div class="time">
+                                        10:31 AM
+                                    </div>
+                                </div>
+                                <div class="author_logo">
+                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                                </div>
+                            </div>
+                            <div class="conversation-item d-flex align-items-start justify-content-end">
+                                <div class="sms_text w-auto">
+                                    <div class="message">
+                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                        thanks! What about you?
+                                    </div>
+                                    <div class="time">
+                                        10:31 AM
+                                    </div>
+                                </div>
+                                <div class="author_logo">
+                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                                </div>
+                            </div>
+                            <div class="conversation-item d-flex align-items-start justify-content-end">
+                                <div class="sms_text w-auto">
+                                    <div class="message">
+                                        I'm good, thanks! What about you? I'm good, thanks! What about you? I'm good,
+                                        thanks! What about you?
+                                    </div>
+                                    <div class="time">
+                                        10:31 AM
+                                    </div>
+                                </div>
+                                <div class="author_logo">
+                                    <img src="{{ asset('default_img/male.png') }}" alt="avatar">
+                                </div>
+                            </div>
+                            {{-- <div class="conversation-item sent">
+                                <div class="message">
+                                    Doing great. Let’s catch up later.
+                                </div>
+                                <div class="time">
+                                    10:32 AM
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div>
                     <div class="send_box">
                         <form action="" class="pt-2 h-100">
                             <div class="input-group h-100">

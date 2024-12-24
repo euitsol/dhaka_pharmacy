@@ -134,4 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
         $(this).toggleClass("active");
         $(".message_box").toggleClass("active");
     });
+
+    $(".conversation").scrollTop($(".conversation")[0].scrollHeight);
 });
