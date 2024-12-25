@@ -2081,7 +2081,8 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
     background: white;
     border-radius: 0 0 25px 25px;
     padding: 15px 15px;
-    height: calc(100% - 60px);
+    /* height: calc(100% - 60px); */
+    height: 100%;
 }
   .support_wrap .message_box .chat-box .desc-text{
     color: #515365;
@@ -2167,7 +2168,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 
   .support_wrap .message_box .chat-box .message .send_box {
-    /* height: 15%; */
+    height: 15%;
     /* display: flex;
     align-items: center; */
     /* border-top: 1px solid gainsboro; */
