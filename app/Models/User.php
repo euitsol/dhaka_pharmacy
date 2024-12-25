@@ -37,4 +37,10 @@ class User extends AuthenticateBaseModel
     {
         return $this->morphMany(Address::class, 'creater');
     }
+
+
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
 }

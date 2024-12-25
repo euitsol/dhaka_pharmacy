@@ -107,3 +107,79 @@ function formatPercentageNumber(number) {
         : formattedNumber;
     return formattedNumber;
 }
+
+// support JS
+
+document.addEventListener("DOMContentLoaded", () => {
+    const talkBubble = document.querySelector(".default-talk-bubble");
+    const lastShownTime = localStorage.getItem("talkBubbleLastShown");
+    const currentTime = new Date().getTime();
+
+    // if (!lastShownTime || currentTime - lastShownTime > 3600000) {
+    setTimeout(() => {
+        talkBubble.classList.add("show");
+        setTimeout(() => {
+            talkBubble.classList.remove("show");
+        }, 10000);
+        localStorage.setItem("talkBubbleLastShown", currentTime);
+    }, 2000);
+
+    // }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    $("#chat").on("click", function () {
+        const talkBubble = $(".default-talk-bubble");
+        talkBubble.remove();
+        $(this).toggleClass("active");
+        $(".message_box").toggleClass("active");
+    });
+
+    $(".conversation").scrollTop($(".conversation")[0].scrollHeight);
+});
+
+// Auth Chat Ticket Create
+$(document).ready(function () {
+    $("#authChatStartForm").on("submit", function (event) {
+        event.preventDefault();
+        let $this = $(this);
+        $.ajax({
+            url: $this.attr("action"),
+            method: "POST",
+            data: $this.serialize(),
+            dataType: "json",
+            success: function (response) {
+                $this.parent().remove();
+                $(".conversation").removeClass("d-none");
+            },
+            error: function (xhr) {
+                // if (xhr.status === 422) {
+                //     // Handle validation errors
+                //     var errors = xhr.responseJSON.errors;
+                //     $(".invalid-feedback").remove();
+                //     $.each(errors, function (field, messages) {
+                //         // Display validation errors
+                //         var errorHtml = "";
+                //         $.each(messages, function (index, message) {
+                //             errorHtml +=
+                //                 '<span class="invalid-feedback d-block" role="alert">' +
+                //                 message +
+                //                 "</span>";
+                //         });
+                //         $('[name="' + field + '"]').after(errorHtml);
+                //         // Handle other errors.
+                //         let imageError =
+                //             '<span class="invalid-feedback d-block" role="alert">Image field is required</span>';
+                //         $('[name="uploadfile"]').parent().after(imageError);
+                //     });
+                // } else {
+                //     $(".invalid-feedback").remove();
+                //     // Handle other errors.
+                //     let imageError =
+                //         '<span class="invalid-feedback d-block" role="alert">Image field is required</span>';
+                //     $('[name="uploadfile"]').parent().after(imageError);
+                // }
+            },
+        });
+    });
+});
