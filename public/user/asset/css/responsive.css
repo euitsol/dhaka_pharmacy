@@ -56,8 +56,47 @@
         font-size: 15px;
     }
     /* Header CSS  */
+    .header-section .profile img {
+        height: 35px !important; 
+        width: 35px !important;
+    }
+
+
     .header-section .nav-menu{
-        display: none;
+        position: absolute;
+        top: 100px;
+        right: 0;
+        width: 0;
+        background-color: var(--bg);
+        visibility: hidden;
+        opacity: 0;
+        transition: .4s;
+        z-index: 99;
+        border: 2px solid #fff;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        overflow-x: hidden;
+    }
+    .header-section .nav-menu.active{
+
+        width: 310px;
+        visibility: visible;
+        opacity: 1;
+    }
+    .header-section .nav-menu .navbar-nav{
+        flex-direction: column !important;
+        align-items: start !important;
+        padding: 20px;
+    }
+    .header-section .nav-menu .navbar-nav li{
+        width: 100%;
+    }
+    .header-section .nav-menu .navbar-nav li a{
+        width: 100%;
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+    .header-section .toggle_bar{
+        display: block;
     }
 
     .header-section .notification ul.dropdown-menu {
@@ -174,8 +213,43 @@
         line-height: 20px;
     }
     /* Header CSS  */
+    .header-section .profile img {
+        height: 35px !important; 
+        width: 35px !important;
+    }
     .header-section .nav-menu{
-        display: none;
+        position: absolute;
+        top: 100px;
+        right: 0;
+        width: 0;
+        background-color: var(--bg);
+        visibility: hidden;
+        opacity: 0;
+        transition: .4s;
+        z-index: 99;
+        border: 2px solid #fff;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        overflow-x: hidden;
+    }
+    .header-section .nav-menu.active{
+
+        width: 400px;
+        visibility: visible;
+        opacity: 1;
+    }
+    .header-section .nav-menu .navbar-nav{
+        flex-direction: column !important;
+        align-items: start !important;
+        padding: 20px;
+    }
+    .header-section .nav-menu .navbar-nav li{
+        width: 100%;
+    }
+    .header-section .nav-menu .navbar-nav li a{
+        width: 100%;
+    }
+    .header-section .toggle_bar{
+        display: block;
     }
     .header-section .notification ul.dropdown-menu {
         right: -80px !important;
@@ -261,10 +335,46 @@
     .dashboard-main-section .col-left .current-order .progress-box .progress {
         margin-top: 15px;
     }
-    /* Header CSS  */
-    .header-section .nav-menu{
-        display: none;
+   /* Header CSS  */
+
+   .header-section .profile img {
+        height: 35px !important; 
+        width: 35px !important;
     }
+
+   .header-section .nav-menu{
+    position: absolute;
+    top: 100px;
+    right: 0;
+    width: 0;
+    background-color: var(--bg);
+    visibility: hidden;
+    opacity: 0;
+    transition: .4s;
+    z-index: 99;
+    border: 2px solid #fff;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.header-section .nav-menu.active{
+
+    width: 400px;
+    visibility: visible;
+    opacity: 1;
+}
+.header-section .nav-menu .navbar-nav{
+    flex-direction: column !important;
+    align-items: start !important;
+    padding: 20px;
+}
+.header-section .nav-menu .navbar-nav li{
+    width: 100%;
+}
+.header-section .nav-menu .navbar-nav li a{
+    width: 100%;
+}
+.header-section .toggle_bar{
+    display: block;
+}
 
     /* Order Details  */
     .order-info-section .order-traking-row .step-1::before {
@@ -319,8 +429,43 @@
     }
 
     /* Header CSS  */
+    .header-section .profile img {
+        height: 35px !important; 
+        width: 35px !important;
+    }
     .header-section .nav-menu{
-        display: none;
+        position: absolute;
+        top: 100px;
+        right: 0;
+        width: 0;
+        background-color: var(--bg);
+        visibility: hidden;
+        opacity: 0;
+        transition: .4s;
+        z-index: 99;
+        border: 2px solid #fff;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        overflow-x: hidden;
+    }
+    .header-section .nav-menu.active{
+
+        width: 400px;
+        visibility: visible;
+        opacity: 1;
+    }
+    .header-section .nav-menu .navbar-nav{
+        flex-direction: column !important;
+        align-items: start !important;
+        padding: 20px;
+    }
+    .header-section .nav-menu .navbar-nav li{
+        width: 100%;
+    }
+    .header-section .nav-menu .navbar-nav li a{
+        width: 100%;
+    }
+    .header-section .toggle_bar{
+        display: block;
     }
 }
 @media screen and (min-width: 1024px) and (max-width: 1199px) {
