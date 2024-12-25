@@ -73,7 +73,7 @@
 
                 {{-- ++++++++++++++++++++++++++/ --}}
 
-                <div class="d-none">
+                <div class="d-none h-100">
                     <div class="conversation">
                         <div class="conversation-list">
                             <div class="conversation-item sent d-flex align-items-start justify-content-start">
