@@ -121,6 +121,7 @@ use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodCo
 use App\Http\Controllers\User\KYC\KycVerificationController as UserKycVerificationController;
 use App\Http\Controllers\User\NotificationController as UserNotificationController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
+use App\Http\Controllers\User\TicketController as UserTicketController;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -1099,6 +1100,12 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
 
     Route::controller(UserNotificationController::class)->prefix('notification')->name('u.notification.')->group(function () {
         Route::get('/read-all', 'read_all')->name('read_all');
+    });
+
+
+    // Live Chat
+    Route::controller(UserTicketController::class)->prefix('ticket')->name('u.ticket.')->group(function () {
+        Route::post('/create', 'create')->name('create');
     });
 });
 Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {
