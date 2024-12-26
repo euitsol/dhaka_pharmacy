@@ -8,7 +8,7 @@
                     <div class="col-3">
                         <div class="row">
                             <div class="col-2">
-                                <img src="{{ asset('frontend/asset/img/delivery.png') }}" alt="">
+                                <img class="w-100" src="{{ asset('frontend/asset/img/delivery.png') }}" alt="">
                             </div>
                             <div class="col-10">
                                 <h3>{{ __('Quick Delivery') }}</h3>
@@ -54,7 +54,7 @@
         </div>
 
         <!--======== Footer newsletter row ===========-->
-        <div class="newsletter-row">
+        <!-- <div class="newsletter-row">
             <div class="container">
                 <div class="row">
                     <div class="col-8 m-auto">
@@ -64,6 +64,27 @@
                                     {{ __('Subscribe to get the Latest News') }}</h3>
                             </div>
                             <div class="col-8">
+                                <form action="" class="d-flex align-items-center">
+                                    <input type="text" placeholder="Enter Your Email">
+                                    <input type="submit" value="Subscribe">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="newsletter-row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="newsletter-main-row align-items-center">
+                            <div class="newsletter-headign">
+                                <h3 class="title text-white m-0 text-center">
+                                    {{ __('Subscribe to get the Latest News') }}</h3>
+                            </div>
+                            <div class="newsletter-content">
                                 <form action="" class="d-flex align-items-center">
                                     <input type="text" placeholder="Enter Your Email">
                                     <input type="submit" value="Subscribe">

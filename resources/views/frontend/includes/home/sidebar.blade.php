@@ -6,16 +6,18 @@
         </div>
         <div class="categories_menu">
             <h2 class="text-center cat-title d-lg-block d-none">{{ __('Categories') }}</h2>
-            <div class="row py-4 px-4 align-items-center justify-content-center">
-                @foreach ($menuItems as $item)
-                    <a href="{{ route('category.products', ['category' => $item->slug]) }}"
-                        class="col-6 text-center single-cat text-decoration-none {{ isset($category) && $category->id == $item->id ? 'active' : '' }}">
-                        <div class="icon m-auto">
-                            <img class="w-100" src="{{ storage_url($item->image) }}" alt="category icon">
-                        </div>
-                        <h2 class="mt-2">{{ __($item->name) }}</h2>
-                    </a>
-                @endforeach
+            <div class="row py-4 px-4  justify-content-center">
+               
+                    @foreach ($menuItems as $item)
+                        <a href="{{ route('category.products', ['category' => $item->slug]) }}"
+                                class="col-6 text-center single-cat text-decoration-none {{ isset($category) && $category->id == $item->id ? 'active' : '' }}">
+                            <div class="icon m-auto">
+                                <img class="w-100" src="{{ storage_url($item->image) }}" alt="category icon">
+                            </div>
+                            <h2 class="mt-2">{{ __($item->name) }}</h2>
+                        </a>
+                    @endforeach
+               
             </div>
         </div>
     </div>

@@ -40,8 +40,8 @@
                                         <div class="col-12 single-item">
                                             <div class="row align-items-center row-gap-2">
                                                 <div class="col-4 img">
-                                                    <a href="{{ route('product.single_product', $item->slug) }}"></a>
-                                                    <img height="90" class="w-100 border border-1 rounded-1"
+                                                    <a href="{{ route('product.single_product', $item->slug) }}">
+                                                        <img height="90" class="w-100 border border-1 rounded-1"
                                                         src="{{ $item->image }}" alt="{{ $item->name }}">
                                                     </a>
                                                 </div>
@@ -77,39 +77,39 @@
                                 </div>
 
                                 <div class="col-8">
-                                    <div class="slider-col" uk-slider="finite: true">
-                                        <div class="uk-position-relative">
-                                            <div class="uk-slider-container uk-light">
-                                                <ul
-                                                    class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
-                                                    <li class=" active d-flex align-content-center justify-content-center m-auto ">
-                                                        <a href="javascript:void(0)" class="featured_category"
-                                                            data-slug="all">{{ _('All') }}</a>
-                                                    </li>
-                                                    @foreach ($featuredCategories as $category)
-                                                        <li class="d-flex align-content-center justify-content-center m-auto"><a href="javascript:void(0)" class="featured_category"
-                                                                data-slug="{{ $category->slug }}">{{ __($category->name) }}</a>
+                                        <div class="slider-col" uk-slider="finite: true">
+                                            <div class="uk-position-relative">
+                                                <div class="uk-slider-container uk-light">
+                                                    <ul
+                                                        class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
+                                                        <li class=" active d-flex align-content-center justify-content-center m-auto ">
+                                                            <a href="javascript:void(0)" class="featured_category"
+                                                                data-slug="all">{{ _('All') }}</a>
                                                         </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
+                                                        @foreach ($featuredCategories as $category)
+                                                            <li class="d-flex align-content-center justify-content-center m-auto"><a href="javascript:void(0)" class="featured_category"
+                                                                    data-slug="{{ $category->slug }}">{{ __($category->name) }}</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
 
-                                            <div class="uk-hidden@s uk-light btn-arrow">
-                                                <a class="uk-position-center-left uk-position-small" href
-                                                    uk-slidenav-previous uk-slider-item="previous"></a>
-                                                <a class="uk-position-center-right uk-position-small" href uk-slidenav-next
-                                                    uk-slider-item="next"></a>
-                                            </div>
+                                                <div class="uk-hidden@s uk-light btn-arrow">
+                                                    <a class="uk-position-center-left uk-position-small" href
+                                                        uk-slidenav-previous uk-slider-item="previous"></a>
+                                                    <a class="uk-position-center-right uk-position-small" href uk-slidenav-next
+                                                        uk-slider-item="next"></a>
+                                                </div>
 
-                                            <div class="uk-visible@s btn-arrow">
-                                                <a class="uk-position-center-left-out uk-position-small" href
-                                                    uk-slidenav-previous uk-slider-item="previous"></a>
-                                                <a class="uk-position-center-right-out uk-position-small" href
-                                                    uk-slidenav-next uk-slider-item="next"></a>
-                                            </div>
+                                                <div class="uk-visible@s btn-arrow">
+                                                    <a class="uk-position-center-left-out uk-position-small" href
+                                                        uk-slidenav-previous uk-slider-item="previous"></a>
+                                                    <a class="uk-position-center-right-out uk-position-small" href
+                                                        uk-slidenav-next uk-slider-item="next"></a>
+                                                </div>
 
+                                            </div>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="row all-products mt-3">

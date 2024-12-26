@@ -1,31 +1,14 @@
 
-/* .best-selling-products{
-    height: auto;
-}
-@media screen and (max-width: 1200px){
-    .product-section .col-3.best-selling-col {
-        width: 100%;
-    }
-    .product-section .col-3.best-selling-col .best-selling-products .all-product {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        column-gap: 20px;
-    }
-    .product-section .col-9.feature-product {
-        width: 100%;
-    }
-    
-} */
+/*=========================================================
+            responsive css code here 
+============================================================*/
 
-@media screen and (max-width: 1100px){
-    
-}
-@media screen and (max-width: 1024px){
-    
-}
+
 @media screen and (max-width: 991px){
 
-    /* container-fluid section responsive code here  */
+    /*=======================================================
+       container-fluid section responsive code here  
+    =========================================================*/
 
     .container-fluid .col-md-3.col-lg-2.sidebar-cat-section {
         display: block;
@@ -35,37 +18,57 @@
         display: block;
         width: 100%;
     }
+
+    /*=======================================================
+        container-fluid section responsive code end  
+    =========================================================*/
+
+
+
+    /*=======================================================
+        sidebar categories menu responsive code here 
+    =========================================================*/
+
+    .sidebar-cat-section {
+        padding-bottom: 0px;
+    }
     .sidebar-cat-section .categories_menu {
         background: transparent;
         box-shadow: none;
         border-radius: 0px;
     }
-    .categories_menu .row.py-4.px-4.align-items-center.justify-content-center {
-        display: fe;
+
+    .categories_menu .row {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        column-gap: 20px;
+        column-gap: 10px;
         row-gap: 20px;
     }
-    .categories_menu .col-6.text-center.single-cat {
+    .categories_menu  .single-cat {
         border: none;
         background: var(--text-color-white);
         box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
         border-radius: 10px;
         width: 100%;
-        padding: 25px;
+        padding: 30px !important;
     }
 
-    /* container-fluid section responsive code end  */
+    /*===================================================== 
+        sidebar categories menu responsive code end 
+    =======================================================*/
+   
 
 
-    /* product section responsive code here */
+    /*=====================================================
+       product section responsive code here 
+    =======================================================*/
 
     .product-section .best-selling-col .best-selling-products {
         height: auto !important;
         background: transparent;
         box-shadow: none;
         border-radius: 0px;
+        padding-bottom: 30px;
     }
 
     .product-section .best-selling-col {
@@ -75,15 +78,24 @@
     .product-section .best-selling-col .best-selling-products .all-product {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        column-gap: 20px;
+        column-gap: 14px;
         row-gap: 30px;
     }
     .product-section .col-3.best-selling-col .best-selling-products .all-product .single-item{
-        background: var(--text-color-white);
-        box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
-        border-radius: 15px;
-        padding: 20px 15px;
         border: none;
+        overflow: hidden;
+        padding: 0px 0px;
+        padding-bottom: 15px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
+        border-radius: 15px;
+        backdrop-filter: blur(23px) saturate(169%);
+        -webkit-backdrop-filter: blur(23px) saturate(169%);
+        background-color: rgba(255, 255, 255, 0.1);
+        transition: .4s;
+    }
+    .product-section .col-3.best-selling-col .best-selling-products .all-product .single-item .col-8{
+        width: 100%;
+        padding: 0px 30px;
     }
     .product-section .feature-product {
         width: 100%;
@@ -91,26 +103,65 @@
     .product-section .feature-product .all-products {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        column-gap: 20px;
         row-gap: 30px;
         padding: 0px 10px;
     }
     .product-section .feature-product .all-products .single-pdct-wrapper{
         width: auto;
     }
-
-    .best-selling-products .single-item .align-items-center .col-4.img{
-        width: 100%;
+    .product-section .best-selling-col h2.title {
+        padding-left: 20px;
     }
-    
-    /* product section responsive code end */
+    .best-selling-products .single-item .align-items-center .col-4.img{
+        padding: 0px;
+        width: 100%;
+        padding: 0px 10px;
+    }
+ 
+    .best-selling-products .single-item img {
+        height: 150px;
+        border-color: #373f5000 !important;
+        padding: 0px;
+    }
+    .product-section .cat-filter-row .col-3{
+        width: 35%;
+    }
+    .product-section .cat-filter-row .col-8{
+        width: 60%;
+        padding: 0px 60px;
+    }
+
+    /*===========================================
+        product section responsive code end
+    ==========================================*/
 
 
+    /* =========================================
+        footer newslter section code here
+    ============================================*/
+    .footer-section .newsletter-main-row {
+        display: block;
+        row-gap: 30px;
+    }
+    .footer-section .newsletter-main-row .newsletter-headign {
+        width: 100%;
+        text-align: center;
+    }
+    .footer-section .newsletter-main-row .newsletter-content {
+        width: 100%;
+        margin-top: 20px;
+    }
+  
 }
 
 
 
 @media screen and (max-width: 800px){
+
+    /* ===========================================
+        container-fluid responsive code here
+    ===============================================*/
+
     .container-fluid .col-md-3.col-lg-2.sidebar-cat-section {
         display: block;
         width: 100%;
@@ -119,30 +170,118 @@
         display: block;
         width: 100%;
     }
+
+    /* ===========================================
+        container-fluid responsive code end
+    ===============================================*/
+
 }
+
 @media screen and (max-width: 767px){
+    .product-section .cat-filter-row .col-3 {
+        width: 100%;
+    }
+
+    .product-section .cat-filter-row .col-8 {
+        width: 100%;
+        padding: 0px 0px;
+    }
+}
+
+@media screen and (max-width: 640px){
+
+    /* ===========================================
+        categories-section responsive code here
+    ===============================================*/
+
+    .categories_menu .col-6.text-center.single-cat h2{
+        display: none;
+    }
+ 
+    .categories_menu .single-cat {
+        padding: 15px !important;
+    }
+
+    /* ===========================================
+        categories-section responsive code here
+    ===============================================*/
+
+
+
+}
+
+
+@media screen and (max-width: 575px){
+
+    /* ===========================================
+        product-section responsive code here
+    ===============================================*/
+
     .product-section .col-3.best-selling-col .best-selling-products .all-product {
         grid-template-columns: 1fr 1fr;
     }
     .product-section .col-9.feature-product .all-products {
         grid-template-columns: 1fr 1fr;
     }
+    .product-section .best-selling-col .best-selling-products .all-product {
+        column-gap: 15px;
+    }
+    .uk-child-width-1-5\@m > * {
+        width: 34%;
+    }
+    .footer-section .delivery-row{
+        padding: 0px;
+    }
+    .footer-section .newsletter-main-row {
+        display: block;
+        max-width: 100%;
+    }
+
+
+
+
+    /* ===========================================
+        product-section responsive code end
+    ===============================================*/
+
+
+
+    /* ===========================================
+        categories-section responsive code here
+    ===============================================*/
+    .categories_menu .row {
+        column-gap: 15px;
+        row-gap: 15px;
+    }
+    /* ===========================================
+        categories-section responsive code end
+    ===============================================*/
+
 }
 
-@media screen and (max-width: 640px){
-    .categories_menu .col-6.text-center.single-cat h2{
-        display: none;
-    }
-    .feature-product .uk-light.btn-arrow .uk-position-small.uk-icon.uk-slidenav-previous.uk-slidenav {
-        margin-right: 20px;
-    }
-}
+
 @media screen and (max-width: 520px){
-    
+
+     /* ===========================================
+        categories-section responsive code here
+    ===============================================*/
+
+    .categories_menu .single-cat {
+        padding: 8px !important;
+    }
+
+    /* ===========================================
+        categories-section responsive code end
+    ===============================================*/
 }
+
+
 @media screen and (max-width: 480px){
-    
+    .uk-child-width-1-5\@m > * {
+        width: 45%;
+    }
 }
+
 @media screen and (max-width: 320px){
     
 }
