@@ -10,6 +10,10 @@ class TempUser extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'name',
+        'phone'
+    ];
     public function messages()
     {
         return $this->morphMany(Message::class, 'sender');
