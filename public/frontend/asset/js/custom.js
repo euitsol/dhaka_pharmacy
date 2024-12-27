@@ -107,3 +107,32 @@ function formatPercentageNumber(number) {
         : formattedNumber;
     return formattedNumber;
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const footer = document.querySelector(".mobile-footer");
+    let isFooterVisible = false; // Tracks the current state
+
+    window.addEventListener("scroll", () => {
+        const currentScrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+
+        if (currentScrollY <= windowHeight && isFooterVisible) {
+            // Hide the footer when below 100vh
+            footer.classList.remove("show");
+            footer.classList.add("hide");
+            isFooterVisible = false;
+        } else if (currentScrollY > windowHeight && !isFooterVisible) {
+            // Show the footer when above 100vh
+            footer.classList.remove("hide");
+            footer.classList.add("show");
+            isFooterVisible = true;
+        }
+    });
+});
+
+
+
+
+
+

@@ -4,46 +4,46 @@
         <!--======== Footer Deivery Row ===========-->
         <div class="delivery-row p-5">
             <div class="container">
-                <div class="row">
-                    <div class="col-3">
-                        <div class="row">
-                            <div class="col-2">
-                                <img class="w-100" src="{{ asset('frontend/asset/img/delivery.png') }}" alt="">
+                <div class="row row-gap-4">
+                    <div class="col-6 col-md-3">
+                        <div class="row row-gap-2">
+                            <div class="col-12 col-lg-2">
+                                <img class="w-auto" src="{{ asset('frontend/asset/img/delivery.png') }}" alt="">
                             </div>
-                            <div class="col-10">
+                            <div class="col-12 col-md-10">
                                 <h3>{{ __('Quick Delivery') }}</h3>
                                 <h4>{{ __('Varius sit amet mattis vulputat') }}</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
-                        <div class="row">
-                            <div class="col-2">
+                    <div class="col-6 col-md-3">
+                        <div class="row row-gap-2">
+                            <div class="col-12 col-lg-2">
                                 <img src="{{ asset('frontend/asset/img/clock.png') }}" alt="">
                             </div>
-                            <div class="col-10">
+                            <div class="col-12 col-lg-10">
                                 <h3>{{ __('24/7 Help Center') }}</h3>
                                 <h4>{{ __('Dedicated 24/7 support') }}</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
-                        <div class="row">
-                            <div class="col-2">
+                    <div class="col-6 col-md-3">
+                        <div class="row row-gap-2">
+                            <div class="col-12 col-lg-2">
                                 <img src="{{ asset('frontend/asset/img/setisfide.png') }}" alt="">
                             </div>
-                            <div class="col-10">
+                            <div class="col-12 col-lg-10">
                                 <h3>{{ __('Satisfied or Refunder') }}</h3>
                                 <h4>{{ __('Free returns within 14 days') }}</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
-                        <div class="row">
-                            <div class="col-2">
+                    <div class="col-6 col-md-3">
+                        <div class="row row-gap-2">
+                            <div class="col-12 col-lg-2">
                                 <img src="{{ asset('frontend/asset/img/card.png') }}" alt="">
                             </div>
-                            <div class="col-9">
+                            <div class="col-12 col-lg-10">
                                 <h3>{{ __('Secured Payment') }}</h3>
                                 <h4>{{ __('Pharetra magna ac placerat vestibu') }}</h4>
                             </div>
@@ -98,8 +98,8 @@
         <!--======== Footer Main Row =========-->
         <div class="main-footer-row py-5">
             <div class="container">
-                <div class="row">
-                    <div class="col-3">
+                <div class="row row-gap-4">
+                    <div class="col-4 col-lg-3 col-6 col-md-4 col-12 col-sm-6">
                         <div class="footer-logo mb-4">
                             <a href="#"> <img src="{{ asset('frontend/asset/img/logo.png') }}"
                                     alt="Footer logo"></a>
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4 col-lg-3 col-6 col-md-4 col-12 col-sm-6">
                         <h2 class="title">{{ __('Information') }}</h2>
                         <div class="footer-menu">
                             <ul class="footer-nav">
@@ -134,7 +134,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4 col-lg-3 col-6 col-md-4 col-12 col-sm-6">
                         <h2 class="title">{{ __('Customer Service') }}</h2>
                         <div class="footer-menu">
                             <ul class="footer-nav">
@@ -148,7 +148,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-6 col-lg-3 col-6 col-md-6 col-12 col-sm-6">
                         <h2 class="title">{{ __('Your trusted online medicine supplier') }}</h2>
                         <div class="footer-contact">
                             <ul class="footer-nav">
@@ -179,5 +179,21 @@
             </div>
         </div>
     </div>
+    <!-- =========== Mobile footer design =========== -->
+    <div class="mobile-footer">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-12">
+                    <div class="main-mobile-col text-center">
+                        <ul>
+                            <li><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li><a href="#"><i class="fas fa-th-large"></i></a></li>
+                            <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                            <li><a href="#"><i class="fas fa-user"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </footer>

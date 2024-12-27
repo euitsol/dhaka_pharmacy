@@ -39,13 +39,13 @@
                                     @foreach ($bsItems as $item)
                                         <div class="col-12 single-item">
                                             <div class="row align-items-center row-gap-2">
-                                                <div class="col-4 img">
+                                                <div class="col-12 col-xxl-4 img">
                                                     <a href="{{ route('product.single_product', $item->slug) }}">
                                                         <img height="90" class="w-100 border border-1 rounded-1"
                                                         src="{{ $item->image }}" alt="{{ $item->name }}">
                                                     </a>
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-12 col-xxl-8">
                                                     <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
                                                             href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
                                                     </h3>
@@ -72,11 +72,11 @@
                     @if ($featuredCategories->isNotEmpty())
                         <div class="col-9 feature-product">
                             <div class="row cat-filter-row gx-4 align-items-center justify-content-center">
-                                <div class="col-3">
+                                <div class="col-4">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>
 
-                                <div class="col-8">
+                                <div class="col-7">
                                         <div class="slider-col" uk-slider="finite: true">
                                             <div class="uk-position-relative">
                                                 <div class="uk-slider-container uk-light">

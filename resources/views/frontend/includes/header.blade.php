@@ -1,55 +1,59 @@
 <section class="header-section">
     <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col-3">
-                <div class="row align-items-center">
-                    {{-- <div class="col-2">
-                        <a class="menu-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                            aria-controls="offcanvasExample">
-                            <i class="fa-solid fa-bars fs-4 text-white"></i>
-                        </a>
-                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
-                            aria-labelledby="offcanvasExampleLabel">
-                            <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="offcanvasExampleLabel"></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="offcanvas-body">
-                                <!--========= Burger Menu data here =======-->
+        <div class="row align-items-center row-gap-4 row-gap-lg-0">
+            <div class="col-12 col-lg-9 order-2 order-lg-1">    
+                <div class="row align-items-center justify-space-between">
+                    <div class="col-4">
+                        <div class="row align-items-center">
+                            {{-- <div class="col-2">
+                                <a class="menu-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                                    aria-controls="offcanvasExample">
+                                    <i class="fa-solid fa-bars fs-4 text-white"></i>
+                                </a>
+                                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                                    aria-labelledby="offcanvasExampleLabel">
+                                    <div class="offcanvas-header">
+                                        <h5 class="offcanvas-title" id="offcanvasExampleLabel"></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        <!--========= Burger Menu data here =======-->
+                                    </div>
+                                </div>
+                            </div> --}}
+                            <div class="col-8 col-lg-6 col-12 col-sm-8">
+                                <div class="logo">
+                                    <a href="{{ route('home') }}"><img class="w-100"
+                                            src="{{ asset('frontend/asset/img/logo.png') }}" alt="Header-logo"></a>
+                                </div>
                             </div>
                         </div>
-                    </div> --}}
-                    <div class="col-6">
-                        <div class="logo">
-                            <a href="{{ route('home') }}"><img class="w-100"
-                                    src="{{ asset('frontend/asset/img/logo.png') }}" alt="Header-logo"></a>
+                    </div>
+                    <div class="col-8 ">
+                        <div class="search-filter col-12 col-md-8 m-auto">
+                            <form class="d-flex" action="">
+                                <input class="col-7" type="text" id="searchInput" placeholder="Search...">
+                                <select class="col-4" name="pro_cat_id" id="categorySelect">
+                                    <option value="all" selected>{{ __('All Category') }}</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ __($category->name) }}</option>
+                                    @endforeach
+
+                                </select>
+                                <button class="sub-btn text-center bg-white col-1" type="submit"><i
+                                        class="fa-solid fa-magnifying-glass text-dark"></i></button>
+                            </form>
+                            <div id="suggestionBox" class="suggestion-box p-2 pb-0">
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="search-filter col-8 m-auto">
-                    <form class="d-flex" action="">
-                        <input class="col-7" type="text" id="searchInput" placeholder="Search...">
-                        <select class="col-4" name="pro_cat_id" id="categorySelect">
-                            <option value="all" selected>{{ __('All Category') }}</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ __($category->name) }}</option>
-                            @endforeach
-
-                        </select>
-                        <button class="sub-btn text-center bg-white col-1" type="submit"><i
-                                class="fa-solid fa-magnifying-glass text-dark"></i></button>
-                    </form>
-                    <div id="suggestionBox" class="suggestion-box p-2 pb-0">
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-3 ps-0 right-col">
-                <div class="row align-items-center justify-content-end">
+            <div class="col-12 col-lg-3  ps-0 right-col order-1 order-lg-2">
+                <div class="row align-items-center justify-content-center justify-content-lg-end">
                     @if (!Auth::guard('web')->check())
                         <div class="item">
                             <a href="{{ route('login') }}" class="login-btn">

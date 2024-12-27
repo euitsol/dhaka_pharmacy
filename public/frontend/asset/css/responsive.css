@@ -2,7 +2,11 @@
 /*=========================================================
             responsive css code here 
 ============================================================*/
-
+@media screen and (max-width: 1100px){
+    .footer-section .newsletter-main-row {
+        max-width: 80%;
+    }
+}
 
 @media screen and (max-width: 991px){
 
@@ -130,7 +134,9 @@
         width: 60%;
         padding: 0px 60px;
     }
-
+    .uk-child-width-1-5\@m > * {
+        width: 35%;
+    }
     /*===========================================
         product section responsive code end
     ==========================================*/
@@ -151,7 +157,18 @@
         width: 100%;
         margin-top: 20px;
     }
-  
+    .footer-section .container {
+        max-width: 100%;
+        padding: 0px 30px;
+    }
+    .footer-section .delivery-row {
+        padding: 60px  0px !important;
+    }
+    .header-section .search-filter{
+        display: flex;
+        justify-content: end;
+        width: 100%;
+    }
 }
 
 
@@ -186,8 +203,52 @@
         width: 100%;
         padding: 0px 0px;
     }
-}
 
+    
+    /* ===========================================
+        product-section responsive code here
+    ===============================================*/
+
+    .mobile-footer {
+        display: block;
+        width: 100%;
+    }
+    .mobile-footer .main-mobile-col {
+
+        text-align: center;
+    }
+    .mobile-footer.hide {
+        transform: translateY(100%);
+    }
+    .mobile-footer.show {
+        transform: translateY(0);
+    }
+
+    .mobile-footer .main-mobile-col ul li{
+        list-style: none;
+        display: inline-block;
+        margin-right: 15px;
+        font-size: 29px;
+    }
+    
+    .mobile-footer .main-mobile-col ul li:last-child{
+        margin-right: 0px;
+    }
+    .mobile-footer .main-mobile-col ul li a i {
+        font-size: 29px;
+        color: var(--text-color-white);
+        padding: 15px;
+        background-color: var(--info-bg);
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+
+    /* ===========================================
+        product-section responsive code end
+    ===============================================*/
+
+}
 @media screen and (max-width: 640px){
 
     /* ===========================================
@@ -239,7 +300,6 @@
 
 
 
-
     /* ===========================================
         product-section responsive code end
     ===============================================*/
@@ -279,6 +339,9 @@
 @media screen and (max-width: 480px){
     .uk-child-width-1-5\@m > * {
         width: 45%;
+    }
+    .footer-section .main-footer-row .title {
+        font-size: 15px;
     }
 }
 
