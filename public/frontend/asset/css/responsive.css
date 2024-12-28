@@ -2,9 +2,34 @@
 /*=========================================================
             responsive css code here 
 ============================================================*/
+
+@media screen and (max-width: 1400px){
+    .footer-section .delivery-row {
+        padding: 60px  0px !important;
+    }
+}
+
+
+@media screen and (max-width: 1300px){
+    .uk-child-width-1-5\@m > * {
+        width: 40%;
+    }
+}
+@media screen and (max-width: 1300px){
+    .product-section .feature-product .all-products {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 30px;
+        padding: 0px 10px;
+    }
+}    
+
 @media screen and (max-width: 1100px){
     .footer-section .newsletter-main-row {
         max-width: 80%;
+    }
+    .product-section .feature-product .all-products .single-pdct-wrapper {
+        width: auto;
     }
 }
 
@@ -104,7 +129,7 @@
     .product-section .feature-product {
         width: 100%;
     }
-    .product-section .feature-product .all-products {
+    /* .product-section .feature-product .all-products {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         row-gap: 30px;
@@ -112,7 +137,7 @@
     }
     .product-section .feature-product .all-products .single-pdct-wrapper{
         width: auto;
-    }
+    } */
     .product-section .best-selling-col h2.title {
         padding-left: 20px;
     }
@@ -124,7 +149,7 @@
  
     .best-selling-products .single-item img {
         height: 150px;
-        border-color: #373f5000 !important;
+        border:none !important;
         padding: 0px;
     }
     .product-section .cat-filter-row .col-3{
@@ -136,6 +161,9 @@
     }
     .uk-child-width-1-5\@m > * {
         width: 35%;
+    }
+    .best-selling-products .bst-product-content{
+        padding: 15px;
     }
     /*===========================================
         product section responsive code end
@@ -160,9 +188,6 @@
     .footer-section .container {
         max-width: 100%;
         padding: 0px 30px;
-    }
-    .footer-section .delivery-row {
-        padding: 60px  0px !important;
     }
     .header-section .search-filter{
         display: flex;
@@ -203,7 +228,7 @@
         width: 100%;
         padding: 0px 0px;
     }
-
+    
     
     /* ===========================================
         product-section responsive code here
@@ -243,7 +268,12 @@
         cursor: pointer;
     }
     
-
+    .uk-position-center-right-out {
+        left: 95%;
+    }
+    .uk-position-center-left-out {
+        right: 95%;
+    }
     /* ===========================================
         product-section responsive code end
     ===============================================*/
@@ -266,7 +296,12 @@
     /* ===========================================
         categories-section responsive code here
     ===============================================*/
-
+    .slider-col.uk-slider .uk-position-center-left {
+        left: -34px;
+    }
+    .slider-col.uk-slider .uk-position-center-right {
+        right: -35px;
+    }
 
 
 }

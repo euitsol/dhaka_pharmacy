@@ -1,7 +1,7 @@
 <section class="header-section">
     <div class="container-fluid">
         <div class="row align-items-center row-gap-4 row-gap-lg-0">
-            <div class="col-12 col-lg-9 order-2 order-lg-1">    
+            <div class="col-8 col-xl-9 col-12 col-lg-8 order-2 order-lg-1">    
                 <div class="row align-items-center justify-space-between">
                     <div class="col-4">
                         <div class="row align-items-center">
@@ -22,7 +22,7 @@
                                     </div>
                                 </div>
                             </div> --}}
-                            <div class="col-8 col-lg-6 col-12 col-sm-8">
+                            <div class="col-8 col-xl-6 col-12 col-sm-8">
                                 <div class="logo">
                                     <a href="{{ route('home') }}"><img class="w-100"
                                             src="{{ asset('frontend/asset/img/logo.png') }}" alt="Header-logo"></a>
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="col-8 ">
-                        <div class="search-filter col-12 col-md-8 m-auto">
+                        <div class="search-filter col-12 col-xl-8  m-auto">
                             <form class="d-flex" action="">
                                 <input class="col-7" type="text" id="searchInput" placeholder="Search...">
                                 <select class="col-4" name="pro_cat_id" id="categorySelect">
@@ -52,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-3  ps-0 right-col order-1 order-lg-2">
+            <div class="col-3 col-xl-3 col-12 col-lg-4  ps-0 right-col order-1 order-lg-2">
                 <div class="row align-items-center justify-content-center justify-content-lg-end">
                     @if (!Auth::guard('web')->check())
                         <div class="item">

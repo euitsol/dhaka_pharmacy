@@ -7,10 +7,10 @@
                 <div class="row row-gap-4">
                     <div class="col-6 col-md-3">
                         <div class="row row-gap-2">
-                            <div class="col-12 col-lg-2">
+                            <div class="col-12 col-xxl-2">
                                 <img class="w-auto" src="{{ asset('frontend/asset/img/delivery.png') }}" alt="">
                             </div>
-                            <div class="col-12 col-md-10">
+                            <div class="col-12 col-xxl-10">
                                 <h3>{{ __('Quick Delivery') }}</h3>
                                 <h4>{{ __('Varius sit amet mattis vulputat') }}</h4>
                             </div>
@@ -18,10 +18,10 @@
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="row row-gap-2">
-                            <div class="col-12 col-lg-2">
+                            <div class="col-12 col-xxl-2">
                                 <img src="{{ asset('frontend/asset/img/clock.png') }}" alt="">
                             </div>
-                            <div class="col-12 col-lg-10">
+                            <div class="col-12 col-xxl-10">
                                 <h3>{{ __('24/7 Help Center') }}</h3>
                                 <h4>{{ __('Dedicated 24/7 support') }}</h4>
                             </div>
@@ -29,10 +29,10 @@
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="row row-gap-2">
-                            <div class="col-12 col-lg-2">
+                            <div class="col-12 col-xxl-2">
                                 <img src="{{ asset('frontend/asset/img/setisfide.png') }}" alt="">
                             </div>
-                            <div class="col-12 col-lg-10">
+                            <div class="col-12 col-xxl-10">
                                 <h3>{{ __('Satisfied or Refunder') }}</h3>
                                 <h4>{{ __('Free returns within 14 days') }}</h4>
                             </div>
@@ -40,10 +40,10 @@
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="row row-gap-2">
-                            <div class="col-12 col-lg-2">
+                            <div class="col-12 col-xxl-2">
                                 <img src="{{ asset('frontend/asset/img/card.png') }}" alt="">
                             </div>
-                            <div class="col-12 col-lg-10">
+                            <div class="col-12 col-xxl-10">
                                 <h3>{{ __('Secured Payment') }}</h3>
                                 <h4>{{ __('Pharetra magna ac placerat vestibu') }}</h4>
                             </div>

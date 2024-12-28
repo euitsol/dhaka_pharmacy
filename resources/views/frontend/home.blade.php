@@ -3,7 +3,7 @@
 @section('content')
     <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
-        <section class="col-md-3 col-lg-2 d-lg-block d-none">
+        <section class="col-3 col-xl-2 d-lg-block d-none">
             @if ($menuItems->isNotEmpty())
                 @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
             @endif
@@ -14,7 +14,7 @@
 
 
         <!--=========== Main Content Section Start ==============-->
-        <div class="{{ $menuItems->isNotEmpty() ? 'col-md-9 col-lg-10' : 'col-12' }} content-col">
+        <div class="{{ $menuItems->isNotEmpty() ? 'col-9 col-xl-10 col-12 col-lg-9 content-col' : 'col-12' }} content-col">
             <!--========= Slider-Section-Include ========-->
             @include('frontend.includes.home.slider')
             <!--========= Slider-Section-Include ========-->
@@ -30,7 +30,7 @@
 
             <!--========= Product-Section-Start ========-->
             <section class="product-section pb-4 mb-5">
-                <div class="row">
+                <div class="row align-items-baseline">
                     @if ($bsItems->isNotEmpty())
                         <div class="col-3 best-selling-col">
                             <h2 class="title mb-3">{{ __('Best Selling') }}</h2>
@@ -41,25 +41,27 @@
                                             <div class="row align-items-center row-gap-2">
                                                 <div class="col-12 col-xxl-4 img">
                                                     <a href="{{ route('product.single_product', $item->slug) }}">
-                                                        <img height="90" class="w-100 border border-1 rounded-1"
+                                                        <img height="90" class="w-100 border border-1 rounded-1 lg-rounded-0"
                                                         src="{{ $item->image }}" alt="{{ $item->name }}">
                                                     </a>
                                                 </div>
                                                 <div class="col-12 col-xxl-8">
-                                                    <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
-                                                            href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
-                                                    </h3>
-                                                    <p><a href="">{{ $item->pro_sub_cat->name }}</a>
-                                                    </p>
-                                                    <p><a href="">{{ $item->generic->name }}</a></p>
-                                                    <p><a href="">{{ $item->company->name }}</a></p>
-                                                    <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                            {{ number_format($item->discounted_price, 2) }}</span>
-                                                        @if ($item->discounted_price != $item->price)
-                                                            <span class="regular_price"> <del>{!! get_taka_icon() !!}
-                                                                    {{ number_format($item->price, 2) }}</del></span>
-                                                        @endif
-                                                    </h4>
+                                                    <div class="bst-product-content">
+                                                        <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
+                                                                href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
+                                                        </h3>
+                                                        <p><a href="">{{ $item->pro_sub_cat->name }}</a>
+                                                        </p>
+                                                        <p><a href="">{{ $item->generic->name }}</a></p>
+                                                        <p><a href="">{{ $item->company->name }}</a></p>
+                                                        <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
+                                                                {{ number_format($item->discounted_price, 2) }}</span>
+                                                            @if ($item->discounted_price != $item->price)
+                                                                <span class="regular_price"> <del>{!! get_taka_icon() !!}
+                                                                        {{ number_format($item->price, 2) }}</del></span>
+                                                            @endif
+                                                        </h4>
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -71,12 +73,12 @@
                     @endif
                     @if ($featuredCategories->isNotEmpty())
                         <div class="col-9 feature-product">
-                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center">
-                                <div class="col-4">
+                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center mb-4 mb-lg-0">
+                                <div class="col-12 col-md-4">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>
 
-                                <div class="col-7">
+                                <div class="col-12 col-md-7">
                                         <div class="slider-col" uk-slider="finite: true">
                                             <div class="uk-position-relative">
                                                 <div class="uk-slider-container uk-light">
@@ -112,7 +114,7 @@
                                         </div>
                                 </div>
                             </div>
-                            <div class="row all-products mt-3">
+                            <div class="row all-products">
                                 @foreach ($products as $product)
                                     <div class="col-3 px-2 single-pdct-wrapper">
                                         <div class="single-pdct">
