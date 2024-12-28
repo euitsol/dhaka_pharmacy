@@ -1048,7 +1048,9 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .footer-section .newsletter-main-row .newsletter-content{
   width: 60%;
 }
-
+.uk-child-width-1-5\@m > * {
+	width: 25%;
+}
 
 /* ===================================
     mobile footer design code here

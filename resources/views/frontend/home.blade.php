@@ -33,7 +33,7 @@
                 <div class="row align-items-baseline">
                     @if ($bsItems->isNotEmpty())
                         <div class="col-3 best-selling-col">
-                            <h2 class="title mb-3">{{ __('Best Selling') }}</h2>
+                            <h2 class="title mb-0 mb-lg-3">{{ __('Best Selling') }}</h2>
                             <div class="best-selling-products">
                                 <div class="all-product">
                                     @foreach ($bsItems as $item)
@@ -73,7 +73,7 @@
                     @endif
                     @if ($featuredCategories->isNotEmpty())
                         <div class="col-9 feature-product">
-                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center mb-4 mb-lg-0">
+                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center mb-3">
                                 <div class="col-12 col-md-4">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>

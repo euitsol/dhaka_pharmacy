@@ -15,12 +15,16 @@
         width: 40%;
     }
 }
-@media screen and (max-width: 1300px){
+@media screen and (max-width: 1200px){
     .product-section .feature-product .all-products {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         row-gap: 30px;
         padding: 0px 10px;
+    }
+     
+    .product-section .feature-product .all-products .single-pdct-wrapper{
+        width: auto;
     }
 }    
 
