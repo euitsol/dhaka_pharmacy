@@ -1,9 +1,13 @@
 
 /*=========================================================
-            responsive css code here 
+    all responsive css code here 
 ============================================================*/
 
+
 @media screen and (max-width: 1400px){
+    /* ===============================================
+        footer responsive code here 
+    ==================================================*/
     .footer-section .delivery-row {
         padding: 60px  0px !important;
     }
@@ -11,24 +15,32 @@
 
 
 @media screen and (max-width: 1300px){
+    /* =============================================
+        uk future item tap slider responsive code
+    =============================================== */
     .uk-child-width-1-5\@m > * {
-        width: 40%;
+        width: 100%;
     }
 }
 @media screen and (max-width: 1200px){
+    /*============================================
+        product section responsive code here
+    =================================================*/
     .product-section .feature-product .all-products {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         row-gap: 30px;
         padding: 0px 10px;
     }
-     
     .product-section .feature-product .all-products .single-pdct-wrapper{
         width: auto;
     }
 }    
 
 @media screen and (max-width: 1100px){
+    /* =========================================
+        footer section responsive code here        
+    ==============================================*/
     .footer-section .newsletter-main-row {
         max-width: 80%;
     }
@@ -51,12 +63,6 @@
         display: block;
         width: 100%;
     }
-
-    /*=======================================================
-        container-fluid section responsive code end  
-    =========================================================*/
-
-
 
     /*=======================================================
         sidebar categories menu responsive code here 
@@ -85,11 +91,6 @@
         width: 100%;
         padding: 30px !important;
     }
-
-    /*===================================================== 
-        sidebar categories menu responsive code end 
-    =======================================================*/
-   
 
 
     /*=====================================================
@@ -169,13 +170,10 @@
     .best-selling-products .bst-product-content{
         padding: 15px;
     }
-    /*===========================================
-        product section responsive code end
-    ==========================================*/
-
+  
 
     /* =========================================
-        footer newslter section code here
+        footer newslter section responsive code here
     ============================================*/
     .footer-section .newsletter-main-row {
         display: block;
@@ -201,13 +199,11 @@
 }
 
 
-
 @media screen and (max-width: 800px){
 
     /* ===========================================
         container-fluid responsive code here
     ===============================================*/
-
     .container-fluid .col-md-3.col-lg-2.sidebar-cat-section {
         display: block;
         width: 100%;
@@ -217,13 +213,13 @@
         width: 100%;
     }
 
-    /* ===========================================
-        container-fluid responsive code end
-    ===============================================*/
-
 }
 
 @media screen and (max-width: 767px){
+    /* ===========================================
+        product-section responsive code here
+    ===============================================*/
+
     .product-section .cat-filter-row .col-3 {
         width: 100%;
     }
@@ -235,9 +231,8 @@
     
     
     /* ===========================================
-        product-section responsive code here
+        mobile footer menu show code here
     ===============================================*/
-
     .mobile-footer {
         display: block;
         width: 100%;
@@ -272,15 +267,15 @@
         cursor: pointer;
     }
     
+    /* ============================================
+        uk future tap text slider responsive code
+    ================================================*/
     .uk-position-center-right-out {
         left: 95%;
     }
     .uk-position-center-left-out {
         right: 95%;
     }
-    /* ===========================================
-        product-section responsive code end
-    ===============================================*/
 
 }
 @media screen and (max-width: 640px){
@@ -288,7 +283,6 @@
     /* ===========================================
         categories-section responsive code here
     ===============================================*/
-
     .categories_menu .col-6.text-center.single-cat h2{
         display: none;
     }
@@ -298,7 +292,7 @@
     }
 
     /* ===========================================
-        categories-section responsive code here
+        uk future tap text slider responsive code
     ===============================================*/
     .slider-col.uk-slider .uk-position-center-left {
         left: -34px;
@@ -306,7 +300,6 @@
     .slider-col.uk-slider .uk-position-center-right {
         right: -35px;
     }
-
 
 }
 
@@ -316,7 +309,6 @@
     /* ===========================================
         product-section responsive code here
     ===============================================*/
-
     .product-section .col-3.best-selling-col .best-selling-products .all-product {
         grid-template-columns: 1fr 1fr;
     }
@@ -326,9 +318,17 @@
     .product-section .best-selling-col .best-selling-products .all-product {
         column-gap: 15px;
     }
+
+    /* ===========================================
+        uk future tap text slider responsive code
+    ===============================================*/
     .uk-child-width-1-5\@m > * {
         width: 34%;
     }
+    
+    /* ===========================================
+        footer-section responsive code here
+    ===============================================*/
     .footer-section .delivery-row{
         padding: 0px;
     }
@@ -337,14 +337,6 @@
         max-width: 100%;
     }
 
-
-
-    /* ===========================================
-        product-section responsive code end
-    ===============================================*/
-
-
-
     /* ===========================================
         categories-section responsive code here
     ===============================================*/
@@ -352,39 +344,36 @@
         column-gap: 15px;
         row-gap: 15px;
     }
-    /* ===========================================
-        categories-section responsive code end
-    ===============================================*/
 
 }
 
 
 @media screen and (max-width: 520px){
 
-     /* ===========================================
+    /* ===========================================
         categories-section responsive code here
     ===============================================*/
-
     .categories_menu .single-cat {
         padding: 8px !important;
     }
 
-    /* ===========================================
-        categories-section responsive code end
-    ===============================================*/
 }
 
 
 @media screen and (max-width: 480px){
+    /* ===========================================
+        uk future tap text slider responsive code
+    ===============================================*/
     .uk-child-width-1-5\@m > * {
         width: 45%;
     }
+    
+     /* ===========================================
+        footer-section responsive code here
+    ===============================================*/
     .footer-section .main-footer-row .title {
         font-size: 15px;
     }
 }
 
-@media screen and (max-width: 320px){
-    
-}
 

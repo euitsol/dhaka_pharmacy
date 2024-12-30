@@ -1046,10 +1046,10 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   text-align: left;
 }
 .footer-section .newsletter-main-row .newsletter-content{
-  width: 60%;
+  width: 80%;
 }
 .uk-child-width-1-5\@m > * {
-	width: 25%;
+	width: 30%;
 }
 
 /* ===================================

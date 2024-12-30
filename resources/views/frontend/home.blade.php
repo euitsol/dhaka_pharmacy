@@ -3,11 +3,10 @@
 @section('content')
     <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
-        <section class="col-3 col-xl-2 d-lg-block d-none">
-            @if ($menuItems->isNotEmpty())
-                @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
-            @endif
-        </section>
+
+        @if ($menuItems->isNotEmpty())
+            @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
+        @endif
 
         
         <!--=========== Sidebar-Category-Section-Include  ==============-->
@@ -74,11 +73,11 @@
                     @if ($featuredCategories->isNotEmpty())
                         <div class="col-9 feature-product">
                             <div class="row cat-filter-row gx-4 align-items-center justify-content-center mb-3">
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-4 col-4 col-xxl-5 col-2 col-lg-6">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>
 
-                                <div class="col-12 col-md-7">
+                                <div class="col-12 col-md-7 col-7 col-xxl-6 col-4 col-lg-5">
                                         <div class="slider-col" uk-slider="finite: true">
                                             <div class="uk-position-relative">
                                                 <div class="uk-slider-container uk-light">
