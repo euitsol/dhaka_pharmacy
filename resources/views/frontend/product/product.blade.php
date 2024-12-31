@@ -21,7 +21,7 @@
                             </div>
                             @if (isset($sub_categories) && $sub_categories->isNotEmpty())
                                 <div class="col-12">
-                                    <div class="sub_categories my-5" uk-slider="finite: true">
+                                    <div class="sub_categories my-3 my-lg-5" uk-slider="finite: true">
                                         <div class="uk-position-relative">
                                             <div class="uk-slider-container uk-light">
                                                 <ul class="uk-slider-items cat-list">
@@ -80,7 +80,7 @@
                                 @php
                                     $proDisPrice = proDisPrice($product->price, $product->discounts);
                                 @endphp
-                                <div class="col-2 px-2 single-pdct-wrapper">
+                                <div class="px-2 single-pdct-wrapper col-3 col-xl-2 col-6 col-md-3">
                                     <div class="single-pdct">
                                         <a href="{{ route('product.single_product', $product->slug) }}">
                                             <div class="pdct-img">

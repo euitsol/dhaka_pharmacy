@@ -13,7 +13,7 @@
 
 
         <!--=========== Main Content Section Start ==============-->
-        <div class="{{ $menuItems->isNotEmpty() ? 'col-9 col-xl-10 col-12 col-lg-9 content-col' : 'col-12' }} content-col">
+        <div class="{{ $menuItems->isNotEmpty() ? 'col-8 col-xxl-10 col-12 col-lg-9 content-col' : 'col-12' }} content-col">
             <!--========= Slider-Section-Include ========-->
             @include('frontend.includes.home.slider')
             <!--========= Slider-Section-Include ========-->

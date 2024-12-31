@@ -11,6 +11,18 @@
     .footer-section .delivery-row {
         padding: 60px  0px !important;
     }
+    /* ul home page slider responsive code here */
+    .slider-sction .carousel-caption .slider-left h2 {
+        font-size: 55px;
+        line-height: 62px;
+    }
+    .slider-sction .uk-slideshow-items {
+        height: auto;
+    }
+    .slider-sction .carousel-caption .slider-right img {
+        max-width: 100%;
+        width: 100%;
+    }
 }
 
 
@@ -275,6 +287,21 @@
     }
     .uk-position-center-left-out {
         right: 95%;
+    }
+    .slider-sction .carousel-caption .slider-left h3 {
+        font-size: 20px;
+        line-height: 36px;
+    }
+    .slider-sction .carousel-caption .slider-left h2 {
+        font-size: 46px;
+        line-height: 49px;
+    }
+    .slider-sction .uk-slideshow-items {
+        height: 600px;
+    }
+    .slider-sction .carousel-caption .slider-right img {
+        width: auto;
+        max-width: 300px;
     }
 
 }

@@ -5,9 +5,9 @@
                 <li>
                     <img src="{{ asset('frontend/asset/img/Rectangle .jpg') }}" alt=""
                         uk-cover>
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption">
                         <div class="row">
-                            <div class="col-5 slider-left">
+                            <div class="col-6 col-xxl-5 col-12 col-md-6 slider-left">
                                 <h3>Your health. Our priority.</h3>
                                 <h2>100% pure <br>
                                     Pharmacy.</h2>
@@ -16,7 +16,7 @@
                                     <a href="#" class="reg">Register</a>
                                 </div>
                             </div>
-                            <div class="col-7 slider-right">
+                            <div class="col-6 col-xxl-7 col-12 col-md-6 slider-right">
                                 <img src="{{ asset('frontend/asset/img/medicalpharmacy-theme-background.png') }}"
                                     alt="">
                             </div>
@@ -26,9 +26,9 @@
                 <li>
                     <img src="{{ asset('frontend/asset/img/Rectangle .jpg') }}" alt=""
                         uk-cover>
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption">
                         <div class="row">
-                            <div class="col-5 slider-left">
+                            <div class="col-6 col-xxl-5 col-12 col-md-6 slider-left">
                                 <h3>Your health. Our priority.</h3>
                                 <h2>100% pure <br>
                                     Pharmacy.</h2>
@@ -37,7 +37,7 @@
                                     <a href="#" class="reg">Register</a>
                                 </div>
                             </div>
-                            <div class="col-7 slider-right">
+                            <div class="col-6 col-xxl-7 col-12 col-md-6 slider-right">
                                 <img src="{{ asset('frontend/asset/img/medicalpharmacy-theme-background.png') }}"
                                     alt="">
                             </div>
@@ -47,9 +47,9 @@
                 <li>
                     <img src="{{ asset('frontend/asset/img/Rectangle .jpg') }}" alt=""
                         uk-cover>
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption">
                         <div class="row">
-                            <div class="col-5 slider-left">
+                            <div class="col-6 col-xxl-5 col-12 col-md-6 slider-left">
                                 <h3>Your health. Our priority.</h3>
                                 <h2>100% pure <br>
                                     Pharmacy.</h2>
@@ -58,7 +58,7 @@
                                     <a href="#" class="reg">Register</a>
                                 </div>
                             </div>
-                            <div class="col-7 slider-right">
+                            <div class="col-6 col-xxl-7 col-12 col-md-6 slider-right">
                                 <img src="{{ asset('frontend/asset/img/medicalpharmacy-theme-background.png') }}"
                                     alt="">
                             </div>

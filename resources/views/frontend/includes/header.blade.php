@@ -33,8 +33,8 @@
                     <div class="col-8 ">
                         <div class="search-filter col-12 col-xl-8  m-auto">
                             <form class="d-flex" action="">
-                                <input class="col-7" type="text" id="searchInput" placeholder="Search...">
-                                <select class="col-4" name="pro_cat_id" id="categorySelect">
+                                <input class="col-5 col-sm-7" type="text" id="searchInput" placeholder="Search...">
+                                <select class="col-6 col-sm-4" name="pro_cat_id" id="categorySelect">
                                     <option value="all" selected>{{ __('All Category') }}</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ __($category->name) }}</option>

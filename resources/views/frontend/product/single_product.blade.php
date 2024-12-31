@@ -17,10 +17,10 @@
 
 
         <!--=========== Main Content Section Start ==============-->
-        <div class="{{ $menuItems->isNotEmpty() ? 'col-md-9 col-lg-10' : 'col-12' }} content-col">
+        <div class="{{ $menuItems->isNotEmpty() ? 'col-8 col-xxl-10 col-12 col-lg-9' : 'col-12' }} content-col">
             <section class="single_product_section pb-4">
                 <div class="row">
-                    <div class="{{ $similar_products->isNotEmpty() ? 'col-md-9' : 'col-md-12' }}">
+                    <div class="{{ $similar_products->isNotEmpty() ? 'col-12 col-xxl-9' : 'col-md-12' }}">
                         <div class="card single_product_card">
                             <div class="card-body">
                                 <div class="single_product">
@@ -274,7 +274,7 @@
 
                     </div>
                     @if ($similar_products->isNotEmpty())
-                        <div class="col-3">
+                        <div class="col-12 col-xxl-3">
                             <div class="card similar_products_card" style="height:100%">
                                 <div class="card-body">
                                     <div class="similar_products">
@@ -290,7 +290,7 @@
                                                     @endphp
                                                     <div class="col-12 single-item">
                                                         <div class="row align-items-center">
-                                                            <div class="col-4 img">
+                                                            <div class="col-12 col-xxl-4 img">
                                                                 <a
                                                                     href="{{ route('product.single_product', $product->slug) }}">
                                                                     <img height=""
@@ -299,7 +299,7 @@
                                                                         alt="{{ __($product->name) }}">
                                                                 </a>
                                                             </div>
-                                                            <div class="col-8 content">
+                                                            <div class="col-12 col-xxl-8 content">
 
                                                                 <h3 class="pdct-title"
                                                                     title="{{ $product->attr_title }}"><a

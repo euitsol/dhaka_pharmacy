@@ -1,5 +1,5 @@
 @include('frontend.includes.upload_prescription')
-<section class="col-md-3 col-lg-2 sidebar-cat-section">
+<section class="col-3 col-xxl-2 col-12 col-lg-3 sidebar-cat-section">
     <div class="col sticky-col pb-4">
         <div class="upload_prescription mb-2">
             <h2 class="text-center cat-title up_button">{{ __('Upload Prescription') }}</h2>
