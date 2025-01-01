@@ -12,6 +12,7 @@
         padding: 60px  0px !important;
     }
     /* ul home page slider responsive code here */
+
     .slider-sction .carousel-caption .slider-left h2 {
         font-size: 55px;
         line-height: 62px;
@@ -23,13 +24,36 @@
         max-width: 100%;
         width: 100%;
     }
+    .single_product_section .similar_products_card .similar_products .single-item{
+        padding: inherit;
+        border: none;
+      
+    }
+    .single_product_section .similar_products_card .similar_products .single-item .row{
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
+        border-radius: 15px;
+        backdrop-filter: blur(23px) saturate(169%);
+        -webkit-backdrop-filter: blur(23px) saturate(169%);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    .single_product_section .similar_products_card .similar_products .single-item img {
+        padding: 0px;
+        border-radius: 15px 15px 0px 0px !important;
+        border: none !important;
+    }
 }
+
+
+
+
+
 
 
 @media screen and (max-width: 1300px){
     /* =============================================
         uk future item tap slider responsive code
     =============================================== */
+
     .uk-child-width-1-5\@m > * {
         width: 100%;
     }
@@ -303,6 +327,12 @@
         width: auto;
         max-width: 300px;
     }
+    .container-fluid {
+        padding: 0 20px !important;
+    }
+    .sp_quantity{
+        width: 40% !important;
+    }
 
 }
 @media screen and (max-width: 640px){
@@ -327,7 +357,55 @@
     .slider-col.uk-slider .uk-position-center-right {
         right: -35px;
     }
+    .breadcrumb_wrap .breadcrumb.wizard {
+        list-style: none;
+        font-size: 12px;
+    }
+    .breadcrumb_wrap .breadcrumb.wizard li:first-child a {
+        padding-left: 5px;
+    }
+    .breadcrumb_wrap .breadcrumb.wizard li a::before {
+        left: 95%;
+    }
+    .breadcrumb_wrap .breadcrumb.wizard li a::after {
+        left: 95%;
+    }
+    .breadcrumb_wrap .breadcrumb.wizard li a {
+        padding: 8px 0 8px 30px;
+    }
+    .breadcrumb_wrap .favorite {
+        right: 0px;
+    }
+    .single_product_section .single_product .product_details .nav-tabs li a {
+        padding: 0px 0px !important;
+    }
+    .single_product_section .single_product .product_details .nav-tabs {
+        padding: 18px 3px;
+        align-items: center;
+    }
+    .single_product_section .single_product .product_details .tab-pane {
+        padding: 0px;
+        margin-top: 10px;
+    }
 
+    .faq-section .accordion-item .accordion-button {
+        font-size: 16px;
+        line-height: 23px;
+        box-shadow: none;
+        padding: 10px 15px;
+    }
+    .faq-section .accordion-button::after {
+        width: 22px !important;
+        height: 24px !important;
+    }
+    .faq-section .accordion-body {
+        font-size: 14px;
+        text-align: justify;
+    }
+    .faq-section .nav-pills .nav-item button {
+        font-size: 18px !important;
+        line-height: 32px !important;
+    }
 }
 
 
