@@ -11,7 +11,10 @@
     .footer-section .delivery-row {
         padding: 60px  0px !important;
     }
-    /* ul home page slider responsive code here */
+
+    /*==================================================
+        ul home page slider responsive code here *
+    ====================================================*/
 
     .slider-sction .carousel-caption .slider-left h2 {
         font-size: 55px;
@@ -44,11 +47,6 @@
 }
 
 
-
-
-
-
-
 @media screen and (max-width: 1300px){
     /* =============================================
         uk future item tap slider responsive code
@@ -58,6 +56,7 @@
         width: 100%;
     }
 }
+
 @media screen and (max-width: 1200px){
     /*============================================
         product section responsive code here
@@ -232,6 +231,12 @@
         justify-content: end;
         width: 100%;
     }
+    #searchBox{
+        width: 100%;
+    }
+    .header-section .search-filter .suggestion-box {
+        top: 39px;
+    }
 }
 
 
@@ -274,7 +279,6 @@
         width: 100%;
     }
     .mobile-footer .main-mobile-col {
-
         text-align: center;
     }
     .mobile-footer.hide {
@@ -288,19 +292,18 @@
         list-style: none;
         display: inline-block;
         margin-right: 15px;
-        font-size: 29px;
     }
     
     .mobile-footer .main-mobile-col ul li:last-child{
         margin-right: 0px;
     }
     .mobile-footer .main-mobile-col ul li a i {
-        font-size: 29px;
         color: var(--text-color-white);
         padding: 15px;
         background-color: var(--info-bg);
         border-radius: 5px;
         cursor: pointer;
+        font-size: 20px;
     }
     
     /* ============================================
@@ -332,6 +335,48 @@
     }
     .sp_quantity{
         width: 40% !important;
+    }
+    .footer-section .container {
+        padding: 0px 20px;
+    }
+    .product-section .sub_categories .uk-position-center-left-out {
+        right: 90%;
+    }
+    .product-section .sub_categories .uk-position-center-right-out {
+        left: 90% !important;
+    }
+
+    .faq-section .accordion-item .accordion-button {
+        font-size: 16px !important;
+        line-height: 23px;
+        box-shadow: none;
+        padding: 10px 15px;
+        font-weight: 400;
+    }
+    .faq-section .accordion-button::after {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    .faq-section .accordion-body {
+        font-size: 14px;
+        text-align: justify;
+    }
+    .faq-section .nav-pills .nav-item button {
+        font-size: 18px !important;
+        line-height: 32px ;
+    }
+    .faq-section .accordion-item .accordion-body {
+        font-size: 14px;
+    }
+
+    .faq-section .nav-pills .nav-item button.active {
+        font-weight: 500 !important;
+        color: var(--text-color-white);
+        background: var(--secondary-bg) !important;
+        padding: 0px 5px !important;
+    }
+    .slider-sction .carousel-caption .slider-right {
+        background-position: center bottom;
     }
 
 }
@@ -371,46 +416,10 @@
         left: 95%;
     }
     .breadcrumb_wrap .breadcrumb.wizard li a {
-        padding: 8px 0 8px 30px;
-    }
-    .breadcrumb_wrap .favorite {
-        right: 0px;
-    }
-    .single_product_section .single_product .product_details .nav-tabs li a {
-        padding: 0px 0px !important;
-    }
-    .single_product_section .single_product .product_details .nav-tabs {
-        padding: 18px 3px;
-        align-items: center;
-    }
-    .single_product_section .single_product .product_details .tab-pane {
-        padding: 0px;
-        margin-top: 10px;
-    }
-
-    .faq-section .accordion-item .accordion-button {
-        font-size: 16px;
-        line-height: 23px;
-        box-shadow: none;
-        padding: 10px 15px;
-    }
-    .faq-section .accordion-button::after {
-        width: 22px !important;
-        height: 24px !important;
-    }
-    .faq-section .accordion-body {
-        font-size: 14px;
-        text-align: justify;
-    }
-    .faq-section .nav-pills .nav-item button {
-        font-size: 18px !important;
-        line-height: 32px !important;
-    }
+        padding: 8px 5px 8px 30px;}
 }
 
-
 @media screen and (max-width: 575px){
-
     /* ===========================================
         product-section responsive code here
     ===============================================*/
@@ -449,9 +458,45 @@
         column-gap: 15px;
         row-gap: 15px;
     }
+    
+    .header-section .search-filter .search-icon a i{
+        color: var(--text-color-white);
+        font-size: 20px;
+    }
+    .header-section .search-filter .search-icon{
+        display: block;
+    }
+  
+    .header-section .search-filter .search-icon {
+        transition: transform 0.3s ease;
+    }
+  
+    .header-section .search-box {
+        width: 500px !important;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        transition: all 0.3s ease;
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-10px);
+        background: #00204b;
+        top: 45px;
+        position: absolute;
+    }
+    .search-box.active {
+        visibility: visible;
+        opacity: 1 !important;
+        transform: translateY(0);
+    }
+    .header-section .search-filter .suggestion-box {
+        top: 89px;
+        width: -moz-available;
+        left: -199px;
+    }
 
 }
-
 
 @media screen and (max-width: 520px){
 
@@ -460,6 +505,15 @@
     ===============================================*/
     .categories_menu .single-cat {
         padding: 8px !important;
+    }
+      
+    .header-section .search-box {
+        width: 330px !important;
+        top: 38px ;
+    }
+    .header-section .search-filter .suggestion-box {
+        width: 330px !important;
+        left: -60px;
     }
 
 }
@@ -473,7 +527,7 @@
         width: 45%;
     }
     
-     /* ===========================================
+    /* ===========================================
         footer-section responsive code here
     ===============================================*/
     .footer-section .main-footer-row .title {

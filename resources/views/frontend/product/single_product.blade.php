@@ -114,7 +114,7 @@
                                                                     </label>
                                                                 @endforeach
                                                             </div>
-                                                            <div class="sp_quantity w-25 mb-2 mb-md-0">
+                                                            <div class="sp_quantity w-25 mb-4 mb-md-0">
                                                                 <div class="form-group">
                                                                     <div class="input-group" role="group">
                                                                         <a href="javascript:void(0)"

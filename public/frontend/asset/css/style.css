@@ -84,6 +84,29 @@ a:hover{
 }
 
 
+/* ======================================================
+  For WebKit Browsers (e.g., Chrome, Edge, Safari) 
+=========================================================*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background:var(--secundary-color);
+}
+::-webkit-scrollbar-thumb {
+  background-color:var(--nav-primary-bg); 
+}
+
+/* ======================================================
+  For Firefox 
+=========================================================*/
+*{
+  scrollbar-width: thin; 
+  scrollbar-color: var(--nav-primary-bg) var(--secundary-color); 
+}
+
+
+
 /*====================================
       Start Product Common CSS
 ======================================*/
@@ -1068,7 +1091,9 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   z-index: 999;
 }
 
-
+.header-section .search-filter .search-icon{
+  display: none;
+}
 
 
 

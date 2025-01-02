@@ -99,7 +99,7 @@
         <div class="main-footer-row py-5">
             <div class="container">
                 <div class="row row-gap-4">
-                    <div class="col-4 col-lg-3 col-6 col-md-4 col-12 col-sm-6">
+                    <div class="col-4 col-lg-3 col-6 col-md-4 col-6 col-sm-6">
                         <div class="footer-logo mb-4">
                             <a href="#"> <img src="{{ asset('frontend/asset/img/logo.png') }}"
                                     alt="Footer logo"></a>

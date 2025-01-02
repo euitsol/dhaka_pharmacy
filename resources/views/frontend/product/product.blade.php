@@ -10,7 +10,7 @@
 
 
         <!--=========== Main Content Section Start ==============-->
-        <div class="{{ $menuItems->isNotEmpty() ? 'col-md-9 col-lg-10' : 'col-12' }} content-col">
+        <div class="{{ $menuItems->isNotEmpty() ? 'col-9 col-xxl-10 col-12 col-lg-9' : 'col-12' }} content-col">
             <!--========= Product-Section-Start ========-->
             <section class="product-section pb-4 mb-5">
                 <div class="row">
