@@ -3,9 +3,11 @@
 @section('content')
     <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
+        <div class="col-3 col-xxl-2 col-12 col-lg-3 d-none d-lg-block home-cat-sidebar">
         @if ($menuItems->isNotEmpty())
             @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
         @endif
+        </div>
         <!--=========== Sidebar-Category-Section-Include  ==============-->
 
 
@@ -19,8 +21,7 @@
                 @if ($menuItems->isNotEmpty())
                     @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
                 @endif
-            </div>
-                    
+            </div>      
             <!--=========== Sidebar-Category-Section-Include  ==============-->
 
 

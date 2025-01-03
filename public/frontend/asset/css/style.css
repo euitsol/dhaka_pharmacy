@@ -503,7 +503,9 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .sidebar-cat-section .single-cat.active h2 {
   color: var(--text-color-white);
 }
-
+.home-cat-sidebar .sidebar-cat-section {
+  width: 100%;
+}
 
 /*====================================
       Start Slider-section-style
@@ -1054,7 +1056,9 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 
 
-/* new code here  */
+/*=====================================
+  new footer code here  
+======================================*/
 
 .footer-section .newsletter-main-row {
 	display: flex;
@@ -1074,6 +1078,14 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 	width: 30%;
 }
 
+
+/* =====================================
+  header icon style
+=======================================*/
+.header-section .search-filter .search-icon{
+  display: none;
+}
+
 /* ===================================
     mobile footer design code here
 ====================================== */
@@ -1090,33 +1102,6 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   transition: transform 0.3s ease-in-out;
   z-index: 999;
 }
-
-.header-section .search-filter .search-icon{
-  display: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .footer-section .main-footer-row h2.title {
   position: relative;
@@ -1386,7 +1371,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 .breadcrumb_wrap .favorite {
   position: absolute;
-  right: 10px;
+  right: 0px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 22px;
