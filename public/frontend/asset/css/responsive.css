@@ -57,6 +57,9 @@
     .uk-child-width-1-5\@m > * {
         width: 100%;
     }
+    .header-section .search-filter {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 1200px){
@@ -70,7 +73,10 @@
         padding: 0px 10px;
     }
     .product-section .feature-product .all-products .single-pdct-wrapper{
-        width: auto;
+        width: 100%;
+    }
+    .product-section .feature-product .all-products .col-3{
+        width: 100% !important;
     }
 }    
 
@@ -81,8 +87,9 @@
     .footer-section .newsletter-main-row {
         max-width: 80%;
     }
-    .product-section .feature-product .all-products .single-pdct-wrapper {
-        width: auto;
+    .footer-section .main-footer-row .footer-nav li a {
+        font-size: 16px;
+        line-height: 30px;
     }
 }
 
@@ -119,6 +126,7 @@
         grid-template-columns: 1fr 1fr 1fr 1fr;
         column-gap: 10px;
         row-gap: 20px;
+        padding: 8px !important;
     }
     .categories_menu  .single-cat {
         border: none;
@@ -233,6 +241,9 @@
     .header-section .search-filter .suggestion-box {
         top: 39px;
     }
+    .sidebar-cat-section .row .single-cat .icon {
+        max-width: 80%;
+    }
 }
 
 
@@ -265,29 +276,30 @@
         width: 100%;
         padding: 0px 0px;
     }
-    
-    
+    .product-section .sub_categories .uk-position-center-left-out {
+        right: 90%;
+    }
+    .product-section .sub_categories .uk-position-center-right-out {
+        left: 90% !important;
+    }
+
     /* ===========================================
         mobile footer menu show code here
     ===============================================*/
     .mobile-footer {
         display: block;
-        width: 100%;
+        width: 100% !important;
         margin: 0 auto;
         padding: 15px 0;
         position: fixed;
         bottom: 0;
-        width: 100%;
-        background: var(--secundary-color);
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-        transform: translateY(100%);
-        transition: transform 0.3s ease-in-out;
+        box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
         z-index: 999;
         background-color: var(--info-bg);
     }
-    /* .mobile-footer .main-mobile-col {
+    .mobile-footer .main-mobile-col {
         text-align: center;
-    } */
+    } 
     .mobile-footer.hide {
         transform: translateY(100%);
     }
@@ -295,12 +307,14 @@
         transform: translateY(0);
     }
     .mobile-footer .row .col{
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        background: #2d98daa6;
         border-radius: 5px;
-        background: var(--secundary-color);
+        padding: 25px 0px;
     }
     .mobile-footer a i {
         color: var(--text-color-white);
-        padding: 20px 20px;
+        /* padding: 25px 15px; */
         cursor: pointer;
         font-size: 20px;
     }
@@ -323,19 +337,19 @@
         slider section 
     =================================================*/
     .slider-sction .carousel-caption .slider-left h3 {
-        font-size: 20px;
+        font-size: 18px;
         line-height: 36px;
     }
     .slider-sction .carousel-caption .slider-left h2 {
-        font-size: 46px;
-        line-height: 49px;
+        font-size: 36px;
+        line-height: 39px;
     }
     .slider-sction .uk-slideshow-items {
-        height: 600px;
+        height: 400px;
     }
     .slider-sction .carousel-caption .slider-right img {
         width: auto;
-        max-width: 300px;
+        max-width: 250px;
     }
     .container-fluid {
         padding: 0 20px !important;
@@ -343,16 +357,6 @@
     .sp_quantity{
         width: 40% !important;
     }
-    .footer-section .container {
-        padding: 0px 20px;
-    }
-    .product-section .sub_categories .uk-position-center-left-out {
-        right: 90%;
-    }
-    .product-section .sub_categories .uk-position-center-right-out {
-        left: 90% !important;
-    }
-
     /* ============================================================
         faq section responsive code here
     ===============================================================*/
@@ -368,15 +372,12 @@
         height: 20px !important;
     }
     .faq-section .accordion-body {
-        font-size: 14px;
+        font-size: 14px !important;
         text-align: justify;
     }
     .faq-section .nav-pills .nav-item button {
         font-size: 18px !important;
         line-height: 32px ;
-    }
-    .faq-section .accordion-item .accordion-body {
-        font-size: 16px !important;
     }
 
     .faq-section .nav-pills .nav-item button.active {
@@ -411,12 +412,16 @@
     }
     .tream-condition .container{
         max-width: 100%;
+        padding: 0px;
     }
     .container-fluid .log-with-pass .container{
         padding: 0px 30px;
         max-width: 100%;
     }
     
+    /* ============================================
+        loginpass responsive code here
+    ===============================================*/
     .log-with-pass .left-col form input {
         border-radius: 5px;
         height: 50px !important;
@@ -462,6 +467,7 @@
     .header-section .search-filter input{
         border: 2px solid var(--primary-color);
         border-right: 0px;
+        color: var(--primary-color);
     }
     .header-section .search-filter select {
         color: var(--primary-color);
@@ -478,22 +484,24 @@
         color: var(--text-color-white) !important;
     }
     .header-section .search-filter select option {
-        background: var(--asent-color);
+        background: var(--primary-color);
         color: var(--text-color-white) !important;
     }
-}
-@media screen and (max-width: 640px){
-
-    /* ===========================================
-        categories-section responsive code here
-    ===============================================*/
-    .categories_menu .col-6.text-center.single-cat h2{
+    header {
+        position: unset;
+    }
+    .categories_menu .col-6.text-center.single-cat h2 {
         display: none;
     }
- 
-    .categories_menu .single-cat {
-        padding: 15px !important;
+    .footer-section .container {
+        padding: 0px 20px;
     }
+    .log-with-pass::before {
+        top: 0px !important;
+    }
+
+}
+@media screen and (max-width: 640px){
 
     /* ===========================================
         uk future tap text slider responsive code
@@ -504,6 +512,7 @@
     .slider-col.uk-slider .uk-position-center-right {
         right: -35px;
     }
+
     /* ===========================================
         breadcrumb_wrap responsive code
     =============================================*/
@@ -523,6 +532,7 @@
     .breadcrumb_wrap .breadcrumb.wizard li a {
         padding: 8px 5px 8px 30px;
     }
+
     .product-section .sub_categories .uk-position-center-right-out {
         display: none;
     }
@@ -536,6 +546,7 @@
     /* ===========================================
         product-section responsive code here
     ===============================================*/
+
     .product-section .col-3.best-selling-col .best-selling-products .all-product {
         grid-template-columns: 1fr 1fr;
     }
@@ -567,55 +578,20 @@
     /* ===========================================
         categories-section responsive code here
     ===============================================*/
-    .categories_menu .row {
-        column-gap: 15px;
-        row-gap: 15px;
+
+    .slider-sction .carousel-caption .slider-left .btns a {
+        font-size: 14px;
+        width: 100px;
     }
-    
-    /* =============================================
-        header section resonsive design code here
-    ================================================*/
-    /* .header-section .search-filter .search-icon a i{
-        color: var(--text-color-white);
-        font-size: 20px;
+    .slider-sction .carousel-caption .slider-right img {
+        max-width: 225px;
     }
-    .header-section .search-filter .search-icon{
-        display: block;
+    .slider-sction .carousel-caption .slider-left h2 {
+        font-size: 32px;
+        line-height: 32px;
     }
-  
-    .header-section .search-filter .search-icon {
-        transition: transform 0.3s ease;
-    }
-  
-    .header-section .search-box {
-        width: 500px !important;
-        padding: 12px;
-        border: none;
-        border-radius: 5px;
-        outline: none;
-        transition: all 0.3s ease;
-        visibility: hidden;
-        opacity: 0;
-        transform: translateY(-10px);
-        background: #00204b;
-        top: 45px;
-        position: absolute;
-    }
-    .search-box.active {
-        visibility: visible;
-        opacity: 1 !important;
-        transform: translateY(0);
-    }
-    .header-section .search-filter .suggestion-box {
-        top: 89px;
-        /* width: -moz-available; */
-        /* left: -199px; */
-    } */
-    .mobile-footer a i {
-        color: var(--text-color-white);
+    .mobile-footer .row .col {
         padding: 15px 10px;
-        cursor: pointer;
-        font-size: 20px;
     }
 }
 
@@ -628,13 +604,6 @@
         padding: 8px !important;
     }
       
-    /* .header-section .search-box {
-        width: 330px !important;
-        top: 38px ;
-    }
-    .header-section .search-filter .suggestion-box {
-        width: 330px !important;
-    } */
 
 }
 

@@ -4,7 +4,7 @@
             <div class="row align-items-center row-gap-4 row-gap-lg-0">
                 <div class="col-12 col-lg-8 order-2 order-lg-1">    
                     <div class="row align-items-center justify-space-between">
-                        <div class="col-5 col-sm-5">
+                        <div class="col-4 col-xxl-5 col-5 col-md-4">
                             <div class="row align-items-center">
                                 {{-- <div class="col-2">
                                     <a class="menu-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
@@ -31,11 +31,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-7">
+                        <div class="col 8 col-xxl-7 col-12 col-md-8">
                             <div class="search-filter col-12 col-xl-10  m-auto">
                                 <form class="d-flex search-box" action="">
-                                    <input class="col-5 col-md-7" type="text" id="searchInput" placeholder="Search...">
-                                    <select class="col-6 col-md-4" name="pro_cat_id" id="categorySelect">
+                                    <input class="col-6 col-md-7 col-4 col-sm-6" type="text" id="searchInput" placeholder="Search...">
+                                    <select class="col-5 col-md-4 col-5 col-sm-5" name="pro_cat_id" id="categorySelect">
                                         <option value="all" selected>{{ __('All Category') }}</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ __($category->name) }}</option>
@@ -48,12 +48,6 @@
                                 <div id="suggestionBox" class="suggestion-box p-2 pb-0">
 
                                 </div>
-                                <!-- <div class="search-icon">
-                                    <a id="searchIcon" class="search-icon" onclick="toggleSearch()" href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
-                                </div>
-                                <div id="suggestionBox" class="suggestion-box p-2 pb-0">
-
-                                </div> -->
                             </div>
                         </div>
                     </div>

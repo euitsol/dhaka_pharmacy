@@ -113,7 +113,7 @@
                             </div>
                             <div class="row all-products">
                                 @foreach ($products as $product)
-                                    <div class="col-3 px-2 single-pdct-wrapper">
+                                    <div class="px-2 single-pdct-wrapper col-4 col-xl-3 col-6 col-sm-4">
                                         <div class="single-pdct">
                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                 <div class="pdct-img">

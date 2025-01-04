@@ -54,27 +54,6 @@
         </div>
 
         <!--======== Footer newsletter row ===========-->
-        <!-- <div class="newsletter-row">
-            <div class="container">
-                <div class="row">
-                    <div class="col-8 m-auto">
-                        <div class="row align-items-center">
-                            <div class="col-4">
-                                <h3 class="title text-white m-0 text-center">
-                                    {{ __('Subscribe to get the Latest News') }}</h3>
-                            </div>
-                            <div class="col-8">
-                                <form action="" class="d-flex align-items-center">
-                                    <input type="text" placeholder="Enter Your Email">
-                                    <input type="submit" value="Subscribe">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
         <div class="newsletter-row">
             <div class="container">
                 <div class="row">
@@ -183,16 +162,6 @@
     <div class="mobile-footer">
         <div class="container">
             <div class="row align-items-center justify-content-center gap-2">
-                <!-- <div class="col-12">
-                    <div class="main-mobile-col text-center">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-home"></i></a></li>
-                            <li><a href="#"><i class="fas fa-th-large"></i></a></li>
-                            <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-                            <li><a href="#"><i class="fas fa-user"></i></a></li>
-                        </ul>
-                    </div>
-                </div> -->
                 <div class="col text-center">
                     <a href="#"><i class="fas fa-home"></i></a>
                 </div>
@@ -204,6 +173,14 @@
                 </div>
                 <div class="col text-center">
                     <a href="#"><i class="fas fa-user"></i></a>
+                </div>
+                <div class="col d-flex align-items-center justify-content-center">
+                    <div class="item">
+                        <select name="" id="">
+                            <option value="english">{{ __('English') }}</option>
+                            <option value="bangla">{{ __('Bangla') }}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
