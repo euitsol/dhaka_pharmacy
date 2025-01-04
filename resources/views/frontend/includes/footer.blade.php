@@ -182,8 +182,8 @@
     <!-- =========== Mobile footer design =========== -->
     <div class="mobile-footer">
         <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-12">
+            <div class="row align-items-center justify-content-center gap-2">
+                <!-- <div class="col-12">
                     <div class="main-mobile-col text-center">
                         <ul>
                             <li><a href="#"><i class="fas fa-home"></i></a></li>
@@ -192,6 +192,18 @@
                             <li><a href="#"><i class="fas fa-user"></i></a></li>
                         </ul>
                     </div>
+                </div> -->
+                <div class="col text-center">
+                    <a href="#"><i class="fas fa-home"></i></a>
+                </div>
+                <div class="col text-center">
+                    <a href="#"><i class="fas fa-th-large"></i></a>
+                </div>
+                <div class="col text-center">
+                    <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                </div>
+                <div class="col text-center">
+                    <a href="#"><i class="fas fa-user"></i></a>
                 </div>
             </div>
         </div>

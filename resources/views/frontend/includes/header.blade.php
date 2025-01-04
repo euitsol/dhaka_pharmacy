@@ -23,7 +23,7 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="col-8 col-xl-5 col-12 col-sm-8">
+                                <div class="col-8 col-xl-5 col-12 col-sm-8 logo-col">
                                     <div class="logo">
                                         <a href="{{ route('home') }}"><img class="w-100"
                                                 src="{{ asset('frontend/asset/img/logo.png') }}" alt="Header-logo"></a>
@@ -31,9 +31,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7 col-sm-7">
+                        <div class="col-12 col-md-7">
                             <div class="search-filter col-12 col-xl-10  m-auto">
-                                <form class="d-flex search-box" id="searchBox" action="">
+                                <form class="d-flex search-box" action="">
                                     <input class="col-5 col-md-7" type="text" id="searchInput" placeholder="Search...">
                                     <select class="col-6 col-md-4" name="pro_cat_id" id="categorySelect">
                                         <option value="all" selected>{{ __('All Category') }}</option>
@@ -45,15 +45,15 @@
                                     <button class="sub-btn text-center bg-white col-1" type="submit"><i
                                             class="fa-solid fa-magnifying-glass text-dark"></i></button>
                                 </form>
-                                <!-- <div id="suggestionBox" class="suggestion-box p-2 pb-0">
+                                <div id="suggestionBox" class="suggestion-box p-2 pb-0">
 
-                                </div> -->
-                                <div class="search-icon">
+                                </div>
+                                <!-- <div class="search-icon">
                                     <a id="searchIcon" class="search-icon" onclick="toggleSearch()" href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
                                 </div>
                                 <div id="suggestionBox" class="suggestion-box p-2 pb-0">
 
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

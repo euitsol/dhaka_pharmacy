@@ -115,49 +115,5 @@ function formatPercentageNumber(number) {
 
 
 
-// Mobile footer design code here
-
-document.addEventListener("DOMContentLoaded", () => {
-    const footer = document.querySelector(".mobile-footer");
-    let isFooterVisible = false; // Tracks the current state
-
-    window.addEventListener("scroll", () => {
-        const currentScrollY = window.scrollY;
-        const windowHeight = window.innerHeight;
-
-        if (currentScrollY <= windowHeight && isFooterVisible) {
-            // Hide the footer when below 100vh
-            footer.classList.remove("show");
-            footer.classList.add("hide");
-            isFooterVisible = false;
-        } else if (currentScrollY > windowHeight && !isFooterVisible) {
-            // Show the footer when above 100vh
-            footer.classList.remove("hide");
-            footer.classList.add("show");
-            isFooterVisible = true;
-        }
-    });
-});
-
-
-
-// header search icon click
-
-function toggleSearch() {
-    const searchBox = document.getElementById('searchBox');
-    const searchIcon = document.getElementById('searchIcon');
-
-    // Toggle the search box visibility
-    searchBox.classList.toggle('active');
-
-    // Change the icon based on visibility
-    if (searchBox.classList.contains('active')) {
-        searchIcon.innerHTML = '<i class="fa-solid fa-xmark"></i>'; // Close icon
-    } else {
-        searchIcon.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>'; // Search icon
-    }
-}
-
-
 
 
