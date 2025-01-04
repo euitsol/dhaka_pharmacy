@@ -17,8 +17,8 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->longText('message');
-            $table->unsignedBigInteger('sender_id');
-            $table->string('sender_type');
+            $table->unsignedBigInteger('sender_id')->nullable();
+            $table->string('sender_type')->nullable();
             $table->unsignedBigInteger('ticket_id'); // Ticket association
             $table->timestamps();
             $table->softDeletes();

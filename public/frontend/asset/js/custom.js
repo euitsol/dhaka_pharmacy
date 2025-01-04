@@ -138,48 +138,129 @@ document.addEventListener("DOMContentLoaded", () => {
     $(".conversation").scrollTop($(".conversation")[0].scrollHeight);
 });
 
-// Auth Chat Ticket Create
-$(document).ready(function () {
-    $("#authChatStartForm").on("submit", function (event) {
-        event.preventDefault();
-        let $this = $(this);
-        $.ajax({
-            url: $this.attr("action"),
-            method: "POST",
-            data: $this.serialize(),
-            dataType: "json",
-            success: function (response) {
-                $this.parent().remove();
-                $(".conversation").parent().removeClass("d-none");
-            },
-            error: function (xhr) {
-                // if (xhr.status === 422) {
-                //     // Handle validation errors
-                //     var errors = xhr.responseJSON.errors;
-                //     $(".invalid-feedback").remove();
-                //     $.each(errors, function (field, messages) {
-                //         // Display validation errors
-                //         var errorHtml = "";
-                //         $.each(messages, function (index, message) {
-                //             errorHtml +=
-                //                 '<span class="invalid-feedback d-block" role="alert">' +
-                //                 message +
-                //                 "</span>";
-                //         });
-                //         $('[name="' + field + '"]').after(errorHtml);
-                //         // Handle other errors.
-                //         let imageError =
-                //             '<span class="invalid-feedback d-block" role="alert">Image field is required</span>';
-                //         $('[name="uploadfile"]').parent().after(imageError);
-                //     });
-                // } else {
-                //     $(".invalid-feedback").remove();
-                //     // Handle other errors.
-                //     let imageError =
-                //         '<span class="invalid-feedback d-block" role="alert">Image field is required</span>';
-                //     $('[name="uploadfile"]').parent().after(imageError);
-                // }
-            },
+// Function to handle chat ticket creation
+function handleChatTicketForm(formId, ticketKey) {
+    $(document).ready(function () {
+        $(formId).on("submit", function (event) {
+            event.preventDefault();
+            let $this = $(this);
+
+            $.ajax({
+                url: $this.attr("action"),
+                method: "POST",
+                data: $this.serialize(),
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        let conversation = $(".conversation");
+
+                        $this.parent().remove();
+                        conversation.parent().removeClass("d-none");
+                        toastr.success(response.message);
+
+                        sessionStorage.setItem(ticketKey, response.ticket_id);
+                        sessionStorage.setItem(
+                            "last_active_time",
+                            new Date().getTime()
+                        );
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 422) {
+                        handleValidationErrors(xhr.responseJSON.errors);
+                    } else {
+                        toastr.error("An error occurred. Please try again.");
+                    }
+                },
+            });
         });
     });
+}
+
+// Function to handle validation errors
+function handleValidationErrors(errors) {
+    $(".invalid-feedback").remove();
+    $.each(errors, function (field, messages) {
+        let errorHtml = messages
+            .map(
+                (message) =>
+                    `<span class="invalid-feedback d-block" role="alert">${message}</span>`
+            )
+            .join("");
+        $(`[name="${field}"]`).after(errorHtml);
+    });
+}
+
+// Function to render chat messages
+function chatMessages(chatMessages, senderId) {
+    if (!Array.isArray(chatMessages)) {
+        chatMessages = [chatMessages]; // Convert single object to array
+    }
+    let result = "";
+    if (chatMessages.length == 0) {
+        result += `<span class="temp_text text-muted text-center d-block">Sent your message here.</span>`;
+    }
+    chatMessages.forEach((message) => {
+        result += `
+        <div class="conversation-item d-flex align-items-start ${
+            message.sender_id != senderId
+                ? "justify-content-end sent"
+                : "justify-content-start "
+        }">`;
+        if (message.sender_id != senderId) {
+            result += `<div class="author_logo">
+                <img src="${message.author_image}" alt="avatar">
+            </div>`;
+        }
+
+        result += `<div class="sms_text w-auto">
+                <div class="message">${message.message}</div>
+                <div class="time">${message.send_at}</div>
+            </div>`;
+        if (message.sender_id === senderId) {
+            result += `<div class="author_logo">
+                <img src="${message.author_image}" alt="avatar">
+            </div>`;
+        }
+        result += `</div>`;
+    });
+
+    return result;
+}
+
+// Initialize forms for both authenticated and guest users
+handleChatTicketForm("#authChatStartForm", "authChatTicketId");
+handleChatTicketForm("#guestChatStartForm", "guestChatTicketId");
+
+// Chat Refresh Function
+function chatDataLoad() {
+    let authChatTicketId = sessionStorage.getItem("authChatTicketId", "null");
+    let guestChatTicketId = sessionStorage.getItem("guestChatTicketId", "null");
+    let route = routes.getMessages.replace("auth_ticket_id", authChatTicketId);
+    route = route.replace("guest_ticket_id", guestChatTicketId);
+    $.ajax({
+        url: route,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+            if (data.success) {
+                let conversation = $(".conversation");
+                $(".chat_initial_form").remove();
+                conversation
+                    .find(".conversation-list")
+                    .html(
+                        chatMessages(data.ticket.messages, data.ticketAbleId)
+                    );
+                conversation.parent().removeClass("d-none");
+                conversation.scrollTop(
+                    conversation[0].scrollHeight - conversation.height()
+                );
+            }
+        },
+    });
+}
+$(document).ready(function () {
+    chatDataLoad();
 });

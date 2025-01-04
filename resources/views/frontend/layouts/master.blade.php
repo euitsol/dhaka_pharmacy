@@ -57,6 +57,9 @@
             'cart_update': `{{ route('cart.update') }}`,
             'cart_delete': `{{ route('cart.delete') }}`,
             'login': `{{ route('login') }}`,
+
+            // Live Chat
+            'getMessages': `{{ route('guest.ticket.messages', ['auth_ticket_id', 'guest_ticket_id']) }}`,
         };
     </script>
 </head>

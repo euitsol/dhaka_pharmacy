@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('subject');
-            $table->boolean('status')->default(0);
+            $table->tinyInteger('status')->default(0)->comment('0=Pending, 1=Open, 2=Closed');
             $table->unsignedBigInteger('ticketable_id');
             $table->string('ticketable_type');
             $table->unsignedBigInteger('assigned_admin')->nullable();
