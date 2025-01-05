@@ -42,7 +42,7 @@ class MedicineUnitController extends Controller
         $medicine_unit = new MedicineUnit();
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = titleToSlug($req->name) . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'medicine_units/images';
             $path = $image->storeAs($folderName, $imageName, 'public');
             $medicine_unit->image = $path;
@@ -66,7 +66,7 @@ class MedicineUnitController extends Controller
         $medicine_unit = MedicineUnit::findOrFail($id);
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = titleToSlug($req->name) . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'products/images';
             $path = $image->storeAs($folderName, $imageName, 'public');
             if (!empty($medicine_unit->image)) {
