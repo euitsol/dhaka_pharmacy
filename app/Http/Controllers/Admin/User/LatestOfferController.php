@@ -43,7 +43,7 @@ class LatestOfferController extends Controller
         if ($req->hasFile('image')) {
             $image = $req->file('image');
             $imageName = $req->title . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'latest_offer/';
+            $folderName = 'latest_offer';
             $path = $image->storeAs($folderName, $imageName, 'public');
             $lf->image = $path;
         }
@@ -66,7 +66,7 @@ class LatestOfferController extends Controller
         if ($req->hasFile('image')) {
             $image = $req->file('image');
             $imageName = $req->title . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'latest_offer/';
+            $folderName = 'latest_offer';
             $path = $image->storeAs($folderName, $imageName, 'public');
             if (!empty($lf->image)) {
                 $this->fileDelete($lf->image);

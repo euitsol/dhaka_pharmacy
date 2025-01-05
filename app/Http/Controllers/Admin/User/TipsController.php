@@ -46,7 +46,7 @@ class TipsController extends Controller
         if ($req->hasFile('image')) {
             $image = $req->file('image');
             $imageName = $req->title . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'user_tips/';
+            $folderName = 'user_tips';
             $path = $image->storeAs($folderName, $imageName, 'public');
             $tips->image = $path;
         }
@@ -79,7 +79,7 @@ class TipsController extends Controller
         if ($req->hasFile('image')) {
             $image = $req->file('image');
             $imageName = $req->title . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'user_tips/';
+            $folderName = 'user_tips';
             $path = $image->storeAs($folderName, $imageName, 'public');
             if (!empty($tips->image)) {
                 $this->fileDelete($tips->image);
