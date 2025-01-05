@@ -1,11 +1,3 @@
-{{-- <div class="chat_bubble" id="chat_bubble">
-
-    <div class="chat_icon w-100 h-100 d-flex justify-content-center align-items-center">
-        <i class="fa-solid fa-headset"></i>
-    </div>
-
-
-</div> --}}
 <div class="support_wrap">
     <div class="chat" id="chat">
         <div class="background"></div>
@@ -33,16 +25,16 @@
 
     <div class="message_box">
         <div class="head-text">
-            Let's chat? - Online
+            {{ __("Let's chat? - Online") }}
         </div>
         <div class="chat-box">
             <div class="message w-100 h-100">
                 <div class="chat_initial_form w-100 h-100 d-flex align-items-center justify-content-center flex-column">
                     <div class="desc-text w-100">
-                        Please fill out the form below to start chatting with the next available agent.
+                        {{ __('Please fill out the form below to start chatting with the next available agent.') }}
                     </div>
                     @if (!auth()->guard('web')->check())
-                        <form class="w-100" id="guestChatStartForm" action="{{ route('guest.ticket.create') }}"
+                        <form class="w-100" id="guestChatStartForm" action="{{ route('ticket.create') }}"
                             method="POST">
                             @csrf
                             <div class="field">
@@ -55,18 +47,18 @@
                                 <input type="text" class="p-4" name="subject" placeholder="Your Subject" required>
                             </div>
                             <div class="field">
-                                <button type="submit" class="start_btn">Start Chat</button>
+                                <button type="submit" class="start_btn">{{ __('Start Chat') }}</button>
                             </div>
                         </form>
                     @else
-                        <form class="w-100" id="authChatStartForm" action="{{ route('u.ticket.create') }}"
+                        <form class="w-100" id="authChatStartForm" action="{{ route('ticket.create') }}"
                             method="POST">
                             @csrf
                             <div class="field">
                                 <input type="text" name="subject" class="p-4" placeholder="Your Subject" required>
                             </div>
                             <div class="field">
-                                <button type="submit" class="start_btn">Start Chat</button>
+                                <button type="submit" class="start_btn">{{ __('Start Chat') }}</button>
                             </div>
                         </form>
                     @endif
@@ -82,10 +74,9 @@
                         </div>
                     </div>
                     <div class="send_box">
-                        <form
-                            action="{{ !auth()->guard('web')->check() ? route('guest.ticket.message.send') : route('u.ticket.message.send') }}"
-                            class="pt-2 h-100" method="POST"
-                            id="{{ !auth()->guard('web')->check() ? 'guestChatForm' : 'authChatForm' }}">
+                        <form action="{{ route('ticket.message.send') }}" class="pt-2 h-100" method="POST"
+                            id="messageSendForm">
+                            @csrf
                             <div class="input-group h-100">
                                 <textarea class="form-control message-input" rows="1" name="message" placeholder="Enter your message"></textarea>
                                 <input type="submit" value="Send" class="btn send_btn">
