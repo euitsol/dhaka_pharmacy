@@ -18,8 +18,8 @@
     </div>
     <div class="default-talk-bubble tri-right border btm-right-in">
         <div class="talktext">
-            <p>👋 Need any help?
-                We're here to assist you! Click the chat bubble to start a conversation</p>
+            <p>{{ __("👋 Need any help? We're here to assist you! Click the chat bubble to start a conversation") }}
+            </p>
         </div>
     </div>
 
@@ -38,13 +38,13 @@
                             method="POST">
                             @csrf
                             <div class="field">
-                                <input type="text" class="p-4" name="name" placeholder="Your Name" required>
+                                <input type="text" class="p-4" name="name" placeholder="Your Name">
                             </div>
                             <div class="field">
-                                <input type="text" class="p-4" name="phone" placeholder="Your Phone" required>
+                                <input type="text" class="p-4" name="phone" placeholder="Your Phone">
                             </div>
                             <div class="field">
-                                <input type="text" class="p-4" name="subject" placeholder="Your Subject" required>
+                                <input type="text" class="p-4" name="subject" placeholder="Your Subject">
                             </div>
                             <div class="field">
                                 <button type="submit" class="start_btn">{{ __('Start Chat') }}</button>
@@ -55,7 +55,7 @@
                             method="POST">
                             @csrf
                             <div class="field">
-                                <input type="text" name="subject" class="p-4" placeholder="Your Subject" required>
+                                <input type="text" name="subject" class="p-4" placeholder="Your Subject">
                             </div>
                             <div class="field">
                                 <button type="submit" class="start_btn">{{ __('Start Chat') }}</button>

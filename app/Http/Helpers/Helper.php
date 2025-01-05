@@ -650,10 +650,18 @@ function getPharmacySubArea($pharmacy)
     return $sub_area;
 }
 
-
-function ticketClosed()
+function getTicketId()
 {
-    $ticketId = decrypt(session()->get('ticket_id'));
+    $ticketId = session()->get('ticket_id');
+    $ticketId = $ticketId ? decrypt($ticketId) : null;
+    return $ticketId;
+}
+
+
+function ticketClosed($ticket_id = false)
+{
+
+    $ticketId = $ticket_id ? $ticket_id : getTicketId();
     $ticket = Ticket::where('id', $ticketId)->first();
     if ($ticket) {
         $ticket->update(['status' => 2]);

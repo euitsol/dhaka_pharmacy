@@ -54,7 +54,7 @@ function handleChatTicketForm(formId) {
                 },
                 error: function (xhr) {
                     if (xhr.status === 422) {
-                        handleValidationErrors(xhr.responseJSON.errors);
+                        handleValidationErrors(xhr.responseJSON.errors, formId);
                     } else {
                         toastr.error("An error occurred. Please try again.");
                     }
@@ -68,16 +68,16 @@ handleChatTicketForm("#authChatStartForm");
 handleChatTicketForm("#guestChatStartForm");
 
 // Function to handle validation errors
-function handleValidationErrors(errors) {
+function handleValidationErrors(errors, formId) {
     $(".invalid-feedback").remove();
     $.each(errors, function (field, messages) {
         let errorHtml = messages
             .map(
                 (message) =>
-                    `<span class="invalid-feedback d-block" role="alert">${message}</span>`
+                    `<span class="invalid-feedback d-block text-start m-0" style="position: unset;" role="alert">${message}</span>`
             )
             .join("");
-        $(`[name="${field}"]`).after(errorHtml);
+        $(formId).find(`[name="${field}"]`).after(errorHtml);
     });
 }
 
@@ -86,7 +86,6 @@ function chatMessages(chatMessages, senderId) {
     let conversation = $(".conversation");
     let result = "";
     if (!Array.isArray(chatMessages)) {
-        $(".temp_text").remove();
         result += `<div class="conversation-item d-flex align-items-start justify-content-end sent">
                             <div class="sms_text w-auto">
                                 <div class="message">${chatMessages.message}</div>
@@ -98,13 +97,13 @@ function chatMessages(chatMessages, senderId) {
                         </div>`;
 
         conversation.find(".conversation-list").append(result);
+        $(".temp_text").remove();
     } else {
         $(".chat_initial_form").remove();
         conversation.parent().removeClass("d-none");
-        if (chatMessages.length == 0) {
-            result += `<span class="temp_text text-muted text-center d-block">Sent your message here.</span>`;
+        if (chatMessages.length === 0) {
+            result = `<span class="temp_text text-muted text-center d-block">Sent your message here.</span>`;
         } else {
-            $(".temp_text").remove();
             chatMessages.forEach((message) => {
                 result += `
                 <div class="conversation-item d-flex align-items-start ${
@@ -129,8 +128,8 @@ function chatMessages(chatMessages, senderId) {
                 }
                 result += `</div>`;
             });
-            conversation.find(".conversation-list").html(result);
         }
+        conversation.find(".conversation-list").html(result);
     }
     conversation.scrollTop(
         conversation[0].scrollHeight - conversation.height()
@@ -147,6 +146,10 @@ function chatDataLoad() {
         success: function (response) {
             if (response.success) {
                 chatMessages(response.ticket.messages, response.ticketAbleId);
+            } else {
+                console.log(response);
+
+                toastr.error(response.message);
             }
         },
     });
@@ -172,7 +175,8 @@ $(document).ready(function () {
             },
             error: function (xhr) {
                 if (xhr.status === 422) {
-                    handleValidationErrors(xhr.responseJSON.errors);
+                    // toastr.error(xhr.responseJSON.message);
+                    console.log(xhr.responseJSON.message);
                 } else {
                     toastr.error("An error occurred. Please try again.");
                 }
