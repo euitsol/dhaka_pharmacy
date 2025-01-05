@@ -554,6 +554,11 @@ function slugToTitle($slug)
 {
     return ucwords(strtolower(str_replace('-', ' ', $slug)));
 }
+
+function titleToSlug($title)
+{
+    return strtolower(str_replace(' ', '-', $title));
+}
 function activatedTime($start_time, $end_time)
 {
     if ($end_time != $start_time) {

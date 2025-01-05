@@ -41,7 +41,7 @@ class RiderProfileController extends Controller
         $rider = Rider::findOrFail(rider()->id);
         if ($request->hasFile('cv')) {
             $file = $request->file('cv');
-            $fileName = rider()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $fileName = titleToSlug(rider()->name) . '_' . time() . '.' . $file->getClientOriginalExtension();
             $folderName = 'rider/' . rider()->id;
             $path = $file->storeAs($folderName, $fileName, 'public');
             if (!empty($rider->cv)) {
@@ -88,7 +88,7 @@ class RiderProfileController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = rider()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = titleToSlug(rider()->name) . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'rider/' . rider()->id;
             $path = $image->storeAs($folderName, $imageName, 'public');
             $rider->image = $path;

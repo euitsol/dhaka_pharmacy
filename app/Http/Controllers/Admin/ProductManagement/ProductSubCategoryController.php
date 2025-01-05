@@ -45,7 +45,7 @@ class ProductSubCategoryController extends Controller
         $product_sub_category = new ProductSubCategory();
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = $req->slug . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'product_sub_category';
             $path = $image->storeAs($folderName, $imageName, 'public');
             $product_sub_category->image = $path;
@@ -70,7 +70,7 @@ class ProductSubCategoryController extends Controller
         $product_sub_category = ProductSubCategory::findOrFail($id);
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = $req->slug . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'product_sub_category';
             $path = $image->storeAs($folderName, $imageName, 'public');
             if (!empty($product_sub_category->image)) {
