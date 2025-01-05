@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <title> @yield('title', 'District Manager Dashboard'){{ __(' - Dhakha Pharmacy') }} </title>
+    <title> @yield('title', 'District Manager Dashboard'){{ __(' - Dhaka Pharmacy') }} </title>
 
     <!-- Favicon -->
     <link rel="icon" href="{{ storage_url(settings('site_favicon')) }}">

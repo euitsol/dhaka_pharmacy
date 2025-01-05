@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
 
-    <title> @yield('title', 'DP') - Dhakha Pharmacy </title>
+    <title> @yield('title', 'DP') - Dhaka Pharmacy </title>
     <!-- Favicon -->
     <link rel="icon" href="{{ storage_url(settings('site_favicon')) }}">
 
