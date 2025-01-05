@@ -72,6 +72,7 @@ class LoginController extends Controller
             $newUser->save();
             Auth::guard('web')->login($newUser);
         }
+        ticketClosed();
         return redirect()->route('user.dashboard');
     }
 
@@ -135,6 +136,7 @@ class LoginController extends Controller
             $newUser->save();
             Auth::guard('web')->login($newUser);
         }
+        ticketClosed();
         return redirect()->route('user.dashboard');
     }
 
@@ -166,6 +168,7 @@ class LoginController extends Controller
                     Session::forget('data');
                     $url = Session::get('previous_url', route('user.dashboard'));
                     Session::forget('previous_url');
+                    ticketClosed();
                     return redirect($url);
                 }
                 flash()->addError('Invalid credentials');
@@ -188,6 +191,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::guard('web')->logout();
+        ticketClosed();
         return redirect()->route('login');
     }
 
@@ -308,6 +312,7 @@ class LoginController extends Controller
                 Auth::guard('web')->login($user);
                 $url = Session::get('previous_url', route('user.dashboard'));
                 Session::forget('previous_url');
+                ticketClosed();
                 return redirect($url);
             } else {
                 flash()->addSuccess('OTP didn\'t match. Please try again');

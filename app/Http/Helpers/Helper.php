@@ -7,6 +7,7 @@ use App\Models\Permission;
 use App\Models\PointSetting;
 use App\Models\Review;
 use App\Models\SiteSetting;
+use App\Models\Ticket;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
@@ -647,4 +648,16 @@ function getPharmacySubArea($pharmacy)
         ($pharmacy->operation_area ? $pharmacy->operation_sub_area->name . ' )' : '( ' . $pharmacy->operation_sub_area->name . ' )')
         : '';
     return $sub_area;
+}
+
+
+function ticketClosed()
+{
+    $ticketId = decrypt(session()->get('ticket_id'));
+    $ticket = Ticket::where('id', $ticketId)->first();
+    if ($ticket) {
+        $ticket->update(['status' => 2]);
+    }
+    session()->forget('ticket_id');
+    session()->forget('last_active_time');
 }
