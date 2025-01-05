@@ -2105,7 +2105,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
     height: 50px;
     width: 100%;
     margin-top: 20px;
-    line-height: 50px;
+    /* line-height: 50px; */
     text-align: center;
       }
   .support_wrap .message_box .chat-box .chat_initial_form .field:last-child{
