@@ -37,19 +37,11 @@ class GuestTicketController extends Controller
             ]);
 
             // $message = Message::create([
-            //     'message' => $request->subject,
-            //     'ticket_id' => $ticket->id,
-            //     'sender_id' => $guest->id,
-            //     'sender_type' => 'App\Models\TempUser'
-            // ]);
-            // $message = Message::create([
-            //     'message' => 'Hi, ' . $guest->name . ' your ticket has been created successfully. Our representative will contact you soon.',
+            //     'message' => 'Hi, ' . $guest->name . ' your ticket has been created successfully. How can we help you.',
             //     'ticket_id' => $ticket->id,
             //     'sender_id' => NULL,
             //     'sender_type' => NULL
             // ]);
-
-            // $ticket->load('messages');
             $ticketId = $ticket->id;
         });
         if ($ticketId == null) {
@@ -84,7 +76,7 @@ class GuestTicketController extends Controller
     public function messages($authTicketId, $guestTicketId)
     {
         if (Auth::guard('web')->check() && $authTicketId != 'null') {
-            return redirect()->route('u.ticket.messages', encrypt($authTicketId));
+            return redirect()->route('u.ticket.messages', $authTicketId);
         } elseif ($guestTicketId != 'null') {
             $ticket = Ticket::with('messages.sender')->where('id', decrypt($guestTicketId))->first();
             if ($ticket) {
@@ -102,6 +94,41 @@ class GuestTicketController extends Controller
         }
         return response()->json([
             'success' => false
+        ]);
+    }
+
+    public function message_send(Request $request)
+    {
+        $ticket = Ticket::with(['messages'])->where('id', decrypt($request->guest_ticket_id))->first();
+        if ($ticket) {
+            $message = Message::create([
+                'message' => $request->message,
+                'ticket_id' => $ticket->id,
+                'sender_id' => $ticket->ticketable_id,
+                'sender_type' => $ticket->ticketable_type
+            ]);
+            $ticket->messages->each(function ($message) {
+                $message->load('sender');
+                $message->author_image = $message->sender && $message->sender->image ? asset('storage/' . $message->sender->image) : asset('default_img/male.png');
+                $message->send_at = $message->created_at->diffForHumans();
+            });
+            // return response()->json([
+            //     'success' => true,
+            //     'ticket' => $ticket,
+            //     'ticketAbleId' => $ticket->ticketable_id,
+            // ]);
+            return response()->json([
+                'success' => true,
+                'reply' => $message,
+                'ticket' => $ticket,
+                'message' => 'Message sent successfully',
+                'auth' => false,
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Something went wrong, please try again'
         ]);
     }
 }

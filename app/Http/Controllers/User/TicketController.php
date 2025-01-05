@@ -88,4 +88,37 @@ class TicketController extends Controller
             ]);
         }
     }
+
+    public function message_send(Request $request)
+    {
+        $ticket = Ticket::with('messages')->where('id', decrypt($request->auth_ticket_id))->first();
+        if ($ticket) {
+            $message = Message::create([
+                'message' => $request->message,
+                'ticket_id' => $ticket->id,
+                'sender_id' => $ticket->ticketable_id,
+                'sender_type' => $ticket->ticketable_type
+            ]);
+            $ticket->messages->each(function ($message) {
+                $message->load('sender');
+                $message->author_image = $message->sender && $message->sender->image ? asset('storage/' . $message->sender->image) : asset('default_img/male.png');
+                $message->send_at = $message->created_at->diffForHumans();
+            });
+            // return response()->json([
+            //     'success' => true,
+            //     'ticket' => $ticket,
+            //     'ticketAbleId' => $ticket->ticketable_id,
+            // ]);
+            return response()->json([
+                'success' => true,
+                'reply' => $message,
+                'message' => 'Message sent successfully',
+                'auth' => true,
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'message' => 'Something went wrong, please try again'
+        ]);
+    }
 }

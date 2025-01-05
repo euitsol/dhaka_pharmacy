@@ -82,9 +82,12 @@
                         </div>
                     </div>
                     <div class="send_box">
-                        <form action="" class="pt-2 h-100">
+                        <form
+                            action="{{ !auth()->guard('web')->check() ? route('guest.ticket.message.send') : route('u.ticket.message.send') }}"
+                            class="pt-2 h-100" method="POST"
+                            id="{{ !auth()->guard('web')->check() ? 'guestChatForm' : 'authChatForm' }}">
                             <div class="input-group h-100">
-                                <textarea class="form-control message-input" rows="1" placeholder="Enter your message"></textarea>
+                                <textarea class="form-control message-input" rows="1" name="message" placeholder="Enter your message"></textarea>
                                 <input type="submit" value="Send" class="btn send_btn">
                             </div>
                         </form>

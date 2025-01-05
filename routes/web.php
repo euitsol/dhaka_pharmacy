@@ -1108,6 +1108,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     Route::controller(UserTicketController::class)->prefix('ticket')->name('u.ticket.')->group(function () {
         Route::post('/create', 'create')->name('create');
         Route::get('/messages/{ticket_id}', 'messages')->name('messages');
+        Route::post('message/send', 'message_send')->name('message.send');
     });
 });
 
@@ -1116,16 +1117,8 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
 Route::controller(GuestTicketController::class)->prefix('ticket')->name('guest.ticket.')->group(function () {
     Route::post('/create', 'create')->name('create');
     Route::get('/messages/{auth_ticket_id}/{guest_ticket_id}', 'messages')->name('messages');
+    Route::post('message/send', 'message_send')->name('message.send');
 });
-
-
-
-
-
-
-
-
-
 
 Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {
     // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');

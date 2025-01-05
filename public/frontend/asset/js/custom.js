@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Function to handle chat ticket creation
-function handleChatTicketForm(formId, ticketKey) {
+function handleChatTicketForm(formId, ticketKey, lastActiveTimeKey) {
     $(document).ready(function () {
         $(formId).on("submit", function (event) {
             event.preventDefault();
@@ -153,14 +153,18 @@ function handleChatTicketForm(formId, ticketKey) {
                 success: function (response) {
                     if (response.success) {
                         let conversation = $(".conversation");
-
+                        conversation
+                            .find(".conversation-list")
+                            .html(
+                                '<span class="temp_text text-muted text-center d-block">Sent your message here.</span>'
+                            );
                         $this.parent().remove();
                         conversation.parent().removeClass("d-none");
                         toastr.success(response.message);
 
                         sessionStorage.setItem(ticketKey, response.ticket_id);
                         sessionStorage.setItem(
-                            "last_active_time",
+                            lastActiveTimeKey,
                             new Date().getTime()
                         );
                     } else {
@@ -201,38 +205,48 @@ function chatMessages(chatMessages, senderId) {
     let result = "";
     if (chatMessages.length == 0) {
         result += `<span class="temp_text text-muted text-center d-block">Sent your message here.</span>`;
-    }
-    chatMessages.forEach((message) => {
-        result += `
-        <div class="conversation-item d-flex align-items-start ${
-            message.sender_id != senderId
-                ? "justify-content-end sent"
-                : "justify-content-start "
-        }">`;
-        if (message.sender_id != senderId) {
-            result += `<div class="author_logo">
-                <img src="${message.author_image}" alt="avatar">
-            </div>`;
-        }
+    } else {
+        $(".temp_text").remove();
+        chatMessages.forEach((message) => {
+            result += `
+            <div class="conversation-item d-flex align-items-start ${
+                message.sender_id != senderId
+                    ? "justify-content-end sent"
+                    : "justify-content-start "
+            }">`;
+            if (message.sender_id != senderId) {
+                result += `<div class="author_logo">
+                    <img src="${message.author_image}" alt="avatar">
+                </div>`;
+            }
 
-        result += `<div class="sms_text w-auto">
-                <div class="message">${message.message}</div>
-                <div class="time">${message.send_at}</div>
-            </div>`;
-        if (message.sender_id === senderId) {
-            result += `<div class="author_logo">
-                <img src="${message.author_image}" alt="avatar">
-            </div>`;
-        }
-        result += `</div>`;
-    });
+            result += `<div class="sms_text w-auto">
+                    <div class="message">${message.message}</div>
+                    <div class="time">${message.send_at}</div>
+                </div>`;
+            if (message.sender_id === senderId) {
+                result += `<div class="author_logo">
+                    <img src="${message.author_image}" alt="avatar">
+                </div>`;
+            }
+            result += `</div>`;
+        });
+    }
 
     return result;
 }
 
 // Initialize forms for both authenticated and guest users
-handleChatTicketForm("#authChatStartForm", "authChatTicketId");
-handleChatTicketForm("#guestChatStartForm", "guestChatTicketId");
+handleChatTicketForm(
+    "#authChatStartForm",
+    "authChatTicketId",
+    "authLastActiveTime"
+);
+handleChatTicketForm(
+    "#guestChatStartForm",
+    "guestChatTicketId",
+    "guestLastActiveTime"
+);
 
 // Chat Refresh Function
 function chatDataLoad() {
@@ -264,3 +278,77 @@ function chatDataLoad() {
 $(document).ready(function () {
     chatDataLoad();
 });
+
+function messageSend(formId) {
+    $(formId).on("submit", function (event) {
+        event.preventDefault();
+        let $this = $(this);
+
+        let authChatTicketId = sessionStorage.getItem(
+            "authChatTicketId",
+            "null"
+        );
+        let guestChatTicketId = sessionStorage.getItem(
+            "guestChatTicketId",
+            "null"
+        );
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+        $.ajax({
+            url: $this.attr("action"),
+            method: "POST",
+            data: {
+                message: $this.find('textarea[name="message"]').val(),
+                auth_ticket_id: authChatTicketId,
+                guest_ticket_id: guestChatTicketId,
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    console.log(response);
+
+                    let conversation = $(".conversation");
+                    conversation.find(".conversation-list").append(
+                        `<div class="conversation-item d-flex align-items-start justify-content-end sent">
+                            <div class="sms_text w-auto">
+                                <div class="message">${response.reply}</div>
+                                <div class="time">${response.send_at}</div>
+                            </div>
+                            <div class="author_logo">
+                                <img src="${response.author_image}" alt="avatar">
+                            </div>
+                        </div>`
+                    );
+                    $(".temp_text").remove();
+                    if (response.auth) {
+                        sessionStorage.setItem(
+                            "authLastActiveTime",
+                            new Date().getTime()
+                        );
+                    } else {
+                        sessionStorage.setItem(
+                            "guestLastActiveTime",
+                            new Date().getTime()
+                        );
+                    }
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function (xhr) {
+                if (xhr.status === 422) {
+                    handleValidationErrors(xhr.responseJSON.errors);
+                } else {
+                    toastr.error("An error occurred. Please try again.");
+                }
+            },
+        });
+    });
+}
+
+messageSend("#guestChatForm");
+messageSend("#authChatForm");
