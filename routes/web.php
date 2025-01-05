@@ -110,7 +110,7 @@ use App\Http\Controllers\DM\WithdrawMethodController as DmWithdrawMethodControll
 use App\Http\Controllers\Frontend\FaqPageController;
 use App\Http\Controllers\Frontend\PrivacyPolicyPageController;
 use App\Http\Controllers\Frontend\TermsAndConditionsPageController;
-use App\Http\Controllers\GuestTicketController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
 use App\Http\Controllers\LAM\WithdrawMethodController as LamWithdrawMethodController;
 use App\Http\Controllers\Pharmacy\Auth\EmailVerificationController as PharmacyEmailVerificationController;
@@ -122,7 +122,6 @@ use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodCo
 use App\Http\Controllers\User\KYC\KycVerificationController as UserKycVerificationController;
 use App\Http\Controllers\User\NotificationController as UserNotificationController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
-use App\Http\Controllers\User\TicketController as UserTicketController;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -1104,28 +1103,21 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     });
 
 
-    // Live Chat
-    Route::controller(UserTicketController::class)->prefix('ticket')->name('u.ticket.')->group(function () {
-        Route::post('/create', 'create')->name('create');
-        Route::get('/messages/{ticket_id}', 'messages')->name('messages');
-    });
+    // // Live Chat
+    // Route::controller(UserTicketController::class)->prefix('ticket')->name('u.ticket.')->group(function () {
+    //     Route::post('/create', 'create')->name('create');
+    //     Route::get('/messages/{ticket_id}', 'messages')->name('messages');
+    //     Route::post('message/send', 'message_send')->name('message.send');
+    // });
 });
 
 // Guest Live Chat
 // Live Chat
-Route::controller(GuestTicketController::class)->prefix('ticket')->name('guest.ticket.')->group(function () {
+Route::controller(TicketController::class)->prefix('ticket')->name('ticket.')->group(function () {
     Route::post('/create', 'create')->name('create');
-    Route::get('/messages/{auth_ticket_id}/{guest_ticket_id}', 'messages')->name('messages');
+    Route::get('/messages', 'messages')->name('messages');
+    Route::post('message/send', 'message_send')->name('message.send');
 });
-
-
-
-
-
-
-
-
-
 
 Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payment.')->group(function () {
     // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');

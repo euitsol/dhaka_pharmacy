@@ -59,7 +59,7 @@
             'login': `{{ route('login') }}`,
 
             // Live Chat
-            'getMessages': `{{ route('guest.ticket.messages', ['auth_ticket_id', 'guest_ticket_id']) }}`,
+            'getMessages': `{{ route('ticket.messages') }}`,
         };
     </script>
 </head>
@@ -95,6 +95,7 @@
     @stack('js_link')
     <!--========== custom-js ===========-->
     <script src="{{ asset('frontend/asset/js/custom.js') }}"></script>
+    <script src="{{ asset('frontend/asset/js/support.js') }}"></script>
     @include('frontend.includes.add_to_cart_js')
     @include('frontend.includes.search_js')
     @include('frontend.includes.wishlist_js')
