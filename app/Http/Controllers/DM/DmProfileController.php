@@ -38,7 +38,7 @@ class DmProfileController extends Controller
         $dm = DistrictManager::findOrFail(dm()->id);
         if ($request->hasFile('cv')) {
             $file = $request->file('cv');
-            $fileName = dm()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $fileName = titleToSlug(dm()->name) . '_' . time() . '.' . $file->getClientOriginalExtension();
             $folderName = 'district_manager/' . dm()->id;
             $path = $file->storeAs($folderName, $fileName, 'public');
             if (!empty($dm->cv)) {
@@ -80,7 +80,7 @@ class DmProfileController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = dm()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = titleToSlug(dm()->name) . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'district_manager/' . dm()->id;
             $path = $image->storeAs($folderName, $imageName, 'public');
             $dm->image = $path;

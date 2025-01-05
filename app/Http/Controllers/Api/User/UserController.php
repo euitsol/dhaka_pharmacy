@@ -30,7 +30,7 @@ class UserController extends BaseController
         if ($user) {
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $imageName = $user->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+                $imageName = titleToSlug($user->name) . '_' . time() . '.' . $image->getClientOriginalExtension();
                 $folderName = 'user/' . $user->id;
                 $path = $image->storeAs($folderName, $imageName, 'public');
                 $user->image = $path;

@@ -38,7 +38,7 @@ class LamProfileController extends Controller
         $lam = LocalAreaManager::findOrFail(lam()->id);
         if ($request->hasFile('cv')) {
             $file = $request->file('cv');
-            $fileName = lam()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $fileName = titleToSlug(lam()->name) . '_' . time() . '.' . $file->getClientOriginalExtension();
             $folderName = 'local_area_manager/' . lam()->id;
             $path = $file->storeAs($folderName, $fileName, 'public');
             if (!empty($lam->cv)) {
@@ -83,7 +83,7 @@ class LamProfileController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = lam()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = titleToSlug(lam()->name) . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'local_area_manager/' . lam()->id;
             $path = $image->storeAs($folderName, $imageName, 'public');
             $lam->image = $path;

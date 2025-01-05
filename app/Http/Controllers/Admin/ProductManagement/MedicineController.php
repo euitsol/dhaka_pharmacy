@@ -63,8 +63,8 @@ class MedicineController extends Controller
 
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'products/' . $req->name;
+            $imageName = $req->slug . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $folderName = 'products/' . $req->slug;
             $path = $image->storeAs($folderName, $imageName, 'public');
             $medicine->image = $path;
         }

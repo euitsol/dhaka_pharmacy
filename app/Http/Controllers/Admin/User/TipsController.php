@@ -45,7 +45,7 @@ class TipsController extends Controller
         $tips = new UserTips();
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->title . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = titleToSlug($req->title) . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'user_tips';
             $path = $image->storeAs($folderName, $imageName, 'public');
             $tips->image = $path;
@@ -78,7 +78,7 @@ class TipsController extends Controller
         $tips = UserTips::findOrFail($id);
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->title . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = titleToSlug($req->title) . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'user_tips';
             $path = $image->storeAs($folderName, $imageName, 'public');
             if (!empty($tips->image)) {
