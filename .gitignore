@@ -20,3 +20,4 @@ yarn-error.log
 composer.lock
 .htaccess
 config/broadcasting.php
+config/broadcasting.php
