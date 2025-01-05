@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Support\MessageSendRequest;
+use App\Http\Requests\Support\TicketCreateRequest;
 use App\Models\Message;
 use App\Models\TempUser;
 use App\Models\Ticket;
@@ -16,7 +18,7 @@ use Illuminate\View\View;
 class TicketController extends Controller
 {
 
-    public function create(Request $request)
+    public function create(TicketCreateRequest $request)
     {
         try {
             DB::transaction(function () use ($request, &$ticketId) {
@@ -64,15 +66,15 @@ class TicketController extends Controller
     {
 
         try {
-            $lastActiveTime = session()->get('last_active_time', now()->timestamp);
-            $ticketId = decrypt(session()->get('ticket_id'));
+            $lastActiveTime = session()->get('last_active_time');
+            $ticketId = getTicketId();
             $currentTime = now()->timestamp;
-            if ($lastActiveTime && $currentTime - $lastActiveTime > 1800) {
+            if ($lastActiveTime && $currentTime - $lastActiveTime > 3600) {
                 ticketClosed();
                 return response()->json([
                     'success' => false,
-                    'message' => 'The session has expired. Your ticket has been closed.',
-                ], 401);
+                    'message' => 'The session has expired. Your support ticket has been closed.',
+                ]);
             }
 
             $ticket = Ticket::with('messages.sender')->where('id', $ticketId)->first();
@@ -90,10 +92,10 @@ class TicketController extends Controller
                     'ticketAbleId' => $ticket->ticketable_id,
                 ]);
             }
-            return response()->json([
-                'success' => false,
-                'message' => 'Ticket not found.',
-            ], 404);
+            // return response()->json([
+            //     'success' => false,
+            //     'message' => 'Ticket not found.',
+            // ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -103,7 +105,7 @@ class TicketController extends Controller
         }
     }
 
-    public function message_send(Request $request)
+    public function message_send(MessageSendRequest $request)
     {
         try {
             $lastActiveTime = session()->get('last_active_time', now()->timestamp);
@@ -136,12 +138,11 @@ class TicketController extends Controller
                     'message' => 'Message sent successfully',
                 ]);
             }
-            return response()->json([
-                'success' => false,
-                'message' => 'Ticket not found.',
-            ], 404);
+            // return response()->json([
+            //     'success' => false,
+            //     'message' => 'Ticket not found.',
+            // ], 404);
         } catch (\Exception $e) {
-            // Handle exceptions and return an error response
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while sending the message.',
