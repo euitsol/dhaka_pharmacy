@@ -75,7 +75,7 @@ class AdminController extends Controller
 
         if ($request->hasFile('identification_file')) {
             $file = $request->file('identification_file');
-            $fileName = admin()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $fileName = titleToSlug(admin()->name) . '_' . time() . '.' . $file->getClientOriginalExtension();
             $folderName = 'admin/identification-file/' . admin()->id;
             $path = $file->storeAs($folderName, $fileName, 'public');
             if (!empty($admin->identification_file)) {
@@ -117,7 +117,7 @@ class AdminController extends Controller
         $admin = Admin::findOrFail(admin()->id);
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = admin()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = titleToSlug(admin()->name) . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'admin/' . admin()->id;
             $path = $image->storeAs($folderName, $imageName, 'public');
             $admin->image = $path;

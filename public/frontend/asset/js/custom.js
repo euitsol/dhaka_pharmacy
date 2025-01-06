@@ -108,12 +108,247 @@ function formatPercentageNumber(number) {
     return formattedNumber;
 }
 
+// // support JS
 
+// document.addEventListener("DOMContentLoaded", () => {
+//     const talkBubble = document.querySelector(".default-talk-bubble");
+//     const lastShownTime = localStorage.getItem("talkBubbleLastShown");
+//     const currentTime = new Date().getTime();
 
+//     // if (!lastShownTime || currentTime - lastShownTime > 3600000) {
+//     setTimeout(() => {
+//         talkBubble.classList.add("show");
+//         setTimeout(() => {
+//             talkBubble.classList.remove("show");
+//         }, 10000);
+//         localStorage.setItem("talkBubbleLastShown", currentTime);
+//     }, 2000);
 
+//     // }
+// });
 
+// document.addEventListener("DOMContentLoaded", () => {
+//     $("#chat").on("click", function () {
+//         const talkBubble = $(".default-talk-bubble");
+//         talkBubble.remove();
+//         $(this).toggleClass("active");
+//         $(".message_box").toggleClass("active");
+//     });
 
+//     $(".conversation").scrollTop($(".conversation")[0].scrollHeight);
+// });
 
+// // Function to handle chat ticket creation
+// function handleChatTicketForm(formId, ticketKey, lastActiveTimeKey) {
+//     $(document).ready(function () {
+//         $(formId).on("submit", function (event) {
+//             event.preventDefault();
+//             let $this = $(this);
 
+//             $.ajax({
+//                 url: $this.attr("action"),
+//                 method: "POST",
+//                 data: $this.serialize(),
+//                 dataType: "json",
+//                 success: function (response) {
+//                     if (response.success) {
+//                         let conversation = $(".conversation");
+//                         conversation
+//                             .find(".conversation-list")
+//                             .html(
+//                                 '<span class="temp_text text-muted text-center d-block">Sent your message here.</span>'
+//                             );
+//                         $this.parent().remove();
+//                         conversation.parent().removeClass("d-none");
+//                         toastr.success(response.message);
 
+//                         sessionStorage.setItem(ticketKey, response.ticket_id);
+//                         sessionStorage.setItem(
+//                             lastActiveTimeKey,
+//                             new Date().getTime()
+//                         );
+//                     } else {
+//                         toastr.error(response.message);
+//                     }
+//                 },
+//                 error: function (xhr) {
+//                     if (xhr.status === 422) {
+//                         handleValidationErrors(xhr.responseJSON.errors);
+//                     } else {
+//                         toastr.error("An error occurred. Please try again.");
+//                     }
+//                 },
+//             });
+//         });
+//     });
+// }
 
+// // Function to handle validation errors
+// function handleValidationErrors(errors) {
+//     $(".invalid-feedback").remove();
+//     $.each(errors, function (field, messages) {
+//         let errorHtml = messages
+//             .map(
+//                 (message) =>
+//                     `<span class="invalid-feedback d-block" role="alert">${message}</span>`
+//             )
+//             .join("");
+//         $(`[name="${field}"]`).after(errorHtml);
+//     });
+// }
+
+// // Function to render chat messages
+// function chatMessages(chatMessages, senderId) {
+//     if (!Array.isArray(chatMessages)) {
+//         chatMessages = [chatMessages]; // Convert single object to array
+//     }
+//     let result = "";
+//     if (chatMessages.length == 0) {
+//         result += `<span class="temp_text text-muted text-center d-block">Sent your message here.</span>`;
+//     } else {
+//         $(".temp_text").remove();
+//         chatMessages.forEach((message) => {
+//             result += `
+//             <div class="conversation-item d-flex align-items-start ${
+//                 message.sender_id != senderId
+//                     ? "justify-content-end sent"
+//                     : "justify-content-start "
+//             }">`;
+//             if (message.sender_id != senderId) {
+//                 result += `<div class="author_logo">
+//                     <img src="${message.author_image}" alt="avatar">
+//                 </div>`;
+//             }
+
+//             result += `<div class="sms_text w-auto">
+//                     <div class="message">${message.message}</div>
+//                     <div class="time">${message.send_at}</div>
+//                 </div>`;
+//             if (message.sender_id === senderId) {
+//                 result += `<div class="author_logo">
+//                     <img src="${message.author_image}" alt="avatar">
+//                 </div>`;
+//             }
+//             result += `</div>`;
+//         });
+//     }
+
+//     return result;
+// }
+
+// // Initialize forms for both authenticated and guest users
+// handleChatTicketForm(
+//     "#authChatStartForm",
+//     "authChatTicketId",
+//     "authLastActiveTime"
+// );
+// handleChatTicketForm(
+//     "#guestChatStartForm",
+//     "guestChatTicketId",
+//     "guestLastActiveTime"
+// );
+
+// // Chat Refresh Function
+// function chatDataLoad() {
+//     let authChatTicketId = sessionStorage.getItem("authChatTicketId", "null");
+//     let guestChatTicketId = sessionStorage.getItem("guestChatTicketId", "null");
+//     let route = routes.getMessages.replace("auth_ticket_id", authChatTicketId);
+//     route = route.replace("guest_ticket_id", guestChatTicketId);
+//     $.ajax({
+//         url: route,
+//         method: "GET",
+//         dataType: "json",
+//         success: function (data) {
+//             if (data.success) {
+//                 let conversation = $(".conversation");
+//                 $(".chat_initial_form").remove();
+//                 conversation
+//                     .find(".conversation-list")
+//                     .html(
+//                         chatMessages(data.ticket.messages, data.ticketAbleId)
+//                     );
+//                 conversation.parent().removeClass("d-none");
+//                 conversation.scrollTop(
+//                     conversation[0].scrollHeight - conversation.height()
+//                 );
+//             }
+//         },
+//     });
+// }
+// $(document).ready(function () {
+//     chatDataLoad();
+// });
+
+// function messageSend(formId) {
+//     $(formId).on("submit", function (event) {
+//         event.preventDefault();
+//         let $this = $(this);
+
+//         let authChatTicketId = sessionStorage.getItem(
+//             "authChatTicketId",
+//             "null"
+//         );
+//         let guestChatTicketId = sessionStorage.getItem(
+//             "guestChatTicketId",
+//             "null"
+//         );
+
+//         $.ajaxSetup({
+//             headers: {
+//                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+//             },
+//         });
+//         $.ajax({
+//             url: $this.attr("action"),
+//             method: "POST",
+//             data: {
+//                 message: $this.find('textarea[name="message"]').val(),
+//                 auth_ticket_id: authChatTicketId,
+//                 guest_ticket_id: guestChatTicketId,
+//             },
+//             dataType: "json",
+//             success: function (response) {
+//                 if (response.success) {
+//                     console.log(response);
+
+//                     let conversation = $(".conversation");
+//                     conversation.find(".conversation-list").append(
+//                         `<div class="conversation-item d-flex align-items-start justify-content-end sent">
+//                             <div class="sms_text w-auto">
+//                                 <div class="message">${response.reply}</div>
+//                                 <div class="time">${response.send_at}</div>
+//                             </div>
+//                             <div class="author_logo">
+//                                 <img src="${response.author_image}" alt="avatar">
+//                             </div>
+//                         </div>`
+//                     );
+//                     $(".temp_text").remove();
+//                     if (response.auth) {
+//                         sessionStorage.setItem(
+//                             "authLastActiveTime",
+//                             new Date().getTime()
+//                         );
+//                     } else {
+//                         sessionStorage.setItem(
+//                             "guestLastActiveTime",
+//                             new Date().getTime()
+//                         );
+//                     }
+//                 } else {
+//                     toastr.error(response.message);
+//                 }
+//             },
+//             error: function (xhr) {
+//                 if (xhr.status === 422) {
+//                     handleValidationErrors(xhr.responseJSON.errors);
+//                 } else {
+//                     toastr.error("An error occurred. Please try again.");
+//                 }
+//             },
+//         });
+//     });
+// }
+
+// messageSend("#guestChatForm");
+// messageSend("#authChatForm");

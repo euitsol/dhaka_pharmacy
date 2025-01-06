@@ -33,7 +33,7 @@ class ProfileController extends Controller
         $user = User::findOrFail(user()->id);
         if ($request->hasFile('identification_file')) {
             $file = $request->file('identification_file');
-            $fileName = user()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $fileName = titleToSlug(user()->name) . '_' . time() . '.' . $file->getClientOriginalExtension();
             $folderName = 'user/' . user()->id;
             $path = $file->storeAs($folderName, $fileName, 'public');
             if (!empty($user->identification_file)) {
@@ -77,7 +77,7 @@ class ProfileController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = user()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = titleToSlug(user()->name) . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'user/' . user()->id;
             $path = $image->storeAs($folderName, $imageName, 'public');
             $user->image = $path;

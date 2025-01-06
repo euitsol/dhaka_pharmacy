@@ -70,7 +70,7 @@ class PharmacyProfileController extends Controller
 
         if ($request->hasFile('identification_file')) {
             $file = $request->file('identification_file');
-            $fileName = pharmacy()->name . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $fileName = titleToSlug(pharmacy()->name) . '_' . time() . '.' . $file->getClientOriginalExtension();
             $folderName = 'pharmacy/identification-file/' . pharmacy()->id;
             $path = $file->storeAs($folderName, $fileName, 'public');
             if (!empty($pharmacy->identification_file)) {
@@ -112,7 +112,7 @@ class PharmacyProfileController extends Controller
         $pharmacy = Pharmacy::findOrFail(pharmacy()->id);
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = pharmacy()->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = titleToSlug(pharmacy()->name) . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'pharmacy/' . pharmacy()->id;
             $path = $image->storeAs($folderName, $imageName, 'public');
             $pharmacy->image = $path;

@@ -158,3 +158,18 @@ function updateUrlParameter(param, value) {
     url.searchParams.set(param, value);
     window.history.pushState({}, "", url);
 }
+
+
+// Header Toggle JS 
+
+
+$(document).ready(function () {
+    $(".toggle_bar .toggle_icon").on("click", function () {
+        if($(this).hasClass("fa-bars")){
+            $(this).removeClass("fa-bars").addClass("fa-bars-staggered");
+        }else{
+            $(this).removeClass("fa-bars-staggered").addClass("fa-bars");
+        }
+        $(".header-section .nav-menu").toggleClass("active");
+    });
+});

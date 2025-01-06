@@ -42,8 +42,8 @@ class LatestOfferController extends Controller
         $lf = new LatestOffer();
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->title . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'latest_offer/';
+            $imageName = titleToSlug($req->title) . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $folderName = 'latest_offer';
             $path = $image->storeAs($folderName, $imageName, 'public');
             $lf->image = $path;
         }
@@ -65,8 +65,8 @@ class LatestOfferController extends Controller
         $lf = LatestOffer::findOrFail($id);
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->title . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $folderName = 'latest_offer/';
+            $imageName = titleToSlug($req->tittle) . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $folderName = 'latest_offer';
             $path = $image->storeAs($folderName, $imageName, 'public');
             if (!empty($lf->image)) {
                 $this->fileDelete($lf->image);

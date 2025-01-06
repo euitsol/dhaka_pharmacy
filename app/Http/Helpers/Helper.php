@@ -7,6 +7,7 @@ use App\Models\Permission;
 use App\Models\PointSetting;
 use App\Models\Review;
 use App\Models\SiteSetting;
+use App\Models\Ticket;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
@@ -553,6 +554,11 @@ function slugToTitle($slug)
 {
     return ucwords(strtolower(str_replace('-', ' ', $slug)));
 }
+
+function titleToSlug($title)
+{
+    return strtolower(str_replace(' ', '-', $title));
+}
 function activatedTime($start_time, $end_time)
 {
     if ($end_time != $start_time) {
@@ -647,4 +653,24 @@ function getPharmacySubArea($pharmacy)
         ($pharmacy->operation_area ? $pharmacy->operation_sub_area->name . ' )' : '( ' . $pharmacy->operation_sub_area->name . ' )')
         : '';
     return $sub_area;
+}
+
+function getTicketId()
+{
+    $ticketId = session()->get('ticket_id');
+    $ticketId = $ticketId ? decrypt($ticketId) : null;
+    return $ticketId;
+}
+
+
+function ticketClosed($ticket_id = false)
+{
+
+    $ticketId = $ticket_id ? $ticket_id : getTicketId();
+    $ticket = Ticket::where('id', $ticketId)->first();
+    if ($ticket) {
+        $ticket->update(['status' => 2]);
+    }
+    session()->forget('ticket_id');
+    session()->forget('last_active_time');
 }

@@ -44,7 +44,7 @@ class ProductCategoryController extends Controller
 
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = $req->slug . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'product_category';
             $path = $image->storeAs($folderName, $imageName, 'public');
             $product_category->image = $path;
@@ -68,7 +68,7 @@ class ProductCategoryController extends Controller
         $product_category = ProductCategory::findOrFail($id);
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $imageName = $req->name . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = $req->slug . '_' . time() . '.' . $image->getClientOriginalExtension();
             $folderName = 'product_category';
             $path = $image->storeAs($folderName, $imageName, 'public');
             if (!empty($product_category->image)) {

@@ -45,10 +45,14 @@ window.Echo = new Echo({
     encrypted: true,
     disableStatus: true,
 
-    authEndpoint: '/broadcasting/auth',
+    authEndpoint: "/broadcasting/auth",
     auth: {
         headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        }
-    }
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+        },
+    },
 });
+
+console.log(window.Echo);
