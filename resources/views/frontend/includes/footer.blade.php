@@ -158,7 +158,7 @@
                 <div class="col text-center">
                     <a href="#"><i class="fas fa-user"></i></a>
                 </div>
-                <div class="col d-flex align-items-center justify-content-center">
+                <div class="col d-none align-items-center justify-content-center">
                     <div class="item">
                         <select name="" id="">
                             <option value="english">{{ __('English') }}</option>

@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Home')
 @section('content')
-    <div class="row pt-4">
+    <div class="row pt-0 pt-lg-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
         <div class="col-3 col-xxl-2 col-12 col-lg-3 d-none d-lg-block home-cat-sidebar">
         @if ($menuItems->isNotEmpty())
@@ -29,7 +29,7 @@
             <section class="product-section pb-4 mb-5">
                 <div class="row align-items-baseline">
                     @if ($bsItems->isNotEmpty())
-                        <div class="col-3 best-selling-col">
+                        <div class="col-12 col-xl-3 best-selling-col">
                             <h2 class="title mb-0 mb-lg-3">{{ __('Best Selling') }}</h2>
                             <div class="best-selling-products">
                                 <div class="all-product">
@@ -58,6 +58,14 @@
                                                                         {{ number_format($item->price, 2) }}</del></span>
                                                             @endif
                                                         </h4>
+                                                        <!-- add to cart button -->
+                                                        <div class="cart-button-lg d-block d-xl-none mt-2">
+                                                            <a class="cart-btn" data-product_slug="#"
+                                                                data-unit_id="" href="javascript:void(0)">
+                                                                <i class="fa-solid fa-cart-plus"></i>
+                                                                <span>Add To Cart</span>
+                                                            </a>
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -69,7 +77,7 @@
                         </div>
                     @endif
                     @if ($featuredCategories->isNotEmpty())
-                        <div class="col-9 feature-product">
+                        <div class="col-12 col-xl-9 feature-product">
                             <div class="row cat-filter-row gx-4 align-items-center justify-content-center mb-3">
                                 <div class="col-12 col-md-4 col-4 col-xxl-5 col-2 col-lg-6">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
@@ -148,10 +156,18 @@
                                                     @endif
                                                 </h4>
 
-                                                <div class="add_to_card">
+                                                <div class="add_to_card d-none d-xl-block">
                                                     <a class="cart-btn" data-product_slug="{{ $product->slug }}"
                                                         data-unit_id="" href="javascript:void(0)">
                                                         <i class="fa-solid fa-cart-plus"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="cart-button-lg d-block d-xl-none">
+                                                    <a class="cart-btn" data-product_slug="{{ $product->slug }}"
+                                                        data-unit_id="" href="javascript:void(0)">
+                                                        <i class="fa-solid fa-cart-plus"></i>
+                                                        <span>Add To Cart</span>
                                                     </a>
                                                 </div>
                                             </div>

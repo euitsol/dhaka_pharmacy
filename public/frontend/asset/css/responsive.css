@@ -62,7 +62,7 @@
     }
 }
 
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1199px){
     /*============================================
         product section responsive code here
     =================================================*/
@@ -78,6 +78,74 @@
     .product-section .feature-product .all-products .col-3{
         width: 100% !important;
     }
+    .product-section .best-selling-col .best-selling-products .all-product {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 14px;
+        row-gap: 30px;
+        padding: 5px 5px !important;
+    }
+    .single-item img {
+        border-color: var(--text-color-black) !important;
+        height: 100% !important;
+        object-fit: cover;
+        padding: 0px !important;
+    }
+    .product-section .best-selling-col .best-selling-products .all-product .single-item {
+        padding: 0px 0;
+        border-bottom: 0px !important;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
+        border-radius: 15px;
+        backdrop-filter: blur(23px) saturate(169%);
+        -webkit-backdrop-filter: blur(23px) saturate(169%);
+        background-color: rgba(255, 255, 255, 0.1);
+        transition: .4s;
+
+    }
+    .best-selling-products .single-item img {
+        height: 100% !important;
+        border: none !important;
+        padding: 0px;
+        border-radius: 15px 15px 0px 0px !important;
+    }
+    .product-section .best-selling-col .best-selling-products {
+        background: transparent !important;
+        box-shadow: none ;
+        border-radius: 0px;
+        overflow-y: auto;
+        height: inherit !important;
+    }
+    .best-selling-products .bst-product-content{
+        padding: 15px;
+    }
+
+
+    /* ===================================================
+      tab cart button design css code here
+    =====================================================*/
+
+    .cart-button-lg .cart-btn {
+       border: 2px solid var(--secundary-color);
+       border-radius: 10px !important;
+       padding: 8px 15px !important;
+       text-decoration: none !important;
+       font-family: 'Poppins', sans-serif;
+       font-size: 15px !important;
+       line-height: 21px !important;
+       font-weight: 400 !important;
+       color: var(--secundary-color) !important;
+       width: 100% !important;
+       display: inline-block !important;
+       display: flex;
+       justify-content: center !important;
+       column-gap: 10px !important;
+       transition: 0.4s;
+       text-align: center !important;
+       margin-bottom: 5px;
+   }
+   .single-pdct .pdct-info {
+    padding: 10px 20px 10px 20px;
+   }
 }    
 
 @media screen and (max-width: 1100px){
@@ -94,6 +162,10 @@
 }
 
 @media screen and (max-width: 991px){
+
+    .socket-row {
+     padding-bottom: 120px !important;
+    }
 
     /*=======================================================
        container-fluid section responsive code here  
@@ -157,22 +229,21 @@
         border-radius: 0px;
         padding-bottom: 30px;
     }
-
     .product-section .best-selling-col {
         width: 100%;
         display: contents;
     }
-    .product-section .best-selling-col .best-selling-products .all-product {
+    /* .product-section .best-selling-col .best-selling-products .all-product {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 14px;
         row-gap: 30px;
-    }
+    } */
     .product-section .col-3.best-selling-col .best-selling-products .all-product .single-item{
         border: none;
         overflow: hidden;
         padding: 0px 0px;
-        padding-bottom: 15px;
+        padding-bottom: 5px;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
         border-radius: 15px;
         backdrop-filter: blur(23px) saturate(169%);
@@ -196,11 +267,12 @@
         padding: 0px 10px;
     }
  
-    .best-selling-products .single-item img {
-        height: 150px;
+    /* .best-selling-products .single-item img {
+        height: 100% !important;
         border:none !important;
         padding: 0px;
-    }
+        border-radius: 15px 15px 0px 0px !important;
+    } */
     .product-section .cat-filter-row .col-3{
         width: 35%;
     }
@@ -211,11 +283,9 @@
     .uk-child-width-1-5\@m > * {
         width: 35%;
     }
-    .best-selling-products .bst-product-content{
-        padding: 15px;
+    .single-pdct .pdct-img > img {
+        height: 100% !important;
     }
-  
-
     /* =================================================
         footer newslter section responsive code here
     ====================================================*/
@@ -251,6 +321,149 @@
     }
     .sidebar-cat-section .row .single-cat .icon {
         max-width: 80%;
+    }
+    
+    .single-pdct .pdct-info {
+        padding: 10px 10px 12px 10px !important;
+    }
+    
+    /* ===========================================
+        mobile footer menu show code here
+    ===============================================*/
+    .mobile-footer {
+        display: block;
+        width: 100% !important;
+        margin: 0 auto;
+        padding: 15px 0;
+        position: fixed;
+        bottom: 0;
+        box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        background-color: var(--info-bg);
+    }
+    .mobile-footer .main-mobile-col {
+        text-align: center;
+    } 
+    .mobile-footer.hide {
+        transform: translateY(100%);
+    }
+    .mobile-footer.show {
+        transform: translateY(0);
+    }
+    .mobile-footer .row .col{
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        background: #2d98daa6;
+        border-radius: 5px;
+        padding: 25px 0px;
+    }
+    .mobile-footer a i {
+        color: var(--text-color-white);
+        /* padding: 25px 15px; */
+        cursor: pointer;
+        font-size: 20px;
+    }
+    .mobile-footer .container{
+        max-width: 100%;
+        padding: 0px 30px;
+    }
+
+    /* ===========================================
+      main header responsive code here
+   ==============================================*/
+
+    .main-header .right-col{
+        display: none;
+    }
+    .main-header .logo-col{
+        display: none;
+    }
+    .main-header .search-box{
+        width: 100%;
+    }
+    .header-section {
+        background: transparent;
+    }
+    .header-section .search-filter input{
+        border: 2px solid var(--primary-color);
+        border-right: 0px;
+        color: var(--primary-color);
+    }
+    .header-section .search-filter select {
+        color: var(--primary-color);
+        background: transparent;
+        border: 2px solid var(--primary-color);
+    }
+    .header-section .search-filter input[type="text"]::placeholder {
+        color: var(--primary-color);
+    }
+    .header-section .search-filter .sub-btn {
+        background-color: var(--primary-color) !important;
+    }
+    .header-section .search-filter .sub-btn i{
+        color: var(--text-color-white) !important;
+    }
+    .header-section .search-filter select option {
+        background: var(--primary-color);
+        color: var(--text-color-white) !important;
+    }
+    header {
+        position: unset;
+    }
+
+     /* ==============================================
+       about ua page responsive code here
+    ================================================*/
+
+    .about-section .container{
+        max-width: 100% !important;
+    }
+    .about-section .about-container .content h1 {
+        font-size: 24px !important;
+        font-weight: 600;
+        line-height: 31px !important;
+    }
+    .about-section .about-container .feature-list li {
+        font-size: 16px !important;
+        line-height: 12px !important;
+        margin-bottom: 5px !important;
+    }
+    .about-section  h2,h3{
+        font-size: 16px !important;
+        line-height: 32px !important;
+    }
+
+    /* ==============================================
+       contact page responsive code here
+    ================================================*/
+
+   .contact-section .container{
+        max-width: 100%;
+    }
+    .contact-section .contact-container {
+        padding: 40px 15px;
+    }
+    .contact-section .contact-container {
+        padding: 16px 15px!important;
+    }
+    .contact-section .contact-container h2 {
+        font-size: 24px !important;
+        margin-bottom: 10px !important;
+        line-height: 40px !important;
+    }
+    .support_wrap {
+        height:60px;
+        width: 60px;
+        border-radius: 50%;
+        position: fixed;
+        bottom:95px;
+        right: 20px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .product_title h3{
+        font-size: 14px !important;
     }
 }
 
@@ -291,46 +504,6 @@
         left: 90% !important;
     }
 
-    /* ===========================================
-        mobile footer menu show code here
-    ===============================================*/
-    .mobile-footer {
-        display: block;
-        width: 100% !important;
-        margin: 0 auto;
-        padding: 15px 0;
-        position: fixed;
-        bottom: 0;
-        box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
-        z-index: 999;
-        background-color: var(--info-bg);
-    }
-    .mobile-footer .main-mobile-col {
-        text-align: center;
-    } 
-    .mobile-footer.hide {
-        transform: translateY(100%);
-    }
-    .mobile-footer.show {
-        transform: translateY(0);
-    }
-    .mobile-footer .row .col{
-        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-        background: #2d98daa6;
-        border-radius: 5px;
-        padding: 25px 0px;
-    }
-    .mobile-footer a i {
-        color: var(--text-color-white);
-        /* padding: 25px 15px; */
-        cursor: pointer;
-        font-size: 20px;
-    }
-    .mobile-footer .container{
-        max-width: 100%;
-        padding: 0px 30px;
-    }
-    
     /* ============================================
         uk future tap text slider responsive code
     ================================================*/
@@ -342,7 +515,7 @@
     }
 
     /* ==============================================
-        slider section 
+        slider section responsive code here
     =================================================*/
     .slider-sction .carousel-caption .slider-left h3 {
         font-size: 18px;
@@ -466,46 +639,9 @@
     }
     
     /* =============================================
-        header section design 
+       categories responsive code here
     ==================================================*/
-    .main-header .right-col{
-        display: none;
-    }
-    .main-header .logo-col{
-        display: none;
-    }
-    .main-header .search-box{
-        width: 100%;
-    }
-    .header-section {
-        background: transparent;
-    }
-    .header-section .search-filter input{
-        border: 2px solid var(--primary-color);
-        border-right: 0px;
-        color: var(--primary-color);
-    }
-    .header-section .search-filter select {
-        color: var(--primary-color);
-        background: transparent;
-        border: 2px solid var(--primary-color);
-    }
-    .header-section .search-filter input[type="text"]::placeholder {
-        color: var(--primary-color);
-    }
-    .header-section .search-filter .sub-btn {
-        background-color: var(--primary-color) !important;
-    }
-    .header-section .search-filter .sub-btn i{
-        color: var(--text-color-white) !important;
-    }
-    .header-section .search-filter select option {
-        background: var(--primary-color);
-        color: var(--text-color-white) !important;
-    }
-    header {
-        position: unset;
-    }
+    
     .categories_menu .col-6.text-center.single-cat h2 {
         display: none;
     }
@@ -515,6 +651,112 @@
     .log-with-pass::before {
         top: 0px !important;
     }
+    .best-selling-products .bst-product-content {
+        padding: 10px;
+    }
+
+     /* ===========================================
+        product-section responsive code here
+    ===============================================*/
+
+    .product-section .best-selling-col .best-selling-products .all-product {
+        grid-template-columns: 1fr 1fr !important;
+    }
+    .product-section .feature-product .all-products{
+        grid-template-columns: 1fr 1fr !important;
+    }
+    .product-section .best-selling-col .best-selling-products .all-product {
+        column-gap: 15px;
+    }
+
+
+    /* ==============================================
+       about ua page responsive code here
+    ================================================*/
+
+    .about-section .about-container .content h1 {
+        font-size: 22px!important;
+        font-weight: 600;
+        line-height: 31px !important;
+    }
+    .about-section .about-container .feature-list li {
+        font-size: 14px !important;
+        line-height: 12px;
+        margin-bottom: 5px !important;
+    }
+    .about-section .about-container .feature-list li i {
+        margin-right: 7px !important;
+        font-size: 16px !important;
+    }
+    
+    .about-section .highlight-section p {
+        font-size: 16px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info-content a {
+        font-size: 18px !important;
+        line-height: 29px !important;
+    }
+    .about-section .contact-section .main-contact-section .icon {
+        font-size: 24px !important;
+        width: 60px !important;
+        height: 60px !important;
+        margin-right: 5px;
+        line-height: 60px !important;
+    }
+    .about-section .contact-section .main-contact-section .information {
+        padding: 0px 0px !important;
+        margin-bottom: 10px !important;
+    }
+        
+    .about-section .contact-section .main-contact-section .information .button .btn {
+        font-size: 16px;
+        height: 45px;
+        width: 200px;
+        padding-left: 15px;
+    }
+    .about-section .contact-section .main-contact-section .information .button .btn i {
+        background: var(--text-color-white);
+        height: 45px;
+        width: 45px;
+        color: var(--asent-color);
+        margin: 0 auto;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 45px;
+        font-size: 30px;
+        position: absolute;
+        right: 0px;
+        top: 0;
+    }
+
+
+    /* ==============================================
+       contact page responsive code here
+    ================================================*/
+
+    .contact-section .form-control{
+        padding: 0px;
+    }
+    .contact-section .contact-container p{
+        text-align: justify;
+        font-size: 16px !important;
+    }
+    .contact-section .contact-container .send-button {
+        font-size: 20px;
+        padding: 6px 0;
+        margin-top: 10px;
+        width: 170px;
+    }
+    .contact-section .contact-container .form-label {
+        font-size: 18px;
+    }
+    .contact-section .btn{
+        text-align: center;
+    }
+    .single-pdct .pdct-info .company-name,
+    .single-pdct .pdct-info .generic-name{
+         font-size: 9px !important;
+     }
 
 }
 @media screen and (max-width: 640px){
@@ -559,20 +801,7 @@
 }
 
 @media screen and (max-width: 575px){
-    /* ===========================================
-        product-section responsive code here
-    ===============================================*/
-
-    .product-section .col-3.best-selling-col .best-selling-products .all-product {
-        grid-template-columns: 1fr 1fr;
-    }
-    .product-section .col-9.feature-product .all-products {
-        grid-template-columns: 1fr 1fr;
-    }
-    .product-section .best-selling-col .best-selling-products .all-product {
-        column-gap: 15px;
-    }
-
+   
     /* ===========================================
         uk future tap text slider responsive code
     ===============================================*/
@@ -626,6 +855,20 @@
     .single_product_section .single_product .product_details .nav-tabs li a {
         padding: 10px 25px !important;
     }
+    .header-section .search-filter .sub-btn i {
+        font-size: 14px !important;
+    }
+
+    /* ==========================================
+        about us page responsive code here
+    =============================================*/
+    .support_wrap .message_box {
+        right: 0px !important;
+    }
+
+    .support_wrap .message_box {
+       width: 334px!important;
+   }
 }
 
 @media screen and (max-width: 520px){

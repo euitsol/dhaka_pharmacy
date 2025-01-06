@@ -5,7 +5,7 @@
 @endpush
 @section('content')
     <section class="contact-section py-5">
-        <div class="container">
+        <div class="container p-0">
             <div class="contact-container">
                 <div class="row row-gap-3">
                     <!-- Left Section (Image + Text) -->

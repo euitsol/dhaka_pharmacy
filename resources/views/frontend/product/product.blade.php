@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Products')
 @section('content')
-    <div class="row pt-4">
+    <div class="row pt-0 pt-md-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
         @if ($menuItems->isNotEmpty())
             @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
@@ -112,13 +112,22 @@
                                                             {{ number_format($product->price, 2) }}</del></span>
                                                 @endif
                                             </h4>
-                                            <div class="add_to_card">
+                                            <div class="add_to_card d-none d-xl-block">
                                                 <a class="cart-btn" data-product_slug="{{ $product->slug }}"
                                                     data-unit_id="{{ $product->units->first()->id }}"
                                                     href="javascript:void(0)">
                                                     <i class="fa-solid fa-cart-plus"></i>
                                                 </a>
                                             </div>
+
+
+                                            <!-- add to cart button -->
+                                            <div class="cart-button-lg d-block d-xl-none mt-2">
+                                                <a class="cart-btn" data-product_slug="#" data-unit_id="" href="javascript:void(0)">
+                                                    <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
+                                                </a>
+                                            </div>
+                                            
                                         </div>
 
                                     </div>

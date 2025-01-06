@@ -9,13 +9,13 @@
     width: 100%;
 }
 .about-section .highlight-section {
-    background: url('/asset/img/Banner.png')no-repeat center center/cover;
+    background: url('/')no-repeat center center/cover;
     padding: 60px 0px;
     height: 100%;
     width: 100%;
 }
 .about-section .about-container .content h5{
-    background: var(--btn_bg);
+    background: var(--secondary-bg);
     border-radius: 2px;
     font-size: 14px;
     line-height: 20px;
