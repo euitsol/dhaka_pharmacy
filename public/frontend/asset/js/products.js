@@ -21,7 +21,7 @@ $(document).ready(function () {
                 }
 
                 return `
-                <div class="col-2 px-2 single-pdct-wrapper">
+                <div class="px-2 single-pdct-wrapper col-3 col-xl-2 col-6 col-md-3">
                     <div class="single-pdct">
                         <a href="${_route}">
                             <div class="pdct-img">

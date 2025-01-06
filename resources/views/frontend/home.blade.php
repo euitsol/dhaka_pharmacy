@@ -3,50 +3,62 @@
 @section('content')
     <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
+        <div class="col-3 col-xxl-2 col-12 col-lg-3 d-none d-lg-block home-cat-sidebar">
         @if ($menuItems->isNotEmpty())
             @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
         @endif
+        </div>
         <!--=========== Sidebar-Category-Section-Include  ==============-->
 
 
         <!--=========== Main Content Section Start ==============-->
-        <div class="{{ $menuItems->isNotEmpty() ? 'col-md-9 col-lg-10' : 'col-12' }} content-col">
+        <div class="{{ $menuItems->isNotEmpty() ? 'col-8 col-xxl-10 col-12 col-lg-9 content-col' : 'col-12' }} content-col">
             <!--========= Slider-Section-Include ========-->
             @include('frontend.includes.home.slider')
             <!--========= Slider-Section-Include ========-->
+            <!--===========  Sidebar-Category-Section-Include ==============-->
+            <div class="d-block d-lg-none">
+                @if ($menuItems->isNotEmpty())
+                    @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
+                @endif
+            </div>      
+            <!--=========== Sidebar-Category-Section-Include  ==============-->
+
 
             <!--========= Product-Section-Start ========-->
             <section class="product-section pb-4 mb-5">
-                <div class="row">
+                <div class="row align-items-baseline">
                     @if ($bsItems->isNotEmpty())
                         <div class="col-3 best-selling-col">
-                            <h2 class="title mb-3">{{ __('Best Selling') }}</h2>
+                            <h2 class="title mb-0 mb-lg-3">{{ __('Best Selling') }}</h2>
                             <div class="best-selling-products">
                                 <div class="all-product">
                                     @foreach ($bsItems as $item)
                                         <div class="col-12 single-item">
-                                            <div class="row align-items-center">
-                                                <div class="col-4 img">
-                                                    <a href="{{ route('product.single_product', $item->slug) }}"></a>
-                                                    <img height="90" class="w-100 border border-1 rounded-1"
+                                            <div class="row align-items-center row-gap-2">
+                                                <div class="col-12 col-xxl-4 img">
+                                                    <a href="{{ route('product.single_product', $item->slug) }}">
+                                                        <img height="90" class="w-100 border border-1 rounded-1 lg-rounded-0"
                                                         src="{{ $item->image }}" alt="{{ $item->name }}">
                                                     </a>
                                                 </div>
-                                                <div class="col-8">
-                                                    <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
-                                                            href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
-                                                    </h3>
-                                                    <p><a href="">{{ $item->pro_sub_cat->name }}</a>
-                                                    </p>
-                                                    <p><a href="">{{ $item->generic->name }}</a></p>
-                                                    <p><a href="">{{ $item->company->name }}</a></p>
-                                                    <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                            {{ number_format($item->discounted_price, 2) }}</span>
-                                                        @if ($item->discounted_price != $item->price)
-                                                            <span class="regular_price"> <del>{!! get_taka_icon() !!}
-                                                                    {{ number_format($item->price, 2) }}</del></span>
-                                                        @endif
-                                                    </h4>
+                                                <div class="col-12 col-xxl-8">
+                                                    <div class="bst-product-content">
+                                                        <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
+                                                                href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
+                                                        </h3>
+                                                        <p><a href="">{{ $item->pro_sub_cat->name }}</a>
+                                                        </p>
+                                                        <p><a href="">{{ $item->generic->name }}</a></p>
+                                                        <p><a href="">{{ $item->company->name }}</a></p>
+                                                        <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
+                                                                {{ number_format($item->discounted_price, 2) }}</span>
+                                                            @if ($item->discounted_price != $item->price)
+                                                                <span class="regular_price"> <del>{!! get_taka_icon() !!}
+                                                                        {{ number_format($item->price, 2) }}</del></span>
+                                                            @endif
+                                                        </h4>
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -57,53 +69,51 @@
                         </div>
                     @endif
                     @if ($featuredCategories->isNotEmpty())
-                        <div class="col-9">
-                            <div class="row cat-filter-row gx-4">
-                                <div class="col-3">
+                        <div class="col-9 feature-product">
+                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center mb-3">
+                                <div class="col-12 col-md-4 col-4 col-xxl-5 col-2 col-lg-6">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>
 
-                                <div class="col-8">
-                                    <div class="slider-col" uk-slider="finite: true">
-                                        <div class="uk-position-relative">
-                                            <div class="uk-slider-container uk-light">
-                                                <ul
-                                                    class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
-                                                    <li class="text-right active" style="text-align: right;">
-                                                        <a href="javascript:void(0)" class="featured_category"
-                                                            data-slug="all">{{ _('All') }}</a>
-                                                    </li>
-                                                    @foreach ($featuredCategories as $category)
-                                                        <li><a href="javascript:void(0)" class="featured_category"
-                                                                data-slug="{{ $category->slug }}">{{ __($category->name) }}</a>
+                                <div class="col-12 col-md-7 col-7 col-xxl-6 col-4 col-lg-5">
+                                        <div class="slider-col" uk-slider="finite: true">
+                                            <div class="uk-position-relative">
+                                                <div class="uk-slider-container uk-light">
+                                                    <ul
+                                                        class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
+                                                        <li class=" active d-flex align-content-center justify-content-center m-auto ">
+                                                            <a href="javascript:void(0)" class="featured_category"
+                                                                data-slug="all">{{ _('All') }}</a>
                                                         </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
+                                                        @foreach ($featuredCategories as $category)
+                                                            <li class="d-flex align-content-center justify-content-center m-auto"><a href="javascript:void(0)" class="featured_category"
+                                                                    data-slug="{{ $category->slug }}">{{ __($category->name) }}</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
 
-                                            <div class="uk-hidden@s uk-light btn-arrow">
-                                                <a class="uk-position-center-left uk-position-small" href
-                                                    uk-slidenav-previous uk-slider-item="previous"></a>
-                                                <a class="uk-position-center-right uk-position-small" href uk-slidenav-next
-                                                    uk-slider-item="next"></a>
-                                            </div>
+                                                <div class="uk-hidden@s uk-light btn-arrow">
+                                                    <a class="uk-position-center-left uk-position-small" href
+                                                        uk-slidenav-previous uk-slider-item="previous"></a>
+                                                    <a class="uk-position-center-right uk-position-small" href uk-slidenav-next
+                                                        uk-slider-item="next"></a>
+                                                </div>
 
-                                            <div class="uk-visible@s
-btn-arrow">
-                                                <a class="uk-position-center-left-out uk-position-small" href
-                                                    uk-slidenav-previous uk-slider-item="previous"></a>
-                                                <a class="uk-position-center-right-out uk-position-small" href
-                                                    uk-slidenav-next uk-slider-item="next"></a>
-                                            </div>
+                                                <div class="uk-visible@s btn-arrow">
+                                                    <a class="uk-position-center-left-out uk-position-small" href
+                                                        uk-slidenav-previous uk-slider-item="previous"></a>
+                                                    <a class="uk-position-center-right-out uk-position-small" href
+                                                        uk-slidenav-next uk-slider-item="next"></a>
+                                                </div>
 
+                                            </div>
                                         </div>
-                                    </div>
                                 </div>
-
                             </div>
-                            <div class="row all-products mt-3">
+                            <div class="row all-products">
                                 @foreach ($products as $product)
-                                    <div class="col-3 px-2 single-pdct-wrapper">
+                                    <div class="px-2 single-pdct-wrapper col-4 col-xl-3 col-6 col-sm-4">
                                         <div class="single-pdct">
                                             <a href="{{ route('product.single_product', $product->slug) }}">
                                                 <div class="pdct-img">

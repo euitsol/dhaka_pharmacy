@@ -17,10 +17,10 @@
 
 
         <!--=========== Main Content Section Start ==============-->
-        <div class="{{ $menuItems->isNotEmpty() ? 'col-md-9 col-lg-10' : 'col-12' }} content-col">
+        <div class="{{ $menuItems->isNotEmpty() ? 'col-8 col-xxl-10 col-12 col-lg-9' : 'col-12' }} content-col">
             <section class="single_product_section pb-4">
                 <div class="row">
-                    <div class="{{ $similar_products->isNotEmpty() ? 'col-md-9' : 'col-md-12' }}">
+                    <div class="{{ $similar_products->isNotEmpty() ? 'col-12 col-xxl-9' : 'col-md-12' }}">
                         <div class="card single_product_card">
                             <div class="card-body">
                                 <div class="single_product">
@@ -41,9 +41,9 @@
                                     </div>
 
                                     <div class="row gx-4">
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
+                                        <div class="col-5 col-xxl-6 col-12 col-sm-5 mb-3 mb-sm-0">
+                                            <div class="card h-100">
+                                                <div class="card-body h-100">
                                                     <div class="product_image xzoom-container">
                                                         @php
                                                             $singleProDisPrice = proDisPrice(
@@ -71,7 +71,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-7 col-xxl-6 col-12 col-sm-7">
                                             <form action="{{ route('u.ck.init') }}" id="single_order_form" method="POST">
                                                 @csrf
                                                 <div class="product_content">
@@ -97,7 +97,7 @@
                                                                 </span></strong> /<span
                                                                 class="unit_name">{{ __('piece') }}</span> </p>
 
-                                                        <div class="d-flex align-items-center justify-content-between">
+                                                        <div class="d-block d-md-flex align-items-center justify-content-between">
                                                             <div class="form-group my-4 boxed">
                                                                 @foreach ($single_product->units as $key => $unit)
                                                                     <input type="radio" value="{{ $unit->id }}"
@@ -114,7 +114,7 @@
                                                                     </label>
                                                                 @endforeach
                                                             </div>
-                                                            <div class="sp_quantity w-25">
+                                                            <div class="sp_quantity w-25 mb-4 mb-md-0">
                                                                 <div class="form-group">
                                                                     <div class="input-group" role="group">
                                                                         <a href="javascript:void(0)"
@@ -274,13 +274,13 @@
 
                     </div>
                     @if ($similar_products->isNotEmpty())
-                        <div class="col-3">
+                        <div class="col-12 col-xxl-3 mt-3 mt-xxl-0">
                             <div class="card similar_products_card" style="height:100%">
                                 <div class="card-body">
                                     <div class="similar_products">
                                         <h2 class="mb-4">{{ __('Similar Products') }}</h2>
                                         <div class="products">
-                                            <div class="row px-3">
+                                            <div class="row align-items-baseline px-3 row-gap-3">
                                                 @foreach ($similar_products as $product)
                                                     @php
                                                         $ProDisPrice = proDisPrice(
@@ -288,18 +288,18 @@
                                                             $product->discounts,
                                                         );
                                                     @endphp
-                                                    <div class="col-12 single-item">
+                                                    <div class="col-3 col-xxl-12 col-6 col-md-3 single-item ">
                                                         <div class="row align-items-center">
-                                                            <div class="col-4 img">
+                                                            <div class="col-12 col-xxl-4 img p-0 m-0">
                                                                 <a
                                                                     href="{{ route('product.single_product', $product->slug) }}">
                                                                     <img height=""
-                                                                        class="w-100 border border-1 rounded-1"
+                                                                        class="w-100 border border-xxl-1 rounded-1"
                                                                         src="{{ $product->image }}"
                                                                         alt="{{ __($product->name) }}">
                                                                 </a>
                                                             </div>
-                                                            <div class="col-8 content">
+                                                            <div class="col-12 col-xxl-8 content">
 
                                                                 <h3 class="pdct-title"
                                                                     title="{{ $product->attr_title }}"><a

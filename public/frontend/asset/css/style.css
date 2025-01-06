@@ -84,6 +84,29 @@ a:hover{
 }
 
 
+/* ======================================================
+  For WebKit Browsers (e.g., Chrome, Edge, Safari) 
+=========================================================*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background:var(--secundary-color);
+}
+::-webkit-scrollbar-thumb {
+  background-color:var(--nav-primary-bg); 
+}
+
+/* ======================================================
+  For Firefox 
+=========================================================*/
+*{
+  scrollbar-width: thin; 
+  scrollbar-color: var(--nav-primary-bg) var(--secundary-color); 
+}
+
+
+
 /*====================================
       Start Product Common CSS
 ======================================*/
@@ -104,7 +127,6 @@ h2.title {
   transition: .4s;
 
 }
-
 
  .single-pdct .pdct-img{
   background: #E9E9E9;
@@ -380,7 +402,13 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   position: sticky;
   top: 5.5rem;
 }
-
+.sidebar-cat-section .main-categories-items{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
 .sidebar-cat-section .row .single-cat {
   padding: 10px;
   display: flex;
@@ -475,7 +503,9 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .sidebar-cat-section .single-cat.active h2 {
   color: var(--text-color-white);
 }
-
+.home-cat-sidebar .sidebar-cat-section {
+  width: 100%;
+}
 
 /*====================================
       Start Slider-section-style
@@ -1025,6 +1055,46 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   background: #027BA5;
 }
 
+
+/*=====================================
+  new footer code here  
+======================================*/
+
+.footer-section .newsletter-main-row {
+	display: flex;
+	max-width:70%;
+	margin: 0 auto;
+	justify-content: space-between;
+  column-gap: 20px;
+}
+.footer-section .newsletter-main-row .newsletter-headign {
+  width: 40%;
+  text-align: left;
+}
+.footer-section .newsletter-main-row .newsletter-content{
+  width: 80%;
+}
+.uk-child-width-1-5\@m > * {
+	width: 30%;
+}
+
+
+/* =====================================
+  header icon style
+=======================================*/
+.header-section .search-filter .search-icon{
+  display: none;
+}
+
+/* ===================================
+    mobile footer design code here
+====================================== */
+
+.mobile-footer {
+  display: none;
+  
+}
+
 .footer-section .main-footer-row h2.title {
   position: relative;
   padding-bottom: 8px;
@@ -1293,7 +1363,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 .breadcrumb_wrap .favorite {
   position: absolute;
-  right: 10px;
+  right: 0px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 22px;
@@ -1981,6 +2051,14 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
     transform: scale(0);
   }
 
+
+/* ======================================
+  faq nav item design code here
+=========================================*/
+
+.faq-section .nav-pills{
+    justify-content: space-between;
+}
 
 
 /* CSS talk bubble */

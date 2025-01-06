@@ -7,7 +7,7 @@
     <section class="tream-condition py-5">
         <div class="container">
             <div class="row">
-                <div class="col">
+                <div class="col-12 col-md-12">
                     <h2>What personal data we collect and why we collect it Account & Security</h2>
                     <p>You will receive a notification stating that the account and password have been created, shortly
                         after the registration process.

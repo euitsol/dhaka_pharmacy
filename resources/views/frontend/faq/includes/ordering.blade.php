@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
         <div class="accordion" id="accordionExample2">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -93,7 +93,7 @@
             </div>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
         <div class="accordion" id="accordionExample20">
             <div class="accordion-item">
                 <h2 class="accordion-header">
