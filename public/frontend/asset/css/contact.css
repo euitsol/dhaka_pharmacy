@@ -1,0 +1,118 @@
+/*============================================================ */
+/**********this code only for the user login page ************/
+/*============================================================ */
+
+/*  content and image design css code here */
+
+.contact-section .contact-container{
+    background: var(--commoninner_bg);
+    padding: 100px 35px;
+    border-radius: 20px;
+    max-width: 1370px;
+    border: 2px solid #dcdcdc;
+}
+.contact-section .contact-container h2{
+    font-size: 32px;
+    line-height: 40px;
+    color: var(--text);
+    font-family: var(--secondry-font);
+    font-weight: 600;
+}
+.contact-section .contact-container p{
+    font-size: 18px;
+    line-height: 29px;
+    color: #000000a3;
+    font-weight: 400;
+    font-family: var(--secondry-font);
+}
+.contact-section .contact-container img{
+    width: 100%;
+}
+
+/* form design css code here */
+
+.contact-section .form-control {
+    border: none;
+    border-bottom: 3px solid #00000065;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+}
+.contact-section .form-control:focus {
+    box-shadow: none;
+}
+.contact-section .form-label {
+    font-weight: bold;
+    font-size: 24px;
+    font-weight: 600;
+    font-family: var(--secondry-font);
+    line-height: 40px;
+    color: var(--text);
+    margin: 0px;
+}
+.contact-section .required{
+    color: red;
+}
+.contact-section input,textarea::placeholder {
+    font-size: 14px;
+    line-height: 40px;
+    color: #000;
+}
+.contact-section #message{
+    height: 60px;
+}
+.contact-section .btn{
+    text-align: right;
+}
+.contact-section .send-button{
+    font-size: 24px;
+	text-transform: uppercase;
+	color: var(--text-color-white);
+	background-color: var(--asent-color);
+    border: 1px solid var(--text);
+	padding: 16px 0;
+	border-radius: 10px;
+	margin-top: 10px;
+    width: 270px;
+    line-height: 40px;
+    font-weight: bold;
+    font-family: var(--secondry-font);
+    transition: all 0.3s ease-in-out;
+    border: 1px solid var(--asent-color);
+    text-align: center;
+}
+.contact-section .send-button:hover{
+    background-color: transparent;
+    border: 1px solid var(--asent-color);
+    color: var(--asent-color);
+}
+
+
+/* responsive css code here */
+
+@media screen and (max-width: 991px) {
+    .contact-section .contact-container {
+        padding: 40px 15px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .contact-section .form-control{
+        padding: 0px;
+    }
+    .contact-section .contact-container p{
+        text-align: justify;
+    }
+    .contact-section .contact-container .send-button {
+        font-size: 20px;
+        padding: 6px 0;
+        margin-top: 10px;
+        width: 170px;
+    }
+    .contact-section .contact-container .form-label {
+        font-size: 18px;
+    }
+    .contact-section .btn{
+        text-align: center;
+    }
+}
