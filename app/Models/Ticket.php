@@ -20,4 +20,32 @@ class Ticket extends BaseModel
     {
         return $this->hasMany(Message::class);
     }
+
+    public function assignedAdmin()
+    {
+        return $this->belongsTo(Admin::class, 'assigned_admin');
+    }
+
+    public function getStatus()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'Pending';
+            case 1:
+                return 'Opened';
+            case 2:
+                return 'Closed';
+        }
+    }
+    public function getStatusBadgeClass()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'badge badge-info';
+            case 1:
+                return 'badge badge-success';
+            case 2:
+                return 'badge badge-danger';
+        }
+    }
 }

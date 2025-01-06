@@ -102,6 +102,7 @@ use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\MapboxSettingsController;
 use App\Http\Controllers\Admin\PaymentClearanceController;
+use App\Http\Controllers\Admin\Support\TicketController as SupportTicketController;
 use App\Http\Controllers\Admin\User\TipsController;
 use App\Http\Controllers\Admin\WithdrawMethodController as AdminWithdrawMethodController;
 use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
@@ -725,6 +726,12 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         Route::put('/edit/{id}', 'update')->name('review_edit');
         Route::get('/status/{id}', 'status')->name('status.review_edit');
         Route::get('/delete/{id}', 'delete')->name('review_delete');
+    });
+
+
+    // Support
+    Route::controller(SupportTicketController::class)->prefix('ticket')->name('st.')->group(function () {
+        Route::get('/support/ticket', 'index')->name('ticket_list');
     });
 });
 
