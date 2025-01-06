@@ -45,7 +45,7 @@ $(document).ready(function () {
                                     </h3>
                                 </a>
                             </div>
-                            <h4><span>${taka_icon} ${numberFormat(product.discountPrice, 2)}</span>  ${discount_amount}</h4>
+                            <h4><span>${taka_icon} ${numberFormat(product.discounted_price, 2)}</span>  ${discount_amount}</h4>
                             <div class="add_to_card">
                                 <a class="cart-btn" data-unit_id="${
                                     product.units[0]["id"]
