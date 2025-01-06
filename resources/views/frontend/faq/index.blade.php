@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col">
                     <h1 class="text-center page-title">{{ __('Frequently Asked Question') }}</h1>
-                    <ul class="nav nav-pills mb-3 justify-content-around py-4 mb-5" id="pills-tab" role="tablist">
+                    <ul class="nav nav-pills mb-3 py-4 mb-5" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="pills-general-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-general" type="button" role="tab" aria-controls="pills-general"
