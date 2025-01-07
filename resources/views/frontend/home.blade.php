@@ -26,11 +26,11 @@
 
 
             <!--========= Product-Section-Start ========-->
-            <section class="product-section pb-4 mb-5">
+            <section class="product-section pb-4 mb-2 mb-lg-5">
                 <div class="row align-items-baseline">
                     @if ($bsItems->isNotEmpty())
-                        <div class="col-12 col-xl-3 best-selling-col">
-                            <h2 class="title mb-0 mb-lg-3">{{ __('Best Selling') }}</h2>
+                        <div class="col-12 col-xl-3 best-selling-col mb-3 mb-xl-0">
+                            <h2 class="title mb-2 mb-lg-3">{{ __('Best Selling') }}</h2>
                             <div class="best-selling-products">
                                 <div class="all-product">
                                     @foreach ($bsItems as $item)

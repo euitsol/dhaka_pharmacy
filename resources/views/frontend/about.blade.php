@@ -31,7 +31,7 @@
             </div>
         </div>
         <!-- Trusted Pharmacy Section -->
-        <div class="highlight-section text-left">
+        <div class="highlight-section text-left mt-3 mt-lg-0">
             <div class="container">
                 <div class="row">
                     <div class="col p-0">
@@ -53,7 +53,7 @@
                 <div class="main-contact-section">
                     <div class="about-container">
                         <div class="row align-items-center">
-                            <div class="col-xl-4 col-md-6">
+                            <div class="col-xl-4 col-sm-6">
                                 <div class="contact-info d-flex align-items-center justify-content-sm-start column-gap-2">
                                     <div class="icon">
                                         <i class="fa-solid fa-phone-volume"></i>
@@ -64,13 +64,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-5 col-md-6 px-xxl-5">
+                            <div class="col-xl-5 col-sm-6 px-xxl-5">
                                 <div class="information px-0 px-xl-4">
                                     <h2>Trusted delivery of your essential <br>
                                         medications</h2>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-12 ">
+                            <div class="col-xl-3 col-12 d-flex d-md-block mt-3 mt-lg-0">
                                 <div class="information">
                                     <div class="button text-md-center text-xl-end text-start">
                                         <button class="btn ">Contact Us <i class="fas fa-chevron-right"></i></button>

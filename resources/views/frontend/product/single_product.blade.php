@@ -18,7 +18,7 @@
 
         <!--=========== Main Content Section Start ==============-->
         <div class="{{ $menuItems->isNotEmpty() ? 'col-8 col-xxl-10 col-12 col-lg-9' : 'col-12' }} content-col">
-            <section class="single_product_section pb-4">
+            <section class="single_product_section pb-3 col-lg-4">
                 <div class="row">
                     <div class="{{ $similar_products->isNotEmpty() ? 'col-12 col-xxl-9' : 'col-md-12' }}">
                         <div class="card single_product_card">

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/terms_and_conditions.css') }}">
 @endpush
 @section('content')
-    <section class="tream-condition py-5">
+    <section class="tream-condition py-3 py-lg-5">
         <div class="container">
             <div class="row">
                 <div class="col">
