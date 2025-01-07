@@ -18,7 +18,7 @@ class Ticket extends BaseModel
 
     public function messages()
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Message::class, 'ticket_id', 'id');
     }
 
     public function assignedAdmin()

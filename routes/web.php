@@ -732,6 +732,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
     // Support
     Route::controller(SupportTicketController::class)->prefix('ticket')->name('st.')->group(function () {
         Route::get('/support/ticket', 'index')->name('ticket_list');
+        Route::get('/support/ticket/chat/{ticket_id}', 'chat')->name('ticket_chat');
     });
 });
 

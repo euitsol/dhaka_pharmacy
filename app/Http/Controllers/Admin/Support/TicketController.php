@@ -19,7 +19,23 @@ class TicketController extends Controller
 
     public function index(): View
     {
-        $data['tickets'] = Ticket::with('messages.sender')->orderBy('status', 'asc')->latest()->get();
+        $data['tickets'] = Ticket::with('messages.sender')
+            ->withCount([
+                'messages as active_message_count' => function ($query) {
+                    $query->where('is_read', 0)
+                        ->where(function ($q) {
+                            $q->where('sender_id', '!=', admin()->id)
+                                ->orWhere('sender_type', '!=', get_class(admin()));
+                        });
+                }
+            ])
+            ->orderBy('status', 'asc')->latest()->get();
         return view('admin.support.ticket.index', $data);
+    }
+
+    public function chat($ticket_id): View
+    {
+        $data['ticket'] = Ticket::with('messages.sender')->findOrFail(decrypt($ticket_id));
+        return view('admin.support.ticket.chat', $data);
     }
 }

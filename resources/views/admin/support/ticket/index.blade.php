@@ -37,7 +37,9 @@
                             @foreach ($tickets as $ticket)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td>{{ $ticket->subject }}</td>
+                                    <td><sup
+                                            class="badge badge-success">{{ $ticket->active_message_count }}</sup>{{ $ticket->subject }}
+                                    </td>
                                     <td><span
                                             class="{{ $ticket->getStatusBadgeClass() }}">{{ $ticket->getStatus() }}</span>
                                     </td>
@@ -46,28 +48,15 @@
                                     <td>{{ timeFormate($ticket->created_at) }}</td>
                                     <td>{{ timeFormate($ticket->updated_at) }}</td>
                                     <td>
-                                        {{-- @include('admin.partials.action_buttons', [
+                                        @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'javascript:void(0)',
-                                                    'params' => [$role->id],
-                                                    'label' => 'View Details',
-                                                    'className' => 'view',
-                                                    'data-id' => $role->id,
-                                                ],
-                                                [
-                                                    'routeName' => 'am.role.role_edit',
-                                                    'params' => [$role->id],
-                                                    'label' => 'Update',
-                                                ],
-                                                [
-                                                    'routeName' => 'am.role.role_delete',
-                                                    'params' => [$role->id],
-                                                    'label' => 'Delete',
-                                                    'delete' => true,
+                                                    'routeName' => 'st.ticket_chat',
+                                                    'params' => [encrypt($ticket->id)],
+                                                    'label' => 'Chat',
                                                 ],
                                             ],
-                                        ]) --}}
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
