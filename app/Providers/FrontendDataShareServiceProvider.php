@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\TransformProductTrait;
 use App\Models\User;
 use App\Models\WishList;
+use Illuminate\Support\Facades\Cache;
 
 class FrontendDataShareServiceProvider extends ServiceProvider
 {
@@ -28,9 +29,14 @@ class FrontendDataShareServiceProvider extends ServiceProvider
 
             $data = [];
             $data['default_delivery_fee'] = 60;
-            $query = ProductCategory::activated()->orderBy('name')->get();
-            $data['categories'] = $query;
-            $data['menuItems'] = $query->where('is_menu', 1);
+
+            $categories = Cache::remember('categories', 60, function () {
+                return ProductCategory::where('status', 1)->orderBy('name')->get();
+            });
+            // $categories = ProductCategory::where('status', 1)->orderBy('name')->get();
+
+            $data['categories'] = $categories;
+            $data['menuItems'] = $categories->where('is_menu', 1);
             $data['wishes'] = [];
             if (Auth::guard('web')->check()) {
                 $wishes = WishList::activated()->where('user_id', user()->id)->with([

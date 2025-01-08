@@ -138,51 +138,51 @@ class BaseModel extends Model
 
     public function getPermission()
     {
-        if($this->permission == 1){
+        if ($this->permission == 1) {
             return 'Accepted';
-        }elseif($this->permission == 0){
+        } elseif ($this->permission == 0) {
             return 'Pending';
-        }else{
+        } else {
             return 'Declined';
         }
     }
     public function getPermissionClass()
     {
-        if($this->permission == 1){
+        if ($this->permission == 1) {
             return 'btn-success';
-        }elseif($this->permission == 0){
+        } elseif ($this->permission == 0) {
             return 'btn-info';
-        }else{
+        } else {
             return 'btn-danger';
         }
     }
     public function getPermissionAcceptTogleClassName()
     {
-        if($this->permission == 1){
-            return'd-none';
-        }else{
+        if ($this->permission == 1) {
+            return 'd-none';
+        } else {
             return 'd-block';
         }
     }
     public function getPermissionDeclineTogleClassName()
     {
-        if($this->permission == 1){
-            return'd-none';
-        }else{
+        if ($this->permission == 1) {
+            return 'd-none';
+        } else {
             return 'd-block';
         }
     }
 
-    public function scopeActivated($query){
-        return $query->where('status',1);
+    public function scopeActivated($query)
+    {
+        return $query->where('status', 1);
     }
-    public function scopeFeatured($query){
-        return $query->where('is_featured',1);
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', 1);
     }
-    public function scopeMenu($query){
-        return $query->where('is_menu',1);
+    public function scopeMenu($query)
+    {
+        return $query->where('is_menu', 1);
     }
-    
-
-    
 }

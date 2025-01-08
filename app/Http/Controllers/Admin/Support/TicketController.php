@@ -38,6 +38,7 @@ class TicketController extends Controller
     public function chat($ticket_id): View
     {
         $data['ticket'] = Ticket::with('messages.sender')->findOrFail(decrypt($ticket_id));
+        $data['ticket']->messages()->unread()->update(['is_read' => 1]);
         return view('admin.support.ticket.chat', $data);
     }
 

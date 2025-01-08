@@ -18,7 +18,7 @@
 
         <!--=========== Main Content Section Start ==============-->
         <div class="{{ $menuItems->isNotEmpty() ? 'col-8 col-xxl-10 col-12 col-lg-9' : 'col-12' }} content-col">
-            <section class="single_product_section pb-3 col-lg-4">
+            <section class="single_product_section pb-3">
                 <div class="row">
                     <div class="{{ $similar_products->isNotEmpty() ? 'col-12 col-xxl-9' : 'col-md-12' }}">
                         <div class="card single_product_card">
@@ -41,7 +41,7 @@
                                     </div>
 
                                     <div class="row gx-4">
-                                        <div class="col-5 col-xxl-6 col-12 col-sm-5 mb-3 mb-sm-0">
+                                        <div class="col-5 col-xxl-6 col-12 col-md-5 mb-3 mb-sm-0">
                                             <div class="card h-100">
                                                 <div class="card-body h-100">
                                                     <div class="product_image xzoom-container">
@@ -71,7 +71,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-7 col-xxl-6 col-12 col-sm-7">
+                                        <div class="col-7 col-xxl-6 col-12 col-md-7">
                                             <form action="{{ route('u.ck.init') }}" id="single_order_form" method="POST">
                                                 @csrf
                                                 <div class="product_content">
@@ -97,7 +97,8 @@
                                                                 </span></strong> /<span
                                                                 class="unit_name">{{ __('piece') }}</span> </p>
 
-                                                        <div class="d-block d-md-flex align-items-center justify-content-between">
+                                                        <div
+                                                            class="d-block d-md-flex align-items-center justify-content-between">
                                                             <div class="form-group my-4 boxed">
                                                                 @foreach ($single_product->units as $key => $unit)
                                                                     <input type="radio" value="{{ $unit->id }}"
@@ -322,8 +323,10 @@
                                                                 </h4>
                                                                 <!-- add to cart button -->
                                                                 <div class="cart-button-lg d-block d-xl-none mt-2">
-                                                                    <a class="cart-btn" data-product_slug="#" data-unit_id="" href="javascript:void(0)">
-                                                                        <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
+                                                                    <a class="cart-btn" data-product_slug="#"
+                                                                        data-unit_id="" href="javascript:void(0)">
+                                                                        <i class="fa-solid fa-cart-plus"></i><span>Add To
+                                                                            Cart</span>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -405,8 +408,10 @@
                                                             </div>
                                                             <!-- add to cart button -->
                                                             <div class="cart-button-lg d-block d-xl-none mt-2">
-                                                                <a class="cart-btn" data-product_slug="#" data-unit_id="" href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
+                                                                <a class="cart-btn" data-product_slug="#" data-unit_id=""
+                                                                    href="javascript:void(0)">
+                                                                    <i class="fa-solid fa-cart-plus"></i><span>Add To
+                                                                        Cart</span>
                                                                 </a>
                                                             </div>
                                                         </div>

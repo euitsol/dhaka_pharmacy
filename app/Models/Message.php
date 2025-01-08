@@ -21,4 +21,13 @@ class Message extends BaseModel
     {
         return $this->belongsTo(Ticket::class);
     }
+
+    public function scopeUnread($query)
+    {
+        return $query->where('is_read', 0);
+    }
+    public function scopeRead($query)
+    {
+        return $query->where('is_read', 1);
+    }
 }
