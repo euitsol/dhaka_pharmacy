@@ -2,6 +2,15 @@
 @section('title', 'Support Ticket Chat With ' . $ticket->ticketable->name)
 @push('css')
     <style>
+        .support_wrap .conversation {
+            height: calc(100vh - 300px);
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
         .support_wrap .conversation-item .author_logo img {
             min-width: 40px;
             min-height: 40px;
@@ -29,6 +38,12 @@
         .support_wrap .conversation-item.sent .time {
             text-align: right;
         }
+
+        .support_wrap .conversation-item.sent .message {
+            background-color: #0d6efd;
+            color: #fff;
+            margin-left: auto;
+        }
     </style>
 @endpush
 @section('content')
@@ -50,7 +65,7 @@
                     </div>
                 </div>
                 <div class="card-body pb-0">
-                    <div class="card mb-0 support_wrap" style="height: calc(100vh - 300px)">
+                    <div class="card mb-0 support_wrap">
                         <div class="card-body">
                             <div class="conversation">
                                 <div class="conversation-list">
@@ -67,7 +82,7 @@
                                                 <div class="message">{{ $message->message }}</div>
                                                 <div class="time">{{ $message->created_at->diffForHumans() }}</div>
                                             </div>
-                                            @if ($message->sender_id != $ticket->ticketable_id && $message->sender_type != $ticket->ticketable_type)
+                                            @if ($message->sender_id != $ticket->ticketable_id || $message->sender_type != $ticket->ticketable_type)
                                                 <div class="author_logo">
                                                     <img src="{{ $message->sender->image ? asset('storage/' . $message->sender->image) : asset('default_img/male.png') }}"
                                                         alt="avatar">
@@ -82,7 +97,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <form action="" method="POST">
+                    <form action="{{ route('st.message_send.ticket_chat', encrypt($ticket->id)) }}" method="POST"
+                        id="messageSendForm">
                         @csrf
                         <div class="form-group">
                             <div class="input-group">
@@ -101,3 +117,6 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script src="{{ asset('admin/js/support.js') }}"></script>
+@endpush

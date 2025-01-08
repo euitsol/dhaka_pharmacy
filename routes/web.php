@@ -733,6 +733,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
     Route::controller(SupportTicketController::class)->prefix('ticket')->name('st.')->group(function () {
         Route::get('/support/ticket', 'index')->name('ticket_list');
         Route::get('/support/ticket/chat/{ticket_id}', 'chat')->name('ticket_chat');
+        Route::post('/support/ticket/message/send/{ticket_id}', 'message_send')->name('message_send.ticket_chat');
     });
 });
 
