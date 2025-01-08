@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/privacy_policy.css') }}">
 @endpush
 @section('content')
-    <section class="tream-condition py-5">
+    <section class="tream-condition py-3 py-lg-5">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-12">

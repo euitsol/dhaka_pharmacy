@@ -1,21 +1,32 @@
 /*============================================================ */
 /**********this code only for the about page ************/
 /*============================================================ */
-.about-section .about-container{
-    max-width: 1320px;
-    margin: 0 auto;
+.about-section .about-container {
+	max-width: 1320px;
+	margin: 0 auto;
+	position: relative;
+	z-index: 99;
 }
 .about-section .about-container img{
     width: 100%;
 }
 .about-section .highlight-section {
-    background: url('/asset/img/Banner.png')no-repeat center center/cover;
-    padding: 60px 0px;
+	position: relative;
+	padding: 60px 30px;
+	margin: 0 -30px;
+}
+.about-section .highlight-section::after {
+    content: '';
+    position: absolute;
+    background: url('./../img/Banner.png') no-repeat center center / cover;
     height: 100%;
     width: 100%;
+    top: 0;
+    left: 0;
+    opacity: .7;
 }
 .about-section .about-container .content h5{
-    background: var(--btn_bg);
+    background: var(--secondary-bg);
     border-radius: 2px;
     font-size: 14px;
     line-height: 20px;
@@ -141,9 +152,3 @@
     top: 0;
 }
 
-
-@media screen and (max-width: 767px) {
-    .about-section .contact-section .main-contact-section .contact-info {
-        border-right: 0;
-    }
-}

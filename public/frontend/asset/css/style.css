@@ -87,7 +87,7 @@ a:hover{
 /* ======================================================
   For WebKit Browsers (e.g., Chrome, Edge, Safari) 
 =========================================================*/
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
@@ -95,15 +95,15 @@ a:hover{
 }
 ::-webkit-scrollbar-thumb {
   background-color:var(--nav-primary-bg); 
-}
+} */
 
 /* ======================================================
   For Firefox 
 =========================================================*/
-*{
+/* *{
   scrollbar-width: thin; 
   scrollbar-color: var(--nav-primary-bg) var(--secundary-color); 
-}
+} */
 
 
 

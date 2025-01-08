@@ -33,7 +33,7 @@
 
 .contact-section .form-control {
     border: none;
-    border-bottom: 3px solid #00000065;
+    border-bottom: 2px solid #00000065;
     border-radius: 0;
     box-shadow: none;
     background: transparent;
@@ -88,31 +88,3 @@
 }
 
 
-/* responsive css code here */
-
-@media screen and (max-width: 991px) {
-    .contact-section .contact-container {
-        padding: 40px 15px;
-    }
-}
-
-@media screen and (max-width: 767px) {
-    .contact-section .form-control{
-        padding: 0px;
-    }
-    .contact-section .contact-container p{
-        text-align: justify;
-    }
-    .contact-section .contact-container .send-button {
-        font-size: 20px;
-        padding: 6px 0;
-        margin-top: 10px;
-        width: 170px;
-    }
-    .contact-section .contact-container .form-label {
-        font-size: 18px;
-    }
-    .contact-section .btn{
-        text-align: center;
-    }
-}

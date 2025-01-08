@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Products')
 @section('content')
-    <div class="row pt-4">
+    <div class="row pt-0 pt-md-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
         @if ($menuItems->isNotEmpty())
             @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
@@ -12,7 +12,7 @@
         <!--=========== Main Content Section Start ==============-->
         <div class="{{ $menuItems->isNotEmpty() ? 'col-9 col-xxl-10 col-12 col-lg-9' : 'col-12' }} content-col">
             <!--========= Product-Section-Start ========-->
-            <section class="product-section pb-4 mb-5">
+            <section class="product-section pb-4 mb-3 mb-lg-5">
                 <div class="row">
                     <div class="col-12">
                         <div class="row cat-filter-row gx-4">
@@ -21,7 +21,7 @@
                             </div>
                             @if (isset($sub_categories) && $sub_categories->isNotEmpty())
                                 <div class="col-12">
-                                    <div class="sub_categories my-3 my-lg-5" uk-slider="finite: true">
+                                    <div class="sub_categories my-3 my-lg-4" uk-slider="finite: true">
                                         <div class="uk-position-relative">
                                             <div class="uk-slider-container uk-light">
                                                 <ul class="uk-slider-items cat-list">
@@ -112,13 +112,22 @@
                                                             {{ number_format($product->price, 2) }}</del></span>
                                                 @endif
                                             </h4>
-                                            <div class="add_to_card">
+                                            <div class="add_to_card d-none d-xl-block">
                                                 <a class="cart-btn" data-product_slug="{{ $product->slug }}"
                                                     data-unit_id="{{ $product->units->first()->id }}"
                                                     href="javascript:void(0)">
                                                     <i class="fa-solid fa-cart-plus"></i>
                                                 </a>
                                             </div>
+
+
+                                            <!-- add to cart button -->
+                                            <div class="cart-button-lg d-block d-xl-none mt-2">
+                                                <a class="cart-btn" data-product_slug="#" data-unit_id="" href="javascript:void(0)">
+                                                    <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
+                                                </a>
+                                            </div>
+                                            
                                         </div>
 
                                     </div>

@@ -18,7 +18,7 @@
 
         <!--=========== Main Content Section Start ==============-->
         <div class="{{ $menuItems->isNotEmpty() ? 'col-8 col-xxl-10 col-12 col-lg-9' : 'col-12' }} content-col">
-            <section class="single_product_section pb-4">
+            <section class="single_product_section pb-3 col-lg-4">
                 <div class="row">
                     <div class="{{ $similar_products->isNotEmpty() ? 'col-12 col-xxl-9' : 'col-md-12' }}">
                         <div class="card single_product_card">
@@ -320,6 +320,12 @@
                                                                                 {{ number_format($product->price, 2) }}</del></span>
                                                                     @endif
                                                                 </h4>
+                                                                <!-- add to cart button -->
+                                                                <div class="cart-button-lg d-block d-xl-none mt-2">
+                                                                    <a class="cart-btn" data-product_slug="#" data-unit_id="" href="javascript:void(0)">
+                                                                        <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -391,10 +397,16 @@
                                                                 @endif
                                                             </h4>
 
-                                                            <div class="add_to_card">
+                                                            <div class="add_to_card d-none d-xl-block">
                                                                 <a class="cart-btn" href="javascript:void(0)"
                                                                     data-product_slug="{{ $product->slug }}">
                                                                     <i class="fa-solid fa-cart-plus"></i>
+                                                                </a>
+                                                            </div>
+                                                            <!-- add to cart button -->
+                                                            <div class="cart-button-lg d-block d-xl-none mt-2">
+                                                                <a class="cart-btn" data-product_slug="#" data-unit_id="" href="javascript:void(0)">
+                                                                    <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
                                                                 </a>
                                                             </div>
                                                         </div>

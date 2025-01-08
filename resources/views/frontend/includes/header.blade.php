@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col 8 col-xxl-7 col-12 col-md-8">
+                        <div class="col-8 col-xxl-7 col-12 col-lg-8">
                             <div class="search-filter col-12 col-xl-10  m-auto">
                                 <form class="d-flex search-box" action="">
                                     <input class="col-6 col-md-7 col-4 col-sm-6" type="text" id="searchInput" placeholder="Search...">

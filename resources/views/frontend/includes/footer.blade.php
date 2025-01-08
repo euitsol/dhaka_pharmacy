@@ -76,27 +76,29 @@
     <div class="main-footer-row py-5">
         <div class="container">
             <div class="row row-gap-4">
-                <div class="col-4 col-lg-3 col-6 col-md-4 col-6 col-sm-6">
+                <div class="col-4 col-lg-3 col-6 col-md-4 col-12 col-sm-6">
                     <div class="footer-logo mb-4">
                         <a href="#"> <img src="{{ asset('frontend/asset/img/logo.png') }}" alt="Footer logo"></a>
                     </div>
-                    <div class="social-info mb-4">
-                        <h3 class="title">{{ __('Follow Us') }}</h3>
-                        <div class="icons d-flex">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    <div class="footer-followus">
+                        <div class="social-info mb-4">
+                            <h3 class="title">{{ __('Follow Us') }}</h3>
+                            <div class="icons d-flex">
+                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="#"><i class="fa-brands fa-instagram"></i></i></a>
+                                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="pay-info">
-                        <h3 class="title">{{ __('We Accept') }}</h3>
-                        <div class="payment">
-                            <img src="{{ asset('frontend/asset/img/card-update-logo.png') }}" alt="Payment card image">
+                        <div class="pay-info">
+                            <h3 class="title">{{ __('We Accept') }}</h3>
+                            <div class="payment">
+                                <img src="{{ asset('frontend/asset/img/card-update-logo.png') }}" alt="Payment card image">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-4 col-lg-3 col-6 col-md-4 col-12 col-sm-6">
+                <div class="col-4 col-lg-3 col-6 col-md-4 col-6 col-sm-6">
                     <h2 class="title">{{ __('Information') }}</h2>
                     <div class="footer-menu">
                         <ul class="footer-nav">
@@ -109,7 +111,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-4 col-lg-3 col-6 col-md-4 col-12 col-sm-6">
+                <div class="col-4 col-lg-3 col-6 col-md-4 col-6 col-sm-6">
                     <h2 class="title">{{ __('Customer Service') }}</h2>
                     <div class="footer-menu">
                         <ul class="footer-nav">
@@ -123,7 +125,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-6 col-lg-3 col-6 col-md-6 col-12 col-sm-6">
+                <div class="col-6 col-lg-3 col-6 col-md-6 col-12 col-sm-6 mt-3 mt-sm-0">
                     <h2 class="title">{{ __('Your trusted online medicine supplier') }}</h2>
                     <div class="footer-contact">
                         <ul class="footer-nav">
@@ -147,18 +149,21 @@
         <div class="container">
             <div class="row align-items-center justify-content-center gap-2">
                 <div class="col text-center">
-                    <a href="#"><i class="fas fa-home"></i></a>
+                    <a href="{{ route('home') }}"><i class="fas fa-home"></i></a>
                 </div>
                 <div class="col text-center">
-                    <a href="#"><i class="fas fa-th-large"></i></a>
+                    <a href="{{ route('category.products', ['category' => 'all']) }}"><i class="fas fa-th-large"></i></a>
                 </div>
                 <div class="col text-center">
-                    <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                    <a href="javascript:void(0)">
+                        <i class="fa-solid fa-cart-plus"></i>
+                    </a>
                 </div>
                 <div class="col text-center">
-                    <a href="#"><i class="fas fa-user"></i></a>
+                    <a href="{{ route('login') }}"><i class="fas fa-user"></i></a>
+                    <!-- <a href="#"><i class="fas fa-user"></i></a> -->
                 </div>
-                <div class="col d-flex align-items-center justify-content-center">
+                <div class="col d-none align-items-center justify-content-center">
                     <div class="item">
                         <select name="" id="">
                             <option value="english">{{ __('English') }}</option>
