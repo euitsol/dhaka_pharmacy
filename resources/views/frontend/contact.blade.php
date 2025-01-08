@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/contact.css') }}">
 @endpush
 @section('content')
-    <section class="contact-section py-5">
+    <section class="contact-section py-3 py-lg-5">
         <div class="container p-0">
             <div class="contact-container">
                 <div class="row row-gap-3">

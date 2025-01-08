@@ -13,8 +13,17 @@
     .single-pdct .pdct-info {
         padding: 10px 10px 0px 10px;
     }
-
-
+    .single-pdct .pdct-info .cart-button-lg .cart-btn{
+        font-size: 12px !important;
+    }
+    .single-pdct .pdct-info .cart-button-lg .cart-btn i{
+        display: inline-block;
+        margin-right: 4px;
+    }
+    .sidebar-cat-section .cat-title {
+        font-size: 16px;
+        line-height: 24px;
+    }
 
 }
 
@@ -64,6 +73,10 @@
         padding: 0px;
         border-radius: 15px 15px 0px 0px !important;
         border: none !important;
+    }
+
+    .log-with-pass .left-col .form-title h1 {
+        font-size: 29px !important;
     }
 }
 
@@ -147,12 +160,12 @@
     =====================================================*/
 
     .cart-button-lg .cart-btn {
-       border: 2px solid var(--secundary-color);
+       border: 1px solid var(--secundary-color);
        border-radius: 10px !important;
        padding: 8px 15px !important;
        text-decoration: none !important;
        font-family: 'Poppins', sans-serif;
-       font-size: 15px !important;
+       font-size: 12px !important;
        line-height: 21px !important;
        font-weight: 400 !important;
        color: var(--secundary-color) !important;
@@ -173,6 +186,7 @@
         line-height: 16px;
         font-weight: 500;
     }
+   
 }    
 
 @media screen and (max-width: 1100px){
@@ -293,12 +307,6 @@
         width: 100%;
         display: contents;
     }
-    /* .product-section .best-selling-col .best-selling-products .all-product {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        column-gap: 14px;
-        row-gap: 30px;
-    } */
     .product-section .col-3.best-selling-col .best-selling-products .all-product .single-item{
         border: none;
         overflow: hidden;
@@ -326,13 +334,6 @@
         width: 100%;
         padding: 0px 10px;
     }
- 
-    /* .best-selling-products .single-item img {
-        height: 100% !important;
-        border:none !important;
-        padding: 0px;
-        border-radius: 15px 15px 0px 0px !important;
-    } */
     .product-section .cat-filter-row .col-3{
         width: 35%;
     }
@@ -399,7 +400,7 @@
         display: block;
         width: 100% !important;
         margin: 0 auto;
-        padding: 15px 0;
+        padding: 15px 10px;
         position: fixed;
         bottom: 0;
         box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
@@ -419,11 +420,16 @@
         box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
         background: #2d98daa6;
         border-radius: 5px;
+        padding: 0px !important;
+    }
+    .mobile-footer .row .col a{
+        display: block;
+        height: 100% !important;
+        width: 100% !important;
         padding: 25px 0px;
     }
     .mobile-footer a i {
         color: var(--text-color-white);
-        /* padding: 25px 15px; */
         cursor: pointer;
         font-size: 20px;
     }
@@ -475,23 +481,6 @@
         position: unset;
     }
 
-    /*==============================================
-       about ua page responsive code here
-    ================================================*/
-
-    .about-section .container{
-        max-width: 100% !important;
-    }
-    
-    .about-section .about-container .feature-list li {
-        font-size: 16px !important;
-        line-height: 12px !important;
-        margin-bottom: 5px !important;
-    }
-    .about-section  h2,h3{
-        font-size: 14px !important;
-        line-height: 20px !important;
-    }
     .footer-section .delivery-row h4 {
         font-size: 12px;
         line-height: 15px;
@@ -512,9 +501,9 @@
         padding: 16px 15px!important;
     }
     .contact-section .contact-container h2 {
-        font-size: 24px !important;
+        font-size: 22px !important;
         margin-bottom: 10px !important;
-        line-height: 40px !important;
+        line-height: 29px !important;
     }
     .support_wrap {
         height:60px;
@@ -543,12 +532,6 @@
     .single-pdct .pdct-info .company-name,
     .single-pdct .pdct-info .generic-name{
         font-size: 9px !important;
-     }
-    .cart-button-lg .cart-btn {
-        border: 1px solid var(--secundary-color);
-        padding: 8px 15px !important;
-        font-size: 12px !important;
-        line-height: 20px !important;
     }
     .log-with-pass::before {
         top: 0px !important;
@@ -558,23 +541,31 @@
         font-weight: 500 !important;
     }
     
-    /*==============================================
+   /*==============================================
        about ua page responsive code here
     ================================================*/
+
+    .about-section .container{
+        max-width: 100% !important;
+    }
+    .about-section .about-container .feature-list li {
+        font-size: 14px !important;
+        line-height: 12px !important;
+        margin-bottom: 5px;
+    }
+    .about-section  h2,h3{
+        font-size: 14px !important;
+        line-height: 20px !important;
+    }
 
     .about-section .about-container .content p {
         font-size: 14px !important;
         line-height: 23px !important;
     }
     .about-section .about-container .content h1 {
-        font-size: 22px!important;
-        font-weight: 600;
+        font-size: 22px !important;
+        font-weight: 500 !important; 
         line-height: 31px !important;
-    }
-    .about-section .about-container .feature-list li {
-        font-size: 14px !important;
-        line-height: 12px;
-        margin-bottom: 5px !important;
     }
     .about-section .about-container .feature-list li i {
         margin-right: 7px !important;
@@ -590,20 +581,20 @@
         font-size: 16px !important;
         width: 50px !important;
         height: 50px !important;
-        margin-right: 5px;
+        margin-right: 5px !important;
         line-height: 50px !important;
     }
     .about-section .contact-section .main-contact-section .information {
         padding: 0px 0px !important;
         margin-bottom: 10px !important;
-        margin: 0 auto;
+        margin: 0 auto !important;
     }
         
     .about-section .contact-section .main-contact-section .information .button .btn {
         font-size: 16px !important;
         height: 45px !important;
         width: 200px !important;
-        padding-left: 15px !important;
+        padding-left: 25px !important;
     }
     .about-section .contact-section .main-contact-section .information .button .btn i {
         height: 45px !important;
@@ -622,6 +613,123 @@
         font-size: 13px !important;
         line-height: 23px !important;
     }
+    /*================================================
+       categories responsive code here
+    ==================================================*/
+    
+    .categories_menu .col-6.text-center.single-cat h2 {
+        display: none;
+    }
+
+   /*=================================================
+        faq section responsive code here
+    ====================================================*/
+
+    .faq-section .accordion-item .accordion-button {
+        font-size: 16px !important;
+        line-height: 23px;
+        box-shadow: none;
+        padding: 10px 15px !important;
+        font-weight: 400 !important;
+    }
+    .faq-section .accordion-button::after {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    .faq-section .accordion-body {
+        font-size: 14px !important;
+        text-align: justify;
+    }
+    .faq-section .nav-pills .nav-item button {
+        font-size: 16px !important;
+        line-height: 32px ;
+    }
+
+    .faq-section .nav-pills .nav-item button.active {
+        font-weight: 500 !important;
+        color: var(--text-color-white);
+        background: var(--secondary-bg) !important;
+        padding: 0px 5px !important;
+    }
+    
+    .faq-section .nav-pills li {
+        margin-right: 15px;
+    }
+    .faq-section .nav-pills li:last-child {
+        margin-right: 0;
+    }
+    .faq-section .container{
+        max-width: 100%;
+        padding: 0px;
+    }
+    .faq-section .page-title {
+        font-size: 22px !important;
+    }
+    .slider-sction .carousel-caption .slider-right {
+        background-position: center bottom;
+    }
+    .tream-condition ul li, .tream-condition p {
+        line-height: 29px !important;
+        text-align: justify;
+        font-size: 14px !important;
+    }
+    .tream-condition h2 {
+        font-size: 20px !important;
+        line-height: 32px !important;
+        margin-bottom: 10px !important;
+        font-weight: 500 !important;
+    }
+    .tream-condition .container{
+        max-width: 100%;
+        padding: 0px;
+    }
+    .faq-section .container{
+        max-width: 100% !important;
+    }
+
+    .faq-section .nav-pills{
+        justify-content: left;
+    }
+
+    
+    /*==============================================
+        loginpass responsive code here
+    ===============================================*/
+
+    .log-with-pass .left-col form input {
+        border-radius: 5px;
+        height: 50px !important;
+        padding-right: 20px !important;
+        padding-left: 60px !important;
+    }
+    .log-with-pass .left-col form .register_button.submit_button{
+        padding: 0px !important;
+    }
+    .log-with-pass .left-col form .input-box .icon {
+        left: 25px !important;
+    }
+    .log-with-pass .left-col form input[type="submit"] {
+        padding: none !important;
+    }
+    .log-with-pass .left-col form .otp_button {
+        height: 50px !important;
+        line-height: 50px !important;
+    }
+    .log-with-pass {
+        height: 100% !important;
+        padding: 40px 0px !important;
+    }
+    .log-with-pass .left-col form .input-box.phn {
+        margin-bottom: 10px !important;
+    }
+    .log-with-pass .container{
+        padding: 0px 30px;
+    }
+    .log-with-pass .left-col .form-title h1 {
+        font-size: 22px !important;
+    }
+
+
 }
 
 
@@ -698,115 +806,9 @@
     .sp_quantity{
         width: 40% !important;
     }
-
-    /* =================================================
-        faq section responsive code here
-    ====================================================*/
-
-    .faq-section .accordion-item .accordion-button {
-        font-size: 16px !important;
-        line-height: 23px;
-        box-shadow: none;
-        padding: 10px 15px !important;
-        font-weight: 400 !important;
-    }
-    .faq-section .accordion-button::after {
-        width: 20px !important;
-        height: 20px !important;
-    }
-    .faq-section .accordion-body {
-        font-size: 14px !important;
-        text-align: justify;
-    }
-    .faq-section .nav-pills .nav-item button {
-        font-size: 16px !important;
-        line-height: 32px ;
-    }
-
-    .faq-section .nav-pills .nav-item button.active {
-        font-weight: 500 !important;
-        color: var(--text-color-white);
-        background: var(--secondary-bg) !important;
-        padding: 0px 5px !important;
-    }
-    .faq-section .nav-pills{
-        justify-content: left;
-    }
-    .faq-section .nav-pills li {
-        margin-right: 15px;
-    }
-    .faq-section .nav-pills li:last-child {
-        margin-right: 0;
-    }
-    .faq-section .container{
-        max-width: 100%;
-        padding: 0px;
-    }
-    .faq-section .page-title {
-        font-size: 22px !important;
-    }
-    .slider-sction .carousel-caption .slider-right {
-        background-position: center bottom;
-    }
-    .tream-condition ul li, .tream-condition p {
-        line-height: 29px !important;
-        text-align: justify;
-        font-size: 14px !important;
-    }
-    .tream-condition h2 {
-        font-size: 20px !important;
-        line-height: 32px !important;
-        margin-bottom: 10px !important;
-    }
-    .tream-condition .container{
-        max-width: 100%;
-        padding: 0px;
-    }
-
-    /*==============================================
-        loginpass responsive code here
-    ===============================================*/
-
-    .log-with-pass .left-col form input {
-        border-radius: 5px;
-        height: 50px !important;
-        padding-right: 20px !important;
-        padding-left: 60px !important;
-    }
-    .log-with-pass .left-col form .register_button.submit_button{
-        padding: 0px !important;
-    }
-    .log-with-pass .left-col form .input-box .icon {
-        left: 25px !important;
-    }
-    .log-with-pass .left-col form input[type="submit"] {
-        padding: none !important;
-    }
-    .log-with-pass .left-col form .otp_button {
-        height: 50px !important;
-        line-height: 50px !important;
-    }
-    .log-with-pass {
-        height: 100% !important;
-        padding: 40px 0px !important;
-    }
-    .log-with-pass .left-col form .input-box.phn {
-        margin-bottom: 10px !important;
-    }
-    .log-with-pass .container{
-        padding: 0px 30px;
-    }
     .container-fluid .log-with-pass .container{
         padding: 0px 30px;
-        max-width: 100%;
-    }
-    
-    /*================================================
-       categories responsive code here
-    ==================================================*/
-    
-    .categories_menu .col-6.text-center.single-cat h2 {
-        display: none;
+        /* max-width: 100%; */
     }
     .footer-section .container {
         padding: 0px 20px;
@@ -843,53 +845,35 @@
         line-height: 20px !important;
     }
     .contact-section .contact-container .send-button {
-        font-size: 20px;
-        padding: 6px 0;
-        margin-top: 10px;
-        width: 170px;
+        font-size: 16px;
+        padding: 3px 0;
+        margin-top: 0px;
+        width: 140px;
     }
     .contact-section .contact-container .form-label {
-        font-size: 18px;
+        font-size: 16px;
+        line-height: 23px;
     }
-    .contact-section .btn{
-        text-align: center;
-    }
+    /* .contact-section .btn{
+        text-align: center !important;
+    } */
     .uk-child-width-1-5\@m > * {
         width: 27% !important;
     }
-
-
-/* 
-    .product-section .sub_categories .cat-list {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+    .product-section h2.title {
+        font-size: 20px;
+        line-height: 29px;
     }
-    .product-section .sub_categories .sub_cat_link {
-        background: var(--text-color-white);
-        box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
-        border-radius: 10px;
-        padding: 30px !important;
+    .about-section .highlight-section {
+        padding: 40px 30px !important;
     }
-    .product-section .sub_categories .sub_cat_item {
-        padding: 0 10px;
-        overflow: visible;
-        transition: .4s;
-    }
-    .product-section .sub_categories .sub_cat_item .card {
-        position: relative; 
-        transition: .4s;
-        height: auto;
-        width: auto;
-        padding: 0px;
-        overflow: visible;
-    } */
-    .product-section .cat-filter-row .cat-list li a{
-        background: var(--text-color-white) !important;
-        box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
-        border-radius: 10px !important;
+    .about-section .contact-section .main-contact-section .contact-info {
+        border-right: 0 !important;
     }
 
-
+    .mobile-footer {
+        padding: 15px 10px;
+    }
 
 
 }
@@ -963,18 +947,18 @@
     ===============================================*/
 
     .slider-sction .carousel-caption .slider-left .btns a {
-        font-size: 14px;
+        font-size: 12px;
         width: 100px;
     }
     .slider-sction .carousel-caption .slider-right img {
-        max-width: 225px;
+        max-width: 215px;
     }
     .slider-sction .carousel-caption .slider-left h2 {
         font-size: 32px;
         line-height: 32px;
     }
-    .mobile-footer .row .col {
-        padding: 15px 10px;
+    .mobile-footer .row .col a{
+        padding: 15px 0px;
     }
 
     /*=======================================================
@@ -1015,10 +999,8 @@
         padding-bottom: 100px !important;
     }
     .product-section .sub_categories .sub_cat_item .card {
-        height: 100px;
-        width: 100px;
-        padding: 20px;
-        box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+        padding: 8px !important;
+        /* box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px; */
     }
     .main-footer-row .footer-followus{
         display: grid;
@@ -1055,32 +1037,32 @@
     .single-pdct .pdct-info .company-name, .single-pdct .pdct-info .generic-name {
         font-size: 8px !important;
     }
-}
-
-@media screen and (max-width: 520px){
-
-    /* ===========================================
-        categories-section responsive code here
-    ===============================================*/
-    /* .categories_menu .single-cat {
-        padding: 8px !important;
+    .sub_cat_item.uk-active .sub_cat_link .card.active h3{
+        font-size: 10px !important;
     }
-    .header-section .search-filter .sub-btn {
-        border: none;
-        outline: none;
-        color: var(--nav-text-color);
-        background: transparent;
-        padding: 6px 20px;
-        border-radius: 0px 10px 11px 0;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: -5px;
-    } */
+
+    /* ====================================================
+        header section suggestion box responsive code
+    =======================================================*/
+    .header-section .suggestion-box .search_item .details .product_sub_cat {
+        font-size: 14px;
+        color: #959595;
+    }
+    .header-section .suggestion-box .search_item .details p {
+        font-size: 10px;
+        line-height: 18px;
+    }
+    .header-section .suggestion-box .search_item .details .product_title {
+        font-size: 12px;
+    }
+    .header-section .search-filter select {
+        font-size: 12px;
+    }
+    .header-section .search-filter input {
+        font-size: 12px;
+    }
 
 }
-
 
 @media screen and (max-width: 480px){
 

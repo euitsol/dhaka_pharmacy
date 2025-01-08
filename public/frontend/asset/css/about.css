@@ -23,6 +23,7 @@
     width: 100%;
     top: 0;
     left: 0;
+    opacity: .7;
 }
 .about-section .about-container .content h5{
     background: var(--secondary-bg);
@@ -151,9 +152,3 @@
     top: 0;
 }
 
-
-@media screen and (max-width: 767px) {
-    .about-section .contact-section .main-contact-section .contact-info {
-        border-right: 0;
-    }
-}

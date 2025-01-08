@@ -21,7 +21,7 @@
                             </div>
                             @if (isset($sub_categories) && $sub_categories->isNotEmpty())
                                 <div class="col-12">
-                                    <div class="sub_categories my-3 my-lg-5" uk-slider="finite: true">
+                                    <div class="sub_categories my-3 my-lg-4" uk-slider="finite: true">
                                         <div class="uk-position-relative">
                                             <div class="uk-slider-container uk-light">
                                                 <ul class="uk-slider-items cat-list">

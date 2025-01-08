@@ -73,7 +73,8 @@
                             <div class="col-xl-3 col-12 d-flex d-md-block mt-3 mt-lg-0">
                                 <div class="information">
                                     <div class="button text-md-center text-xl-end text-start">
-                                        <button class="btn ">Contact Us <i class="fas fa-chevron-right"></i></button>
+                                        <!-- <button class="btn">Contact Us <i class="fas fa-chevron-right"></i></button> -->
+                                        <a class="btn" href="{{ route('contact_us') }}">Contact Us <i class="fas fa-chevron-right"></i></a>
                                     </div>
                                 </div>
                             </div>
