@@ -993,6 +993,37 @@
                 </li>
             @endif
 
+            {{-- Payment Gateways --}}
+            @if (mainMenuCheck([
+                    'prefixes' => ['st.'],
+                    'routes' => ['ticket_list'],
+                ]))
+                <li>
+                    <a class="@if ($pageSlug == 'ticket') @else collapsed @endif" data-toggle="collapse"
+                        href="#st"
+                        @if ($pageSlug == 'ticket') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-money-check-alt"></i>
+                        <span class="nav-link-text">{{ __('Support') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'ticket') show @endif" id="st">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'ticket',
+                                        'routeName' => 'st.ticket_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'label' => 'Ticket',
+                                    ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
             {{-- Documentation --}}
             @include('admin.partials.menu_buttons', [
                 'menuItems' => [

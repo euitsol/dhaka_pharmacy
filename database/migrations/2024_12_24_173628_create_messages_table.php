@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sender_id')->nullable();
             $table->string('sender_type')->nullable();
             $table->unsignedBigInteger('ticket_id'); // Ticket association
+            $table->boolean('is_read')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

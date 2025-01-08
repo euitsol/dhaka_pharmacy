@@ -82,7 +82,7 @@ function handleValidationErrors(errors, formId) {
 }
 
 // Function to render chat messages
-function chatMessages(chatMessages, senderId) {
+function chatMessages(chatMessages) {
     let conversation = $(".conversation");
     let result = "";
     if (!Array.isArray(chatMessages)) {
@@ -107,11 +107,15 @@ function chatMessages(chatMessages, senderId) {
             chatMessages.forEach((message) => {
                 result += `
                 <div class="conversation-item d-flex align-items-start ${
-                    message.sender_id == senderId
+                    message.sender_id == message.ticket.ticketable_id &&
+                    message.sender_type == message.ticket.ticketable_type
                         ? "justify-content-end sent"
                         : "justify-content-start "
                 }">`;
-                if (message.sender_id != senderId) {
+                if (
+                    message.sender_id != message.ticket.ticketable_id ||
+                    message.sender_type != message.ticket.ticketable_type
+                ) {
                     result += `<div class="author_logo">
                         <img src="${message.author_image}" alt="avatar">
                     </div>`;
@@ -121,7 +125,10 @@ function chatMessages(chatMessages, senderId) {
                         <div class="message">${message.message}</div>
                         <div class="time">${message.send_at}</div>
                     </div>`;
-                if (message.sender_id === senderId) {
+                if (
+                    message.sender_id == message.ticket.ticketable_id &&
+                    message.sender_type == message.ticket.ticketable_type
+                ) {
                     result += `<div class="author_logo">
                         <img src="${message.author_image}" alt="avatar">
                     </div>`;
@@ -145,7 +152,7 @@ function chatDataLoad() {
         dataType: "json",
         success: function (response) {
             if (response.success) {
-                chatMessages(response.ticket.messages, response.ticketAbleId);
+                chatMessages(response.ticket.messages);
             } else {
                 console.log(response);
 
@@ -167,7 +174,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (response.success) {
-                    chatMessages(response.reply, response.reply.sender_id);
+                    chatMessages(response.reply);
                     $this.find("textarea[name=message]").val("");
                 } else {
                     toastr.error(response.message);

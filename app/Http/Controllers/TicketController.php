@@ -81,6 +81,7 @@ class TicketController extends Controller
             if ($ticket) {
                 $ticket->messages->each(function ($message) {
                     $message->load('sender');
+                    $message->load('ticket');
                     $message->author_image = $message->sender && $message->sender->image
                         ? asset('storage/' . $message->sender->image)
                         : asset('default_img/male.png');
@@ -89,7 +90,6 @@ class TicketController extends Controller
                 return response()->json([
                     'success' => true,
                     'ticket' => $ticket,
-                    'ticketAbleId' => $ticket->ticketable_id,
                 ]);
             }
             // return response()->json([
@@ -128,6 +128,7 @@ class TicketController extends Controller
                     'sender_type' => $ticket->ticketable_type,
                 ]);
                 $message->load('sender');
+                $message->load('ticket');
                 $message->author_image = $message->sender && $message->sender->image
                     ? asset('storage/' . $message->sender->image)
                     : asset('default_img/male.png');
