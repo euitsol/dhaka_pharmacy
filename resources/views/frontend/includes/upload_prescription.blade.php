@@ -70,22 +70,28 @@
         </div>
     </div>
 </div>
-@include('filepond.fileupload')
 @include('user.address.add_address')
-@push('js_link')
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
-    </script>
-@endpush
-@push('js')
-    <script src="{{ asset('user/asset/js/up.js') }}"></script>
-    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
-    <script>
-        file_upload(["#prescription"], "uploadfile", "user");
-        const data = {
-            'check_auth': `{{ route('u.obp.check.auth') }}`,
-            'upload_route': `{{ route('u.obp.up') }}`,
-        };
-    </script>
-@endpush
+
+@if (!defined('SIDEBAR_JS_LOADED'))
+    @php
+        define('SIDEBAR_JS_LOADED', true);
+    @endphp
+    @include('filepond.fileupload')
+    @push('js_link')
+        <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
+        </script>
+    @endpush
+    @push('js')
+        <script src="{{ asset('user/asset/js/up.js') }}"></script>
+        <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
+        <script>
+            file_upload(["#prescription"], "uploadfile", "user");
+            const data = {
+                'check_auth': `{{ route('u.obp.check.auth') }}`,
+                'upload_route': `{{ route('u.obp.up') }}`,
+            };
+        </script>
+    @endpush
+@endif

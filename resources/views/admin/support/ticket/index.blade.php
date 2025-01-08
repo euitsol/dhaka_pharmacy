@@ -37,8 +37,11 @@
                             @foreach ($tickets as $ticket)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td><sup
-                                            class="badge badge-success">{{ $ticket->active_message_count }}</sup>{{ $ticket->subject }}
+                                    <td>
+                                        @if ($ticket->active_message_count > 0)
+                                            <sup class="badge badge-success">{{ $ticket->active_message_count }}</sup>
+                                        @endif
+                                        {{ $ticket->subject }}
                                     </td>
                                     <td><span
                                             class="{{ $ticket->getStatusBadgeClass() }}">{{ $ticket->getStatus() }}</span>
