@@ -37,11 +37,12 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <!--========= custiom css =========-->
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/nav.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/asset/css/style.css') }}"> 
-    <link rel="stylesheet" href="{{ asset('frontend/asset/css/responsive.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('frontend/asset/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/asset/css/responsive.css') }}">
 
     <!--======== FontAwesome cdn ==========-->
     <script src="https://kit.fontawesome.com/db6820c2b5.js" crossorigin="anonymous"></script>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     {{-- @livewireStyles <!-- Include Livewire styles here --> --}}
     @stack('css')
@@ -62,6 +63,8 @@
             // Live Chat
             'getMessages': `{{ route('ticket.messages') }}`,
         };
+        const ticket_id = `{{ getTicketId() }}`;
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
 </head>
 

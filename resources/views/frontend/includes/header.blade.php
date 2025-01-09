@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="main-header">
             <div class="row align-items-center row-gap-4 row-gap-lg-0">
-                <div class="col-12 col-lg-8 order-2 order-lg-1">    
+                <div class="col-12 col-lg-8 order-2 order-lg-1">
                     <div class="row align-items-center justify-space-between">
                         <div class="col-4 col-xxl-5 col-5 col-md-4">
                             <div class="row align-items-center">
@@ -34,11 +34,12 @@
                         <div class="col-8 col-xxl-7 col-12 col-lg-8">
                             <div class="search-filter col-12 col-xl-10  m-auto">
                                 <form class="d-flex search-box" action="">
-                                    <input class="col-6 col-md-7 col-4 col-sm-6" type="text" id="searchInput" placeholder="Search...">
+                                    <input class="col-6 col-md-7 col-4 col-sm-6" type="text" id="searchInput"
+                                        placeholder="Search...">
                                     <select class="col-5 col-md-4 col-5 col-sm-5" name="pro_cat_id" id="categorySelect">
                                         <option value="all" selected>{{ __('All Category') }}</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ __($category->name) }}</option>
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
 
                                     </select>
@@ -85,8 +86,8 @@
                                 @include('frontend.includes.wishlist_slide')
                             </div>
                             <div class="item">
-                                <button class="cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"
-                                    aria-controls="offcanvasRight">
+                                <button class="cart-btn" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#cartbtn" aria-controls="offcanvasRight">
                                     <i class="fa-solid fa-cart-shopping me-1"></i>
                                     <span>{{ __('Cart') }}</span><sup><strong id="cart_btn_quantity"></strong></sup>
                                 </button>
@@ -100,7 +101,7 @@
                                     <span class="ms-1">{{ abbreviateName(user()->name) }}</span>
                                 </a>
                             </div>
-                        @endif  
+                        @endif
                     </div>
                 </div>
             </div>
