@@ -93,7 +93,8 @@
                         <div class="pay-info">
                             <h3 class="title">{{ __('We Accept') }}</h3>
                             <div class="payment">
-                                <img src="{{ asset('frontend/asset/img/card-update-logo.png') }}" alt="Payment card image">
+                                <img src="{{ asset('frontend/asset/img/card-update-logo.png') }}"
+                                    alt="Payment card image">
                             </div>
                         </div>
                     </div>
@@ -145,21 +146,36 @@
         </div>
     </div>
     <!-- =========== Mobile footer design =========== -->
-    <div class="mobile-footer">
+    <div class="mobile-footer ">
         <div class="container">
-            <div class="row align-items-center justify-content-center gap-2">
+            <div class="row header-section p-0 align-items-center justify-content-center gap-2">
                 <div class="col text-center">
                     <a href="{{ route('home') }}"><i class="fas fa-home"></i></a>
                 </div>
                 <div class="col text-center">
-                    <a href="{{ route('category.products', ['category' => 'all']) }}"><i class="fas fa-th-large"></i></a>
+                    <a href="{{ route('category.products', ['category' => 'all']) }}"><i
+                            class="fas fa-th-large"></i></a>
+                </div>
+                <div class="col ">
+                    <div class="right-col">
+                        <a href="javascript:void(0)" class="cart-btn text-center d-block" type="button"
+                            data-bs-toggle="offcanvas" data-bs-target="#cartbtn" aria-controls="offcanvasRight">
+                            <span><i class="fa-solid fa-cart-plus"></i></span><sup><strong
+                                    id="cart_btn_quantity"></strong></sup>
+                        </a>
+                        @include('frontend.includes.add_to_cart_slide')
+                    </div>
+                    {{-- <div class="item">
+                        <button class="cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"
+                            aria-controls="offcanvasRight">
+                            <i class="fa-solid fa-cart-shopping me-1"></i>
+                            <span>{{ __('Cart') }}</span><sup><strong id="cart_btn_quantity"></strong></sup>
+                        </button>
+                        @include('frontend.includes.add_to_cart_slide')
+                    </div> --}}
                 </div>
                 <div class="col text-center">
-                    <a href="javascript:void(0)">
-                        <i class="fa-solid fa-cart-plus"></i>
-                    </a>
-                </div>
-                <div class="col text-center">
+
                     <a href="{{ route('login') }}"><i class="fas fa-user"></i></a>
                     <!-- <a href="#"><i class="fas fa-user"></i></a> -->
                 </div>
