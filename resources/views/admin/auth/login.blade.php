@@ -43,10 +43,6 @@
                                     </div>
                                     <button type="submit"
                                         class="btn btn-primary w-100 login-button border-0">{{ __('LOGIN') }}</button>
-                                    <div class="mt-3 text-center">
-                                        <p>{{ __('Not yet registered?') }} <a href="#"
-                                                class="text-decoration-none">{{ __('Create an account') }}</a></p>
-                                    </div>
                                 </form>
                             </div>
                         </div>
