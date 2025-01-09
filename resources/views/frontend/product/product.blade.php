@@ -80,7 +80,7 @@
                                 @php
                                     $proDisPrice = proDisPrice($product->price, $product->discounts);
                                 @endphp
-                                <div class="px-2 single-pdct-wrapper col-3 col-xl-2 col-6 col-md-3">
+                                <div class="px-2 single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
                                     <div class="single-pdct">
                                         <a href="{{ route('product.single_product', $product->slug) }}">
                                             <div class="pdct-img">
@@ -123,7 +123,9 @@
 
                                             <!-- add to cart button -->
                                             <div class="cart-button-lg d-block d-xl-none mt-2">
-                                                <a class="cart-btn" data-product_slug="#" data-unit_id="" href="javascript:void(0)">
+                                                <a class="cart-btn" data-product_slug="{{ $product->slug }}"
+                                                    data-unit_id="{{ $product->units->first()->id }}"
+                                                    href="javascript:void(0)">
                                                     <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
                                                 </a>
                                             </div>

@@ -35,7 +35,7 @@
                                 <div class="all-product">
                                     <div class="row m-0">
                                         @foreach ($bsItems as $item)
-                                            <div class="col-xxl-12 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
+                                            <div class="col-xxl-12 col-xl-12 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
                                                 <div class="single-item">
                                                     <div class=" row align-items-center">
                                                         {{-- <div class=""> --}}
@@ -47,7 +47,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-12  px-xxl-3  col-xxl-8">
-                                                            <div class="bst-product-content">
+                                                            <div class="bst-product-content mt-xl-3 mt-lg-3 mt-xxl-0">
                                                                 <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
                                                                         href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
                                                                 </h3>
@@ -87,7 +87,7 @@
                     @endif
                     @if ($featuredCategories->isNotEmpty())
                         <div class="col-12 col-xl-9 feature-product">
-                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center mb-3">
+                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center">
                                 <div class="col-12 col-md-4 col-4 col-xxl-5 col-2 col-lg-6">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>
@@ -132,8 +132,7 @@ btn-arrow">
                                     </div>
                                 </div>
                             </div>
-                            <div class="all-products">
-                                <div class="row">
+                            <div class="all-products row">
                                     @foreach ($products as $product)
                                         <div class="single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
                                             <div class="single-pdct">
@@ -190,7 +189,7 @@ btn-arrow">
                                             </div>
                                         </div>
                                     @endforeach
-                                </div>
+                                
                             </div>
 
 

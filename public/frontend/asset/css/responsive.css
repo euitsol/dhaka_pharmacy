@@ -1,14 +1,19 @@
 /*=========================================================
     all responsive css code here
 ============================================================*/
-
+@media screen and (max-width: 1700px){
+    .uk-child-width-1-5\@m > * {
+        width: 43%;
+    }
+}
 @media screen and (max-width: 1600px){
 
     .single-pdct .pdct-info a {
         font-size: 9px !important;
     }
     .single-pdct .pdct-info h3 {
-        font-size: 10px !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
     }
     .single-pdct .pdct-info {
         padding: 10px 10px 0px 10px;
@@ -24,10 +29,23 @@
         font-size: 16px;
         line-height: 24px;
     }
-
+    .single-item p, .single-item p a {
+        font-size: 9px !important;
+    }
+    .single-item .pdct-title a {
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .sidebar-cat-section .row .single-cat h2 {
+        font-size: 11px;
+        line-height: 18px;
+    }
+    .uk-child-width-1-5\@m > * {
+        width: 39%;
+    }
 }
 
-@media screen and (max-width: 1400px){
+@media screen and (max-width: 1399px){
 
     /*================================================
         footer responsive code here
@@ -78,6 +96,18 @@
     .log-with-pass .left-col .form-title h1 {
         font-size: 29px !important;
     }
+
+
+    .uk-child-width-1-5\@m > * {
+        width: 54%;
+    }
+
+    .single_product_section .similar_products_card {
+        height: 100% !important;
+        max-height: 100%  !important;
+    }
+
+
 }
 
 
@@ -151,7 +181,7 @@
         height: inherit !important;
     }
     .best-selling-products .bst-product-content{
-        padding: 15px;
+        padding: 5px;
     }
 
 
@@ -186,6 +216,25 @@
         line-height: 16px;
         font-weight: 500;
     }
+
+    .single-pdct .pdct-info a {
+        font-size: 11px !important;
+        line-height: 18px !important;
+    }
+
+    .single-item p, .single-item p a {
+        font-size: 11px !important;
+    }
+    .single-item .pdct-title a {
+        font-size: 14px;
+        line-height: 15px;
+        font-weight: 500 !important;
+    }
+    .single-pdct .pdct-info h3 {
+        font-size: 14px !important;
+        font-weight: 500 !important;
+    }
+
 
 }
 
@@ -301,7 +350,7 @@
         background: transparent;
         box-shadow: none;
         border-radius: 0px;
-        padding-bottom: 30px;
+        padding-bottom: 10px;
     }
     .product-section .best-selling-col {
         width: 100%;
@@ -523,7 +572,7 @@
     ================================================*/
 
     .single-item .pdct-title a{
-        font-size: 10px !important;
+        font-size: 13px !important;
         font-weight: 500 !important;
     }
     .single-item p, .single-item p a {
@@ -538,6 +587,10 @@
     }
     .product_title h3 {
         font-size: 10px !important;
+        font-weight: 500 !important;
+    }
+    .single-pdct .pdct-info h3 {
+        font-size: 13px !important;
         font-weight: 500 !important;
     }
 
@@ -649,7 +702,7 @@
         font-weight: 500 !important;
         color: var(--text-color-white);
         background: var(--secondary-bg) !important;
-        padding: 0px 5px !important;
+        padding: 0px 10px !important;
     }
 
     .faq-section .nav-pills li {
@@ -746,6 +799,9 @@
     .container-fluid .col-md-9.col-lg-10.content-col {
         display: block;
         width: 100%;
+    }
+    .product-section h2.title {
+        font-size: 22px;
     }
 
 }
@@ -858,14 +914,16 @@
         text-align: center !important;
     } */
     .uk-child-width-1-5\@m > * {
-        width: 27% !important;
+        width: 30% !important;
     }
     .product-section h2.title {
         font-size: 20px;
         line-height: 29px;
     }
+
+    
     .about-section .highlight-section {
-        padding: 40px 30px !important;
+        padding: 40px 20px !important;
     }
     .about-section .contact-section .main-contact-section .contact-info {
         border-right: 0 !important;
@@ -877,10 +935,31 @@
 
     .single_product_section .single_product .product_details .nav-tabs li a {
         font-size: 13px;
-      }
+    }
 
+    .single-pdct .pdct-info a {
+        font-size: 10px !important;
+        line-height: 15px !important;
+    }
 
-
+    /* .single-item p, .single-item p a {
+        font-size: 10px !important;
+    } */
+    .single-item .pdct-title a {
+        font-size: 12px !important;
+        line-height: 15px;
+        font-weight: 500 !important;
+    }
+    .single-pdct .pdct-info h3 {
+        font-size: 12px !important;
+        font-weight: 500 !important;
+    }
+    .single_product_section .single_product .product_content h1, .single_product_section .similar_products h2 {
+        font-size: 22px !important;
+    }
+    .single_product_section .single_product .product_price p {
+        font-size: 16px;
+    }
 }
 @media screen and (max-width: 640px){
 
@@ -888,12 +967,12 @@
         uk future tap text slider responsive code
     ===============================================*/
 
-    .slider-col.uk-slider .uk-position-center-left {
+    /* .slider-col.uk-slider .uk-position-center-left {
         left: -34px;
     }
     .slider-col.uk-slider .uk-position-center-right {
         right: -35px;
-    }
+    } */
 
     /*============================================
         breadcrumb_wrap responsive code
@@ -913,7 +992,7 @@
         left: 95%;
     }
     .breadcrumb_wrap .breadcrumb.wizard li a {
-        padding: 8px 5px 8px 30px;
+        padding: 7px 6px 9px 32px;
     }
 
     .product-section .sub_categories .uk-position-center-right-out {
@@ -932,7 +1011,7 @@
     ===============================================*/
 
     .uk-child-width-1-5\@m > * {
-        width: 34%;
+        width: 37% !important;
     }
 
     /*=============================================
@@ -1039,9 +1118,9 @@
         align-items: center;
         margin-left: -5px;
     }
-    .single-pdct .pdct-info .company-name, .single-pdct .pdct-info .generic-name {
+    /* .single-pdct .pdct-info .company-name, .single-pdct .pdct-info .generic-name {
         font-size: 8px !important;
-    }
+    } */
     .sub_cat_item.uk-active .sub_cat_link .card.active h3{
         font-size: 10px !important;
     }
@@ -1097,6 +1176,24 @@
     }
     .support_wrap {
         bottom: 121px;
+    }
+    .single-item p, .single-item p a {
+        font-size: 8px !important;
+    }
+    .single-pdct .pdct-info .company-name, .single-pdct .pdct-info .generic-name {
+        font-size: 8px !important;
+    }
+    .uk-child-width-1-5\@m > * {
+        width: 50% !important;
+    }
+    .single-item .pdct-title a {
+        font-size: 10px !important;
+    }
+    .footer-section .delivery-row h4 {
+        font-size: 10px;
+    }
+    .breadcrumb_wrap .favorite {
+        right: -7px !important;
     }
 }
 

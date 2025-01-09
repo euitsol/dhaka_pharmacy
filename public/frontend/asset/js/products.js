@@ -21,7 +21,7 @@ $(document).ready(function () {
                 }
 
                 return `
-                <div class="px-2 single-pdct-wrapper col-3 col-xl-2 col-6 col-md-3">
+                <div class="px-2 single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
                     <div class="single-pdct">
                         <a href="${_route}">
                             <div class="pdct-img">
@@ -52,11 +52,14 @@ $(document).ready(function () {
                                 }" href="javascript:void(0)" data-product_slug="${product.slug}">
                                     <i class="fa-solid fa-cart-plus"></i>
                                 </a>
-                                 <div class="cart-button-lg d-block d-xl-none mt-2">
-                                     <a class="cart-btn" data-product_slug="#" data-unit_id="" href="javascript:void(0)">
-                                         <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
-                                     </a>
-                                 </div>
+                            </div>
+
+                            <div class="cart-button-lg d-block d-xl-none mt-2">
+                                <a class="cart-btn"  data-unit_id="${
+                                    product.units[0]["id"]
+                                }" href="javascript:void(0)" data-product_slug="${product.slug}">
+                                <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
+                                </a>
                             </div>
                         </div>
                     </div>

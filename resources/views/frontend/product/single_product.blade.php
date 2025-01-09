@@ -289,7 +289,7 @@
                                                             $product->discounts,
                                                         );
                                                     @endphp
-                                                    <div class="col-3 col-xxl-12 col-6 col-md-3 single-item ">
+                                                    <div class="col-xxl-12 col-md-4 col-sm-4  col-6 single-item ">
                                                         <div class="row align-items-center">
                                                             <div class="col-12 col-xxl-4 img p-0 m-0">
                                                                 <a
@@ -323,8 +323,9 @@
                                                                 </h4>
                                                                 <!-- add to cart button -->
                                                                 <div class="cart-button-lg d-block d-xl-none mt-2">
-                                                                    <a class="cart-btn" data-product_slug="#"
-                                                                        data-unit_id="" href="javascript:void(0)">
+                                                                    <a class="cart-btn" data-product_slug="{{ $product->slug }}"
+                                                    data-unit_id="{{ $product->units->first()->id }}"
+                                                    href="javascript:void(0)">
                                                                         <i class="fa-solid fa-cart-plus"></i><span>Add To
                                                                             Cart</span>
                                                                     </a>
