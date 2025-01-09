@@ -65,20 +65,12 @@ $(document).ready(function () {
                         product.discounted_price,
                         2
                     )}</span>  ${discount_amount}</h4>
-                                        <div class="add_to_card d-none d-xl-block">
+                                        <div class="add_to_card ">
                                             <a class="cart-btn" data-product_slug="${
                                                 product.slug
                                             }" data-unit_id="" href="javascript:void(0)">
                                                 <i class="fa-solid fa-cart-plus"></i>
-                                            </a>
-                                        </div>
-
-                                        <div class="cart-button-lg d-block d-xl-none">
-                                            <a class="cart-btn" data-product_slug="${
-                                                product.slug
-                                            }" data-unit_id="" href="javascript:void(0)">
-                                                <i class="fa-solid fa-cart-plus"></i>
-                                                <span>Add To Cart</span>
+                                                <span class="d-block d-xl-none">Add To Cart</span>
                                             </a>
                                         </div>
                                     </div>

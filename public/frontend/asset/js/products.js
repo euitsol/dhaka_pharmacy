@@ -46,19 +46,12 @@ $(document).ready(function () {
                                 </a>
                             </div>
                             <h4><span>${taka_icon} ${numberFormat(product.discounted_price, 2)}</span>  ${discount_amount}</h4>
-                            <div class="add_to_card d-none d-xl-block">
+                            <div class="add_to_card">
                                 <a class="cart-btn" data-unit_id="${
                                     product.units[0]["id"]
                                 }" href="javascript:void(0)" data-product_slug="${product.slug}">
                                     <i class="fa-solid fa-cart-plus"></i>
-                                </a>
-                            </div>
-
-                            <div class="cart-button-lg d-block d-xl-none mt-2">
-                                <a class="cart-btn"  data-unit_id="${
-                                    product.units[0]["id"]
-                                }" href="javascript:void(0)" data-product_slug="${product.slug}">
-                                <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
+                                    <span class="d-block d-xl-none">Add To Cart</span>
                                 </a>
                             </div>
                         </div>

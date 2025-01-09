@@ -84,29 +84,6 @@ a:hover{
 }
 
 
-/* ======================================================
-  For WebKit Browsers (e.g., Chrome, Edge, Safari)
-=========================================================*/
-/* ::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background:var(--secundary-color);
-}
-::-webkit-scrollbar-thumb {
-  background-color:var(--nav-primary-bg);
-} */
-
-/* ======================================================
-  For Firefox
-=========================================================*/
-/* *{
-  scrollbar-width: thin;
-  scrollbar-color: var(--nav-primary-bg) var(--secundary-color);
-} */
-
-
-
 /*====================================
       Start Product Common CSS
 ======================================*/
@@ -161,7 +138,7 @@ h2.title {
 }
 .single-pdct .pdct-img > img{
   object-fit: cover;
-  height: 150px;
+  /* height: 150px; */
   border-radius: 15px 15px 0 0 ;
   border-bottom: 1px solid rgba(112, 112, 112, 0.34);
 }
@@ -328,6 +305,7 @@ h2.title {
     padding: 0px;
     margin: 0;
     transition: .4s;
+    text-decoration: none;
 }
 
 .single-item .pdct-title a:hover{
@@ -854,6 +832,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 .delivery-slider-section .uk-slideshow-items img{
   filter: brightness(0.5);
+  width: 100% !important;
 }
 
 .delivery-slider-section .uk-slideshow-items .carousel-caption{

@@ -112,21 +112,12 @@
                                                             {{ number_format($product->price, 2) }}</del></span>
                                                 @endif
                                             </h4>
-                                            <div class="add_to_card d-none d-xl-block">
-                                                <a class="cart-btn" data-product_slug="{{ $product->slug }}"
-                                                    data-unit_id="{{ $product->units->first()->id }}"
-                                                    href="javascript:void(0)">
-                                                    <i class="fa-solid fa-cart-plus"></i>
-                                                </a>
-                                            </div>
-
-
                                             <!-- add to cart button -->
-                                            <div class="cart-button-lg d-block d-xl-none mt-2">
+                                            <div class="add_to_card">
                                                 <a class="cart-btn" data-product_slug="{{ $product->slug }}"
-                                                    data-unit_id="{{ $product->units->first()->id }}"
-                                                    href="javascript:void(0)">
-                                                    <i class="fa-solid fa-cart-plus"></i><span>Add To Cart</span>
+                                                    data-unit_id="" href="javascript:void(0)">
+                                                    <i class="fa-solid fa-cart-plus"></i>
+                                                    <span class="d-block d-xl-none">Add To Cart</span>
                                                 </a>
                                             </div>
                                             

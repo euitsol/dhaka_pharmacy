@@ -322,12 +322,10 @@
                                                                     @endif
                                                                 </h4>
                                                                 <!-- add to cart button -->
-                                                                <div class="cart-button-lg d-block d-xl-none mt-2">
-                                                                    <a class="cart-btn" data-product_slug="{{ $product->slug }}"
-                                                    data-unit_id="{{ $product->units->first()->id }}"
-                                                    href="javascript:void(0)">
-                                                                        <i class="fa-solid fa-cart-plus"></i><span>Add To
-                                                                            Cart</span>
+                                                                <div class="add_to_card d-block d-xxl-none my-2">
+                                                                    <a class="cart-btn">
+                                                                        <i class="fa-solid fa-cart-plus"></i>
+                                                                        <span class="d-block d-xxl-none">Add To Cart</span>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -401,18 +399,12 @@
                                                                 @endif
                                                             </h4>
 
-                                                            <div class="add_to_card d-none d-xl-block">
+                                                            <!-- add to cart button -->
+                                                            <div class="add_to_card">
                                                                 <a class="cart-btn" href="javascript:void(0)"
                                                                     data-product_slug="{{ $product->slug }}">
                                                                     <i class="fa-solid fa-cart-plus"></i>
-                                                                </a>
-                                                            </div>
-                                                            <!-- add to cart button -->
-                                                            <div class="cart-button-lg d-block d-xl-none mt-2">
-                                                                <a class="cart-btn" data-product_slug="#" data-unit_id=""
-                                                                    href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-cart-plus"></i><span>Add To
-                                                                        Cart</span>
+                                                                    <span class="d-block d-xl-none">Add To Cart</span>
                                                                 </a>
                                                             </div>
                                                         </div>
