@@ -24,6 +24,7 @@ Broadcast::channel('user-notification.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 }, ['guards' => ['web']]);
 
-Broadcast::channel('ticket.{ticket_id}', function ($ticket, $ticketId) {
-    return (int) $ticket->id === (int) $ticketId;
+Broadcast::channel('ticket.{ticket_id}', function ($user, $ticketId) {
+    // return (int) $ticket->id === (int) $ticketId;
+    return true;
 });

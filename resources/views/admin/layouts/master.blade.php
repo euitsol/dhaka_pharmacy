@@ -37,6 +37,7 @@
         const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
         const admin_id = `{{ admin() ? admin()->id : false }}`;
         const content_image_upload_url = "{{ route('file.ci_upload') }}";
+        const ticket_id = `{{ getTicketId() }}`;
     </script>
 </head>
 

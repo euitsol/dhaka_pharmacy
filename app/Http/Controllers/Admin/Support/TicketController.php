@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Support;
 
+use App\Events\MessageSent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Support\MessageSendRequest;
 use App\Models\Message;
 use App\Models\Ticket;
+use App\Notifications\Frontend\UserChatNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -53,15 +55,18 @@ class TicketController extends Controller
                     'sender_id' => admin()->id,
                     'sender_type' => get_class(admin()),
                 ]);
+
                 $message->load('sender');
                 $message->load('ticket');
                 $message->author_image = $message->sender && $message->sender->image
                     ? asset('storage/' . $message->sender->image)
                     : asset('default_img/male.png');
                 $message->send_at = $message->created_at->diffForHumans();
+                broadcast(new MessageSent($message));
+
                 return response()->json([
                     'success' => true,
-                    'reply' => $message,
+                    // 'reply' => $message,
                     'message' => 'Message sent successfully',
                 ]);
             }
