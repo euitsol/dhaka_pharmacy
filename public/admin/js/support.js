@@ -73,7 +73,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     if (ticket_id) {
-        window.Echo.private(`ticket.${ticket_id}`).listen(
+        window.Echo.channel(`ticket.${ticket_id}`).listen(
             ".ticket-chat",
             (e) => {
                 console.log(e.message);

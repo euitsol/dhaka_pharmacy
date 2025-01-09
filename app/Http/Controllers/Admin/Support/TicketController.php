@@ -58,10 +58,6 @@ class TicketController extends Controller
 
                 $message->load('sender');
                 $message->load('ticket');
-                $message->author_image = $message->sender && $message->sender->image
-                    ? asset('storage/' . $message->sender->image)
-                    : asset('default_img/male.png');
-                $message->send_at = $message->created_at->diffForHumans();
                 broadcast(new MessageSent($message));
 
                 return response()->json([

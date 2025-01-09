@@ -210,14 +210,13 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    if (ticket_id) {
-        window.Echo.private(`ticket.${ticket_id}`).listen(
-            ".ticket-chat",
-            (e) => {
-                console.log(e.message);
+    // if (user_id) {
+    window.Echo.channel(`ticket.${ticket_id}`).listen(".ticket-chat", (e) => {
+        console.log(e.message);
 
-                chatMessages(e.message);
-            }
-        );
-    }
+        chatMessages(e.message);
+    });
+    // }
+
+    console.log(ticket_id);
 });

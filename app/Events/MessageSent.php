@@ -20,7 +20,7 @@ class MessageSent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct(Message $message)
     {
         $this->message = $message;
     }
@@ -30,7 +30,7 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('ticket.' . $this->message->ticket_id);
+        return new Channel('ticket.' . $this->message->ticket_id);
     }
 
     public function broadcastAs(): string
