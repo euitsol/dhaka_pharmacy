@@ -26,17 +26,17 @@ $(document).ready(function () {
 //related product
 $(document).ready(function () {
     $("#related-product-slider").owlCarousel({
-        items: 5,
-        itemsDesktop: [1000, 5],
-        itemsDesktopSmall: [980, 4],
-        itemsTablet: [768, 3],
-        itemsMobile: [650, 2],
-        itemsMobile: [480, 1],
+        items: 5, // Default number of items
+        itemsDesktop: [1399, 3], // 1399px and above: show 3 items
+        itemsDesktopSmall: [991, 4], // 991px and below: show 4 items
+        itemsTablet: [767, 3], // 767px and below: show 3 items
+        itemsMobile: [575, 2], // 575px and below: show 2 items
         pagination: true,
         navigation: false,
         slideSpeed: 1000,
         autoPlay: 2000,
     });
+    
 });
 
 $(document).ready(function () {

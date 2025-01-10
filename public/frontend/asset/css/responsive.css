@@ -92,24 +92,29 @@
         border-radius: 15px 15px 0px 0px !important;
         border: none !important;
     }
-
     .log-with-pass .left-col .form-title h1 {
         font-size: 29px !important;
     }
-
-
     .uk-child-width-1-5\@m > * {
         width: 54%;
     }
-
     .single_product_section .similar_products_card {
         height: 100% !important;
         max-height: 100%  !important;
+        /* border: none; */
     }
-
+    
     .add_to_card .cart-btn {
         border: 1px solid var(--secundary-color) !important;
     }
+
+    .header-section .suggestion-box .search_item .details p {
+        font-size: .7rem;
+        line-height: 0.25rem;
+    }
+
+
+
 }
 
 
@@ -168,7 +173,6 @@
         -webkit-backdrop-filter: blur(23px) saturate(169%);
         background-color: rgba(255, 255, 255, 0.1);
         transition: .4s;
-
     }
     .best-selling-products .single-item img {
         height: 100% !important;
@@ -225,14 +229,12 @@
         right: 0px !important;
         opacity: 1 !important; 
     }
-
     .single-pdct .pdct-info {
         padding: 10px 20px 0px 20px;
         background: unset;
         position: relative !important;
         overflow: visible !important;
     }
-
     .add_to_card .cart-btn {
         border: 1px solid var(--secundary-color) !important;
         font-size: 14px !important;
@@ -253,7 +255,6 @@
         line-height: 16px;
         font-weight: 500;
     }
-
     .single-pdct .pdct-info a {
         font-size: 11px !important;
         line-height: 18px !important;
@@ -312,6 +313,9 @@
 
     .socket-row {
      padding-bottom: 120px !important;
+    }
+    .upload_prescription{
+        width: 25% !important;
     }
 
     /* ==================================================
@@ -578,8 +582,6 @@
     .main-header .search-filter .search-box{
         width: 100%;
     }
-
-
     .footer-section .delivery-row h4 {
         font-size: 12px;
         line-height: 15px;
@@ -660,7 +662,6 @@
         font-size: 14px !important;
         line-height: 20px !important;
     }
-
     .about-section .about-container .content p {
         font-size: 14px !important;
         line-height: 23px !important;
@@ -692,12 +693,12 @@
         margin-bottom: 10px !important;
         margin: 0 auto !important;
     }
-
     .about-section .contact-section .main-contact-section .information .button .btn {
         font-size: 16px !important;
         height: 45px !important;
         width: 200px !important;
-        padding-left: 25px !important;
+        padding-left: 30px !important;
+        line-height: 34px !important;
     }
     .about-section .contact-section .main-contact-section .information .button .btn i {
         height: 45px !important;
@@ -747,14 +748,12 @@
         font-size: 16px !important;
         line-height: 32px ;
     }
-
     .faq-section .nav-pills .nav-item button.active {
         font-weight: 500 !important;
         color: var(--text-color-white);
         background: var(--secondary-bg) !important;
         padding: 0px 10px !important;
     }
-
     .faq-section .nav-pills li {
         margin-right: 15px;
     }
@@ -831,6 +830,11 @@
     .log-with-pass .left-col .form-title h1 {
         font-size: 22px !important;
     }
+
+    .footer-section .delivery-row h3 {
+        margin: 0px !important;
+    }
+
 
 }
 
@@ -977,15 +981,12 @@
     .about-section .contact-section .main-contact-section .contact-info {
         border-right: 0 !important;
     }
-
     .mobile-footer {
         padding: 15px 10px;
     }
-
     .single_product_section .single_product .product_details .nav-tabs li a {
         font-size: 13px;
     }
-
     .single-pdct .pdct-info a {
         font-size: 10px !important;
         line-height: 15px !important;
@@ -1038,7 +1039,6 @@
     .breadcrumb_wrap .breadcrumb.wizard li a {
         padding: 7px 6px 9px 32px;
     }
-
     .product-section .sub_categories .uk-position-center-right-out {
         display: none;
     }
@@ -1079,7 +1079,7 @@
         width: 100px;
     }
     .slider-sction .carousel-caption .slider-right img {
-        max-width: 215px;
+        max-width: 195px;
     }
     .slider-sction .carousel-caption .slider-left h2 {
         font-size: 32px;
@@ -1168,7 +1168,7 @@
     } */
 
     .sub_cat_item.uk-active .sub_cat_link .card.active h3{
-        font-size: 10px !important;
+        font-size: 9px !important;
     }
 
     /* ====================================================
@@ -1180,7 +1180,7 @@
     }
     .header-section .suggestion-box .search_item .details p {
         font-size: 10px;
-        line-height: 18px;
+        line-height: 1px;
     }
     .header-section .suggestion-box .search_item .details .product_title {
         font-size: 12px;
@@ -1214,6 +1214,9 @@
     .header-section .right-col select {
         font-size: 13px !important;
         font-weight: 500 !important;
+    }
+    .upload_prescription {
+        width: 50% !important;
     }
 }
 
@@ -1266,4 +1269,6 @@
     }
 }
 
-
+/*========================================
+    css reponsive code end
+==========================================*/

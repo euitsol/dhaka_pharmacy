@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Products')
 @section('content')
-    <div class="row pt-0 pt-md-4">
+    <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
         @if ($menuItems->isNotEmpty())
             @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])

@@ -1,7 +1,7 @@
 <section class="header-section">
     <div class="container-fluid">
         <div class="main-header">
-            <div class="row align-items-center row-gap-4 row-gap-lg-0">
+            <div class="row align-items-center row-gap-3 row-gap-lg-0">
                 <div class="col-12 col-lg-8 order-2 order-lg-1">
                     <div class="row align-items-center justify-space-between">
                         <div class="col-4 col-xxl-5 col-5 col-md-4">

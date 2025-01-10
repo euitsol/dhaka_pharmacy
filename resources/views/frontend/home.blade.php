@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Home')
 @section('content')
-    <div class="row pt-0 pt-lg-4">
+    <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
         <div class="col-3 col-xxl-2 col-12 col-lg-3 d-none d-lg-block home-cat-sidebar">
             @if ($menuItems->isNotEmpty())
