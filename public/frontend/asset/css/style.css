@@ -244,8 +244,11 @@ h2.title {
     display: block;
     padding: 0px;
     margin: 0px;
+    text-decoration: none;
 }
-
+a{
+  text-decoration: none !important;
+}
 .single-item{
   padding: 10px 0;
   border-bottom: 1px solid var(--text-color-black);

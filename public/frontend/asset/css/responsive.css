@@ -532,6 +532,7 @@
       main header responsive code here
     ==============================================*/
 
+/* 
     .main-header .right-col{
         display: none;
     }
@@ -543,7 +544,8 @@
     }
     .header-section {
         background: transparent;
-    }
+    } */
+/*     
     .header-section .search-filter input{
         border: 2px solid var(--primary-color);
         border-right: 0px;
@@ -566,10 +568,17 @@
     .header-section .search-filter select option {
         background: var(--primary-color);
         color: var(--text-color-white) !important;
-    }
+    } */
+
+
     header {
         position: unset;
     }
+
+    .main-header .search-filter .search-box{
+        width: 100%;
+    }
+
 
     .footer-section .delivery-row h4 {
         font-size: 12px;
@@ -899,7 +908,7 @@
     .container-fluid {
         padding: 0 20px !important;
     }
-    .sp_quantity{
+    .product_price .sp_quantity{
         width: 40% !important;
     }
     .container-fluid .log-with-pass .container{
@@ -1193,6 +1202,18 @@
     }
     .add_to_card .cart-btn i{
         font-size: 12px !important;
+    }
+    .header-section .right-col .item {
+        width: inherit;
+        padding: 7px !important;
+    }
+    .header-section .right-col .login-btn {
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .header-section .right-col select {
+        font-size: 13px !important;
+        font-weight: 500 !important;
     }
 }
 

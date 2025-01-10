@@ -176,7 +176,7 @@
                 </div>
                 <div class="col text-center">
 
-                    <a href="{{ route('login') }}"><i class="fas fa-user"></i></a>
+                    <a href="#"><i class="fa-solid fa-pen-to-square"></i></a>
                     <!-- <a href="#"><i class="fas fa-user"></i></a> -->
                 </div>
                 <div class="col d-none align-items-center justify-content-center">
