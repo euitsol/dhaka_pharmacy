@@ -12,6 +12,8 @@ class Message extends BaseModel
 
     protected $fillable = ['message', 'sender_id', 'sender_type', 'ticket_id'];
 
+    protected $appends = ['author_image', 'send_at'];
+
     public function sender()
     {
         return $this->morphTo();
@@ -29,5 +31,15 @@ class Message extends BaseModel
     public function scopeRead($query)
     {
         return $query->where('is_read', 1);
+    }
+
+    public function getAuthorImageAttribute()
+    {
+        return $this->sender->image ? asset('storage/' . $this->sender->image) : asset('default_img/male.png');
+    }
+
+    public function getSendAtAttribute()
+    {
+        return $this->created_at->diffForHumans();
     }
 }

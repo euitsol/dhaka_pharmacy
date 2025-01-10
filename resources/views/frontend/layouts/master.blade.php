@@ -42,6 +42,7 @@
 
     <!--======== FontAwesome cdn ==========-->
     <script src="https://kit.fontawesome.com/db6820c2b5.js" crossorigin="anonymous"></script>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     {{-- @livewireStyles <!-- Include Livewire styles here --> --}}
     @stack('css')
@@ -62,6 +63,8 @@
             // Live Chat
             'getMessages': `{{ route('ticket.messages') }}`,
         };
+        const ticket_id = `{{ getTicketId() }}`;
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
 </head>
 

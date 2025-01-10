@@ -30,7 +30,7 @@ class FrontendDataShareServiceProvider extends ServiceProvider
             $data = [];
             $data['default_delivery_fee'] = 60;
 
-            $categories = Cache::remember('categories', 60, function () {
+            $categories = Cache::remember('categories', 360, function () {
                 return ProductCategory::where('status', 1)->orderBy('name')->get();
             });
             // $categories = ProductCategory::where('status', 1)->orderBy('name')->get();
