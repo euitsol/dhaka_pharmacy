@@ -73,7 +73,7 @@
     <header>
         @include('frontend.includes.header')
     </header>
-    <main>
+    <main class="overflow-hidden">
         <div class="container-fluid">
             @yield('content')
         </div>
