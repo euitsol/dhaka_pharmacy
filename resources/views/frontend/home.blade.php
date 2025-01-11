@@ -35,7 +35,7 @@
                                 <div class="all-product">
                                     <div class="row m-0">
                                         @foreach ($bsItems as $item)
-                                            <div class="col-xxl-12 col-xl-12 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
+                                            <div class="col-xxl-12 col-xl-12 col-lg-4 col-md-3 col-sm-4 col-6 py-2 py-lg-3">
                                                 <div class="single-item">
                                                     <div class=" row align-items-center">
                                                         {{-- <div class=""> --}}
@@ -66,7 +66,8 @@
 
                                                                 <!-- add to cart button -->
                                                                 <div class="add_to_card d-block d-xl-none mt-2">
-                                                                    <a class="cart-btn" data-unit_id="" href="javascript:void(0)">
+                                                                    <a class="cart-btn" data-product_slug=""
+                                                                    data-unit_id="" href="javascript:void(0)">
                                                                         <i class="fa-solid fa-cart-plus"></i>
                                                                         <span class="d-block d-xl-none">Add To Cart</span>
                                                                     </a>
@@ -134,7 +135,7 @@ btn-arrow">
                             </div>
                             <div class="all-products row">
                                     @foreach ($products as $product)
-                                        <div class="single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
+                                        <div class="single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2 py-lg-3">
                                             <div class="single-pdct">
                                                 <a href="{{ route('product.single_product', $product->slug) }}">
                                                     <div class="pdct-img">
@@ -189,7 +190,7 @@ btn-arrow">
                             </div>
 
 
-                            <div class="row show-more mt-5" @if (count($products) < 8) style="display:none;" @endif>
+                            <div class="row show-more mt-3 mt-lg-5" @if (count($products) < 8) style="display:none;" @endif>
                                 <a class="all-pdct-btn text-center"
                                     href="{{ route('category.products', ['category' => 'all']) }}">{{ __('All Products') }}</a>
                             </div>

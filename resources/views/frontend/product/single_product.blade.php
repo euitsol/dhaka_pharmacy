@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/single_product.css') }}">
 @endpush
 @section('content')
-    <div class="row pt-4">
+    <div class="row pt-2 pt-lg-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
         @if ($menuItems->isNotEmpty())
             @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
@@ -41,7 +41,7 @@
                                     </div>
 
                                     <div class="row gx-4">
-                                        <div class="col-5 col-xxl-6 col-12 col-md-5 mb-3 mb-sm-0">
+                                        <div class="col-5 col-xxl-6 col-12 col-md-5 mb-2 mb-sm-0">
                                             <div class="card h-100">
                                                 <div class="card-body h-100">
                                                     <div class="product_image xzoom-container">
@@ -156,7 +156,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-12">
-                                            <div class="product_details py-4">
+                                            <div class="product_details py-2 py-md-4">
                                                 <!-- Nav tabs -->
                                                 <ul class="nav nav-tabs nav-justified" role="tablist">
                                                     <div class="slider"></div>

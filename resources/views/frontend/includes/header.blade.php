@@ -41,7 +41,6 @@
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
-
                                     </select>
                                     <button class="sub-btn text-center bg-white col-1" type="submit"><i
                                             class="fa-solid fa-magnifying-glass text-dark"></i></button>
@@ -113,7 +112,6 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </div>
