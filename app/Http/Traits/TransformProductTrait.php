@@ -12,6 +12,7 @@ trait TransformProductTrait
         $this->setStrengthInfo($product);
         $this->setProductNames($product, $limit);
         $this->setDiscountInformation($product);
+        $this->setProductImage($product);
 
         return $product;
     }
