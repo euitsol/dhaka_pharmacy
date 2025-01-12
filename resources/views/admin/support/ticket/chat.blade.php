@@ -119,7 +119,7 @@
 @endsection
 @push('js')
     <script>
-        const ticket_id = `{{ $ticket->id }}`;
+        const TICKET_ID = `{{ $ticket->id }}`;
     </script>
     <script src="{{ asset('admin/js/support.js') }}"></script>
 @endpush

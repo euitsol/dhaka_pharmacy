@@ -47,6 +47,13 @@ function handleChatTicketForm(formId) {
                             );
                         $this.parent().remove();
                         conversation.parent().removeClass("d-none");
+
+                        window.Echo.channel(
+                            `ticket.${response.ticket_id}`
+                        ).listen(".ticket-chat", (e) => {
+                            chatMessages(e.message);
+                        });
+
                         toastr.success(response.message);
                     } else {
                         toastr.error(response.message);
@@ -171,8 +178,6 @@ function chatDataLoad() {
             if (response.success) {
                 chatMessages(response.ticket.messages);
             } else {
-                console.log(response);
-
                 toastr.error(response.message);
             }
         },
@@ -210,13 +215,14 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    // if (user_id) {
-    window.Echo.channel(`ticket.${ticket_id}`).listen(".ticket-chat", (e) => {
-        console.log(e.message);
+    if (TICKET_ID) {
+        window.Echo.channel(`ticket.${TICKET_ID}`).listen(
+            ".ticket-chat",
+            (e) => {
+                console.log(TICKET_ID);
 
-        chatMessages(e.message);
-    });
-    // }
-
-    console.log(ticket_id);
+                chatMessages(e.message);
+            }
+        );
+    }
 });

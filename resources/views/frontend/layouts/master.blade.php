@@ -63,7 +63,10 @@
             // Live Chat
             'getMessages': `{{ route('ticket.messages') }}`,
         };
-        const ticket_id = `{{ getTicketId() }}`;
+
+        const TICKET_ID = `{{ getTicketId() }}`;
+
+
         const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
 </head>
