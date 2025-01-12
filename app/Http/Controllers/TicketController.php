@@ -48,6 +48,7 @@ class TicketController extends Controller
             });
             return response()->json([
                 'success' => true,
+                'ticket_id' => getTicketId(),
                 'message' => 'Ticket created successfully'
             ]);
         } catch (\Exception $e) {

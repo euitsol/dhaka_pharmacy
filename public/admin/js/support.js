@@ -72,11 +72,10 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    if (ticket_id) {
-        window.Echo.channel(`ticket.${ticket_id}`).listen(
+    if (TICKET_ID) {
+        window.Echo.channel(`ticket.${TICKET_ID}`).listen(
             ".ticket-chat",
             (e) => {
-                console.log(e.message);
                 chatMessage(e.message);
             }
         );
