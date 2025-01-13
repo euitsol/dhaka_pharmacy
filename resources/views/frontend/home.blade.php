@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Home')
 @section('content')
-    <div class="row pt-0 pt-lg-4">
+    <div class="row pt-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
         <div class="col-3 col-xxl-2 col-12 col-lg-3 d-none d-lg-block home-cat-sidebar">
             @if ($menuItems->isNotEmpty())
@@ -35,7 +35,7 @@
                                 <div class="all-product">
                                     <div class="row m-0">
                                         @foreach ($bsItems as $item)
-                                            <div class="col-xxl-12 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
+                                            <div class="col-xxl-12 col-xl-12 col-lg-4 col-md-3 col-sm-4 col-6 py-2 py-lg-3">
                                                 <div class="single-item">
                                                     <div class=" row align-items-center">
                                                         {{-- <div class=""> --}}
@@ -47,7 +47,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-12  px-xxl-3  col-xxl-8">
-                                                            <div class="bst-product-content">
+                                                            <div class="bst-product-content mt-xl-3 mt-lg-3 mt-xxl-0">
                                                                 <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
                                                                         href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
                                                                 </h3>
@@ -63,12 +63,13 @@
                                                                                 {{ number_format($item->price, 2) }}</del></span>
                                                                     @endif
                                                                 </h4>
+
                                                                 <!-- add to cart button -->
-                                                                <div class="cart-button-lg d-block d-xl-none mt-2">
-                                                                    <a class="cart-btn" data-product_slug="#"
-                                                                        data-unit_id="" href="javascript:void(0)">
+                                                                <div class="add_to_card d-block d-xl-none mt-2">
+                                                                    <a class="cart-btn" data-product_slug=""
+                                                                    data-unit_id="" href="javascript:void(0)">
                                                                         <i class="fa-solid fa-cart-plus"></i>
-                                                                        <span>Add To Cart</span>
+                                                                        <span class="d-block d-xl-none">Add To Cart</span>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -87,7 +88,7 @@
                     @endif
                     @if ($featuredCategories->isNotEmpty())
                         <div class="col-12 col-xl-9 feature-product">
-                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center mb-3">
+                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center">
                                 <div class="col-12 col-md-4 col-4 col-xxl-5 col-2 col-lg-6">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>
@@ -132,10 +133,9 @@ btn-arrow">
                                     </div>
                                 </div>
                             </div>
-                            <div class="all-products">
-                                <div class="row">
+                            <div class="all-products row">
                                     @foreach ($products as $product)
-                                        <div class="single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
+                                        <div class="single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2 py-lg-3">
                                             <div class="single-pdct">
                                                 <a href="{{ route('product.single_product', $product->slug) }}">
                                                     <div class="pdct-img">
@@ -171,30 +171,26 @@ btn-arrow">
                                                         @endif
                                                     </h4>
 
-                                                    <div class="add_to_card d-none d-xl-block">
+                                                    <!-- add to cart button -->
+                                                     
+                                                    <div class="add_to_card">
                                                         <a class="cart-btn" data-product_slug="{{ $product->slug }}"
                                                             data-unit_id="" href="javascript:void(0)">
                                                             <i class="fa-solid fa-cart-plus"></i>
+                                                            <span class="d-block d-xl-none">Add To Cart</span>
                                                         </a>
                                                     </div>
 
-                                                    <div class="cart-button-lg d-block d-xl-none">
-                                                        <a class="cart-btn" data-product_slug="{{ $product->slug }}"
-                                                            data-unit_id="" href="javascript:void(0)">
-                                                            <i class="fa-solid fa-cart-plus"></i>
-                                                            <span>Add To Cart</span>
-                                                        </a>
-                                                    </div>
                                                 </div>
 
                                             </div>
                                         </div>
                                     @endforeach
-                                </div>
+                                
                             </div>
 
 
-                            <div class="row show-more mt-5" @if (count($products) < 8) style="display:none;" @endif>
+                            <div class="row show-more mt-3 mt-lg-5" @if (count($products) < 8) style="display:none;" @endif>
                                 <a class="all-pdct-btn text-center"
                                     href="{{ route('category.products', ['category' => 'all']) }}">{{ __('All Products') }}</a>
                             </div>

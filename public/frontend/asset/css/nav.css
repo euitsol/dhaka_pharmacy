@@ -450,7 +450,7 @@ header{
     transition: .4s;
   }
   .header-section .suggestion-box .search_item .image img{
-    height: 75px;
+    /* height: 75px; */
     object-fit: cover;
   }
   .header-section .suggestion-box .search_item .details .product_title {
@@ -459,8 +459,8 @@ header{
   }
   .header-section .suggestion-box .search_item .details p {
     color: var(--text-color-black);
-    font-size: .8rem;
-    line-height: 1.25rem;
+    font-size: .7rem;
+    line-height: .25rem;
   }
   .header-section .suggestion-box .search_item .details .product_sub_cat {
     font-size: 1rem;

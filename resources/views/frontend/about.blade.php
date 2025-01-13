@@ -24,7 +24,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-6 text-center p-0 mt-4 mt-lg-0">
+                    <div class="col-12 col-lg-6 text-center p-0 mt-2 mt-lg-0">
                         <img src="{{ asset('frontend/asset/img/about.png') }}" alt="Pharmacy Image" class="">
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                                         medications</h2>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-12 d-flex d-md-block mt-3 mt-lg-0">
+                            <div class="col-xl-3 col-12 d-flex d-md-block mt-2 mt-lg-0">
                                 <div class="information">
                                     <div class="button text-md-center text-xl-end text-start">
                                         <!-- <button class="btn">Contact Us <i class="fas fa-chevron-right"></i></button> -->

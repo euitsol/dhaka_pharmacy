@@ -26,17 +26,17 @@ $(document).ready(function () {
 //related product
 $(document).ready(function () {
     $("#related-product-slider").owlCarousel({
-        items: 5,
-        itemsDesktop: [1000, 5],
-        itemsDesktopSmall: [980, 4],
-        itemsTablet: [768, 3],
-        itemsMobile: [650, 2],
-        itemsMobile: [480, 1],
+        items: 5, 
+        itemsDesktop: [1399, 3], 
+        itemsDesktopSmall: [991, 4], 
+        itemsTablet: [767, 3], 
+        itemsMobile: [575, 2],
         pagination: true,
         navigation: false,
         slideSpeed: 1000,
         autoPlay: 2000,
     });
+    
 });
 
 $(document).ready(function () {

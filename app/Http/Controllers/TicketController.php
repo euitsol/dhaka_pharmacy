@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\Http\Requests\Support\MessageSendRequest;
 use App\Http\Requests\Support\TicketCreateRequest;
 use App\Models\Message;
@@ -47,6 +48,7 @@ class TicketController extends Controller
             });
             return response()->json([
                 'success' => true,
+                'ticket_id' => getTicketId(),
                 'message' => 'Ticket created successfully'
             ]);
         } catch (\Exception $e) {
@@ -92,10 +94,10 @@ class TicketController extends Controller
                     'ticket' => $ticket,
                 ]);
             }
-            // return response()->json([
-            //     'success' => false,
-            //     'message' => 'Ticket not found.',
-            // ], 404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Ticket not found.',
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -133,16 +135,14 @@ class TicketController extends Controller
                     ? asset('storage/' . $message->sender->image)
                     : asset('default_img/male.png');
                 $message->send_at = $message->created_at->diffForHumans();
+
+                broadcast(new MessageSent($message));
                 return response()->json([
                     'success' => true,
-                    'reply' => $message,
+                    // 'reply' => $message,
                     'message' => 'Message sent successfully',
                 ]);
             }
-            // return response()->json([
-            //     'success' => false,
-            //     'message' => 'Ticket not found.',
-            // ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

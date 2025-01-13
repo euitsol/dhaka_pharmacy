@@ -28,20 +28,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    <!--======== toastr css ========-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
-        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <!--========= Select2 =========-->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <!--========= custiom css =========-->
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/nav.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/asset/css/style.css') }}"> 
-    <link rel="stylesheet" href="{{ asset('frontend/asset/css/responsive.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('frontend/asset/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/asset/css/responsive.css') }}">
 
     <!--======== FontAwesome cdn ==========-->
     <script src="https://kit.fontawesome.com/db6820c2b5.js" crossorigin="anonymous"></script>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!--======== toastr css ========-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     @stack('css_link')
     {{-- @livewireStyles <!-- Include Livewire styles here --> --}}
     @stack('css')
@@ -62,6 +64,11 @@
             // Live Chat
             'getMessages': `{{ route('ticket.messages') }}`,
         };
+
+        const TICKET_ID = `{{ getTicketId() }}`;
+
+
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
 </head>
 
@@ -70,7 +77,7 @@
     <header>
         @include('frontend.includes.header')
     </header>
-    <main>
+    <main class="overflow-hidden">
         <div class="container-fluid">
             @yield('content')
         </div>

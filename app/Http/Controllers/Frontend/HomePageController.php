@@ -15,9 +15,11 @@ use App\Models\Order;
 class HomePageController extends Controller
 {
 
+
     use TransformProductTrait;
     public function home(): View
     {
+        // ticketClosed();
         $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'units' => function ($q) {
             $q->orderBy('quantity', 'asc');
         }])->activated();

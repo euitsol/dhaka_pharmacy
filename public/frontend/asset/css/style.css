@@ -84,29 +84,6 @@ a:hover{
 }
 
 
-/* ======================================================
-  For WebKit Browsers (e.g., Chrome, Edge, Safari)
-=========================================================*/
-/* ::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background:var(--secundary-color);
-}
-::-webkit-scrollbar-thumb {
-  background-color:var(--nav-primary-bg);
-} */
-
-/* ======================================================
-  For Firefox
-=========================================================*/
-/* *{
-  scrollbar-width: thin;
-  scrollbar-color: var(--nav-primary-bg) var(--secundary-color);
-} */
-
-
-
 /*====================================
       Start Product Common CSS
 ======================================*/
@@ -125,7 +102,6 @@ h2.title {
   -webkit-backdrop-filter: blur(23px) saturate(169%);
   background-color: rgba(255, 255, 255, 0.1);
   transition: .4s;
-
 }
 
  .single-pdct .pdct-img{
@@ -150,7 +126,6 @@ h2.title {
 }
 
 .discount_tag::after{
-
   border-right: 15px solid transparent;
   border-top: 15px solid var(--border-2);
   border-bottom: 15px solid var(--border-2);
@@ -161,7 +136,7 @@ h2.title {
 }
 .single-pdct .pdct-img > img{
   object-fit: cover;
-  height: 150px;
+  /* height: 150px; */
   border-radius: 15px 15px 0 0 ;
   border-bottom: 1px solid rgba(112, 112, 112, 0.34);
 }
@@ -267,8 +242,11 @@ h2.title {
     display: block;
     padding: 0px;
     margin: 0px;
+    text-decoration: none;
 }
-
+a{
+  text-decoration: none !important;
+}
 .single-item{
   padding: 10px 0;
   border-bottom: 1px solid var(--text-color-black);
@@ -283,11 +261,25 @@ h2.title {
   border-bottom: 0;
 }
 
-.single-item img{
-  border-color: var(--text-color-black) !important;
-  height: 100px;
-  object-fit: cover;
-  padding: 5px;
+.single-item img {
+	border-color: var(--text-color-black) !important;
+	object-fit: cover;
+	padding: 5px;
+	width: 100% !important;
+	height: revert-layer;
+}
+.product-section .align-items-baseline .best-selling-products .all-product .single-item .img a{
+  display: block;
+  width: 100% !important;
+}
+.product-section .align-items-baseline .feature-product .slider-col .uk-position-small {
+	margin: 0px;
+  top: 16px;
+}
+
+.product-section .align-items-baseline .best-selling-products .all-product .single-item{
+	border-bottom: 1px solid #000;
+  padding-bottom: 15px;
 }
 
 .single-item .pdct-title{
@@ -314,6 +306,7 @@ h2.title {
     padding: 0px;
     margin: 0;
     transition: .4s;
+    text-decoration: none;
 }
 
 .single-item .pdct-title a:hover{
@@ -400,7 +393,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 .sidebar-cat-section .sticky-col{
   position: sticky;
-  top: 5.5rem;
+  top: 1.5rem;
 }
 .sidebar-cat-section .main-categories-items{
   display: flex;
@@ -787,9 +780,9 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   padding: 3px;
 }
 
-.product-section .all-products {
+/* .product-section .all-products {
     row-gap: 30px;
-}
+} */
 
 
 
@@ -840,6 +833,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 .delivery-slider-section .uk-slideshow-items img{
   filter: brightness(0.5);
+  width: 100% !important;
 }
 
 .delivery-slider-section .uk-slideshow-items .carousel-caption{
@@ -1440,11 +1434,11 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 
 /*====================================
-    Product Details CSS Start
+  Product Details CSS Start
 ======================================*/
-.single_product_section .single_product .product_details .tab-pane {
+/* .single_product_section .single_product .product_details .tab-pane {
   padding: 15px;
-}
+} */
 
 .single_product_section .single_product .product_details .nav-tabs {
   position: relative;
@@ -1454,7 +1448,10 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   border-radius: 6px;
   padding: 0;
 }
-
+.single_product_section .single_product .product_details #description {
+  padding: 10px 10px 0 10px;
+	background: var( --commoninner_bg);
+}
 .single_product_section .single_product .product_details .nav-tabs li {
   margin: 0px !important;
 }

@@ -36,7 +36,7 @@ $(document).ready(function () {
                     let route = datas.single_product;
                     let _route = route.replace("slug", product.slug);
                     result += `
-                        <div class="col-3 px-2">
+                        <div class="px-2 col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
                             <div class="single-pdct">
                                     <a href="${_route}">
                                         <div class="pdct-img">
@@ -65,11 +65,12 @@ $(document).ready(function () {
                         product.discounted_price,
                         2
                     )}</span>  ${discount_amount}</h4>
-                                        <div class="add_to_card">
+                                        <div class="add_to_card ">
                                             <a class="cart-btn" data-product_slug="${
                                                 product.slug
                                             }" data-unit_id="" href="javascript:void(0)">
                                                 <i class="fa-solid fa-cart-plus"></i>
+                                                <span class="d-block d-xl-none">Add To Cart</span>
                                             </a>
                                         </div>
                                     </div>

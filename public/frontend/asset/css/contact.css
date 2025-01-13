@@ -12,15 +12,15 @@
     border: 2px solid #dcdcdc;
 }
 .contact-section .contact-container h2{
-    font-size: 32px;
-    line-height: 40px;
+    font-size: 24px;
+    line-height: 36px;
     color: var(--text);
     font-family: var(--secondry-font);
     font-weight: 600;
 }
 .contact-section .contact-container p{
-    font-size: 18px;
-    line-height: 29px;
+    font-size: 16px;
+    line-height: 23px;
     color: #000000a3;
     font-weight: 400;
     font-family: var(--secondry-font);
@@ -43,10 +43,10 @@
 }
 .contact-section .form-label {
     font-weight: bold;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 600;
     font-family: var(--secondry-font);
-    line-height: 40px;
+    line-height: 30px;
     color: var(--text);
     margin: 0px;
 }
@@ -59,21 +59,21 @@
     color: #000;
 }
 .contact-section #message{
-    height: 60px;
+    height: 50px;
 }
 .contact-section .btn{
     text-align: right;
 }
 .contact-section .send-button{
-    font-size: 24px;
+    font-size: 22px;
 	text-transform: uppercase;
 	color: var(--text-color-white);
 	background-color: var(--asent-color);
     border: 1px solid var(--text);
-	padding: 16px 0;
+	padding: 12px 0;
 	border-radius: 10px;
 	margin-top: 10px;
-    width: 270px;
+    width: 200px;
     line-height: 40px;
     font-weight: bold;
     font-family: var(--secondry-font);

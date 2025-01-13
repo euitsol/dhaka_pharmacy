@@ -47,6 +47,13 @@ function handleChatTicketForm(formId) {
                             );
                         $this.parent().remove();
                         conversation.parent().removeClass("d-none");
+
+                        window.Echo.channel(
+                            `ticket.${response.ticket_id}`
+                        ).listen(".ticket-chat", (e) => {
+                            chatMessages(e.message);
+                        });
+
                         toastr.success(response.message);
                     } else {
                         toastr.error(response.message);
@@ -86,18 +93,35 @@ function chatMessages(chatMessages) {
     let conversation = $(".conversation");
     let result = "";
     if (!Array.isArray(chatMessages)) {
-        result += `<div class="conversation-item d-flex align-items-start justify-content-end sent">
-                            <div class="sms_text w-auto">
+        result += `<div class="conversation-item d-flex align-items-start ${
+            chatMessages.sender_id == chatMessages.ticket.ticketable_id &&
+            chatMessages.sender_type == chatMessages.ticket.ticketable_type
+                ? "justify-content-end sent"
+                : "justify-content-start "
+        }">`;
+        if (
+            chatMessages.sender_id != chatMessages.ticket.ticketable_id ||
+            chatMessages.sender_type != chatMessages.ticket.ticketable_type
+        ) {
+            result += `<div class="author_logo">
+                <img src="${chatMessages.author_image}" alt="avatar">
+            </div>`;
+        }
+        result += `<div class="sms_text w-auto">
                                 <div class="message">${chatMessages.message}</div>
                                 <div class="time">${chatMessages.send_at}</div>
-                            </div>
-                            <div class="author_logo">
-                                <img src="${chatMessages.author_image}" alt="avatar">
-                            </div>
-                        </div>`;
-
-        conversation.find(".conversation-list").append(result);
+                            </div>`;
+        if (
+            chatMessages.sender_id == chatMessages.ticket.ticketable_id &&
+            chatMessages.sender_type == chatMessages.ticket.ticketable_type
+        ) {
+            result += `<div class="author_logo">
+                                    <img src="${chatMessages.author_image}" alt="avatar">
+                                </div>`;
+        }
+        result += `</div>`;
         $(".temp_text").remove();
+        conversation.find(".conversation-list").append(result);
     } else {
         $(".chat_initial_form").remove();
         conversation.parent().removeClass("d-none");
@@ -154,9 +178,8 @@ function chatDataLoad() {
             if (response.success) {
                 chatMessages(response.ticket.messages);
             } else {
-                console.log(response);
-
-                toastr.error(response.message);
+                // toastr.error(response.message);
+                console.log(response.message);
             }
         },
     });
@@ -174,7 +197,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (response.success) {
-                    chatMessages(response.reply);
+                    // chatMessages(response.reply);
                     $this.find("textarea[name=message]").val("");
                 } else {
                     toastr.error(response.message);
@@ -190,4 +213,17 @@ $(document).ready(function () {
             },
         });
     });
+});
+
+$(document).ready(function () {
+    if (TICKET_ID) {
+        window.Echo.channel(`ticket.${TICKET_ID}`).listen(
+            ".ticket-chat",
+            (e) => {
+                console.log(TICKET_ID);
+
+                chatMessages(e.message);
+            }
+        );
+    }
 });

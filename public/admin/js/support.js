@@ -49,7 +49,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (response.success) {
-                    chatMessage(response.reply);
+                    // chatMessage(response.reply);
                     $this.find("textarea[name=message]").val("");
                 } else {
                     toastr.error(response.message);
@@ -69,4 +69,15 @@ $(document).ready(function () {
     $(".conversation").scrollTop(
         $(".conversation")[0].scrollHeight - $(".conversation").height()
     );
+});
+
+$(document).ready(function () {
+    if (TICKET_ID) {
+        window.Echo.channel(`ticket.${TICKET_ID}`).listen(
+            ".ticket-chat",
+            (e) => {
+                chatMessage(e.message);
+            }
+        );
+    }
 });
