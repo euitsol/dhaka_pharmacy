@@ -144,8 +144,8 @@
     =================================================*/
     .single-item img {
         border-color: var(--text-color-black) !important;
-        height: 100% !important;
-        object-fit: cover;
+        /* height: 100% !important;
+        object-fit: cover; */
         padding: 0px !important;
     }
     .product-section .best-selling-col .best-selling-products .all-product .single-item {
@@ -159,9 +159,9 @@
         transition: .4s;
     }
     .best-selling-products .single-item img {
-        height: 100% !important;
-        border: none !important;
-        padding: 0px;
+        /* height: 100% !important; */
+        /* padding: 0px; */
+        border: 3px !important;
         border-radius: 15px 15px 0px 0px !important;
     }
     .product-section .best-selling-col .best-selling-products {
@@ -286,6 +286,11 @@
         /* top: 16px; */
         margin-left: -28px;
     }
+    .sidebar-cat-section .single-cat:nth-child(2n+1) {
+        border-right: 0px !important;
+        border-color: rgba(112, 112, 112, 0.34);
+    }
+
     /*=======================================================
         header section responsive code here
     =========================================================*/
@@ -701,7 +706,7 @@
         font-size: 22px !important;
     }
     .slider-sction .uk-slideshow-items {
-        height: 350px;
+        height: 320px;
     }
     .slider-sction .carousel-caption .slider-right img {
         max-width: 300px;
@@ -843,6 +848,16 @@
     /*================================================
         slider section responsive code here
     =================================================*/
+    .slider-sction .carousel-caption .slider-left .btns a {
+        font-size: 12px !important;
+        width: 100px;
+    }
+    .slider-sction .carousel-caption .slider-right img {
+        max-width: 140px;
+    }
+    .slider-sction .carousel-caption .slider-left .btns {
+        margin-top: 7px;
+    }
 
     .slider-sction .carousel-caption .slider-left h3 {
         font-size: 18px;
@@ -854,10 +869,6 @@
     }
     .slider-sction .uk-slideshow-items {
         height: 300px;
-    }
-    .slider-sction .carousel-caption .slider-right img {
-        width: auto;
-        max-width: 150px;
     }
 
     /* delivery slider responsive code */
@@ -1035,7 +1046,7 @@
     .product-section .align-items-baseline .feature-product .slider-col .uk-position-small {
         margin-left: -10px;
     }
-    .uk-position-center-right.uk-position-small.uk-icon.uk-slidenav-next.uk-slidenav {
+    .product-section .feature-product .uk-position-center-right.uk-position-small.uk-icon.uk-slidenav-next.uk-slidenav {
         right: -25px;
     }
     
@@ -1090,7 +1101,7 @@
         slider-section responsive code here
     ===============================================*/
 
-    .slider-sction .carousel-caption .slider-left .btns a {
+    /* .slider-sction .carousel-caption .slider-left .btns a {
         font-size: 12px;
         width: 100px;
     }
@@ -1101,12 +1112,13 @@
         font-size: 29px;
         line-height: 30px;
     }
+    .slider-sction .carousel-caption .slider-left .btns {
+        margin-top: 7px;
+    } */
     .delivery-slider-section .uk-slideshow-items {
         height: 200px;
     }
-    .slider-sction .carousel-caption .slider-left .btns {
-        margin-top: 7px;
-    }
+    
 
     /*=======================================================
         single product section responsive code
