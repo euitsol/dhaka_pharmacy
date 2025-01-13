@@ -19,15 +19,7 @@ class LoginRequest extends BaseRequest
     {
         return [
             'phone' => 'required|string|exists:users,phone',
-            'password' => [
-                'required',
-                Password::min(8) // Minimum length of 8 characters
-                    ->mixedCase() // Requires at least one uppercase and one lowercase letter
-                    ->letters() // Requires at least one letter
-                    ->numbers() // Requires at least one digit
-                    ->symbols() // Requires at least one special character
-                    ->uncompromised(), // Ensures the password has not been compromised in data leaks
-            ],
+            'password' => 'required'
         ];
     }
 }
