@@ -135,12 +135,13 @@ h2.title {
   top: 0;
 }
 .single-pdct .pdct-img > img{
-  object-fit: cover;
-  /* height: 150px; */
   border-radius: 15px 15px 0 0 ;
   border-bottom: 1px solid rgba(112, 112, 112, 0.34);
 }
-
+.related_product #related-product-slider .single-pdct .pdct-img > img {
+	border-radius: 15px 15px 0 0;
+	border-bottom: none !important;
+}
 .single-pdct .pdct-info{
   padding: 10px 20px 0px 20px;
   background: unset;

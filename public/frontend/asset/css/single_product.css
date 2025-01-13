@@ -19,11 +19,17 @@
     width: 100%;
     object-fit: cover;
 }
-.product_content .sp_quantity .minus_qty,
 .product_content .sp_quantity .plus_qty{
     background-color: var(--nav-asent-color);
     color: var(--nav-text-color);
     line-height: 2;
+    border-radius: 0px 20px 20px 0px !important;
+}
+.product_content .sp_quantity .minus_qty{
+    background-color: var(--nav-asent-color);
+    color: var(--nav-text-color);
+    line-height: 2;
+    border-radius: 20px 0px 0px 20px !important;
 }
 
 .product_content .sp_quantity .quantity_input:focus {
