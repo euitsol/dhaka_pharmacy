@@ -26,7 +26,7 @@
                                 <div class="col-8 col-xl-5 col-12 col-sm-8 logo-col d-none d-lg-block">
                                     <div class="logo">
                                         <a href="{{ route('home') }}"><img class="w-100"
-                                            src="{{ asset('frontend/asset/img/logo.png') }}" alt="Header-logo"></a>
+                                                src="{{ asset('frontend/asset/img/logo.png') }}" alt="Header-logo"></a>
                                     </div>
                                 </div>
                             </div>
@@ -57,14 +57,19 @@
                         <div class="col-4 col-md-3 col-sm-4 logo-col d-block d-lg-none">
                             <div class="logo">
                                 <a href="{{ route('home') }}"><img class="w-100"
-                                src="{{ asset('frontend/asset/img/logo.png') }}" alt="Header-logo"></a>
+                                        src="{{ asset('frontend/asset/img/logo.png') }}" alt="Header-logo"></a>
                             </div>
                         </div>
                         <div class="col-8 col-md-9 col-lg-12">
                             <div class="row align-items-center justify-content-end">
                                 @if (!Auth::guard('web')->check())
                                     <div class="item">
-                                        <a href="{{ route('login') }}" class="login-btn">
+                                        <a href="javascript:void(0)"
+                                            onclick="
+                                        sessionStorage.removeItem('login_type');
+                                        window.location.href = '{{ route('login') }}';
+                                     "
+                                            class="login-btn">
                                             <i class="fa-solid fa-user me-1"></i>
                                             <span>{{ __('Login') }}</span>
                                         </a>
@@ -96,12 +101,14 @@
                                         <button class="cart-btn" type="button" data-bs-toggle="offcanvas"
                                             data-bs-target="#cartbtn" aria-controls="offcanvasRight">
                                             <i class="fa-solid fa-cart-shopping me-1"></i>
-                                            <span>{{ __('Cart') }}</span><sup><strong id="cart_btn_quantity"></strong></sup>
+                                            <span>{{ __('Cart') }}</span><sup><strong
+                                                    id="cart_btn_quantity"></strong></sup>
                                         </button>
                                         @include('frontend.includes.add_to_cart_slide')
                                     </div>
                                     <div class="item" style="max-width: 185px; overflow:hidden;">
-                                        <a href="{{ route('user.dashboard') }}" class="login-btn d-flex align-items-center">
+                                        <a href="{{ route('user.dashboard') }}"
+                                            class="login-btn d-flex align-items-center">
                                             <img style="height: 35px; width: 35px; object-fit: cover; border-radius: 50%;"
                                                 src="{{ user()->image ? storage_url(user()->image) : asset('user/asset/img/user.png') }}"
                                                 alt="">

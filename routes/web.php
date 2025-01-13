@@ -221,8 +221,11 @@ Route::controller(UserLoginController::class)->prefix('user')->group(function ()
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login');
     Route::post('/otp-verify', 'send_otp')->name('use.send_otp');
+    Route::get('/otp/{user_id}', 'otp')->name('use.otp');
+
+
     Route::get('/otp-verify', 'verify')->name('use.send_otp');
-    Route::get('/send-otp/again', 'send_otp_again')->name('use.send_otp.again');
+    Route::get('/send-otp/again/{user_id}', 'send_otp_again')->name('use.send_otp.again');
     Route::post('/otp/verify', 'otp_verify')->name('use.otp.verify');
 });
 
