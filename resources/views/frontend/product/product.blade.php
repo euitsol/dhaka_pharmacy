@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Products')
 @section('content')
-    <div class="row pt-4">
+    <div class="row pt-2 pt-lg-4">
         <!--===========  Sidebar-Category-Section-Include ==============-->
         @if ($menuItems->isNotEmpty())
             @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
@@ -12,7 +12,7 @@
         <!--=========== Main Content Section Start ==============-->
         <div class="{{ $menuItems->isNotEmpty() ? 'col-9 col-xxl-10 col-12 col-lg-9' : 'col-12' }} content-col">
             <!--========= Product-Section-Start ========-->
-            <section class="product-section pb-4 mb-3 mb-lg-5">
+            <section class="product-section mb-4 mb-lg-5">
                 <div class="row">
                     <div class="col-12">
                         <div class="row cat-filter-row gx-4">
@@ -75,12 +75,12 @@
                             @endif
 
                         </div>
-                        <div class="row all-products mt-3">
+                        <div class="row all-products mt-0 mt-lg-3">
                             @foreach ($products as $product)
                                 @php
                                     $proDisPrice = proDisPrice($product->price, $product->discounts);
                                 @endphp
-                                <div class="px-2 single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
+                                <div class="px-2 single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2">
                                     <div class="single-pdct">
                                         <a href="{{ route('product.single_product', $product->slug) }}">
                                             <div class="pdct-img">
@@ -128,7 +128,7 @@
                             @endforeach
                         </div>
                         @if (count($products) > 5)
-                            <div class="row show-more mt-5">
+                            <div class="row show-more mt-2 mt-lg-5">
                                 <a class="all-pdct-btn text-center more"
                                     data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
                                     data-sub_cat_slug="{{ isset($sub_category) ? $sub_category->slug : '' }}"

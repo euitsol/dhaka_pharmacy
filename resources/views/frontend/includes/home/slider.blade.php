@@ -1,4 +1,4 @@
-<section class="slider-sction pb-4 mb-0 mb-xxl-5">
+<section class="slider-sction  mb-0 mb-xxl-5">
     <div class="row">
         <div uk-slideshow>
             <ul class="uk-slideshow-items">

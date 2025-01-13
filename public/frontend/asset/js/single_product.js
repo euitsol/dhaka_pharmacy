@@ -26,11 +26,11 @@ $(document).ready(function () {
 //related product
 $(document).ready(function () {
     $("#related-product-slider").owlCarousel({
-        items: 5, // Default number of items
-        itemsDesktop: [1399, 3], // 1399px and above: show 3 items
-        itemsDesktopSmall: [991, 4], // 991px and below: show 4 items
-        itemsTablet: [767, 3], // 767px and below: show 3 items
-        itemsMobile: [575, 2], // 575px and below: show 2 items
+        items: 5, 
+        itemsDesktop: [1399, 3], 
+        itemsDesktopSmall: [991, 4], 
+        itemsTablet: [767, 3], 
+        itemsMobile: [575, 2],
         pagination: true,
         navigation: false,
         slideSpeed: 1000,
