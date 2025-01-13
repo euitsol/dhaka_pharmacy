@@ -178,7 +178,8 @@ function chatDataLoad() {
             if (response.success) {
                 chatMessages(response.ticket.messages);
             } else {
-                toastr.error(response.message);
+                // toastr.error(response.message);
+                console.log(response.message);
             }
         },
     });
