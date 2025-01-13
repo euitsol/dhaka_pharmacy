@@ -7,7 +7,6 @@
     }
 }
 @media screen and (max-width: 1600px){
-
     .single-pdct .pdct-info a {
         font-size: 9px !important;
     }
@@ -25,10 +24,6 @@
         display: inline-block;
         margin-right: 4px;
     }
-    .sidebar-cat-section .cat-title {
-        font-size: 16px;
-        line-height: 24px;
-    }
     .single-item p, .single-item p a {
         font-size: 9px !important;
     }
@@ -40,19 +35,22 @@
         font-size: 11px;
         line-height: 18px;
     }
+    .sidebar-cat-section .cat-title {
+        font-size: 16px;
+        line-height: 24px;
+    }
     .uk-child-width-1-5\@m > * {
         width: 39%;
     }
 }
 
 @media screen and (max-width: 1399px){
-
-    /*================================================
-        footer responsive code here
-    ==================================================*/
-
-    .footer-section .delivery-row {
-        padding: 40px  0px !important;
+    /* ===============================================
+        header section responsive code
+    ================================================== */
+    .header-section .suggestion-box .search_item .details p {
+        font-size: .7rem;
+        line-height: 0.25rem;
     }
 
     /*==================================================
@@ -92,23 +90,27 @@
         border-radius: 15px 15px 0px 0px !important;
         border: none !important;
     }
+    .single_product_section .similar_products_card {
+        height: 100% !important;
+        max-height: 100%  !important;
+        /* border: none; */
+    }
     .log-with-pass .left-col .form-title h1 {
         font-size: 29px !important;
     }
     .uk-child-width-1-5\@m > * {
         width: 54%;
     }
-    .single_product_section .similar_products_card {
-        height: 100% !important;
-        max-height: 100%  !important;
-        /* border: none; */
-    }
     .add_to_card .cart-btn {
         border: 1px solid var(--secundary-color) !important;
     }
-    .header-section .suggestion-box .search_item .details p {
-        font-size: .7rem;
-        line-height: 0.25rem;
+    
+    /*================================================
+        footer responsive code here
+    ==================================================*/
+
+    .footer-section .delivery-row {
+        padding: 40px  0px !important;
     }
 }
 
@@ -193,19 +195,14 @@
         background: transparent !important;
         align-items: center !important;
     }
-    .order_button .order-btn {
-        border: 1px solid var(--secundary-color);
-    }
     .add_to_card .cart-btn span{
         font-size: 14px !important;
     }
+    .order_button .order-btn {
+        border: 1px solid var(--secundary-color);
+    }
     .single-pdct .pdct-info {
         padding: 10px 10px 10px 10px;
-    }
-    .sidebar-cat-section .row .single-cat h2 {
-        font-size: 10px;
-        line-height: 16px;
-        font-weight: 500;
     }
     .single-pdct .pdct-info a {
         font-size: 11px !important;
@@ -224,15 +221,19 @@
         font-size: 14px !important;
         font-weight: 500 !important;
     }
-
+    .sidebar-cat-section .row .single-cat h2 {
+        font-size: 10px;
+        line-height: 16px;
+        font-weight: 500;
+    }
 
 }
 
 @media screen and (max-width: 1100px){
 
-    /*=============================================
-        footer section responsive code here
-    ==============================================*/
+    /*=======================================================
+        footer,slider,about  section responsive code here
+    =========================================================*/
 
     .footer-section .newsletter-main-row {
         max-width: 80%;
@@ -262,16 +263,35 @@
 }
 
 @media screen and (max-width: 991px){
-
-    .footer-section .socket-row {
-        padding-bottom: 120px !important;
-    }
     .upload_prescription{
         width: 25% !important;
     }
     .invalid-feedback {
         top: -5px !important;
     }
+
+    /*=======================================================
+        header section responsive code here
+    =========================================================*/
+    
+    header {
+        position: unset;
+    }
+    .main-header .search-filter .search-box{
+        width: 100%;
+    }
+    .header-section .search-filter{
+        display: flex;
+        justify-content: end;
+        width: 100%;
+    }
+    #searchBox{
+        width: 100%;
+    }
+    .header-section .search-filter .suggestion-box {
+        top: 39px;
+    }
+
     /* ==================================================
         sidebar cat title responsive code here
     =====================================================*/
@@ -283,7 +303,13 @@
         font-size: 16px;
         line-height: 23px;
     }
+    .sidebar-cat-section .row .single-cat .icon {
+        max-width: 80%;
+    }
 
+    .single-pdct .pdct-info {
+        padding: 10px 5px 10px 5px !important;
+    }
     .slider-sction .carousel-caption .slider-left .btns a {
         border-radius: 10px;
     }
@@ -300,6 +326,7 @@
         display: block;
         width: 100%;
     }
+
 
     /*=======================================================
         sidebar categories menu responsive code here
@@ -368,10 +395,6 @@
         background-color: rgba(255, 255, 255, 0.1);
         transition: .4s;
     }
-    /* .product-section .col-3.best-selling-col .best-selling-products .all-product .single-item .col-8{
-        width: 100%;
-        padding: 0px 30px;
-    } */
     .product-section .feature-product {
         width: 100%;
     }
@@ -383,13 +406,6 @@
         width: 100%;
         padding: 0px 10px;
     }
-    /* .product-section .cat-filter-row .col-3{
-        width: 35%;
-    }
-    .product-section .cat-filter-row .col-8{
-        width: 60%;
-        padding: 0px 60px;
-    } */
     .uk-child-width-1-5\@m > * {
         width: 35%;
     }
@@ -417,100 +433,8 @@
         max-width: 100%;
         padding: 0px 30px;
     }
-
-    /*=======================================================
-        header section responsive code here
-    =========================================================*/
-
-    .header-section .search-filter{
-        display: flex;
-        justify-content: end;
-        width: 100%;
-    }
-    #searchBox{
-        width: 100%;
-    }
-    .header-section .search-filter .suggestion-box {
-        top: 39px;
-    }
-    .sidebar-cat-section .row .single-cat .icon {
-        max-width: 80%;
-    }
-
-    .single-pdct .pdct-info {
-        padding: 10px 5px 10px 5px !important;
-    }
-
-    /*=============================================
-        mobile footer menu show code here
-    ===============================================*/
-
-    .mobile-footer {
-        display: block;
-        width: 100% !important;
-        margin: 0 auto;
-        padding: 15px 10px;
-        position: fixed;
-        bottom: 0;
-        box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
-        z-index: 999;
-        background-color: var(--info-bg);
-    }
-    .mobile-footer .main-mobile-col {
-        text-align: center;
-    }
-    .mobile-footer.hide {
-        transform: translateY(100%);
-    }
-    .mobile-footer.show {
-        transform: translateY(0);
-    }
-    .mobile-footer .row .col{
-        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-        background: #2d98daa6;
-        border-radius: 5px;
-        padding: 0px !important;
-    }
-    .mobile-footer .row .col a{
-        display: block;
-        height: 100% !important;
-        width: 100% !important;
-        padding: 25px 0px;
-        color: var(--text-color-white) !important;
-    }
-    .mobile-footer a i {
-        color: var(--text-color-white);
-        cursor: pointer;
-        font-size: 20px;
-    }
-    .mobile-footer .container{
-        max-width: 100%;
-        padding: 0px 20px !important;
-    }
-    .mobile-footer .container .header-section{
-        margin: 0 auto;
-    }
-    /* .mobile-footer .row .col h2{
-        padding: 25px 0px;
-    } */
-    .mobile-footer .row .col span i{
-        color: var(--text-color-white) !important;
-    }
-    /*============================================
-      main header responsive code here
-    ==============================================*/
-
-    header {
-        position: unset;
-    }
-
-    .main-header .search-filter .search-box{
-        width: 100%;
-    }
-    .footer-section .delivery-row h4 {
-        font-size: 12px;
-        line-height: 15px;
-        font-weight: 500;
+    .footer-section .socket-row {
+        padding-bottom: 120px !important;
     }
 
     /*==============================================
@@ -531,6 +455,11 @@
         margin-bottom: 10px !important;
         line-height: 29px !important;
     }
+
+    /* ==============================================
+        support section responsive code here
+    =============================================== */
+
     .support_wrap {
         height:60px;
         width: 60px;
@@ -558,9 +487,6 @@
     .single-pdct .pdct-info .company-name,
     .single-pdct .pdct-info .generic-name{
         font-size: 9px !important;
-    }
-    .log-with-pass::before {
-        top: 0px !important;
     }
     .product_title h3 {
         font-size: 10px !important;
@@ -692,6 +618,17 @@
     .faq-section .page-title {
         font-size: 22px !important;
     }
+    .faq-section .container{
+        max-width: 100% !important;
+    }
+    .faq-section .nav-pills{
+        justify-content: left;
+    }
+
+    /*==========================================
+        tream-condition responsive code here
+    ============================================ */
+
     .slider-sction .carousel-caption .slider-right {
         background-position: center bottom;
     }
@@ -710,14 +647,7 @@
         max-width: 100%;
         padding: 0px;
     }
-    .faq-section .container{
-        max-width: 100% !important;
-    }
-
-    .faq-section .nav-pills{
-        justify-content: left;
-    }
-
+    
     /*==============================================
         loginpass responsive code here
     ===============================================*/
@@ -754,15 +684,80 @@
     .log-with-pass .left-col .form-title h1 {
         font-size: 22px !important;
     }
-    .footer-section .delivery-row h3 {
-        margin: 0px !important;
-    }
-
     .slider-sction .uk-slideshow-items {
         height: 350px;
     }
     .slider-sction .carousel-caption .slider-right img {
         max-width: 300px;
+    }
+    .log-with-pass::before {
+        top: 0px !important;
+    }
+
+    /* ==============================================
+        footer section responsive code here
+    ==============================================*/
+
+    .footer-section .delivery-row h4 {
+        font-size: 12px;
+        line-height: 15px;
+        font-weight: 500;
+    }
+    .footer-section .delivery-row h3 {
+        margin: 0px !important;
+    }
+
+    /*=============================================
+        mobile footer menu show code here
+    ===============================================*/
+
+    .mobile-footer {
+        display: block;
+        width: 100% !important;
+        margin: 0 auto;
+        padding: 15px 10px;
+        position: fixed;
+        bottom: 0;
+        box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        background-color: var(--info-bg);
+    }
+    .mobile-footer .main-mobile-col {
+        text-align: center;
+    }
+    .mobile-footer.hide {
+        transform: translateY(100%);
+    }
+    .mobile-footer.show {
+        transform: translateY(0);
+    }
+    .mobile-footer .row .col{
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        background: #2d98daa6;
+        border-radius: 5px;
+        padding: 0px !important;
+    }
+    .mobile-footer .row .col a{
+        display: block;
+        height: 100% !important;
+        width: 100% !important;
+        padding: 25px 0px;
+        color: var(--text-color-white) !important;
+    }
+    .mobile-footer a i {
+        color: var(--text-color-white);
+        cursor: pointer;
+        font-size: 20px;
+    }
+    .mobile-footer .container{
+        max-width: 100%;
+        padding: 0px 20px !important;
+    }
+    .mobile-footer .container .header-section{
+        margin: 0 auto;
+    }
+    .mobile-footer .row .col span i{
+        color: var(--text-color-white) !important;
     }
 }
 
@@ -772,7 +767,9 @@
     /*=============================================
         container-fluid responsive code here
     ===============================================*/
-
+    .container-fluid {
+        padding: 0 20px !important;
+    }
     .container-fluid .col-md-3.col-lg-2.sidebar-cat-section {
         display: block;
         width: 100%;
@@ -806,6 +803,9 @@
     .product-section .sub_categories .uk-position-center-right-out {
         left: 90% !important;
     }
+    .product_price .sp_quantity{
+        width: 40% !important;
+    }
 
     /*===============================================
         uk future tap text slider responsive code
@@ -837,19 +837,33 @@
         width: auto;
         max-width: 150px;
     }
-    .container-fluid {
-        padding: 0 20px !important;
+
+    /* delivery slider responsive code */
+
+    .delivery-slider-section .uk-slideshow-items {
+        height: 300px;
     }
-    .product_price .sp_quantity{
-        width: 40% !important;
+    .slider-sction .carousel-caption .slider-left .btns {
+        margin-top: 9px;
     }
+    .slider-sction .uk-slideshow .uk-position-center-right svg {
+        height: 25px;
+        width: 25px;
+    }
+    .slider-sction .uk-slideshow .uk-position-center-left svg {
+        height: 25px;
+        width: 25px;
+    }
+
+    /* loginpass responsive code */
+
     .container-fluid .log-with-pass .container{
         padding: 0px 30px;
         /* max-width: 100%; */
     }
-    .footer-section .container {
-        padding: 0px 20px;
-    }
+    
+    /* best selling products responsive code */
+
     .best-selling-products .bst-product-content {
         padding: 5px;
     }
@@ -886,19 +900,22 @@
     .uk-child-width-1-5\@m > * {
         width: 30% !important;
     }
-    .product-section h2.title {
-        font-size: 20px;
-        line-height: 29px;
-    }
+
+    /*================================================
+        about page responsive code 
+    =================================================*/
+
     .about-section .highlight-section {
         padding: 40px 20px !important;
     }
     .about-section .contact-section .main-contact-section .contact-info {
         border-right: 0 !important;
     }
-    .mobile-footer {
-        padding: 15px 10px;
-    }
+
+    /*=================================================
+        single product responsive code
+    =================================================*/
+
     .single_product_section .single_product .product_details .nav-tabs li a {
         font-size: 13px;
     }
@@ -906,11 +923,6 @@
         font-size: 10px !important;
         line-height: 15px !important;
     }
-
-    /* .single-item p, .single-item p a {
-        font-size: 10px !important;
-    } */
-
     .single-item .pdct-title a {
         font-size: 12px !important;
         line-height: 15px;
@@ -926,34 +938,32 @@
     .single_product_section .single_product .product_price p {
         font-size: 16px;
     }
+    .product-section h2.title {
+        font-size: 20px;
+        line-height: 29px;
+    }
+
+    /* add to card responsive code */
+
     .add_to_card .cart-btn span {
         font-size: 12px !important;
     }
-    .footer-section .main-footer-row .title {
-        font-size: 12px !important;
-    }
-    .delivery-slider-section .uk-slideshow-items {
-        height: 300px;
-    }
-    .slider-sction .carousel-caption .slider-left .btns {
-        margin-top: 9px;
-    }
 
-    .slider-sction .uk-slideshow .uk-position-center-right svg {
-        height: 25px;
-        width: 25px;
-    }
-    .slider-sction .uk-slideshow .uk-position-center-left svg {
-        height: 25px;
-        width: 25px;
-    }
+    /* footer responsive code */
+
     .mobile-footer .container {
         max-width: 100%;
         padding: 0px 10px !important;
     }
-    /* .single_product_section .single_product .product_details .tab-pane {
-        padding: 15px 0px;
-    } */
+    .mobile-footer {
+        padding: 15px 10px;
+    }
+    .footer-section .main-footer-row .title {
+        font-size: 12px !important;
+    }
+    .footer-section .container {
+        padding: 0px 20px;
+    }
 
 
 }
@@ -979,6 +989,9 @@
     .breadcrumb_wrap .breadcrumb.wizard li a {
         padding: 7px 6px 9px 32px;
     }
+
+    /* product section sub category uk left right arrow slider responsive code  */
+
     .product-section .sub_categories .uk-position-center-right-out {
         display: none;
     }
@@ -998,20 +1011,56 @@
         width: 37% !important;
     }
 
-    /*=============================================
-        footer-section responsive code here
-    ===============================================*/
+    
+    /* ====================================================
+        header section suggestion box responsive code
+    =======================================================*/
 
-    .footer-section .delivery-row{
-        padding: 0px;
+    .header-section .suggestion-box .search_item .details .product_sub_cat {
+        font-size: 14px;
+        color: #959595;
     }
-    .footer-section .newsletter-main-row {
-        display: block;
-        max-width: 100%;
+    .header-section .suggestion-box .search_item .details p {
+        font-size: 10px;
+        line-height: 1px;
     }
+    .header-section .suggestion-box .search_item .details .product_title {
+        font-size: 12px;
+    }
+    .header-section .search-filter select {
+        font-size: 12px;
+    }
+    .header-section .search-filter input {
+        font-size: 12px;
+    }
+    .header-section .right-col .login-btn {
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .header-section .right-col select {
+        font-size: 13px !important;
+        font-weight: 500 !important;
+    }
+    .header-section .right-col .item {
+        width: inherit;
+        padding: 7px !important;
+    }
+
+    /* ===============================================
+        product,about section responsive code 
+    ================================================*/
+
+    .product-section .sub_categories .sub_cat_item .card {
+        padding: 8px !important;
+        /* box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px; */
+    }
+    .about-section .contact-section .main-contact-section .information {
+        margin: inherit !important;
+    }
+
 
     /*===========================================
-        categories-section responsive code here
+        slider-section responsive code here
     ===============================================*/
 
     .slider-sction .carousel-caption .slider-left .btns a {
@@ -1025,8 +1074,11 @@
         font-size: 29px;
         line-height: 30px;
     }
-    .mobile-footer .row .col a{
-        padding: 15px 0px;
+    .delivery-slider-section .uk-slideshow-items {
+        height: 200px;
+    }
+    .slider-sction .carousel-caption .slider-left .btns {
+        margin-top: 7px;
     }
 
     /*=======================================================
@@ -1058,9 +1110,10 @@
         background: var( --commoninner_bg);
     } */
 
-    /*============================================
-        about us page responsive code here
-    =============================================*/
+
+    /* =============================================
+        support_wrap responsive code
+    ================================================*/
 
     .support_wrap .message_box {
         right: 0px !important;
@@ -1068,25 +1121,7 @@
     .support_wrap .message_box {
        width: 334px!important;
     }
-    .footer-section .socket-row {
-        padding-bottom: 100px !important;
-    }
-    .product-section .sub_categories .sub_cat_item .card {
-        padding: 8px !important;
-        /* box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px; */
-    }
-    .main-footer-row .footer-followus{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
-    }
-    .about-section .contact-section .main-contact-section .information {
-        margin: inherit !important;
-    }
-    .footer-section .main-footer-row .footer-logo img {
-        width: 195px;
-    }
-
+    
     /*============================================
         categories-section responsive code here
     ===============================================*/
@@ -1097,28 +1132,11 @@
     .sub_cat_item.uk-active .sub_cat_link .card.active h3{
         font-size: 9px !important;
     }
+    
+    /* =========================================
+        add to card responsive code
+    ============================================ */
 
-    /* ====================================================
-        header section suggestion box responsive code
-    =======================================================*/
-
-    .header-section .suggestion-box .search_item .details .product_sub_cat {
-        font-size: 14px;
-        color: #959595;
-    }
-    .header-section .suggestion-box .search_item .details p {
-        font-size: 10px;
-        line-height: 1px;
-    }
-    .header-section .suggestion-box .search_item .details .product_title {
-        font-size: 12px;
-    }
-    .header-section .search-filter select {
-        font-size: 12px;
-    }
-    .header-section .search-filter input {
-        font-size: 12px;
-    }
     .add_to_card .cart-btn {
         padding: 8px 5px !important;
     }
@@ -1131,33 +1149,59 @@
     .add_to_card .cart-btn i{
         font-size: 12px !important;
     }
-    .header-section .right-col .item {
-        width: inherit;
-        padding: 7px !important;
-    }
-    .header-section .right-col .login-btn {
-        font-size: 13px;
-        font-weight: 500;
-    }
-    .header-section .right-col select {
-        font-size: 13px !important;
-        font-weight: 500 !important;
-    }
-    .upload_prescription {
-        width: 50% !important;
-    }
-    .delivery-slider-section .uk-slideshow-items {
-        height: 200px;
-    }
-    .slider-sction .carousel-caption .slider-left .btns {
-        margin-top: 7px;
-    }
+    
+    /* ==========================================
+        contact-section responsive code
+    ==============================================*/
+
     .contact-section .contact-container .btn{
         padding: 0px;
     }
     .contact-section .contact-container .send-button {
         width: 100%;
     }
+
+    /* ============================================
+        about-section responsive code 
+    ================================================*/
+
+    .about-section .about-container .content h5 {
+        display: block !important;
+        text-align: center;
+    }
+    .about-section .contact-section .main-contact-section {
+        padding: 5px 0px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info {
+        padding-top: 0px !important;
+    }
+
+    /*============================================
+        footer responsive code here
+    =============================================*/
+    
+    .footer-section .main-footer-row .footer-logo img {
+        width: 195px;
+    }
+    .footer-section .delivery-row{
+        padding: 0px;
+    }
+    .footer-section .newsletter-main-row {
+        display: block;
+        max-width: 100%;
+    }
+    .main-footer-row .footer-followus{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+    .footer-section .socket-row {
+        padding-bottom: 100px !important;
+    }
+    .mobile-footer .row .col a{
+        padding: 15px 0px;
+    }
+
 }
 
 @media screen and (max-width: 480px){
@@ -1170,40 +1214,52 @@
         width: 45% !important;
     }
 
-    /* ===========================================
-        footer-section responsive code here
-    ===============================================*/
-
-    .footer-section .main-footer-row .title {
-        font-size: 14px;
-    }
+    /*============================================
+        single prduct section responsive code
+    ============================================= */
     .product-section .sub_categories .sub_cat_item .card {
         height: 70px;
         width: 70px;
         padding: 10px;
         box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
     }
-    .socket-row p {
-        font-size: 12px !important;
-    }
-    .support_wrap {
-        bottom: 121px;
+    .single-pdct .pdct-info .company-name, .single-pdct .pdct-info .generic-name {
+        font-size: 8px !important;
     }
     .single-item p, .single-item p a {
         font-size: 8px !important;
     }
-    .single-pdct .pdct-info .company-name, .single-pdct .pdct-info .generic-name {
-        font-size: 8px !important;
-    }
-    .uk-child-width-1-5\@m > * {
-        width: 50% !important;
-    }
     .single-item .pdct-title a {
         font-size: 10px !important;
+    }
+
+    /* ===========================================
+        footer-section responsive code here
+    ===============================================*/
+    .footer-section .main-footer-row .title {
+        font-size: 14px;
     }
     .footer-section .delivery-row h4 {
         font-size: 10px;
     }
+    .socket-row p {
+        font-size: 12px !important;
+    }
+
+    /* support_wrap responsive code */
+
+    .support_wrap {
+        bottom: 121px;
+    }
+   
+   /* uk future item tap slider responsive code */
+
+    .uk-child-width-1-5\@m > * {
+        width: 50% !important;
+    }
+    
+    /* breadcrumb_wrap responsive code */
+
     .breadcrumb_wrap .favorite {
         right: -7px !important;
     }
