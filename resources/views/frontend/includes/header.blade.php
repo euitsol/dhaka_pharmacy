@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="main-header">
             <div class="row align-items-center row-gap-3 row-gap-lg-0">
-                <div class="col-12 col-lg-8 order-2 order-lg-1">
+                <div class="col-12 col-xl-8 col-lg-7 order-2 order-lg-1">
                     <div class="row align-items-center justify-space-between">
                         <div class="col-4 col-xxl-5 col-5 col-md-4">
                             <div class="row align-items-center">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4  ps-0 right-col order-1 order-lg-2">
+                <div class="col-12 col-xl-4 col-lg-5  ps-0 right-col order-1 order-lg-2">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-4 col-md-3 col-sm-4 logo-col d-block d-lg-none">
                             <div class="logo">
@@ -102,10 +102,10 @@
                                     </div>
                                     <div class="item" style="max-width: 185px; overflow:hidden;">
                                         <a href="{{ route('user.dashboard') }}" class="login-btn d-flex align-items-center">
-                                            <img style="height: 35px; width: 35px; object-fit: cover; border-radius: 50%;"
+                                            <img 
                                                 src="{{ user()->image ? storage_url(user()->image) : asset('user/asset/img/user.png') }}"
                                                 alt="">
-                                            <span class="ms-1">{{ abbreviateName(user()->name) }}</span>
+                                            <span class="ms-1 d-none d-sm-none d-md-block d-lg-none d-xxl-block">{{ abbreviateName(user()->name) }}</span>
                                         </a>
                                     </div>
                                 @endif
