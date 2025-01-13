@@ -351,7 +351,7 @@ a{
 
 .add_to_card .cart-btn:hover{
 color: var(--text-color-white);
-background-color: var(--text-color-black);
+background-color: var(--text-color-black) !important;
 box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 

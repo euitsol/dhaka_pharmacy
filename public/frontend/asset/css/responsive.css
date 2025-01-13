@@ -694,6 +694,10 @@
         top: 0px !important;
     }
 
+    .log-with-pass .verification_wrap .field-set input{
+        
+    }
+
     /* ==============================================
         footer section responsive code here
     ==============================================*/
