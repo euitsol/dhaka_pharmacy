@@ -88,12 +88,12 @@
                     @endif
                     @if ($featuredCategories->isNotEmpty())
                         <div class="col-12 col-xl-9 feature-product">
-                            <div class="row cat-filter-row gx-4 align-items-center justify-content-center">
-                                <div class="col-12 col-md-4 col-4 col-xxl-5 col-2 col-lg-6">
+                            <div class="row cat-filter-row gx-4 align-items-center justify-content-between">
+                                <div class="col-12 col-md-4 col-xxl-3 col-lg-5">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>
 
-                                <div class="col-12 col-md-7 col-7 col-xxl-6 col-4 col-lg-5">
+                                <div class="col-12 col-md-7 col-xxl-8 col-lg-6">
                                     <div class="slider-col" uk-slider="finite: true">
                                         <div class="uk-position-relative">
                                             <div class="uk-slider-container uk-light">
@@ -121,8 +121,7 @@
                                                     uk-slider-item="next"></a>
                                             </div>
 
-                                            <div class="uk-visible@s
-btn-arrow">
+                                            <div class="uk-visible@s btn-arrow">
                                                 <a class="uk-position-center-left-out uk-position-small" href
                                                     uk-slidenav-previous uk-slider-item="previous"></a>
                                                 <a class="uk-position-center-right-out uk-position-small" href

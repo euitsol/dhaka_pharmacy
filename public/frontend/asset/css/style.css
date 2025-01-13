@@ -273,8 +273,9 @@ a{
   width: 100% !important;
 }
 .product-section .align-items-baseline .feature-product .slider-col .uk-position-small {
-	margin: 0px;
-  top: 16px;
+	/* margin: 0px 19px 0px 0px; */
+	/* top: 16px; */
+	margin-left: 0px;
 }
 
 .product-section .align-items-baseline .best-selling-products .all-product .single-item{
@@ -656,7 +657,13 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   background: var(--text-color-black);
 }
 
+.uk-child-width-1-5\@m > * {
+	width: 21% !important;
+}
 
+.product-section .feature-product .cat-filter-row .slider-col{
+	margin-right: 30px;
+}
 
 /*====================================
       Start Home Product Section CSS
@@ -1068,9 +1075,9 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .footer-section .newsletter-main-row .newsletter-content{
   width: 80%;
 }
-.uk-child-width-1-5\@m > * {
+/* .uk-child-width-1-5\@m > * {
 	width: 30%;
-}
+} */
 
 
 /* =====================================
