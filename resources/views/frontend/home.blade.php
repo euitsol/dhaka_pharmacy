@@ -26,7 +26,7 @@
 
 
             <!--========= Product-Section-Start ========-->
-            <section class="product-section pb-4 mb-2 mb-lg-5">
+            <section class="product-section pb-3 pb-lg-4 mb-0 mb-lg-2 mb-lg-5">
                 <div class="row align-items-baseline">
                     @if ($bsItems->isNotEmpty())
                         <div class="col-12 col-xl-3 best-selling-col mb-3 mb-xl-0">

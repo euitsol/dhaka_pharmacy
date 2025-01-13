@@ -263,10 +263,10 @@ a{
 
 .single-item img {
 	border-color: var(--text-color-black) !important;
-	object-fit: cover;
 	padding: 5px;
 	width: 100% !important;
-	height: revert-layer;
+  /* object-fit: cover; */
+	/* height: revert-layer; */
 }
 .product-section .align-items-baseline .best-selling-products .all-product .single-item .img a{
   display: block;
@@ -377,7 +377,7 @@ transition: 0.4s;
 .order_button .order-btn:hover{
 color: var(--text-color-white);
 border-color: var(--text-color-black);
-background-color: var(--text-color-black);
+background-color: var(--text-color-black) !important;
 box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 
