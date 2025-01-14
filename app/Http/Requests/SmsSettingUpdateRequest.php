@@ -26,7 +26,7 @@ class SmsSettingUpdateRequest extends FormRequest
             'sms_api_key' => 'required',
             'sms_api_secret' => 'nullable',
             'sms_api_status_code' => 'required',
-            'sms_api_sender_id' => 'required',
+            'sms_api_sender_id' => 'nullable',
         ];
     }
 }

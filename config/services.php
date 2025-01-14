@@ -48,11 +48,11 @@ return [
         'redirect'      => env('FACEBOOK_REDIRECT_URL')
     ],
     'sms_api' => [
-        'url'     => env('SMS_API_URL'),
-        'key' => env('SMS_API_KEY'),
-        'secret'      => env('SMS_API_SECRET'),
+        'url'     => env('SMS_API_URL', 'https://portal.adnsms.com/api/v1/secure/send-sms'),
+        'key' => env('SMS_API_KEY', 'KEY-mrvshgmw3ungyoqxadguq5hil601g4j4'),
+        'secret'      => env('SMS_API_SECRET', 'XYhKX@yQ0@jmy9Wg'),
         'sender_id'      => env('SMS_API_SENDER_ID'),
-        'status'      => env('SMS_API_STATUS'),
+        'status'      => env('SMS_API_STATUS', '200'),
     ],
 
 ];
