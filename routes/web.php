@@ -229,18 +229,18 @@ Route::controller(UserLoginController::class)->prefix('user')->group(function ()
     Route::post('/otp/verify', 'otp_verify')->name('use.otp.verify');
 });
 
-Route::controller(UserRegisterController::class)->prefix('user')->group(function () {
+// Route::controller(UserRegisterController::class)->prefix('user')->group(function () {
 
-    Route::get('/registration', 'register')->name('use.register');
-    Route::post('/registration', 'rStore')->name('use.register');
-    Route::get('/register/phone/validation/{phone}', 'phoneValidation')->name('use.register.phone.validation');
-});
+//     Route::get('/registration', 'register')->name('use.register');
+//     Route::post('/registration', 'rStore')->name('use.register');
+//     Route::get('/register/phone/validation/{phone}', 'phoneValidation')->name('use.register.phone.validation');
+// });
 
 Route::controller(UserForgotPasswordController::class)->prefix('user')->group(function () {
     Route::get('/password/forgot', 'forgotPassword')->name('user.forgot.password');
     Route::post('/password/forgot', 'forgotPasswordOtp')->name('user.forgot.password');
-    Route::get('/reset/password', 'resetPassword')->name('user.reset.password');
-    Route::post('/reset/password', 'resetPasswordStore')->name('user.reset.password');
+    Route::get('/reset/password/{user_id}', 'resetPassword')->name('user.reset.password');
+    Route::post('/reset/password/{user_id}', 'resetPasswordStore')->name('user.reset.password');
 });
 //Admin Auth Routes
 Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin'], function () {

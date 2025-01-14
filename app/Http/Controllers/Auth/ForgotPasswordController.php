@@ -10,6 +10,8 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Traits\SmsTrait;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ForgotPasswordController extends Controller
 {
@@ -28,6 +30,9 @@ class ForgotPasswordController extends Controller
 
     public function forgotPassword(): View
     {
+        if (Auth::guard('web')->check()) {
+            return redirect()->route('user.dashboard');
+        }
         return view('auth.forgot');
     }
 
@@ -35,21 +40,17 @@ class ForgotPasswordController extends Controller
     {
 
         $user = User::where('phone', $req->phone)->first();
-        $data['user'] = $user;
         if ($user) {
             $user->otp = otp();
+            $user->phone_verified_at = Carbon::now();
             $user->save();
             // SMS SEND
             $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
             $result = $this->sms_send($user->phone, $verification_sms);
             if ($result === true) {
-                $s['uid'] = encrypt($user->id);
-                $s['message'] = 'The verification code has been sent successfully.';
-                $s['forgot'] = true;
-                $s['otp'] = true;
-                $s['title'] = "VERIFY YOUR PHONE TO RESET PASSWORD";
-                Session::put('data', $s);
-                return redirect()->route('use.send_otp');
+                session()->put('forgot', true);
+                flash()->addSuccess('The verification code has been sent successfully.');
+                return redirect()->route('use.otp', encrypt($user->id));
             } else {
                 flash()->addError($result);
                 return redirect()->back();
@@ -59,20 +60,15 @@ class ForgotPasswordController extends Controller
         return redirect()->back();
     }
 
-    public function resetPassword()
+    public function resetPassword($user_id)
     {
-        $session = Session::get('data');
-        unset($session['forgot']);
-        Session::put('data', $session);
-        if (isset(Session::get('data')['uid'])) {
-            return view('auth.reset');
-        }
-        return redirect()->route('login');
+        session()->forget('forgot');
+        return view('auth.reset', compact('user_id'));
     }
 
-    public function resetPasswordStore(ResetPaswordRequest $req)
+    public function resetPasswordStore(ResetPaswordRequest $req, $user_id)
     {
-        $user = User::findOrFail(decrypt(Session::get('data')['uid']));
+        $user = User::findOrFail(decrypt($user_id));
         $user->password = $req->password;
         $user->update();
         flash()->addSuccess('Password updated successfully.');
