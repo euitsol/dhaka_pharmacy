@@ -39,3 +39,8 @@
 .product_content .sp_quantity .minus_qty.disabled {
     border-color: transparent;
 }
+
+.single_product_section .similar_products_card .similar_products .single-item{
+	padding-bottom: 10px;
+  	border-bottom: 1px solid;
+}
