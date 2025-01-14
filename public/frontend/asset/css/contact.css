@@ -4,19 +4,19 @@
 
 /*  content and image design css code here */
 
-.contact-section .contact-container{
-    background: var(--commoninner_bg);
-    padding: 100px 35px;
-    border-radius: 20px;
-    max-width: 1370px;
-    border: 2px solid #dcdcdc;
+.contact-section .contact-container {
+	background: var(--commoninner_bg);
+	padding: 50px 20px;
+	border-radius: 20px;
+	max-width: 1370px;
+	border: 2px solid #dcdcdc;
 }
 .contact-section .contact-container h2{
-    font-size: 24px;
-    line-height: 36px;
-    color: var(--text);
     font-family: var(--secondry-font);
-    font-weight: 600;
+    font-size: 24px;
+    line-height: 35px;
+    font-weight: 500;
+    color: var(--text-color-black);
 }
 .contact-section .contact-container p{
     font-size: 16px;
@@ -33,7 +33,7 @@
 
 .contact-section .form-control {
     border: none;
-    border-bottom: 2px solid #00000065;
+    border-bottom: 2px solid rgba(112, 112, 112, 0.34);
     border-radius: 0;
     box-shadow: none;
     background: transparent;
@@ -42,11 +42,10 @@
     box-shadow: none;
 }
 .contact-section .form-label {
-    font-weight: bold;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     font-family: var(--secondry-font);
-    line-height: 30px;
+    line-height: 26px;
     color: var(--text);
     margin: 0px;
 }
@@ -64,22 +63,22 @@
 .contact-section .btn{
     text-align: right;
 }
-.contact-section .send-button{
-    font-size: 22px;
+.contact-section .send-button {
+	font-size: 20px;
 	text-transform: uppercase;
 	color: var(--text-color-white);
 	background-color: var(--asent-color);
-    border: 1px solid var(--text);
+	border: 1px solid var(--text);
 	padding: 12px 0;
 	border-radius: 10px;
 	margin-top: 10px;
-    width: 200px;
-    line-height: 40px;
-    font-weight: bold;
-    font-family: var(--secondry-font);
-    transition: all 0.3s ease-in-out;
-    border: 1px solid var(--asent-color);
-    text-align: center;
+	width: 100%;
+	line-height: 35px;
+	font-weight: 500;
+	font-family: var(--secondry-font);
+	transition: all 0.3s ease-in-out;
+	border: 1px solid var(--asent-color);
+	text-align: center;
 }
 .contact-section .send-button:hover{
     background-color: transparent;

@@ -41,7 +41,7 @@
                                     </div>
 
                                     <div class="row gx-4">
-                                        <div class="col-5 col-xxl-6 col-12 col-md-5 mb-2 mb-sm-0">
+                                        <div class="col-5 col-xxl-6 col-12 col-md-5 mb-3 mb-sm-0">
                                             <div class="card h-100">
                                                 <div class="card-body h-100">
                                                     <div class="product_image xzoom-container">
@@ -279,9 +279,9 @@
                             <div class="card similar_products_card" style="height:100%">
                                 <div class="card-body">
                                     <div class="similar_products">
-                                        <h2 class="mb-4">{{ __('Similar Products') }}</h2>
+                                        <h2 class="mb-3 mb-lg-4">{{ __('Similar Products') }}</h2>
                                         <div class="products">
-                                            <div class="row align-items-baseline px-3 row-gap-3">
+                                            <div class="row align-items-baseline px-0 px-xxl-2 row-gap-3">
                                                 @foreach ($similar_products as $product)
                                                     @php
                                                         $ProDisPrice = proDisPrice(
@@ -289,44 +289,46 @@
                                                             $product->discounts,
                                                         );
                                                     @endphp
-                                                    <div class="col-xxl-12 col-md-4 col-sm-4  col-6 single-item ">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-12 col-xxl-4 img p-0 m-0">
-                                                                <a
-                                                                    href="{{ route('product.single_product', $product->slug) }}">
-                                                                    <img height=""
-                                                                        class="w-100 border border-xxl-1 rounded-1"
-                                                                        src="{{ $product->image }}"
-                                                                        alt="{{ __($product->name) }}">
-                                                                </a>
-                                                            </div>
-                                                            <div class="col-12 col-xxl-8 content">
-
-                                                                <h3 class="pdct-title"
-                                                                    title="{{ $product->attr_title }}"><a
-                                                                        href="{{ route('product.single_product', $product->slug) }}">{{ $product->name }}
-                                                                    </a></h3>
-                                                                <p><a href="">{{ $product->pro_sub_cat->name }}</a>
-                                                                </p>
-
-                                                                <p><a href="">{{ $product->generic->name }}</a>
-                                                                </p>
-                                                                <p><a href="">{{ $product->company->name }}</a>
-                                                                </p>
-                                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                                        {{ number_format($ProDisPrice, 2) }}</span>
-                                                                    @if ($ProDisPrice != $product->price)
-                                                                        <span class="regular_price">
-                                                                            <del>{!! get_taka_icon() !!}
-                                                                                {{ number_format($product->price, 2) }}</del></span>
-                                                                    @endif
-                                                                </h4>
-                                                                <!-- add to cart button -->
-                                                                <div class="add_to_card d-block d-xxl-none my-2">
-                                                                    <a class="cart-btn">
-                                                                        <i class="fa-solid fa-cart-plus"></i>
-                                                                        <span class="d-block d-xxl-none">Add To Cart</span>
+                                                    <div class="col-xxl-12 col-md-4 col-sm-4 col-6 ">
+                                                        <div class="single-item">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-12 col-xxl-4 img">
+                                                                    <a class="d-block w-100"
+                                                                        href="{{ route('product.single_product', $product->slug) }}">
+                                                                        <img height=""
+                                                                            class="w-100 border border-xxl-1 rounded-1"
+                                                                            src="{{ $product->image }}"
+                                                                            alt="{{ __($product->name) }}">
                                                                     </a>
+                                                                </div>
+                                                                <div class="col-12 col-xxl-8 content">
+
+                                                                    <h3 class="pdct-title"
+                                                                        title="{{ $product->attr_title }}"><a
+                                                                            href="{{ route('product.single_product', $product->slug) }}">{{ $product->name }}
+                                                                        </a></h3>
+                                                                    <p><a href="">{{ $product->pro_sub_cat->name }}</a>
+                                                                    </p>
+
+                                                                    <p><a href="">{{ $product->generic->name }}</a>
+                                                                    </p>
+                                                                    <p><a href="">{{ $product->company->name }}</a>
+                                                                    </p>
+                                                                    <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
+                                                                            {{ number_format($ProDisPrice, 2) }}</span>
+                                                                        @if ($ProDisPrice != $product->price)
+                                                                            <span class="regular_price">
+                                                                                <del>{!! get_taka_icon() !!}
+                                                                                    {{ number_format($product->price, 2) }}</del></span>
+                                                                        @endif
+                                                                    </h4>
+                                                                    <!-- add to cart button -->
+                                                                    <div class="add_to_card d-block d-xxl-none my-2">
+                                                                        <a class="cart-btn">
+                                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                                            <span class="d-block d-xxl-none">Add To Cart</span>
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>

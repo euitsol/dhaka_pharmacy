@@ -7,7 +7,7 @@
     <div class="about-section my-0 my-lg-4">
         <div class="container">
             <div class="about-container">
-                <div class="row my-0 my-lg-5 align-items-end mt-4 mt-lg-0">
+                <div class="row my-0 my-lg-5 align-items-start align-items-xxl-end mt-4 mt-lg-0">
                     <div class="col-12 col-lg-6 p-0">
                         <div class="content pe-0 pe-lg-4">
                             <h5 class="text-white d-inline-block py-2 px-3 mb-2 mb-lg-0">WHO WE ARE</h5>
@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-5 col-sm-6 px-xxl-5">
+                            <div class="col-xl-5 col-sm-6 px-xxl-1">
                                 <div class="information px-0 px-xl-4">
                                     <h2>Trusted delivery of your essential <br>
                                         medications</h2>

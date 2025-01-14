@@ -472,4 +472,9 @@ header{
       background-color: rgb(243 246 249/var(--tw-bg-opacity));
   }
 
-  
+  .header-section .main-header .right-col .login-btn img{
+    height: 35px; 
+    width: 35px; 
+    object-fit: cover; 
+    border-radius: 50%
+  }
