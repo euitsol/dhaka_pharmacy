@@ -50,6 +50,27 @@
     .uk-child-width-1-5\@m > * {
         width: 39%;
     }
+    .about-section .about-container .content h1 {
+        font-size: 29px !important;
+        line-height: 35px !important;
+    }
+    .about-section .highlight-section h2 {
+        font-size: 29px !important;
+        line-height: 35px !important;
+    }
+    .about-section .contact-section .main-contact-section .information h2 {
+        font-size: 22px !important;
+        line-height: 30px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info-content h3 {
+        font-size: 22px !important;
+        line-height: 30px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info-content a {
+        font-size: 22px !important;
+        line-height: 30px !important;
+        font-weight: 500 !important;
+    }
 }
 
 @media screen and (max-width: 1399px){
@@ -86,7 +107,16 @@
         single product desgin code here
     ================================================================*/
 
-    .single_product_section .similar_products_card .similar_products .single-item .row{
+    /* .single_product_section .similar_products_card .similar_products .single-item .row{
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
+        border-radius: 15px;
+        backdrop-filter: blur(23px) saturate(169%);
+        -webkit-backdrop-filter: blur(23px) saturate(169%);
+        background-color: rgba(255, 255, 255, 0.1);
+    } */
+    .single_product_section .similar_products_card .similar_products .single-item{
+        padding-bottom: 0px !important;
+        border: none !important;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
         border-radius: 15px;
         backdrop-filter: blur(23px) saturate(169%);
@@ -103,6 +133,9 @@
         max-height: 100%  !important;
         /* border: none; */
     }
+    .single_product_section .similar_products .single-item .content {
+        padding: 5px;
+    }
     .log-with-pass .left-col .form-title h1 {
         font-size: 29px !important;
     }
@@ -111,8 +144,13 @@
     }
     .add_to_card .cart-btn {
         border: 1px solid var(--secundary-color) !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    
+    .order_button .order-btn {
+        border: 1px solid var(--secundary-color) !important;
+    }
     /*================================================
         footer responsive code here
     ==================================================*/
@@ -196,7 +234,7 @@
     }
     .add_to_card .cart-btn {
         border: 1px solid var(--secundary-color) !important;
-        font-size: 14px !important;
+        font-size: 12px !important;
         width: 100% !important;
         padding: 12px !important;
         display: flex !important;
@@ -234,7 +272,9 @@
         line-height: 16px;
         font-weight: 500;
     }
-
+    .about-section .container{
+        max-width: 100%;
+    }
 }
 
 @media screen and (max-width: 1100px){
@@ -522,8 +562,11 @@
     .single-pdct .pdct-info h3 {
         font-size: 13px !important;
         font-weight: 500 !important;
+        margin: .2rem 0rem !important
     }
-
+    .single-pdct .pdct-info h4 {
+        margin: 0rem 0rem .6rem 0rem !important;
+    }
    /*==============================================
        about ua page responsive code here
     ================================================*/
@@ -535,10 +578,6 @@
         font-size: 14px !important;
         line-height: 12px !important;
         margin-bottom: 5px;
-    }
-    .about-section  h2,h3{
-        font-size: 14px !important;
-        line-height: 20px !important;
     }
     .about-section .about-container .content p {
         font-size: 14px !important;
@@ -587,14 +626,26 @@
     .about-section .highlight-section p {
         font-size: 14px !important;
     }
-    .about-section .contact-info-content h3 {
-        font-size: 13px !important;
+    .about-section .contact-section .main-contact-section .contact-info-content h3 {
+        font-size: 16px !important;
         line-height: 23px !important;
     }
     .about-section .contact-section .main-contact-section .information h2 {
         font-size: 13px !important;
         line-height: 23px !important;
     }
+    .about-section .highlight-section h2{
+        font-size: 22px !important;
+        line-height: 29px !important;
+        font-weight: 500 !important;
+    }
+
+
+
+    /* .about-section .contact-section .main-contact-section .contact-info-content h3 {
+        font-size: 16px !important;
+        line-height: 30px !important;
+    } */
     /*================================================
        categories responsive code here
     ==================================================*/
@@ -911,10 +962,11 @@
     /*===============================================
        contact page responsive code here
     ================================================*/
-
+    .contact-section .contact-container h2 {
+        font-size: 20px !important;
+    }
     .contact-section .form-control{
         padding: 0px;
-        border-bottom: 1px solid #00000065 !important;
     }
     .contact-section .contact-container p {
         text-align: justify;
@@ -923,15 +975,12 @@
     }
     .contact-section .contact-container .send-button {
         font-size: 16px;
-        padding: 3px 0;
-        margin-top: 0px;
-        width: 140px;
+        padding: 8px 0;
     }
     .contact-section .contact-container .form-label {
         font-size: 16px;
         line-height: 23px;
     }
-
     /* .contact-section .btn{
         text-align: center !important;
     } */
@@ -963,7 +1012,7 @@
         line-height: 15px !important;
     }
     .single-item .pdct-title a {
-        font-size: 12px !important;
+        font-size: 11px !important;
         line-height: 15px;
         font-weight: 500 !important;
     }
@@ -1036,6 +1085,10 @@
     }
     .product-section .sub_categories .uk-position-center-left-out {
         display: none;
+    }
+
+    .single-pdct .pdct-info h3 {
+        font-size: 10px !important;
     }
 
 }
@@ -1195,16 +1248,6 @@
         font-size: 12px !important;
     }
     
-    /* ==========================================
-        contact-section responsive code
-    ==============================================*/
-
-    .contact-section .contact-container .btn{
-        padding: 0px;
-    }
-    .contact-section .contact-container .send-button {
-        width: 100%;
-    }
 
     /* ============================================
         about-section responsive code 
@@ -1272,7 +1315,7 @@
         font-size: 8px !important;
     }
     .single-item p, .single-item p a {
-        font-size: 8px !important;
+        font-size: 7px !important;
     }
     .single-item .pdct-title a {
         font-size: 10px !important;
