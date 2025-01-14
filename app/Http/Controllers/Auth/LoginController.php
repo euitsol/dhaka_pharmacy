@@ -186,6 +186,9 @@ class LoginController extends Controller
                 if ($result === true) {
                     flash()->addSuccess('The verification code has been sent successfully.');
                     return redirect()->route('use.otp', encrypt($user->id));
+                } else {
+                    flash()->addError($result);
+                    return redirect()->back();
                 }
             } else {
                 flash()->addError('Something went wrong! please try again.');

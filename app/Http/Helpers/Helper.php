@@ -366,8 +366,8 @@ function formatPercentageNumber($number)
 
 function otp()
 {
-    // $otp =  mt_rand(100000, 999999);
-    $otp =  '123456';
+    $otp =  mt_rand(100000, 999999);
+    // $otp =  '123456';
     return $otp;
 }
 
