@@ -202,6 +202,9 @@ class LoginController extends Controller
 
     public function otp($user_id)
     {
+        if (Auth::guard('web')->check()) {
+            return redirect()->route('user.dashboard');
+        }
         return view('auth.otp_verify', compact('user_id'));
     }
     public function send_otp_again($user_id)
@@ -244,11 +247,15 @@ class LoginController extends Controller
                 $user->is_verify = 1;
                 $user->update();
 
-                Auth::guard('web')->login($user);
-                $url = session()->get('previous_url', route('user.dashboard'));
-                session()->forget('previous_url');
-                ticketClosed();
-                return redirect($url);
+                if (session()->get('forgot')) {
+                    return redirect()->route('user.reset.password', encrypt($user->id));
+                } else {
+                    Auth::guard('web')->login($user);
+                    $url = session()->get('previous_url', route('user.dashboard'));
+                    session()->forget('previous_url');
+                    ticketClosed();
+                    return redirect($url);
+                }
             } else {
                 flash()->addSuccess('OTP didn\'t match. Please try again');
             }

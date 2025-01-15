@@ -71,15 +71,15 @@
                                      "
                                             class="login-btn">
                                             <i class="fa-solid fa-user me-1"></i>
-                                            <span>{{ __('Login') }}</span>
+                                            <span>{{ __('Sign In') }}</span>
                                         </a>
                                     </div>
-                                    <div class="item">
+                                    {{-- <div class="item">
                                         <a href="{{ route('use.register') }}" class="login-btn">
                                             <i class="fa-solid fa-address-card me-1"></i>
                                             <span>{{ __('Register') }}</span>
                                         </a>
-                                    </div>
+                                    </div> --}}
                                 @endif
 
                                 <div class="item">

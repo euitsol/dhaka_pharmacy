@@ -78,7 +78,8 @@
             <div class="row row-gap-2 row-gap-sm-4">
                 <div class="col-12 col-lg-3 col-md-2 col-sm-6">
                     <div class="footer-logo mb-4">
-                        <a href="{{ route('home') }}"> <img src="{{ asset('frontend/asset/img/logo.png') }}" alt="Footer logo"></a>
+                        <a href="{{ route('home') }}"> <img src="{{ asset('frontend/asset/img/logo.png') }}"
+                                alt="Footer logo"></a>
                     </div>
                     <div class="footer-followus">
                         <div class="social-info mb-4">
@@ -121,7 +122,8 @@
                             </li>
                             <li><a href="{{ route('privacy_policy') }}">{{ __('Privacy Policy') }}</a></li>
                             @if (!Auth::guard('web')->check())
-                                <li><a href="{{ route('use.register') }}">{{ __('Register') }}</a></li>
+                                {{-- <li><a href="{{ route('use.register') }}">{{ __('Register') }}</a></li> --}}
+                                <li><a href="{{ route('login') }}">{{ __('Sign In') }}</a></li>
                             @endif
                         </ul>
                     </div>
