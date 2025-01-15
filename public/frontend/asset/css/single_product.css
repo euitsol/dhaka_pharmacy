@@ -43,4 +43,5 @@
 .single_product_section .similar_products_card .similar_products .single-item{
 	padding-bottom: 10px;
   	border-bottom: 1px solid;
+    margin-bottom: 10px;
 }

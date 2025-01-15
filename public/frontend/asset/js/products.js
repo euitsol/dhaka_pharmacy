@@ -21,7 +21,7 @@ $(document).ready(function () {
                 }
 
                 return `
-                <div class="px-2 single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
+                <div class="px-2 single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2 px-2">
                     <div class="single-pdct">
                         <a href="${_route}">
                             <div class="pdct-img">
@@ -32,12 +32,6 @@ $(document).ready(function () {
                             </div>
                         </a>
                         <div class="pdct-info">
-                            <a href="#" class="generic-name">${
-                                product.generic.name
-                            }</a>
-                            <a href="#" class="company-name">${
-                                product.company.name
-                            }</a>
                             <div class="product_title">
                                 <a href="${_route}">
                                     <h3 class="fw-bold">
@@ -45,6 +39,14 @@ $(document).ready(function () {
                                     </h3>
                                 </a>
                             </div>
+                            <p><a href="">${ product.pro_sub_cat.name }</a></p>
+                            <p><a href="#" class="generic-name">${
+                                product.generic.name
+                            }</a></p>
+                            <p><a href="#" class="company-name">${
+                                product.company.name
+                            }</a></p>
+                            
                             <h4><span>${taka_icon} ${numberFormat(product.discounted_price, 2)}</span>  ${discount_amount}</h4>
                             <div class="add_to_card">
                                 <a class="cart-btn" data-unit_id="${

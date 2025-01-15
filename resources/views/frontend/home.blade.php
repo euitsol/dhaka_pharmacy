@@ -26,33 +26,32 @@
 
 
             <!--========= Product-Section-Start ========-->
-            <section class="product-section pb-3 pb-lg-4 mb-0 mb-lg-2 mb-lg-5">
+            <section class="product-section mb-4 mb-lg-5">
                 <div class="row align-items-baseline">
                     @if ($bsItems->isNotEmpty())
                         <div class="col-12 col-xl-3 best-selling-col mb-3 mb-xl-0">
-                            <h2 class="title mb-2 mb-lg-3">{{ __('Best Selling') }}</h2>
+                            <h2 class="title mb-2 mb-lg-2 mb-xl-3">{{ __('Best Selling') }}</h2>
                             <div class="best-selling-products">
                                 <div class="all-product">
                                     <div class="row m-0">
                                         @foreach ($bsItems as $item)
-                                            <div class="col-xxl-12 col-xl-12 col-lg-4 col-md-3 col-sm-4 col-6 py-2 py-lg-3">
+                                            <div class="col-xxl-12 col-xl-12 col-lg-4 col-md-3 col-sm-4 col-6 px-2 px-xl-3 py-2 py-xl-0">
                                                 <div class="single-item">
                                                     <div class=" row align-items-center">
                                                         {{-- <div class=""> --}}
-                                                        <div class="col-12  px-xxl-3  col-xxl-4 img">
+                                                        <div class="col-12 px-xxl-2 col-xxl-4 img">
                                                             <a href="{{ route('product.single_product', $item->slug) }}">
                                                                 <img height="90"
                                                                     class="w-100 border border-1 rounded-1 lg-rounded-0"
                                                                     src="{{ $item->image }}" alt="{{ $item->name }}">
                                                             </a>
                                                         </div>
-                                                        <div class="col-12  px-xxl-3  col-xxl-8">
+                                                        <div class="col-12 px-xxl-1 col-xxl-8">
                                                             <div class="bst-product-content mt-xl-3 mt-lg-3 mt-xxl-0">
                                                                 <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
                                                                         href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
                                                                 </h3>
-                                                                <p><a href="">{{ $item->pro_sub_cat->name }}</a>
-                                                                </p>
+                                                                <p class="d-block d-xl-none"><a href="">{{ $item->pro_sub_cat->name }}</a></p>
                                                                 <p><a href="">{{ $item->generic->name }}</a></p>
                                                                 <p><a href="">{{ $item->company->name }}</a></p>
                                                                 <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
@@ -134,7 +133,7 @@
                             </div>
                             <div class="all-products row">
                                     @foreach ($products as $product)
-                                        <div class="single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2 py-lg-3">
+                                        <div class="single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2 px-2">
                                             <div class="single-pdct">
                                                 <a href="{{ route('product.single_product', $product->slug) }}">
                                                     <div class="pdct-img">
@@ -147,12 +146,6 @@
                                                     </div>
                                                 </a>
                                                 <div class="pdct-info">
-                                                    <a href="#" class="generic-name">
-                                                        {{ $product->generic->name }}
-                                                    </a>
-                                                    <a href="#" class="company-name">
-                                                        {{ $product->company->name }}
-                                                    </a>
 
                                                     <div class="product_title">
                                                         <a href="{{ route('product.single_product', $product->slug) }}">
@@ -161,8 +154,10 @@
                                                             </h3>
                                                         </a>
                                                     </div>
-
-                                                    <h4> <span> {!! get_taka_icon() !!}
+                                                    <p><a href="">{{ $item->pro_sub_cat->name }}</a></p>
+                                                    <p><a href="#" class="generic-name">{{ $product->generic->name }}</a></p>
+                                                    <p><a href="#" class="company-name">{{ $product->company->name }}</a></p>
+                                                    <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
                                                             {{ number_format($product->discounted_price, 2) }}</span>
                                                         @if ($product->discounted_price != $product->price)
                                                             <span class="regular_price"> <del>{!! get_taka_icon() !!}
@@ -189,7 +184,7 @@
                             </div>
 
 
-                            <div class="row show-more mt-3 mt-lg-5" @if (count($products) < 8) style="display:none;" @endif>
+                            <div class="row show-more mt-3 mt-lg-4" @if (count($products) < 8) style="display:none;" @endif>
                                 <a class="all-pdct-btn text-center"
                                     href="{{ route('category.products', ['category' => 'all']) }}">{{ __('All Products') }}</a>
                             </div>

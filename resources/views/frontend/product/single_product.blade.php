@@ -137,7 +137,7 @@
 
 
                                                     <div class="add_to_card">
-                                                        <a class="cart-btn" href="javascript:void(0)"
+                                                        <a class="cart-btn d-flex align-items-center justify-content-center" href="javascript:void(0)"
                                                             data-product_slug="{{ $single_product->slug }}"
                                                             data-quantity="1"
                                                             data-unit_id="{{ $single_product->units[0]['id'] }}">
@@ -281,7 +281,7 @@
                                     <div class="similar_products">
                                         <h2 class="mb-3 mb-lg-4">{{ __('Similar Products') }}</h2>
                                         <div class="products">
-                                            <div class="row align-items-baseline px-0 px-xxl-2 row-gap-3">
+                                            <div class="row align-items-baseline px-0 ">
                                                 @foreach ($similar_products as $product)
                                                     @php
                                                         $ProDisPrice = proDisPrice(
@@ -307,13 +307,10 @@
                                                                         title="{{ $product->attr_title }}"><a
                                                                             href="{{ route('product.single_product', $product->slug) }}">{{ $product->name }}
                                                                         </a></h3>
-                                                                    <p><a href="">{{ $product->pro_sub_cat->name }}</a>
-                                                                    </p>
-
-                                                                    <p><a href="">{{ $product->generic->name }}</a>
-                                                                    </p>
-                                                                    <p><a href="">{{ $product->company->name }}</a>
-                                                                    </p>
+                                                                        
+                                                                    <p class="d-block d-xxl-none"><a href="">{{ $product->pro_sub_cat->name }}</a></p>
+                                                                    <p><a href="">{{ $product->generic->name }}</a></p>
+                                                                    <p><a href="">{{ $product->company->name }}</a></p>
                                                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
                                                                             {{ number_format($ProDisPrice, 2) }}</span>
                                                                         @if ($ProDisPrice != $product->price)
@@ -376,12 +373,6 @@
                                                             </div>
                                                         </a>
                                                         <div class="pdct-info">
-                                                            <a href="#" class="generic-name">
-                                                                {{ $product->generic->name }}
-                                                            </a>
-                                                            <a href="#" class="company-name">
-                                                                {{ $product->company->name }}
-                                                            </a>
                                                             <div class="product_title">
                                                                 <a
                                                                     href="{{ route('product.single_product', $product->slug) }}">
@@ -391,7 +382,13 @@
                                                                     </h3>
                                                                 </a>
                                                             </div>
-
+                                                            <p><a href="#" class="generic-name">
+                                                                {{ $product->generic->name }}
+                                                            </a></p>
+                                                            <p><a href="#" class="company-name">
+                                                                {{ $product->company->name }}
+                                                            </a></p>
+                                                            
                                                             <h4> <span> {!! get_taka_icon() !!}
                                                                     {{ number_format($similarProDisPrice, 2) }}</span>
                                                                 @if ($similarProDisPrice != $product->price)
