@@ -29,13 +29,14 @@
             <section class="product-section mb-4 mb-lg-5">
                 <div class="row align-items-baseline">
                     @if ($bsItems->isNotEmpty())
-                        <div class="col-12 col-xl-3 best-selling-col mb-3 mb-xl-0">
-                            <h2 class="title mb-2 mb-lg-2 mb-xl-3">{{ __('Best Selling') }}</h2>
+                        <div class="col-12 col-xl-3 px-0 px-xl-3 best-selling-col mb-3 mb-xl-0">
+                            <h2 class="title mb-2 mb-lg-2 mb-xl-3 ps-3">{{ __('Best Selling') }}</h2>
                             <div class="best-selling-products">
                                 <div class="all-product">
                                     <div class="row m-0">
                                         @foreach ($bsItems as $item)
-                                            <div class="col-xxl-12 col-xl-12 col-lg-4 col-md-3 col-sm-4 col-6 px-2 px-xl-3 py-2 py-xl-0">
+                                            <div
+                                                class="col-xxl-12 col-xl-12 col-lg-4 col-md-3 col-sm-4 col-6 px-2 px-xl-3 py-2 py-xl-0">
                                                 <div class="single-item">
                                                     <div class=" row align-items-center">
                                                         {{-- <div class=""> --}}
@@ -51,7 +52,9 @@
                                                                 <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
                                                                         href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
                                                                 </h3>
-                                                                <p class="d-block d-xl-none"><a href="">{{ $item->pro_sub_cat->name }}</a></p>
+                                                                <p class="d-block d-xl-none"><a
+                                                                        href="">{{ $item->pro_sub_cat->name }}</a>
+                                                                </p>
                                                                 <p><a href="">{{ $item->generic->name }}</a></p>
                                                                 <p><a href="">{{ $item->company->name }}</a></p>
                                                                 <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
@@ -65,8 +68,9 @@
 
                                                                 <!-- add to cart button -->
                                                                 <div class="add_to_card d-block d-xl-none mt-2">
-                                                                    <a class="cart-btn" data-product_slug=""
-                                                                    data-unit_id="" href="javascript:void(0)">
+                                                                    <a class="cart-btn"
+                                                                        data-product_slug="{{ $item->slug }}"
+                                                                        data-unit_id="" href="javascript:void(0)">
                                                                         <i class="fa-solid fa-cart-plus"></i>
                                                                         <span class="d-block d-xl-none">Add To Cart</span>
                                                                     </a>
@@ -120,7 +124,8 @@
                                                     uk-slider-item="next"></a>
                                             </div>
 
-                                            <div class="uk-visible@s btn-arrow">
+                                            <div class="uk-visible@s
+btn-arrow">
                                                 <a class="uk-position-center-left-out uk-position-small" href
                                                     uk-slidenav-previous uk-slider-item="previous"></a>
                                                 <a class="uk-position-center-right-out uk-position-small" href
@@ -132,59 +137,61 @@
                                 </div>
                             </div>
                             <div class="all-products row">
-                                    @foreach ($products as $product)
-                                        <div class="single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2 px-2">
-                                            <div class="single-pdct">
-                                                <a href="{{ route('product.single_product', $product->slug) }}">
-                                                    <div class="pdct-img">
-                                                        @if ($product->discounted_price != $product->price)
-                                                            <span
-                                                                class="discount_tag">{{ formatPercentageNumber($product->discount_percentage) . '% 0ff' }}</span>
-                                                        @endif
-                                                        <img class="w-100" src="{{ $product->image }}"
-                                                            alt="Product Image">
-                                                    </div>
-                                                </a>
-                                                <div class="pdct-info">
+                                @foreach ($products as $product)
+                                    <div class="single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2 px-2">
+                                        <div class="single-pdct">
+                                            <a href="{{ route('product.single_product', $product->slug) }}">
+                                                <div class="pdct-img">
+                                                    @if ($product->discounted_price != $product->price)
+                                                        <span
+                                                            class="discount_tag">{{ formatPercentageNumber($product->discount_percentage) . '% 0ff' }}</span>
+                                                    @endif
+                                                    <img class="w-100" src="{{ $product->image }}" alt="Product Image">
+                                                </div>
+                                            </a>
+                                            <div class="pdct-info">
 
-                                                    <div class="product_title">
-                                                        <a href="{{ route('product.single_product', $product->slug) }}">
-                                                            <h3 class="fw-bold" title="{{ $product->attr_title }}">
-                                                                {{ $product->name }}
-                                                            </h3>
-                                                        </a>
-                                                    </div>
-                                                    <p><a href="">{{ $item->pro_sub_cat->name }}</a></p>
-                                                    <p><a href="#" class="generic-name">{{ $product->generic->name }}</a></p>
-                                                    <p><a href="#" class="company-name">{{ $product->company->name }}</a></p>
-                                                    <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                            {{ number_format($product->discounted_price, 2) }}</span>
-                                                        @if ($product->discounted_price != $product->price)
-                                                            <span class="regular_price"> <del>{!! get_taka_icon() !!}
-                                                                    {{ number_format($product->price, 2) }}</del></span>
-                                                        @endif
-                                                    </h4>
+                                                <div class="product_title">
+                                                    <a href="{{ route('product.single_product', $product->slug) }}">
+                                                        <h3 class="fw-bold" title="{{ $product->attr_title }}">
+                                                            {{ $product->name }}
+                                                        </h3>
+                                                    </a>
+                                                </div>
+                                                <p><a href="">{{ $item->pro_sub_cat->name }}</a></p>
+                                                <p><a href="#" class="generic-name">{{ $product->generic->name }}</a>
+                                                </p>
+                                                <p><a href="#" class="company-name">{{ $product->company->name }}</a>
+                                                </p>
+                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
+                                                        {{ number_format($product->discounted_price, 2) }}</span>
+                                                    @if ($product->discounted_price != $product->price)
+                                                        <span class="regular_price"> <del>{!! get_taka_icon() !!}
+                                                                {{ number_format($product->price, 2) }}</del></span>
+                                                    @endif
+                                                </h4>
 
-                                                    <!-- add to cart button -->
-                                                     
-                                                    <div class="add_to_card">
-                                                        <a class="cart-btn" data-product_slug="{{ $product->slug }}"
-                                                            data-unit_id="" href="javascript:void(0)">
-                                                            <i class="fa-solid fa-cart-plus"></i>
-                                                            <span class="d-block d-xl-none">Add To Cart</span>
-                                                        </a>
-                                                    </div>
+                                                <!-- add to cart button -->
 
+                                                <div class="add_to_card">
+                                                    <a class="cart-btn" data-product_slug="{{ $product->slug }}"
+                                                        data-unit_id="" href="javascript:void(0)">
+                                                        <i class="fa-solid fa-cart-plus"></i>
+                                                        <span class="d-block d-xl-none">Add To Cart</span>
+                                                    </a>
                                                 </div>
 
                                             </div>
+
                                         </div>
-                                    @endforeach
-                                
+                                    </div>
+                                @endforeach
+
                             </div>
 
 
-                            <div class="row show-more mt-3 mt-lg-4" @if (count($products) < 8) style="display:none;" @endif>
+                            <div class="row show-more mt-3 mt-lg-4"
+                                @if (count($products) < 8) style="display:none;" @endif>
                                 <a class="all-pdct-btn text-center"
                                     href="{{ route('category.products', ['category' => 'all']) }}">{{ __('All Products') }}</a>
                             </div>
