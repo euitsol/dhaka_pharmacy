@@ -75,7 +75,7 @@
                             @endif
 
                         </div>
-                        <div class="row all-products mt-0 mt-lg-3">
+                        <div class="row all-products mt-2 mt-lg-3">
                             @foreach ($products as $product)
                                 @php
                                     $proDisPrice = proDisPrice($product->price, $product->discounts);

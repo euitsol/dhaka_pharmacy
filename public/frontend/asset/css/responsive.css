@@ -856,7 +856,7 @@
     /*=============================================
         container-fluid responsive code here
     ===============================================*/
-    .container-fluid {
+    /* .container-fluid {
         padding: 0 20px !important;
     }
     .container-fluid .col-md-3.col-lg-2.sidebar-cat-section {
@@ -869,6 +869,9 @@
     }
     .product-section h2.title {
         font-size: 22px;
+    } */
+    .container-fluid {
+        padding: 0 20px !important;
     }
 
 }
@@ -963,7 +966,7 @@
     /* best selling products responsive code */
 
     .best-selling-products .bst-product-content {
-        padding: 5px;
+        padding: 10px 5px 5px 5px !important;
     }
 
 
@@ -1174,7 +1177,12 @@
     .about-section .contact-section .main-contact-section .information {
         margin: inherit !important;
     }
-
+    .single-item p, .single-item p a {
+        line-height: 12px;
+    }
+    .single-pdct .pdct-info .company-name, .single-pdct .pdct-info .generic-name {
+        line-height: 12px;
+    }
 
     /*===========================================
         slider-section responsive code here
