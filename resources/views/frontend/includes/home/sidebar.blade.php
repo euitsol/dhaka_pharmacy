@@ -6,7 +6,7 @@
         </div>
         <div class="categories_menu">
             <h2 class="text-center cat-title d-lg-block d-none">{{ __('Categories') }}</h2>
-            <div class="row py-4 px-4 justify-content-center">
+            <div class="row py-2 px-4 justify-content-center">
                 @foreach ($menuItems as $item)
                     <a href="{{ route('category.products', ['category' => $item->slug]) }}"
                         class="col-6 text-center single-cat text-decoration-none {{ isset($category) && $category->id == $item->id ? 'active' : '' }}">

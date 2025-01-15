@@ -21,7 +21,7 @@
                             </div>
                             @if (isset($sub_categories) && $sub_categories->isNotEmpty())
                                 <div class="col-12">
-                                    <div class="sub_categories my-3 my-lg-4" uk-slider="finite: true">
+                                    <div class="sub_categories  my-lg-3" uk-slider="finite: true">
                                         <div class="uk-position-relative">
                                             <div class="uk-slider-container uk-light">
                                                 <ul class="uk-slider-items cat-list">
@@ -92,13 +92,6 @@
                                             </div>
                                         </a>
                                         <div class="pdct-info">
-                                            <a href="generic-name" class="generic-name">
-                                                {{ $product->generic->name }}
-                                            </a>
-                                            <a href="" class="company-name">
-                                                {{ $product->company->name }}
-                                            </a>
-
                                             <div class="product_title">
                                                 <a href="{{ route('product.single_product', $product->slug) }}">
                                                     <h3 class="fw-bold" title="{{ $product->attr_title }}">
@@ -106,6 +99,8 @@
                                                     </h3>
                                                 </a>
                                             </div>
+                                            <p><a href="generic-name" class="generic-name">{{ $product->generic->name }}</a></p>
+                                            <p><a href="" class="company-name">{{ $product->company->name }}</a></p>
                                             <h4> <span> {!! get_taka_icon() !!} {{ number_format($proDisPrice, 2) }}</span>
                                                 @if ($proDisPrice != $product->price)
                                                     <span class="regular_price"> <del>{!! get_taka_icon() !!}

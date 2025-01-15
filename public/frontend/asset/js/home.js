@@ -36,7 +36,7 @@ $(document).ready(function () {
                     let route = datas.single_product;
                     let _route = route.replace("slug", product.slug);
                     result += `
-                        <div class="px-2 col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-3">
+                        <div class="px-2 col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2 px-2">
                             <div class="single-pdct">
                                     <a href="${_route}">
                                         <div class="pdct-img">
@@ -47,20 +47,24 @@ $(document).ready(function () {
                                         </div>
                                     </a>
                                     <div class="pdct-info">
-                                        <a href="#" class="generic-name">
-                                            ${product.generic.name}
-                                        </a>
-                                        <a href="#" class="company-name">
-                                            ${product.company.name}
-                                        </a>
-
                                         <div class="product_title">
                                             <a href="${_route}">
-                                            <h3 class="fw-bold">
-                                                ${product.name}
-                                            </h3>
-                                        </a>
+                                                <h3 class="fw-bold">
+                                                    ${product.name}
+                                                </h3>
+                                            </a>
                                         </div>
+                                        <p><a href="">
+                                            ${ product.pro_sub_cat.name }
+                                        </a></p>
+                                        <p><a href="#" class="generic-name">
+                                            ${product.generic.name}
+                                        </a></p>
+                                        <p><a href="#" class="company-name">
+                                            ${product.company.name}
+                                        </a></p>
+
+                                        
                                         <h4> <span> ${taka_icon} ${numberFormat(
                         product.discounted_price,
                         2
