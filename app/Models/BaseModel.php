@@ -18,6 +18,19 @@ class BaseModel extends Model
     {
         return $this->belongsTo(Admin::class, 'deleted_by');
     }
+    public function creater()
+    {
+        return $this->morphTo();
+    }
+    public function updater()
+    {
+        return $this->morphTo();
+    }
+    public function deleter()
+    {
+        return $this->morphTo();
+    }
+
 
     public function getStatus()
     {
@@ -40,9 +53,9 @@ class BaseModel extends Model
     public function getStatusClass()
     {
         if ($this->status == 1) {
-            return 'btn-success';
-        } else {
             return 'btn-danger';
+        } else {
+            return 'btn-success';
         }
     }
     public function getStatusBadgeClass()
@@ -87,5 +100,89 @@ class BaseModel extends Model
         } else {
             return 'badge badge-info';
         }
+    }
+
+    public function getMenu()
+    {
+        if ($this->is_menu == 1) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
+    }
+    public function getBtnMenu()
+    {
+        if ($this->is_menu == 1) {
+            return 'Remove from menu';
+        } else {
+            return 'Added on menu';
+        }
+    }
+
+    public function getMenuClass()
+    {
+        if ($this->is_menu == 1) {
+            return 'btn-primary';
+        } else {
+            return 'btn-secondary';
+        }
+    }
+    public function getMenuBadgeClass()
+    {
+        if ($this->is_menu == 1) {
+            return 'badge badge-primary';
+        } else {
+            return 'badge badge-info';
+        }
+    }
+
+    public function getPermission()
+    {
+        if ($this->permission == 1) {
+            return 'Accepted';
+        } elseif ($this->permission == 0) {
+            return 'Pending';
+        } else {
+            return 'Declined';
+        }
+    }
+    public function getPermissionClass()
+    {
+        if ($this->permission == 1) {
+            return 'btn-success';
+        } elseif ($this->permission == 0) {
+            return 'btn-info';
+        } else {
+            return 'btn-danger';
+        }
+    }
+    public function getPermissionAcceptTogleClassName()
+    {
+        if ($this->permission == 1) {
+            return 'd-none';
+        } else {
+            return 'd-block';
+        }
+    }
+    public function getPermissionDeclineTogleClassName()
+    {
+        if ($this->permission == 1) {
+            return 'd-none';
+        } else {
+            return 'd-block';
+        }
+    }
+
+    public function scopeActivated($query)
+    {
+        return $query->where('status', 1);
+    }
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', 1);
+    }
+    public function scopeMenu($query)
+    {
+        return $query->where('is_menu', 1);
     }
 }

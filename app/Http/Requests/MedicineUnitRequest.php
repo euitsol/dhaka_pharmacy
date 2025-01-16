@@ -24,6 +24,8 @@ class MedicineUnitRequest extends FormRequest
         return [
             'name'=>'required',
             'quantity'=>'required|numeric',
+            'type'=>'nullable',
+            'image' => 'nullable|image|mimes:jpeg,png,gif,jpg,webp|max:2048',
         ];
     }
 }

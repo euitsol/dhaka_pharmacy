@@ -129,21 +129,45 @@ class SettingsSeeder extends Seeder
 
         SiteSetting::create([
             'key' => 'database_name',
-            'value' => 'dbagn3qmqlgczo',
+            'value' => 'dhak_dhaka_pharmacy',
             'env_key' => 'DB_DATABASE',
         ]);
 
         SiteSetting::create([
             'key' => 'database_username',
-            'value' => 'uexujdijpkch2',
+            'value' => 'dhak_dhaka_pharmacy',
             'env_key' => 'DB_USERNAME',
         ]);
 
         SiteSetting::create([
             'key' => 'database_password',
-            'value' => 'ujgo7ajnfh8g',
+            'value' => 'xiG8bIoL!IBkJl9K',
             'env_key' => 'DB_PASSWORD',
         ]);
-
+        SiteSetting::create([
+            'key' => 'sms_api_url',
+            'value' => '',
+            'env_key' => 'SMS_API_URL',
+        ]);
+        SiteSetting::create([
+            'key' => 'sms_api_key',
+            'value' => '',
+            'env_key' => 'SMS_API_KEY',
+        ]);
+        SiteSetting::create([
+            'key' => 'sms_api_secret',
+            'value' => '',
+            'env_key' => 'SMS_API_SECRET',
+        ]);
+        SiteSetting::create([
+            'key' => 'sms_api_sender_id',
+            'value' => '',
+            'env_key' => 'SMS_API_SENDER_ID',
+        ]);
+        SiteSetting::create([
+            'key' => 'sms_api_status',
+            'value' => '',
+            'env_key' => 'SMS_API_STATUS',
+        ]);
     }
 }

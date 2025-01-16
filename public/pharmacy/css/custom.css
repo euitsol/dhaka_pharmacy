@@ -1,0 +1,88 @@
+:root {
+    --primary-color: #0093E9;
+    --secondary-color: #80D0C7;
+    --primary-bg-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    --secondary-bg-image: linear-gradient(160deg, #80D0C7 0%, #0093E9 100%);
+
+    --btn-bg-color: #263148;
+    --btn-bg-image: linear-gradient(to bottom left, #344675, #263148, #344675);
+  }
+  .sidebar {
+    background-color:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+
+.btn:not([data-action]):hover{
+    background-color:var(--secondary-color) !important;
+    background-image:var(--secondary-bg-image) !important;
+}
+.white-content .footer .copyright a{
+    color:var(--primary-color) !important;
+}
+.white-content .footer .copyright a:hover{
+    color:var(--secondary-color) !important;
+}
+.main-panel {
+    border-top: 2px solid var(--primary-color) !important;
+    /* background-color:var(--primary-color) !important; */
+    /* background-image:var(--primary-bg-image) !important; */
+}
+
+.btn-primary {
+    background:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+.form-control:focus {
+    border-color: var(--primary-color) !important;
+}
+.form-group input[type=file] {
+    height: auto !important;
+}
+.form-check input[type="checkbox"]:checked+.form-check-sign::before, .form-check input[type="checkbox"]:checked+.form-check-sign::before {
+    background-color: var(--primary-color) !important;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:focus, .btn-primary.active:hover {
+    background:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+
+/* Email Verify Modal CSS */
+.email-verify .otp-field {
+    flex-direction: row;
+    column-gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.email-verify .otp-field input {
+    height: 45px;
+    background-color: #e9e9e9 !important;
+    width: 42px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 1.125rem;
+    text-align: center;
+    border: 1px solid var(--bg-1);
+    padding: unset !important;
+}
+
+.email-verify .otp-field input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.email-verify .otp-field input::-webkit-inner-spin-button,
+.email-verify .otp-field input::-webkit-outer-spin-button {
+    display: none;
+}
+
+.email-verify .submit_button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.email-verify .verify-btn {
+    margin-top: 2rem;
+    width: 20rem;
+}
+

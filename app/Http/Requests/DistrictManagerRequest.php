@@ -18,25 +18,27 @@ class DistrictManagerRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4',
-            
-            'age'=>'nullable|numeric|digits:2',
-            'area'=>'nullable',
-            'identification_type' => 'nullable|in:NID,DOB,Passport',
-            'identification_no'=>'nullable|numeric',
-            'present_address'=>'nullbale',
-            'cv'=>'nullable|file|mimes:pdf',
+
+            'age' => 'nullable|numeric|digits:2',
+            'area' => 'nullable',
+            'identification_type' => 'nullable|numeric',
+            'identification_no' => 'nullable|numeric',
+            'present_address' => 'nullbale',
+            'cv' => 'nullable|file|mimes:pdf',
 
 
-            'gender'=>'nullable|in:Male,Female,Others',
-            'dob'=>'nullable|date|before:today',
-            'father_name'=>'nullable|min:6',
-            'mother_name'=>'nullable|min:6',
-            'permanent_address'=>'nullable',
-            'parent_phone'=>'nullable|numeric|digits:11',
+            'gender' => 'nullable|numeric',
+            'dob' => 'nullable|date|before:today',
+            'father_name' => 'nullable|min:6',
+            'mother_name' => 'nullable|min:6',
+            'permanent_address' => 'nullable',
+            'parent_phone' => 'nullable|numeric|digits:11',
+
+            'oa_id' => 'required|exists:operation_areas,id',
 
         ]
-        +
-        ($this->isMethod('POST') ? $this->store() : $this->update());
+            +
+            ($this->isMethod('POST') ? $this->store() : $this->update());
     }
 
     protected function store(): array

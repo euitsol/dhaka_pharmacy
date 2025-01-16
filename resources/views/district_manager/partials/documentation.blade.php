@@ -1,12 +1,12 @@
-@if($document)
+@if ($document)
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                <p class="card-header">
-                    <b>{{ $document->title ? (ucfirst($document->title)) : ''}}</b>
-                </p>
+                <div class="card-header">
+                    <b>{{ $document->title ? ucfirst($document->title) : '' }}</b>
+                </div>
                 <div class="card-body">
-                    @if(isset($document->documentation))
+                    @if (isset($document->documentation))
                         {!! $document->documentation !!}
                     @endif
                 </div>

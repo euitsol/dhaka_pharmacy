@@ -4,7 +4,8 @@ namespace App\Http\Traits;
 
 use Illuminate\Database\Schema\Blueprint;
 
-trait AuditColumnsTrait{
+trait AuditColumnsTrait
+{
 
     public function addAuditColumns(Blueprint $table): void
     {
@@ -30,13 +31,12 @@ trait AuditColumnsTrait{
 
     public function dropAuditColumns(Blueprint $table): void
     {
-
-        $table->dropForeign('created_by');
-        $table->dropForeign('updated_by');
-        $table->dropForeign('user_updated');
+        $table->dropForeign(['created_by']);
+        $table->dropForeign(['updated_by']);
+        $table->dropForeign(['deleted_by']);
 
         $table->dropColumn('created_by');
         $table->dropColumn('updated_by');
-        $table->dropColumn('user_updated');
+        $table->dropColumn('deleted_by');
     }
 }

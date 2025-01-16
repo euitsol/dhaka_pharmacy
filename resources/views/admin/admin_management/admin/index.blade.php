@@ -1,5 +1,8 @@
 @extends('admin.layouts.master', ['pageSlug' => 'admin'])
-
+@section('title', 'Admin List')
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -13,7 +16,7 @@
                             @include('admin.partials.button', [
                                 'routeName' => 'am.admin.admin_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new admin',
+                                'label' => 'Add admin',
                             ])
                         </div>
                     </div>
@@ -28,7 +31,7 @@
                                 <th>{{ __('Email') }}</th>
                                 <th>{{ __('Role') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -45,15 +48,23 @@
                                     </td>
                                     <td>{{ timeFormate($admin->created_at) }}</td>
 
-                                    <td> {{ $admin->createdBy->name ?? 'system' }} </td>
+                                    <td> {{ c_user_name($admin->created_user) }} </td>
                                     <td>
-                                        @include('admin.partials.action_buttons', [
-                                            'menuItems' => [
-                                                [
+                                        @php
+                                            $profile = [];
+                                        @endphp
+                                        @if ($admin->id == admin()->id)
+                                            @php
+                                                $profile = [
                                                     'routeName' => 'am.admin.admin_profile',
                                                     'params' => [$admin->id],
                                                     'label' => 'Profile',
-                                                ],
+                                                ];
+                                            @endphp
+                                        @endif
+                                        @include('admin.partials.action_buttons', [
+                                            'menuItems' => [
+                                                $profile,
                                                 [
                                                     'routeName' => 'javascript:void(0)',
                                                     'params' => [$admin->id],
@@ -113,6 +124,9 @@
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
 @push('js')
+    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
+@endpush
+@push('js')
     <script>
         $(document).ready(function() {
             $('.view').on('click', function() {
@@ -124,8 +138,8 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
+                        let status = data.status == 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status == 1 ? 'badge-success' :
                             'badge-warning';
                         var result = `
                                 <table class="table table-striped">
@@ -135,14 +149,82 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Email</th>
+                                        <th class="text-nowrap">Image</th>
                                         <th>:</th>
-                                        <td>${data.email}</td>
+                                        <td>
+                                            <div id="lightbox" class="lightbox">
+                                                <div class="lightbox-content">
+                                                    <img src="${data.image}" class="lightbox_image">
+                                                </div>
+                                                <div class="close_button fa-beat">X</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Father Name</th>
+                                        <th>:</th>
+                                        <td>${data.father_name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Mother Name</th>
+                                        <th>:</th>
+                                        <td>${data.mother_name}</td>
+                                    </tr>
+                                     <tr>
+                                        <th class="text-nowrap">Designation</th>
+                                        <th>:</th>
+                                        <td>${data.designation}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Role</th>
                                         <th>:</th>
                                         <td>${data.role.name}</td>
+                                    </tr>
+                                     <tr>
+                                        <th class="text-nowrap">Status</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${statusClass}">${status}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Email</th>
+                                        <th>:</th>
+                                        <td>${data.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Phone</th>
+                                        <th>:</th>
+                                        <td>${data.phone}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Emergency Phone</th>
+                                        <th>:</th>
+                                        <td>${data.emergency_phone}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identifiation Type</th>
+                                        <th>:</th>
+                                        <td>${data.identificationType}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identifiation No</th>
+                                        <th>:</th>
+                                        <td>${data.identification_no}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identifiation File</th>
+                                        <th>:</th>
+                                        <td>${data.identification_file_url ? `<a class='btn btn-primary' target='_blank' href='${data.identification_file_url}'><i
+                                                                class='fa-solid fa-download'></i></a>` : `null`}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Gender</th>
+                                        <th>:</th>
+                                        <td>${data.getGender}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Date Of Birth</th>
+                                        <th>:</th>
+                                        <td>${data.dob}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">IP Address</th>
@@ -150,12 +232,24 @@
                                         <td>${data.ips}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Status</th>
+                                        <th class="text-nowrap">Bio</th>
                                         <th>:</th>
-                                        <td><span class="badge ${statusClass}">${status}</span></td>
+                                        <td>${data.bio}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created At</th>
+                                        <th class="text-nowrap">Present Address</th>
+                                        <th>:</th>
+                                        <td>${data.present_address}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Permanent Address</th>
+                                        <th>:</th>
+                                        <td>${data.permanent_address}</td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <th class="text-nowrap">Created Date</th>
                                         <th>:</th>
                                         <td>${data.creating_time}</td>
                                     </tr>
@@ -165,7 +259,7 @@
                                         <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Updated At</th>
+                                        <th class="text-nowrap">Updated Date</th>
                                         <th>:</th>
                                         <td>${data.updating_time}</td>
                                     </tr>

@@ -22,7 +22,26 @@ class ProductCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,gif,jpg,webp,svg|max:2048',
+        ]
+            +
+            ($this->isMethod('POST') ? $this->store() : $this->update());
+    }
+
+    protected function store(): array
+    {
+        return [
+            'name' => 'required|unique:product_categories,name',
+            'slug' => 'required|unique:product_categories,slug',
+
+        ];
+    }
+
+    protected function update(): array
+    {
+        return [
+            'name' => 'required|unique:product_categories,name,' . $this->route('id'),
+            'slug' => 'required|unique:product_categories,slug,' . $this->route('id'),
         ];
     }
 }

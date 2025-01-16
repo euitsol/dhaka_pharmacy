@@ -1,5 +1,8 @@
 @extends('admin.layouts.master', ['pageSlug' => 'pharmacy'])
-
+@section('title', 'Pharmacy List')
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
+@endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -7,7 +10,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">Pharmacy List</h4>
+                            <h4 class="card-title">{{ __('Pharmacy List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -27,7 +30,9 @@
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Email') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('KYC Status') }}</th>
+                                <th>{{ __('Email Verify') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -42,37 +47,55 @@
                                         <span
                                             class="{{ $pharmacy->getStatusBadgeClass() }}">{{ $pharmacy->getStatus() }}</span>
                                     </td>
+                                    <td>
+                                        <span
+                                            class="{{ $pharmacy->getKycStatusClass() }}">{{ $pharmacy->getKycStatus() }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="{{ $pharmacy->getEmailVerifyClass() }}">{{ $pharmacy->getEmailVerifyStatus() }}</span>
+                                    </td>
                                     <td>{{ timeFormate($pharmacy->created_at) }}</td>
 
-                                    <td> {{ $pharmacy->creater->name ?? 'system' }} </td>
+                                    <td> {{ c_user_name($pharmacy->creater) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
+                                                    'routeName' => 'pm.pharmacy.login_as.pharmacy_profile',
+                                                    'params' => [encrypt($pharmacy->id)],
+                                                    'label' => 'Login As',
+                                                    'target' => '_blank',
+                                                ],
+                                                [
                                                     'routeName' => 'pm.pharmacy.pharmacy_profile',
-                                                    'params' => [$pharmacy->id],
+                                                    'params' => [encrypt($pharmacy->id)],
                                                     'label' => 'Profile',
                                                 ],
                                                 [
+                                                    'routeName' => 'pm.pharmacy.pharmacy_discount',
+                                                    'params' => [encrypt($pharmacy->id)],
+                                                    'label' => 'Pharmacy Discount',
+                                                ],
+                                                [
                                                     'routeName' => 'javascript:void(0)',
-                                                    'params' => [$pharmacy->id],
                                                     'label' => 'View Details',
                                                     'className' => 'view',
-                                                    'data-id' => $pharmacy->id,
+                                                    'data-id' => encrypt($pharmacy->id),
                                                 ],
                                                 [
                                                     'routeName' => 'pm.pharmacy.pharmacy_edit',
-                                                    'params' => [$pharmacy->id],
+                                                    'params' => [encrypt($pharmacy->id)],
                                                     'label' => 'Update',
                                                 ],
                                                 [
                                                     'routeName' => 'pm.pharmacy.status.pharmacy_edit',
-                                                    'params' => [$pharmacy->id],
+                                                    'params' => [encrypt($pharmacy->id)],
                                                     'label' => $pharmacy->getBtnStatus(),
                                                 ],
                                                 [
                                                     'routeName' => 'pm.pharmacy.pharmacy_delete',
-                                                    'params' => [$pharmacy->id],
+                                                    'params' => [encrypt($pharmacy->id)],
                                                     'label' => 'Delete',
                                                     'delete' => true,
                                                 ],
@@ -112,6 +135,7 @@
 @endsection
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
 @push('js')
+    <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.view').on('click', function() {
@@ -123,9 +147,6 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
-                            'badge-warning';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -134,17 +155,69 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">Image</th>
+                                        <th>:</th>
+                                        <td><div id="lightbox" class="lightbox">
+                                                <div class="lightbox-content">
+                                                    <img src="${data.image}"
+                                                        class="lightbox_image">
+                                                </div>
+                                                <div class="close_button fa-beat">X</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Email</th>
                                         <th>:</th>
                                         <td>${data.email}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Status</th>
+                                        <th class="text-nowrap">Pharmacy / Responsible Person Phone</th>
                                         <th>:</th>
-                                        <td><span class="badge ${statusClass}">${status}</span></td>
+                                        <td>${data.phone ?? 'null'}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created At</th>
+                                        <th class="text-nowrap">Emergency Phone</th>
+                                        <th>:</th>
+                                        <td>${data.emergency_phone ?? 'null'}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identification Type</th>
+                                        <th>:</th>
+                                        <td>${data.identificationType ?? 'null'}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Identifiation File</th>
+                                        <th>:</th>
+                                        <td>${data.identification_file_url ? `<a class='btn btn-primary' target='_blank' href='${data.identification_file_url}'><i class='fa-solid fa-download'></i></a>` : `null`}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Status</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${data.statusBg}">${data.statusTitle}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">KYC Status</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${data.kycStatusBg}">${data.kycStatusTitle}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Email Verify</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${data.verifyStatusBg}">${data.verifyStatusTitle}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Operational Area</th>
+                                        <th>:</th>
+                                        <td>${data.operation_area ? data.operation_area.name : 'null'}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Operational Sub Area</th>
+                                        <th>:</th>
+                                        <td>${data.operation_sub_area ? data.operation_sub_area.name : 'null'}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Created Date</th>
                                         <th>:</th>
                                         <td>${data.creating_time}</td>
                                     </tr>
@@ -154,7 +227,7 @@
                                         <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Updated At</th>
+                                        <th class="text-nowrap">Updated Date</th>
                                         <th>:</th>
                                         <td>${data.updating_time}</td>
                                     </tr>

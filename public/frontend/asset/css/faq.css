@@ -1,0 +1,57 @@
+.faq-section .page-title{
+    font-family: var(--secondry-font);
+    font-size: 24px;
+    line-height: 35px;
+    font-weight: 500;
+    color: var(--text-color-black);
+}
+.faq-section .nav-pills{
+    border-bottom: 2px solid;
+    border-color: rgba(0, 0, 0, 0.5);
+}
+.faq-section .nav-pills .nav-item button{
+    font-family: var(--secondry-font);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 40px;
+    color: rgba(0, 0, 0, 0.8);
+    padding: 0;
+    background: none;
+}
+.faq-section .nav-pills .nav-item button.active{
+    font-weight: 500;
+    color: var(--text);
+}
+.faq-section .accordion-item{
+    margin-bottom: 10px;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    background-color: rgba(217, 0217, 217, 0.5);
+}
+.faq-section .accordion-item .accordion-button{
+    font-family: var(--secondry-font);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 40px;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 29px 20px;
+}
+.faq-section .accordion-item .accordion-button::after{
+    width: 30px;
+    height: 25px;
+    background-size: cover;
+}
+.faq-section .accordion-item .accordion-body{
+    font-family: var(--secondry-font);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.6);
+    padding-top: 0px;
+    padding-bottom: 20px;
+}
+.faq-section .accordion-item .accordion-button:focus{
+    box-shadow: none;
+}

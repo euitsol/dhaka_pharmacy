@@ -18,7 +18,28 @@ class MedicineCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required',
+
+        ]
+        +
+            ($this->isMethod('POST') ? $this->store() : $this->update());
+    }
+
+    protected function store(): array
+    {
+        return [
+            'name' => 'required|unique:medicine_categories,name',
+            'slug' => 'required|unique:medicine_categories,slug',
+
         ];
     }
+
+    protected function update(): array
+    {
+        return [
+            'name' => 'required|unique:medicine_categories,name,' . $this->route('id'),
+            'slug' => 'required|unique:medicine_categories,slug,' . $this->route('id'),
+        ];
+    }
+
 }
+

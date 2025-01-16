@@ -10,31 +10,33 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
+
 
 
 class PermissionController extends Controller
 {
-    public function __construct() {
+    use DetailsCommonDataTrait;
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
 
     public function index(): View
-     {
-        $data['permissions'] = Permission::orderBy('prefix')->get();
-        return view('admin.admin_management.permission.index',$data);
+    {
+        $data['permissions'] = Permission::with(['created_user', 'updated_user'])->orderBy('prefix')->get();
+        return view('admin.admin_management.permission.index', $data);
     }
     public function details($id): JsonResponse
     {
         $data = Permission::findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->created_by ? $data->created_user->name : 'System';
-        $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
+        $this->simpleColumnData($data);
         return response()->json($data);
     }
-    public function create(){
-        $data['document'] = Documentation::where('module_key','permission')->first();
-        return view('admin.admin_management.permission.create',$data);
+    public function create()
+    {
+        $data['document'] = Documentation::where([['module_key', 'permission'], ['type', 'create']])->first();
+        return view('admin.admin_management.permission.create', $data);
     }
 
     public function store(PermissionRequest $req): RedirectResponse
@@ -51,8 +53,8 @@ class PermissionController extends Controller
     public function edit($id): View
     {
         $data['permission'] = Permission::findOrFail($id);
-        $data['document'] = Documentation::where('module_key','permission')->first();
-        return view('admin.admin_management.permission.edit',$data);
+        $data['document'] = Documentation::where([['module_key', 'permission'], ['type', 'update']])->first();
+        return view('admin.admin_management.permission.edit', $data);
     }
     public function update(PermissionRequest $req, $id): RedirectResponse
     {

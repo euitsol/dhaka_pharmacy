@@ -1,0 +1,1378 @@
+/*=========================================================
+    all responsive css code here
+============================================================*/
+@media screen and (max-width: 1700px){
+    .product-section h2.title {
+        font-size: 20px;
+    }
+    .uk-child-width-1-5\@m > * {
+        width: 32% !important;
+    }
+}
+@media screen and (max-width: 1600px){
+
+    /* ===================================
+        single pdct responsive code 
+    =====================================*/
+
+    .single-pdct .pdct-info a {
+        font-size: 9px !important;
+    }
+    .single-pdct .pdct-info h3 {
+        font-size: 12px !important;
+        font-weight: 500 !important;
+    }
+    .single-pdct .pdct-info {
+        padding: 10px 10px 0px 10px;
+    }
+    .single-pdct .pdct-info .cart-button-lg .cart-btn{
+        font-size: 12px !important;
+    }
+    .single-pdct .pdct-info .cart-button-lg .cart-btn i{
+        display: inline-block;
+        margin-right: 4px;
+    }
+    .single-item p, .single-item p a {
+        font-size: 9px !important;
+    }
+    .single-item .pdct-title a {
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .sidebar-cat-section .row .single-cat h2 {
+        font-size: 11px;
+        line-height: 18px;
+    }
+    .sidebar-cat-section .cat-title {
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .uk-child-width-1-5\@m > * {
+        width: 39%;
+    }
+    .about-section .about-container .content h1 {
+        font-size: 29px !important;
+        line-height: 35px !important;
+    }
+    .about-section .highlight-section h2 {
+        font-size: 29px !important;
+        line-height: 35px !important;
+    }
+    .about-section .contact-section .main-contact-section .information h2 {
+        font-size: 22px !important;
+        line-height: 30px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info-content h3 {
+        font-size: 22px !important;
+        line-height: 30px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info-content a {
+        font-size: 22px !important;
+        line-height: 30px !important;
+        font-weight: 500 !important;
+    }
+}
+
+@media screen and (max-width: 1399px){
+    /* ===============================================
+        header section responsive code
+    ================================================== */
+    .header-section .suggestion-box .search_item .details p {
+        font-size: .7rem;
+        line-height: 0.25rem;
+    }
+
+    /*==================================================
+        ul home page slider responsive code here *
+    ====================================================*/
+
+    .slider-sction .carousel-caption .slider-left h2 {
+        font-size: 49px;
+        line-height: 52px;
+    }
+    .slider-sction .uk-slideshow-items {
+        height: auto;
+    }
+    .slider-sction .carousel-caption .slider-right img {
+        max-width: 100%;
+        width: 100%;
+    }
+    .single_product_section .similar_products_card .similar_products .single-item{
+        padding: inherit;
+        border: none;
+
+    }
+
+    /*=============================================================
+        single product desgin code here
+    ================================================================*/
+
+    /* .single_product_section .similar_products_card .similar_products .single-item .row{
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
+        border-radius: 15px;
+        backdrop-filter: blur(23px) saturate(169%);
+        -webkit-backdrop-filter: blur(23px) saturate(169%);
+        background-color: rgba(255, 255, 255, 0.1);
+    } */
+    .single_product_section .similar_products_card .similar_products .single-item{
+        padding-bottom: 0px !important;
+        border: none !important;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
+        border-radius: 15px;
+        backdrop-filter: blur(23px) saturate(169%);
+        -webkit-backdrop-filter: blur(23px) saturate(169%);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    .single_product_section .similar_products_card .similar_products .single-item img {
+        padding: 0px;
+        border-radius: 15px 15px 0px 0px !important;
+        border: none !important;
+    }
+    .single_product_section .similar_products_card {
+        height: 100% !important;
+        max-height: 100%  !important;
+        /* border: none; */
+    }
+    .single_product_section .similar_products .single-item .content {
+        padding: 5px;
+    }
+    .log-with-pass .left-col .form-title h1 {
+        font-size: 29px !important;
+    }
+    .uk-child-width-1-5\@m > * {
+        width: 54% !important;
+    }
+    .add_to_card .cart-btn {
+        border: 1px solid var(--secundary-color) !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .order_button .order-btn {
+        border: 1px solid var(--secundary-color) !important;
+    }
+    /*================================================
+        footer responsive code here
+    ==================================================*/
+
+    .footer-section .delivery-row {
+        padding: 40px  0px !important;
+    }
+}
+
+
+@media screen and (max-width: 1300px){
+
+    /*=============================================
+        uk future item tap slider responsive code
+    =============================================== */
+
+    .uk-child-width-1-5\@m > * {
+        width: 100%;
+    }
+    .header-section .search-filter {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1199px){
+
+    /*===============================================
+        product section responsive code here
+    =================================================*/
+    .single-item img {
+        border-color: var(--text-color-black) !important;
+        /* height: 100% !important;
+        object-fit: cover; */
+        padding: 0px !important;
+    }
+    .product-section .best-selling-col .best-selling-products .all-product .single-item {
+        padding: 0px 0;
+        border-bottom: 0px !important;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
+        border-radius: 15px;
+        backdrop-filter: blur(23px) saturate(169%);
+        -webkit-backdrop-filter: blur(23px) saturate(169%);
+        background-color: rgba(255, 255, 255, 0.1);
+        transition: .4s;
+    }
+    .best-selling-products .single-item img {
+        padding: 3px !important;
+        border: none !important;
+        border-radius: 15px 15px 0px 0px !important;
+        height: 12.575rem !important;
+        object-fit: cover;
+        border-bottom: 1px solid rgba(112, 112, 112, 0.34) !important;
+    }
+    .product-section .best-selling-col .best-selling-products {
+        background: transparent !important;
+        box-shadow: none ;
+        border-radius: 0px;
+        overflow-y: auto;
+        height: inherit !important;
+    }
+    .best-selling-products .bst-product-content{
+        padding: 10px;
+    }
+
+
+    /*===================================================
+       cart button design css code here
+    =====================================================*/
+
+    .single-pdct .add_to_card {
+        position: relative !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        visibility: visible !important;
+        right: 0px !important;
+        opacity: 1 !important; 
+    }
+    .single-pdct .pdct-info {
+        padding: 10px 20px 0px 20px;
+        background: unset;
+        position: relative !important;
+        overflow: visible !important;
+    }
+    .add_to_card .cart-btn {
+        border: 1px solid var(--secundary-color) !important;
+        font-size: 12px !important;
+        width: 100% !important;
+        padding: 12px !important;
+        display: flex !important;
+        background: transparent !important;
+        align-items: center !important;
+    }
+    .add_to_card .cart-btn span{
+        font-size: 14px !important;
+    }
+    .order_button .order-btn {
+        border: 1px solid var(--secundary-color);
+    }
+    .single-pdct .pdct-info {
+        padding: 10px 10px 10px 10px;
+    }
+    .single-pdct .pdct-info a {
+        font-size: 11px !important;
+        /* line-height: 18px !important; */
+    }
+
+    .single-item p, .single-item p a {
+        font-size: 11px !important;
+    }
+    .single-item .pdct-title a {
+        font-size: 14px;
+        line-height: 15px;
+        font-weight: 500 !important;
+    }
+    .single-pdct .pdct-info h3 {
+        font-size: 14px !important;
+        font-weight: 500 !important;
+    }
+    .sidebar-cat-section .row .single-cat h2 {
+        font-size: 10px;
+        line-height: 16px;
+        font-weight: 500;
+    }
+    .product-section .align-items-baseline .best-selling-products .all-product .single-item {
+        margin-bottom: 0px !important;
+    }
+    .about-section .container{
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 1100px){
+
+    /*=======================================================
+        footer,slider,about  section responsive code here
+    =========================================================*/
+
+    .footer-section .newsletter-main-row {
+        max-width: 80%;
+    }
+    .footer-section .main-footer-row .footer-nav li a {
+        font-size: 14px;
+        line-height: 30px;
+    }
+    .footer-section .main-footer-row .title {
+        font-size: 16px;
+        line-height: 19px;
+    }
+    .slider-sction .carousel-caption .slider-left h2 {
+        font-size: 39px;
+        line-height: 44px;
+    }
+    .slider-sction .carousel-caption .slider-left h3 {
+        font-size: 19px;
+        line-height: 38px;
+    }
+    .about-section .about-container .content h1 {
+        font-size: 24px !important;
+        font-weight: 600;
+        line-height: 31px !important;
+    }
+
+}
+
+@media screen and (max-width: 991px){
+    .upload_prescription{
+        width: 25% !important;
+    }
+    .invalid-feedback {
+        top: -5px !important;
+    }
+    
+    .product-section .feature-product .cat-filter-row .slider-col{
+        margin-right: 0px;
+    }
+    .product-section .align-items-baseline .feature-product .slider-col .uk-position-small {
+        /* margin: 0px 19px 0px 0px; */
+        /* top: 16px; */
+        margin-left: -28px;
+    }
+    .sidebar-cat-section .single-cat:nth-child(2n+1) {
+        border-right: 0px !important;
+        border-color: rgba(112, 112, 112, 0.34);
+    }
+
+    /*=======================================================
+        header section responsive code here
+    =========================================================*/
+    
+    header {
+        position: unset;
+    }
+    .main-header .search-filter .search-box{
+        width: 100%;
+    }
+    .header-section .search-filter{
+        display: flex;
+        justify-content: end;
+        width: 100%;
+    }
+    #searchBox{
+        width: 100%;
+    }
+    .header-section .search-filter .suggestion-box {
+        top: 39px;
+    }
+    .header-section .main-header .right-col .login-btn img{
+        height: 25px !important; 
+        width: 25px !important; 
+    }
+    .header-section .right-col .cart-btn, .header-section .right-col .wish-btn {
+        font-size: 12px !important;
+    }
+    /* ==================================================
+        sidebar cat title responsive code here
+    =====================================================*/
+
+    .sidebar-cat-section .upload_prescription .cat-title {
+        border: 1px solid var(--border-2);
+    }
+    .sidebar-cat-section .cat-title {
+        font-size: 16px;
+        line-height: 23px;
+    }
+    .sidebar-cat-section .row .single-cat .icon {
+        max-width: 80%;
+    }
+
+    .single-pdct .pdct-info {
+        padding: 10px 5px 5px 5px !important;
+    }
+    .slider-sction .carousel-caption .slider-left .btns a {
+        font-size: 14px;
+        width: 120px;
+        height: 45px;
+    }
+
+    /*=======================================================
+       container-fluid section responsive code here
+    =========================================================*/
+
+    .container-fluid .sidebar-cat-section {
+        display: block;
+        width: 100%;
+    }
+    .container-fluid .content-col {
+        display: block;
+        width: 100%;
+    }
+
+
+    /*=======================================================
+        sidebar categories menu responsive code here
+    =========================================================*/
+
+    .sidebar-cat-section {
+        padding-bottom: 0px;
+    }
+    .sidebar-cat-section .categories_menu {
+        background: transparent;
+        box-shadow: none;
+        border-radius: 0px;
+    }
+    .categories_menu .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        column-gap: 15px;
+        row-gap: 15px;
+        padding: 8px !important;
+    }
+    .categories_menu  .single-cat {
+        border: none;
+        background: var(--text-color-white);
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+        border-radius: 10px;
+        width: 100%;
+        padding: 30px !important;
+    }
+
+
+    /*=====================================================
+       product section responsive code here
+    =======================================================*/
+
+    .single_product_section .similar_products_card .similar_products .single-item img {
+        height: 100% !important;
+    }
+
+    /* .single_product_section .single_product .product_image .xzoom-thumbs .xzoom-gallery {
+        height: 100% !important;
+    }
+    .single_product_section .single_product .product_image .xzoom {
+        height: 100% !important;
+    } */
+
+    .product-section .best-selling-col .best-selling-products {
+        height: auto !important;
+        background: transparent;
+        box-shadow: none;
+        border-radius: 0px;
+        padding-bottom: 10px;
+    }
+    .product-section .best-selling-col {
+        width: 100%;
+        display: contents;
+    }
+    .product-section .col-3.best-selling-col .best-selling-products .all-product .single-item{
+        border: none;
+        overflow: hidden;
+        padding: 0px 0px;
+        padding-bottom: 5px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
+        border-radius: 15px;
+        backdrop-filter: blur(23px) saturate(169%);
+        -webkit-backdrop-filter: blur(23px) saturate(169%);
+        background-color: rgba(255, 255, 255, 0.1);
+        transition: .4s;
+    }
+    .product-section .feature-product {
+        width: 100%;
+    }
+    .product-section .best-selling-col .title {
+        padding-left: 20px;
+    }
+    .best-selling-products .single-item .align-items-center .img{
+        padding: 0px;
+        width: 100%;
+        padding: 0px 10px;
+    }
+    .uk-child-width-1-5\@m > * {
+        width: 35%;
+    }
+    .single-pdct .pdct-img > img {
+        height: 100% !important;
+    }
+
+    /*==================================================
+        footer newslter section responsive code here
+    ====================================================*/
+
+    .footer-section .newsletter-main-row {
+        display: block;
+        row-gap: 30px;
+    }
+    .footer-section .newsletter-main-row .newsletter-headign {
+        width: 100%;
+        text-align: center;
+    }
+    .footer-section .newsletter-main-row .newsletter-content {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .footer-section .container {
+        max-width: 100%;
+        padding: 0px 30px;
+    }
+    .footer-section .socket-row {
+        padding-bottom: 120px !important;
+    }
+
+    /*==============================================
+       contact page responsive code here
+    ================================================*/
+
+   .contact-section .container{
+        max-width: 100%;
+    }
+    .contact-section .contact-container {
+        padding: 40px 15px;
+    }
+    .contact-section .contact-container {
+        padding: 16px 15px!important;
+    }
+    .contact-section .contact-container h2 {
+        font-size: 22px !important;
+        margin-bottom: 10px !important;
+        line-height: 29px !important;
+    }
+
+    /* ==============================================
+        support section responsive code here
+    =============================================== */
+
+    .support_wrap {
+        height:60px;
+        width: 60px;
+        border-radius: 50%;
+        position: fixed;
+        bottom:95px;
+        right: 20px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /*==============================================
+        single item responsive code
+    ================================================*/
+
+    .single-item .pdct-title a {
+        font-size: 11px !important;
+        font-weight: 500 !important;
+    }
+    .single-item p, .single-item p a {
+        font-size: 9px !important;
+    }
+    .single-pdct .pdct-info .company-name,
+    .single-pdct .pdct-info .generic-name{
+        font-size: 9px !important;
+    }
+    .product_title h3 {
+        font-size: 10px !important;
+        font-weight: 500 !important;
+    }
+    .single-pdct .pdct-info h3 {
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        margin: .2rem 0rem !important;
+    }
+    /* .single-pdct .pdct-info h4 {
+        margin: 0rem 0rem .6rem 0rem !important;
+    } */
+   /*==============================================
+       about ua page responsive code here
+    ================================================*/
+
+    .about-section .container{
+        max-width: 100% !important;
+    }
+    .about-section .about-container .feature-list li {
+        font-size: 14px !important;
+        line-height: 12px !important;
+        margin-bottom: 5px;
+    }
+    .about-section .about-container .content p {
+        font-size: 14px !important;
+        line-height: 23px !important;
+    }
+    .about-section .about-container .content h1 {
+        font-size: 22px !important;
+        font-weight: 500 !important;
+        line-height: 31px !important;
+    }
+    .about-section .about-container .feature-list li i {
+        margin-right: 7px !important;
+        font-size: 14px !important;
+    }
+
+    .about-section .contact-section .main-contact-section .contact-info-content a {
+        font-size: 14px !important;
+        line-height: 29px !important;
+        font-weight: 500 !important;
+    }
+    .about-section .contact-section .main-contact-section .icon {
+        font-size: 16px !important;
+        width: 50px !important;
+        height: 50px !important;
+        margin-right: 5px !important;
+        line-height: 50px !important;
+    }
+    .about-section .contact-section .main-contact-section .information {
+        padding: 0px 0px !important;
+        margin-bottom: 10px !important;
+        margin: 0 auto !important;
+    }
+    .about-section .contact-section .main-contact-section .information .button .btn {
+        font-size: 16px !important;
+        height: 45px !important;
+        width: 200px !important;
+        padding-left: 30px !important;
+        line-height: 34px !important;
+    }
+    .about-section .contact-section .main-contact-section .information .button .btn i {
+        height: 45px !important;
+        width: 45px !important;
+        line-height: 45px !important;
+        font-size: 20px !important;
+    }
+    .about-section .highlight-section p {
+        font-size: 14px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info-content h3 {
+        font-size: 16px !important;
+        line-height: 23px !important;
+    }
+    .about-section .contact-section .main-contact-section .information h2 {
+        font-size: 13px !important;
+        line-height: 23px !important;
+    }
+    .about-section .highlight-section h2{
+        font-size: 22px !important;
+        line-height: 29px !important;
+        font-weight: 500 !important;
+    }
+
+
+
+    /* .about-section .contact-section .main-contact-section .contact-info-content h3 {
+        font-size: 16px !important;
+        line-height: 30px !important;
+    } */
+    /*================================================
+       categories responsive code here
+    ==================================================*/
+
+    .categories_menu .col-6.text-center.single-cat h2 {
+        display: none;
+    }
+
+   /*=================================================
+        faq section responsive code here
+    ====================================================*/
+
+    .faq-section .accordion-item .accordion-button {
+        font-size: 16px !important;
+        line-height: 23px;
+        box-shadow: none;
+        padding: 10px 15px !important;
+        font-weight: 400 !important;
+    }
+    .faq-section .accordion-button::after {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    .faq-section .accordion-body {
+        font-size: 14px !important;
+        text-align: justify;
+    }
+    .faq-section .nav-pills .nav-item button {
+        font-size: 16px !important;
+        line-height: 32px ;
+    }
+    .faq-section .nav-pills .nav-item button.active {
+        font-weight: 500 !important;
+        color: var(--text-color-white);
+        background: var(--secondary-bg) !important;
+        padding: 0px 10px !important;
+    }
+    .faq-section .nav-pills li {
+        margin-right: 15px;
+    }
+    .faq-section .nav-pills li:last-child {
+        margin-right: 0;
+    }
+    .faq-section .container{
+        max-width: 100%;
+        padding: 0px;
+    }
+    .faq-section .page-title {
+        font-size: 22px !important;
+    }
+    .faq-section .container{
+        max-width: 100% !important;
+    }
+    .faq-section .nav-pills{
+        justify-content: left;
+    }
+
+    /*==========================================
+        tream-condition responsive code here
+    ============================================ */
+
+    .slider-sction .carousel-caption .slider-right {
+        background-position: center bottom;
+    }
+    .tream-condition ul li, .tream-condition p {
+        line-height: 29px !important;
+        /* text-align: justify; */
+        font-size: 14px !important;
+    }
+    .tream-condition h2 {
+        font-size: 22px !important;
+        line-height: 32px !important;
+        /* margin-bottom: 10px !important; */
+        font-weight: 500 !important;
+    }
+    .tream-condition .container{
+        max-width: 100%;
+        padding: 0px;
+    }
+    
+    /*==============================================
+        loginpass responsive code here
+    ===============================================*/
+
+    .log-with-pass .left-col form input {
+        border-radius: 5px;
+        height: 50px !important;
+        padding-right: 20px !important;
+        padding-left: 60px !important;
+    }
+    .log-with-pass .left-col form .register_button.submit_button{
+        padding: 0px !important;
+    }
+    .log-with-pass .left-col form .input-box .icon {
+        left: 25px !important;
+    }
+    .log-with-pass .left-col form input[type="submit"] {
+        padding: none !important;
+    }
+    .log-with-pass .left-col form .otp_button {
+        height: 50px !important;
+        line-height: 50px !important;
+    }
+    .log-with-pass {
+        height: 100% !important;
+        padding: 40px 0px !important;
+    }
+    .log-with-pass .left-col form .input-box.phn {
+        margin-bottom: 10px !important;
+    }
+    .log-with-pass .container{
+        padding: 0px 30px;
+    }
+    .log-with-pass .left-col .form-title h1 {
+        font-size: 22px !important;
+    }
+    .slider-sction .uk-slideshow-items {
+        height: 320px;
+    }
+    .slider-sction .carousel-caption .slider-right img {
+        max-width: 300px;
+    }
+    .log-with-pass::before {
+        top: 0px !important;
+    }
+
+    /* .log-with-pass .verification_wrap .field-set input{
+        
+    } */
+
+    /* ==============================================
+        footer section responsive code here
+    ==============================================*/
+
+    .footer-section .delivery-row h4 {
+        font-size: 12px;
+        line-height: 15px;
+        font-weight: 500;
+    }
+    .footer-section .delivery-row h3 {
+        margin: 0px !important;
+    }
+
+    /*=============================================
+        mobile footer menu show code here
+    ===============================================*/
+
+    .mobile-footer {
+        display: block;
+        width: 100% !important;
+        margin: 0 auto;
+        padding: 15px 10px;
+        position: fixed;
+        bottom: 0;
+        box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        background-color: var(--info-bg);
+    }
+    .mobile-footer .main-mobile-col {
+        text-align: center;
+    }
+    .mobile-footer.hide {
+        transform: translateY(100%);
+    }
+    .mobile-footer.show {
+        transform: translateY(0);
+    }
+    .mobile-footer .row .col{
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        background: #2d98daa6;
+        border-radius: 5px;
+        padding: 0px !important;
+    }
+    .mobile-footer .row .col a{
+        display: block;
+        height: 100% !important;
+        width: 100% !important;
+        padding: 25px 0px;
+        color: var(--text-color-white) !important;
+    }
+    .mobile-footer a i {
+        color: var(--text-color-white);
+        cursor: pointer;
+        font-size: 20px;
+    }
+    .mobile-footer .container{
+        max-width: 100%;
+        padding: 0px 20px !important;
+    }
+    .mobile-footer .container .header-section{
+        margin: 0 auto;
+    }
+    .mobile-footer .row .col span i{
+        color: var(--text-color-white) !important;
+    }
+}
+
+
+@media screen and (max-width: 800px){
+
+    /*=============================================
+        container-fluid responsive code here
+    ===============================================*/
+    .container-fluid {
+        padding: 0 20px !important;
+    }
+    .container-fluid .col-md-3.col-lg-2.sidebar-cat-section {
+        display: block;
+        width: 100%;
+    }
+    .container-fluid .col-md-9.col-lg-10.content-col {
+        display: block;
+        width: 100%;
+    }
+    .product-section h2.title {
+        font-size: 22px;
+    }
+
+}
+
+@media screen and (max-width: 767px){
+
+    /*=============================================
+        product-section responsive code here
+    ===============================================*/
+
+    .product-section .cat-filter-row .col-3 {
+        width: 100%;
+    }
+    .product-section .cat-filter-row .col-8 {
+        width: 100%;
+        padding: 0px 0px;
+    }
+    .product-section .sub_categories .uk-position-center-left-out {
+        right: 90%;
+    }
+    .product-section .sub_categories .uk-position-center-right-out {
+        left: 90% !important;
+    }
+    .product_price .sp_quantity{
+        width: 40% !important;
+    }
+
+    /*===============================================
+        uk future tap text slider responsive code
+    ================================================*/
+
+    .uk-position-center-right-out {
+        left: 95%;
+    }
+    .uk-position-center-left-out {
+        right: 95%;
+    }
+    .product-section .align-items-baseline .feature-product .slider-col .uk-position-small {
+        margin-left: 5px;
+    }
+    /*================================================
+        slider section responsive code here
+    =================================================*/
+    .slider-sction .carousel-caption .slider-left .btns a {
+        font-size: 12px !important;
+        width: 95px;
+        height: 40px;
+    }
+    .slider-sction .carousel-caption .slider-right img {
+        max-width: 140px;
+    }
+    .slider-sction .carousel-caption .slider-left .btns {
+        margin-top: 7px;
+    }
+
+    .slider-sction .carousel-caption .slider-left h3 {
+        font-size: 18px;
+        line-height: 36px;
+    }
+    .slider-sction .carousel-caption .slider-left h2 {
+        font-size: 26px;
+        line-height: 32px;
+    }
+    .slider-sction .uk-slideshow-items {
+        height: 300px;
+    }
+
+    /* delivery slider responsive code */
+
+    .delivery-slider-section .uk-slideshow-items {
+        height: 300px;
+    }
+    .slider-sction .carousel-caption .slider-left .btns {
+        margin-top: 9px;
+    }
+    .slider-sction .uk-slideshow .uk-position-center-right svg {
+        height: 25px;
+        width: 25px;
+    }
+    .slider-sction .uk-slideshow .uk-position-center-left svg {
+        height: 25px;
+        width: 25px;
+    }
+
+    /* loginpass responsive code */
+
+    .container-fluid .log-with-pass .container{
+        padding: 0px 30px;
+        /* max-width: 100%; */
+    }
+    
+    /* best selling products responsive code */
+
+    .best-selling-products .bst-product-content {
+        padding: 5px;
+    }
+
+
+    /*===============================================
+       contact page responsive code here
+    ================================================*/
+    .contact-section .contact-container h2 {
+        font-size: 20px !important;
+    }
+    .contact-section .form-control{
+        padding: 0px;
+    }
+    .contact-section .contact-container p {
+        text-align: justify;
+        font-size: 14px !important;
+        line-height: 20px !important;
+    }
+    .contact-section .contact-container .send-button {
+        font-size: 16px;
+        padding: 8px 0;
+    }
+    .contact-section .contact-container .form-label {
+        font-size: 16px;
+        line-height: 23px;
+    }
+    /* .contact-section .btn{
+        text-align: center !important;
+    } */
+
+    .uk-child-width-1-5\@m > * {
+        width: 30% !important;
+    }
+
+    /*================================================
+        about page responsive code 
+    =================================================*/
+
+    .about-section .highlight-section {
+        padding: 40px 20px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info {
+        border-right: 0 !important;
+    }
+    /* tream and considtion section heading  */
+    .tream-condition h2 {
+        font-size: 20px !important;
+        line-height: 29px !important;
+    }
+
+    /*=================================================
+        single product responsive code
+    =================================================*/
+
+    .single_product_section .single_product .product_details .nav-tabs li a {
+        font-size: 13px;
+    }
+    .single-pdct .pdct-info a {
+        font-size: 10px !important;
+        /* line-height: 15px !important; */
+    }
+    .single-item .pdct-title a {
+        font-size: 11px !important;
+        /* line-height: 15px; */
+        font-weight: 500 !important;
+    }
+    .single-pdct .pdct-info h3 {
+        font-size: 12px !important;
+        font-weight: 500 !important;
+    }
+    .single_product_section .single_product .product_content h1, .single_product_section .similar_products h2 {
+        font-size: 22px !important;
+    }
+    .single_product_section .single_product .product_price p {
+        font-size: 16px;
+    }
+    .product-section h2.title {
+        font-size: 20px;
+        line-height: 29px;
+    }
+    .single-pdct .pdct-info h4 {
+        font-size: 12px;
+        line-height: 20px;
+    }
+    .single_product_section .similar_products .single-item .pdct-price {
+        font-size: 12px;
+        line-height: 20px;
+    }
+    /* add to card responsive code */
+
+    .add_to_card .cart-btn span {
+        font-size: 12px !important;
+    }
+
+    /* footer responsive code */
+
+    .mobile-footer .container {
+        max-width: 100%;
+        padding: 0px 10px !important;
+    }
+    .mobile-footer {
+        padding: 15px 10px;
+    }
+    .footer-section .main-footer-row .title {
+        font-size: 12px !important;
+    }
+    .footer-section .container {
+        padding: 0px 20px;
+    }
+
+
+}
+@media screen and (max-width: 640px){
+
+    /*============================================
+        breadcrumb_wrap responsive code
+    =============================================*/
+
+    .breadcrumb_wrap .breadcrumb.wizard {
+        list-style: none;
+        font-size: 12px;
+    }
+    .breadcrumb_wrap .breadcrumb.wizard li:first-child a {
+        padding-left: 5px;
+    }
+    .breadcrumb_wrap .breadcrumb.wizard li a::before {
+        left: 95%;
+    }
+    .breadcrumb_wrap .breadcrumb.wizard li a::after {
+        left: 95%;
+    }
+    .breadcrumb_wrap .breadcrumb.wizard li a {
+        padding: 7px 6px 9px 32px;
+    }
+
+    /* product section sub category uk left right arrow slider responsive code  */
+
+    .product-section .sub_categories .uk-position-center-right-out {
+        display: none;
+    }
+    .product-section .sub_categories .uk-position-center-left-out {
+        display: none;
+    }
+
+    .single-pdct .pdct-info h3 {
+        font-size: 10px !important;
+    }
+
+}
+
+@media screen and (max-width: 575px){
+
+    /*============================================
+        uk future tap text slider responsive code
+    ===============================================*/
+
+    .uk-child-width-1-5\@m > * {
+        width: 37% !important;
+    }
+    .product-section .align-items-baseline .feature-product .slider-col .uk-position-small {
+        margin-left: -10px;
+    }
+    .product-section .feature-product .uk-position-center-right.uk-position-small.uk-icon.uk-slidenav-next.uk-slidenav {
+        right: -25px;
+    }
+    
+    /* ====================================================
+        header section suggestion box responsive code
+    =======================================================*/
+
+    .header-section .suggestion-box .search_item .details .product_sub_cat {
+        font-size: 14px;
+        color: #959595;
+    }
+    .header-section .suggestion-box .search_item .details p {
+        font-size: 10px;
+        line-height: 1px;
+    }
+    .header-section .suggestion-box .search_item .details .product_title {
+        font-size: 12px;
+    }
+    .header-section .search-filter select {
+        font-size: 12px;
+    }
+    .header-section .search-filter input {
+        font-size: 12px;
+    }
+    .header-section .right-col .login-btn {
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .header-section .right-col select {
+        font-size: 13px !important;
+        font-weight: 500 !important;
+    }
+    .header-section .right-col .item {
+        width: inherit;
+        padding: 7px !important;
+    }
+
+    /* ===============================================
+        product,about section responsive code 
+    ================================================*/
+
+    .product-section .sub_categories .sub_cat_item .card {
+        padding: 8px !important;
+        /* box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px; */
+    }
+    .about-section .contact-section .main-contact-section .information {
+        margin: inherit !important;
+    }
+
+
+    /*===========================================
+        slider-section responsive code here
+    ===============================================*/
+
+    /* .slider-sction .carousel-caption .slider-left .btns a {
+        font-size: 12px;
+        width: 100px;
+    }
+    .slider-sction .carousel-caption .slider-right img {
+        max-width: 140px;
+    }
+    .slider-sction .carousel-caption .slider-left h2 {
+        font-size: 29px;
+        line-height: 30px;
+    }
+    .slider-sction .carousel-caption .slider-left .btns {
+        margin-top: 7px;
+    } */
+    .delivery-slider-section .uk-slideshow-items {
+        height: 200px;
+    }
+    
+
+    /*=======================================================
+        single product section responsive code
+    =========================================================*/
+
+    /* .single_product_section .single_product .product_details .nav-tabs li {
+        margin: 0px !important;
+        display: block;
+        width: 100% !important;
+        text-align: inherit;
+    } */
+    /* .product_details .nav-tabs{
+        display: flex;
+        text-align: left;
+    }
+    .single_product_section .single_product .product_details .tab-pane {
+        padding: 0px !important;
+    } */
+     
+    .single_product_section .single_product .product_details .nav-tabs li a {
+        padding: 10px 5px !important;
+    }
+    .header-section .search-filter .sub-btn i {
+        font-size: 14px !important;
+    }
+    /* .single_product_section .single_product .product_details #description{
+        padding: 10px;
+        background: var( --commoninner_bg);
+    } */
+
+
+    /* =============================================
+        support_wrap responsive code
+    ================================================*/
+
+    .support_wrap .message_box {
+        right: 0px !important;
+    }
+    .support_wrap .message_box {
+       width: 334px!important;
+    }
+    
+    /*============================================
+        categories-section responsive code here
+    ===============================================*/
+
+    .categories_menu .single-cat {
+        padding: 8px !important;
+    }
+    .sub_cat_item.uk-active .sub_cat_link .card.active h3{
+        font-size: 9px !important;
+    }
+    
+    /* =========================================
+        add to card responsive code
+    ============================================ */
+
+    .add_to_card .cart-btn {
+        padding: 8px 5px !important;
+    }
+    .pdct-info .add_to_card .cart-btn{
+        padding: 10px 5px !important;
+    }
+    .pdct-info .add_to_card i{
+        font-size: 12px !important;
+    }
+    .add_to_card .cart-btn i{
+        font-size: 12px !important;
+    }
+    
+
+    /* ============================================
+        about-section responsive code 
+    ================================================*/
+
+    .about-section .about-container .content h5 {
+        display: block !important;
+        text-align: center;
+    }
+    .about-section .contact-section .main-contact-section {
+        padding: 5px 0px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info {
+        padding-top: 0px !important;
+    }
+
+    /*============================================
+        footer responsive code here
+    =============================================*/
+    
+    .footer-section .main-footer-row .footer-logo img {
+        width: 195px;
+    }
+    .footer-section .delivery-row{
+        padding: 0px;
+    }
+    .footer-section .newsletter-main-row {
+        display: block;
+        max-width: 100%;
+    }
+    .main-footer-row .footer-followus{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+    .footer-section .socket-row {
+        padding-bottom: 100px !important;
+    }
+    .mobile-footer .row .col a{
+        padding: 15px 0px;
+    }
+
+}
+
+@media screen and (max-width: 480px){
+
+    /* ===========================================
+        uk future tap text slider responsive code
+    ===============================================*/
+
+    .uk-child-width-1-5\@m > * {
+        width: 45% !important;
+    }
+
+    /*============================================
+        single prduct section responsive code
+    ============================================= */
+    .product-section .sub_categories .sub_cat_item .card {
+        height: 70px;
+        width: 70px;
+        padding: 10px;
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    }
+    .single-pdct .pdct-info .company-name, .single-pdct .pdct-info .generic-name {
+        font-size: 8px !important;
+    }
+    .single-item p, .single-item p a {
+        font-size: 8px !important;
+    }
+    .single-item .pdct-title a {
+        font-size: 10px !important;
+    }
+
+    /* ===========================================
+        footer-section responsive code here
+    ===============================================*/
+    .footer-section .main-footer-row .title {
+        font-size: 14px;
+    }
+    .footer-section .delivery-row h4 {
+        font-size: 10px;
+    }
+    .socket-row p {
+        font-size: 12px !important;
+    }
+
+    /* support_wrap responsive code */
+
+    .support_wrap {
+        bottom: 121px;
+    }
+   
+   /* uk future item tap slider responsive code */
+
+    .uk-child-width-1-5\@m > * {
+        width: 50% !important;
+    }
+    
+    /* breadcrumb_wrap responsive code */
+
+    .breadcrumb_wrap .favorite {
+        right: -7px !important;
+    }
+}
+
+/*========================================
+    css reponsive code end
+==========================================*/

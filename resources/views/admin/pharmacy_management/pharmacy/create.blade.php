@@ -1,7 +1,7 @@
 @extends('admin.layouts.master', ['pageSlug' => 'pharmacy'])
-
+@section('title', 'Create Pharmacy')
 @section('content')
-    <div class="row px-3 pt-3">
+    <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
@@ -18,37 +18,39 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('pm.pharmacy.pharmacy_create') }}">
-                        @csrf
+                <form method="POST" action="{{ route('pm.pharmacy.pharmacy_create') }}">
+                    @csrf
+                    <div class="card-body">
                         <div class="form-group">
 
-                            <label>Name</label>
+                            <label>{{ __('Name') }}</label>
                             <input type="text" name="name" class="form-control" placeholder="Enter name"
                                 value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>Email</label>
+                            <label>{{ __('Email') }}</label>
                             <input type="email" name="email" class="form-control" placeholder="Enter email"
                                 value="{{ old('email') }}">
                             @include('alerts.feedback', ['field' => 'email'])
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
+                            <label>{{ __('Password') }}</label>
                             <input type="password" name="password" class="form-control" placeholder="Enter new password">
                             @include('alerts.feedback', ['field' => 'password'])
                         </div>
                         <div class="form-group">
-                            <label>Confirm Password</label>
+                            <label>{{ __('Confirm Password') }}</label>
                             <input type="password" name="password_confirmation" class="form-control"
                                 placeholder="Confirm password">
                         </div>
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="card-footer text-end">
+                        <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                    </div>
+                </form>
             </div>
         </div>
-        @include('admin.partials.documentation',['document'=>$document])
+        @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection

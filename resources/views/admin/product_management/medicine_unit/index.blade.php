@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine_unit'])
-
+@section('title', 'Medicine Unit List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -24,9 +24,11 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
+                                <th>{{ __('Image') }}</th>
                                 <th>{{ __('Quantity') }}</th>
+                                <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -36,14 +38,17 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $medicine_unit->name }} </td>
+                                    <td> <img height="60px" width="60px" style="object-fit: cover"
+                                            src="{{ storage_url($medicine_unit->image) }}" alt=""> </td>
                                     <td> {{ $medicine_unit->quantity }} </td>
+                                    <td> {{ $medicine_unit->type ? $medicine_unit->type : '-' }} </td>
                                     <td>
                                         <span
                                             class="{{ $medicine_unit->getStatusBadgeClass() }}">{{ $medicine_unit->getStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($medicine_unit->created_at) }}</td>
 
-                                    <td> {{ $medicine_unit->created_user->name ?? 'system' }} </td>
+                                    <td> {{ c_user_name($medicine_unit->created_user) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
@@ -118,11 +123,18 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
+                        let status = data.status == 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status == 1 ? 'badge-success' :
                             'badge-warning';
                         var result = `
                                 <table class="table table-striped">
+                                    <tr>
+                                        <th class="text-nowrap">Image</th>
+                                        <th>:</th>
+                                        <td> 
+                                            <img height='100px' width='100px' class='border p-2' src="${data.image}">   
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
@@ -134,12 +146,17 @@
                                         <td>${data.quantity}</td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">Type</th>
+                                        <th>:</th>
+                                        <td>${data.type}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
                                         <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created At</th>
+                                        <th class="text-nowrap">Created Date</th>
                                         <th>:</th>
                                         <td>${data.creating_time}</td>
                                     </tr>
@@ -149,7 +166,7 @@
                                         <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Updated At</th>
+                                        <th class="text-nowrap">Updated Date</th>
                                         <th>:</th>
                                         <td>${data.updating_time}</td>
                                     </tr>

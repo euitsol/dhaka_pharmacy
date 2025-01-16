@@ -12,6 +12,8 @@ class DistrictManager extends AuthenticateBaseModel
         'name',
         'phone',
         'password',
+        'oa_id',
+        'kyc_status',
     ];
     protected $hidden = [
         'password',
@@ -25,6 +27,10 @@ class DistrictManager extends AuthenticateBaseModel
     public function lams()
     {
         return $this->hasMany(LocalAreaManager::class, 'dm_id');
+    }
+    public function operation_area()
+    {
+        return $this->belongsTo(OperationArea::class, 'oa_id');
     }
 
     

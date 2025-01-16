@@ -20,7 +20,7 @@
             //Parameters
         @endphp
         @if ($check)
-            <a class="dropdown-item @if(isset($menuItem['className'])) {{$menuItem['className']}} @endif @if(isset($menuItem['delete']) && $menuItem['delete'] == true) action-delete @endif" @if(isset($menuItem['delete']) && $menuItem['delete'] == true) onclick="return confirm('Are you sure?')" @endif href="{{$route}}" @if(isset($menuItem['data-id'])) data-id="{{$menuItem['data-id']}}" @endif>{{ _($menuItem['label']) }}</a>
+            <a target="@if(isset($menuItem['target'])){{$menuItem['target']}}@endif" class="dropdown-item @if(isset($menuItem['className'])) {{$menuItem['className']}} @endif @if(isset($menuItem['delete']) && $menuItem['delete'] == true) action-delete @endif" @if(isset($menuItem['delete']) && $menuItem['delete'] == true) onclick="return confirm('Are you sure?')" @endif href="{{$route}}" @if(isset($menuItem['data-id'])) data-id="{{$menuItem['data-id']}}" @endif>{{ _($menuItem['label']) }}</a>
         @endif
 
         @endforeach

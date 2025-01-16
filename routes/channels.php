@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\Admin;
+use App\Models\Order;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,17 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+Broadcast::channel('order-status-changed.{id}', function ($user, $id) {
+    return  $user->id === (int) $id;
+}, ['guards' => ['admin']]);
+
+Broadcast::channel('user-notification.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
+}, ['guards' => ['web']]);
+
+Broadcast::channel('ticket.{ticket_id}', function ($user, $ticket_id) {
+    if (auth()->guard('web')->check()) {
+    }
+    // return (int) $user->id === (int) $id;
+    return true;
 });

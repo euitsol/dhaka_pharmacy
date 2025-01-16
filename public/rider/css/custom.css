@@ -1,0 +1,109 @@
+:root {
+    --primary-color: #13547a;
+    --secondary-color: #80d0c7;
+    --primary-bg-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+    --secondary-bg-image: linear-gradient(15deg, #80d0c7 0%, #13547a 100%);
+  }
+
+  .sidebar {
+    background-color:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+
+.btn:not([data-action]):hover{
+    background-color:var(--secondary-color) !important;
+    background-image:var(--secondary-bg-image) !important;
+}
+
+.white-content .footer .copyright a{
+    color:var(--primary-color) !important;
+}
+
+.white-content .footer .copyright a:hover{
+    color:var(--secondary-color) !important;
+}
+
+.main-panel {
+    border-top: 2px solid var(--primary-color) !important;
+    /* background-color:var(--primary-color) !important; */
+    /* background-image:var(--primary-bg-image) !important; */
+}
+
+.btn-primary {
+    background:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color) !important;
+}
+
+.form-group input[type=file] {
+    height: auto !important;
+}
+
+.form-check input[type="checkbox"]:checked+.form-check-sign::before, .form-check input[type="checkbox"]:checked+.form-check-sign::before {
+    background-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:focus, .btn-primary.active:hover {
+    background:var(--primary-color) !important;
+    background-image:var(--primary-bg-image) !important;
+}
+
+/*=============================================================
+                Site Settings CSS
+ =============================================================*/
+
+ .map-modal #map{
+    height: 300px;
+ }
+
+ #map ol li, .map_direction ol li{
+    color: #fff !important;
+ }
+
+ .mapboxgl-ctrl-top-left .mapboxgl-ctrl {
+    max-width: 15rem;
+ }
+
+ .mapboxgl-ctrl-top-left .directions-control .mapbox-directions-origin,
+ .mapboxgl-ctrl-top-left .directions-control .mapbox-directions-destination {
+     display: none;
+ }
+
+ .mapboxgl-ctrl-top-left .mapbox-directions-steps .mapbox-directions-step-maneuver,
+ .mapbox-directions-route-summary h1 {
+     color: #fff;
+ }
+
+ .mapbox-directions-steps ol li:first-child {
+    display: block;
+    color: #fff !important;
+  }
+
+  .mapbox-directions-steps ol li:not(:first-child) {
+    display: none;
+    color: #fff !important;
+  }
+
+  .mapbox-directions-instructions{
+    max-height: 5rem;
+    background-color: #0b215f94;
+    overflow: auto;
+  }
+
+  .mapbox-directions-component.mapbox-directions-route-summary{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0px;
+    background-color: #25459d8c;
+  }
+
+  .mapbox-directions-component.mapbox-directions-route-summary h1, .mapbox-directions-component.mapbox-directions-route-summary span{
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 0px;
+    margin-right: .5rem;
+  }

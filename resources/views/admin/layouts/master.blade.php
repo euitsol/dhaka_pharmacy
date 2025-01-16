@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <title> @yield('title', 'Dhakha Pharmacy') - Dhakha Pharmacy </title>
+    <title> @yield('title', 'Admin Dashboard') - Dhaka Pharmacy </title>
 
     <!-- Favicon -->
-    <link rel="icon" href="{{storage_url(settings('site_favicon'))}}">
+    <link rel="icon" href="{{ storage_url(settings('site_favicon')) }}">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Favicon-->
     <link rel="icon" href="" type="image/png">
     <!-- CSRF Token -->
@@ -19,12 +20,24 @@
     <link href="{{ asset('white') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
     <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
-    <link href="{{ asset('backend/css/custom.css') }}" rel="stylesheet">
-    
+    <!--======== toastr css ========-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css_link')
     @stack('css')
-
+    <script>
+        const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
+        const map_center = `[{{ config('mapbox.center_location_lng') }}, {{ config('mapbox.center_location_lat') }}]`;
+        const pharmacy_radious = `{{ config('mapbox.pharmacy_radious') }}`;
+        const mapbox_style_id = `{{ config('mapbox.pharmacy_radious') }}`;
+        const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
+        const admin_id = `{{ admin() ? admin()->id : false }}`;
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
+    </script>
 </head>
 
 <body class="white-content dark {{ $class ?? '' }}">
@@ -33,14 +46,14 @@
             @include('admin.partials.navbars.sidebar')
             <div class="main-panel">
                 @include('admin.partials.navbars.navbar')
-                    <div class="content">
-                        @yield('content')
-                    </div>
+                <div class="content">
+                    @yield('content')
+                </div>
                 @include('admin.partials.footer')
             </div>
         @endauth
     </div>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
 
@@ -52,10 +65,16 @@
     <script src="{{ asset('white') }}/js/white-dashboard.min.js?v=1.0.0"></script>
     <script src="{{ asset('white') }}/js/theme.js"></script>
     <script src="{{ asset('white') }}/js/color_change.js"></script>
+    <!--======== toastr script ========-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @stack('js_link')
-    <script src="{{ asset('backend/js/custom.js') }}"></script>
+    <script src="{{ asset('admin/js/custom.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-   
+    <script src="{{ asset('admin/js/realtime-notification.js') }}"></script>
+    <script src="{{ asset('ckEditor5/main.js') }}"></script>
+
     @stack('js')
 
 

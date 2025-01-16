@@ -19,6 +19,15 @@ class DistrictManagerMiddleware
         if(!Auth::guard('dm')->check()){
             return redirect()->route('district_manager.login');
         }
+
+        if((Auth::guard('dm')->check()) && (Auth::guard('dm')->user()->status == 0)){
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            flash()->addError('Your account is not active. Please contact support.');
+            return redirect()->route('district_manager.login');
+
+        }
         return $next($request);
     }
 }

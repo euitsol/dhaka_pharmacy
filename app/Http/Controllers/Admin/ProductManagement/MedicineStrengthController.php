@@ -8,13 +8,13 @@ use App\Models\Documentation;
 use App\Models\MedicineStrength;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Traits\DetailsCommonDataTrait;
 
 
 class MedicineStrengthController extends Controller
 {
-    //
+    use DetailsCommonDataTrait;
 
     public function __construct()
     {
@@ -23,21 +23,18 @@ class MedicineStrengthController extends Controller
 
     public function index(): View
     {
-        $data['medicine_strengths'] = MedicineStrength::with(['created_user', 'updated_user'])->orderBy('quantity')->get();
+        $data['medicine_strengths'] = MedicineStrength::with('created_user')->orderBy('quantity')->get();
         return view('admin.product_management.medicine_strength.index', $data);
     }
     public function details($id): JsonResponse
     {
-        $data = MedicineStrength::findOrFail($id);
-        $data->creating_time = timeFormate($data->created_at);
-        $data->updating_time = ($data->updated_at != $data->created_at) ? (timeFormate($data->updated_at)) : 'N/A';
-        $data->created_by = $data->created_by ? $data->created_user->name : 'System';
-        $data->updated_by = $data->updated_by ? $data->updated_user->name : 'N/A';
+        $data = MedicineStrength::with(['created_user', 'updated_user'])->findOrFail($id);
+        $this->simpleColumnData($data);
         return response()->json($data);
     }
     public function create(): View
     {
-        $data['document'] = Documentation::where('module_key', 'medicine_strength')->first();
+        $data['document'] = Documentation::where([['module_key', 'medicine_strength'], ['type', 'create']])->first();
         return view('admin.product_management.medicine_strength.create', $data);
     }
     public function store(MedicineStrengthRequest $req): RedirectResponse
@@ -53,7 +50,7 @@ class MedicineStrengthController extends Controller
     public function edit($id): View
     {
         $data['medicine_strength'] = MedicineStrength::findOrFail($id);
-        $data['document'] = Documentation::where('module_key', 'medicine_strength')->first();
+        $data['document'] = Documentation::where([['module_key', 'medicine_strength'], ['type', 'update']])->first();
         return view('admin.product_management.medicine_strength.edit', $data);
     }
     public function update(MedicineStrengthRequest $req, $id): RedirectResponse

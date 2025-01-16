@@ -1,18 +1,28 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine'])
-
+@section('title', 'Edit Product')
 @section('content')
-    <div class="row px-3 pt-3">
+    {{-- @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif --}}
+    <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
-            <form method="POST" action="{{ route('product.medicine.medicine_edit',$medicine->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('product.medicine.medicine_edit', $medicine->id) }}"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
-                {{-- Medicine Details Card  --}}
+                {{-- Product Details Card  --}}
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-8">
-                                <h4 class="card-title">{{ __('Medicine Details') }}</h4>
+                                <h4 class="card-title">{{ __('Product Details') }}</h4>
                             </div>
                             <div class="col-4 text-right">
                                 @include('admin.partials.button', [
@@ -28,32 +38,55 @@
                             <div class="form-group col-md-6">
 
                                 <label>{{ __('Name') }}</label>
-                                <input type="text" name="name"
+                                <input type="text" name="name" id="title"
                                     class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                     placeholder="Enter name" value="{{ $medicine->name }}">
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
                             <div class="form-group col-md-6">
+                                <label>{{ _('Slug') }}</label>
+                                <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}"
+                                    id="slug" name="slug"
+                                    placeholder="{{ _('Enter Slug (must be use - on white speace)') }}"
+                                    value="{{ $medicine->slug }}">
+                                @include('alerts.feedback', ['field' => 'slug'])
+                            </div>
+
+                            <div class="form-group col-md-6">
                                 <label>{{ __('Product Category') }}</label>
                                 <select name="pro_cat_id"
-                                    class="form-control {{ $errors->has('pro_cat_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select product category') }}</option>
+                                    class="form-control {{ $errors->has('pro_cat_id') ? ' is-invalid' : '' }} pro_cat">
+                                    <option selected hidden value=" ">{{ __('Select product category') }}</option>
                                     @foreach ($pro_cats as $cat)
                                         <option value="{{ $cat->id }}"
-                                            {{ ($cat->id == $medicine->pro_cat_id) ? 'selected' : '' }}>{{ $cat->name }}
+                                            {{ $cat->id == $medicine->pro_cat_id ? 'selected' : '' }}>
+                                            {{ $cat->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @include('alerts.feedback', ['field' => 'generic_id'])
+                                @include('alerts.feedback', ['field' => 'pro_cat_id'])
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>{{ __('Product Sub Category') }}</label>
+                                <select name="pro_sub_cat_id"
+                                    class="form-control {{ $errors->has('pro_sub_cat_id') ? ' is-invalid' : '' }} pro_sub_cat">
+                                    @foreach ($pro_sub_cats as $cat)
+                                        <option value="{{ $cat->id }}"
+                                            {{ $cat->id == $medicine->pro_sub_cat_id ? 'selected' : '' }}>
+                                            {{ $cat->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @include('alerts.feedback', ['field' => 'pro_sub_cat_id'])
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __('Generic Name') }}</label>
                                 <select name="generic_id"
                                     class="form-control {{ $errors->has('generic_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select generic name') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select generic name') }}</option>
                                     @foreach ($generics as $generic)
                                         <option value="{{ $generic->id }}"
-                                            {{ ($generic->id == $medicine->generic_id) ? 'selected' : '' }}>
+                                            {{ $generic->id == $medicine->generic_id ? 'selected' : '' }}>
                                             {{ $generic->name }}</option>
                                     @endforeach
                                 </select>
@@ -63,20 +96,20 @@
                                 <label>{{ __('Company Name') }}</label>
                                 <select name="company_id"
                                     class="form-control {{ $errors->has('company_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select company name') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select company name') }}</option>
                                     @foreach ($companies as $company)
                                         <option value="{{ $company->id }}"
-                                            {{ ($company->id == $medicine->company_id) ? 'selected' : '' }}>
+                                            {{ $company->id == $medicine->company_id ? 'selected' : '' }}>
                                             {{ $company->name }}</option>
                                     @endforeach
                                 </select>
                                 @include('alerts.feedback', ['field' => 'company_id'])
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>{{ __('Medicine Category') }}</label>
+                            {{-- <div class="form-group col-md-6">
+                                <label>{{ __('Medicine Dosage') }}</label>
                                 <select name="medicine_cat_id"
                                     class="form-control {{ $errors->has('medicine_cat_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select medicine category') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select medicine dosage') }}</option>
                                     @foreach ($medicine_cats as $medicine_cat)
                                         <option value="{{ $medicine_cat->id }}"
                                             {{ ($medicine_cat->id == $medicine->medicine_cat_id) ? 'selected' : '' }}>
@@ -84,29 +117,32 @@
                                     @endforeach
                                 </select>
                                 @include('alerts.feedback', ['field' => 'medicine_cat_id'])
-                            </div>
+                            </div> --}}
                             <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Strength') }}</label>
                                 <select name="strength_id"
                                     class="form-control {{ $errors->has('strength_id') ? ' is-invalid' : '' }}">
-                                    <option selected hidden>{{ __('Select medicine strength') }}</option>
+                                    <option selected hidden value=" ">{{ __('Select medicine strength') }}</option>
                                     @foreach ($strengths as $strength)
                                         <option value="{{ $strength->id }}"
-                                            {{ ($strength->id == $medicine->strength_id) ? 'selected' : '' }}>
+                                            {{ $strength->id == $medicine->strength_id ? 'selected' : '' }}>
                                             <small>{{ $strength->quantity }} </small> {{ $strength->unit }}
                                         </option>
                                     @endforeach
                                 </select>
                                 @include('alerts.feedback', ['field' => 'strength_id'])
                             </div>
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Unit') }}</label>
                                 <select name="unit[]" class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }}"
                                     multiple="multiple">
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}"
-                                            {{  (in_array($unit->id, (array)json_decode($medicine->unit, true)))  ? 'selected' : '' }}>{{ $unit->name }}
-                                            <small>({{ $unit->quantity }})</small></option>
+                                            {{ in_array($unit->id, $medicine->units->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                            {{ $unit->name }}
+                                            <small>({{ $unit->quantity }})</small>
+                                            <small>{{ $unit->type ? '-' . $unit->type : '' }}</small>
+                                        </option>
                                     @endforeach
                                 </select>
                                 @include('alerts.feedback', ['field' => 'unit'])
@@ -114,7 +150,8 @@
                             <div class="form-group col-md-12">
 
                                 <label>{{ __('Description') }}</label>
-                                <textarea name="description" placeholder="Enter description" class="form-control {{ $errors->has('description') ? ' is-invalid' : '' }}">{{ $medicine->description }}</textarea>
+                                <textarea name="description" placeholder="Enter description"
+                                    class="form-control {{ $errors->has('description') ? ' is-invalid' : '' }}">{{ $medicine->description }}</textarea>
                                 @include('alerts.feedback', ['field' => 'description'])
                             </div>
                         </div>
@@ -123,9 +160,9 @@
 
 
 
-                {{-- Medicine Requirements  --}}
+                {{-- Product Requirements  --}}
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header">pan
                         <div class="row">
                             <div class="col-12">
                                 <h4 class="card-title">{{ __('Medicine Requirements') }}</h4>
@@ -137,8 +174,11 @@
                             <div class="col-md-6">
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label mr-2">
-                                      <input class="form-check-input prescription_required" type="checkbox" name="prescription_required" value="1" {{ ($medicine->prescription_required == 1) ? 'checked' : '' }}>
-                                      <span class="form-check-sign"><strong>{{__('Prescription Required')}}</strong></span>
+                                        <input class="form-check-input prescription_required" type="checkbox"
+                                            name="prescription_required" value="1"
+                                            {{ $medicine->prescription_required == 1 ? 'checked' : '' }}>
+                                        <span
+                                            class="form-check-sign"><strong>{{ __('Prescription Required') }}</strong></span>
                                     </label>
                                 </div>
                             </div>
@@ -153,8 +193,9 @@
                             <div class="col-md-12">
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label mr-2">
-                                      <input class="form-check-input" type="checkbox" name="kyc_required" value="1" {{ ($medicine->kyc_required == 1) ? 'checked' : '' }}>
-                                      <span class="form-check-sign"><strong>{{__('KYC Required')}}</strong></span>
+                                        <input class="form-check-input" type="checkbox" name="kyc_required" value="1"
+                                            {{ $medicine->kyc_required == 1 ? 'checked' : '' }}>
+                                        <span class="form-check-sign"><strong>{{ __('KYC Required') }}</strong></span>
                                     </label>
                                 </div>
                             </div>
@@ -162,35 +203,85 @@
                     </div>
                 </div>
 
-                {{-- Medicine Pricing Card  --}}
-                <div class="card">
+                {{-- Product Pricing Card  --}}
+                <div class="card medicine_price_card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-12">
-                                <h4 class="card-title">{{ __('Medicine Pricing') }}</h4>
+                            <div class="col-8">
+                                <h4 class="card-title">{{ __('Product Pricing') }}</h4>
                             </div>
+                            @if ($discounts->isNotEmpty())
+                                <div class="col-4 text-end">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        title="Discount History" data-target="#discount_modal">
+                                        <i class="fa-solid fa-info"></i>
+                                    </button>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12">
-
-                                <label>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</small></label>
-                                <input type="text" name="price"
-                                    class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
-                                    placeholder="Enter price" value="{{ $medicine->price }}">
+                                <label>{{ __('Maximum Retail Price') }} <small>{{ __('(MRP)') }}</small></label>
+                                <div class="input-group" role="group">
+                                    <input type="text" name="price"
+                                        class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
+                                        placeholder="Enter price"
+                                        value="{{ number_format(proDisPrice($medicine->price, $medicine->discounts), 2) }}">
+                                    <span class="bdt_button">BDT</span>
+                                </div>
                                 @include('alerts.feedback', ['field' => 'price'])
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>{{ __('Discount') }}</label>
+                                <div class="form-check form-check-radio">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                            id="exampleRadios2" value="0"
+                                            @if (empty(calculateProductDiscount($medicine, false))) checked @endif>
+                                        {{ __('NO') }}
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                    <label class="form-check-label ms-5">
+                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                            id="exampleRadios1" value="1"
+                                            @if (!empty(calculateProductDiscount($medicine, false))) checked @endif>
+                                        {{ __('YES') }}
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4" style="display: none;">
+                                <label>{{ __('Discount Percentage') }}</label>
+                                <div class="input-group" role="group">
+                                    <input type="text" id="discount_percentage" name="discount_percentage"
+                                        class="form-control {{ $errors->has('discount_percentage') ? ' is-invalid' : '' }}"
+                                        placeholder="Enter discount percentage"
+                                        value="{{ isset($discount->discount_percentage) ? formatPercentageNumber($discount->discount_percentage) : '' }}">
+                                    <span class="bdt_button">{{ __('%') }}</span>
+                                </div>
+                                @include('alerts.feedback', ['field' => 'discount_percentage'])
+                            </div>
+                            <div class="form-group col-md-4" style="display: none;">
+                                <label>{{ __('Discount Amount') }}</label>
+                                <input type="text" id="discount_amount" name="discount_amount"
+                                    class="form-control {{ $errors->has('discount_amount') ? ' is-invalid' : '' }}"
+                                    placeholder="Enter discount percentage"
+                                    value="{{ optional($discount)->discount_amount }}">
+                                @include('alerts.feedback', ['field' => 'discount_amount'])
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Medicine Image  --}}
+                {{-- Product Image  --}}
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="card-title">{{ __('Medicine Image') }}</h4>
+                                <h4 class="card-title">{{ __('Product Image') }}</h4>
                             </div>
                         </div>
                     </div>
@@ -208,31 +299,212 @@
                 </div>
 
 
+                {{-- Product Precaution  --}}
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="card-title">{{ __('Product Precaution') }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label>{{ __('Precaution') }}</label>
+                                <textarea name="precaution" placeholder="Enter product precaution"
+                                    class="form-control {{ $errors->has('precaution') ? ' is-invalid' : '' }}">{{ $precaution ? $precaution->description : old('precaution') }}</textarea>
+                                @include('alerts.feedback', ['field' => 'precaution'])
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>{{ __('Status') }}</label>
+                                <div class="form-check form-check-radio">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="precaution_status"
+                                            id="precaution1" value="1"
+                                            {{ ($precaution && $precaution->status == 1) || !$precaution ? 'checked' : '' }}>
+                                        {{ __('Active') }}
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                    <label class="form-check-label ms-5">
+                                        <input class="form-check-input" type="radio" name="precaution_status"
+                                            id="precaution2" value="0"
+                                            {{ $precaution && $precaution->status == 0 ? 'checked' : '' }}>
+                                        {{ __('Deactive') }}
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+
+                <button type="submit" class="btn btn-primary float-end">{{ __('Update') }}</button>
             </form>
         </div>
+
+
+        {{-- Old Discount Modal  --}}
+        <div class="modal discount_modal fade" id="discount_modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Discount Histories') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body modal_data">
+                        <table class="table table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('SL') }}</th>
+                                    <th>{{ __('Discount Amount') }}</th>
+                                    <th>{{ __('Discount Percentage') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th>{{ __('Created date') }}</th>
+                                    <th>{{ __('Created by') }}</th>
+                                    <th>{{ __('Updated date') }}</th>
+                                    <th>{{ __('Updated by') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($discounts as $discount)
+                                    <tr>
+                                        <td> {{ $loop->iteration }} </td>
+                                        <td> {{ $discount->discount_amount }} </td>
+                                        <td> {{ $discount->discount_percentage }} </td>
+                                        <td>
+                                            <span
+                                                class="{{ $discount->getStatusBadgeClass() }}">{{ $discount->getStatus() }}</span>
+                                        </td>
+                                        <td>{{ timeFormate($discount->created_at) }}</td>
+                                        <td> {{ c_user_name($discount->created_user) }} </td>
+                                        <td>{{ timeFormate($discount->updated_at) }}</td>
+                                        <td> {{ c_user_name($discount->updated_user) }} </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5], 'length' => 10])
 @push('js')
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
+            $('.pro_cat').on('change', function() {
+                let pro_sub_cat = $('.pro_sub_cat');
+                let id = $(this).val();
+                let url = ("{{ route('product.medicine.sub_cat.medicine_list', ['id']) }}");
+                let _url = url.replace('id', id);
+
+                pro_sub_cat.prop('disabled', false);
+
+                $.ajax({
+                    url: _url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var result = '';
+                        data.pro_sub_cats.forEach(function(cat) {
+                            result += `<option value="${cat.id}">${cat.name}</option>`;
+                        });
+                        pro_sub_cat.html(result);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching local area manager data:', error);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
             var checkbox = $('.prescription_required');
             var max_quantity = $('.max_quantity');
 
             if (checkbox.is(':checked')) {
-                max_quantity.prop('disabled',false);
-            }else{
-                max_quantity.prop('disabled',true);
+                max_quantity.prop('disabled', false);
+            } else {
+                max_quantity.prop('disabled', true);
             }
             checkbox.on('change', function() {
                 if (checkbox.is(':checked')) {
-                    max_quantity.prop('disabled',false);
+                    max_quantity.prop('disabled', false);
                 } else {
-                    max_quantity.prop('disabled',true);
+                    max_quantity.prop('disabled', true);
                 }
             });
         })
+    </script>
+    <script>
+        function generateSlug(str) {
+            return str
+                .toLowerCase()
+                .replace(/\s+/g, "-")
+                .replace(/[^\w\u0980-\u09FF-]+/g, "") // Allow Bangla characters (\u0980-\u09FF)
+                .replace(/--+/g, "-")
+                .replace(/^-+|-+$/g, "");
+        }
+        $(document).ready(function() {
+            $("#title").on("keyup", function() {
+                const titleValue = $(this).val().trim();
+                const slugValue = generateSlug(titleValue);
+                $("#slug").val(slugValue);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Initially hide discount fields
+            $('#discount_percentage, #discount_amount').closest('.form-group').hide();
+
+            // Function to toggle discount fields visibility
+            function toggleDiscountFields() {
+                var discountValue = $('input[name="exampleRadios"]:checked').val();
+                if (discountValue == 1) {
+                    $('#discount_percentage, #discount_amount').closest('.form-group').show();
+                } else {
+                    $('#discount_percentage, #discount_amount').closest('.form-group').hide();
+                    $('#discount_percentage, #discount_amount').val('');
+                }
+            }
+
+            function toggleFieldDisabled() {
+                var discountPercentage = $('#discount_percentage').val();
+                var discountAmount = $('#discount_amount').val();
+
+                if (discountPercentage !== '' && discountPercentage !== null) {
+                    $('#discount_amount').prop('disabled', true);
+                } else if (discountAmount !== '' && discountAmount !== null) {
+                    $('#discount_percentage').prop('disabled', true);
+                } else {
+                    $('#discount_amount').prop('disabled', false);
+                    $('#discount_percentage').prop('disabled', false);
+                }
+            }
+            // Call the function on page load
+            toggleDiscountFields();
+            toggleFieldDisabled();
+
+            // Call the function whenever radio button is changed
+            $('input[name="exampleRadios"]').change(function() {
+                toggleDiscountFields();
+                toggleFieldDisabled();
+            });
+            $('#discount_percentage, #discount_amount').on('input, keyup', function() {
+                toggleFieldDisabled();
+            });
+        });
     </script>
 @endpush

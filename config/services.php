@@ -31,4 +31,28 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id'     => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect'      => env('GOOGLE_REDIRECT_URL')
+    ],
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_REDIRECT_URL'),
+    ],
+
+    'facebook' => [
+        'client_id'     => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect'      => env('FACEBOOK_REDIRECT_URL')
+    ],
+    'sms_api' => [
+        'url'     => env('SMS_API_URL', 'https://portal.adnsms.com/api/v1/secure/send-sms'),
+        'key' => env('SMS_API_KEY', 'KEY-mrvshgmw3ungyoqxadguq5hil601g4j4'),
+        'secret'      => env('SMS_API_SECRET', 'XYhKX@yQ0@jmy9Wg'),
+        'sender_id'      => env('SMS_API_SENDER_ID'),
+        'status'      => env('SMS_API_STATUS', '200'),
+    ],
+
 ];

@@ -24,11 +24,12 @@ pharmacy_list,admin,Pharmacy
 pharmacy_create,admin,Pharmacy
 pharmacy_edit,admin,Pharmacy
 pharmacy_delete,admin,Pharmacy
-pharmacy_kyc_settings,admin,"User KYC Settings"
-pharmacy_kyc_list,admin,"Pharmacy KYC"
-pharmacy_kyc_create,admin,"Pharmacy KYC"
-pharmacy_kyc_edit,admin,"Pharmacy KYC"
-pharmacy_kyc_delete,admin,"Pharmacy KYC"
+p_kyc_create,admin,"Pharmacy KYC Settings"
+p_kyc_details,admin,"Pharmacy KYC Settings"
+ps_kyc_list,admin,"Pharmacy KYC"
+ps_kyc_details,admin,"Pharmacy Submitted KYC"
+ps_kyc_status,admin,"Pharmacy Submitted KYC"
+ps_kyc_delete,admin,"Pharmacy Submitted KYC"
 site_settings,admin,"Site Settings"
 district_manager_list,admin,"District Manager"
 district_manager_create,admin,"District Manager"
@@ -51,10 +52,10 @@ company_name_list,admin,"Company Name"
 company_name_create,admin,"Company Name"
 company_name_edit,admin,"Company Name"
 company_name_delete,admin,"Company Name"
-medicine_category_list,admin,"Medicine Category"
-medicine_category_create,admin,"Medicine Category"
-medicine_category_edit,admin,"Medicine Category"
-medicine_category_delete,admin,"Medicine Category"
+medicine_category_list,admin,"Medicine Dosage"
+medicine_category_create,admin,"Medicine Dosage"
+medicine_category_edit,admin,"Medicine Dosage"
+medicine_category_delete,admin,"Medicine Dosage"
 medicine_unit_list,admin,"Medicine Unit"
 medicine_unit_create,admin,"Medicine Unit"
 medicine_unit_edit,admin,"Medicine Unit"
@@ -71,3 +72,67 @@ medicine_list,admin,Medicine
 medicine_create,admin,Medicine
 medicine_edit,admin,Medicine
 medicine_delete,admin,Medicine
+district_manager_kyc_settings,admin,"DM KYC Settings"
+local_area_manager_kyc_settings,admin,"LAM KYC Settings"
+local_area_manager_kyc_list,admin,"LAM KYC"
+local_area_manager_kyc_details,admin,"LAM KYC"
+local_area_manager_kyc_status,admin,"LAM KYC"
+local_area_manager_kyc_delete,admin,"LAM KYC"
+district_manager_kyc_list,admin,"DM KYC"
+district_manager_kyc_details,admin,"DM KYC"
+district_manager_kyc_status,admin,"DM KYC"
+district_manager_kyc_delete,admin,"DM KYC"
+product_sub_category_list,admin,"Product Sub Category"
+product_sub_category_edit,admin,"Product Sub Category"
+product_sub_category_create,admin,"Product Sub Category"
+product_sub_category_delete,admin,"Product Sub Category"
+operation_area_list,admin,"Operation Area"
+operation_area_create,admin,"Operation Area"
+operation_area_edit,admin,"Operation Area"
+operation_area_delete,admin,"Operation Area"
+operation_sub_area_list,admin,"Operation Sub Area"
+operation_sub_area_create,admin,"Operation Sub Area"
+operation_sub_area_edit,admin,"Operation Sub Area"
+operation_sub_area_delete,admin,"Operation Sub Area"
+order_list,admin,Order
+order_details,admin,Order
+order_distribution,admin,Order
+do_list,admin,"Distributed Orders"
+do_edit,admin,"Distributed Orders"
+do_details,admin,"Distributed Orders"
+do_update,admin,"Distributed Orders"
+pharmacy_discount,admin,Pharmacy
+rider_list,admin,Rider
+rider_profile,admin,Rider
+rider_create,admin,Rider
+rider_edit,admin,Rider
+rider_delete,admin,Rider
+pg_ssl_commerz,admin,"Payment Gateway"
+pg_settings,admin,"Payment Gateway"
+payment_list,admin,"Payment Management"
+payment_details,admin,"Payment Management"
+ns,admin,"Push Notification"
+rider_kyc_list,admin,"Rider KYC"
+rider_kyc_details,admin,"Rider KYC"
+rider_kyc_status,admin,"Rider KYC"
+rider_kyc_delete,admin,"Rider KYC"
+rider_kyc_settings,admin,"Rider KYC Settings"
+do_rider,admin,"Distributed Orders"
+obp_list,admin,"Order By Prescription"
+obp_details,admin,"Order By Prescription"
+obp_order_create,admin,"Order By Prescription"
+status_update,admin,"Order By Prescription"
+ps_update,admin,"Site Settings"
+wm_list,admin,"Withdraw Method"
+wm_details,admin,"Withdraw Method"
+wm_accept,admin,"Withdraw Method"
+wm_declined,admin,"Withdraw Method"
+w_list,admin,Withdraw
+w_details,admin,Withdraw
+w_accept,admin,Withdraw
+w_declined,admin,Withdraw
+pc_list,admin,"Payment Clearance"
+pc_details,admin,"Payment Clearance"
+pc_accept,admin,"Payment Clearance"
+pc_declined,admin,"Payment Clearance"
+assign_order,admin,"Distributed Orders"

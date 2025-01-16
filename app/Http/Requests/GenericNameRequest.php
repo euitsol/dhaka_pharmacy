@@ -17,7 +17,26 @@ class GenericNameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required',
+
+        ]
+        +
+            ($this->isMethod('POST') ? $this->store() : $this->update());
+    }
+
+    protected function store(): array
+    {
+        return [
+            'name' => 'required|unique:generic_names,name',
+            'slug' => 'required|unique:generic_names,slug',
+
+        ];
+    }
+
+    protected function update(): array
+    {
+        return [
+            'name' => 'required|unique:generic_names,name,' . $this->route('id'),
+            'slug' => 'required|unique:generic_names,slug,' . $this->route('id'),
         ];
     }
 }

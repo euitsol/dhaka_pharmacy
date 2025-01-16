@@ -1,4 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'role'])
+@section('title', 'Create Role')
 @push('css')
     <style>
         .groupName {
@@ -29,7 +30,7 @@
     </style>
 @endpush
 @section('content')
-    <div class="row px-3 pt-3">
+    <div class="row px-3">
         <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
             <div class="card">
                 <div class="card-header">
@@ -58,7 +59,7 @@
                         </div>
 
                         <div class="row">
-                            @foreach ($groupedPermissions->chunk(count($groupedPermissions) / 4) as $chunks)
+                            @foreach ($groupedPermissions->chunk(1) as $chunks)
                                 <div class="col-md-3">
                                     @foreach ($chunks as $prefix => $permissions)
                                         <h3 class="m-0 pl-4 groupName">
@@ -83,13 +84,13 @@
                         </div>
 
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer text-end">
                         <button type="submit" class="btn btn-fill btn-primary">{{ __('Create') }}</button>
                     </div>
                 </form>
             </div>
         </div>
-        @include('admin.partials.documentation',['document'=>$document])
+        @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection
 

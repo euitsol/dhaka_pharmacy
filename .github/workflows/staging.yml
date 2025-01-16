@@ -1,0 +1,30 @@
+name: Deploy Application to Staging Server
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  laravel-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+        script: |
+            cd www
+            cd sandeepc7.sg-host.com
+            git fetch --all
+            git reset --hard origin/main
+            git pull
+            /usr/local/php82/bin/php-cli artisan optimize:clear
+            

@@ -17,9 +17,12 @@ return new class extends Migration
     {
         Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
+            $table->string('image')->nullable();
             $table->boolean('status')->default(1);
             $table->boolean('is_featured')->default(0);
+            $table->boolean('is_menu')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);

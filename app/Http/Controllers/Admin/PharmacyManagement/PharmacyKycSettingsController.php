@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\PharmacyManagement;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\DetailsCommonDataTrait;
 use App\Models\Documentation;
 use App\Models\KycSetting;
 use Illuminate\Support\Str;
@@ -14,58 +15,85 @@ use Illuminate\View\View;
 
 class PharmacyKycSettingsController extends Controller
 {
-     //
-
-     public function __construct() {
+    use DetailsCommonDataTrait;
+    public function __construct()
+    {
         return $this->middleware('admin');
     }
 
-
-    public function kycSettings():View
+    // public function history(): JsonResponse
+    // {
+    //     $data['kycs'] = KycSetting::where('type', 'pharmacy')->orderBy('status', 'desc')->latest()->get()
+    //         ->each(function (&$kyc) {
+    //             $kyc->encrypted_id = encrypt($kyc->id);
+    //             $kyc->statusBg = $kyc->getStatusBadgeClass();
+    //             $kyc->statusTitle = $kyc->getStatus();
+    //             $kyc->type = Str::ucfirst($kyc->type);
+    //             $this->simpleColumnData($kyc);
+    //         });
+    //     return response()->json($data);
+    // }
+    public function create(): View
     {
-        $data['kyc_setting'] = KycSetting::where('type','pharmacy')->first();
-        $data['document'] = Documentation::where('module_key','pharmacy_kyc_settings')->first();
-        return view('admin.pharmacy_management.kyc_settings.create',$data);
+        $data['document'] = Documentation::where('module_key', 'kyc_setting')->first();
+        $data['kycs'] = KycSetting::where('type', 'pharmacy')->latest()->get();
+        $data['kyc_setting'] = $data['kycs']->where('status', 1)->first();
+        return view('admin.pharmacy_management.kyc_settings.create', $data);
     }
-
-    public function kycSettingsUpdate(Request $request):RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
+        if (is_null($request->formdata)) {
+            flash()->addWarning('Please add KYC requirements.');
+            return redirect()->back();
+        }
         $data = $this->prepareKycData($request);
-
-        $status = $request->status ?? 1;
-        KycSetting::updateOrCreate(
-            ['type' => 'pharmacy'],
+        KycSetting::activated()->where('type', 'pharmacy')->update(['status' => 0, 'updated_by' => admin()->id]);
+        KycSetting::create(
             [
-                'status' => $status,
-                'form_data' => json_encode($data),
+                'type' => 'pharmacy',
+                'status' => 1,
+                'form_data' => json_encode($data, JSON_FORCE_OBJECT),
+                'created_by' => admin()->id,
             ]
         );
-        flash()->addSuccess('KYC settings updated successfully.');
-        return redirect()->route('pm.pharmacy_kyc.pharmacy_kyc_settings');
+        flash()->addSuccess('New KYC created successfully.');
+        return redirect()->route('pm.pharmacy_kyc.settings.p_kyc_create');
     }
-    
-    private function prepareKycData(Request $request):array
+    // public function status($id): RedirectResponse
+    // {
+    //     $kyc = KycSetting::findOrFail(decrypt($id));
+    //     KycSetting::activated()->where('type', 'pharmacy')->where('status', 1)->update(['status' => 0, 'updated_by' => admin()->id]);
+    //     $kyc->update(['status' => 1, 'updated_by' => admin()->id]);
+
+    //     flash()->addSuccess('KYC activated successfully.');
+    //     return redirect()->route('pm.pharmacy_kyc.settings.p_kyc_create');
+    // }
+    public function details($id): View
+    {
+        $data['kyc'] = KycSetting::findOrFail(decrypt($id));
+        return view('admin.pharmacy_management.kyc_settings.details', $data);
+    }
+
+    private function prepareKycData(Request $request): array
     {
         $data = [];
-        if(!is_null($request->formdata)){
-            foreach($request->formdata as $key => $formdata) {
-                if(isset($formdata['field_name'])) {
+        if (!is_null($request->formdata)) {
+            foreach ($request->formdata as $key => $formdata) {
+                if (isset($formdata['field_name'])) {
                     $data[$key]['field_key'] = Str::slug($formdata['field_name']);
                     $data[$key]['field_name'] = $formdata['field_name'];
                     $data[$key]['type'] = $formdata['type'];
                     $data[$key]['required'] = $formdata['required'];
-        
-                    if($formdata['type'] == 'option') {
+
+                    if ($formdata['type'] == 'option') {
                         $data[$key]['option_data']  = $this->convertOptionDataToArray($formdata['option_data']) ?? [];
                     }
                 }
             }
         }
         return $data;
-    } 
-
-
-    private function convertOptionDataToArray($optionData):array
+    }
+    private function convertOptionDataToArray($optionData): array
     {
         $optionsArray = [];
         $options = explode(';', $optionData);
@@ -75,10 +103,9 @@ class PharmacyKycSettingsController extends Controller
             if (count($parts) === 2) {
                 $key = trim($parts[0]);
                 $value = trim($parts[1]);
-                $optionsArray[$key] = $value;
+                $optionsArray[strval($key)] = $value;
             }
         }
-
         return $optionsArray;
     }
 }

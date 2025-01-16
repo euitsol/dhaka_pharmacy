@@ -56,6 +56,14 @@ return [
             'driver' => 'session',
             'provider' => 'local_area_managers',
         ],
+        'rider' => [
+            'driver' => 'session',
+            'provider' => 'riders',
+        ],
+        'api-user' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ]
     ],
 
     /*
@@ -96,6 +104,10 @@ return [
         'local_area_managers' => [
             'driver' => 'eloquent',
             'model' => App\Models\LocalAreaManager::class,
+        ],
+        'riders' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Rider::class,
         ],
     ],
 

@@ -24,4 +24,8 @@ class Permission extends SpatiePermission
     {
         return $this->belongsTo(Admin::class, 'deleted_by');
     }
+
+    public function scopeActivated($query){
+        return $query->where('status',1);
+    }
 }

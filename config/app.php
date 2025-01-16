@@ -165,10 +165,13 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        App\Providers\FrontendDataShareServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
+        Davcpas1234\LaravelPdfViewer\LaravelPdfViewerServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -183,7 +186,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'GoogleTranslate' => Stichoza\GoogleTranslate\GoogleTranslate::class
     ])->toArray(),
 
 ];

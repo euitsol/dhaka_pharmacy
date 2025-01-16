@@ -14,21 +14,21 @@ class PharmacySeeder extends Seeder
      */
     public function run(): void
     {
-         // Create Pharmacy
-       Pharmacy::create([
+        // Create Pharmacy
+        Pharmacy::create([
             'name' => 'Pharmacy1',
             'email' => 'pharmacy1@euitsols.com',
             'password' => Hash::make('pharmacy1@euitsols.com'),
-            ]);
+        ]);
         Pharmacy::create([
-                'name' => 'Pharmacy2',
-                'email' => 'pharmacy2@euitsols.com',
-                'password' => Hash::make('pharmacy2@euitsols.com'),
-            ]);
+            'name' => 'Pharmacy2',
+            'email' => 'pharmacy2@euitsols.com',
+            'password' => Hash::make('pharmacy2@euitsols.com'),
+        ]);
         Pharmacy::create([
-                'name' => 'Pharmacy3',
-                'email' => 'pharmacy3@euitsols.com',
-                'password' => Hash::make('pharmacy3@euitsols.com'),
-            ]);
+            'name' => 'Pharmacy3',
+            'email' => 'pharmacy3@euitsols.com',
+            'password' => Hash::make('pharmacy3@euitsols.com'),
+        ]);
     }
 }

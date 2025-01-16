@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 
@@ -14,11 +14,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends AuthenticateBaseModel
 {
-    use HasRoles;
+    use HasRoles, HasApiTokens, Notifiable;
     protected $fillable = [
         'name',
         'email',
         'password',
+        'oa_id',
+        'osa_id',
+        'status',
+        'kyc_status',
     ];
     protected $hidden = [
         'password',
@@ -28,4 +32,15 @@ class User extends AuthenticateBaseModel
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function address()
+    {
+        return $this->morphMany(Address::class, 'creater');
+    }
+
+
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
 }

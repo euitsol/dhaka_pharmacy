@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine'])
-
+@section('title', 'Product List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Medicine List') }}</h4>
+                            <h4 class="card-title">{{ __('Product List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
@@ -25,11 +25,13 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Product Category') }}</th>
-                                <th>{{ __('Medicine Category') }}</th>
-                                <th>{{ __('Strength') }}</th>
-                                <th>{{ __('Maximum Retail Price') }} <small>{{__('(MRP)')}}</th>
+                                <th title="{{ __('Maximum Retail Price') }}">{{ __('MRP') }}</th>
+                                <th>{{ __('Discount') }} </th>
+                                <th>{{ __('Price') }}</th>
+                                <th>{{ __('Best Selling') }}</th>
+                                <th>{{ __('Featured') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -40,39 +42,56 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $medicine->name }} </td>
                                     <td> {{ $medicine->pro_cat->name }} </td>
-                                    <td> {{ $medicine->medicine_cat->name }} </td>
-                                    <td> {{ $medicine->strength->quantity }} <small>{{$medicine->strength->unit}}</small> </td>
-                                    <td> {{ number_format($medicine->price) }} {{__('BDT')}} </td>
+                                    <td> {{ number_format($medicine->price, 2) }} {{ __('BDT') }} </td>
+                                    <td> {{ number_format(calculateProductDiscount($medicine, false), 2) }}{{ __(' BDT') }}
+                                    </td>
+                                    <td> {{ number_format(proDisPrice($medicine->price, $medicine->discounts), 2) }}
+                                        {{ __('BDT') }} </td>
+                                    <td>
+                                        <span
+                                            class="{{ $medicine->getBestSellingBadgeClass() }}">{{ $medicine->getBestSelling() }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="{{ $medicine->getFeaturedBadgeClass() }}">{{ $medicine->getFeatured() }}</span>
+                                    </td>
                                     <td>
                                         <span
                                             class="{{ $medicine->getStatusBadgeClass() }}">{{ $medicine->getStatus() }}</span>
                                     </td>
                                     <td>{{ timeFormate($medicine->created_at) }}</td>
 
-                                    <td> {{ $medicine->created_user->name ?? 'system' }} </td>
+                                    <td> {{ c_user_name($medicine->created_user) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
                                                     'routeName' => 'product.medicine.details.medicine_list',
-                                                    'params' => [$medicine->id],
+                                                    'params' => [$medicine->slug],
                                                     'label' => 'View Details',
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'product.medicine.medicine_edit',
-                                                    'params' => [$medicine->id],
+                                                    'routeName' => 'product.medicine.medicine_edit',
+                                                    'params' => [$medicine->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'product.medicine.status.medicine_edit',
+                                                    'routeName' => 'product.medicine.best_selling.medicine_edit',
+                                                    'params' => [$medicine->id],
+                                                    'label' => $medicine->getBtnBestSelling(),
+                                                ],
+                                                [
+                                                    'routeName' => 'product.medicine.featured.medicine_edit',
+                                                    'params' => [$medicine->id],
+                                                    'label' => $medicine->getBtnFeatured(),
+                                                ],
+                                                [
+                                                    'routeName' => 'product.medicine.status.medicine_edit',
                                                     'params' => [$medicine->id],
                                                     'label' => $medicine->getBtnStatus(),
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'product.medicine.medicine_delete',
+                                                    'routeName' => 'product.medicine.medicine_delete',
                                                     'params' => [$medicine->id],
                                                     'label' => 'Delete',
                                                     'delete' => true,

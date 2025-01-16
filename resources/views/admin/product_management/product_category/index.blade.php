@@ -1,8 +1,11 @@
 @extends('admin.layouts.master', ['pageSlug' => 'product_category'])
-
+@section('title', 'Product Category List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
+            <div class="alert alert-danger {{ $menuItemsCount % 2 == 0 ? 'd-none' : '' }}">
+                <span>{{ __("Please add an even number of categories to the menu for design purposes. Now you have a total of $menuItemsCount categories in your menu.") }}</span>
+            </div>
             <div class="card ">
                 <div class="card-header">
                     <div class="row">
@@ -24,9 +27,11 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
+                                <th>{{ __('Image') }}</th>
+                                <th>{{ __('Menu') }}</th>
                                 <th>{{ __('Featured') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Creation date') }}</th>
+                                <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
@@ -36,6 +41,12 @@
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $product_category->name }} </td>
+                                    <td> <img height="70px" width="70px" style="object-fit: contain"
+                                            src="{{ storage_url($product_category->image) }}"> </td>
+                                    <td>
+                                        <span
+                                            class="{{ $product_category->getMenuBadgeClass() }}">{{ $product_category->getMenu() }}</span>
+                                    </td>
                                     <td>
                                         <span
                                             class="{{ $product_category->getFeaturedBadgeClass() }}">{{ $product_category->getFeatured() }}</span>
@@ -46,7 +57,7 @@
                                     </td>
                                     <td>{{ timeFormate($product_category->created_at) }}</td>
 
-                                    <td> {{ $product_category->created_user->name ?? 'system' }} </td>
+                                    <td> {{ c_user_name($product_category->created_user) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
@@ -60,8 +71,14 @@
                                                 [
                                                     'routeName' =>
                                                         'product.product_category.product_category_edit',
-                                                    'params' => [$product_category->id],
+                                                    'params' => [$product_category->slug],
                                                     'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' =>
+                                                        'product.product_category.menu.product_category_edit',
+                                                    'params' => [$product_category->id],
+                                                    'label' => $product_category->getBtnMenu(),
                                                 ],
                                                 [
                                                     'routeName' =>
@@ -105,7 +122,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Medicine Category Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Medicine Dosage Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -130,9 +147,15 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
+                        let status = data.status === 1 ? 'Active' : 'Deactive';
+                        let statusClass = data.status === 1 ? 'badge-success' :
                             'badge-warning';
+                        let menu = data.is_menu === 1 ? 'Yes' : 'No';
+                        let menuClass = data.is_menu === 1 ? 'badge-primary' :
+                            'badge-info';
+                        let featured = data.is_featured === 1 ? 'Yes' : 'No';
+                        let featuredClass = data.is_featured === 1 ? 'badge-primary' :
+                            'badge-info';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -141,12 +164,27 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">Image</th>
+                                        <th>:</th>
+                                        <td><img height='100px' width='100px' class='border p-2' src="${data.image}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Menu</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${menuClass}">${menu}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Featured</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${featuredClass}">${featured}</span></td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
                                         <td><span class="badge ${statusClass}">${status}</span></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Created At</th>
+                                        <th class="text-nowrap">Created Date</th>
                                         <th>:</th>
                                         <td>${data.creating_time}</td>
                                     </tr>
@@ -156,7 +194,7 @@
                                         <td>${data.created_by}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Updated At</th>
+                                        <th class="text-nowrap">Updated Date</th>
                                         <th>:</th>
                                         <td>${data.updating_time}</td>
                                     </tr>
