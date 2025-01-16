@@ -17,8 +17,7 @@ class MedicineStrengthRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'quantity'=>'required|numeric',
-            'unit'=>'required',
+            'name'=>'required|unique:medicine_strengths,name',
         ];
     }
 }
