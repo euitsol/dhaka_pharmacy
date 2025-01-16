@@ -23,7 +23,7 @@ class MedicineStrengthController extends Controller
 
     public function index(): View
     {
-        $data['medicine_strengths'] = MedicineStrength::with('created_user')->orderBy('quantity')->get();
+        $data['medicine_strengths'] = MedicineStrength::with('created_user')->orderBy('name')->get();
         return view('admin.product_management.medicine_strength.index', $data);
     }
     public function details($id): JsonResponse
@@ -40,8 +40,7 @@ class MedicineStrengthController extends Controller
     public function store(MedicineStrengthRequest $req): RedirectResponse
     {
         $medicine_strength = new MedicineStrength();
-        $medicine_strength->quantity = $req->quantity;
-        $medicine_strength->unit = $req->unit;
+        $medicine_strength->name = $req->name;
         $medicine_strength->created_by = admin()->id;
         $medicine_strength->save();
         flash()->addSuccess('Medicine strength ' . $medicine_strength->quantity . ' ' . $medicine_strength->unit . ' created successfully.');
@@ -56,8 +55,7 @@ class MedicineStrengthController extends Controller
     public function update(MedicineStrengthRequest $req, $id): RedirectResponse
     {
         $medicine_strength = MedicineStrength::findOrFail($id);
-        $medicine_strength->quantity = $req->quantity;
-        $medicine_strength->unit = $req->unit;
+        $medicine_strength->name = $req->name;
         $medicine_strength->updated_by = admin()->id;
         $medicine_strength->update();
         flash()->addSuccess('Medicine strength ' . $medicine_strength->quantity . ' ' . $medicine_strength->unit . ' updated successfully.');

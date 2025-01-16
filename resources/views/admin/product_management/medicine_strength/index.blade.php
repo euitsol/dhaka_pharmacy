@@ -23,8 +23,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Quantity') }}</th>
-                                <th>{{ __('Unit') }}</th>
+                                <th>{{ __('Name') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -35,8 +34,7 @@
                             @foreach ($medicine_strengths as $medicine_strength)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $medicine_strength->quantity }} </td>
-                                    <td> {{ $medicine_strength->unit }} </td>
+                                    <td> {{ $medicine_strength->name }} </td>
                                     <td>
                                         <span
                                             class="{{ $medicine_strength->getStatusBadgeClass() }}">{{ $medicine_strength->getStatus() }}</span>
@@ -127,14 +125,9 @@
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
-                                        <th class="text-nowrap">Quantity</th>
+                                        <th class="text-nowrap">Name</th>
                                         <th>:</th>
-                                        <td>${data.quantity}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Unit</th>
-                                        <th>:</th>
-                                        <td>${data.unit}</td>
+                                        <td>${data.name}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
