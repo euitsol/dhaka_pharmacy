@@ -1,27 +1,48 @@
 @extends('frontend.layouts.master')
 @section('title', 'Home')
 @section('content')
-    <div class="row pt-4">
-        <!--===========  Sidebar-Category-Section-Include ==============-->
-        <div class="col-3 col-xxl-2 col-12 col-lg-3 d-none d-lg-block home-cat-sidebar">
+    <div class="row pt-3 pt-lg-4">
+            <!--===========  Sidebar-Category-Section-Include ==============-->
+            <!-- <div class="col-3 col-xxl-2 col-12 col-lg-3 d-none d-lg-block home-cat-sidebar">
+                @if ($menuItems->isNotEmpty())
+                    @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
+                @endif
+            </div> -->
+
+            <!--=========== slider-section-include ==============-->
+            <div class="d-block d-lg-none">
+                @include('frontend.includes.home.slider')
+            </div>
+            <!--=========== slider-section-include ==============-->
+
+            <!--=========== Sidebar-Category-Section-Include  ==============-->
             @if ($menuItems->isNotEmpty())
                 @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
             @endif
-        </div>
-        <!--=========== Sidebar-Category-Section-Include  ==============-->
+            <!--=========== Sidebar-Category-Section-Include  ==============-->
+        
 
 
         <!--=========== Main Content Section Start ==============-->
         <div class="{{ $menuItems->isNotEmpty() ? 'col-8 col-xxl-10 col-12 col-lg-9 content-col' : 'col-12' }} content-col">
+
             <!--========= Slider-Section-Include ========-->
-            @include('frontend.includes.home.slider')
+            <div class="d-none d-lg-block">
+                @include('frontend.includes.home.slider')
+            </div>
             <!--========= Slider-Section-Include ========-->
+
+            <!--========= Slider-Section-Include ========-->
+            <!-- @include('frontend.includes.home.slider') -->
+            <!--========= Slider-Section-Include ========-->
+
+
             <!--===========  Sidebar-Category-Section-Include ==============-->
-            <div class="d-block d-lg-none">
+            <!-- <div class="d-block d-lg-none">
                 @if ($menuItems->isNotEmpty())
                     @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
                 @endif
-            </div>
+            </div> -->
             <!--=========== Sidebar-Category-Section-Include  ==============-->
 
 
@@ -51,9 +72,15 @@
                                                                 <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
                                                                         href="{{ route('product.single_product', $item->slug) }}">{{ $item->name }}</a>
                                                                 </h3>
-                                                                <p class="d-block d-xl-none"><a href="">{{ $item->pro_sub_cat->name }}</a></p>
-                                                                <p><a href="">{{ $item->generic->name }}</a></p>
-                                                                <p><a href="">{{ $item->company->name }}</a></p>
+                                                                <p class="d-block d-xl-none"><a href="" title="{{ $item->pro_sub_cat->name }}">
+                                                                    {{ $item->pro_sub_cat->name }}
+                                                                </a></p>
+                                                                <p><a href="" title="{{ $item->generic->name }}">
+                                                                    {{ $item->generic->name }}
+                                                                </a></p>
+                                                                <p><a href="" title="{{ $item->company->name }}">
+                                                                    {{ $item->company->name }}
+                                                                </a></p>
                                                                 <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
                                                                         {{ number_format($item->discounted_price, 2) }}</span>
                                                                     @if ($item->discounted_price != $item->price)
@@ -154,9 +181,15 @@
                                                             </h3>
                                                         </a>
                                                     </div>
-                                                    <p><a href="">{{ $item->pro_sub_cat->name }}</a></p>
-                                                    <p><a href="#" class="generic-name">{{ $product->generic->name }}</a></p>
-                                                    <p><a href="#" class="company-name">{{ $product->company->name }}</a></p>
+                                                    <p><a href="" title="{{ $product->pro_sub_cat->name }}">
+                                                        {{ $item->pro_sub_cat->name }}
+                                                    </a></p>
+                                                    <p><a href="#" class="generic-name" title="{{ $product->generic->name }}">
+                                                        {{ $product->generic->name }}
+                                                    </a></p>
+                                                    <p><a href="#" class="company-name" title="{{ $product->company->name }}">
+                                                        {{ $product->company->name }}
+                                                    </a></p>
                                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
                                                             {{ number_format($product->discounted_price, 2) }}</span>
                                                         @if ($product->discounted_price != $product->price)
@@ -201,7 +234,7 @@
                                 <li>
                                     <img src="{{ asset('frontend/asset/img/slider-bg-02.jpg') }}" alt=""
                                         uk-cover>
-                                    <div class="carousel-caption d-none d-md-block">
+                                    <div class="carousel-caption">
                                         <h2>Shop Online or In store Get</h2>
                                         <a href="#">Free</a>
                                         <h3>Delivery</h3>
@@ -211,7 +244,7 @@
                                 <li>
                                     <img src="{{ asset('frontend/asset/img/slider-bg-01.jpg') }}" alt=""
                                         uk-cover>
-                                    <div class="carousel-caption d-none d-md-block">
+                                    <div class="carousel-caption">
                                         <h2>Shop Online or In store Get</h2>
                                         <a href="#">Free</a>
                                         <h3>Delivery</h3>
@@ -222,7 +255,7 @@
                                     uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
                                     <img src="{{ asset('frontend/asset/img/slider-bg-01.jpg') }}" alt=""
                                         uk-cover>
-                                    <div class="carousel-caption d-none d-md-block">
+                                    <div class="carousel-caption">
                                         <h2>Shop Online or In store Get</h2>
                                         <a href="#">Free</a>
                                         <h3>Delivery</h3>

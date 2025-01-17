@@ -114,27 +114,37 @@
         -webkit-backdrop-filter: blur(23px) saturate(169%);
         background-color: rgba(255, 255, 255, 0.1);
     } */
+
     .single_product_section .similar_products_card .similar_products .single-item{
-        padding-bottom: 0px !important;
+        padding: 0px !important;
         border: none !important;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 2px;
         border-radius: 15px;
         backdrop-filter: blur(23px) saturate(169%);
         -webkit-backdrop-filter: blur(23px) saturate(169%);
         background-color: rgba(255, 255, 255, 0.1);
+        margin-bottom: 0px !important;
+        overflow: hidden;
+    }
+    .single_product_section .similar_products_card .similar_products .single-item .img{
+        padding: 0px !important;
+        border-bottom: 1px solid rgba(112, 112, 112, 0.34) !important;
     }
     .single_product_section .similar_products_card .similar_products .single-item img {
-        padding: 0px;
+        padding: 0px !important;
         border-radius: 15px 15px 0px 0px !important;
         border: none !important;
+        border-radius: 15px 15px 0 0;
+        height: 12.575rem !important;
+        object-fit: cover;
     }
     .single_product_section .similar_products_card {
         height: 100% !important;
         max-height: 100%  !important;
-        /* border: none; */
     }
     .single_product_section .similar_products .single-item .content {
-        padding: 5px;
+        padding: 10px 25px !important;
+        margin-top: 5px !important;
     }
     .log-with-pass .left-col .form-title h1 {
         font-size: 29px !important;
@@ -151,6 +161,7 @@
     .order_button .order-btn {
         border: 1px solid var(--secundary-color) !important;
     }
+
     /*================================================
         footer responsive code here
     ==================================================*/
@@ -316,6 +327,14 @@
 }
 
 @media screen and (max-width: 991px){
+
+    main{
+        overflow: hidden !important;
+    }
+
+    /*=======================================================
+        product section responsive code here
+    =========================================================*/
     .upload_prescription{
         width: 25% !important;
     }
@@ -392,15 +411,17 @@
        container-fluid section responsive code here
     =========================================================*/
 
-    .container-fluid .sidebar-cat-section {
+    /* .container-fluid .sidebar-cat-section {
         display: block;
         width: 100%;
-    }
+    } */
     .container-fluid .content-col {
         display: block;
         width: 100%;
     }
-
+    .sidebar-cat-section {
+        padding-bottom: 0px !important;
+    }
 
     /*=======================================================
         sidebar categories menu responsive code here
@@ -435,9 +456,9 @@
        product section responsive code here
     =======================================================*/
 
-    .single_product_section .similar_products_card .similar_products .single-item img {
+    /* .single_product_section .similar_products_card .similar_products .single-item img {
         height: 100% !important;
-    }
+    } */
 
     /* .single_product_section .single_product .product_image .xzoom-thumbs .xzoom-gallery {
         height: 100% !important;
@@ -808,7 +829,7 @@
         position: fixed;
         bottom: 0;
         box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
-        z-index: 999;
+        z-index: 9999999999999999;
         background-color: var(--info-bg);
     }
     .mobile-footer .main-mobile-col {
@@ -848,6 +869,26 @@
     .mobile-footer .row .col span i{
         color: var(--text-color-white) !important;
     }
+    .delivery-bike{
+        height: 130px !important;
+    }
+    .delivery-slider-section .uk-slideshow-items {
+        height: 290px;
+    }
+    .delivery-slider-section .uk-slideshow-items .carousel-caption h2 {
+        font-size: 22px;
+        line-height: 32px;
+        margin-bottom: 23px;
+    }
+    .delivery-slider-section .uk-slideshow-items .carousel-caption h3 {
+        font-size: 39px;
+        line-height: 44px;
+        margin-top: 15px;
+    }
+    .delivery-slider-section .uk-slideshow-items .carousel-caption h4 {
+        font-size: 22px;
+        line-height: 32px;
+    }
 }
 
 
@@ -870,6 +911,7 @@
     .product-section h2.title {
         font-size: 22px;
     } */
+
     .container-fluid {
         padding: 0 20px !important;
     }
@@ -898,7 +940,9 @@
     .product_price .sp_quantity{
         width: 40% !important;
     }
-
+    .single-pdct .pdct-info {
+        padding: 10px 7px 5px 7px !important;
+    }
     /*===============================================
         uk future tap text slider responsive code
     ================================================*/
@@ -1077,6 +1121,21 @@
     }
 
 
+    /* ===========================================
+        product image heigh responsive code
+    ===========================================*/
+    .best-selling-products .single-item img {
+        height: 10.575rem !important;
+    }
+    .single-pdct .pdct-img > img {
+        height: 10.575rem !important;
+    }
+
+    .single_product_section .similar_products .single-item .content {
+        padding: 5px 20px !important;
+        margin-top: 5px !important;
+    }
+
 }
 @media screen and (max-width: 640px){
 
@@ -1202,10 +1261,29 @@
     .slider-sction .carousel-caption .slider-left .btns {
         margin-top: 7px;
     } */
+
     .delivery-slider-section .uk-slideshow-items {
-        height: 200px;
+        height: 235px;
     }
-    
+    .delivery-slider-section .uk-slideshow-items .carousel-caption h2 {
+        font-size: 16px;
+        line-height: 23px;
+        margin-bottom: 16px;
+    }
+    .delivery-slider-section .uk-slideshow-items .carousel-caption h3 {
+        font-size: 20px;
+        line-height: 26px;
+        margin-top: 15px;
+    }
+    .delivery-slider-section .uk-slideshow-items .carousel-caption h4 {
+        font-size: 14px;
+        line-height: normal;
+    }
+    .delivery-slider-section .uk-slideshow-items .carousel-caption a {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 10px 45px;
+    }
 
     /*=======================================================
         single product section responsive code
@@ -1231,6 +1309,7 @@
     .header-section .search-filter .sub-btn i {
         font-size: 14px !important;
     }
+    
     /* .single_product_section .single_product .product_details #description{
         padding: 10px;
         background: var( --commoninner_bg);
