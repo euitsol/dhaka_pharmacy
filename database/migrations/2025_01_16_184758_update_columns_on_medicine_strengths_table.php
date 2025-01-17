@@ -26,6 +26,8 @@ return new class extends Migration
     {
         Schema::table('medicine_strengths', function (Blueprint $table) {
             $table->dropColumn('name');
+            $table->string('unit')->nullable(false)->change();
+            $table->string('quantity')->nullable(false)->change();
         });
     }
 };
