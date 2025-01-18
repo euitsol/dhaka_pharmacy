@@ -353,4 +353,3 @@ function formatPercentageNumber(number) {
 // messageSend("#guestChatForm");
 // messageSend("#authChatForm");
 
-  

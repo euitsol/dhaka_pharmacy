@@ -75,12 +75,12 @@
                             @endif
 
                         </div>
-                        <div class="row all-products mt-0 mt-lg-3">
+                        <div class="row all-products mt-2 mt-lg-3">
                             @foreach ($products as $product)
                                 @php
                                     $proDisPrice = proDisPrice($product->price, $product->discounts);
                                 @endphp
-                                <div class="px-2 single-pdct-wrapper col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2">
+                                <div class="px-2 single-pdct-wrapper col-xxl-2 col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2">
                                     <div class="single-pdct">
                                         <a href="{{ route('product.single_product', $product->slug) }}">
                                             <div class="pdct-img">
@@ -99,8 +99,13 @@
                                                     </h3>
                                                 </a>
                                             </div>
-                                            <p><a href="generic-name" class="generic-name">{{ $product->generic->name }}</a></p>
-                                            <p><a href="" class="company-name">{{ $product->company->name }}</a></p>
+                                            <p><a href="" title="{{ $product->pro_sub_cat->name }}">{{ $product->pro_sub_cat->name }}</a></p>
+                                            <p><a href="generic-name" class="generic-name" title="{{ $product->generic->name }}">
+                                                {{ $product->generic->name }}
+                                            </a></p>
+                                            <p><a href="" class="company-name" title="{{ $product->company->name }}">
+                                                {{ $product->company->name }}
+                                            </a></p>
                                             <h4> <span> {!! get_taka_icon() !!} {{ number_format($proDisPrice, 2) }}</span>
                                                 @if ($proDisPrice != $product->price)
                                                     <span class="regular_price"> <del>{!! get_taka_icon() !!}
