@@ -156,7 +156,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-12">
-                                            <div class="product_details py-2 py-md-4">
+                                            <div class="product_details pt-4">
                                                 <!-- Nav tabs -->
                                                 <ul class="nav nav-tabs nav-justified" role="tablist">
                                                     <div class="slider"></div>
