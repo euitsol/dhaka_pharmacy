@@ -229,13 +229,13 @@ class DocumentationSeeder extends Seeder
             'title' => 'Medicine Strength Create Documentation',
             'module_key' => 'medicine_strength',
             'type' => 'create',
-            'documentation' => '<p><strong>Quantity :</strong> This field is required. It is a numeric field that indicates the quantity of the medicine strength.</p><p><strong>Unit :</strong> This field is required. It is a select field that indicates the unit of the medicine strength.</p>'
+            'documentation' => '<p><strong>Name :</strong> This field is required. It is a text field that indicates the name of the medicine strength. Also it needs to be unique.</p>'
         ]);
         Documentation::create([
             'title' => 'Medicine Strength Edit Documentation',
             'module_key' => 'medicine_strength',
             'type' => 'update',
-            'documentation' => '<p><strong>Quantity :</strong> This field is required. It is a numeric field that indicates the quantity of the medicine strength.</p><p><strong>Unit :</strong> This field is required. It is a select field that indicates the unit of the medicine strength.</p>'
+            'documentation' => '<p><strong>Name :</strong> This field is required. It is a text field that indicates the name of the medicine strength. Also it needs to be unique.</p>'
         ]);
         Documentation::create([
             'title' => 'Medicine Unit Create Documentation',
