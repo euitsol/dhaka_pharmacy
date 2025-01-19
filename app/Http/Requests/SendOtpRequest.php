@@ -22,7 +22,7 @@ class SendOtpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => 'required|numeric|digits:11|exists:users,phone',
+            'phone' => 'required|numeric|digits:11',
         ];
     }
 }
