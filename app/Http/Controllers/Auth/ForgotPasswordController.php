@@ -25,6 +25,18 @@ class ForgotPasswordController extends Controller
     */
 
     use SmsTrait;
+    private $otpResentTime = 1;
+
+    private function check_throttle($user)
+    {
+        if ($user->phone_verified_at !== null) {
+            $timeSinceLastOtp = now()->diffInMinutes($user->phone_verified_at);
+            if ($timeSinceLastOtp < $this->otpResentTime) {
+                return 'Please wait before requesting another verification otp as one has already been sent recently';
+            }
+        }
+        return false;
+    }
 
     public function forgotPassword(): View
     {
@@ -39,6 +51,10 @@ class ForgotPasswordController extends Controller
 
         $user = User::where('phone', $req->phone)->first();
         if ($user) {
+            if ($this->check_throttle($user)) {
+                flash()->addError($this->check_throttle($user));
+                return redirect()->back()->withInput();
+            }
             $user->otp = otp();
             $user->phone_verified_at = Carbon::now();
             $user->save();
@@ -51,11 +67,11 @@ class ForgotPasswordController extends Controller
                 return redirect()->route('use.otp', encrypt($user->id));
             } else {
                 flash()->addError($result);
-                return redirect()->back();
+                return redirect()->back()->withInput();
             }
         }
         flash()->addError('Invalid phone number.');
-        return redirect()->back();
+        return redirect()->back()->withInput();
     }
 
     public function resetPassword($user_id)
