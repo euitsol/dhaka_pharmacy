@@ -1396,6 +1396,29 @@
     .mobile-footer .row .col a{
         padding: 15px 0px;
     }
+    /* Login Page CSS  */
+    .log-with-pass .left-col .form-title h1{
+        font-size: 18px !important;
+        margin-bottom: 10px !important;
+    }
+    .log-with-pass .left-col .form-title h3 {
+        font-size: 13px !important;
+        line-height: 17px !important;
+    }
+    .log-with-pass .left-col form{
+        padding-top: 15px !important;
+    }
+
+    /* Support CSS  */
+    .support_wrap .default-talk-bubble .talktext {
+        padding: .7em;
+    }
+    .support_wrap .default-talk-bubble {
+        width: 285px;
+    }
+    .support_wrap .default-talk-bubble .talktext p {
+        font-size: 12px;
+    }
 
 }
 

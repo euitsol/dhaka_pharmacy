@@ -8,7 +8,7 @@
     <section class="log-with-pass">
         <div class="container">
             <div class="row">
-                <div class="col-5">
+                <div class="col-lg-6 col-xxl-6 col-md-10 mx-auto">
                     <div class="left-col login_wrap">
                         <div class="form-title">
                             <h1 class="otp_title">{{ __('RESET YOUR PASSWORD') }}</h1>
@@ -30,7 +30,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-7">
+                <div class="col-lg-6 col-xxl-6 d-none d-lg-block">
                     <div class="right-col">
 
                     </div>
