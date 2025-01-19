@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SendOtpRequest;
+use App\Http\Requests\ForgotSentOtpRequest;
 use App\Http\Requests\User\ResetPaswordRequest;
 use App\Models\User;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use App\Http\Traits\SmsTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +34,7 @@ class ForgotPasswordController extends Controller
         return view('auth.forgot');
     }
 
-    public function forgotPasswordOtp(SendOtpRequest $req)
+    public function forgotPasswordOtp(ForgotSentOtpRequest $req)
     {
 
         $user = User::where('phone', $req->phone)->first();
@@ -56,7 +54,7 @@ class ForgotPasswordController extends Controller
                 return redirect()->back();
             }
         }
-        flash()->addError('User Not Found.');
+        flash()->addError('Invalid phone number.');
         return redirect()->back();
     }
 
