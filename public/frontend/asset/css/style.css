@@ -395,15 +395,15 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 /*====================================
       Start Sidebar-section-style
 ======================================*/
+
 .sidebar-cat-section {
-  z-index: 9;
-  padding-bottom: 20px;
+  padding-bottom: 20px !important;
+}
+.sidebar-cat-section .sticky-col {
+  position: sticky !important;
+  top: 1.5rem !important;
 }
 
-.sidebar-cat-section .sticky-col{
-  position: sticky;
-  top: 1.5rem;
-}
 .sidebar-cat-section .main-categories-items{
   display: flex;
   flex-direction: column;
@@ -469,7 +469,6 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   border: 2px solid var(--border-2);
 }
 
-
 .sidebar-cat-section .single-cat {
   border-top: 1px solid;
   border-color: rgba(112, 112, 112, 0.34);
@@ -505,9 +504,11 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .sidebar-cat-section .single-cat.active h2 {
   color: var(--text-color-white);
 }
+
 .home-cat-sidebar .sidebar-cat-section {
   width: 100%;
 }
+
 
 /*====================================
       Start Slider-section-style
@@ -800,19 +801,12 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   padding: 3px;
 }
 
-/* .product-section .all-products {
-    row-gap: 30px;
-} */
-
-
-
 
 .product-section .all-products .single-pdct .pdct-img img {
   /* border-bottom: unset; */
   height: 12.575rem;
   object-fit: cover;
 }
-
 
 .product-section .show-more .all-pdct-btn{
   width: 140px;
@@ -836,7 +830,33 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   background: transparent;
 }
 
-
+/* 
+.product-section .cat-filter-row h2.title {
+	position: relative;
+  display: inline-block;
+}
+.product-section .cat-filter-row h2.title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--text-color-black), orange, yellow, green, blue, indigo, violet);
+  background-size: 200%;
+  animation: moveLeftRight 4s ease-in-out infinite;
+}
+@keyframes moveLeftRight {
+  0% {
+    background-position: 0%;
+  }
+  50% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0%;
+  }
+} */
 
 /*====================================
       Start Home Delivery Section CSS
@@ -920,7 +940,9 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 .delivery-slider-section .uk-slideshow .uk-dotnav li{
   padding-right: 0;
 }
-
+.delivery-slider-section .uk-slideshow .uk-dotnav li:first-child {
+  padding-left: 0px;
+}
 .delivery-slider-section .uk-slideshow .uk-dotnav li a{
   border-color: var(--text-color-white);
 }
@@ -932,7 +954,6 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 /*====================================
   Footer section style Start
 ======================================*/
-
 .footer-section .container {
   max-width: 90%;
 }
@@ -1186,7 +1207,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 .footer-section .main-footer-row .footer-contact .footer-nav li a.map::before {
   content: "\f3c5";
-  top: 20%;
+  top: 25%;
 }
 
 .footer-section .main-footer-row .footer-contact .footer-nav li a.phn::before {

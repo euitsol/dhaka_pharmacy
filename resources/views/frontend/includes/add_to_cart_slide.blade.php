@@ -23,7 +23,7 @@
                 <h3><span> {!! get_taka_icon() !!} </span> <span class="subtotal_price">0.00</span></h3>
             </div>
             <div class="col-12">
-                <a href="javascript:void(0)" class="btn order_button w-100"
+                <a href="javascript:void(0)" class="btn order_button w-100 d-flex align-items-center justify-content-center"
                     id="checkoutBtn">{{ __('Proceed To Checkout') }}</a>
             </div>
         </div>

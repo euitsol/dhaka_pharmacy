@@ -25,29 +25,11 @@
                     <div class="card-body">
                         <div class="form-group">
                             <div class="inptu-group">
-                                <div class="quantity">
-                                    <label>{{ __('Quantity') }}</label>
-                                    <input type="text" name="quantity" class="form-control" placeholder="Enter quantity"
-                                        value="{{ $medicine_strength->quantity }}">
-                                    @include('alerts.feedback', ['field' => 'quantity'])
-                                </div>
-                                <div class="unit">
-                                    <label>{{ __('Unit') }}</label>
-                                    <select name="unit" class="form-control">
-                                        <option selected hidden value=" ">{{ __('Select unit') }}</option>
-                                        <option value="mg" {{ $medicine_strength->unit == 'mg' ? 'selected' : '' }}>
-                                            {{ __('MG') }}</option>
-                                        <option value="ml" {{ $medicine_strength->unit == 'ml' ? 'selected' : '' }}>
-                                            {{ __('ML') }}</option>
-                                        <option value="kg" {{ $medicine_strength->unit == 'kg' ? 'selected' : '' }}>
-                                            {{ __('KG') }}</option>
-                                        <option value="gm" {{ $medicine_strength->unit == 'gm' ? 'selected' : '' }}>
-                                            {{ __('GM') }}</option>
-                                        <option value="litter"
-                                            {{ $medicine_strength->unit == 'litter' ? 'selected' : '' }}>
-                                            {{ __('Litter') }}</option>
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'unit'])
+                                <div class="name">
+                                    <label>{{ __('Name') }}</label>
+                                    <input type="text" name="name" class="form-control" placeholder="Enter strength name"
+                                        value="{{ $medicine_strength->name }}">
+                                    @include('alerts.feedback', ['field' => 'name'])
                                 </div>
                             </div>
                         </div>
