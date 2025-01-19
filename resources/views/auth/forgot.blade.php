@@ -11,9 +11,8 @@
                 <div class="col-5">
                     <div class="left-col login_wrap">
                         <div class="form-title">
-                            <h1 class="otp_title">{{ __('FORGOT PASSWORD') }}</h1>
-                            <h3>{{ __('Follow the instructions to make it easier to reset password and you will be able to explore
-                                                                                    inside.') }}
+                            <h1 class="otp_title">{{ __('RESET YOUR PASSWORD') }}</h1>
+                            <h3>{{ __('Enter your registered phone number to receive an OTP for resetting your password.') }}
                             </h3>
                         </div>
                         <form method="POST" action="{{ route('user.forgot.password') }}" autocomplete="off">
@@ -26,8 +25,8 @@
                             @include('alerts.feedback', ['field' => 'phone'])
 
                             <input class="forgot_button submit_button" type="submit" value="SEND OTP">
-                            <p class="get-otp">{{ __('Login With Phone? ') }}<a class="otp_switch"
-                                    href="{{ route('login') }}">{{ __('GET OTP') }}</a></p>
+                            <p class="get-otp">{{ __('Already have an account? ') }}<a class="otp_switch"
+                                    href="{{ route('login') }}">{{ __('LOG IN') }}</a></p>
                         </form>
                     </div>
                 </div>
