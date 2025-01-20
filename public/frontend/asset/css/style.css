@@ -176,7 +176,7 @@ h2.title {
   padding: .5rem .7rem;
   text-decoration: none;
   font-family: "Rubik", sans-serif;
-  font-size: 25px;
+  font-size: 18px;
   line-height: 20px;
   font-weight: 400;
   color: var(--secundary-color);
@@ -689,6 +689,20 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   color: var(--text-color-black);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .product-section .best-selling-col .best-selling-products{
   background: var(--text-color-white);
   box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
@@ -830,7 +844,13 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
   background: transparent;
 }
 
-/*
+
+
+
+
+
+
+/* 
 .product-section .cat-filter-row h2.title {
 	position: relative;
   display: inline-block;
@@ -857,6 +877,67 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
     background-position: 0%;
   }
 } */
+
+
+/* Category Title Styling */
+
+
+/* Category Title Styling */
+
+/* .product-section .cat-filter-row .sub-title .title {
+  position: relative;
+  padding: 10px 0;
+  display: inline-block;
+}
+
+.product-section .cat-filter-row .sub-categories .animated-subcategories {
+	display: inline-block;
+	margin-left: 15px;
+	font-size: 1.2rem;
+	color: #28a349;
+	font-weight: 500;
+	white-space: nowrap;
+	overflow: hidden;
+	border-right: 3px solid #00204b;
+	padding-right: 0px;
+	width: 0;
+	animation: typing 4s steps(30) 1s forwards, blink 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+@keyframes erase {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0;
+    }
+} */
+
+
+
+
+
+
+
+
+
+
+
 
 /*====================================
       Start Home Delivery Section CSS
@@ -1207,7 +1288,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 .footer-section .main-footer-row .footer-contact .footer-nav li a.map::before {
   content: "\f3c5";
-  top: 25%;
+  top: 45%;
 }
 
 .footer-section .main-footer-row .footer-contact .footer-nav li a.phn::before {

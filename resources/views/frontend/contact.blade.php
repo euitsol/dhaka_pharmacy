@@ -20,7 +20,7 @@
                             class="img-fluid">
                     </div>
                     <!-- Right Section (Form) -->
-                    <div class="col-lg-6 col-12 mb-3 mb-lg-0 px-2 px-md-4">
+                    <div class="col-lg-6 col-12 mb-0 mb-lg-3 mb-lg-0 px-2 px-md-4">
                         <form action="">
                             <div class="mb-3 mb-md-3">
                                 <label for="name" class="form-label">Name<span class="required">*</span></label>

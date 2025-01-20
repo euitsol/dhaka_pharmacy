@@ -4,10 +4,15 @@
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/terms_and_conditions.css') }}">
 @endpush
 @section('content')
-    <section class="tream-condition py-3 py-lg-5">
+    <section class="tream-condition py-4 py-lg-5">
         <div class="container">
             <div class="row">
-                <div class="col">
+                <div class="col-12">
+                    <div class="text-center page-title">
+                        <h1>Terms and Conditions</h1>
+                    </div>
+                </div>
+                <div class="col mt-2 mt-lg-4">
                     <h2>Cancel Order:</h2>
                     <ul>
                         <li>1. If customer want to cancel the order then they have to cancel before 1:10 PM. After 1:10 PM,
