@@ -1,22 +1,22 @@
 @push('css')
-    <style>
-        .datatable {
-            width: 100% !important;
-        }
-    </style>
+<style>
+    .datatable {
+        width: 100% !important;
+    }
+</style>
 @endpush
 @push('css_link')
-    <link rel="stylesheet" href="{{ asset('plugin/datatable/datatables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugin/datatable/datatables.min.css') }}">
 @endpush
 
 @push('js_link')
-    <script src="{{ asset('plugin/datatable/datatables.min.js') }}"></script>
+<script src="{{ asset('plugin/datatable/datatables.min.js') }}"></script>
 @endpush
 
 
 @push('js')
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
             var main_class = {!! json_encode($mainClass ?? 'datatable') !!};
             $('.' + main_class).css('width', '100%');
             $('.' + main_class).each(function() {
@@ -49,5 +49,5 @@
                 });
             });
         });
-    </script>
+</script>
 @endpush
