@@ -20,7 +20,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class MedicineController extends Controller
 {
@@ -28,14 +29,88 @@ class MedicineController extends Controller
 
     public function __construct()
     {
-        return $this->middleware('admin');
+        $this->middleware('admin');
     }
 
-    public function index(): View
+    public function index(Request $request): View|JsonResponse
     {
-        $data['medicines'] = Medicine::with(['pro_cat', 'created_user', 'discounts'])->orderBy('name')->get();
-        return view('admin.product_management.medicine.index', $data);
+        if ($request->ajax()) {
+            $data = Medicine::with(['pro_cat', 'created_user', 'discounts', 'company']);
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->editColumn('created_at', function ($data) {
+                    return date('d-m-Y', strtotime($data->created_at));
+                })
+                ->editColumn('name', function ($data) {
+                    $companyName = optional($data->company)->name ?? 'No Company';
+                    return $data->name . ' (' . $companyName . ')';
+                })
+                ->addColumn('created_user', function ($data) {
+                    return $data->created_user->name ?? 'System';
+                })
+                ->addColumn('price', function ($data) {
+                    return number_format($data->price, 2) . ' BDT';
+                })
+                ->addColumn('discount', function ($data) {
+                    return number_format(calculateProductDiscount($data, false), 2) . ' BDT';
+                })
+                ->addColumn('discounted_price', function ($data) {
+                    return number_format(proDisPrice($data->price, $data->discounts), 2) . ' BDT';
+                })
+                ->addColumn('best_selling', function ($data) {
+                    return '<span class="' . $data->getBestSellingBadgeClass() . '">' . $data->getBestSelling() . '</span>';
+                })
+                ->addColumn('featured', function ($data) {
+                    return '<span class="' . $data->getFeaturedBadgeClass() . '">' . $data->getFeatured() . '</span>';
+                })
+                ->addColumn('status', function ($data) {
+                    return '<span class="' . $data->getStatusBadgeClass() . '">' . $data->getStatus() . '</span>';
+                })
+                ->addColumn('action', function ($data) {
+                    return view('admin.partials.action_buttons', [
+                        'menuItems' => [
+                            [
+                                'routeName' => 'product.medicine.details.medicine_list',
+                                'params' => [$data->slug],
+                                'label' => 'View Details',
+                            ],
+                            [
+                                'routeName' => 'product.medicine.medicine_edit',
+                                'params' => [$data->slug],
+                                'label' => 'Update',
+                            ],
+                            [
+                                'routeName' => 'product.medicine.best_selling.medicine_edit',
+                                'params' => [$data->id],
+                                'label' => $data->getBtnBestSelling(),
+                            ],
+                            [
+                                'routeName' => 'product.medicine.featured.medicine_edit',
+                                'params' => [$data->id],
+                                'label' => $data->getBtnFeatured(),
+                            ],
+                            [
+                                'routeName' => 'product.medicine.status.medicine_edit',
+                                'params' => [$data->id],
+                                'label' => $data->getBtnStatus(),
+                            ],
+                            [
+                                'routeName' => 'product.medicine.medicine_delete',
+                                'params' => [$data->id],
+                                'label' => 'Delete',
+                                'delete' => true,
+                            ],
+                        ],
+                    ])->render();
+                })
+                ->rawColumns(['best_selling', 'featured', 'status', 'action'])
+                ->make(true);
+        }
+
+        return view('admin.product_management.medicine.index');
     }
+
     public function details($slug): View
     {
         $data['medicine'] = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'created_user', 'updated_user', 'discounts', 'units' => function ($q) {
