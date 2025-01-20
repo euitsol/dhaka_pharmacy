@@ -9,7 +9,7 @@
             <div class="row py-2 px-4 justify-content-center">
                 @foreach ($menuItems as $item)
                     <a href="{{ route('category.products', ['category' => $item->slug]) }}"
-                        class="col-6 text-center single-cat text-decoration-none {{ isset($category) && $category->id == $item->id ? 'active' : '' }}">
+                        class="col-6 text-center single-cat text-decoration-none {{ isset($category) && $category->id == $item->id ? 'active' : '' }}" title="{{ __($item->name) }}">
                         <div class="icon m-auto">
                             <img class="w-100" src="{{ storage_url($item->image) }}" alt="category icon">
                         </div>

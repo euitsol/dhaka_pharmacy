@@ -16,12 +16,32 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="row cat-filter-row gx-4">
-                            <div class="col-12">
+                            <div class="col-12 d-flex align-items-center">
                                 <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
+                                <!-- <div class="sub-title">
+                                    <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
+                                </div>
+
+                                <div class="sub-categories">
+                                    <span class="animated-subcategories"></span>
+                                </div> -->
+
                             </div>
+
+                                <!-- @if (isset($sub_categories) && $sub_categories->isNotEmpty())
+                                    <ul class="sub-categories-list d-none">
+                                        @foreach ($sub_categories as $sub_cats)
+                                            @foreach ($sub_cats as $sub_cat)
+                                                <li>{{ $sub_cat->name }}</li>
+                                            @endforeach
+                                        @endforeach
+                                    </ul>
+                                @endif -->
+
+
                             @if (isset($sub_categories) && $sub_categories->isNotEmpty())
                                 <div class="col-12">
-                                    <div class="sub_categories  my-lg-3" uk-slider="finite: true">
+                                    <div class="sub_categories  mt-lg-3" uk-slider="finite: true">
                                         <div class="uk-position-relative">
                                             <div class="uk-slider-container uk-light">
                                                 <ul class="uk-slider-items cat-list">

@@ -4,16 +4,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="address_add_modalLabel">{{ __('Add New Address') }}</h5>
-                <button type="button" class="close btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="map" id="user_a_map"></div>
                     </div>
-                    <div class="col-md-12 m-2">
+                    <div class="col-md-12">
                         <form action="{{ route('u.as.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="lat">
@@ -58,10 +59,9 @@
 
                                 <div class="form-group col-md-12 p-2">
                                     <button type="submit"
-                                        class="btn btn-sm btn-success w-100">{{ __('Save') }}</button>
+                                        class="btn btn-sm btn-success w-100 p-2">{{ __('Save') }}</button>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>

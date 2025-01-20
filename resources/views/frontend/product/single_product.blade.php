@@ -158,7 +158,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-12">
-                                            <div class="product_details py-2 py-md-4">
+                                            <div class="product_details pt-4">
                                                 <!-- Nav tabs -->
                                                 <ul class="nav nav-tabs nav-justified" role="tablist">
                                                     <div class="slider"></div>
@@ -279,7 +279,7 @@
                     @if ($similar_products->isNotEmpty())
                         <div class="col-12 col-xxl-3 mt-3 mt-xxl-0">
                             <div class="card similar_products_card" style="height:100%">
-                                <div class="card-body">
+                                <div class="card-body px-3 px-xxl-4">
                                     <div class="similar_products">
                                         <h2 class="mb-3 mb-lg-4">{{ __('Similar Products') }}</h2>
                                         <div class="products">

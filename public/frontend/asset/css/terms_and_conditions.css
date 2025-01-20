@@ -1,3 +1,10 @@
+.tream-condition h1{
+    font-family: var(--secondry-font);
+    font-size: 26px;
+    line-height: 28px;
+    font-weight: 500;
+    color: var(--text-color-black);
+}
 .tream-condition h2{
     font-family: var(--secondry-font);
     font-size: 24px;

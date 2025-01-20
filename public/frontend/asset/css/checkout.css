@@ -79,6 +79,10 @@
     border-radius: 5px;
     margin-top: 10px;
 }
+.checkout-section .order-info-row .place-order img {
+	margin-top: -5px;
+	margin-left: 10px;
+}
 .checkout-section .order-info-row .left .row{
     border-bottom: 1px solid;
     border-color: rgba(0, 0, 0, 0.25);
@@ -86,9 +90,9 @@
 .checkout-section .order-info-row .left .row:last-child{
     border: none;
 }
-.checkout-section .order-info-row .left .img{
+/* .checkout-section .order-info-row .left .img{
     width: 86px;
-}
+} */
 .checkout-section .order-info-row .left .img img{
     width: 100%;
 }
@@ -214,4 +218,9 @@
     line-height: 30px;
     font-weight: 700;
     color: var(--text-black);
+}
+
+.modal-header .close {
+	padding: 0px 15px !important;
+	font-size: 24px;
 }
