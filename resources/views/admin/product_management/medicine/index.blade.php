@@ -1,116 +1,101 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine'])
 @section('title', 'Product List')
+@push('css_link')
+    <link rel="stylesheet" href="{{ asset('plugin/datatable/datatables.min.css') }}">
+@endpush
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-8">
-                            <h4 class="card-title">{{ __('Product List') }}</h4>
-                        </div>
-                        <div class="col-4 text-right">
-                            @include('admin.partials.button', [
-                                'routeName' => 'product.medicine.medicine_create',
-                                'className' => 'btn-primary',
-                                'label' => 'Add new medicine',
-                            ])
-                        </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-8">
+                        <h4 class="card-title">{{ __('Product List') }}</h4>
+                    </div>
+                    <div class="col-4 text-right">
+                        @include('admin.partials.button', [
+                        'routeName' => 'product.medicine.medicine_create',
+                        'className' => 'btn-primary',
+                        'label' => 'Add new medicine',
+                        ])
                     </div>
                 </div>
-                <div class="card-body">
-                    <table class="table table-striped datatable">
-                        <thead>
-                            <tr>
-                                <th>{{ __('SL') }}</th>
-                                <th>{{ __('Name') }}</th>
-                                <th>{{ __('Product Category') }}</th>
-                                <th title="{{ __('Maximum Retail Price') }}">{{ __('MRP') }}</th>
-                                <th>{{ __('Discount') }} </th>
-                                <th>{{ __('Price') }}</th>
-                                <th>{{ __('Best Selling') }}</th>
-                                <th>{{ __('Featured') }}</th>
-                                <th>{{ __('Status') }}</th>
-                                <th>{{ __('Created date') }}</th>
-                                <th>{{ __('Created by') }}</th>
-                                <th>{{ __('Action') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($medicines as $medicine)
-                                <tr>
-                                    <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $medicine->name }} </td>
-                                    <td> {{ $medicine->pro_cat->name }} </td>
-                                    <td> {{ number_format($medicine->price, 2) }} {{ __('BDT') }} </td>
-                                    <td> {{ number_format(calculateProductDiscount($medicine, false), 2) }}{{ __(' BDT') }}
-                                    </td>
-                                    <td> {{ number_format(proDisPrice($medicine->price, $medicine->discounts), 2) }}
-                                        {{ __('BDT') }} </td>
-                                    <td>
-                                        <span
-                                            class="{{ $medicine->getBestSellingBadgeClass() }}">{{ $medicine->getBestSelling() }}</span>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="{{ $medicine->getFeaturedBadgeClass() }}">{{ $medicine->getFeatured() }}</span>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="{{ $medicine->getStatusBadgeClass() }}">{{ $medicine->getStatus() }}</span>
-                                    </td>
-                                    <td>{{ timeFormate($medicine->created_at) }}</td>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped medicinesTable">
+                    <thead>
+                        <tr>
+                            <th>{{ __('SL') }}</th>
+                            <th>{{ __('Name') }}</th>
+                            <th>{{ __('Product Category') }}</th>
+                            <th title="{{ __('Maximum Retail Price') }}">{{ __('MRP') }}</th>
+                            <th>{{ __('Discount') }} </th>
+                            <th>{{ __('Price') }}</th>
+                            <th>{{ __('Best Selling') }}</th>
+                            <th>{{ __('Featured') }}</th>
+                            <th>{{ __('Status') }}</th>
+                            <th>{{ __('Created date') }}</th>
+                            <th>{{ __('Created by') }}</th>
+                            <th>{{ __('Action') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                                    <td> {{ c_user_name($medicine->created_user) }} </td>
-                                    <td>
-                                        @include('admin.partials.action_buttons', [
-                                            'menuItems' => [
-                                                [
-                                                    'routeName' => 'product.medicine.details.medicine_list',
-                                                    'params' => [$medicine->slug],
-                                                    'label' => 'View Details',
-                                                ],
-                                                [
-                                                    'routeName' => 'product.medicine.medicine_edit',
-                                                    'params' => [$medicine->slug],
-                                                    'label' => 'Update',
-                                                ],
-                                                [
-                                                    'routeName' => 'product.medicine.best_selling.medicine_edit',
-                                                    'params' => [$medicine->id],
-                                                    'label' => $medicine->getBtnBestSelling(),
-                                                ],
-                                                [
-                                                    'routeName' => 'product.medicine.featured.medicine_edit',
-                                                    'params' => [$medicine->id],
-                                                    'label' => $medicine->getBtnFeatured(),
-                                                ],
-                                                [
-                                                    'routeName' => 'product.medicine.status.medicine_edit',
-                                                    'params' => [$medicine->id],
-                                                    'label' => $medicine->getBtnStatus(),
-                                                ],
-                                                [
-                                                    'routeName' => 'product.medicine.medicine_delete',
-                                                    'params' => [$medicine->id],
-                                                    'label' => 'Delete',
-                                                    'delete' => true,
-                                                ],
-                                            ],
-                                        ])
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer py-4">
-                    <nav class="d-flex justify-content-end" aria-label="...">
-                    </nav>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@push('js_link')
+    <script src="{{ asset('plugin/datatable/datatables.min.js') }}"></script>
+@endpush
+@push('js')
+    <script>
+        $(document).ready(function () {
+            $('.medicinesTable').DataTable({
+                dom: 'Bfrtip',
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ request()->url() }}',
+                    type: 'GET'
+                },
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                    { data: 'name', name: 'name' },
+                    { data: 'pro_cat.name', name: 'pro_cat.name' },
+                    { data: 'price', name: 'price' },
+                    { data: 'discount', name: 'discount' },
+                    { data: 'discounted_price', name: 'discounted_price' },
+                    { data: 'best_selling', name: 'best_selling'},
+                    { data: 'featured', name: 'featured'},
+                    { data: 'status', name: 'status'},
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'created_user', name: 'created_user' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
+                ],
+                order: [[1, 'asc'], [3, 'desc'], [9, 'desc']],
+                buttons: [{
+                            extend: 'pdfHtml5',
+                            download: 'open',
+                            orientation: 'potrait',
+                            pagesize: 'A4',
+                            exportOptions: {
+                                columns: [0,1,2,3,4,5,6,7,8,9,10],
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            exportOptions: {
+                                columns: [0,1,2,3,4,5,6,7,8,9,10],
+                            },
+                        }, 'excel', 'csv', 'pageLength',
+                    ]
+            });
+        });
+
+    </script>
+@endpush
