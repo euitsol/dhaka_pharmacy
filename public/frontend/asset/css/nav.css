@@ -194,6 +194,7 @@ header{
     color: var(--nav-asent-color);
     font-size: 1rem;
     padding: 4px 0 0 0;
+    margin: 0px;
   }
 
   .header-section .right-col .offcanvas .add_to_cart_item .boxed label {

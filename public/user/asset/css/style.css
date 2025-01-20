@@ -393,7 +393,7 @@ body{
     text-align: right;
   }
   .header-section .right-col .offcanvas .add_to_cart_item .product_details .image img {
-    height: 60px;
+    /* height: 60px; */
     object-fit: cover;
     width: 100%;
   }
@@ -1488,4 +1488,9 @@ margin: 0;
     }
 }
 
-
+#cartbtn .form-group .plus_btn {
+	border-radius: 0px 15px 15px 0px;
+}
+#cartbtn .form-group .minus_btn {
+	border-radius: 15px 0px 0px 15px;
+}

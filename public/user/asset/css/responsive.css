@@ -32,6 +32,7 @@
     .dashboard-main-section .col-left .single-box .title h2 {
         margin-top: 10px;
         font-size: 20px;
+        text-align: center;
     }
     .dashboard-main-section .col-left .current-order .progress-box .progress {
         margin-top: 15px;
@@ -144,6 +145,33 @@
         height: 30px;
         display: block;
         left: 8px;
+    }
+
+     /* =============================================
+        add to cart responsive code
+    ================================================*/
+    .header-section .right-col .offcanvas .add_to_cart_item .item_price {
+        margin-top: 4px !important;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .ben a {
+        padding: 2px 7px !important;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .ben {
+        top: 0px !important;
+        right: -2px !important;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .item_price h4 {
+        margin: 0px 0 0 0 !important;
+        padding: 0px 0 0 0;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .product_details .info .product_title a {
+        font-size: 11px !important;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .product_details .info p a {
+        font-size: 10px !important;
     }
 
 }
