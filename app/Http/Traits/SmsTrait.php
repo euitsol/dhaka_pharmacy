@@ -39,8 +39,8 @@ trait SmsTrait
 
         // Handle HTTP errors
         if ($http_code !== 200) {
-            // return 'API Request failed with HTTP code: ' . $http_code . ' | Response: ' . $response;
-            return 'Something went wrong, please try again.';
+            return 'API Request failed with HTTP code: ' . $http_code . ' | Response: ' . $response;
+            // return 'Something went wrong, please try again.';
         }
 
         // Decode the API response

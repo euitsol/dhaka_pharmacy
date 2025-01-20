@@ -186,7 +186,7 @@
             append = `
             <div class="card add_to_cart_item mb-2">
                 <div class="card-body py-2">
-                    <div class="row align-items-center product_details mb-2">
+                    <div class="row product_details mb-2">
                         <div class="ben">
                             <div class="text-end">
                                 <a href="javascript:void(0)" data-atc_id="${cart.id}" class="text-danger cart_remove_btn">
@@ -194,32 +194,36 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="image col-3 col-sm-2 item_${cart.id}">
+                        <div class="image col-4 col-sm-2 item_${cart.id}">
                             <a href="${product.slug}">
                                 <img class="border border-1 rounded-1" src="${product.image}" alt="${product.name}">
                             </a>
                         </div>
-                        <div class="col-sm-8 col-9 info">
-                            <h4 class="product_title" title="${product.attr_title}">
-                                <a href="${product.slug}">${product.name}</a>
-                            </h4>
-                            <p><a href="#">${product.pro_cat.name}</a></p>
-                            <p><a href="#">${product.generic.name}</a></p>
-                            <p><a href="#">${product.company.name}</a></p>
-                        </div>
-                        <div class="item_price col-sm-2 mt-2 mt-sm-5 col-12 ps-0">
-                            ${product.discounted_price != product.price ?
-                                `<h4 class="text-end">
-                                    <del class="text-danger">৳ <span class="item_count_regular_price">${Number(product.price).toFixed(2)}</span></del>
-                                </h4>`
-                                : ''}
-                            <h4 class="text-end">
-                                <span>৳</span> <span class="item_count_price">${Number(product.discounted_price).toFixed(2)}</span>
-                            </h4>
+                        <div class="col-8 col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-8 col-12 info px-0 px-sm-3">
+                                    <h4 class="product_title" title="${product.attr_title}">
+                                        <a href="${product.slug}">${product.name}</a>
+                                    </h4>
+                                    <p class="m-0"><a href="#">${product.pro_cat.name}</a></p>
+                                    <p class="m-0"><a href="#">${product.generic.name}</a></p>
+                                    <p class="m-0"><a href="#">${product.company.name}</a></p>
+                                </div>
+                                <div class="item_price col-sm-4 mt-2 mt-sm-5 col-12 ps-0">
+                                    ${product.discounted_price != product.price ?
+                                        `<h4 class="text-start text-sm-end">
+                                            <del class="text-danger">৳ <span class="item_count_regular_price">${Number(product.price).toFixed(2)}</span></del>
+                                        </h4>`
+                                        : ''}
+                                    <h4 class="text-start text-sm-end">
+                                        <span>৳</span> <span class="item_count_price">${Number(product.discounted_price).toFixed(2)}</span>
+                                    </h4>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row align-items-center atc_functionality">
-                        <div class="item_units col-sm-8 col-6">
+                    <div class="row align-items-center atc_functionality row-gap-2">
+                        <div class="item_units col-sm-8 col-12">
                             <div class="form-group my-1 boxed">
                                 ${product.units.map((unit, u_key) => `
                                     <input type="radio" data-cart_id="${cart.id}" data-id="${unit.id}" data-name="${unit.name}"

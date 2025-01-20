@@ -836,7 +836,7 @@
         position: fixed;
         bottom: 0;
         box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
-        z-index: 9999999999999999;
+        z-index: 9999;
         background-color: var(--info-bg);
     }
     .mobile-footer .main-mobile-col {
@@ -896,6 +896,27 @@
         font-size: 22px;
         line-height: 32px;
     }
+
+
+    /* ===========================================
+        checkout page responsive code here
+    =============================================*/
+    .checkout-section .order-info-row .title {
+        font-size: 20px !important;
+        line-height: 29px !important;
+    }
+    .checkout-section .order-info-row .add-new-box a {
+        font-size: 20px !important;
+        line-height: 29px !important;
+    }
+    .checkout-section .order-info-row .left, .checkout-section .order-info-row .right {
+        padding: 10px !important;
+    }
+
+
+
+
+
 }
 
 
@@ -1143,6 +1164,19 @@
         margin-top: 5px !important;
     }
 
+    /* =============================================
+        checkoutpage responsive code
+    ==============================================*/
+    .checkout-section .order-info-row .right p {
+        font-size: 14px !important;
+        line-height: 20px !important;
+        margin: 0px !important;
+    }
+    .checkout-section .order-info-row .right h5 {
+        font-size: 14px !important;
+        line-height: 20px !important;
+    }
+
 }
 @media screen and (max-width: 640px){
 
@@ -1178,6 +1212,10 @@
 
     .single-pdct .pdct-info h3 {
         font-size: 10px !important;
+    }
+
+    .header-section .right-col .offcanvas {
+        width: 95% !important;
     }
 
 }
@@ -1229,7 +1267,7 @@
     }
     .header-section .right-col .item {
         width: inherit;
-        padding: 7px !important;
+        padding: 5px !important;
     }
 
     /* ===============================================
@@ -1429,6 +1467,27 @@
     }
     .support_wrap .default-talk-bubble .talktext p {
         font-size: 12px;
+    }
+
+    /* =============================================
+        add to cart responsive code
+    ================================================*/
+    .header-section .right-col .offcanvas .add_to_cart_item .item_price {
+        margin-top: 4px !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .ben a {
+        padding: 2px 7px !important;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .ben {
+        top: 0px !important;
+        right: -2px !important;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .item_price h4 {
+        margin: 0px 0 0 0 !important;
+        padding: 0px 0 0 0;
     }
 
 }

@@ -106,7 +106,7 @@ header{
   }
   .header-section .right-col .offcanvas {
     width: 600px;
-    
+    z-index: 999999;
   }
   .header-section .right-col .offcanvas .offcanvas-header .cart_clear_btn{
     color: var(--nav-secondary-color);
@@ -126,7 +126,7 @@ header{
     text-align: right;
   }
   .header-section .right-col .offcanvas .add_to_cart_item .product_details .image img {
-    height: 60px;
+    /* height: 60px; */
     object-fit: cover;
     width: 100%;
   }
@@ -477,4 +477,11 @@ header{
     width: 35px; 
     object-fit: cover; 
     border-radius: 50%
+  }
+
+  #cartbtn .form-group .minus_btn{
+    border-radius: 15px 0px 0px 15px;
+  }
+  #cartbtn .form-group .plus_btn{
+    border-radius: 0px 15px 15px 0px;
   }
