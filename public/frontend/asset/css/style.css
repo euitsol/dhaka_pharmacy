@@ -2234,15 +2234,18 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
     -webkit-margin-before: 0em;
     -webkit-margin-after: 0em;
     color:#00204B;
+    margin-bottom: 0;
 }
 
 .support_wrap .default-talk-bubble {
+    display: none;
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .support_wrap .default-talk-bubble.show {
+    display: block;
     opacity: 1;
     transform: translateY(0);
 }

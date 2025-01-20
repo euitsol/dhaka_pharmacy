@@ -8,13 +8,16 @@
     <section class="log-with-pass">
         <div class="container">
             <div class="row">
-                <div class="col-5">
+                <div class="col-lg-6 col-xxl-6 col-md-10 mx-auto">
                     <div class="left-col login_wrap">
                         <div class="form-title">
-                            <h1 class="otp_title">{{ __('LOGIN IN WITH OTP') }}</h1>
+                            <h1 class="otp_title">{{ __('LOG IN OR REGISTER WITH OTP') }}</h1>
                             <h1 class="login_title" style="display: none;">{{ __('LOGIN WITH PASSWORD') }}</h1>
-                            <h3>{{ __('Follow the instructions to make it easier to register and you will be able to explore inside.') }}
+                            <h3 class="otp_title">
+                                {{ __('If you are new, entering your phone number will automatically register you') }}
                             </h3>
+                            <h3 class="login_title" style="display: none;">
+                                {{ __('If you already have an account, you can login with your password') }}</h3>
                         </div>
 
 
@@ -66,15 +69,14 @@
                             <p class="get-otp"> <a class="otp_switch"
                                     href="javascript:void(0)">{{ __('Login with phone?') }}</a></p>
                             {{-- <p class="get-otp">{{ __('Not yet registered? ') }}<a
-                                    href="{{ route('use.register') }}">{{ __('Create an
-                                                                                                                                                                                                                                                                                                                                                                                                                                                account') }}</a>
+                                    href="{{ route('use.register') }}">{{ __('Create an account') }}</a>
                             </p> --}}
                         </form>
                         {{-- login With Password --}}
                         @include('auth.login_with')
                     </div>
                 </div>
-                <div class="col-7">
+                <div class="col-lg-6 col-xxl-6 d-none d-lg-block">
                     <div class="right-col">
 
                     </div>

@@ -12,7 +12,7 @@
 @media screen and (max-width: 1600px){
 
     /* ===================================
-        single pdct responsive code 
+        single pdct responsive code
     =====================================*/
 
     .single-pdct .pdct-info a {
@@ -237,7 +237,7 @@
         right: 0 !important;
         visibility: visible !important;
         right: 0px !important;
-        opacity: 1 !important; 
+        opacity: 1 !important;
     }
     .single-pdct .pdct-info {
         padding: 10px 20px 0px 20px;
@@ -249,7 +249,7 @@
         border: 1px solid var(--secundary-color) !important;
         font-size: 12px !important;
         width: 100% !important;
-        padding: 12px !important;
+        /* padding: 12px !important; */
         display: flex !important;
         background: transparent !important;
         align-items: center !important;
@@ -272,12 +272,12 @@
         font-size: 11px !important;
     }
     .single-item .pdct-title a {
-        font-size: 14px;
+        font-size: 13px;
         line-height: 15px;
         font-weight: 500 !important;
     }
     .single-pdct .pdct-info h3 {
-        font-size: 14px !important;
+        font-size: 13px !important;
         font-weight: 500 !important;
     }
     .sidebar-cat-section .row .single-cat h2 {
@@ -341,7 +341,7 @@
     .invalid-feedback {
         top: -5px !important;
     }
-    
+
     .product-section .feature-product .cat-filter-row .slider-col{
         margin-right: 0px;
     }
@@ -358,7 +358,7 @@
     /*=======================================================
         header section responsive code here
     =========================================================*/
-    
+
     header {
         position: unset;
     }
@@ -377,8 +377,8 @@
         top: 39px;
     }
     .header-section .main-header .right-col .login-btn img{
-        height: 25px !important; 
-        width: 25px !important; 
+        height: 25px !important;
+        width: 25px !important;
     }
     .header-section .right-col .cart-btn, .header-section .right-col .wish-btn {
         font-size: 12px !important;
@@ -760,7 +760,7 @@
         max-width: 100%;
         padding: 0px;
     }
-    
+
     /*==============================================
         loginpass responsive code here
     ===============================================*/
@@ -808,7 +808,7 @@
     }
 
     /* .log-with-pass .verification_wrap .field-set input{
-        
+
     } */
 
     /* ==============================================
@@ -1013,7 +1013,7 @@
         padding: 0px 30px;
         /* max-width: 100%; */
     }
-    
+
     /* best selling products responsive code */
 
     .best-selling-products .bst-product-content {
@@ -1052,7 +1052,7 @@
     }
 
     /*================================================
-        about page responsive code 
+        about page responsive code
     =================================================*/
 
     .about-section .highlight-section {
@@ -1197,7 +1197,7 @@
     .product-section .feature-product .uk-position-center-right.uk-position-small.uk-icon.uk-slidenav-next.uk-slidenav {
         right: -25px;
     }
-    
+
     /* ====================================================
         header section suggestion box responsive code
     =======================================================*/
@@ -1233,7 +1233,7 @@
     }
 
     /* ===============================================
-        product,about section responsive code 
+        product,about section responsive code
     ================================================*/
 
     .product-section .sub_categories .sub_cat_item .card {
@@ -1313,14 +1313,14 @@
     .single_product_section .single_product .product_details .tab-pane {
         padding: 0px !important;
     } */
-     
+
     .single_product_section .single_product .product_details .nav-tabs li a {
         padding: 10px 5px !important;
     }
     .header-section .search-filter .sub-btn i {
         font-size: 14px !important;
     }
-    
+
     /* .single_product_section .single_product .product_details #description{
         padding: 10px;
         background: var( --commoninner_bg);
@@ -1337,7 +1337,7 @@
     .support_wrap .message_box {
        width: 334px!important;
     }
-    
+
     /*============================================
         categories-section responsive code here
     ===============================================*/
@@ -1348,7 +1348,7 @@
     .sub_cat_item.uk-active .sub_cat_link .card.active h3{
         font-size: 9px !important;
     }
-    
+
     /* =========================================
         add to card responsive code
     ============================================ */
@@ -1365,10 +1365,10 @@
     .add_to_card .cart-btn i{
         font-size: 12px !important;
     }
-    
+
 
     /* ============================================
-        about-section responsive code 
+        about-section responsive code
     ================================================*/
 
     .about-section .about-container .content h5 {
@@ -1385,7 +1385,7 @@
     /*============================================
         footer responsive code here
     =============================================*/
-    
+
     .footer-section .main-footer-row .footer-logo img {
         width: 195px;
     }
@@ -1406,6 +1406,29 @@
     }
     .mobile-footer .row .col a{
         padding: 15px 0px;
+    }
+    /* Login Page CSS  */
+    .log-with-pass .left-col .form-title h1{
+        font-size: 18px !important;
+        margin-bottom: 10px !important;
+    }
+    .log-with-pass .left-col .form-title h3 {
+        font-size: 13px !important;
+        line-height: 17px !important;
+    }
+    .log-with-pass .left-col form{
+        padding-top: 15px !important;
+    }
+
+    /* Support CSS  */
+    .support_wrap .default-talk-bubble .talktext {
+        padding: .7em;
+    }
+    .support_wrap .default-talk-bubble {
+        width: 285px;
+    }
+    .support_wrap .default-talk-bubble .talktext p {
+        font-size: 12px;
     }
 
 }
@@ -1457,13 +1480,13 @@
     .support_wrap {
         bottom: 121px;
     }
-   
+
    /* uk future item tap slider responsive code */
 
     .uk-child-width-1-5\@m > * {
         width: 50% !important;
     }
-    
+
     /* breadcrumb_wrap responsive code */
 
     .breadcrumb_wrap .favorite {

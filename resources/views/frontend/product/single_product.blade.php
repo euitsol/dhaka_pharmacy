@@ -117,12 +117,13 @@
                                                             </div>
                                                             <div class="sp_quantity w-25 mb-4 mb-md-0">
                                                                 <div class="form-group">
-                                                                    <div class="input-group" role="group">
+                                                                    <div class="input-group align-items-center"
+                                                                        role="group">
                                                                         <a href="javascript:void(0)"
                                                                             class="btn btn-sm minus_qty disabled d-flex align-items-center justify-content-center">
                                                                             <i class="fa-solid fa-minus"></i>
                                                                         </a>
-                                                                        <input type="text"
+                                                                        <input type="text" style="line-height: 1.5"
                                                                             class="form-control text-center quantity_input"
                                                                             name="quantity" value="1">
                                                                         <a href="javascript:void(0)"
@@ -137,7 +138,8 @@
 
 
                                                     <div class="add_to_card">
-                                                        <a class="cart-btn d-flex align-items-center justify-content-center" href="javascript:void(0)"
+                                                        <a class="cart-btn d-flex align-items-center justify-content-center"
+                                                            href="javascript:void(0)"
                                                             data-product_slug="{{ $single_product->slug }}"
                                                             data-quantity="1"
                                                             data-unit_id="{{ $single_product->units[0]['id'] }}">
@@ -289,10 +291,11 @@
                                                             $product->discounts,
                                                         );
                                                     @endphp
-                                                    <div class="col-xxl-12 col-md-4 col-sm-4 col-6 py-2 py-xxl-0 px-2 p-xxl-2">
+                                                    <div
+                                                        class="col-xxl-12 col-md-4 col-sm-4 col-6 py-2 py-xxl-0 px-2 p-xxl-2">
                                                         <div class="single-item">
                                                             <div class="row align-items-center">
-                                                                <div class="col-12 col-xxl-4 img">
+                                                                <div class="col-12 px-1 px-xxl-2 col-xxl-4 img">
                                                                     <a class="d-block w-100"
                                                                         href="{{ route('product.single_product', $product->slug) }}">
                                                                         <img height=""
@@ -301,22 +304,26 @@
                                                                             alt="{{ __($product->name) }}">
                                                                     </a>
                                                                 </div>
-                                                                <div class="col-12 col-xxl-8 content px-2 px-lg-3 px-xxl-2">
+                                                                <div
+                                                                    class="col-12 col-xxl-8 content px-2 px-lg-3 px-xxl-2">
 
                                                                     <h3 class="pdct-title"
                                                                         title="{{ $product->attr_title }}"><a
                                                                             href="{{ route('product.single_product', $product->slug) }}">{{ $product->name }}
                                                                         </a></h3>
-                                                                        
-                                                                    <p class="d-block d-xxl-none"><a href="" title="{{ $product->pro_sub_cat->name }}">
-                                                                        {{ $product->pro_sub_cat->name }}
-                                                                    </a></p>
-                                                                    <p><a href="" title="{{ $product->generic->name }}">
-                                                                        {{ $product->generic->name }}
-                                                                    </a></p>
-                                                                    <p><a href="" title="{{ $product->company->name }}">
-                                                                        {{ $product->company->name }}
-                                                                    </a></p>
+
+                                                                    <p class="d-block d-xxl-none"><a href=""
+                                                                            title="{{ $product->pro_sub_cat->name }}">
+                                                                            {{ $product->pro_sub_cat->name }}
+                                                                        </a></p>
+                                                                    <p><a href=""
+                                                                            title="{{ $product->generic->name }}">
+                                                                            {{ $product->generic->name }}
+                                                                        </a></p>
+                                                                    <p><a href=""
+                                                                            title="{{ $product->company->name }}">
+                                                                            {{ $product->company->name }}
+                                                                        </a></p>
                                                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
                                                                             {{ number_format($ProDisPrice, 2) }}</span>
                                                                         @if ($ProDisPrice != $product->price)
@@ -329,7 +336,8 @@
                                                                     <div class="add_to_card d-block d-xxl-none">
                                                                         <a class="cart-btn">
                                                                             <i class="fa-solid fa-cart-plus"></i>
-                                                                            <span class="d-block d-xxl-none">Add To Cart</span>
+                                                                            <span class="d-block d-xxl-none">Add To
+                                                                                Cart</span>
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -388,16 +396,19 @@
                                                                     </h3>
                                                                 </a>
                                                             </div>
-                                                            <p><a href="" title="{{ $product->pro_sub_cat->name }}">
-                                                                {{ $product->pro_sub_cat->name }}
-                                                            </a></p>
-                                                            <p><a href="#" class="generic-name" title="{{ $product->generic->name }}">
-                                                                {{ $product->generic->name }}
-                                                            </a></p>
-                                                            <p><a href="#" class="company-name" title="{{ $product->company->name }}">
-                                                                {{ $product->company->name }}
-                                                            </a></p>
-                                                            
+                                                            <p><a href=""
+                                                                    title="{{ $product->pro_sub_cat->name }}">
+                                                                    {{ $product->pro_sub_cat->name }}
+                                                                </a></p>
+                                                            <p><a href="#" class="generic-name"
+                                                                    title="{{ $product->generic->name }}">
+                                                                    {{ $product->generic->name }}
+                                                                </a></p>
+                                                            <p><a href="#" class="company-name"
+                                                                    title="{{ $product->company->name }}">
+                                                                    {{ $product->company->name }}
+                                                                </a></p>
+
                                                             <h4> <span> {!! get_taka_icon() !!}
                                                                     {{ number_format($similarProDisPrice, 2) }}</span>
                                                                 @if ($similarProDisPrice != $product->price)
