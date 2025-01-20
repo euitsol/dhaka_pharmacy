@@ -156,7 +156,7 @@ body {
 
 .log-with-pass .left-col form .input-box .eye {
     right: 15px;
-    left: inherit;
+    left: inherit !important;
     cursor: pointer;
 }
 

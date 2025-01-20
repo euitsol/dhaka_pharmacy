@@ -26,8 +26,8 @@
                             @csrf
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                                <input type="text" name="phone" placeholder="Phone" class="phone" autocomplete="off"
-                                    readonly onfocus="this.removeAttribute('readonly');">
+                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="Phone"
+                                    class="phone" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
 
@@ -49,8 +49,8 @@
                             @csrf
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                                <input type="text" name="phone" placeholder="Phone" class="phone" autocomplete="off"
-                                    readonly onfocus="this.removeAttribute('readonly');">
+                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="Phone"
+                                    class="phone" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
                             <div class="pass input-box password_input">
@@ -67,7 +67,7 @@
 
                             <input class="login_button submit_button" type="submit" value="LOGIN">
                             <p class="get-otp"> <a class="otp_switch"
-                                    href="javascript:void(0)">{{ __('Login with phone?') }}</a></p>
+                                    href="javascript:void(0)">{{ __('Login with OTP?') }}</a></p>
                             {{-- <p class="get-otp">{{ __('Not yet registered? ') }}<a
                                     href="{{ route('use.register') }}">{{ __('Create an account') }}</a>
                             </p> --}}

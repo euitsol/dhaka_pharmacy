@@ -244,12 +244,12 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="card-body">
-                                        <div class="form-group mb-4">
+                                        {{-- <div class="form-group mb-4">
                                             <label class="text-muted">{{ __('Current Password') }}</label>
                                             <input type="password" name="old_password" class="form-control"
                                                 placeholder="Current Password">
                                             @include('alerts.feedback', ['field' => 'old_password'])
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group mb-4">
                                             <label class="text-muted">{{ __('New Password') }}</label>
                                             <input type="password" name="password" class="form-control"
