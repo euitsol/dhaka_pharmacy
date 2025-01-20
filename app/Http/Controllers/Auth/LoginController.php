@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\URL;
 use App\Http\Traits\SmsTrait;
+use Illuminate\Support\Str;
 
 use function PHPUnit\Framework\isNull;
 
@@ -126,7 +127,11 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        session()->put('previous_url', url()->previous());
+        $previous_url = url()->previous();
+        session()->put('previous_url', $previous_url);
+        if (Str::contains($previous_url, 'reset/password')) {
+            session()->forget('previous_url');
+        }
         if (Auth::guard('web')->check()) {
             $url = session()->get('previous_url', route('user.dashboard'));
             session()->forget('previous_url');
@@ -139,7 +144,7 @@ class LoginController extends Controller
     {
         $credentials = $request->only('phone', 'password');
         $check = User::where('phone', $request->phone)->first();
-        if ($check) {
+        if ($check && !empty($check->password)) {
             if ($check->status == 1) {
                 if (Auth::guard('web')->attempt($credentials)) {
                     $url = session()->get('previous_url', route('user.dashboard'));
@@ -149,12 +154,14 @@ class LoginController extends Controller
                 }
                 flash()->addError('Invalid credentials');
             } else {
-                flash()->addError('Your account has been disabled. Please contact support.');
+                flash()->addWarning('Your account has been disabled. Please contact support.');
             }
+        } elseif ($check && empty($check->password)) {
+            flash()->addWarning('Your password has not been set. Please log in with OTP first, then set your password in your profile.');
         } else {
-            flash()->addError('User Not Found');
+            flash()->addError('Invalid phone number.');
         }
-        return redirect()->route('login');
+        return redirect()->route('login')->withInput();
     }
 
     public function send_otp(SendOtpRequest $req)
@@ -171,7 +178,7 @@ class LoginController extends Controller
             if ($user) {
                 if ($this->check_throttle($user)) {
                     flash()->addError($this->check_throttle($user));
-                    return redirect()->back();
+                    return redirect()->back()->withInput();
                 }
 
                 // Save OTP in DB
@@ -188,15 +195,15 @@ class LoginController extends Controller
                     return redirect()->route('use.otp', encrypt($user->id));
                 } else {
                     flash()->addError($result);
-                    return redirect()->back();
+                    return redirect()->back()->withInput();
                 }
             } else {
                 flash()->addError('Something went wrong! please try again.');
-                return redirect()->back();
+                return redirect()->back()->withInput();
             }
         } catch (\Exception $e) {
             flash()->addError($e->getMessage());
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
     }
 

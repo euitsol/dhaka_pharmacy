@@ -6,7 +6,7 @@
                     <div class="col-xl-1 col-lg-2">
                         <div class="logo">
                             <a href="{{ route('home') }}">
-                                <img class="w-100" src="{{ asset('user/asset/img/dashboard-logo.png') }}"
+                                <img class="w-100" src="{{ storage_url(settings('site_favicon')) }}"
                                     alt="{{ config('app.name') }}">
                             </a>
                         </div>

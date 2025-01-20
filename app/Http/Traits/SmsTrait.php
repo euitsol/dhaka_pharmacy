@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 
 trait SmsTrait
 {
-    function sms_send($mobile, $message)
+    public function sms_send($mobile, $message)
     {
         $url = config('services.sms_api.url');
         $api_key = config('services.sms_api.key');
