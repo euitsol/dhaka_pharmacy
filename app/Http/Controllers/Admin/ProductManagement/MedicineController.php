@@ -42,8 +42,8 @@ class MedicineController extends Controller
                 ->editColumn('created_at', function ($data) {
                     return date('d-m-Y', strtotime($data->created_at));
                 })
-                ->addColumn('name', function ($data) {
-                    $companyName = optional($data->company)->name ?? 'No Company'; // Assuming the company name is in 'pro_cat->name'
+                ->editColumn('name', function ($data) {
+                    $companyName = optional($data->company)->name ?? 'No Company';
                     return $data->name . ' (' . $companyName . ')';
                 })
                 ->addColumn('created_user', function ($data) {
