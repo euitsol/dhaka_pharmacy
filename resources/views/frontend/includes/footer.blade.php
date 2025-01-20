@@ -78,7 +78,7 @@
             <div class="row row-gap-2 row-gap-sm-4">
                 <div class="col-12 col-lg-3 col-md-2 col-sm-6">
                     <div class="footer-logo mb-4">
-                        <a href="{{ route('home') }}"> <img src="{{ asset('frontend/asset/img/logo.png') }}"
+                        <a href="{{ route('home') }}"> <img src="{{ storage_url(settings('site_logo')) }}"
                                 alt="Footer logo"></a>
                     </div>
                     <div class="footer-followus">
