@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\URL;
 use App\Http\Traits\SmsTrait;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 use function PHPUnit\Framework\isNull;
@@ -56,7 +58,7 @@ class LoginController extends Controller
         try {
             $user = Socialite::driver('google')->user();
         } catch (Exception $e) {
-            return redirect('/login');
+            return redirect()->route('login');
         }
         $existing = User::where('email', $user->email)->first();
         if ($existing) {
@@ -90,7 +92,7 @@ class LoginController extends Controller
         try {
             $facebookUser = Socialite::driver('facebook')->user();
         } catch (Exception $e) {
-            return redirect('/login');
+            return redirect()->route('login');
         }
         $existing = User::where('email', $facebookUser->email)->first();
         if ($existing) {
@@ -109,6 +111,42 @@ class LoginController extends Controller
         }
         ticketClosed();
         return redirect()->route('user.dashboard');
+    }
+
+    public function fb_delete(Request $request)
+    {
+
+        $accessToken = $request->input('access_token');
+
+        // Validate access token with Facebook API
+        $response = Http::get("https://graph.facebook.com/debug_token", [
+            'input_token' => $accessToken,
+            'access_token' => config('services.facebook.app_access_token'),
+        ]);
+
+        if ($response->failed() || !$response->json('data.is_valid')) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $userIdFromFacebook = $response->json('data.user_id');
+
+        // Validate that the user exists
+        $user = User::where('facebook_id', $userIdFromFacebook)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Perform the deletion
+        $user->delete();
+
+        // Log the request
+        Log::info('User deleted', ['facebook_id' => $userIdFromFacebook]);
+
+        // Return the confirmation response
+        return response()->json([
+            'url' => route('login'),
+        ]);
     }
 
 
