@@ -189,9 +189,9 @@
     .my-order-section .order-row .order-status .total {
         font-size: 16px;
     }
-    .my-order-section .order-row .img {
+    /* .my-order-section .order-row .img {
         width: 100% !important;
-    }
+    } */
     .my-order-section .order-status{
         width: 100% !important;
     }
