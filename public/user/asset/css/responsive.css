@@ -173,10 +173,83 @@
     .header-section .right-col .offcanvas .add_to_cart_item .product_details .info p a {
         font-size: 10px !important;
     }
+    .my-order-section .order-row .order-status .btn a, .order-info-section .order-status a {
+        width: 100px;
+        border: 1px solid #000;
+        font-size: 14px;
+    }
+    .my-order-section .order-row .order-status .btn a.cancle, .order-info-section .order-status a.cancle {
+        border: 1px solid red;
+    }
+    .my-order-section .order-row .product-info .name {
+        font-size: 12px;
+        line-height: 16px;
+        margin-bottom: 5px;
+    }
+    .my-order-section .order-row .order-status .total {
+        font-size: 16px;
+    }
+    .my-order-section .order-row .img {
+        width: 100% !important;
+    }
+    .my-order-section .order-status{
+        width: 100% !important;
+    }
+    .my-order-section .order-row .order-status .btns .button {
+        font-size: 14px !important;
+        width: 50% !important;
+        display: revert !important;
+        border: 1px solid #000 !important;
+    }
+    .my-order-section .order-row .order-status .btns .add_to_card{
+        font-size: 14px !important;
+        width: 50% !important;
+    }
+    .my-order-section .order-row .order-status .btns .add_to_card .cart-btn{
+        width: 100% !important;
+        display: inherit !important;
+    }
+    .my-order-section .order-row .product-info .cat {
+        font-size: 10px !important;
+    }
+    .my-order-section .page-title h3 {
+        font-size: 20px;
+    }
+    .my-order-section .order-row .order-id-row {
+        padding: 10px;
+    }
+    .my-order-section .order-row .qty {
+        font-size: 14px;
+    }
+
+    .form-section h2 {
+        font-size: 22px !important;
+        line-height: 32px !important;
+        margin-bottom: 10px !important;
+    }
+    .form-section .form-column {
+        padding: 10px !important;
+        width: 100% !important;
+    }
+    .form-section .form-column input, textarea {
+        padding-left: 21px !important;
+        border-radius: 10px !important;
+        font-size: 14px !important;
+    }
+    .form-section .form-column .submit-button {
+        font-size: 16px !important;
+        max-width: 100% !important;
+        padding: 0px !important;
+    }
+    .form-section .form-column form {
+        row-gap: 14px !important;
+    }
+    .form-section .form-column textarea {
+        height: 121px !important;
+    }
 
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
-
 
     .offer_image img {
         height: 140px !important;
@@ -309,6 +382,55 @@
     .order-info-section .order-traking-row .step {
         min-height: 60px;
     }
+    .my-order-section .order-row .order-status .btn a, .order-info-section .order-status a {
+        width: 100px;
+        border: 1px solid #000;
+        font-size: 14px;
+    }
+    .my-order-section .order-row .order-status .btn a.cancle, .order-info-section .order-status a.cancle {
+        border: 1px solid red;
+    }
+    .my-order-section .order-row .order-status .btns .button {
+        width: 110px;
+        border: 1px solid #000 !important;
+        font-size: 15px !important;
+    }
+    .my-order-section .order-status{
+        width: 100% !important;
+    }
+    .my-order-section .page-title h3 {
+        font-size: 20px;
+    }
+    .my-order-section .order-row .product-info .name {
+        font-size: 12px;
+        line-height: 16px;
+    }
+    .my-order-section .order-row .qty {
+        font-size: 14px;
+    }
+
+    .form-section h2 {
+        font-size: 29px !important;
+        line-height: 32px !important;
+        margin-bottom: 10px !important;
+    }
+    .form-section .form-column {
+        padding: 30px !important;
+        width: 100% !important;
+    }
+
+    .form-section .form-column input, textarea {
+        padding-left: 21px !important;
+        border-radius: 10px !important;
+    }
+    .form-section .form-column form {
+        row-gap: 15px !important;
+    }
+    .form-section .form-column .submit-button {
+        font-size: 16px !important;
+        max-width: 100% !important;
+        padding: 0px !important;
+    }
 
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
@@ -416,6 +538,15 @@
     .order-info-section .order-traking-row .step-5.active::after {
         left: 64% ;
         width: 40%;
+    }
+
+    .form-section h2 {
+        font-size: 32px !important;
+        line-height: 32px !important;
+        margin-bottom: 15px !important;
+    }
+    .form-section .form-column {
+        padding: 40px !important;
     }
 }
 @media screen and (min-width: 992px) and (max-width: 1023px) {

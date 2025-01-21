@@ -18,7 +18,7 @@
                         <input type="file" name="uploadfiles" data-actualName="files[]" class="form-control filepond"
                             id="files" multiple>
                         @include('alerts.feedback', ['field' => 'files'])
-                        <input class="submit-button ms-auto" type="submit" name="submit" value="Submit">
+                        <input class="submit-button ms-auto p-0" type="submit" name="submit" value="Submit">
                     </form>
                 </div>
             </div>

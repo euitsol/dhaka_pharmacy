@@ -634,6 +634,7 @@ margin: 0;
 .dashboard-main-section .col-left .single-box .title h2{
     font-weight: 600;
     margin-top: 32px;
+    text-align: center;
 }
 .dashboard-main-section .col-left .previous-order{
     background-color: #C2E7FC;

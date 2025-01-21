@@ -373,7 +373,7 @@ header{
     position: relative;
   }
   .header-section .right-col .offcanvas .wishes .product_details .image img {
-    height: 60px;
+    /* height: 60px; */
     object-fit: cover;
     width: 100%;
   }
@@ -425,26 +425,26 @@ header{
   .header-section .right-col .offcanvas .wishes .details .details_btn, 
   .header-section .right-col .offcanvas .wishes .details .order_btn {
     font-size: 11px;
-    border: 1px solid var(--border-2);
+    border: 1px solid var(--border-2) !important;
     display: block;
     text-align: center;
-    padding: 5px 0px;
+    padding: 5px 0px !important;
     border-radius: 5px;
     color: var(--nav-asent-color);
     transition: .4s;
   }
   .header-section .right-col .offcanvas .wishes .details .order_btn {
-    background-color: var(--nav-asent-color);
-    color: var(--nav-text-color);
-    width: 100%;
+    background-color: var(--nav-asent-color) !important;
+    color: var(--nav-text-color) !important;
+    width: 100% !important;
   }
   .header-section .right-col .offcanvas .wishes .details .details_btn:hover{
     background-color: var(--nav-asent-color);
     color: var(--nav-text-color);
   }
   .header-section .right-col .offcanvas .wishes .details .order_btn:hover {
-    background-color: transparent;
-    color: var(--nav-asent-color);
+    background-color: transparent !important;
+    color: var(--nav-asent-color) !important;
   }
   /* New CSS  */
   .header-section .suggestion-box .search_item{
@@ -486,3 +486,7 @@ header{
   #cartbtn .form-group .plus_btn{
     border-radius: 0px 15px 15px 0px;
   }
+
+#wishlist .wish_item .wishlist_item {
+  text-align: right;
+}

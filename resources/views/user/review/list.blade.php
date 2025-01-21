@@ -63,8 +63,8 @@
                                 <div class="product-info">
                                     <h5 class="mb-0" title="{{ $product->attr_title }}">
                                         {{ $product->name }}</h5>
-                                    <p class="mb-0">{{ $product->pro_sub_cat->name }}</p>
-                                    <p class="mb-0">{{ $product->pro_cat->name }}</p>
+                                    <p class="mb-0" title="{{ $product->pro_sub_cat->name }}">{{ $product->pro_sub_cat->name }}</p>
+                                    <p class="mb-0" title="{{ $product->pro_cat->name }}" >{{ $product->pro_cat->name }}</p>
                                 </div>
                             </div>
                             <div class="col-lg col-md-5 col-12">
