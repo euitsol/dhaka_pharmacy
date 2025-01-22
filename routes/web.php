@@ -181,6 +181,13 @@ Route::controller(PharmacyLoginController::class)->prefix('pharmacy')->name('pha
     Route::get('/login', 'pharmacyLogin')->name('login');
     Route::post('/login', 'pharmacyLoginCheck')->name('login');
     Route::post('/logout', 'logout')->name('logout');
+
+    Route::get('/forgot', 'forgot')->name('forgot');
+    Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
+    Route::get('/forgot/verify-otp/{pid}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{pid}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{pid}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{pid}', 'resetPasswordStore')->name('reset.password');
 });
 
 
