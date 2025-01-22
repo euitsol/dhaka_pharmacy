@@ -876,6 +876,7 @@
     }
     .mobile-footer .container .header-section{
         margin: 0 auto;
+        background: transparent !important;
     }
     .mobile-footer .row .col span i{
         color: var(--text-color-white) !important;

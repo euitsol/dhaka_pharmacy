@@ -491,3 +491,6 @@ header{
   #cartbtn .form-group .plus_btn{
     border-radius: 0px 15px 15px 0px;
   }
+  #wish_wrap .wish_item .wishlist_item {
+    text-align: right !important;
+  }
