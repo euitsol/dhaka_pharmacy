@@ -1221,6 +1221,7 @@ margin: 0;
     font-weight: 500;
     color: var(--text);
     min-width: 80px;
+    text-align: right;
 }
 .order-info-section .order-info-row .right div:last-child p{
     font-weight: 700;

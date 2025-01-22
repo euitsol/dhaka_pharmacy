@@ -5,7 +5,7 @@
         <div class="container">
             <div class="order-info-cont">
                 <!-- payment-status-row-start -->
-                <div class="row py-4">
+                <div class="row py-2 py-md-4">
                     <div class="col">
                         <div class="order-status-row d-flex align-items-center">
                             <div class="img me-3">
@@ -20,7 +20,7 @@
                 <!-- payment-status-row-end -->
 
                 <!-- payment-details-row-start -->
-                <div class="row py-2 pt-4">
+                <div class="row py-2 pt-2 pt-md-4">
                     <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Payment Date') }}</span>

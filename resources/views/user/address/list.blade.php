@@ -67,11 +67,10 @@
                                             <div class="col-md-12 mt-sm-3">
                                                 <span class="strong">Instruction: </span> {!! $address->delivery_instruction !!}
                                             </div>
-                                            <div class="col-md-12 mt-sm-3">
+                                            <div class="col-md-12 mt-sm-3 mt-4">
                                                 @if (!empty($address->latitude) && !empty($address->longitude))
                                                     <div class="my-map" id="map{{ $key }}"
-                                                        data-lat={{ $address->latitude }}
-                                                        data-lng={{ $address->longitude }}></div>
+                                                    data-lat={{ $address->latitude }} data-lng={{ $address->longitude }}></div>
                                                 @endif
 
                                             </div>

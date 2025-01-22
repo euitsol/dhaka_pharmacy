@@ -78,15 +78,14 @@
         overflow-x: hidden;
     }
     .header-section .nav-menu.active{
-
-        width: 310px;
+        width: 250px;
         visibility: visible;
         opacity: 1;
     }
     .header-section .nav-menu .navbar-nav{
         flex-direction: column !important;
         align-items: start !important;
-        padding: 20px;
+        padding: 10px;
     }
     .header-section .nav-menu .navbar-nav li{
         width: 100%;
@@ -124,7 +123,7 @@
     /* Payment & Order Details CSS  */
     .order-info-section .order-status-row h2 {
         line-height: 18px;
-        font-size: 15px;
+        font-size: 13px;
     }
     /* Order Details  */
     .order-info-section .order-traking-row .step-1::before {
@@ -187,7 +186,8 @@
         margin-bottom: 5px;
     }
     .my-order-section .order-row .order-status .total {
-        font-size: 16px;
+        font-size: 16px !important;
+        line-height: 22px !important;
     }
     /* .my-order-section .order-row .img {
         width: 100% !important;
@@ -247,6 +247,57 @@
     .form-section .form-column textarea {
         height: 121px !important;
     }
+    #review_wrap textarea{
+        border: 1px solid !important;
+    }
+    .header-section .profile ul.dropdown-menu {
+        right: -45px !important;
+    }
+
+    .header-section .profile ul.dropdown-menu a span {
+        font-size: 14px !important;
+    }
+    .header-section .profile ul.dropdown-menu li a i{
+        font-size: 20px !important;
+    }
+    .header-section .profile ul.dropdown-menu li a {
+        padding: 10px;
+    }
+    .header-section .profile ul.dropdown-menu a img {
+        width: 24px !important;
+        height: 24px !important;
+        margin-right: 20px !important;
+    }
+    .my-order-section .show-order .form-select {
+        width: 100% !important;
+        border-radius: 4px !important;
+    }
+    .my-order-section .payment_wrap .order-id-row .badge {
+        position: absolute;
+        top: 0px;
+        right: 12px;
+    }
+    .my-order-section .order-id-row .status .order-status-row .badge{
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+    .my-order-section .order-row .order-id-row .order-num {
+        font-size: 14px;
+        line-height: 20px;
+    }
+    .order-info-section .order-status-row .img {
+        padding: 6px 6px;
+    }
+    .order-info-section .order-details p {
+        font-size: 14px;
+        line-height: 19px;
+    }
+    .order-info-section .order-info-row .right p{
+        font-size: 16px;
+        line-height: 24px;
+    }
+
 
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
@@ -333,7 +384,6 @@
         overflow-x: hidden;
     }
     .header-section .nav-menu.active{
-
         width: 400px;
         visibility: visible;
         opacity: 1;
@@ -341,7 +391,7 @@
     .header-section .nav-menu .navbar-nav{
         flex-direction: column !important;
         align-items: start !important;
-        padding: 20px;
+        padding: 10px;
     }
     .header-section .nav-menu .navbar-nav li{
         width: 100%;
@@ -359,7 +409,7 @@
     /* Payment & Order Details CSS  */
     .order-info-section .order-status-row h2 {
         line-height: 25px;
-        font-size: 20px;
+        font-size: 14px;
     }
 
     /* Order Details  */
@@ -430,6 +480,12 @@
         font-size: 16px !important;
         max-width: 100% !important;
         padding: 0px !important;
+    }
+    #review_wrap textarea{
+        border: 1px solid !important;
+    }
+    .order-info-section .order-status-row p {
+        padding: 3px 10px;
     }
 
 }

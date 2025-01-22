@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="page-title">
+                    <div class="page-title mb-3">
                         <h3>{{ __('My Payments') }}</h3>
                     </div>
                     <div class="show-order d-flex align-items-center">
@@ -34,8 +34,8 @@
             <div class="payment_wrap">
                 @forelse ($payments as $payment)
                     <div class="order-row">
-                        <div class="order-id-row border-0 p-4">
-                            <div class="row align-items-center">
+                        <div class="order-id-row border-0 p-4" >
+                            <div class="row align-items-center" style="position: relative;">
                                 <div class="col-lg-4 col-12">
                                     <h3 class="order-num">
                                         {{ __('Transaction ID: ') }}<span>{{ $payment->transaction_id }}</span>
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-lg-8 col-12 mt-2 mt-lg-0">
                                     <div class="row align-items-center">
-                                        <div class="col-md-4 col-lg-3 col-6 text-center">
+                                        <div class="col-md-4 col-lg-3 col-sm-6 col-12 text-center">
                                             <div class="order-status pe-0">
                                                 <div class="total">
                                                     <p class="total text-start">
@@ -56,7 +56,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-4">
+                                        <div class="col-md-3 col-sm-4 col-12">
                                             <div class="order-status pe-0">
                                                 <div class="total">
                                                     <p class="total text-start">
@@ -69,7 +69,7 @@
                                             <span
                                                 class="{{ $payment->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $payment->statusTitle())))) }}</span>
                                         </div>
-                                        <div class="col-md-4 mt-2 mt-md-0 col-12 text-end">
+                                        <div class="col-md-4 mt-2 mt-md-0 col-12 text-start text-md-end">
                                             <div class="order-status">
                                                 <div class="btn p-0">
                                                     <a

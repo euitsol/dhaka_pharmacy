@@ -28,8 +28,8 @@
                     <div class="order-row">
                         <div class="order-id-row">
                             <div class="row align-content-center">
-                                <div class="col-xl-10 col-md-8">
-                                    <div class="d-flex flex-sm-row flex-column">
+                                <div class="col-xl-10 col-md-8" >
+                                    <div class="d-flex flex-sm-row flex-column" style="position: relative">
                                         <div class="text">
                                             <h3 class="order-num">
                                                 {{ __('Order: ') }}<span>{{ $order->order_id }}</span>
@@ -38,7 +38,7 @@
                                                 {{ __('Placed on ') }}<span>{{ $order->place_date }}</span>
                                             </p>
                                         </div>
-                                        <div class="status ms-0 ms-sm-4 mt-3 mt-sm-0 ms-md-2 ms-lg-3 order-info-section">
+                                        <div class="status ms-0 ms-sm-4 mt-1 mt-sm-0 ms-md-2 ms-lg-3 order-info-section">
                                             <div class="order-status-row d-flex gap-3 align-items-center">
                                                 <span class="{{ $order->statusBg }}">{{ __($order->statusTitle) }}</span>
                                                 @if (isset($order->otp))
