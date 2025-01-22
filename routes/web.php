@@ -166,6 +166,13 @@ Route::controller(AdminLoginController::class)->prefix('admin')->name('admin.')-
     Route::get('/login', 'adminLogin')->name('login');
     Route::post('/login', 'adminLoginCheck')->name('login');
     Route::post('/logout', 'logout')->name('logout');
+
+    Route::get('/forgot', 'forgot')->name('forgot');
+    Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
+    Route::get('/forgot/verify-otp/{admin_id}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{admin_id}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{admin_id}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{admin_id}', 'resetPasswordStore')->name('reset.password');
 });
 
 
