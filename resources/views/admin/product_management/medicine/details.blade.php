@@ -30,22 +30,22 @@
                             <tr>
                                 <th>{{ __('Product Category') }}</th>
                                 <th>{{ __(':') }}</th>
-                                <td>{{ __($medicine->pro_cat->name) }}</td>
+                                <td>{{ __(optional($medicine->pro_cat)->name) }}</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Product Sub Category') }}</th>
                                 <th>{{ __(':') }}</th>
-                                <td>{{ __($medicine->pro_sub_cat->name) }}</td>
+                                <td>{{ __(optional($medicine->pro_sub_cat)->name) }}</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Generic Name') }}</th>
                                 <th>{{ __(':') }}</th>
-                                <td>{{ __($medicine->generic->name) }}</td>
+                                <td>{{ __(optional($medicine->generic)->name) }}</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Company Name') }}</th>
                                 <th>{{ __(':') }}</th>
-                                <td>{{ __($medicine->company->name) }}</td>
+                                <td>{{ __(optional($medicine->company)->name) }}</td>
                             </tr>
                             {{-- <tr>
                                     <th>{{ __('Medicine Dosage') }}</th>
@@ -56,8 +56,8 @@
                                 <tr>
                                     <th>{{ __('Medicine Strength') }}</th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ $medicine->strength->quantity }}
-                                        <small>{{ $medicine->strength->unit }}</small>
+                                    <td> {{ optional($medicine->strength)->quantity }}
+                                        <small>{{ optional($medicine->strength)->unit }}</small>
                                     </td>
                                 </tr>
                             @endif

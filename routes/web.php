@@ -205,16 +205,14 @@ Route::controller(RiderLoginController::class)->prefix('rider')->name('rider.')-
 
 
 // Google Login
-Route::get('/google-redirect', [UserLoginController::class, 'googleRedirect'])->name('login_with_google');
-Route::get('/auth/google/callback', [UserLoginController::class, 'googleCallback']);
+Route::get('/google-redirect', [UserLoginController::class, 'googleRedirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [UserLoginController::class, 'googleCallback'])->name('google.callback');
 
-// Github Login
-Route::get('/github-redirect', [UserLoginController::class, 'githubRedirect'])->name('login_with_github');
-Route::get('/auth/github/callback', [UserLoginController::class, 'githubCallback']);
 
 // Facebook Login
-Route::get('/facebook-redirect', [UserLoginController::class, 'facebookRedirect'])->name('login_with_facebook');
-Route::get('/auth/facebook/callback', [UserLoginController::class, 'facebookCallback']);
+Route::get('/facebook-redirect', [UserLoginController::class, 'facebookRedirect'])->name('fb.redirect');
+Route::get('/auth/facebook/callback', [UserLoginController::class, 'facebookCallback'])->name('fb.callback');
+Route::post('/facebook/user-deletion', [UserLoginController::class, 'fb_delete'])->name('fb.deletion');
 
 // Overwrite Default Authentication Routes
 Route::controller(UserLoginController::class)->prefix('user')->group(function () {
