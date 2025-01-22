@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Scout\Searchable;
 
 class Medicine extends BaseModel
 {
-    use HasFactory, SoftDeletes, EagerLoadPivotTrait;
+    use HasFactory, SoftDeletes, Searchable;
 
 
     public function pro_cat()
@@ -119,8 +120,40 @@ class Medicine extends BaseModel
         return $query->where('pro_sub_cat_id', $scategoryId);
     }
 
-    public function precaution()
+    public function precaution():HasOne
     {
         return $this->hasOne(ProductPrecaution::class, 'product_id');
+    }
+
+    public function toSearchableArray():array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
+            'generic_id' => optional($this->generic)->id,
+            'generic_name' => optional($this->generic)->name,
+            'generic_slug' => optional($this->generic)->slug,
+            'company_id' => optional($this->company)->id,
+            'company_name' => optional($this->company)->name,
+            'company_slug' => optional($this->company)->slug,
+            'strength' => optional($this->strength)->name,
+            'category' => optional($this->pro_cat)->name,
+            'category_id' => optional($this->pro_cat)->id,
+            'sub_category' => optional($this->pro_sub_cat)->name,
+            'sub_category_id' => optional($this->pro_sub_cat)->id,
+            'price' => $this->price,
+            'status' => $this->status,
+        ];
+    }
+
+    public function isActived():bool
+    {
+        return $this->status == 1;
+    }
+
+    public function shouldBeSearchable(): bool
+    {
+        return $this->isActived();
     }
 }

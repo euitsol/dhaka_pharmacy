@@ -24,16 +24,16 @@ trait TransformProductTrait
 
     private function setStrengthInfo(&$product)
     {
-        $product->strength_info = $product->strength ? ' (' . $product->strength->quantity . ' ' . $product->strength->unit . ')' : '';
+        $product->strength_info = $product->strength ? ' (' . optional($product->strength)->quantity . ' ' . optional($product->strength)->unit . ')' : '';
     }
 
     private function setProductNames(&$product, $limit)
     {
         $product->attr_title = Str::ucfirst(Str::title($product->name));
         $product->name = Str::limit(Str::ucfirst(Str::lower($product->name . ($product->strength_info))), $limit, '..');
-        $product->pro_sub_cat->name = Str::limit(Str::title($product->pro_sub_cat->name), $limit, '..');
-        $product->generic->name = Str::limit(Str::title($product->generic->name), $limit, '..');
-        $product->company->name = Str::limit(Str::title($product->company->name), $limit, '..');
+        optional($product->pro_sub_cat)->name = Str::limit(Str::title(optional($product->pro_sub_cat)->name), $limit, '..');
+        optional($product->generic)->name = Str::limit(Str::title(optional($product->generic)->name), $limit, '..');
+        optional($product->company)->name = Str::limit(Str::title(optional($product->company)->name), $limit, '..');
     }
 
     private function setDiscountInformation(&$product)
