@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
+use Illuminate\Http\Request;
 
 
 class GenericNameController extends Controller
@@ -18,7 +19,7 @@ class GenericNameController extends Controller
 
     public function __construct()
     {
-        return $this->middleware('admin');
+        $this->middleware('admin');
     }
     public function index(): View
     {
@@ -76,5 +77,15 @@ class GenericNameController extends Controller
         $generic_name->delete();
         flash()->addSuccess('Medicine generic name ' . $generic_name->name . ' deleted successfully.');
         return redirect()->route('product.generic_name.generic_name_list');
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $search = $request->get('q');
+        $generic_names = GenericName::where('name', 'LIKE', "%{$search}%")
+            ->select('id', 'name')
+            ->get();
+
+        return response()->json($generic_names);
     }
 }

@@ -1,8 +1,17 @@
 @extends('admin.layouts.master', ['pageSlug' => 'medicine'])
 @section('title', 'Product List')
 @push('css_link')
-    <link rel="stylesheet" href="{{ asset('plugin/datatable/datatables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugin/datatable/datatables.min.css') }}">
 @endpush
+
+@push('css')
+<style>
+    .select2 {
+        width: 100% !important;
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="row">
     <div class="col-md-12">
@@ -22,46 +31,181 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-striped medicinesTable">
-                    <thead>
-                        <tr>
-                            <th>{{ __('SL') }}</th>
-                            <th>{{ __('Name') }}</th>
-                            <th>{{ __('Product Category') }}</th>
-                            <th title="{{ __('Maximum Retail Price') }}">{{ __('MRP') }}</th>
-                            <th>{{ __('Discount') }} </th>
-                            <th>{{ __('Price') }}</th>
-                            <th>{{ __('Best Selling') }}</th>
-                            <th>{{ __('Featured') }}</th>
-                            <th>{{ __('Status') }}</th>
-                            <th>{{ __('Created date') }}</th>
-                            <th>{{ __('Created by') }}</th>
-                            <th>{{ __('Action') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="row">
+                    <div class="col-md-2">
+                        <select id="categoryFilter" class="select2">
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select id="companyFilter" class="select2">
+                            <option value="">Select Company</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select id="genericNameFilter" class="select2">
+                            <option value="">Select Generic Name</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select id="statusFilter" class="select2">
+                            <option value="">Select Status</option>
+                            <option value="1">Active</option>
+                            <option value="0">Deactive</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" id="dateFilter" placeholder="Created Date" class="form-control datepicker" />
+                    </div>
+                    <div class="col-md-1">
+                        <button id="filterBtn" class="btn btn-primary" type="button"><i
+                                class="fa fa-filter"></i></button>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <table class="table table-striped medicinesTable">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('SL') }}</th>
+                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Product Category') }}</th>
+                                    <th title="{{ __('Maximum Retail Price') }}">{{ __('MRP') }}</th>
+                                    <th>{{ __('Discount') }} </th>
+                                    <th>{{ __('Price') }}</th>
+                                    <th>{{ __('Best Selling') }}</th>
+                                    <th>{{ __('Featured') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th>{{ __('Created date') }}</th>
+                                    <th>{{ __('Created by') }}</th>
+                                    <th>{{ __('Action') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
+</div>
 @endsection
 @push('js_link')
-    <script src="{{ asset('plugin/datatable/datatables.min.js') }}"></script>
+<script src="{{ asset('plugin/datatable/datatables.min.js') }}"></script>
 @endpush
 @push('js')
-    <script>
-        $(document).ready(function () {
-            $('.medicinesTable').DataTable({
-                dom: 'Bfrtip',
-                responsive: true,
+<script>
+    $(document).ready(function () {
+        $('.select2').select2();
+
+        $('#categoryFilter').select2({
+            placeholder: 'Select Category',
+            allowClear: true,
+            ajax: {
+                url: '{{ route('product.product_category.search') }}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function (data) {
+                    console.log(data);
+
+                    return {
+                        results: data.map(function(category) {
+                            return {
+                                id: category.id,
+                                text: category.name
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+
+        $('#companyFilter').select2({
+            placeholder: 'Select Company',
+            allowClear: true,
+            ajax: {
+                url: '{{ route('product.company_name.search') }}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function (data) {
+                    console.log(data);
+
+                    return {
+                        results: data.map(function(company) {
+                            return {
+                                id: company.id,
+                                text: company.name
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+
+        $('#genericNameFilter').select2({
+            placeholder: 'Select Generic Name',
+            allowClear: true,
+            ajax: {
+                url: '{{ route('product.generic_name.search') }}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function (data) {
+                    console.log(data);
+
+                    return {
+                        results: data.map(function(generic_name) {
+                            return {
+                                id: generic_name.id,
+                                text: generic_name.name
+                            };
+                        })
+                    };
+                },
+                cache: true,
+
+            }
+        });
+
+        $('#filterBtn').click(function() {
+            console.log('clicked');
+
+            $('.medicinesTable').DataTable().draw();
+        });
+
+        $('.medicinesTable').DataTable({
+            dom: 'Bfrtip',
+            responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: {
                     url: '{{ request()->url() }}',
-                    type: 'GET'
+                    type: 'GET',
+                    data: function (d) {
+                        d.company_id = $('#companyFilter').val();
+                        d.generic_id = $('#genericNameFilter').val();
+                        d.status = $('#statusFilter').val();
+                        d.category_id = $('#categoryFilter').val();
+                        d.date = $('#dateFilter').val();
+                    }
                 },
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
@@ -97,5 +241,5 @@
             });
         });
 
-    </script>
+</script>
 @endpush

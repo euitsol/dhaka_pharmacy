@@ -37,9 +37,9 @@ class ProductSearchController extends Controller
 
         $query = Medicine::search($search_value);
 
-        // if ($category !== 'all') {
-        //     $query = $query->where('category_id', $category);
-        // }
+        if ($category !== 'all') {
+            $query = $query->where('category_id', $category);
+        }
 
         $data['products'] = $query->get()
             ->load(['pro_cat', 'generic', 'company', 'strength', 'discounts'])
