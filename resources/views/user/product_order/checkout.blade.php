@@ -21,17 +21,17 @@
         $totalPrice = 0;
         $totalDiscountedPrice = 0;
     @endphp
-    <section class="checkout-section py-5">
+    <section class="checkout-section py-3 py-lg-5">
         <div class="container">
             <form action="{{ route('u.ck.product.order.confirm', encrypt($order->id)) }}" method="POST">
                 @csrf
                 <input type="hidden" name="order_id" value="{{ encrypt($order->id) }}">
-                <div class="row">
-                    <div class="col-7">
+                <div class="row row-gap-4">
+                    <div class="col-12 col-lg-7 px-0 px-lg-3">
                         <div class="order-info-row">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="add-new-box border text-center py-4">
+                                    <div class="add-new-box border text-center py-3 py-md-4">
                                         <a href="javascript:void(0)" class="address_btn text-decoration-none"
                                             data-bs-toggle="modal"
                                             data-bs-target="#address_add_modal">{{ __('+ Add New Delivery Address') }}</a>
@@ -50,12 +50,13 @@
                                                     $product->discounted_price;
                                             @endphp
                                             <div class="row align-items-center py-2">
-                                                <div class="col-2">
+                                                <div class="col-4 col-md-2">
                                                     <div class="img">
                                                         <img src="{{ $product->image }}" alt="">
                                                     </div>
                                                 </div>
-                                                <div class="col-6 pe-4">
+                                                
+                                                <!-- <div class="col-6 pe-4">
                                                     <h5 class="mb-1" title="{{ $product->attr_title }}">
                                                         {{ $product->name }}</h5>
                                                     <p class="mb-0">{{ $product->generic->name }}</p>
@@ -78,6 +79,39 @@
                                                                 {{ number_format($product->pivot->quantity * $product->pivot->unit->quantity * $product->discounted_price, 2) }}</span>
                                                         </p>
                                                     </div>
+                                                </div> -->
+
+                                                <div class="col-8 col-md-10">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-12 col-md-8 pe-0 pe-md-4">
+                                                            <h5 class="mb-1" title="{{ $product->attr_title }}">
+                                                                {{ $product->name }}</h5>
+                                                            <p class="mb-0">{{ $product->generic->name }}</p>
+                                                            <p class="mb-0">{{ $product->company->name }}</p>
+                                                        </div>
+                                                        <div class="col-12 col-md-4 mt-1 mt-md-0">
+                                                            <div class="qty-col d-flex justify-content-start d-md-block">
+                                                                <div class="qt-1 pe-3 pe-md-0">
+                                                                    <p class="qt mb-1">
+                                                                        {{ __('Qty: ') }}<span>{{ $product->pivot->quantity < 10 ? '0' . $product->pivot->quantity : $product->pivot->quantity }}</span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="d-flex justify-content-between">
+                                                                    <p class="qt mb-0 pe-3 pe-md-0">
+                                                                        {{ __('Pack: ') }}<span>{{ $product->pivot->unit->name }}</span>
+                                                                    </p>
+                                                                    <p class="qt mb-0">
+                                                                        @if ($product->discounted_price != $product->price)
+                                                                            <del class="offer">{!! get_taka_icon() !!}
+                                                                                {{ number_format($product->pivot->quantity * $product->pivot->unit->quantity * $product->price, 2) }}</del>
+                                                                        @endif
+                                                                        <span>{!! get_taka_icon() !!}
+                                                                            {{ number_format($product->pivot->quantity * $product->pivot->unit->quantity * $product->discounted_price, 2) }}</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         @endforeach
@@ -86,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-5">
+                    <div class="col-12 col-lg-5 px-0 px-lg-3">
                         <div class="order-info-row">
                             <div class="right d-flex flex-column justify-content-center">
                                 <h4 class="mb-3 title">{{ __('Delivery Address') }}</h4>

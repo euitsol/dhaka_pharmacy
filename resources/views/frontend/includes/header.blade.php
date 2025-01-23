@@ -26,7 +26,7 @@
                                 <div class="col-8 col-xl-5 col-12 col-sm-8 logo-col d-none d-lg-block">
                                     <div class="logo">
                                         <a href="{{ route('home') }}"><img class="w-100"
-                                                src="{{ asset('frontend/asset/img/logo.png') }}" alt="Header-logo"></a>
+                                                src="{{ storage_url(settings('site_logo')) }}" alt="Header-logo"></a>
                                     </div>
                                 </div>
                             </div>

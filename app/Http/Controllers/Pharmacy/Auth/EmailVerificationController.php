@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Pharmacy\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmailVerifyRequest;
-use App\Http\Traits\PharmacyMailTrait;
+use App\Http\Traits\MailSentTrait;
 use App\Models\Pharmacy;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +15,7 @@ use Illuminate\View\View;
 
 class EmailVerificationController extends Controller
 {
-    use PharmacyMailTrait;
+    use MailSentTrait;
 
     private $otpResentTime = 1;
     public function __construct()

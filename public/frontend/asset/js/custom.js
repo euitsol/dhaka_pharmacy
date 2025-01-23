@@ -353,3 +353,57 @@ function formatPercentageNumber(number) {
 // messageSend("#guestChatForm");
 // messageSend("#authChatForm");
 
+
+
+
+
+
+
+// sub categories animation js code 
+
+
+// document.addEventListener("DOMContentLoaded", () => {
+//     const subCategories = document.querySelectorAll(".sub-categories-list li");
+//     const animatedContainer = document.querySelector(".animated-subcategories"); 
+
+//     let currentIndex = 0; 
+
+//     // Function to start typing animation
+//     const typeSubcategory = (text) => {
+//         let i = 0;
+//         animatedContainer.textContent = ""; // Reset content
+//         animatedContainer.style.animation = 'none'; // Disable animation for reset
+//         animatedContainer.style.width = '0'; // Reset width to 0
+
+//         // Re-enable animation for typing effect
+//         setTimeout(() => {
+//             animatedContainer.style.animation = `typing ${text.length * 0.1}s steps(${text.length}) 1s forwards, blink 0.75s step-end infinite`;
+            
+//             const typingInterval = setInterval(() => {
+//                 animatedContainer.textContent += text.charAt(i); // Append one character at a time
+//                 i++;
+
+//                 if (i === text.length) {
+//                     clearInterval(typingInterval); // Stop typing once done
+//                     setTimeout(() => {
+//                         eraseSubcategory(text); // Start erasing after typing
+//                     }, 1000); // Wait before erasing
+//                 }
+//             }, 100); // Adjust typing speed (lower = faster)
+//         }, 10); // Wait briefly before starting the typing animation
+//     };
+
+//     // Function to start erasing animation
+//     const eraseSubcategory = (text) => {
+//         animatedContainer.style.animation = "erase 1s linear forwards";
+//         setTimeout(() => {
+//             currentIndex = (currentIndex + 1) % subCategories.length; // Move to next subcategory
+//             typeSubcategory(subCategories[currentIndex].textContent); // Start typing next subcategory
+//         }, 1000); // Wait before starting the next cycle
+//     };
+
+//     // Initial type animation
+//     typeSubcategory(subCategories[currentIndex].textContent);
+// });
+
+

@@ -19,8 +19,8 @@
                             @csrf
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                                <input type="text" name="phone" placeholder="Phone" class="phone" autocomplete="off"
-                                    readonly onfocus="this.removeAttribute('readonly');">
+                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="Phone"
+                                    class="phone" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
 

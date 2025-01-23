@@ -5,45 +5,45 @@
             <div class="row row-gap-4">
                 <div class="col-6 col-md-3">
                     <div class="row row-gap-2">
-                        <div class="col-12 col-xxl-2">
+                        <div class="col-12 col-xxl-2 text-xxl-start text-center">
                             <img class="w-auto" src="{{ asset('frontend/asset/img/delivery.png') }}" alt="">
                         </div>
-                        <div class="col-12 col-xxl-10">
+                        <div class="col-12 col-xxl-10  text-xxl-start text-center">
                             <h3>{{ __('Quick Delivery') }}</h3>
-                            <h4>{{ __('Varius sit amet mattis vulputat') }}</h4>
+                            <!-- <h4>{{ __('Varius sit amet mattis vulputat') }}</h4> -->
                         </div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="row row-gap-2">
-                        <div class="col-12 col-xxl-2">
+                        <div class="col-12 col-xxl-2 text-xxl-start text-center">
                             <img src="{{ asset('frontend/asset/img/clock.png') }}" alt="">
                         </div>
-                        <div class="col-12 col-xxl-10">
+                        <div class="col-12 col-xxl-10  text-xxl-start text-center">
                             <h3>{{ __('24/7 Help Center') }}</h3>
-                            <h4>{{ __('Dedicated 24/7 support') }}</h4>
+                            <!-- <h4>{{ __('Dedicated 24/7 support') }}</h4> -->
                         </div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="row row-gap-2">
-                        <div class="col-12 col-xxl-2">
+                        <div class="col-12 col-xxl-2 text-xxl-start text-center">
                             <img src="{{ asset('frontend/asset/img/setisfide.png') }}" alt="">
                         </div>
-                        <div class="col-12 col-xxl-10">
+                        <div class="col-12 col-xxl-10  text-xxl-start text-center">
                             <h3>{{ __('Satisfied or Refunder') }}</h3>
-                            <h4>{{ __('Free returns within 14 days') }}</h4>
+                            <!-- <h4>{{ __('Free returns within 14 days') }}</h4> -->
                         </div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="row row-gap-2">
-                        <div class="col-12 col-xxl-2">
+                        <div class="col-12 col-xxl-2 text-xxl-start text-center">
                             <img src="{{ asset('frontend/asset/img/card.png') }}" alt="">
                         </div>
-                        <div class="col-12 col-xxl-10">
+                        <div class="col-12 col-xxl-10  text-xxl-start text-center">
                             <h3>{{ __('Secured Payment') }}</h3>
-                            <h4>{{ __('Pharetra magna ac placerat vestibu') }}</h4>
+                            <!-- <h4>{{ __('Pharetra magna ac placerat vestibu') }}</h4> -->
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
             <div class="row row-gap-2 row-gap-sm-4">
                 <div class="col-12 col-lg-3 col-md-2 col-sm-6">
                     <div class="footer-logo mb-4">
-                        <a href="{{ route('home') }}"> <img src="{{ asset('frontend/asset/img/logo.png') }}"
+                        <a href="{{ route('home') }}"> <img src="{{ storage_url(settings('site_logo')) }}"
                                 alt="Footer logo"></a>
                     </div>
                     <div class="footer-followus">

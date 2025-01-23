@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 
 trait SmsTrait
 {
-    function sms_send($mobile, $message)
+    public function sms_send($mobile, $message)
     {
         $url = config('services.sms_api.url');
         $api_key = config('services.sms_api.key');
@@ -39,8 +39,8 @@ trait SmsTrait
 
         // Handle HTTP errors
         if ($http_code !== 200) {
-            // return 'API Request failed with HTTP code: ' . $http_code . ' | Response: ' . $response;
-            return 'Something went wrong, please try again.';
+            return 'API Request failed with HTTP code: ' . $http_code . ' | Response: ' . $response;
+            // return 'Something went wrong, please try again.';
         }
 
         // Decode the API response
