@@ -571,7 +571,7 @@ body{
 
   /* Dashboard CSS  */
 
-.dashboard-main-section{
+/* .dashboard-main-section{
     padding-top: 25px;
     min-height: calc(100vh - 189px);
 }
@@ -940,7 +940,462 @@ margin: 0;
     line-height: 23px;
     font-weight: 600;
     padding: 30px 0;
+} */
+
+
+
+.dashboard-main-section{
+    padding-top: 25px;
+    min-height: calc(100vh - 189px);
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
+.dashboard-main-section .col-left .single-box {
+	padding: 26px 15px;
+	border-radius: 25px;
+	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+	transition: .4s;
+}
+.dashboard-main-section .customer-supporrt{
+    border-radius: 25px;
+	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+	transition: .4s;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    margin: 0 auto;
+    background-color: #C2E7FC;
+}
+
+.dashboard-main-section .log-out.text-left {
+	height: 100% !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #eee;
+	border-radius: 10px;
+	padding: 10px;
+	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+}
+
+.dashboard-main-section .customer-supporrt a{
+    display: block;
+    width: 100%;
+}
+.dashboard-main-section .col-left .single-box:hover{
+    transform: scale(1.04);
+}
+.dashboard-main-section .col-left {
+    row-gap: 20px;
+    margin-top: 20px;
+}
+.dashboard-main-section .col-left .current-order{
+    background: var(--primary);
+}
+.dashboard-main-section .col-left .current-order .title h3{
+    font-size: var(--text_size);
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--text);
+    margin: 0;
+}
+.dashboard-main-section .col-left .current-order .title h4{
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: 200;
+    color: var(--text);
+}
+.dashboard-main-section .col-left .current-order .processing .btn a{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    text-decoration: none;
+    color: var(--white);
+    background: var(--btn_bg);
+    padding: 8px 32px;
+    border-radius: 5px;
+    border: 1px solid var(--btn_bg);
+    transition: 0.4s;
+}
+.dashboard-main-section .col-left .current-order .processing .btn a:hover{
+     background: transparent;
+     color: var(--btn_bg);
+}
+
+.dashboard-main-section .col-left .current-order .progress-box .progress{
+    height: 13px;
+    border-radius: 10px;
+    margin-top: 30px;
+    background: var(--white);
+}
+.dashboard-main-section .col-left .current-order .progress-box .progress .progress-bar{
+    background-color: var(--btn_bg);
+    border-radius: 10px;
+}
+.dashboard-main-section .col-left .single-box .title h2{
+    font-weight: 600;
+    margin-top: 15px !important;
+    text-align: center;
+    font-size: 14px !important;
+}
+.dashboard-main-section .col-left .previous-order{
+    background-color: #C2E7FC;
+    text-align: center;
+}
+.dashboard-main-section .col-left .single-box .count {
+	width: 55px;
+	height: 55px;
+	border-radius: 50%;
+	margin: 0 auto;
+	background-color: var(--btn_bg);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* margin-top: 9px; */
+}
+/* .dashboard-main-section .col-left .single-box .icon-imges{
+    width: 55px;
+	height: 55px;
+} */
+.dashboard-main-section .col-left .single-box .icon-imges{
+    width: 55px;
+	height: 55px;
+	border-radius: 50%;
+	margin: 0 auto;
+	background-color: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.dashboard-main-section .col-left .single-box .count span{
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 84px;
+    color: var(--white);
+    font-family: "Itim", cursive;
+}
+.dashboard-main-section .col-left .cancel-order{
+    background-color: var(--primary);
+    text-align: center;
+}
+.dashboard-main-section .col-left .single-box.cancel-order h2,
+.dashboard-main-section .col-left .single-box.previous-order h2{
+    margin-top: 10px;
+}
+.dashboard-main-section .latest-offer .slider .carousel-indicators{
+    bottom: -52px;
+}
+.dashboard-main-section .latest-offer .slider .carousel-indicators button{
+    width: 66px;
+    height: 7px;
+    background-color: #D9D9D9;
+    border-radius: 5px;
+}
+.dashboard-main-section .latest-offer .slider{
+    margin-top: 18px;
+}
+.dashboard-main-section .latest-offer .slider .carousel-item .items{
+    column-gap: 8px;
+}
+.dashboard-main-section .latest-offer .slider .carousel-indicators button.active{
+    background-color: #605656;
+}
+.dashboard-main-section .col-right .google-map .address{
+    padding: 7px 20px;
+}
+.dashboard-main-section .col-right .google-map .title h3{
+    font-size: var(--text_size);
+font-weight: 500;
+line-height: 24px;
+color: var(--text);
+margin: 0;
+}
+.dashboard-main-section .col-right .google-map .btn a{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    text-decoration: none;
+    color: var(--white);
+    background: var(--btn_bg);
+    padding: 7px 11px;
+    border-radius: 5px;
+    border: 1px solid var(--btn_bg);
+    transition: 0.4s;
+}
+.dashboard-main-section .col-right .google-map .btn a:hover{
+    background: transparent;
+    color: var(--btn_bg);
+}
+.dashboard-main-section .col-right .google-map {
+    background: var(--primary);
+    border-radius: 25px;
+    height: 326px !important;
+}
+.dashboard-main-section .col-right .map{
+    height: 205px;
+}
+.dashboard-main-section .col-right .map iframe{
+    width: 100%;
+    height: 105px;
+}
+
+.dashboard-main-section .col-right .google-map .address-btn{
+    padding: 30px 15px;
+}
+.dashboard-main-section .col-right .google-map .address-btn a {
+    text-decoration: none;
+}
+.dashboard-main-section .col-right .google-map .address-btn a i{
+    color: var(--btn_bg);
+}
+.dashboard-main-section .col-right .google-map .address-btn a span{
+    font-size: 12px;
+    line-height: 17px;
+    font-weight: 200;
+    color: var(--text);
+    margin-left: 5px;
+    margin-right: 8px;
+    transition: 0.4s;
+}
+.dashboard-main-section .col-right .google-map .address-btn a span:hover{
+    color: var(--btn_bg);
+}
+.dashboard-main-section .col-right .customer-supporrt a{
+    text-decoration: none;
+    color: var(--text);
+}
+.dashboard-main-section .col-right .customer-supporrt a .single:hover{
+    transform: scale(1.04);
+}
+.dashboard-main-section .col-right .customer-supporrt .single{
+    background-color: var(--primary);
+    padding: 16px 0;
+    border-radius: 25px;
+    box-shadow: 0 5px 4px 0 rgba(0, 0, 0, 0.25);
+    transition: 0.4s;
+}
+.dashboard-main-section .col-right .customer-supporrt img{
+    box-shadow: 1px 10px 3px -5px rgba(0, 0, 0, 0.25);
+}
+.dashboard-main-section .col-right .log-out img{
+    transition: 0.4s;
+}
+.dashboard-main-section .col-right .log-out img:hover{
+    scale: 1.03;
+}
+.dashboard-main-section .col-mid .tips p{
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0;
+    line-height: 19px;
+    text-align: justify;
+}
+.dashboard-main-section .col-mid .tips .single-tips{
+    padding: 10px;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    margin-top: 15px;
+}
+.dashboard-main-section .col-mid .tips p span{
+    color: var(--btn_bg);
+}
+.dashboard-main-section .col-mid .tips h2 span{
+    color: var(--btn_bg);
+}
+.dashboard-main-section .col-mid .order-cart-wish{
+    column-gap: 20px;
+    /* margin-top: 20px; */
+}
+.dashboard-main-section .col-mid .order-cart-wish .single{
+    /* background-color: var(--primary);
+    width: 100%;
+    /* height: 157px; */
+    /* border-radius: 25px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    transition: .4s; */ 
+    padding: 8px 10px;
+    border-radius: 25px;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    transition: .4s; 
+}
+.dashboard-main-section .col-mid .order-cart-wish .single:hover{
+    transform: scale(1.04);
+}
+.dashboard-main-section .col-mid .order-cart-wish a{
+    text-decoration: none;
+    color: var(--text);
+    transition: 0.4s;
+}
+.dashboard-main-section .col-mid .order-cart-wish a:hover{
+    transform: scale(1.04);
+}
+.dashboard-main-section .col-mid .order-cart-wish .single h2{
+    font-weight: 600;
+    margin-top: 15px !important;
+    text-align: center;
+    font-size: 14px !important;
+}
+.dashboard-main-section .col-mid .order-cart-wish div:nth-child(2) .single,
+.dashboard-main-section .col-mid .order-cart-wish div:nth-child(4) .single{
+    background-color: #C2E7FC;
+}
+.dashboard-main-section .order-cart-wish .single .content img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-inner {
+	background-color: #EEEEEE;
+	/* padding: 25px 45px; */
+	border-radius: 25px;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+	text-align: center;
+	height: 325px;
+	display: flex;
+	/* justify-content: center; */
+	align-items: center;
+	/* margin-top: 18px; */
+    padding: 15px !important;
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-inner .carousel-item h3{
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 250;
+    color: var(--text);
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-inner .carousel-item h3 span{
+    font-weight: 600;
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-inner .carousel-item p{
+    font-size: var(--text_size);
+    font-weight: 400;
+    line-height: 30px;
+    color: var(--text);
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-inner .carousel-item p span{
+    font-weight: 700;
+}
+.dashboard-main-section .col-mid .medicine-slider button{
+    width: auto;
+    bottom: 0;
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-control-prev .carousel-control-prev-icon{
+    display: none;
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-control-prev::after{
+    position: absolute;
+    content: "\f060";
+    font-family: FontAwesome;
+    color: black;
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-control-next::after{
+    position: absolute;
+    content: "\f061";
+    font-family: FontAwesome;
+    color: black;
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-control-next .carousel-control-next-icon{
+    display: none;
+}
+.dashboard-main-section .col-mid .medicine-slider .circle{
+    width: 13px;
+    height: 13px;
+    background-color: #A7C438;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    bottom: 13px;
+    transform: translateX(-50%);
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-control-next{
+    left: 54%;
+    transform: translateX(-50%);
+    bottom: 19px;
+    top: inherit;
+}
+.dashboard-main-section .col-mid .medicine-slider .carousel-control-prev{
+    left: 46%;
+    transform: translateX(-50%);
+    bottom: 19px;
+    top: inherit;
+}
+.dashboard-main-section .col-mid .my-payment-feedback .img{
+    width: 56px;
+    height: 56px;
+    background: rgba(123, 177, 65, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+/* .dashboard-main-section .col-mid .my-payment-feedback{
+    column-gap: 2%;
+    margin-top: -200px !important;
+} */
+.dashboard-main-section .col-mid .my-payment-feedback .single{
+    padding: 8px 10px;
+    border-radius: 25px;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    transition: .4s;
+}
+.dashboard-main-section .col-mid .my-payment-feedback a{
+    background-color: #C2E7FC;
+    text-decoration: none;
+    color: var(--text);
+    transition: 0.4s;
+}
+.dashboard-main-section .col-mid .my-payment-feedback .single h3{
+    font-weight: 600;
+    margin-top: 5px !important;
+    text-align: center;
+    font-size: 14px !important;
+}
+.dashboard-main-section .col-mid .my-payment-feedback a:hover{
+    transform: scale(1.04);
+}
+.dashboard-main-section .col-mid .my-payment-feedback a:nth-child(2){
+    background-color: var(--primary);
+}
+.dashboard-main-section .col-mid .my-payment-feedback .my-payment,
+.dashboard-main-section .col-mid .my-payment-feedback .feedback{
+    column-gap: 10px;
+}
+.dashboard-main-section .col-mid .my-payment-feedback h2{
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 600;
+    color: var(--text);
+}
+.dashboard-main-section .tips_image .lightbox_image{
+    /* display: block;
+    width: 100%;
+    height: 150px; */
+}
+
+
+
+
+.socket p a{
+    text-decoration: none;
+    color: rgba(0, 0, 0, .5);
+    transition: 0.4s;
+}
+.socket p a:hover{
+    text-decoration: underline;
+}
+.socket p{
+    color: rgba(0, 0, 0, .5);
+    font-size: 19px;
+    line-height: 23px;
+    font-weight: 600;
+    padding: 30px 0;
+}
+
+
 
 
 /*================= My Order page ===================*/

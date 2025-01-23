@@ -34,7 +34,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-12">
+            <!-- <div class="col-lg-3 col-12">
                 <div class="col-left ">
                     <div class="row">
                         <div class="col-lg-12 col-sm-4 col-12">
@@ -291,8 +291,336 @@
             </div>
             <div class="col-xl-6 d-xl-block d-none mx-xl-auto">
                 @include('user.dashboard.include.payment-feedback')
-            </div>
+            </div> -->
 
+            <div class="col-12">
+                <div class="col-mid">
+                    <div class="col-left">
+                        <div class="row">
+                            <div class="col-9 mt-4">
+                                <div class="row mt-4">
+                                    <div class="col-6">
+                                        <div class="row mb-4">
+                                            <div class="col">
+                                                <!-- <div class="single-box current-order">
+                                                    @if ($total_current_orders > 0)
+                                                        <div class="processing d-flex align-items-center justify-content-between">
+                                                            <div class="title">
+                                                                <h3>{{ __('Processing') }}</h3>
+                                                                {{-- <h4>{{ __('Est. Delivery 01 apr 23') }}</h4> --}}
+                                                            </div>
+                                                            <div class="btn">
+                                                                <a
+                                                                    href="{{ route('u.order.list', ['status' => 'current-orders']) }}">{{ __('Details') }}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progress-box">
+                                                            <div class="progress" role="progressbar" aria-label="Basic example"
+                                                                aria-valuemin="0" aria-valuemax="100">
+                                                                <div class="progress-bar"
+                                                                    style="width: {{ $last_current_order->status == 1
+                                                                        ? '20%'
+                                                                        : ($last_current_order->status == 2
+                                                                            ? '30%'
+                                                                            : ($last_current_order->status == 3
+                                                                                ? '40%'
+                                                                                : ($last_current_order->status == 4
+                                                                                    ? '60%'
+                                                                                    : ($last_current_order->status == 5
+                                                                                        ? '80%'
+                                                                                        : ($last_current_order->status == 6
+                                                                                            ? '100%'
+                                                                                            : ''))))) }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="count">
+                                                            <span>0</span>
+                                                        </div>
+                                                    @endif
+                                                    <div class="title">
+                                                        <h2>{{ __('My Orders') }}</h2>
+                                                    </div>
+                                                </div> -->
+                                                <a href="{{ route('u.order.list', ['status' => 'previous-orders']) }}"
+                                                    style="text-decoration: none; color:#212529;">
+                                                    <div class="single-box previous-order">
+                                                        <div class="count">
+                                                            <span>{{ $total_previous_orders }}</span>
+                                                        </div>
+                                                        <div class="title">
+                                                            <h2>{{ __('My Orders') }}</h2>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a href="{{ route('u.order.list', ['status' => 'previous-orders']) }}"
+                                                    style="text-decoration: none; color:#212529;">
+                                                    <div class="single-box previous-order">
+                                                        <div class="count">
+                                                            <span>{{ $total_previous_orders }}</span>
+                                                        </div>
+                                                        <div class="title">
+                                                            <h2>{{ __('My Payments') }}</h2>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a href="{{ route('u.order.list', ['status' => 'cancel-orders']) }}"
+                                                    style="text-decoration: none; color:#212529;">
+                                                    <div class="single-box cancel-order">
+                                                        <div class="count">
+                                                            <span>{{ $total_cancel_orders }}</span>
+                                                        </div>
+                                                        <div class="title">
+                                                            <h2>{{ __('My Cart') }}</h2>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <a href="{{ route('u.order.list', ['status' => 'cancel-orders']) }}"
+                                                    style="text-decoration: none; color:#212529;">
+                                                    <div class="single-box cancel-order">
+                                                        <div class="count">
+                                                            <span>{{ $total_cancel_orders }}</span>
+                                                        </div>
+                                                        <div class="title">
+                                                            <h2>{{ __('Current Orders') }}</h2>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a href="{{ route('u.order.list', ['status' => 'cancel-orders']) }}"
+                                                    style="text-decoration: none; color:#212529;">
+                                                    <div class="single-box cancel-order">
+                                                        <div class="count">
+                                                            <span>{{ $total_cancel_orders }}</span>
+                                                        </div>
+                                                        <div class="title">
+                                                            <h2>{{ __('Previous Orders') }}</h2>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a href="{{ route('u.order.list', ['status' => 'cancel-orders']) }}"
+                                                    style="text-decoration: none; color:#212529;">
+                                                    <div class="single-box cancel-order">
+                                                        <div class="count">
+                                                            <span>{{ $total_cancel_orders }}</span>
+                                                        </div>
+                                                        <div class="title">
+                                                            <h2>{{ __('Cancel Orders') }}</h2>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="medicine-slider">
+                                                    <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
+                                                        <div class="carousel-inner">
+                                                            @foreach ($order_products as $key => $product)
+                                                                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                                                    <h3><span>{{ $product->name }}</span>({{ $product->strength->quantity . ' ' . $product->strength->unit }})
+                                                                    </h3>
+                                                                    <p><span>{{ __('Efficacy: ') }}</span>
+                                                                        {{ str_limit($product->precaution->description, 110) }}</p>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <button class="carousel-control-prev" type="button"
+                                                            data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">{{ __('Previous') }}</span>
+                                                        </button>
+                                                        <div class="circle"></div>
+                                                        <button class="carousel-control-next" type="button"
+                                                            data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">{{ __('Next') }}</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="col-right row">
+                                    <div class="col-xl-12 d-none d-xl-block">
+                                        @if ($latest_offers->isNotEmpty())
+                                            @include('user.dashboard.include.latest-offer')
+                                        @else
+                                            <h2>{{ __('Address') }}</h2>
+                                        @endif
+                                    </div>
+                                    <div class="col-12 d-xl-none d-block">
+                                        @include('user.dashboard.include.payment-feedback')
+                                    </div>
+                                    <div class="col-md-7 col-12 col-xl-12">
+                                        @if ($user_tips->isNotEmpty())
+                                            <div class="tips">
+                                                @foreach ($user_tips as $tips)
+                                                    <div class="single-tips d-block gap-3">
+                                                        <div class="tips_image">
+                                                            <div id="lightbox" class="lightbox tips_image">
+                                                                <div class="lightbox-content ">
+                                                                    <img src="{{ storage_url($tips->image) }}" class="lightbox_image d-block w-100">
+                                                                </div>
+                                                                    <div class="close_button fa-beat">X</div>
+                                                            </div>
+                                                            {{-- <img src="{{ asset('user/asset/img/tips-img.png') }}" alt=""> --}}
+                                                        </div>
+                                                        <div class="tips_details mt-3">
+                                                            <p>{{ str_limit(html_entity_decode($tips->description), 270) }}</p>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="col-mid">
+                    <div class="col-left">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="row ">
+                                    <div class="col-6">
+                                        <div class="col-right row">
+                                            <div class="col-lg-4 col-12 col-xl-12">
+                                                <div class="google-map" @if ($latest_offers->isEmpty()) style="margin-top:20px" @endif>
+                                                    <div class="address d-flex  align-items-center justify-content-between">
+                                                        <div class="title">
+                                                            <h3>{{ __('Address') }}</h3>
+                                                        </div>
+                                                        <div class="btn">
+                                                            <a href="javascript:void(0)" data-toggle="modal"
+                                                                        data-target="#address_add_modal">{{ __('Add Address') }}</a>
+                                                        </div>
+                                                    </div>
+
+                                                    @if (isset($user->address) && !empty($user->address->first()))
+                                                    <div class="map" id="user_d_map" data-lat={{ $user->address->first()->latitude }}
+                                                                    data-lng={{ $user->address->first()->longitude }}></div>
+                                                        <div class="address-btn">
+                                                            <a href="{{ route('u.as.list') }}"><i
+                                                                class="fa-solid fa-location-dot"></i><span>{{ str_limit($user->address->first()->address, 40) }}</span><i
+                                                                class="fa-solid fa-angle-right"></i></a>
+                                                        </div>
+                                                        @else
+                                                        <div class="map d-flex align-items-center justify-content-center ">
+                                                            <h6 class="text-warning">{{ __('Please add address') }}</h6>
+                                                        </div>
+                                                        <div class="address-btn">
+
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>                                     
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="row mb-4">
+                                            <div class="col">
+                                                <a href="#" style="text-decoration: none; color:#212529;">
+                                                    <div class="single-box cancel-order">
+                                                        <div class="icon-imges">
+                                                            <img src="{{ asset('user/asset/img/star-half.png') }}" alt="">
+                                                        </div>
+                                                        <div class="title">
+                                                        <h2>{{ __('Kyc') }}</h2>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div> 
+                                            <div class="col">
+                                                <a href="#" style="text-decoration: none; color:#212529;">
+                                                    <div class="single-box cancel-order">
+                                                        <div class="icon-imges">
+                                                            <img src="{{ asset('user/asset/img/star-half.png') }}" alt="">
+                                                        </div>
+                                                        <div class="title">
+                                                        <h2>{{ __('Reviews') }}</h2>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a href="#" style="text-decoration: none; color:#212529;">
+                                                    <div class="single-box cancel-order">
+                                                        <div class="icon-imges">
+                                                            <img src="{{ asset('user/asset/img/wishtlist2.png') }}" alt="">
+                                                        </div>
+                                                        <div class="title">
+                                                            <h2>{{ __('Wishlists') }}</h2>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-8 ">
+                                                <div class="customer-supporrt">
+                                                    <a href="#">
+                                                        <div class="single d-flex align-items-center justify-content-center">
+                                                            <div class="support-img">
+                                                                <img src="{{ asset('user/asset/img/customer-support.png') }}"
+                                                                    alt="icon-imges">
+                                                            </div>
+                                                            <div class="title">
+                                                                <h3 class="text-center">{{ __('Customer') }}<br> {{ __('Support') }}</h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>  
+                                            <div class="col-4">
+                                                <a href="#" style="text-decoration: none; color:#212529;">
+                                                    <div class="single-box cancel-order">
+                                                        <div class="icon-imges">
+                                                            <img src="{{ asset('user/asset/img/feedback.png') }}" alt="">
+                                                        </div>
+                                                        <div class="title">
+                                                            <h2>{{ __('Feedback') }}</h2>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="log-out text-left">
+                                    <a href="javascript:void(0)"
+                                                onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                                <img src="{{ asset('user/asset/img/log-out.png') }}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     @include('user.address.add_address')
