@@ -99,12 +99,13 @@ class LoginController extends Controller
                 flash()->addSuccess('OTP verified successfully');
                 return redirect()->route('pharmacy.reset.password', encrypt($pharmacy->id));
             } else {
-                flash()->addSuccess('OTP didn\'t match. Please try again');
+                flash()->addWarning('OTP didn\'t match. Please try again');
+                return redirect()->back()->withInput();
             }
         } else {
             flash()->addSuccess('Something is wrong! please try again.');
         }
-        return redirect()->route('login');
+        return redirect()->route('pharmacy.login');
     }
 
     public function resetPassword($pharmacy_id): View

@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
-@section('title', 'Pharmacy OTP Verification')
+@section('title', 'District Manager OTP Verification')
 @push('css')
-    <link rel="stylesheet" href="{{ asset('pharmacy/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('dm/css/login.css') }}">
 @endpush
 @push('css')
     <style>
@@ -19,21 +19,21 @@
     </style>
 @endpush
 @section('content')
-    <section class="pharmacy-section py-5">
+    <section class="district-section py-5">
         <div class="container">
             <div class="row">
-                <div class="pharmacy-container">
+                <div class="district-container">
                     <div class="row row-gap-4">
-                        <div class="col-md-5">
-                            <div class="image-col  pe-md-4 pe-0 ">
-                                <img src="{{ asset('pharmacy/image/pharmacy-login-image.png') }}" alt="pharmacy login">
+                        <div class="col-md-5 ">
+                            <div class="image-col pe-md-4 pe-0">
+                                <img src="{{ asset('dm/image/distric.png') }}" alt="dsitrict login">
                             </div>
                         </div>
                         <div class="col-md-7">
                             <div class="form ps-md-4 ps-0 h-100">
                                 <div class="form-content d-flex justify-content-center align-items-center h-100">
                                     <div class="w-100">
-                                        <form action="{{ route('pharmacy.otp.verify', $pharmacy_id) }}" method="POST">
+                                        <form action="{{ route('district_manager.otp.verify', $dm_id) }}" method="POST">
                                             @csrf
                                             <h2 class="text-center mb-2">{{ __('Enter OTP') }}</h2>
                                             <div class="otp-container d-flex justify-content-center column-gap-2">

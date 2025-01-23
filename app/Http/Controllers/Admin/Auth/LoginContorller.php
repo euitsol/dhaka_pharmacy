@@ -100,12 +100,13 @@ class LoginContorller extends Controller
                 flash()->addSuccess('OTP verified successfully');
                 return redirect()->route('admin.reset.password', encrypt($admin->id));
             } else {
-                flash()->addSuccess('OTP didn\'t match. Please try again');
+                flash()->addWarning('OTP didn\'t match. Please try again');
+                return redirect()->back()->withInput();
             }
         } else {
             flash()->addSuccess('Something is wrong! please try again.');
         }
-        return redirect()->route('login');
+        return redirect()->route('admin.login');
     }
 
     public function resetPassword($admin_id): View

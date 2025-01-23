@@ -39,7 +39,8 @@
                                             <input type="checkbox" id="rememberMe" class="form-check-input">
                                             <label for="rememberMe" class="form-check-label">{{ __('Remember Me') }}</label>
                                         </div>
-                                        <a href="#" class="text-decoration-none">{{ __('Forgot Password?') }}</a>
+                                        <a href="{{ route('district_manager.forgot') }}"
+                                            class="text-decoration-none">{{ __('Forgot Password?') }}</a>
                                     </div>
                                     <button type="submit"
                                         class="btn btn-primary w-100 login-button border-0">{{ __('LOGIN') }}</button>
