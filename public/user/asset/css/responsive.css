@@ -298,6 +298,11 @@
         line-height: 24px;
     }
 
+    .my-order-section .order-row .favorite.wishlist_item {
+        position: absolute;
+        top: 10px;
+        right: 22px;
+    }
 
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {

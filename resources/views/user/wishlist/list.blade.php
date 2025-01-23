@@ -29,7 +29,7 @@
             <div class="order_wrap" id="wish_wrap">
                 @forelse ($wishes as $wish)
                     <div class="order-row wish_item">
-                        <div class="row px-4 py-3 py-sm-0 row-gap-sm-0 row-gap-3">
+                        <div class="row px-4 py-3 py-sm-0 row-gap-sm-0 row-gap-3" style="position: relative;">
                             <div class="col-lg-8 col-md-6 col-12">
                                 <div class="row py-0 py-sm-3">
                                     <div class="col-xl-2 col-lg-4 col-md-5 col-sm-2 col-4 px-md-3 px-0">
