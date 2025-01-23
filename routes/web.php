@@ -166,6 +166,13 @@ Route::controller(AdminLoginController::class)->prefix('admin')->name('admin.')-
     Route::get('/login', 'adminLogin')->name('login');
     Route::post('/login', 'adminLoginCheck')->name('login');
     Route::post('/logout', 'logout')->name('logout');
+
+    Route::get('/forgot', 'forgot')->name('forgot');
+    Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
+    Route::get('/forgot/verify-otp/{admin_id}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{admin_id}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{admin_id}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{admin_id}', 'resetPasswordStore')->name('reset.password');
 });
 
 
@@ -174,6 +181,13 @@ Route::controller(PharmacyLoginController::class)->prefix('pharmacy')->name('pha
     Route::get('/login', 'pharmacyLogin')->name('login');
     Route::post('/login', 'pharmacyLoginCheck')->name('login');
     Route::post('/logout', 'logout')->name('logout');
+
+    Route::get('/forgot', 'forgot')->name('forgot');
+    Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
+    Route::get('/forgot/verify-otp/{pid}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{pid}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{pid}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{pid}', 'resetPasswordStore')->name('reset.password');
 });
 
 
@@ -183,6 +197,13 @@ Route::controller(DmLoginController::class)->prefix('district-manager')->name('d
     Route::get('/login', 'dmLogin')->name('login');
     Route::post('/login', 'dmLoginCheck')->name('login');
     Route::post('/logout', 'logout')->name('logout');
+
+    Route::get('/forgot', 'forgot')->name('forgot');
+    Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
+    Route::get('/forgot/verify-otp/{admin_id}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{admin_id}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{admin_id}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{admin_id}', 'resetPasswordStore')->name('reset.password');
 });
 
 // LAM Login Routes
@@ -192,6 +213,13 @@ Route::controller(LamLoginController::class)->prefix('local-area-manager')->name
     Route::post('/logout', 'logout')->name('logout');
     Route::post('/register', 'lamRegister')->name('register');
     Route::get('/reference/{id}', 'reference')->name('reference');
+
+    Route::get('/forgot', 'forgot')->name('forgot');
+    Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
+    Route::get('/forgot/verify-otp/{admin_id}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{admin_id}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{admin_id}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{admin_id}', 'resetPasswordStore')->name('reset.password');
 });
 
 

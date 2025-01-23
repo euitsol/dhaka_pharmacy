@@ -7,17 +7,17 @@ use App\Mail\PharmacyMail;
 use App\Models\EmailTemplate;
 use Illuminate\Support\Facades\Mail;
 
-trait PharmacyMailTrait
+trait MailSentTrait
 {
 
-    public function sendOtpMail($pharmacy)
+    public function sendOtpMail($model)
     {
         $templateObj = EmailTemplate::where('key', 'verify_email')->first();
-        $otp =  $pharmacy->otp;
+        $otp =  $model->otp;
         //replacing the variables
         $subject = $templateObj->subject;
         $placeholders = [
-            '{username}' => $pharmacy->name,
+            '{username}' => $model->name,
             '{code}' => $otp,
             '{sent_from}' => config('app.name'),
         ];
@@ -28,8 +28,8 @@ trait PharmacyMailTrait
             'subject' => $subject,
             'message' => $message,
         ];
-        if (!empty($pharmacy)) {
-            Mail::to($pharmacy->email)->send(new OtpVerifyMail($mailData));
+        if (!empty($model)) {
+            Mail::to($model->email)->send(new OtpVerifyMail($mailData));
             return true;
         } else {
             return false;
