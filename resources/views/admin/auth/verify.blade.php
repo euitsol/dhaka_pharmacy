@@ -43,7 +43,7 @@
                                                 <input name=otp[] class="otp-input" type="number" disabled />
                                             </div>
                                             <button type="submit" class="btn btn-primary w-100 login-button"
-                                                id="verifyOTP">{{ __('Verify OTP') }}</button>
+                                                id="verifyOTP">{{ __('VERIFY OTP') }}</button>
                                         </form>
                                     </div>
                                 </div>

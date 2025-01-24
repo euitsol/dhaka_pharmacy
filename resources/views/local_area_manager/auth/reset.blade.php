@@ -1,29 +1,29 @@
 @extends('frontend.layouts.master')
-@section('title', 'Admin Login')
+@section('title', 'Local Area Manager Reset Password')
 @push('css')
-    <link rel="stylesheet" href="{{ asset('admin/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('lam/css/login.css') }}">
 @endpush
 @section('content')
-    <section class="adminlogin-section py-5">
+    <section class="lam-section py-5">
         <div class="container">
             <div class="row">
-                <div class="admin-container">
+                <div class="lam-container">
                     <div class="row row-gap-4">
-                        <div class="col-md-4">
-                            <div class="image-col d-flex align-items-center justify-content-between">
-                                <img src="{{ asset('admin/image/adminlogin.png') }}" alt="adminloginimage">
+                        <div class="col-md-5">
+                            <div class="image-col pe-md-4 pe-0 ">
+                                <img src="{{ asset('lam/image/distric.png') }}" alt="dsitrict login">
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <div class="form ps-md-4 ps-0 h-100 d-flex align-items-center justify-content-center">
                                 <div class="form-content w-100">
                                     <h2 class="text-center mb-4">{{ __('Reset Password') }}</h2>
-                                    <form action="{{ route('admin.reset.password', $admin_id) }}" method="POST">
+                                    <form action="{{ route('local_area_manager.reset.password', $lam_id) }}" method="POST">
                                         @csrf
                                         <div class="mb-3">
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                                <input type="password" name="password" id="password" class="form-control"
+                                                <input type="password" id="password" name="password" class="form-control"
                                                     placeholder="Enter your new password" required>
                                                 <span class="input-group-text eye_btn"><i
                                                         class="fa-solid fa-eye-slash"></i></span>
@@ -32,11 +32,15 @@
                                         <div class="mb-3">
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                                <input type="password" name="confirm_password" id="confirmPassword"
+                                                <input type="password" id="confirmPassword" name="confirm_password"
                                                     class="form-control" placeholder="Confirm your password" required>
                                                 <span class="input-group-text eye_btn"><i
                                                         class="fa-solid fa-eye-slash"></i></span>
                                             </div>
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" id="rememberMe" class="form-check-input">
+                                            <label for="rememberMe" class="form-check-label">{{ __('Remember Me') }}</label>
                                         </div>
                                         <button type="submit"
                                             class="btn btn-primary w-100 login-button">{{ __('SUBMIT') }}</button>
