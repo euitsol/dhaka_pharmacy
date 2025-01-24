@@ -15,19 +15,19 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 12px;
     }
-    .dashboard-main-section .col-left .single-box .count {
+    /* .dashboard-main-section .col-left .single-box .count {
         width: 70px;
         height: 70px;
         margin-top: 0;
-    }
-    .dashboard-main-section .col-left .single-box .count span {
+    } */
+    /* .dashboard-main-section .col-left .single-box .count span {
         font-size: 40px;
-    }
+    } */
     .dashboard-main-section .col-left .single-box.cancel-order h2, .dashboard-main-section .col-left .single-box.previous-order h2 {
         margin-top: 5px;
     }
     .dashboard-main-section .col-left .single-box {
-        padding: 15px 20px;
+        padding: 15px 5px;
     }
     .dashboard-main-section .col-left .single-box .title h2 {
         margin-top: 10px;
@@ -303,12 +303,26 @@
         top: 10px;
         right: 22px;
     }
-
+    .dashboard-main-section .single-tips .tips_image img {
+        height: 200px;
+    }
+    .dashboard-main-section .log-out {
+        height: 125px !important;
+    }
+    .dashboard-main-section .col-left .single-box .title h2 {
+        margin-top: 5px !important;
+    }
+    .dashboard-main-section .col-mid .medicine-slider .carousel-control-next {
+        left: 56%;
+    }
+    .dashboard-main-section .col-mid .medicine-slider .carousel-control-prev {
+        left: 44%;
+    }
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
 
     .offer_image img {
-        height: 140px !important;
+        height: 100% !important;
         /* width: 252px !important; */
     }
     .dashboard-main-section .col-mid .my-payment-feedback{
@@ -327,13 +341,13 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 12px;
     }
-    .dashboard-main-section .col-left .single-box .count {
+    /* .dashboard-main-section .col-left .single-box .count {
         width: 70px;
         height: 70px;
         margin-top: 5px;
-    }
+    } */
     .dashboard-main-section .col-left .single-box .count span {
-        font-size: 40px;
+        font-size: 29px;
     }
     .dashboard-main-section .col-left .single-box.cancel-order h2, .dashboard-main-section .col-left .single-box.previous-order h2 {
         margin-top: 5px;
@@ -368,6 +382,15 @@
     .dashboard-main-section .col-right .customer-supporrt a h3{
         font-size: 20px;
         line-height: 20px;
+    }
+    .dashboard-main-section .log-out {
+        height: 125px !important;
+    }
+    .dashboard-main-section .col-mid .medicine-slider .carousel-control-next {
+        left: 56%;
+    }
+    .dashboard-main-section .col-mid .medicine-slider .carousel-control-prev {
+        left: 44%;
     }
     /* Header CSS  */
     .header-section .profile img {
@@ -492,6 +515,9 @@
     .order-info-section .order-status-row p {
         padding: 3px 10px;
     }
+    .dashboard-main-section .single-tips .tips_image img {
+        height: 200px;
+    }
 
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
@@ -506,7 +532,7 @@
         padding: 5px 20px;
     }
     .offer_image img {
-        height: 130px !important;
+        height: 100% !important;
         /* width: 136px !important; */
     }
     .dashboard-main-section .col-mid .my-payment-feedback{
@@ -525,11 +551,11 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 12px;
     }
-    .dashboard-main-section .col-left .single-box .count {
+    /* .dashboard-main-section .col-left .single-box .count {
         width: 70px;
         height: 70px;
         margin-top: 0;
-    }
+    } */
     .dashboard-main-section .col-left .single-box .count span {
         font-size: 40px;
     }
@@ -545,6 +571,9 @@
     }
     .dashboard-main-section .col-left .current-order .progress-box .progress {
         margin-top: 15px;
+    }
+    .dashboard-main-section .log-out {
+        height: 125px !important;
     }
    /* Header CSS  */
 
@@ -608,6 +637,10 @@
     }
     .form-section .form-column {
         padding: 40px !important;
+    }
+
+    .dashboard-main-section .single-tips .tips_image img {
+        height: 300px;
     }
 }
 @media screen and (min-width: 992px) and (max-width: 1023px) {
@@ -772,6 +805,12 @@
         display: inline-block;
         margin-top: 30px;
     }
+    .dashboard-main-section .col-left .single-box {
+        padding: 26px 5px;
+    }
+
+
+
 }
 @media screen and (min-width: 1440px) {
 
