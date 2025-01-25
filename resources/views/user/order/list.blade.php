@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="page-title">
+                    <div class="page-title mb-3">
                         <h3>{{ __(isset($status) ? slugToTitle($status) : 'My Orders') }}</h3>
                     </div>
                     <div class="show-order d-flex align-items-center">
@@ -28,8 +28,8 @@
                     <div class="order-row">
                         <div class="order-id-row">
                             <div class="row align-content-center">
-                                <div class="col-xl-10 col-md-8">
-                                    <div class="d-flex flex-sm-row flex-column">
+                                <div class="col-xl-10 col-md-8" >
+                                    <div class="d-flex flex-sm-row flex-column" style="position: relative">
                                         <div class="text">
                                             <h3 class="order-num">
                                                 {{ __('Order: ') }}<span>{{ $order->order_id }}</span>
@@ -38,7 +38,7 @@
                                                 {{ __('Placed on ') }}<span>{{ $order->place_date }}</span>
                                             </p>
                                         </div>
-                                        <div class="status ms-0 ms-sm-4 mt-3 mt-sm-0 ms-md-2 ms-lg-3 order-info-section">
+                                        <div class="status ms-0 ms-sm-4 mt-1 mt-sm-0 ms-md-2 ms-lg-3 order-info-section">
                                             <div class="order-status-row d-flex gap-3 align-items-center">
                                                 <span class="{{ $order->statusBg }}">{{ __($order->statusTitle) }}</span>
                                                 @if (isset($order->otp))
@@ -73,21 +73,21 @@
                             </div>
                         </div>
                         <div class="row align-items-center">
-                            <div class="col-12 px-4">
+                            <div class="col-12 px-3 px-md-4">
                                 @foreach ($order->products as $product)
-                                    <div class="row py-3 px-4 align-items-center list-item">
-                                        <div class="col-md-2 col-sm-3 col-5">
+                                    <div class="row py-3 py-md-3 px-3 px-md-4 align-items-start align-items-md-center list-item">
+                                        <div class="col-md-2 col-sm-3 col-4 px-0 px-sm-3">
                                             <div class="img">
                                                 <img class="w-100" src="{{ $product->image }}" alt="">
                                             </div>
                                         </div>
-                                        <div class="col-md-7 col-sm-5 col-7">
+                                        <!-- <div class="col-md-7 col-sm-5 col-7">
                                             <div class="product-info">
                                                 <h2 class="name" title="{{ $product->attr_title }}">
                                                     {{ $product->name }}</h2>
-                                                <p class="cat">{{ $product->pro_sub_cat->name }}</p>
-                                                <p class="cat">{{ $product->generic->name }}</p>
-                                                <p class="cat">{{ $product->company->name }}</p>
+                                                <p class="cat" title="{{ $product->pro_sub_cat->name }}" >{{ $product->pro_sub_cat->name }}</p>
+                                                <p class="cat" title="{{ $product->generic->name }}" >{{ $product->generic->name }}</p>
+                                                <p class="cat" title="{{ $product->company->name }}" >{{ $product->company->name }}</p>
                                             </div>
                                         </div>
                                         <div class="col-md-3 mt-3 mt-sm-0 col-sm-4 col-12 d-flex d-sm-block gap-4 gap-sm-0">
@@ -97,6 +97,27 @@
                                             <p class="qty">
                                                 {{ __('Unit: ') }}<span>{{ $product->pivot->unit->name }}</span>
                                             </p>
+                                        </div> -->
+                                        <div class="col-md-10 col-sm-9 col-8">
+                                            <div class="row justify-content-between">
+                                                <div class="col-md-9 col-sm-8 col-12">
+                                                    <div class="product-info">
+                                                        <h2 class="name" title="{{ $product->attr_title }}">
+                                                            {{ $product->name }}</h2>
+                                                        <p class="cat" title="{{ $product->pro_sub_cat->name }}" >{{ $product->pro_sub_cat->name }}</p>
+                                                        <p class="cat" title="{{ $product->generic->name }}" >{{ $product->generic->name }}</p>
+                                                        <p class="cat" title="{{ $product->company->name }}" >{{ $product->company->name }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mt-2 mt-sm-0 col-sm-4 col-12 d-flex d-sm-block gap-4 gap-sm-0">
+                                                    <p class="qty">
+                                                        {{ __('Qty: ') }}<span>{{ $product->pivot->quantity < 10 ? '0' . $product->pivot->quantity : $product->pivot->quantity }}</span>
+                                                    </p>
+                                                    <p class="qty">
+                                                        {{ __('Unit: ') }}<span>{{ $product->pivot->unit->name }}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach

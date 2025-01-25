@@ -1,5 +1,5 @@
 <div class="latest-offer">
-    <h2 class="d-lg-block d-none">{{ __('Our Latest Offers') }}</h2>
+    <!-- <h2 class="d d-none">{{ __('Our Latest Offers') }}</h2> -->
     <div class="slider">
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-indicators">

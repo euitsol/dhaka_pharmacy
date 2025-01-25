@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="page-title">
+                    <div class="page-title mb-3">
                         <h3>{{ __('My Wishlist') }}</h3>
                     </div>
                     <div class="show-order d-flex align-items-center">
@@ -29,30 +29,29 @@
             <div class="order_wrap" id="wish_wrap">
                 @forelse ($wishes as $wish)
                     <div class="order-row wish_item">
-                        <div class="row px-4">
+                        <div class="row px-4 py-3 py-sm-0 row-gap-sm-0 row-gap-3" style="position: relative;">
                             <div class="col-lg-8 col-md-6 col-12">
-                                <div class="row py-3">
-                                    <div class="col-xl-2 col-lg-3 col-4 ">
+                                <div class="row py-0 py-sm-3">
+                                    <div class="col-xl-2 col-lg-4 col-md-5 col-sm-2 col-4 px-md-3 px-0">
                                         <div class="img">
                                             <img class="w-100" src="{{ $wish->product->image }}" alt="">
                                         </div>
                                     </div>
-                                    <div class="col-xl-10 col-lg-9 col-8">
+                                    <div class="col-xl-10 col-lg-8 col-md-7 col-sm-10 col-8">
                                         <div class="product-info">
                                             <h2 class="name" title="{{ $wish->product->attr_title }}">
                                                 {{ $wish->product->name }}</h2>
-                                            <h3 class="cat">{{ $wish->product->pro_sub_cat->name }}</h3>
-                                            <h3 class="cat">{{ $wish->product->generic->name }}</h3>
-                                            <h3 class="cat">{{ $wish->product->company->name }}</h3>
+                                            <h3 class="cat" title="{{ $wish->product->pro_sub_cat->name }}">{{ $wish->product->pro_sub_cat->name }}</h3>
+                                            <h3 class="cat" title="{{ $wish->product->generic->name }}">{{ $wish->product->generic->name }}</h3>
+                                            <h3 class="cat" title="{{ $wish->product->company->name }}">{{ $wish->product->company->name }}</h3>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="col-lg-4 col-md-6 col-12 d-flex justify-content-md-end align-items-center py-3 px-4">
+                            <div class="col-lg-4 col-md-6 col-12 d-flex justify-content-md-end align-items-center py-0 py-sm-3 px-0 px-md-3">
                                 <div class="order-status p-0 d-md-block d-flex flex-column flex-sm-row-reverse flex-md-row">
                                     <div class="total mb-2">
-                                        <p class="total text-center ms-3">{{ __('Total:') }}
+                                        <p class="total text-center ms-0">{{ __('Total:') }}
                                             <span>{{ number_format($wish->product->discounted_price, 2) }}{{ __('tk') }}</span>
                                             @if ($wish->product->discounted_price != $wish->product->price)
                                                 <sup>
@@ -61,7 +60,7 @@
                                                 </sup>
                                             @endif
                                         </p>
-                                        <div class="favorite wishlist_item me-3 text-danger">
+                                        <div class="favorite wishlist_item me-0 text-danger">
                                             <i class="fa-solid fa-trash-can wish_update wish_remove_btn"
                                                 data-pid="{{ $wish->product->pid }}"></i>
                                         </div>

@@ -19,13 +19,13 @@ function getHtml(wishes) {
                                                 wish.product.attr_title
                                             }">
                                                 ${wish.product.name}</h2>
-                                            <h3 class="cat">${
+                                            <h3 class="cat" title="${wish.product.pro_sub_cat.name}" >${
                                                 wish.product.pro_sub_cat.name
                                             }</h3>
-                                            <h3 class="cat">${
+                                            <h3 class="cat" title="${wish.product.generic.name}" >${
                                                 wish.product.generic.name
                                             }</h3>
-                                            <h3 class="cat">${
+                                            <h3 class="cat" title="${wish.product.company.name}" >${
                                                 wish.product.company.name
                                             }</h3>
                                         </div>
