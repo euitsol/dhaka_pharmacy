@@ -98,7 +98,6 @@ class LoginController extends Controller
         $otp = implode('', $request->otp);
         if ($dm) {
             if ($dm->otp == $otp) {
-                $dm->status = 1;
                 $dm->is_verify = 1;
                 $dm->update();
                 flash()->addSuccess('OTP verified successfully');

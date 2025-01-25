@@ -95,7 +95,6 @@ class LoginContorller extends Controller
         $otp = implode('', $request->otp);
         if ($admin) {
             if ($admin->otp == $otp) {
-                $admin->status = 1;
                 $admin->update();
                 flash()->addSuccess('OTP verified successfully');
                 return redirect()->route('admin.reset.password', encrypt($admin->id));

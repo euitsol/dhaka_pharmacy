@@ -228,6 +228,13 @@ Route::controller(RiderLoginController::class)->prefix('rider')->name('rider.')-
     Route::get('/login', 'riderLogin')->name('login');
     Route::post('/login', 'riderLoginCheck')->name('login');
     Route::post('/logout', 'logout')->name('logout');
+
+    Route::get('/forgot', 'forgot')->name('forgot');
+    Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
+    Route::get('/forgot/verify-otp/{rider_id}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{rider_id}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{rider_id}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{rider_id}', 'resetPasswordStore')->name('reset.password');
 });
 
 
