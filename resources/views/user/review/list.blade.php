@@ -28,7 +28,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="page-title">
+                    <div class="page-title mb-3">
                         <h3>{{ __('All Reviews') }}</h3>
                     </div>
                     <div class="show-order d-flex align-items-center">
@@ -63,8 +63,8 @@
                                 <div class="product-info">
                                     <h5 class="mb-0" title="{{ $product->attr_title }}">
                                         {{ $product->name }}</h5>
-                                    <p class="mb-0">{{ $product->pro_sub_cat->name }}</p>
-                                    <p class="mb-0">{{ $product->pro_cat->name }}</p>
+                                    <p class="mb-0" title="{{ $product->pro_sub_cat->name }}">{{ $product->pro_sub_cat->name }}</p>
+                                    <p class="mb-0" title="{{ $product->pro_cat->name }}" >{{ $product->pro_cat->name }}</p>
                                 </div>
                             </div>
                             <div class="col-lg col-md-5 col-12">
@@ -77,14 +77,14 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-5 ms-auto col-xl col-sm-6 col-12">
+                            <div class="col-lg-2 col-md-5 ms-auto col-xl col-sm-12 col-12">
                                 <div class="product-info">
                                     <p class="mb-0 text-md-start text-lg-center">
                                         <strong>{{ __('Strength: ') }}</strong>{{ $product->strength->quantity . '-' . Str::upper($product->strength->unit) }}
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-5 col-xl col-sm-6 ms-auto ms-md-0 col-12">
+                            <div class="col-lg-2 col-md-5 col-xl col-sm-12 ms-auto ms-md-0 col-12">
                                 <div class="product-info">
                                     <p class="mb-0 text-md-start text-lg-center">
                                         <strong>{{ __('Price: ') }}</strong>
@@ -108,7 +108,7 @@
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <textarea name="description" class="w-100 p-2" placeholder="Tell us about your experience..."></textarea>
                                         @include('alerts.feedback', ['field' => 'description'])
-                                        <input type="submit" class="btn review_submit float-end" value="Submit">
+                                        <input type="submit" class="btn review_submit float-end mt-2" value="Submit">
                                     </form>
                                 @endif
                             </div>

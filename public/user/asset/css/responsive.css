@@ -1,5 +1,8 @@
 @media screen and (max-width: 575px) {
-    .dashboard-main-section .col-mid .my-payment-feedback{
+    .dashboard-main-section .col-mid .tips .single-tips .tips_image {
+        width: 350px;
+    }
+    .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
     .dashboard-main-section .col-right .google-map .address {
@@ -15,41 +18,37 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 12px;
     }
-    .dashboard-main-section .col-left .single-box .count {
-        width: 70px;
-        height: 70px;
-        margin-top: 0;
-    }
-    .dashboard-main-section .col-left .single-box .count span {
-        font-size: 40px;
-    }
-    .dashboard-main-section .col-left .single-box.cancel-order h2, .dashboard-main-section .col-left .single-box.previous-order h2 {
-        margin-top: 5px;
+
+    .dashboard-main-section .col-left .single-box.cancel-order h2,
+    .dashboard-main-section .col-left .single-box.previous-order h2 {
+        margin-top: 0px;
     }
     .dashboard-main-section .col-left .single-box {
-        padding: 15px 20px;
+        padding: 10px 5px !important;
     }
     .dashboard-main-section .col-left .single-box .title h2 {
-        margin-top: 10px;
-        font-size: 20px;
+        margin-top: 0px !important;
+        font-size: 10px !important;
+        text-align: center;
     }
     .dashboard-main-section .col-left .current-order .progress-box .progress {
         margin-top: 15px;
     }
-    .dashboard-main-section .col-mid .my-payment-feedback .my-payment h3, .dashboard-main-section .col-mid .my-payment-feedback .feedback h3{
+    .dashboard-main-section .col-mid .my-payment-feedback .my-payment h3,
+    .dashboard-main-section .col-mid .my-payment-feedback .feedback h3 {
         font-size: 20px;
     }
-    .dashboard-main-section .col-mid .order-cart-wish .single h2{
+    .dashboard-main-section .col-mid .order-cart-wish .single h2 {
         font-size: 20px;
     }
     .dashboard-main-section .col-right .customer-supporrt a h3 {
         font-size: 15px;
         line-height: 20px;
     }
-    .dashboard-main-section .col-right .customer-supporrt a img{
+    .dashboard-main-section .col-right .customer-supporrt a img {
         width: 60px;
     }
-    .dashboard-main-section .col-right .log-out img{
+    .dashboard-main-section .col-right .log-out img {
         width: 100%;
     }
     .socket p {
@@ -57,12 +56,11 @@
     }
     /* Header CSS  */
     .header-section .profile img {
-        height: 35px !important; 
+        height: 35px !important;
         width: 35px !important;
     }
 
-
-    .header-section .nav-menu{
+    .header-section .nav-menu {
         position: absolute;
         top: 100px;
         right: 0;
@@ -70,32 +68,31 @@
         background-color: var(--bg);
         visibility: hidden;
         opacity: 0;
-        transition: .4s;
+        transition: 0.4s;
         z-index: 99;
         border: 2px solid #fff;
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
         overflow-x: hidden;
     }
-    .header-section .nav-menu.active{
-
-        width: 310px;
+    .header-section .nav-menu.active {
+        width: 250px;
         visibility: visible;
         opacity: 1;
     }
-    .header-section .nav-menu .navbar-nav{
+    .header-section .nav-menu .navbar-nav {
         flex-direction: column !important;
         align-items: start !important;
-        padding: 20px;
+        padding: 10px;
     }
-    .header-section .nav-menu .navbar-nav li{
+    .header-section .nav-menu .navbar-nav li {
         width: 100%;
     }
-    .header-section .nav-menu .navbar-nav li a{
+    .header-section .nav-menu .navbar-nav li a {
         width: 100%;
         font-size: 14px;
         padding: 10px 15px;
     }
-    .header-section .toggle_bar{
+    .header-section .toggle_bar {
         display: block;
     }
 
@@ -109,21 +106,22 @@
     }
 
     /* User Address Page CSS  */
-    .address .accordion .accordion-header .accordion-button{
-            line-height: 20px;
-            font-size: 12px;
+    .address .accordion .accordion-header .accordion-button {
+        line-height: 20px;
+        font-size: 12px;
     }
-    .address .accordion .edit-btn, .address .accordion .dlt-btn {
-        padding: 0rem .5rem;
+    .address .accordion .edit-btn,
+    .address .accordion .dlt-btn {
+        padding: 0rem 0.5rem;
     }
-    .address .accordion .accordion-body{
+    .address .accordion .accordion-body {
         font-size: 12px;
     }
 
     /* Payment & Order Details CSS  */
     .order-info-section .order-status-row h2 {
         line-height: 18px;
-        font-size: 15px;
+        font-size: 13px;
     }
     /* Order Details  */
     .order-info-section .order-traking-row .step-1::before {
@@ -146,15 +144,232 @@
         left: 8px;
     }
 
+    /* =============================================
+        add to cart responsive code
+    ================================================*/
+    .header-section .right-col .offcanvas .add_to_cart_item .item_price {
+        margin-top: 4px !important;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .ben a {
+        padding: 2px 7px !important;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .ben {
+        top: 0px !important;
+        right: -2px !important;
+    }
+    .header-section .right-col .offcanvas .add_to_cart_item .item_price h4 {
+        margin: 0px 0 0 0 !important;
+        padding: 0px 0 0 0;
+    }
+    .header-section
+        .right-col
+        .offcanvas
+        .add_to_cart_item
+        .product_details
+        .info
+        .product_title
+        a {
+        font-size: 11px !important;
+    }
+    .header-section
+        .right-col
+        .offcanvas
+        .add_to_cart_item
+        .product_details
+        .info
+        p
+        a {
+        font-size: 10px !important;
+    }
+    .my-order-section .order-row .order-status .btn a,
+    .order-info-section .order-status a {
+        width: 100px;
+        border: 1px solid #000;
+        font-size: 14px;
+    }
+    .my-order-section .order-row .order-status .btn a.cancle,
+    .order-info-section .order-status a.cancle {
+        border: 1px solid red;
+    }
+    .my-order-section .order-row .product-info .name {
+        font-size: 12px;
+        line-height: 16px;
+        margin-bottom: 5px;
+    }
+    .my-order-section .order-row .order-status .total {
+        font-size: 16px !important;
+        line-height: 22px !important;
+    }
+    /* .my-order-section .order-row .img {
+        width: 100% !important;
+    } */
+    .my-order-section .order-status {
+        width: 100% !important;
+    }
+    .my-order-section .order-row .order-status .btns .button {
+        font-size: 14px !important;
+        width: 50% !important;
+        display: revert !important;
+        border: 1px solid #000 !important;
+    }
+    .my-order-section .order-row .order-status .btns .add_to_card {
+        font-size: 14px !important;
+        width: 50% !important;
+    }
+    .my-order-section .order-row .order-status .btns .add_to_card .cart-btn {
+        width: 100% !important;
+        display: inherit !important;
+    }
+    .my-order-section .order-row .product-info .cat {
+        font-size: 10px !important;
+    }
+    .my-order-section .page-title h3 {
+        font-size: 20px;
+    }
+    .my-order-section .order-row .order-id-row {
+        padding: 10px;
+    }
+    .my-order-section .order-row .qty {
+        font-size: 14px;
+    }
+
+    .form-section h2 {
+        font-size: 22px !important;
+        line-height: 32px !important;
+        margin-bottom: 10px !important;
+    }
+    .form-section .form-column {
+        padding: 10px !important;
+        width: 100% !important;
+    }
+    .form-section .form-column input,
+    textarea {
+        padding-left: 21px !important;
+        border-radius: 10px !important;
+        font-size: 14px !important;
+    }
+    .form-section .form-column .submit-button {
+        font-size: 16px !important;
+        max-width: 100% !important;
+        padding: 0px !important;
+    }
+    .form-section .form-column form {
+        row-gap: 14px !important;
+    }
+    .form-section .form-column textarea {
+        height: 121px !important;
+    }
+    #review_wrap textarea {
+        border: 1px solid !important;
+    }
+    .header-section .profile ul.dropdown-menu {
+        right: -45px !important;
+    }
+
+    .header-section .profile ul.dropdown-menu a span {
+        font-size: 14px !important;
+    }
+    .header-section .profile ul.dropdown-menu li a i {
+        font-size: 20px !important;
+    }
+    .header-section .profile ul.dropdown-menu li a {
+        padding: 10px;
+    }
+    .header-section .profile ul.dropdown-menu a img {
+        width: 24px !important;
+        height: 24px !important;
+        margin-right: 20px !important;
+    }
+    .my-order-section .show-order .form-select {
+        width: 100% !important;
+        border-radius: 4px !important;
+    }
+    .my-order-section .payment_wrap .order-id-row .badge {
+        position: absolute;
+        top: 0px;
+        right: 12px;
+    }
+    .my-order-section .order-id-row .status .order-status-row .badge {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+    .my-order-section .order-row .order-id-row .order-num {
+        font-size: 14px;
+        line-height: 20px;
+    }
+    .order-info-section .order-status-row .img {
+        padding: 6px 6px;
+    }
+    .order-info-section .order-details p {
+        font-size: 14px;
+        line-height: 19px;
+    }
+    .order-info-section .order-info-row .right p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .my-order-section .order-row .favorite.wishlist_item {
+        position: absolute;
+        top: 10px;
+        right: 22px;
+    }
+    /* .dashboard-main-section .single-tips .tips_image img {
+        height: 200px;
+    } */
+    .dashboard-main-section .log-out {
+        height: 125px !important;
+    }
+    /* .dashboard-main-section .col-left .single-box .title h2 {
+        margin-top: 5px !important;
+    } */
+    .dashboard-main-section .col-mid .medicine-slider .carousel-control-next {
+        left: 56%;
+    }
+    .dashboard-main-section .col-mid .medicine-slider .carousel-control-prev {
+        left: 44%;
+    }
+    .dashboard-main-section .col-left .single-box .count {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    .dashboard-main-section .col-left .single-box .count-cart {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    .dashboard-main-section
+        .col-mid
+        .medicine-slider
+        .carousel-inner
+        .carousel-item
+        p {
+        font-size: 16px !important;
+    }
+    .dashboard-main-section .customer-supporrt .single a .title .text-center,
+    h3 {
+        font-size: 16px !important;
+        line-height: 20px !important;
+    }
+    .dashboard-main-section .col-mid .medicine-slider .carousel-inner {
+        height: 280px !important;
+    }
+    .dashboard-main-section .col-left .single-box .count-cart span {
+        font-size: 16px !important;
+    }
+    .dashboard-main-section .col-left .single-box .count span {
+        font-size: 16px !important;
+    }
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
-
-
     .offer_image img {
-        height: 140px !important;
+        height: 100% !important;
         /* width: 252px !important; */
     }
-    .dashboard-main-section .col-mid .my-payment-feedback{
+    .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
     .dashboard-main-section .col-right .google-map .address {
@@ -170,15 +385,16 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 12px;
     }
-    .dashboard-main-section .col-left .single-box .count {
+    /* .dashboard-main-section .col-left .single-box .count {
         width: 70px;
         height: 70px;
         margin-top: 5px;
-    }
+    } */
     .dashboard-main-section .col-left .single-box .count span {
-        font-size: 40px;
+        font-size: 29px;
     }
-    .dashboard-main-section .col-left .single-box.cancel-order h2, .dashboard-main-section .col-left .single-box.previous-order h2 {
+    .dashboard-main-section .col-left .single-box.cancel-order h2,
+    .dashboard-main-section .col-left .single-box.previous-order h2 {
         margin-top: 5px;
     }
     .dashboard-main-section .col-left .single-box {
@@ -195,29 +411,39 @@
     .dashboard-main-section .col-left .current-order .title h3 {
         font-size: 18px;
     }
-    .dashboard-main-section .col-left .current-order .processing{
+    .dashboard-main-section .col-left .current-order .processing {
         flex-direction: column;
     }
     .dashboard-main-section .col-left .current-order .processing .btn a {
         font-size: 11px;
         padding: 5px 20px;
     }
-    .dashboard-main-section .col-mid .my-payment-feedback .my-payment h3, .dashboard-main-section .col-mid .my-payment-feedback .feedback h3{
+    .dashboard-main-section .col-mid .my-payment-feedback .my-payment h3,
+    .dashboard-main-section .col-mid .my-payment-feedback .feedback h3 {
         font-size: 20px;
     }
-    .dashboard-main-section .col-mid .order-cart-wish .single h2{
+    .dashboard-main-section .col-mid .order-cart-wish .single h2 {
         font-size: 20px;
     }
-    .dashboard-main-section .col-right .customer-supporrt a h3{
+    .dashboard-main-section .col-right .customer-supporrt a h3 {
         font-size: 20px;
         line-height: 20px;
     }
+    .dashboard-main-section .log-out {
+        height: 125px !important;
+    }
+    .dashboard-main-section .col-mid .medicine-slider .carousel-control-next {
+        left: 56%;
+    }
+    .dashboard-main-section .col-mid .medicine-slider .carousel-control-prev {
+        left: 44%;
+    }
     /* Header CSS  */
     .header-section .profile img {
-        height: 35px !important; 
+        height: 35px !important;
         width: 35px !important;
     }
-    .header-section .nav-menu{
+    .header-section .nav-menu {
         position: absolute;
         top: 100px;
         right: 0;
@@ -225,30 +451,29 @@
         background-color: var(--bg);
         visibility: hidden;
         opacity: 0;
-        transition: .4s;
+        transition: 0.4s;
         z-index: 99;
         border: 2px solid #fff;
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
         overflow-x: hidden;
     }
-    .header-section .nav-menu.active{
-
+    .header-section .nav-menu.active {
         width: 400px;
         visibility: visible;
         opacity: 1;
     }
-    .header-section .nav-menu .navbar-nav{
+    .header-section .nav-menu .navbar-nav {
         flex-direction: column !important;
         align-items: start !important;
-        padding: 20px;
+        padding: 10px;
     }
-    .header-section .nav-menu .navbar-nav li{
+    .header-section .nav-menu .navbar-nav li {
         width: 100%;
     }
-    .header-section .nav-menu .navbar-nav li a{
+    .header-section .nav-menu .navbar-nav li a {
         width: 100%;
     }
-    .header-section .toggle_bar{
+    .header-section .toggle_bar {
         display: block;
     }
     .header-section .notification ul.dropdown-menu {
@@ -258,7 +483,7 @@
     /* Payment & Order Details CSS  */
     .order-info-section .order-status-row h2 {
         line-height: 25px;
-        font-size: 20px;
+        font-size: 14px;
     }
 
     /* Order Details  */
@@ -281,7 +506,87 @@
     .order-info-section .order-traking-row .step {
         min-height: 60px;
     }
+    .my-order-section .order-row .order-status .btn a,
+    .order-info-section .order-status a {
+        width: 100px;
+        border: 1px solid #000;
+        font-size: 14px;
+    }
+    .my-order-section .order-row .order-status .btn a.cancle,
+    .order-info-section .order-status a.cancle {
+        border: 1px solid red;
+    }
+    .my-order-section .order-row .order-status .btns .button {
+        width: 110px;
+        border: 1px solid #000 !important;
+        font-size: 15px !important;
+    }
+    .my-order-section .order-status {
+        width: 100% !important;
+    }
+    .my-order-section .page-title h3 {
+        font-size: 20px;
+    }
+    .my-order-section .order-row .product-info .name {
+        font-size: 12px;
+        line-height: 16px;
+    }
+    .my-order-section .order-row .qty {
+        font-size: 14px;
+    }
 
+    .form-section h2 {
+        font-size: 29px !important;
+        line-height: 32px !important;
+        margin-bottom: 10px !important;
+    }
+    .form-section .form-column {
+        padding: 30px !important;
+        width: 100% !important;
+    }
+
+    .form-section .form-column input,
+    textarea {
+        padding-left: 21px !important;
+        border-radius: 10px !important;
+    }
+    .form-section .form-column form {
+        row-gap: 15px !important;
+    }
+    .form-section .form-column .submit-button {
+        font-size: 16px !important;
+        max-width: 100% !important;
+        padding: 0px !important;
+    }
+    #review_wrap textarea {
+        border: 1px solid !important;
+    }
+    .order-info-section .order-status-row p {
+        padding: 3px 10px;
+    }
+    /* .dashboard-main-section .single-tips .tips_image img {
+        height: 200px;
+    } */
+    .dashboard-main-section
+        .col-mid
+        .medicine-slider
+        .carousel-inner
+        .carousel-item
+        p {
+        font-size: 16px !important;
+    }
+    .dashboard-main-section .col-mid .medicine-slider .carousel-inner {
+        height: 280px !important;
+    }
+    .dashboard-main-section .offer_image img {
+        height: 100%;
+    }
+    .dashboard-main-section #lightbox {
+        height: 100% !important;
+    }
+    .dashboard-main-section .lightbox-content {
+        height: 100% !important;
+    }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
     .dashboard-main-section .col-left .single-box .title h2 {
@@ -295,10 +600,10 @@
         padding: 5px 20px;
     }
     .offer_image img {
-        height: 130px !important;
+        height: 100% !important;
         /* width: 136px !important; */
     }
-    .dashboard-main-section .col-mid .my-payment-feedback{
+    .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
     .dashboard-main-section .col-right .google-map .address {
@@ -314,15 +619,16 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 12px;
     }
-    .dashboard-main-section .col-left .single-box .count {
+    /* .dashboard-main-section .col-left .single-box .count {
         width: 70px;
         height: 70px;
         margin-top: 0;
-    }
+    } */
     .dashboard-main-section .col-left .single-box .count span {
-        font-size: 40px;
+        /* font-size: 40px; */
     }
-    .dashboard-main-section .col-left .single-box.cancel-order h2, .dashboard-main-section .col-left .single-box.previous-order h2 {
+    .dashboard-main-section .col-left .single-box.cancel-order h2,
+    .dashboard-main-section .col-left .single-box.previous-order h2 {
         margin-top: 5px;
     }
     .dashboard-main-section .col-left .single-box {
@@ -335,46 +641,49 @@
     .dashboard-main-section .col-left .current-order .progress-box .progress {
         margin-top: 15px;
     }
-   /* Header CSS  */
+    .dashboard-main-section .log-out {
+        height: 125px !important;
+    }
+    /* Header CSS  */
 
-   .header-section .profile img {
-        height: 35px !important; 
+    .header-section .profile img {
+        height: 35px !important;
         width: 35px !important;
     }
 
-   .header-section .nav-menu{
-    position: absolute;
-    top: 100px;
-    right: 0;
-    width: 0;
-    background-color: var(--bg);
-    visibility: hidden;
-    opacity: 0;
-    transition: .4s;
-    z-index: 99;
-    border: 2px solid #fff;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.header-section .nav-menu.active{
-
-    width: 400px;
-    visibility: visible;
-    opacity: 1;
-}
-.header-section .nav-menu .navbar-nav{
-    flex-direction: column !important;
-    align-items: start !important;
-    padding: 20px;
-}
-.header-section .nav-menu .navbar-nav li{
-    width: 100%;
-}
-.header-section .nav-menu .navbar-nav li a{
-    width: 100%;
-}
-.header-section .toggle_bar{
-    display: block;
-}
+    .header-section .nav-menu {
+        position: absolute;
+        top: 100px;
+        right: 0;
+        width: 0;
+        background-color: var(--bg);
+        visibility: hidden;
+        opacity: 0;
+        transition: 0.4s;
+        z-index: 99;
+        border: 2px solid #fff;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+    }
+    .header-section .nav-menu.active {
+        width: 400px;
+        visibility: visible;
+        opacity: 1;
+    }
+    .header-section .nav-menu .navbar-nav {
+        flex-direction: column !important;
+        align-items: start !important;
+        padding: 20px;
+    }
+    .header-section .nav-menu .navbar-nav li {
+        width: 100%;
+    }
+    .header-section .nav-menu .navbar-nav li a {
+        width: 100%;
+    }
+    .header-section .toggle_bar {
+        display: block;
+    }
 
     /* Order Details  */
     .order-info-section .order-traking-row .step-1::before {
@@ -386,22 +695,50 @@
         left: 64%;
     }
     .order-info-section .order-traking-row .step-5.active::after {
-        left: 64% ;
+        left: 64%;
         width: 40%;
+    }
+
+    .form-section h2 {
+        font-size: 32px !important;
+        line-height: 32px !important;
+        margin-bottom: 15px !important;
+    }
+    .form-section .form-column {
+        padding: 40px !important;
+    }
+
+    /* .dashboard-main-section .single-tips .tips_image img {
+        height: 300px;
+    } */
+
+    .dashboard-main-section .col-mid .tips .single-tips .tips_image {
+        width: 70%;
+    }
+    /* .dashboard-main-section .col-mid .tips .single-tips .tips_image img {
+        height: 250px !important;
+    } */
+    .dashboard-main-section .offer_image img {
+        height: 100%;
+    }
+    .dashboard-main-section #lightbox {
+        height: 100% !important;
+    }
+    .dashboard-main-section .lightbox-content {
+        height: 100% !important;
     }
 }
 @media screen and (min-width: 992px) and (max-width: 1023px) {
-
     .dashboard-main-section .col-right .google-map .address {
         padding: 10px 20px;
     }
     .dashboard-main-section .col-right .map {
-        height: 60px;
+        height: 200px;
     }
     .dashboard-main-section .col-right .google-map .address-btn {
         padding: 10px 15px;
     }
-    .dashboard-main-section .col-mid .my-payment-feedback{
+    .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
     .dashboard-main-section .col-right .google-map .address {
@@ -417,7 +754,7 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 10px;
     }
-    .dashboard-main-section .col-right .log-out a{
+    .dashboard-main-section .col-right .log-out a {
         display: inline-block;
     }
     .dashboard-main-section .col-left .current-order .title h3 {
@@ -430,10 +767,10 @@
 
     /* Header CSS  */
     .header-section .profile img {
-        height: 35px !important; 
+        height: 35px !important;
         width: 35px !important;
     }
-    .header-section .nav-menu{
+    .header-section .nav-menu {
         position: absolute;
         top: 100px;
         right: 0;
@@ -441,32 +778,40 @@
         background-color: var(--bg);
         visibility: hidden;
         opacity: 0;
-        transition: .4s;
+        transition: 0.4s;
         z-index: 99;
         border: 2px solid #fff;
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
         overflow-x: hidden;
     }
-    .header-section .nav-menu.active{
-
+    .header-section .nav-menu.active {
         width: 400px;
         visibility: visible;
         opacity: 1;
     }
-    .header-section .nav-menu .navbar-nav{
+    .header-section .nav-menu .navbar-nav {
         flex-direction: column !important;
         align-items: start !important;
         padding: 20px;
     }
-    .header-section .nav-menu .navbar-nav li{
+    .header-section .nav-menu .navbar-nav li {
         width: 100%;
     }
-    .header-section .nav-menu .navbar-nav li a{
+    .header-section .nav-menu .navbar-nav li a {
         width: 100%;
     }
-    .header-section .toggle_bar{
+    .header-section .toggle_bar {
         display: block;
     }
+    .dashboard-main-section .col-left .single-box {
+        padding: 22px 10px;
+    }
+    .dashboard-main-section .offer_image img {
+        height: 100%;
+    }
+    /* .dashboard-main-section .tips_image img {
+        height: 170px;
+    } */
 }
 @media screen and (min-width: 1024px) and (max-width: 1199px) {
     /* Header CSS  */
@@ -477,7 +822,8 @@
     .header-section .name a {
         font-size: 15px;
     }
-    .header-section .right-col img, .header-section .notification img {
+    .header-section .right-col img,
+    .header-section .notification img {
         width: 20px;
     }
 
@@ -491,13 +837,12 @@
         padding: 10px 15px;
     }
 
-
     /* Dashboard CSS  */
     .dashboard-main-section .col-right .google-map .address {
         padding: 10px 20px;
     }
     .dashboard-main-section .col-right .map {
-        height: 60px;
+        height: 200px;
     }
     .dashboard-main-section .col-right .google-map .address-btn {
         padding: 10px 15px;
@@ -515,10 +860,15 @@
         font-size: 11px;
         padding: 5px 20px;
     }
-    .dashboard-main-section .col-mid .my-payment-feedback{
+    .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
-
+    /* .dashboard-main-section .offer_image img {
+        height: 100%;
+    } */
+    /* .dashboard-main-section .tips_image img {
+        height: 170px;
+    } */
 }
 @media screen and (min-width: 1200px) and (max-width: 1439px) {
     .dashboard-main-section .col-mid .order-cart-wish .single {
@@ -548,11 +898,13 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 10px;
     }
-    .dashboard-main-section .col-right .log-out a{
+    .dashboard-main-section .col-right .log-out a {
         display: inline-block;
         margin-top: 30px;
     }
+    .dashboard-main-section .col-left .single-box {
+        padding: 26px 5px;
+    }
 }
 @media screen and (min-width: 1440px) {
-
 }

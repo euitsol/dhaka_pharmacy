@@ -91,17 +91,17 @@ function getHtml(orders) {
                                                                         }">${
                 product.name
             }</h2>
-                                                                        <p class="cat">${
+                                                                        <p class="cat" title="${product.pro_sub_cat.name}" >${
                                                                             product
                                                                                 .pro_sub_cat
                                                                                 .name
                                                                         }</p>
-                                                                        <p class="cat">${
+                                                                        <p class="cat" title="${product.generic.name}" >${
                                                                             product
                                                                                 .generic
                                                                                 .name
                                                                         }</p>
-                                                                        <p class="cat">${
+                                                                        <p class="cat" title="${product.company.name}" >${
                                                                             product
                                                                                 .company
                                                                                 .name

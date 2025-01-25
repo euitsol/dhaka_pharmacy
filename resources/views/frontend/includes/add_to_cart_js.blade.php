@@ -205,9 +205,9 @@
                                     <h4 class="product_title" title="${product.attr_title}">
                                         <a href="${product.slug}">${product.name}</a>
                                     </h4>
-                                    <p class="m-0"><a href="#">${product.pro_cat.name}</a></p>
-                                    <p class="m-0"><a href="#">${product.generic.name}</a></p>
-                                    <p class="m-0"><a href="#">${product.company.name}</a></p>
+                                    <p class="m-0" title="${product.pro_cat.name}" ><a href="#">${product.pro_cat.name}</a></p>
+                                    <p class="m-0" title="${product.generic.name}" ><a href="#">${product.generic.name}</a></p>
+                                    <p class="m-0" title="${product.company.name}" ><a href="#">${product.company.name}</a></p>
                                 </div>
                                 <div class="item_price col-sm-4 mt-2 mt-sm-5 col-12 ps-0">
                                     ${product.discounted_price != product.price ?
