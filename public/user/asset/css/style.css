@@ -1094,17 +1094,25 @@ margin: 0;
 
 .dashboard-main-section .log-out {
     height: 325px !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background: #bfe3f9;
     border-radius: 15px;
     padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
     text-align: center;
+    transition: 0.4s;
+}
+.dashboard-main-section .log-out a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .dashboard-main-section .log-out a img {
     width: 80%;
+}
+.dashboard-main-section .log-out:hover {
+    transform: scale(1.04);
 }
 .dashboard-main-section .col-right .google-map .address .btn {
     padding: 10px 0px;

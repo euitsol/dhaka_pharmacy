@@ -357,6 +357,12 @@
     .dashboard-main-section .col-mid .medicine-slider .carousel-inner {
         height: 280px !important;
     }
+    .dashboard-main-section .col-left .single-box .count-cart span {
+        font-size: 16px !important;
+    }
+    .dashboard-main-section .col-left .single-box .count span {
+        font-size: 16px !important;
+    }
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
     .offer_image img {
@@ -619,7 +625,7 @@
         margin-top: 0;
     } */
     .dashboard-main-section .col-left .single-box .count span {
-        font-size: 40px;
+        /* font-size: 40px; */
     }
     .dashboard-main-section .col-left .single-box.cancel-order h2,
     .dashboard-main-section .col-left .single-box.previous-order h2 {
@@ -657,6 +663,7 @@
         z-index: 99;
         border: 2px solid #fff;
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
     }
     .header-section .nav-menu.active {
         width: 400px;

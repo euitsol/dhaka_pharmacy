@@ -156,11 +156,7 @@
                                     <div class="col-right row">
                                         <div class="letest-offer-shadow">
                                             <div class="col-xl-12 mt-0">
-                                                @if ($latest_offers->isNotEmpty())
                                                 @include('user.dashboard.include.latest-offer')
-                                                @else
-                                                <h2>{{ __('Address') }}</h2>
-                                                @endif
                                             </div>
                                             <div class="col-12">
                                                 @if ($user_tips->isNotEmpty())
