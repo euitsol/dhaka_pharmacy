@@ -50,7 +50,7 @@
                                                     $product->discounted_price;
                                             @endphp
                                             <div class="row align-items-center py-2">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-sm-3 col-md-2">
                                                     <div class="img">
                                                         <img src="{{ $product->image }}" alt="">
                                                     </div>
@@ -81,15 +81,15 @@
                                                     </div>
                                                 </div> -->
 
-                                                <div class="col-8 col-md-10">
+                                                <div class="col-8 col-sm-9 col-md-10">
                                                     <div class="row align-items-center">
-                                                        <div class="col-12 col-md-8 pe-0 pe-md-4">
+                                                        <div class="col-12 col-sm-7 col-md-8 pe-0 pe-md-4">
                                                             <h5 class="mb-1" title="{{ $product->attr_title }}">
                                                                 {{ $product->name }}</h5>
-                                                            <p class="mb-0">{{ $product->generic->name }}</p>
-                                                            <p class="mb-0">{{ $product->company->name }}</p>
+                                                            <p class="mb-0" title="{{ $product->generic->name }}">{{ $product->generic->name }}</p>
+                                                            <p class="mb-0" title="{{ $product->company->name }}" >{{ $product->company->name }}</p>
                                                         </div>
-                                                        <div class="col-12 col-md-4 mt-1 mt-md-0">
+                                                        <div class="col-12 col-sm-5 col-md-4 mt-1 mt-md-0">
                                                             <div class="qty-col d-flex justify-content-start d-md-block">
                                                                 <div class="qt-1 pe-3 pe-md-0">
                                                                     <p class="qt mb-1">

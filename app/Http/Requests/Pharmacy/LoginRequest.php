@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Pharmacy;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UploadPrescriptionRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,9 @@ class UploadPrescriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'address_id' => 'required|exists:addresses,id',
-            // 'delivery_type' => 'required|numeric',
+            'email' => 'required|sometimes|email|exists:pharmacies,email',
+            'id' => 'required|sometimes',
+            'password' => 'required|sometimes',
         ];
     }
 }

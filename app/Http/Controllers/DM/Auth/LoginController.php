@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\DM\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DistrictManager\LoginRequest;
+use App\Http\Requests\DistrictManager\PasswordUpdateRequest;
 use App\Http\Requests\DistrictManagerRequest;
 use App\Models\DistrictManager;
 use Carbon\Carbon;
@@ -17,6 +19,18 @@ use App\Http\Traits\SmsTrait;
 class LoginController extends Controller
 {
     use SmsTrait;
+    private $otpResentTime = 1;
+
+    private function check_throttle($dm)
+    {
+        if ($dm->phone_verified_at !== null) {
+            $timeSinceLastOtp = now()->diffInMinutes($dm->phone_verified_at);
+            if ($timeSinceLastOtp < $this->otpResentTime) {
+                return 'Please wait before requesting another verification otp as one has already been sent recently';
+            }
+        }
+        return false;
+    }
     public function dmLogin()
     {
         if (Auth::guard('dm')->check() && dm()->status == 1) {
@@ -26,7 +40,7 @@ class LoginController extends Controller
         return view('district_manager.auth.login');
     }
 
-    public function dmLoginCheck(Request $request): RedirectResponse
+    public function dmLoginCheck(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->only('phone', 'password');
         $check = DistrictManager::where('phone', $request->phone)->first();
@@ -62,26 +76,42 @@ class LoginController extends Controller
         return view('district_manager.auth.forgot');
     }
 
-    public function send_otp(Request $request): RedirectResponse
+    public function send_otp(LoginRequest $request)
     {
         $dm = DistrictManager::where('phone', $request->phone)->first();
+        if ($request->ajax()) {
+            $dm = DistrictManager::where('id', decrypt($request->id))->first();
+        }
         if ($dm) {
+            if ($this->check_throttle($dm)) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'error', 'message' => $this->check_throttle($dm)]);
+                } else {
+                    flash()->addError($this->check_throttle($dm));
+                    return redirect()->back()->withInput();
+                }
+            }
             $dm->otp = otp();
             $dm->phone_verified_at = Carbon::now();
             $dm->save();
             $verification_sms = "Your verification code is $dm->otp. Please enter this code to verify your phone.";
             $result = $this->sms_send($dm->phone, $verification_sms);
             if ($result === true) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'success', 'message' => 'The verification code has been sent successfully.']);
+                }
                 flash()->addSuccess('The verification code has been sent successfully.');
                 return redirect()->route('district_manager.otp.verify', encrypt($dm->id));
             } else {
                 flash()->addError($result);
-                return redirect()->back()->withInput();
             }
         } else {
             flash()->addWarning('Phone number not found in our record');
-            return redirect()->back()->withInput();
         }
+        if ($request->ajax()) {
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong. Please try again.']);
+        }
+        return redirect()->back()->withInput();
     }
 
     public function otp($dm_id)
@@ -98,7 +128,6 @@ class LoginController extends Controller
         $otp = implode('', $request->otp);
         if ($dm) {
             if ($dm->otp == $otp) {
-                $dm->status = 1;
                 $dm->is_verify = 1;
                 $dm->update();
                 flash()->addSuccess('OTP verified successfully');
@@ -118,7 +147,7 @@ class LoginController extends Controller
         return view('district_manager.auth.reset', compact('dm_id'));
     }
 
-    public function resetPasswordStore(Request $request, $dm_id): RedirectResponse
+    public function resetPasswordStore(PasswordUpdateRequest $request, $dm_id): RedirectResponse
     {
         $dm = DistrictManager::where('id', decrypt($dm_id))->first();
         $dm->password = $request->password;

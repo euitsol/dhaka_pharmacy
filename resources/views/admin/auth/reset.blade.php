@@ -9,13 +9,13 @@
             <div class="row">
                 <div class="admin-container">
                     <div class="row row-gap-4">
-                        <div class="col-md-4">
+                        <div class="col-lg-4 d-none d-lg-block">
                             <div class="image-col d-flex align-items-center justify-content-between">
                                 <img src="{{ asset('admin/image/adminlogin.png') }}" alt="adminloginimage">
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="form ps-md-4 ps-0 h-100 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-8 col-12">
+                            <div class="form h-100 d-flex align-items-center justify-content-center">
                                 <div class="form-content w-100">
                                     <h2 class="text-center mb-4">{{ __('Reset Password') }}</h2>
                                     <form action="{{ route('admin.reset.password', $admin_id) }}" method="POST">
@@ -28,11 +28,12 @@
                                                 <span class="input-group-text eye_btn"><i
                                                         class="fa-solid fa-eye-slash"></i></span>
                                             </div>
+                                            @include('alerts.feedback', ['field' => 'password'])
                                         </div>
                                         <div class="mb-3">
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                                <input type="password" name="confirm_password" id="confirmPassword"
+                                                <input type="password" name="password_confirmation" id="confirmPassword"
                                                     class="form-control" placeholder="Confirm your password" required>
                                                 <span class="input-group-text eye_btn"><i
                                                         class="fa-solid fa-eye-slash"></i></span>

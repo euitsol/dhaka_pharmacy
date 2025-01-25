@@ -83,6 +83,18 @@ a:hover{
   text-decoration: none;
 }
 
+/* For most browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 
 /*====================================
       Start Product Common CSS
@@ -401,7 +413,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 .sidebar-cat-section .sticky-col {
   position: sticky !important;
-  top: 1.5rem !important;
+  top: 5rem !important;
 }
 
 .sidebar-cat-section .main-categories-items{
@@ -850,7 +862,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 
 
-/* 
+/*
 .product-section .cat-filter-row h2.title {
 	position: relative;
   display: inline-block;

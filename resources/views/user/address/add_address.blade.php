@@ -4,9 +4,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="address_add_modalLabel">{{ __('Add New Address') }}</h5>
-                <button type="button" class="close btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
+
+                <button type="button" class="close btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+
 
             </div>
             <div class="modal-body">
