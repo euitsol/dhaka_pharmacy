@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Pharmacy\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pharmacy\LoginRequest;
+use App\Http\Requests\Pharmacy\PasswordUpdateRequest;
 use App\Models\Pharmacy;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +17,18 @@ use App\Http\Traits\MailSentTrait;
 class LoginController extends Controller
 {
     use MailSentTrait;
+    private $otpResentTime = 1;
+
+    private function check_throttle($pharmacy)
+    {
+        if ($pharmacy->email_verified_at !== null) {
+            $timeSinceLastOtp = now()->diffInMinutes($pharmacy->email_verified_at);
+            if ($timeSinceLastOtp < $this->otpResentTime) {
+                return 'Please wait before requesting another verification otp as one has already been sent recently';
+            }
+        }
+        return false;
+    }
     public function pharmacyLogin()
     {
         if (Auth::guard('pharmacy')->check() && pharmacy()->status == 1) {
@@ -24,7 +38,7 @@ class LoginController extends Controller
         return view('pharmacy.auth.login');
     }
 
-    public function pharmacyLoginCheck(Request $request): RedirectResponse
+    public function pharmacyLoginCheck(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->only('email', 'password');
 
@@ -59,25 +73,41 @@ class LoginController extends Controller
         return view('pharmacy.auth.forgot');
     }
 
-    public function send_otp(Request $request): RedirectResponse
+    public function send_otp(LoginRequest $request)
     {
         $pharmacy = Pharmacy::where('email', $request->email)->first();
+        if ($request->ajax()) {
+            $pharmacy = Pharmacy::where('id', decrypt($request->id))->first();
+        }
         if ($pharmacy) {
+            if ($this->check_throttle($pharmacy)) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'error', 'message' => $this->check_throttle($pharmacy)]);
+                } else {
+                    flash()->addError($this->check_throttle($pharmacy));
+                    return redirect()->back()->withInput();
+                }
+            }
             $pharmacy->otp = otp();
             $pharmacy->email_verified_at = Carbon::now();
             $pharmacy->save();
             $mail = $this->sendOtpMail($pharmacy);
             if ($mail) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'success', 'message' => 'The verification code has been successfully sent to your email']);
+                }
                 flash()->addSuccess('The verification code has been successfully sent to your email');
                 return redirect()->route('pharmacy.otp.verify', encrypt($pharmacy->id));
             } else {
                 flash()->addError('Something went wrong. Please try again.');
-                return redirect()->back()->withInput();
             }
         } else {
             flash()->addWarning('Email not found in our record');
-            return redirect()->back()->withInput();
         }
+        if ($request->ajax()) {
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong. Please try again.']);
+        }
+        return redirect()->back()->withInput();
     }
 
     public function otp($pharmacy_id)
@@ -113,7 +143,7 @@ class LoginController extends Controller
         return view('pharmacy.auth.reset', compact('pharmacy_id'));
     }
 
-    public function resetPasswordStore(Request $request, $pharmacy_id): RedirectResponse
+    public function resetPasswordStore(PasswordUpdateRequest $request, $pharmacy_id): RedirectResponse
     {
         $pharmacy = pharmacy::where('id', decrypt($pharmacy_id))->first();
         $pharmacy->password = $request->password;

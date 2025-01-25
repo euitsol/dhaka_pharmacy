@@ -130,8 +130,9 @@
                 </div>
             </form>
         </div>
+        @include('admin.partials.documentation', ['document' => $document])
     </div>
-    @include('admin.partials.documentation', ['document' => $document])
+
     </div>
     {{-- KYC History Modal  --}}
     <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

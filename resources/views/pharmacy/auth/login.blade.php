@@ -23,9 +23,10 @@
                                     <div class="mb-4">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-regular fa-envelope"></i></span>
-                                            <input type="email" id="email" name="email" class="form-control"
-                                                placeholder="Enter your e-mail address" required>
+                                            <input type="email" id="email" value="{{ old('email') }}" name="email"
+                                                class="form-control" placeholder="Enter your e-mail address" required>
                                         </div>
+                                        @include('alerts.feedback', ['field' => 'email'])
                                     </div>
                                     <div class="mb-4">
                                         <div class="input-group">
@@ -33,10 +34,12 @@
                                             <input type="password" name="password" id="password" class="form-control"
                                                 placeholder="Enter your password" required>
                                         </div>
+                                        @include('alerts.feedback', ['field' => 'password'])
                                     </div>
                                     <div class="mb-4 form-check d-flex justify-content-between">
                                         <div>
-                                            <input type="checkbox" id="rememberMe" class="form-check-input">
+                                            <input type="checkbox" id="rememberMe" name="remember"
+                                                {{ old('remember') ? 'checked' : '' }} class="form-check-input">
                                             <label for="rememberMe" class="form-check-label">{{ __('Remember Me') }}</label>
                                         </div>
                                         <a href="{{ route('pharmacy.forgot') }}"
