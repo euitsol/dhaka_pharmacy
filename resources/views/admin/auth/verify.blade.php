@@ -9,13 +9,13 @@
             <div class="row">
                 <div class="admin-container">
                     <div class="row row-gap-4">
-                        <div class="col-md-4">
+                        <div class="col-lg-4 d-none d-lg-block">
                             <div class="image-col d-flex align-items-center justify-content-between">
                                 <img src="{{ asset('admin/image/adminlogin.png') }}" alt="adminloginimage">
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="form ps-md-4 ps-0 h-100">
+                        <div class="col-lg-8 col-12">
+                            <div class="form ps-md-4 h-100">
                                 <div class="form-content d-flex justify-content-center align-items-center h-100">
                                     <div class="w-100">
                                         <form action="{{ route('admin.otp.verify', $admin_id) }}" method="POST">
