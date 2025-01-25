@@ -9,13 +9,13 @@
             <div class="row">
                 <div class="pharmacy-container">
                     <div class="row row-gap-4">
-                        <div class="col-md-5">
+                        <div class="col-lg-5 d-none d-lg-block">
                             <div class="image-col  pe-md-4 pe-0 ">
                                 <img src="{{ asset('pharmacy/image/pharmacy-login-image.png') }}" alt="pharmacy login">
                             </div>
                         </div>
-                        <div class="col-md-7">
-                            <div class="form ps-md-4 ps-0 h-100">
+                        <div class="col-lg-7 col-12">
+                            <div class="form h-100">
                                 <div class="form-content d-flex justify-content-center align-items-center h-100">
                                     <div class="w-100">
                                         <form action="{{ route('pharmacy.otp.verify', $pharmacy_id) }}" method="POST">

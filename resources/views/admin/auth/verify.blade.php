@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="col-lg-8 col-12">
-                            <div class="form ps-md-4 h-100">
+                            <div class="form h-100">
                                 <div class="form-content d-flex justify-content-center align-items-center h-100">
                                     <div class="w-100">
                                         <form action="{{ route('admin.otp.verify', $admin_id) }}" method="POST">

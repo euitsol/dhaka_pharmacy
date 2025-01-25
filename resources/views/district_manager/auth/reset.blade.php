@@ -9,13 +9,13 @@
             <div class="row">
                 <div class="district-container">
                     <div class="row row-gap-4">
-                        <div class="col-md-5">
+                        <div class="col-lg-5 d-none d-lg-block">
                             <div class="image-col pe-md-4 pe-0 ">
                                 <img src="{{ asset('dm/image/distric.png') }}" alt="dsitrict login">
                             </div>
                         </div>
-                        <div class="col-md-7">
-                            <div class="form ps-md-4 ps-0 h-100 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-7 col-12">
+                            <div class="form h-100 d-flex align-items-center justify-content-center">
                                 <div class="form-content w-100">
                                     <h2 class="text-center mb-4">{{ __('Reset Password') }}</h2>
                                     <form action="{{ route('district_manager.reset.password', $dm_id) }}" method="POST">

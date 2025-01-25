@@ -9,13 +9,13 @@
             <div class="row">
                 <div class="rider-container">
                     <div class="row row-gap-4">
-                        <div class="col-md-5">
+                        <div class="col-lg-5 d-none d-lg-block">
                             <div class="image-col">
                                 <img src="{{ asset('rider/img/rider.png') }}" alt="rider login">
                             </div>
                         </div>
-                        <div class="col-md-7">
-                            <div class="form ps-md-4 ps-0 h-100">
+                        <div class="col-lg-7 col-12">
+                            <div class="form h-100">
                                 <div class="form-content d-flex justify-content-center align-items-center h-100">
                                     <div class="w-100">
                                         <form action="{{ route('rider.otp.verify', $rider_id) }}" method="POST">

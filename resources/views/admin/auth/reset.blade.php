@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="col-lg-8 col-12">
-                            <div class="form ps-md-4 h-100 d-flex align-items-center justify-content-center">
+                            <div class="form h-100 d-flex align-items-center justify-content-center">
                                 <div class="form-content w-100">
                                     <h2 class="text-center mb-4">{{ __('Reset Password') }}</h2>
                                     <form action="{{ route('admin.reset.password', $admin_id) }}" method="POST">

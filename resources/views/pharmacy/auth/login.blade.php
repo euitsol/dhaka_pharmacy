@@ -23,8 +23,8 @@
                                     <div class="mb-4">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-regular fa-envelope"></i></span>
-                                            <input type="email" id="email" value="{{ old('email') }}" name="email" class="form-control"
-                                                placeholder="Enter your e-mail address" required>
+                                            <input type="email" id="email" value="{{ old('email') }}" name="email"
+                                                class="form-control" placeholder="Enter your e-mail address" required>
                                         </div>
                                         @include('alerts.feedback', ['field' => 'email'])
                                     </div>

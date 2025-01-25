@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="col-lg-8 col-12">
-                            <div class="form ps-md-4 d-flex align-items-center justify-content-center h-100">
+                            <div class="form d-flex align-items-center justify-content-center h-100">
                                 <div class="form-content w-100">
                                     <h2 class="text-center mb-0">{{ __('Forgot Your Password?') }}</h2>
                                     <p class="mb-4 text-center">
