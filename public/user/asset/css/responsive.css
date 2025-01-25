@@ -363,6 +363,9 @@
     .dashboard-main-section .col-left .single-box .count span {
         font-size: 16px !important;
     }
+    .dashboard-main-section .letest-offer-shadow {
+        min-height: auto !important;
+    }
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
     .offer_image img {
@@ -587,6 +590,9 @@
     .dashboard-main-section .lightbox-content {
         height: 100% !important;
     }
+    .dashboard-main-section .letest-offer-shadow {
+        min-height: auto !important;
+    }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
     .dashboard-main-section .col-left .single-box .title h2 {
@@ -727,6 +733,9 @@
     .dashboard-main-section .lightbox-content {
         height: 100% !important;
     }
+    .dashboard-main-section .letest-offer-shadow {
+        min-height: auto !important;
+    }
 }
 @media screen and (min-width: 992px) and (max-width: 1023px) {
     .dashboard-main-section .col-right .google-map .address {
@@ -812,6 +821,9 @@
     /* .dashboard-main-section .tips_image img {
         height: 170px;
     } */
+    .dashboard-main-section .letest-offer-shadow {
+        min-height: auto !important;
+    }
 }
 @media screen and (min-width: 1024px) and (max-width: 1199px) {
     /* Header CSS  */
@@ -869,6 +881,9 @@
     /* .dashboard-main-section .tips_image img {
         height: 170px;
     } */
+    .dashboard-main-section .letest-offer-shadow {
+        min-height: auto !important;
+    }
 }
 @media screen and (min-width: 1200px) and (max-width: 1439px) {
     .dashboard-main-section .col-mid .order-cart-wish .single {

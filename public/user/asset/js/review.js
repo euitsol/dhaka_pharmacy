@@ -3,8 +3,8 @@ function getHtml(products) {
     products.forEach(function (product) {
         result += `
         <div class="order-row">
-            <div class="row align-items-center py-4">
-                <div class="col-1">
+            <div class="row align-items-center py-4 px-xl-3 px-xxl-0 px-3">
+                <div class="col-lg-1 col-md-2 col-sm-2 col-3">
                     <div class="img w-100 text-center">
                         <div id="lightbox" class="lightbox tips_image">
                             <div class="lightbox-content">
@@ -16,15 +16,19 @@ function getHtml(products) {
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-lg col-md-5 col-sm-10 col-9">
                     <div class="product-info">
                         <h5 class="mb-0" title="${product.attr_title}">
                             ${product.name}</h5>
-                        <p class="mb-0" title="${product.pro_sub_cat.name}" >${product.pro_sub_cat.name}</p>
-                        <p class="mb-0" title="${product.pro_cat.name}" >${product.pro_cat.name}</p>
+                        <p class="mb-0" title="${product.pro_sub_cat.name}" >${
+            product.pro_sub_cat.name
+        }</p>
+                        <p class="mb-0" title="${product.pro_cat.name}" >${
+            product.pro_cat.name
+        }</p>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-lg col-md-5 col-12">
                     <div class="product-info">
                         <p class="mb-0">
                             <strong>Generic Name: </strong>${
@@ -36,7 +40,7 @@ function getHtml(products) {
                         </p>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-lg-2 col-md-5 ms-auto col-xl col-sm-12 col-12">
                     <div class="product-info text-center">
                         <p class="mb-0">
                             <strong>Strength: </strong>${
@@ -47,8 +51,8 @@ function getHtml(products) {
                         </p>
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="product-info text-center">
+                <div class="col-lg-2 col-md-5 col-xl col-sm-12 ms-auto ms-md-0 col-12">
+                    <div class="product-info text-md-start text-lg-center text-left">
                         <p class="mb-0">
                             <strong>Price: </strong>
                             <span>${numberFormat(

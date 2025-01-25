@@ -1378,10 +1378,13 @@ margin: 0;
         rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
     border-radius: 15px; */
     margin-top: 13px;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset; */
+}
+.dashboard-main-section .letest-offer-shadow {
+    min-height: 325px !important;
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
     border-radius: 10px;
 }
-
 .dashboard-main-section .col-mid .tips p span {
     color: var(--btn_bg);
 }
