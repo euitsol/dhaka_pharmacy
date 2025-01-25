@@ -34,7 +34,7 @@ class OrderByPrescriptionController extends Controller
                 Storage::move($from_path, 'public/' . $to_path);
                 $up->image = $to_path;
                 $up->address_id = $request->address_id;
-                $up->delivery_type = 1;
+                $up->delivery_type = $request->delivery_type;
                 $up->delivery_fee = $this->getDeliveryCharge($address->latitude, $address->longitude);
                 $up->user_id = user()->id;
                 $up->save();
@@ -46,7 +46,7 @@ class OrderByPrescriptionController extends Controller
             }
             return response()->json($data);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Somethings is wrong' . $e], 500);
+            return response()->json(['message' => 'Somethings is wrong'], 500);
         }
     }
     public function check_auth()
