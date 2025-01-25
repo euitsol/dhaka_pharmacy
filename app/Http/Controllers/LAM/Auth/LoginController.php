@@ -20,6 +20,17 @@ use App\Http\Traits\SmsTrait;
 class LoginController extends Controller
 {
     use SmsTrait;
+    private $otpResentTime = 1;
+    private function check_throttle($lam)
+    {
+        if ($lam->phone_verified_at !== null) {
+            $timeSinceLastOtp = now()->diffInMinutes($lam->phone_verified_at);
+            if ($timeSinceLastOtp < $this->otpResentTime) {
+                return 'Please wait before requesting another verification otp as one has already been sent recently';
+            }
+        }
+        return false;
+    }
     public function lamLogin()
     {
 
@@ -96,26 +107,42 @@ class LoginController extends Controller
         return view('local_area_manager.auth.forgot');
     }
 
-    public function send_otp(Request $request): RedirectResponse
+    public function send_otp(Request $request)
     {
         $lam = LocalAreaManager::where('phone', $request->phone)->first();
+        if ($request->ajax()) {
+            $lam = LocalAreaManager::where('id', decrypt($request->id))->first();
+        }
         if ($lam) {
+            if ($this->check_throttle($lam)) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'error', 'message' => $this->check_throttle($lam)]);
+                } else {
+                    flash()->addError($this->check_throttle($lam));
+                    return redirect()->back()->withInput();
+                }
+            }
             $lam->otp = otp();
             $lam->phone_verified_at = Carbon::now();
             $lam->save();
             $verification_sms = "Your verification code is $lam->otp. Please enter this code to verify your phone.";
             $result = $this->sms_send($lam->phone, $verification_sms);
             if ($result === true) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'success', 'message' => 'The verification code has been sent successfully.']);
+                }
                 flash()->addSuccess('The verification code has been sent successfully.');
                 return redirect()->route('local_area_manager.otp.verify', encrypt($lam->id));
             } else {
                 flash()->addError($result);
-                return redirect()->back()->withInput();
             }
         } else {
             flash()->addWarning('Phone number not found in our record');
-            return redirect()->back()->withInput();
         }
+        if ($request->ajax()) {
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong. Please try again.']);
+        }
+        return redirect()->back()->withInput();
     }
 
     public function otp($lam_id)

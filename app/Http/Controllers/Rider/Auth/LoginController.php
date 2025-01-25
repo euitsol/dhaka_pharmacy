@@ -16,6 +16,17 @@ use App\Http\Traits\SmsTrait;
 class LoginController extends Controller
 {
     use SmsTrait;
+    private $otpResentTime = 1;
+    private function check_throttle($rider)
+    {
+        if ($rider->phone_verified_at !== null) {
+            $timeSinceLastOtp = now()->diffInMinutes($rider->phone_verified_at);
+            if ($timeSinceLastOtp < $this->otpResentTime) {
+                return 'Please wait before requesting another verification otp as one has already been sent recently';
+            }
+        }
+        return false;
+    }
     public function riderLogin()
     {
 
@@ -62,26 +73,42 @@ class LoginController extends Controller
         return view('rider.auth.forgot');
     }
 
-    public function send_otp(Request $request): RedirectResponse
+    public function send_otp(Request $request)
     {
         $rider = Rider::where('phone', $request->phone)->first();
+        if ($request->ajax()) {
+            $rider = Rider::where('id', decrypt($request->id))->first();
+        }
         if ($rider) {
+            if ($this->check_throttle($rider)) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'error', 'message' => $this->check_throttle($rider)]);
+                } else {
+                    flash()->addError($this->check_throttle($rider));
+                    return redirect()->back()->withInput();
+                }
+            }
             $rider->otp = otp();
             $rider->phone_verified_at = Carbon::now();
             $rider->save();
             $verification_sms = "Your verification code is $rider->otp. Please enter this code to verify your phone.";
             $result = $this->sms_send($rider->phone, $verification_sms);
             if ($result === true) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'success', 'message' => 'The verification code has been sent successfully.']);
+                }
                 flash()->addSuccess('The verification code has been sent successfully.');
                 return redirect()->route('rider.otp.verify', encrypt($rider->id));
             } else {
                 flash()->addError($result);
-                return redirect()->back()->withInput();
             }
         } else {
             flash()->addWarning('Phone number not found in our record');
-            return redirect()->back()->withInput();
         }
+        if ($request->ajax()) {
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong. Please try again.']);
+        }
+        return redirect()->back()->withInput();
     }
 
     public function otp($rider_id)

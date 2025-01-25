@@ -26,9 +26,11 @@
                                         <div class="mb-4">
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-                                                <input type="text" id="number" name="phone" class="form-control"
+                                                <input type="text" id="number" name="phone"
+                                                    value="{{ old('phone') }}" class="form-control"
                                                     placeholder="Enter your phone" required>
                                             </div>
+                                            @include('alerts.feedback', ['field' => 'phone'])
                                         </div>
                                         <button type="submit"
                                             class="btn btn-primary w-100 login-button">{{ __('SEND OTP') }}</button>

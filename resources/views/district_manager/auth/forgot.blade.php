@@ -30,6 +30,7 @@
                                                     id="number" class="form-control"
                                                     placeholder="Enter your phone number" required>
                                             </div>
+                                            @include('alerts.feedback', ['field' => 'phone'])
                                         </div>
                                         <button type="submit"
                                             class="btn btn-primary w-100 login-button">{{ __('SEND OTP') }}</button>

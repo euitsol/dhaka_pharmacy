@@ -29,6 +29,7 @@
                                                 <input type="email" id="email" value="{{ old('email') }}"
                                                     name="email" class="form-control" placeholder="Enter your email"
                                                     required>
+                                                @include('alerts.feedback', ['field' => 'email'])
                                             </div>
                                         </div>
                                         <button type="submit"

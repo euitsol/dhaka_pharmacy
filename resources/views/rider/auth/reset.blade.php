@@ -28,6 +28,7 @@
                                                 <span class="input-group-text eye_btn"><i
                                                         class="fa-solid fa-eye-slash"></i></span>
                                             </div>
+                                            @include('alerts.feedback', ['field' => 'password'])
                                         </div>
                                         <div class="mb-3">
                                             <div class="input-group">

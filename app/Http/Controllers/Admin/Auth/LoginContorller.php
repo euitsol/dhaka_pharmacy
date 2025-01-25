@@ -15,7 +15,19 @@ use Carbon\Carbon;
 
 class LoginContorller extends Controller
 {
+    private $otpResentTime = 1;
     use MailSentTrait;
+
+    private function check_throttle($admin)
+    {
+        if ($admin->email_verified_at !== null) {
+            $timeSinceLastOtp = now()->diffInMinutes($admin->email_verified_at);
+            if ($timeSinceLastOtp < $this->otpResentTime) {
+                return 'Please wait before requesting another verification otp as one has already been sent recently';
+            }
+        }
+        return false;
+    }
     public function adminLogin()
     {
         if (Auth::guard('admin')->check() && admin()->status == 1) {
@@ -60,25 +72,42 @@ class LoginContorller extends Controller
         return view('admin.auth.forgot');
     }
 
-    public function send_otp(Request $request): RedirectResponse
+    public function send_otp(Request $request)
     {
         $admin = Admin::where('email', $request->email)->first();
+        if ($request->ajax()) {
+            $admin = Admin::where('id', decrypt($request->id))->first();
+        }
+
         if ($admin) {
+            if ($this->check_throttle($admin)) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'error', 'message' => $this->check_throttle($admin)]);
+                } else {
+                    flash()->addError($this->check_throttle($admin));
+                    return redirect()->back()->withInput();
+                }
+            }
             $admin->otp = otp();
             $admin->email_verified_at = Carbon::now();
             $admin->save();
             $mail = $this->sendOtpMail($admin);
             if ($mail) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'success', 'message' => 'The verification code has been successfully sent to your email']);
+                }
                 flash()->addSuccess('The verification code has been successfully sent to your email');
                 return redirect()->route('admin.otp.verify', encrypt($admin->id));
             } else {
                 flash()->addError('Something went wrong. Please try again.');
-                return redirect()->back()->withInput();
             }
         } else {
             flash()->addWarning('Email not found in our record');
-            return redirect()->back()->withInput();
         }
+        if ($request->ajax()) {
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong. Please try again.']);
+        }
+        return redirect()->back()->withInput();
     }
 
     public function otp($admin_id)

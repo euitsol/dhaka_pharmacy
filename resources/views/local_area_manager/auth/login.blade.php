@@ -23,9 +23,10 @@
                                     <div class="mb-4">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-                                            <input type="text" id="number" name="phone" class="form-control"
-                                                placeholder="Enter your Phone Number" required>
+                                            <input type="text" id="number" name="phone" value="{{ old('phone') }}"
+                                                class="form-control" placeholder="Enter your Phone Number" required>
                                         </div>
+                                        @include('alerts.feedback', ['field' => 'phone'])
                                     </div>
                                     <div class="mb-4">
                                         <div class="input-group">
@@ -33,10 +34,12 @@
                                             <input type="password" id="password" name="password" class="form-control"
                                                 placeholder="Enter your password" required>
                                         </div>
+                                        @include('alerts.feedback', ['field' => 'password'])
                                     </div>
                                     <div class="mb-4 form-check d-flex justify-content-between">
                                         <div>
-                                            <input type="checkbox" id="rememberMe" class="form-check-input">
+                                            <input type="checkbox" id="rememberMe" name="remember"
+                                                {{ old('remember') ? 'checked' : '' }} class="form-check-input">
                                             <label for="rememberMe" class="form-check-label">{{ __('Remember Me') }}</label>
                                         </div>
                                         <a href="{{ route('local_area_manager.forgot') }}"

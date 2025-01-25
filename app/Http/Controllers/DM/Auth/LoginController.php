@@ -17,6 +17,18 @@ use App\Http\Traits\SmsTrait;
 class LoginController extends Controller
 {
     use SmsTrait;
+    private $otpResentTime = 1;
+
+    private function check_throttle($dm)
+    {
+        if ($dm->phone_verified_at !== null) {
+            $timeSinceLastOtp = now()->diffInMinutes($dm->phone_verified_at);
+            if ($timeSinceLastOtp < $this->otpResentTime) {
+                return 'Please wait before requesting another verification otp as one has already been sent recently';
+            }
+        }
+        return false;
+    }
     public function dmLogin()
     {
         if (Auth::guard('dm')->check() && dm()->status == 1) {
@@ -62,26 +74,42 @@ class LoginController extends Controller
         return view('district_manager.auth.forgot');
     }
 
-    public function send_otp(Request $request): RedirectResponse
+    public function send_otp(Request $request)
     {
         $dm = DistrictManager::where('phone', $request->phone)->first();
+        if ($request->ajax()) {
+            $dm = DistrictManager::where('id', decrypt($request->id))->first();
+        }
         if ($dm) {
+            if ($this->check_throttle($dm)) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'error', 'message' => $this->check_throttle($dm)]);
+                } else {
+                    flash()->addError($this->check_throttle($dm));
+                    return redirect()->back()->withInput();
+                }
+            }
             $dm->otp = otp();
             $dm->phone_verified_at = Carbon::now();
             $dm->save();
             $verification_sms = "Your verification code is $dm->otp. Please enter this code to verify your phone.";
             $result = $this->sms_send($dm->phone, $verification_sms);
             if ($result === true) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'success', 'message' => 'The verification code has been sent successfully.']);
+                }
                 flash()->addSuccess('The verification code has been sent successfully.');
                 return redirect()->route('district_manager.otp.verify', encrypt($dm->id));
             } else {
                 flash()->addError($result);
-                return redirect()->back()->withInput();
             }
         } else {
             flash()->addWarning('Phone number not found in our record');
-            return redirect()->back()->withInput();
         }
+        if ($request->ajax()) {
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong. Please try again.']);
+        }
+        return redirect()->back()->withInput();
     }
 
     public function otp($dm_id)
