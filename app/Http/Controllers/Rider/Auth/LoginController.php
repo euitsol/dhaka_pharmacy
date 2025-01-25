@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Rider\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Rider\LoginRequest;
+use App\Http\Requests\Rider\PasswordUpdateRequest;
 use App\Models\Rider;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -37,7 +39,7 @@ class LoginController extends Controller
         return view('rider.auth.login');
     }
 
-    public function riderLoginCheck(Request $request): RedirectResponse
+    public function riderLoginCheck(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->only('phone', 'password');
         $check = Rider::where('phone', $request->phone)->first();
@@ -73,7 +75,7 @@ class LoginController extends Controller
         return view('rider.auth.forgot');
     }
 
-    public function send_otp(Request $request)
+    public function send_otp(LoginRequest $request)
     {
         $rider = Rider::where('phone', $request->phone)->first();
         if ($request->ajax()) {
@@ -144,7 +146,7 @@ class LoginController extends Controller
         return view('rider.auth.reset', compact('rider_id'));
     }
 
-    public function resetPasswordStore(Request $request, $rider_id): RedirectResponse
+    public function resetPasswordStore(PasswordUpdateRequest $request, $rider_id): RedirectResponse
     {
         $rider = Rider::where('id', decrypt($rider_id))->first();
         $rider->password = $request->password;

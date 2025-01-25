@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\LoginRequest;
+use App\Http\Requests\Admin\PasswordUpdateRequest;
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
 use Illuminate\Http\JsonResponse;
@@ -36,7 +38,7 @@ class LoginContorller extends Controller
         return view('admin.auth.login');
     }
 
-    public function adminLoginCheck(Request $request): RedirectResponse
+    public function adminLoginCheck(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->only('email', 'password');
         $check = Admin::where('email', $request->email)->first();
@@ -72,7 +74,7 @@ class LoginContorller extends Controller
         return view('admin.auth.forgot');
     }
 
-    public function send_otp(Request $request)
+    public function send_otp(LoginRequest $request)
     {
         $admin = Admin::where('email', $request->email)->first();
         if ($request->ajax()) {
@@ -142,7 +144,7 @@ class LoginContorller extends Controller
         return view('admin.auth.reset', compact('admin_id'));
     }
 
-    public function resetPasswordStore(Request $request, $admin_id): RedirectResponse
+    public function resetPasswordStore(PasswordUpdateRequest $request, $admin_id): RedirectResponse
     {
         $admin = Admin::where('id', decrypt($admin_id))->first();
         $admin->password = $request->password;

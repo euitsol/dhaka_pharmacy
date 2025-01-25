@@ -25,6 +25,7 @@ class PasswordUpdateRequest extends FormRequest
         return [
             'old_password' => [
                 'required',
+                'sometimes',
                 function ($attribute, $value, $fail) {
                     if (!$this->checkOldPassword($value)) {
                         $fail("The $attribute doesn't match the current password.");

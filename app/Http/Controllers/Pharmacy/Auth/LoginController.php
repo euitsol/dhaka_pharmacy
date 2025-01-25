@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Pharmacy\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pharmacy\LoginRequest;
+use App\Http\Requests\Pharmacy\PasswordUpdateRequest;
 use App\Models\Pharmacy;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -36,7 +38,7 @@ class LoginController extends Controller
         return view('pharmacy.auth.login');
     }
 
-    public function pharmacyLoginCheck(Request $request): RedirectResponse
+    public function pharmacyLoginCheck(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->only('email', 'password');
 
@@ -71,7 +73,7 @@ class LoginController extends Controller
         return view('pharmacy.auth.forgot');
     }
 
-    public function send_otp(Request $request)
+    public function send_otp(LoginRequest $request)
     {
         $pharmacy = Pharmacy::where('email', $request->email)->first();
         if ($request->ajax()) {
@@ -141,7 +143,7 @@ class LoginController extends Controller
         return view('pharmacy.auth.reset', compact('pharmacy_id'));
     }
 
-    public function resetPasswordStore(Request $request, $pharmacy_id): RedirectResponse
+    public function resetPasswordStore(PasswordUpdateRequest $request, $pharmacy_id): RedirectResponse
     {
         $pharmacy = pharmacy::where('id', decrypt($pharmacy_id))->first();
         $pharmacy->password = $request->password;

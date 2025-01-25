@@ -34,7 +34,8 @@
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                                 <input type="password" id="confirmPassword" class="form-control"
-                                                    placeholder="Confirm your password" name="confirm_password" required>
+                                                    placeholder="Confirm your password" name="password_confirmation"
+                                                    required>
                                                 <span class="input-group-text eye_btn"><i
                                                         class="fa-solid fa-eye-slash "></i></span>
                                             </div>

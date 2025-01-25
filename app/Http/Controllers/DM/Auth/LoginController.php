@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\DM\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DistrictManager\LoginRequest;
+use App\Http\Requests\DistrictManager\PasswordUpdateRequest;
 use App\Http\Requests\DistrictManagerRequest;
 use App\Models\DistrictManager;
 use Carbon\Carbon;
@@ -38,7 +40,7 @@ class LoginController extends Controller
         return view('district_manager.auth.login');
     }
 
-    public function dmLoginCheck(Request $request): RedirectResponse
+    public function dmLoginCheck(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->only('phone', 'password');
         $check = DistrictManager::where('phone', $request->phone)->first();
@@ -74,7 +76,7 @@ class LoginController extends Controller
         return view('district_manager.auth.forgot');
     }
 
-    public function send_otp(Request $request)
+    public function send_otp(LoginRequest $request)
     {
         $dm = DistrictManager::where('phone', $request->phone)->first();
         if ($request->ajax()) {
@@ -145,7 +147,7 @@ class LoginController extends Controller
         return view('district_manager.auth.reset', compact('dm_id'));
     }
 
-    public function resetPasswordStore(Request $request, $dm_id): RedirectResponse
+    public function resetPasswordStore(PasswordUpdateRequest $request, $dm_id): RedirectResponse
     {
         $dm = DistrictManager::where('id', decrypt($dm_id))->first();
         $dm->password = $request->password;

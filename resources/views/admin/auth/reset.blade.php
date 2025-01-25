@@ -33,7 +33,7 @@
                                         <div class="mb-3">
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                                <input type="password" name="confirm_password" id="confirmPassword"
+                                                <input type="password" name="password_confirmation" id="confirmPassword"
                                                     class="form-control" placeholder="Confirm your password" required>
                                                 <span class="input-group-text eye_btn"><i
                                                         class="fa-solid fa-eye-slash"></i></span>

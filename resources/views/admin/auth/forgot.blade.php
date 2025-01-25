@@ -29,8 +29,8 @@
                                                 <input type="email" id="email" value="{{ old('email') }}"
                                                     name="email" class="form-control" placeholder="Enter your email"
                                                     required>
-                                                @include('alerts.feedback', ['field' => 'email'])
                                             </div>
+                                            @include('alerts.feedback', ['field' => 'email'])
                                         </div>
                                         <button type="submit"
                                             class="btn btn-primary w-100 login-button">{{ __('SEND OTP') }}</button>

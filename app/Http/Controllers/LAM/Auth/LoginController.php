@@ -4,6 +4,8 @@ namespace App\Http\Controllers\LAM\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DistrictManagerRequest;
+use App\Http\Requests\LocalAreaManager\LoginRequest;
+use App\Http\Requests\LocalAreaManager\PasswordUpdateRequest;
 use App\Models\DistrictManager;
 use App\Models\LocalAreaManager;
 use Carbon\Carbon;
@@ -41,7 +43,7 @@ class LoginController extends Controller
         return view('local_area_manager.auth.login');
     }
 
-    public function lamLoginCheck(Request $request): RedirectResponse
+    public function lamLoginCheck(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->only('phone', 'password');
 
@@ -107,7 +109,7 @@ class LoginController extends Controller
         return view('local_area_manager.auth.forgot');
     }
 
-    public function send_otp(Request $request)
+    public function send_otp(LoginRequest $request)
     {
         $lam = LocalAreaManager::where('phone', $request->phone)->first();
         if ($request->ajax()) {
@@ -178,7 +180,7 @@ class LoginController extends Controller
         return view('local_area_manager.auth.reset', compact('lam_id'));
     }
 
-    public function resetPasswordStore(Request $request, $lam_id): RedirectResponse
+    public function resetPasswordStore(PasswordUpdateRequest $request, $lam_id): RedirectResponse
     {
         $lam = LocalAreaManager::where('id', decrypt($lam_id))->first();
         $lam->password = $request->password;
