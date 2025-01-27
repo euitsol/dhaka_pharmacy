@@ -132,7 +132,7 @@
                     <h2 class="title">{{ __('Your trusted online medicine supplier') }}</h2>
                     <div class="footer-contact">
                         <ul class="footer-nav">
-                            <li><a class="map" href="javascript:void(0)" target="_blank">
+                            <li><a class="map" href="javascript:void(0)">
                                     {{ __('4th Floor, Noor Mansion, Plot-4, Main Road, Mirpur-10, Dhaka-1216') }}
                                 </a>
                             </li>
