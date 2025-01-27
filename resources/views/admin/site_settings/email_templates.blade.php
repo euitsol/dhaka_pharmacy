@@ -71,11 +71,11 @@
                             </div>
                             <div class="form-group">
                                 <label>{{ __('Template') }}</label>
-                                <textarea name="template" id="template" class="form-control"></textarea>
+                                <textarea name="template" id="template" class="form-control no-ckeditor5"></textarea>
                                 @include('alerts.feedback', ['field' => 'template'])
                             </div>
-                            <span type="submit" id="updateEmailTemplate"
-                                class="btn btn-primary btn-sm">{{ __('Update') }}</span>
+                            <buttton type="submit" id="updateEmailTemplate" class="btn btn-primary btn-sm">
+                                {{ __('Update') }}</buttton>
                         </form>
                     </div>
                 </div>
@@ -87,10 +87,16 @@
     <script>
         // Edit
         $(document).ready(function() {
+            $('#exampleModal').on('hidden.bs.modal', function(event) {
+                destroyAllEditors();
+
+            })
             $('.edit_et').on('click', function() {
                 let id = $(this).data('id');
                 let _url = ("{{ route('settings.email_templates.site_settings', ['id']) }}");
                 let __url = _url.replace('id', id);
+
+                let textAreas = $("#emailTemplateForm").find('textarea');
                 $.ajax({
                     url: __url,
                     method: 'GET',
@@ -114,6 +120,7 @@
                         $('#updateEmailTemplate').attr('data-id', data.email_template.id)
                         $('#subject').val(data.email_template.subject)
                         $('#template').val(data.email_template.template);
+                        initializeCKEditor(textAreas);
                         $('#exampleModal').modal('show');
                     },
                     error: function(xhr, status, error) {
@@ -126,6 +133,7 @@
         // Update
         $(document).ready(function() {
             $('#updateEmailTemplate').click(function() {
+                let template_value = editors[$('#template').attr('data-index', 0)].getData();
                 var form = $('#emailTemplateForm');
                 let id = $(this).data('id');
                 let _url = ("{{ route('settings.email_templates.site_settings', ['id']) }}");
@@ -133,10 +141,11 @@
                 $.ajax({
                     type: 'PUT',
                     url: __url,
-                    data: form.serialize(),
+                    data: form.serialize() +
+                        `&template=${encodeURIComponent(template_value)}`,
                     success: function(response) {
                         $('#exampleModal').modal('hide');
-                        console.log(response.message);
+                        console.log(response);
                         window.location.reload();
                     },
                     error: function(xhr) {
