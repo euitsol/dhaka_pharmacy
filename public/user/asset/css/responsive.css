@@ -1,7 +1,4 @@
 @media screen and (max-width: 575px) {
-    .dashboard-main-section .col-mid .tips .single-tips .tips_image {
-        width: 350px;
-    }
     .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
@@ -318,15 +315,9 @@
         top: 10px;
         right: 22px;
     }
-    /* .dashboard-main-section .single-tips .tips_image img {
-        height: 200px;
-    } */
     .dashboard-main-section .log-out {
         height: 125px !important;
     }
-    /* .dashboard-main-section .col-left .single-box .title h2 {
-        margin-top: 5px !important;
-    } */
     .dashboard-main-section .col-mid .medicine-slider .carousel-control-next {
         left: 56%;
     }
@@ -372,15 +363,36 @@
     .dashboard-main-section .tips_image img {
         height: 150px !important;
     }
+    .dashboard-main-section .tips_image {
+        width: 50%;
+    }
     .dashboard-main-section .tips_details {
         height: 150px !important;
+        width: 50%;
+    }
+    .dashboard-main-section .col-mid .tips .single-tips {
+        margin-top: 0px !important;
+    }
+    .dashboard-main-section .letest-offer-shadow {
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0px !important;
+        min-height: 100% !important;
+    }
+    .dashboard-main-section .letest-offer-shadow .latest-col {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+        padding: 10px !important;
+        border-radius: 10px;
+        /* background: #bfe3f8; */
+    }
+    .dashboard-main-section .letest-offer-shadow .tips-col {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+        padding: 10px !important;
+        border-radius: 10px;
+        /* background: #d7e3ca; */
     }
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
-    /* .offer_image img {
-        height: 100% !important;
-        width: 252px !important;
-    } */
     .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
@@ -397,24 +409,21 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 12px;
     }
-    /* .dashboard-main-section .col-left .single-box .count {
-        width: 70px;
-        height: 70px;
-        margin-top: 5px;
-    } */
     .dashboard-main-section .col-left .single-box .count span {
-        font-size: 29px;
+        font-size: 16px !important;
     }
-    .dashboard-main-section .col-left .single-box.cancel-order h2,
+    .dashboard-main-section .col-left .single-box .count-cart span {
+        font-size: 16px !important;
+    }
     .dashboard-main-section .col-left .single-box.previous-order h2 {
-        margin-top: 5px;
+        margin-top: 5px !important;
     }
     .dashboard-main-section .col-left .single-box {
-        padding: 15px 20px;
+        padding: 10px 5px !important;
     }
     .dashboard-main-section .col-left .single-box .title h2 {
-        margin-top: 0px;
-        font-size: 14px;
+        margin-top: 0px !important;
+        font-size: 12px !important;
     }
     .dashboard-main-section .col-left .current-order .progress-box .progress {
         margin-top: 5px;
@@ -596,8 +605,12 @@
     .dashboard-main-section .tips_image img {
         height: 150px !important;
     }
+    .dashboard-main-section .tips_image {
+        width: 50%;
+    }
     .dashboard-main-section .tips_details {
         height: 150px !important;
+        width: 50%;
     }
     .dashboard-main-section #lightbox {
         height: 100% !important;
@@ -607,6 +620,27 @@
     }
     .dashboard-main-section .letest-offer-shadow {
         min-height: auto !important;
+    }
+    .dashboard-main-section .col-mid .tips .single-tips {
+        margin-top: 0px !important;
+    }
+    .dashboard-main-section .letest-offer-shadow {
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0px !important;
+        min-height: 100% !important;
+    }
+    .dashboard-main-section .letest-offer-shadow .latest-col {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+        padding: 10px !important;
+        border-radius: 10px;
+        /* background: #bfe3f8; */
+    }
+    .dashboard-main-section .letest-offer-shadow .tips-col {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+        padding: 10px !important;
+        border-radius: 10px;
+        /* background: #d7e3ca; */
     }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
@@ -619,10 +653,6 @@
     .dashboard-main-section .col-left .current-order .processing .btn a {
         font-size: 11px;
         padding: 5px 20px;
-    }
-    .offer_image img {
-        height: 100% !important;
-        /* width: 136px !important; */
     }
     .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
@@ -640,24 +670,16 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 12px;
     }
-    /* .dashboard-main-section .col-left .single-box .count {
-        width: 70px;
-        height: 70px;
-        margin-top: 0;
-    } */
-    .dashboard-main-section .col-left .single-box .count span {
-        /* font-size: 40px; */
-    }
     .dashboard-main-section .col-left .single-box.cancel-order h2,
     .dashboard-main-section .col-left .single-box.previous-order h2 {
         margin-top: 5px;
     }
     .dashboard-main-section .col-left .single-box {
-        padding: 15px 20px;
+        padding: 10px 5px;
     }
     .dashboard-main-section .col-left .single-box .title h2 {
-        margin-top: 10px;
-        font-size: 20px;
+        margin-top: 10px !important;
+        font-size: 12px !important;
     }
     .dashboard-main-section .col-left .current-order .progress-box .progress {
         margin-top: 15px;
@@ -729,24 +751,18 @@
         padding: 40px !important;
     }
 
-    /* .dashboard-main-section .single-tips .tips_image img {
-        height: 300px;
-    } */
-
-    .dashboard-main-section .col-mid .tips .single-tips .tips_image {
-        width: 70%;
-    }
-    /* .dashboard-main-section .col-mid .tips .single-tips .tips_image img {
-        height: 250px !important;
-    } */
     .dashboard-main-section .offer_image img {
         height: 200px !important;
     }
     .dashboard-main-section .tips_image img {
         height: 200px !important;
     }
+    .dashboard-main-section .tips_image {
+        width: 50%;
+    }
     .dashboard-main-section .tips_details {
         height: 200px !important;
+        width: 50%;
     }
     .dashboard-main-section #lightbox {
         height: 100% !important;
@@ -756,6 +772,27 @@
     }
     .dashboard-main-section .letest-offer-shadow {
         min-height: auto !important;
+    }
+    .dashboard-main-section .col-mid .tips .single-tips {
+        margin-top: 0px !important;
+    }
+    .dashboard-main-section .letest-offer-shadow {
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0px !important;
+        min-height: 100% !important;
+    }
+    .dashboard-main-section .letest-offer-shadow .latest-col {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+        padding: 10px !important;
+        border-radius: 10px;
+        /* background: #bfe3f8; */
+    }
+    .dashboard-main-section .letest-offer-shadow .tips-col {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+        padding: 10px !important;
+        border-radius: 10px;
+        /* background: #d7e3ca; */
     }
 }
 @media screen and (min-width: 992px) and (max-width: 1023px) {
@@ -840,13 +877,38 @@
         height: 150px !important;
     }
     .dashboard-main-section .tips_image img {
-        height: 140px !important;
+        height: 150px !important;
+    }
+    .dashboard-main-section .tips_image {
+        width: 50%;
     }
     .dashboard-main-section .tips_details {
-        height: 140px !important;
+        height: 150px !important;
+        width: 50%;
     }
     .dashboard-main-section .letest-offer-shadow {
         min-height: 100% !important;
+    }
+    .dashboard-main-section .col-mid .tips .single-tips {
+        margin-top: 0px !important;
+    }
+    .dashboard-main-section .letest-offer-shadow {
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0px !important;
+        min-height: 100% !important;
+    }
+    .dashboard-main-section .letest-offer-shadow .latest-col {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+        padding: 10px !important;
+        border-radius: 10px;
+        /* background: #bfe3f8; */
+    }
+    .dashboard-main-section .letest-offer-shadow .tips-col {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+        padding: 10px !important;
+        border-radius: 10px;
+        /* background: #d7e3ca; */
     }
 }
 @media screen and (min-width: 1024px) and (max-width: 1199px) {
@@ -903,16 +965,35 @@
         height: 150px !important;
     }
     .dashboard-main-section .tips_image img {
-        height: 140px !important;
+        height: 150px !important;
+    }
+    .dashboard-main-section .tips_image {
+        width: 50%;
     }
     .dashboard-main-section .tips_details {
-        height: 140px !important;
+        height: 150px !important;
+        width: 50%;
+    }
+    .dashboard-main-section .col-mid .tips .single-tips {
+        margin-top: 0px !important;
     }
     .dashboard-main-section .letest-offer-shadow {
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0px !important;
         min-height: 100% !important;
     }
-    .dashboard-main-section .tips_details {
-        height: 55px;
+    .dashboard-main-section .letest-offer-shadow .latest-col {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+        padding: 10px !important;
+        border-radius: 10px;
+        /* background: #bfe3f8; */
+    }
+    .dashboard-main-section .letest-offer-shadow .tips-col {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+        padding: 10px !important;
+        border-radius: 10px;
+        /* background: #d7e3ca; */
     }
 }
 @media screen and (min-width: 1200px) and (max-width: 1439px) {
