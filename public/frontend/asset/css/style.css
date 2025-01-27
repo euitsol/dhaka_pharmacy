@@ -1233,8 +1233,10 @@ a {
     text-decoration: none;
     font-family: "Open Sans", sans-serif;
     font-size: 17px;
-    line-height: 40px;
+    line-height: 30px;
+    margin-bottom: 10px;
     font-weight: 400;
+    display: inline-block;
     color: var(--text-color-white);
     position: relative;
     transition: 0.4s;
@@ -1280,7 +1282,7 @@ a {
 
 .footer-section .main-footer-row .footer-contact .footer-nav li a.map::before {
     content: "\f3c5";
-    top: 45%;
+    top: 16px;
 }
 
 .footer-section .main-footer-row .footer-contact .footer-nav li a.phn::before {

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    destroyAllEditors();
     const textAreas = $("textarea.form-control:not(.no-ckeditor5)");
     textAreas.each((index, textArea) => {
         const currentConfig = { ...CkEditorConfig };
@@ -6,6 +7,7 @@ $(document).ready(function () {
 
         CkClassicEditor.create(textArea, currentConfig)
             .then((editor) => {
+                console.log("Test");
                 console.log("Editor was initialized", editor);
             })
             .catch((error) => {
@@ -20,6 +22,7 @@ $(document).ready(function () {
 const editors = [];
 function initializeCKEditor(textAreas) {
     textAreas.each((index, textArea) => {
+        $(textArea).attr("data-index", index);
         const currentConfig = { ...CkEditorConfig };
         currentConfig.initialData = textArea.value;
 
@@ -38,6 +41,8 @@ function initializeCKEditor(textAreas) {
     });
 }
 function destroyAllEditors() {
+    console.log(editors);
+
     editors.forEach((editor) => {
         editor
             .destroy()
