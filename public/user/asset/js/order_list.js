@@ -76,7 +76,7 @@ function getHtml(orders) {
         order.products.forEach(function (product) {
             result += `
 
-                                                            <div class="row py-3 px-4 align-items-center list-item">
+                                                            <div class="row py-3 px-0 px-sm-4 align-items-center list-item">
                                                                 <div class="col-md-2 col-sm-3 col-5">
                                                                     <div class="img">
                                                                         <img class="w-100" src="${
@@ -91,21 +91,27 @@ function getHtml(orders) {
                                                                         }">${
                 product.name
             }</h2>
-                                                                        <p class="cat" title="${product.pro_sub_cat.name}" >${
+                                                                        <p class="cat" title="${
                                                                             product
                                                                                 .pro_sub_cat
                                                                                 .name
-                                                                        }</p>
-                                                                        <p class="cat" title="${product.generic.name}" >${
+                                                                        }" >${
+                product.pro_sub_cat.name
+            }</p>
+                                                                        <p class="cat" title="${
                                                                             product
                                                                                 .generic
                                                                                 .name
-                                                                        }</p>
-                                                                        <p class="cat" title="${product.company.name}" >${
+                                                                        }" >${
+                product.generic.name
+            }</p>
+                                                                        <p class="cat" title="${
                                                                             product
                                                                                 .company
                                                                                 .name
-                                                                        }</p>
+                                                                        }" >${
+                product.company.name
+            }</p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 mt-3 mt-sm-0 col-sm-4 col-12 d-flex d-sm-block gap-4 gap-sm-0">

@@ -12,21 +12,26 @@
 <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 <style>
 .offer_image img {
-    height: 100%;
+    height: 75px;
     width: 100%;
     border: 2px solid var(--btn_bg) !important;
     padding: 5px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 20px;
 }
 
 .tips_image img {
-    height: 100%;
-    width: 120px;
+    height: 120px;
+    width: 100%;
     border: 2px solid var(--btn_bg) !important;
     padding: 5px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 20px;
+}
+
+.tips_details {
+    height: 55px;
+    overflow-y: hidden;
 }
 </style>
 @endpush
@@ -153,8 +158,8 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-6 col-12 mt-xl-0 order-1 order-lg-2">
-                                    <div class="col-right row">
-                                        <div class="letest-offer-shadow">
+                                    <div class="letest-offer-shadow">
+                                        <div class="col-right row">
                                             <div class="col-xl-12 mt-0">
                                                 @include('user.dashboard.include.latest-offer')
                                             </div>
@@ -212,8 +217,8 @@
                                         </div>
                                         @if (isset($user->address) && !empty($user->address->first()))
                                         <div class="map" id="user_d_map"
-                                            data-lat={{ $user->address->first()->latitude }}
-                                            data-lng={{ $user->address->first()->longitude }}></div>
+                                            data-lat="{{ $user->address->first()->latitude }}"
+                                            data-lng="{{ $user->address->first()->longitude }}"></div>
                                         <div class="address-btn">
                                             <a href="{{ route('u.as.list') }}"><i
                                                     class="fa-solid fa-location-dot"></i><span>{{ str_limit($user->address->first()->address, 40) }}</span><i

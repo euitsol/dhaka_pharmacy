@@ -39,7 +39,7 @@
                                     <select class="col-5 col-md-4 col-5 col-sm-5" name="pro_cat_id" id="categorySelect">
                                         <option value="all" selected>{{ __('All Category') }}</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
                                     <button class="sub-btn text-center bg-white col-1" type="submit"><i
@@ -57,70 +57,66 @@
                         <div class="col-4 col-md-3 col-sm-4 logo-col d-block d-lg-none">
                             <div class="logo">
                                 <a href="{{ route('home') }}"><img class="w-100"
-                                        src="{{ asset('frontend/asset/img/logo.png') }}" alt="Header-logo"></a>
+                                        src="{{ storage_url(settings('site_logo')) }}" alt="Header-logo"></a>
                             </div>
                         </div>
                         <div class="col-8 col-md-9 col-lg-12">
                             <div class="row align-items-center justify-content-end">
                                 @if (!Auth::guard('web')->check())
-                                    <div class="item">
-                                        <a href="javascript:void(0)"
-                                            onclick="
+                                <div class="item">
+                                    <a href="javascript:void(0)" onclick="
                                         sessionStorage.removeItem('login_type');
                                         window.location.href = '{{ route('login') }}';
-                                     "
-                                            class="login-btn">
-                                            <i class="fa-solid fa-user me-1"></i>
-                                            <span>{{ __('Sign In') }}</span>
-                                        </a>
-                                    </div>
-                                    {{-- <div class="item">
-                                        <a href="{{ route('use.register') }}" class="login-btn">
-                                            <i class="fa-solid fa-address-card me-1"></i>
-                                            <span>{{ __('Register') }}</span>
-                                        </a>
-                                    </div> --}}
-                                @endif
-
-                                <div class="item">
-                                    <select name="" id="">
-                                        <option value="english">{{ __('English') }}</option>
-                                        <option value="bangla">{{ __('Bangla') }}</option>
-                                    </select>
+                                     " class="login-btn">
+                                        <i class="fa-solid fa-user me-1"></i>
+                                        <span>{{ __('Sign In') }}</span>
+                                    </a>
                                 </div>
-                                @if (Auth::guard('web')->check())
-                                    <div class="item">
-                                        <button class="wish-btn bg-none" type="button" data-bs-toggle="offcanvas"
-                                            data-bs-target="#wishlist" aria-controls="offcanvasRight">
-                                            <i class="fa-solid fa-heart me-1"></i>
-                                            <span>{{ __('Wish List') }}</span>
-                                        </button>
-                                        @include('frontend.includes.wishlist_slide')
-                                    </div>
-                                    <div class="item">
-                                        <button class="cart-btn" type="button" data-bs-toggle="offcanvas"
-                                            data-bs-target="#cartbtn" aria-controls="offcanvasRight">
-                                            <i class="fa-solid fa-cart-shopping me-1"></i>
-                                            <span>{{ __('Cart') }}</span><sup><strong
-                                                    id="cart_btn_quantity"></strong></sup>
-                                        </button>
-                                        @include('frontend.includes.add_to_cart_slide')
-                                    </div>
-                                    <div class="item" style="max-width: 185px; overflow:hidden;">
-                                        <a href="{{ route('user.dashboard') }}"
-                                            class="login-btn d-flex align-items-center">
-                                            <img src="{{ user()->image ? storage_url(user()->image) : asset('user/asset/img/user.png') }}"
-                                                alt="">
-                                            <span
-                                                class="ms-1 d-none d-sm-none d-md-block d-lg-none d-xxl-block">{{ abbreviateName(user()->name) }}</span>
-                                        </a>
-                                    </div>
-                                @endif
+                                {{-- <div class="item">
+                                        <a href="{{ route('use.register') }}" class="login-btn">
+                                <i class="fa-solid fa-address-card me-1"></i>
+                                <span>{{ __('Register') }}</span>
+                                </a>
+                            </div> --}}
+                            @endif
+
+                            <div class="item">
+                                <select name="" id="">
+                                    <option value="english">{{ __('English') }}</option>
+                                    <option value="bangla">{{ __('Bangla') }}</option>
+                                </select>
                             </div>
+                            @if (Auth::guard('web')->check())
+                            <div class="item">
+                                <button class="wish-btn bg-none" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#wishlist" aria-controls="offcanvasRight">
+                                    <i class="fa-solid fa-heart me-1"></i>
+                                    <span>{{ __('Wish List') }}</span>
+                                </button>
+                                @include('frontend.includes.wishlist_slide')
+                            </div>
+                            <div class="item">
+                                <button class="cart-btn" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#cartbtn" aria-controls="offcanvasRight">
+                                    <i class="fa-solid fa-cart-shopping me-1"></i>
+                                    <span>{{ __('Cart') }}</span><sup><strong id="cart_btn_quantity"></strong></sup>
+                                </button>
+                                @include('frontend.includes.add_to_cart_slide')
+                            </div>
+                            <div class="item" style="max-width: 185px; overflow:hidden;">
+                                <a href="{{ route('user.dashboard') }}" class="login-btn d-flex align-items-center">
+                                    <img src="{{ user()->image ? storage_url(user()->image) : asset('user/asset/img/user.png') }}"
+                                        alt="">
+                                    <span
+                                        class="ms-1 d-none d-sm-none d-md-block d-lg-none d-xxl-block">{{ abbreviateName(user()->name) }}</span>
+                                </a>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>

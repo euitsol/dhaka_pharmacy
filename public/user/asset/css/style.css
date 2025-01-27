@@ -422,7 +422,7 @@ body {
     .image
     img {
     /* height: 60px; */
-    object-fit: cover;
+    object-fit: contain;
     width: 100%;
 }
 .header-section .right-col .offcanvas .add_to_cart_item .product_details .info {
@@ -1373,15 +1373,17 @@ margin: 0;
     text-align: justify;
 }
 .dashboard-main-section .col-mid .tips .single-tips {
-    padding: 10px;
-    /* box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
-        rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-    border-radius: 15px; */
-    margin-top: 13px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
-    border-radius: 10px;
+    margin-top: 10px;
 }
-
+.dashboard-main-section .letest-offer-shadow {
+    min-height: 325px !important;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset; */
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+    background: #dcdcdc;
+    background: var(--primary);
+}
 .dashboard-main-section .col-mid .tips p span {
     color: var(--btn_bg);
 }
@@ -1422,7 +1424,7 @@ margin: 0;
 .dashboard-main-section .order-cart-wish .single .content img {
     width: 50px;
     height: 50px;
-    object-fit: cover;
+    object-fit: contain;
 }
 .dashboard-main-section .col-mid .medicine-slider .carousel-inner {
     background-color: #eeeeee;
@@ -1993,7 +1995,7 @@ margin: 0;
 }
 
 .imagePreview {
-    object-fit: cover;
+    object-fit: contain;
     width: auto;
     height: 6rem;
 }
