@@ -73,7 +73,7 @@
                             } elseif ($fileType == 'video') {
                                 $videoHtml .=
                                     '<div class="video" style="height: 300px; width:350px">
-                                        <video controls width="100%" height="100%" style="object-fit: cover; border-radius:5px;">
+                                        <video controls width="100%" height="100%" style="object-fit: contain; border-radius:5px;">
                                             <source src="' .
                                     storage_url($file) .
                                     '">

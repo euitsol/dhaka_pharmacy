@@ -67,7 +67,7 @@
     .reference .loading img{
         height: 100%;
         width: 100%;
-        object-fit: cover;
+        object-fit: contain;
     }
 
 </style>
@@ -83,7 +83,7 @@
                                 <div class="row">
                                     <div class="col-md-7 pe-md-0">
                                         <div class="image_wrap h-100">
-                                            <img style="object-fit: cover" src="{{asset('frontend\asset\img\lam_login_reg.jpeg')}}" class="h-100 w-100" alt="">
+                                            <img style="object-fit: contain" src="{{asset('frontend\asset\img\lam_login_reg.jpeg')}}" class="h-100 w-100" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-5 ps-md-0">
