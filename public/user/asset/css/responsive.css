@@ -98,7 +98,7 @@
 
     .header-section .notification ul.dropdown-menu {
         width: 310px;
-        right: -99px !important;
+        right: -105px !important;
     }
 
     .header-section .right-col .offcanvas {
@@ -364,14 +364,23 @@
         font-size: 16px !important;
     }
     .dashboard-main-section .letest-offer-shadow {
-        min-height: auto !important;
+        min-height: 100% !important;
+    }
+    .dashboard-main-section .offer_image img {
+        height: 150px !important;
+    }
+    .dashboard-main-section .tips_image img {
+        height: 150px !important;
+    }
+    .dashboard-main-section .tips_details {
+        height: 150px !important;
     }
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
-    .offer_image img {
+    /* .offer_image img {
         height: 100% !important;
-        /* width: 252px !important; */
-    }
+        width: 252px !important;
+    } */
     .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
@@ -582,7 +591,13 @@
         height: 280px !important;
     }
     .dashboard-main-section .offer_image img {
-        height: 100%;
+        height: 150px !important;
+    }
+    .dashboard-main-section .tips_image img {
+        height: 150px !important;
+    }
+    .dashboard-main-section .tips_details {
+        height: 150px !important;
     }
     .dashboard-main-section #lightbox {
         height: 100% !important;
@@ -725,7 +740,13 @@
         height: 250px !important;
     } */
     .dashboard-main-section .offer_image img {
-        height: 100%;
+        height: 200px !important;
+    }
+    .dashboard-main-section .tips_image img {
+        height: 200px !important;
+    }
+    .dashboard-main-section .tips_details {
+        height: 200px !important;
     }
     .dashboard-main-section #lightbox {
         height: 100% !important;
@@ -816,13 +837,16 @@
         padding: 22px 10px;
     }
     .dashboard-main-section .offer_image img {
-        height: 100%;
+        height: 150px !important;
     }
-    /* .dashboard-main-section .tips_image img {
-        height: 170px;
-    } */
+    .dashboard-main-section .tips_image img {
+        height: 140px !important;
+    }
+    .dashboard-main-section .tips_details {
+        height: 140px !important;
+    }
     .dashboard-main-section .letest-offer-shadow {
-        min-height: auto !important;
+        min-height: 100% !important;
     }
 }
 @media screen and (min-width: 1024px) and (max-width: 1199px) {
@@ -875,14 +899,20 @@
     .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
-    /* .dashboard-main-section .offer_image img {
-        height: 100%;
-    } */
-    /* .dashboard-main-section .tips_image img {
-        height: 170px;
-    } */
+    .dashboard-main-section .offer_image img {
+        height: 150px !important;
+    }
+    .dashboard-main-section .tips_image img {
+        height: 140px !important;
+    }
+    .dashboard-main-section .tips_details {
+        height: 140px !important;
+    }
     .dashboard-main-section .letest-offer-shadow {
-        min-height: auto !important;
+        min-height: 100% !important;
+    }
+    .dashboard-main-section .tips_details {
+        height: 55px;
     }
 }
 @media screen and (min-width: 1200px) and (max-width: 1439px) {

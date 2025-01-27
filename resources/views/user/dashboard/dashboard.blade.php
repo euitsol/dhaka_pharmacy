@@ -12,21 +12,26 @@
 <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 <style>
 .offer_image img {
-    height: 100%;
+    height: 75px;
     width: 100%;
     border: 2px solid var(--btn_bg) !important;
     padding: 5px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 20px;
 }
 
 .tips_image img {
-    height: 100%;
-    width: 120px;
+    height: 120px;
+    width: 100%;
     border: 2px solid var(--btn_bg) !important;
     padding: 5px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 20px;
+}
+
+.tips_details {
+    height: 55px;
+    overflow-y: hidden;
 }
 </style>
 @endpush

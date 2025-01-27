@@ -3,7 +3,7 @@ function getHtml(payments) {
     payments.forEach(function (payment) {
         result += `<div class="order-row">
                 <div class="order-id-row border-0 p-4">
-                    <div class="row align-items-center">
+                    <div class="row align-items-center" style="position: relative;">
                         <div class="col-lg-4 col-12">
                             <h3 class="order-num">
                                 Transaction ID: '<span>${
@@ -28,7 +28,7 @@ function getHtml(payments) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-4">
+                                <div class="col-md-3 col-sm-4 col-12">
                                     <div class="order-status pe-0">
                                         <div class="total">
                                             <p class="total text-start">
@@ -47,7 +47,7 @@ function getHtml(payments) {
             payment.statusTitle
         }</span>
                                 </div>
-                                <div class="col-md-4 mt-2 mt-md-0 col-12 text-end">
+                                <div class="col-md-4 mt-2 mt-md-0 col-12 text-start text-md-end">
                                     <div class="order-status">
                                         <div class="btn p-0">
                                             <a href="${myDatas[
