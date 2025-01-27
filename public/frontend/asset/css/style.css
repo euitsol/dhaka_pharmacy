@@ -1112,18 +1112,16 @@ a {
     position: relative;
 }
 
+.footer-section .main-footer-row .footer-logo a {
+    height: 50px !important;
+    display: block;
+}
+
+.footer-section .main-footer-row .footer-logo a img {
+    height: 100% !important;
+}
 .footer-section .main-footer-row .footer-logo {
     max-width: 245px;
-}
-.footer-section
-    .main-footer-row
-    .footer-logo
-    img
-    .footer-section
-    .main-footer-row
-    .footer-logo
-    img {
-    width: 100%;
 }
 
 .footer-section .main-footer-row .title {
