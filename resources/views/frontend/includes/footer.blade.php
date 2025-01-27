@@ -132,8 +132,8 @@
                     <h2 class="title">{{ __('Your trusted online medicine supplier') }}</h2>
                     <div class="footer-contact">
                         <ul class="footer-nav">
-                            <li><a class="map" href="https://maps.app.goo.gl/UPWoFht1PicYMHdR8" target="_blank">
-                                    {{ __('Road -4, 11 Gulshan Avenue, Dhaka BangladeshFree Consultation') }}
+                            <li><a class="map" href="javascript:void(0)" target="_blank">
+                                    {{ __('4th Floor, Noor Mansion, Plot-4, Main Road, Mirpur-10, Dhaka-1216') }}
                                 </a>
                             </li>
                             <li><a class="phn" href="tel:01714 432 534">{{ __('01714 432 534') }}</a></li>
