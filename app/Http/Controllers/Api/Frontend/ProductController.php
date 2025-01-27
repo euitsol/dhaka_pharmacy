@@ -119,11 +119,21 @@ class ProductController extends BaseController
             $query->where('name', 'like', "%$request->name%");
         }
 
-        $data = $query->get()->shuffle()->each(function ($product) {
+        // Pagination
+        $perPage = $request->get('per_page', 15);
+        $products = $query->paginate($perPage);
+
+        $data = $query->get()->each(function ($product) {
             $product = $this->transformProduct($product, 30);
             return $product;
         });
 
-        return sendResponse(true, null, $data);
+        $additional = [
+            'current_page' => $products->currentPage(),
+            'last_page' => $products->lastPage(),
+            'per_page' => $products->perPage(),
+            'total' => $products->total(),
+        ];
+        return sendResponse(true, null, $data, 200, $additional);
     }
 }

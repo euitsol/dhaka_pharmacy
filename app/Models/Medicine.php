@@ -60,7 +60,10 @@ class Medicine extends BaseModel
     {
         return $this->belongsTo(MedicineStrength::class, 'strength_id');
     }
-
+    public function dosage()
+    {
+        return $this->belongsTo(MedicineDose::class, 'dose_id');
+    }
     public function getBestSelling()
     {
         if ($this->is_best_selling == 1) {

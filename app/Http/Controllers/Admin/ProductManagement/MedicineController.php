@@ -62,7 +62,8 @@ class MedicineController extends Controller
                 ->editColumn('name', function ($data) {
                     $companyName = optional($data->company)->name ?? 'No Company';
                     $strengthName = optional($data->strength)->name ?? 'No Strength';
-                    return $data->name.' - '.$strengthName . ' (' . $companyName . ')';
+                    $dosageFormName = optional($data->dosage)->name ?? 'No Dosage';
+                    return $data->name.' - '.$strengthName .' - '. $dosageFormName. ' (' . $companyName . ')';
                 })
                 ->addColumn('created_user', function ($data) {
                     return $data->created_user->name ?? 'System';

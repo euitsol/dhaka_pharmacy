@@ -120,12 +120,16 @@ function createCSV($filename = 'permissions.csv'): string
 function storage_url($urlOrArray)
 {
     $image = asset('frontend/default/default.png');
+
     if (is_array($urlOrArray) || is_object($urlOrArray)) {
         $result = '';
         $count = 0;
         $itemCount = count($urlOrArray);
         foreach ($urlOrArray as $index => $url) {
 
+            if (Str::contains($url, ['http://', 'https://'])) {
+                return $url;
+            }
             $result .= $url ? asset('storage/' . $url) : $image;
 
             if ($count === $itemCount - 1) {
@@ -137,6 +141,9 @@ function storage_url($urlOrArray)
         }
         return $result;
     } else {
+        if (Str::contains($urlOrArray, ['http://', 'https://'])) {
+            return $urlOrArray;
+        }
         return $urlOrArray ? asset('storage/' . $urlOrArray) : $image;
     }
 }
@@ -178,6 +185,9 @@ function product_image($url)
     //     return $url;
     // }
     // For Fake Image
+    if (Str::contains($url, ['http://', 'https://'])) {
+        return $url;
+    }
     return $url ? asset('storage/' . $url) : asset('frontend/default/product.png');
 }
 

@@ -222,7 +222,7 @@ btn-arrow">
 
                     <div class="row show-more mt-3 mt-lg-4" @if (count($products) < 8) style="display:none;" @endif>
                         <a class="all-pdct-btn text-center"
-                            href="{{ route('category.products', ['category' => 'all']) }}">{{ __('All Products') }}</a>
+                            href="{{ route('category.products', ['category' => 'all', 'featured' => true]) }}">{{ __('All Products') }}</a>
                     </div>
                 </div>
                 @endif
