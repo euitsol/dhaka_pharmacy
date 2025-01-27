@@ -3,28 +3,34 @@
         <div class="row align-items-center">
             <div class="col-lg-8 col-3">
                 <div class="row align-items-center">
-                    <div class="col-xl-1 col-lg-2">
+                    <div class="col-lg-2">
                         <div class="logo">
                             <a href="{{ route('home') }}">
-                                <img class="w-100" src="{{ storage_url(settings('site_favicon')) }}"
+                                <img class="w-100" src="{{ storage_url(settings('site_logo')) }}"
                                     alt="{{ config('app.name') }}">
                             </a>
                         </div>
                     </div>
-                    <div class="col-xl-11 col-lg-10">
+                    <div class="col-lg-10">
                         <div class="nav-menu ps-xl-5">
                             <ul class="navbar-nav flex-row align-items-center">
-                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'dashboard') active @endif"
+                                <li class="nav-item"><a
+                                        class="nav-link @if (isset($pageSlug) && $pageSlug == 'dashboard') active @endif"
                                         href="{{ route('user.dashboard') }}">{{ __('Dashboard') }}</a></li>
-                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'address') active @endif"
+                                <li class="nav-item"><a
+                                        class="nav-link @if (isset($pageSlug) && $pageSlug == 'address') active @endif"
                                         href="{{ route('u.as.list') }}">{{ __('Address') }}</a></li>
-                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'order') active @endif"
+                                <li class="nav-item"><a
+                                        class="nav-link @if (isset($pageSlug) && $pageSlug == 'order') active @endif"
                                         href="{{ route('u.order.list') }}">{{ __('Orders') }}</a></li>
-                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'wishlist') active @endif"
+                                <li class="nav-item"><a
+                                        class="nav-link @if (isset($pageSlug) && $pageSlug == 'wishlist') active @endif"
                                         href="{{ route('u.wishlist.list') }}">{{ __('Wishlists') }}</a></li>
-                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'payment') active @endif"
+                                <li class="nav-item"><a
+                                        class="nav-link @if (isset($pageSlug) && $pageSlug == 'payment') active @endif"
                                         href="{{ route('u.payment.list') }}">{{ __('Payments') }}</a></li>
-                                <li class="nav-item"><a class="nav-link @if (isset($pageSlug) && $pageSlug == 'review') active @endif"
+                                <li class="nav-item"><a
+                                        class="nav-link @if (isset($pageSlug) && $pageSlug == 'review') active @endif"
                                         href="{{ route('u.review.list') }}">{{ __('Reviews') }}</a></li>
                             </ul>
                         </div>
@@ -67,28 +73,28 @@
                         <li>
                             <ul class="notification-list">
                                 @forelse (user()->notifications as $notification)
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center notification-item {{ $notification->read_at ? '' : 'active' }}"
-                                            href='javascript:void(0)' data-id="{{ $notification->id }}"
-                                            data-url="{{ $notification->data['url'] ?? null }}">
-                                            <div class="notification-icon">
-                                                <i class="fa-regular fa-bell fs-3 me-3 "
-                                                    style="width: 50px; text-align: center"></i>
-                                            </div>
-                                            <div class="details px-2">
-                                                <p class="fw-semibold">{{ $notification->data['title'] }}</p>
-                                                <span
-                                                    class="notification-title d-block">{{ str_limit($notification->data['message'], 60) }}</span>
-                                                <span
-                                                    class="notify-time d-block mt-1 text-muted">{{ $notification->created_at->diffForHumans() }}</span>
-                                            </div>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center notification-item {{ $notification->read_at ? '' : 'active' }}"
+                                        href='javascript:void(0)' data-id="{{ $notification->id }}"
+                                        data-url="{{ $notification->data['url'] ?? null }}">
+                                        <div class="notification-icon">
+                                            <i class="fa-regular fa-bell fs-3 me-3 "
+                                                style="width: 50px; text-align: center"></i>
+                                        </div>
+                                        <div class="details px-2">
+                                            <p class="fw-semibold">{{ $notification->data['title'] }}</p>
+                                            <span
+                                                class="notification-title d-block">{{ str_limit($notification->data['message'], 60) }}</span>
+                                            <span
+                                                class="notify-time d-block mt-1 text-muted">{{ $notification->created_at->diffForHumans() }}</span>
+                                        </div>
 
-                                        </a>
-                                    </li>
+                                    </a>
+                                </li>
                                 @empty
-                                    <li class="text-center notification-empty">
-                                        <span class="text-muted">{{ __('You have no notifications') }}</span>
-                                    </li>
+                                <li class="text-center notification-empty">
+                                    <span class="text-muted">{{ __('You have no notifications') }}</span>
+                                </li>
                                 @endforelse
                             </ul>
                         </li>
@@ -142,8 +148,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)"
-                                onclick="event.preventDefault();
+                            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                                 <img src="{{ asset('user/asset/img/logout.png') }}" alt="">
                                 <span>{{ __('Logout') }}</span>
