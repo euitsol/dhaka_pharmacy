@@ -43,151 +43,163 @@
             <div class="col-mid">
                 <div class="col-left">
                     <div class="row row-gap-3 row-gap-sm-4">
-                        <div class="col-xl-5 col-12">
+                        <div class="col-xl-9 col-12 order-2 order-xl-1">
                             <div class="row mb-0 mb-xl-4 row-gap-3 row-gap-sm-4">
-                                <div class="col-xl-4 col-lg-2 col-sm-4 col-4 px-2">
-                                    <a href="{{ route('u.order.list') }}" style="text-decoration: none; color:#212529;">
-                                        <div class="single-box cancel-order">
-                                            <div class="count">
-                                                <span>{{$total_orders}}</span>
-                                            </div>
-                                            <div class="title">
-                                                <h2>{{ __('My Orders') }}</h2>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-xl-4 col-lg-2 col-sm-4 col-4 px-2">
-                                    <a href="{{ route('u.payment.list') }}"
-                                        style="text-decoration: none; color:#212529;">
-                                        <div class="single-box previous-order">
-                                            <div class="count-cart">
-                                                <span>{{$total_payments}}</span>
-                                            </div>
-                                            <div class="title">
-                                                <h2>{{ __('My Payments') }}</h2>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-xl-4 col-lg-2 col-sm-4 col-4 px-2">
-                                    <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"
-                                        aria-controls="offcanvasRight" style="text-decoration: none; color:#212529;">
-                                        <div class="single-box cancel-order">
-                                            <div class="count">
-                                                <span>30</span>
-                                            </div>
-                                            <div class="title">
-                                                <h2>{{ __('My Cart') }}</h2>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-xl-4 col-lg-2 col-sm-4 col-4 px-2">
-                                    <a href="{{ route('u.order.list', ['status' => 'current-orders']) }}"
-                                        style="text-decoration: none; color:#212529;">
-                                        <div class="single-box previous-order">
-                                            <div class="count-cart">
-                                                <span>{{$total_current_orders}}</span>
-                                            </div>
-                                            <div class="title">
-                                                <h2>{{ __('Current Orders') }}</h2>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-xl-4 col-lg-2 col-sm-4 col-4 px-2">
-                                    <a href="{{ route('u.order.list', ['status' => 'previous-orders']) }}"
-                                        style="text-decoration: none; color:#212529;">
-                                        <div class="single-box cancel-order">
-                                            <div class="count">
-                                                <span>{{ $total_previous_orders }}</span>
-                                            </div>
-                                            <div class="title">
-                                                <h2>{{ __('Previous Orders') }}</h2>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-xl-4 col-lg-2 col-sm-4 col-4 px-2">
-                                    <a href="{{ route('u.order.list', ['status' => 'cancel-orders']) }}"
-                                        style="text-decoration: none; color:#212529;">
-                                        <div class="single-box previous-order">
-                                            <div class="count-cart">
-                                                <span>{{ $total_cancel_orders }}</span>
-                                            </div>
-                                            <div class="title">
-                                                <h2>{{ __('Cancel Orders') }}</h2>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-7 col-12">
-                            <div class="row row-gap-3 row-gap-sm-4">
-                                <div class="col-xl-8 col-lg-6 col-12 order-2 order-lg-1">
-                                    <div class="medicine-slider">
-                                        <div id="carouselExampleControlsNoTouching" class="carousel slide"
-                                            data-bs-touch="false">
-                                            <div class="carousel-inner">
-                                                @foreach ($order_products as $key => $product)
-                                                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                                                    <h3><span>{{ $product->name }}</span>({{ $product->strength->quantity . ' ' . $product->strength->unit }})
-                                                    </h3>
-                                                    <p><span>{{ __('Efficacy: ') }}</span>
-                                                        {{ str_limit($product->precaution->description, 110) }}
-                                                    </p>
+                                <div class="col-lg-6 col-12">
+                                    <div class="row row-gap-3 row-gap-sm-4">
+                                        <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
+                                            <a href="{{ route('u.order.list') }}"
+                                                style="text-decoration: none; color:#212529;">
+                                                <div class="single-box cancel-order">
+                                                    <div class="count">
+                                                        <span>{{$total_orders}}</span>
+                                                    </div>
+                                                    <div class="title">
+                                                        <h2>{{ __('My Orders') }}</h2>
+                                                    </div>
                                                 </div>
-                                                @endforeach
-                                            </div>
-                                            <button class="carousel-control-prev" type="button"
-                                                data-bs-target="#carouselExampleControlsNoTouching"
-                                                data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">{{ __('Previous') }}</span>
-                                            </button>
-                                            <div class="circle"></div>
-                                            <button class="carousel-control-next" type="button"
-                                                data-bs-target="#carouselExampleControlsNoTouching"
-                                                data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">{{ __('Next') }}</span>
-                                            </button>
+                                            </a>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
+                                            <a href="{{ route('u.payment.list') }}"
+                                                style="text-decoration: none; color:#212529;">
+                                                <div class="single-box previous-order">
+                                                    <div class="count-cart">
+                                                        <span>{{$total_payments}}</span>
+                                                    </div>
+                                                    <div class="title">
+                                                        <h2>{{ __('My Payments') }}</h2>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
+                                            <a href="javascript:void(0)" data-bs-toggle="offcanvas"
+                                                data-bs-target="#cartbtn" aria-controls="offcanvasRight"
+                                                style="text-decoration: none; color:#212529;">
+                                                <div class="single-box cancel-order">
+                                                    <div class="count">
+                                                        <span>30</span>
+                                                    </div>
+                                                    <div class="title">
+                                                        <h2>{{ __('My Cart') }}</h2>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
+                                            <a href="{{ route('u.order.list', ['status' => 'current-orders']) }}"
+                                                style="text-decoration: none; color:#212529;">
+                                                <div class="single-box previous-order">
+                                                    <div class="count-cart">
+                                                        <span>{{$total_current_orders}}</span>
+                                                    </div>
+                                                    <div class="title">
+                                                        <h2>{{ __('Current Orders') }}</h2>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
+                                            <a href="{{ route('u.order.list', ['status' => 'previous-orders']) }}"
+                                                style="text-decoration: none; color:#212529;">
+                                                <div class="single-box cancel-order">
+                                                    <div class="count">
+                                                        <span>{{ $total_previous_orders }}</span>
+                                                    </div>
+                                                    <div class="title">
+                                                        <h2>{{ __('Previous Orders') }}</h2>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
+                                            <a href="{{ route('u.order.list', ['status' => 'cancel-orders']) }}"
+                                                style="text-decoration: none; color:#212529;">
+                                                <div class="single-box previous-order">
+                                                    <div class="count-cart">
+                                                        <span>{{ $total_cancel_orders }}</span>
+                                                    </div>
+                                                    <div class="title">
+                                                        <h2>{{ __('Cancel Orders') }}</h2>
+                                                    </div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-4 col-lg-6 col-12 mt-xl-0 order-1 order-lg-2">
-                                    <div class="letest-offer-shadow">
-                                        <div class="col-right row">
-                                            <div class="col-xl-12 mt-0">
-                                                @include('user.dashboard.include.latest-offer')
-                                            </div>
-                                            <div class="col-12">
-                                                @if ($user_tips->isNotEmpty())
-                                                <div class="tips">
-                                                    @foreach ($user_tips as $tips)
-                                                    <div class="single-tips d-flex d-xl-block  gap-3">
-                                                        <div class="tips_image">
-                                                            <div id="lightbox" class="lightbox h-100">
-                                                                <div class="lightbox-content h-100">
-                                                                    <img src="{{ storage_url($tips->image) }}"
-                                                                        class="lightbox_image d-block w-100">
-                                                                </div>
-                                                                <div class="close_button fa-beat">X</div>
-                                                            </div>
-                                                            {{-- <img src="{{ asset('user/asset/img/tips-img.png') }}"
-                                                            alt=""> --}}
-                                                        </div>
-                                                        <div class="tips_details mt-0 mt-xl-3">
-                                                            <p>{{ str_limit(html_entity_decode($tips->description), 270) }}
+                                <div class="col-lg-6 col-12">
+                                    <div class="row row-gap-3 row-gap-sm-4">
+                                        <div class="col-12 order-2 order-lg-1">
+                                            <div class="medicine-slider">
+                                                <div id="carouselExampleControlsNoTouching" class="carousel slide"
+                                                    data-bs-touch="false">
+                                                    <div class="carousel-inner">
+                                                        @foreach ($order_products as $key => $product)
+                                                        <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                                            <h3><span>{{ $product->name }}</span>({{ $product->strength->quantity . ' ' . $product->strength->unit }})
+                                                            </h3>
+                                                            <p><span>{{ __('Efficacy: ') }}</span>
+                                                                {{ str_limit($product->precaution->description, 110) }}
                                                             </p>
                                                         </div>
+                                                        @endforeach
                                                     </div>
-                                                    @endforeach
+                                                    <button class="carousel-control-prev" type="button"
+                                                        data-bs-target="#carouselExampleControlsNoTouching"
+                                                        data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon"
+                                                            aria-hidden="true"></span>
+                                                        <span class="visually-hidden">{{ __('Previous') }}</span>
+                                                    </button>
+                                                    <div class="circle"></div>
+                                                    <button class="carousel-control-next" type="button"
+                                                        data-bs-target="#carouselExampleControlsNoTouching"
+                                                        data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon"
+                                                            aria-hidden="true"></span>
+                                                        <span class="visually-hidden">{{ __('Next') }}</span>
+                                                    </button>
                                                 </div>
-                                                @endif
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-12 order-1 order-xl-2">
+                            <div class="letest-offer-shadow">
+                                <div class="col-right row row-gap-3 row-gap-xl-0">
+                                    <div class="col-xl-12 col-md-6 col-12 mt-0">
+                                        <div class="latest-col">
+                                            @include('user.dashboard.include.latest-offer')
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-md-6 col-12">
+                                        <div class="tips-col">
+                                            @if ($user_tips->isNotEmpty())
+                                            <div class="tips">
+                                                @foreach ($user_tips as $tips)
+                                                <div class="single-tips d-flex d-xl-block  gap-3">
+                                                    <div class="tips_image">
+                                                        <div id="lightbox" class="lightbox h-100">
+                                                            <div class="lightbox-content h-100">
+                                                                <img src="{{ storage_url($tips->image) }}"
+                                                                    class="lightbox_image d-block w-100">
+                                                            </div>
+                                                            <div class="close_button fa-beat">X</div>
+                                                        </div>
+                                                        {{-- <img src="{{ asset('user/asset/img/tips-img.png') }}"
+                                                        alt=""> --}}
+                                                    </div>
+                                                    <div class="tips_details mt-0 mt-xl-3">
+                                                        <p>{{ str_limit(html_entity_decode($tips->description), 270) }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -201,9 +213,9 @@
             <div class="col-mid">
                 <div class="col-left mt-4 mt-xl-0">
                     <div class="row row-gap-3 row-gap-sm-4">
-                        <div class="col-xl-5 col-12 order-2 order-xl-1">
-                            <div class="col-right row">
-                                <div class="col">
+                        <div class="col-xl-9 col-12">
+                            <div class="col-right row row-gap-3 row-gap-sm-4 ">
+                                <div class="col-lg-6 col-12 order-2 order-lg-1">
                                     <div class="google-map" @if ($latest_offers->isEmpty()) style="margin-top:20px"
                                         @endif>
                                         <div class="address d-flex  align-items-center justify-content-between">
@@ -233,13 +245,9 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-7 col-12 order-1 order-xl-2">
-                            <div class="row row-gap-3 row-gap-sm-4">
-                                <div class="col-xl-8 col-12">
+                                <div class="col-lg-6 col-12 order-1 order-lg-2">
                                     <div class="row mb-0 mb-xl-4 row-gap-3 row-gap-sm-4">
-                                        <div class="col-xl-4 col-lg-2 col-md-2 col-4 px-2">
+                                        <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
                                             <a href="{{ route('u.kyc.verification') }}"
                                                 style="text-decoration: none; color:#212529;">
                                                 <div class="single-box cancel-order">
@@ -252,7 +260,7 @@
                                                 </div>
                                             </a>
                                         </div>
-                                        <div class="col-xl-4 col-lg-2 col-md-2 col-4 px-2">
+                                        <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
                                             <a href="{{ route('u.review.list') }}"
                                                 style="text-decoration: none; color:#212529;">
                                                 <div class="single-box previous-order">
@@ -265,7 +273,7 @@
                                                 </div>
                                             </a>
                                         </div>
-                                        <div class="col-xl-4 col-lg-2 col-md-2 col-4 px-2">
+                                        <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
                                             <a href="{{ route('u.wishlist.list') }}"
                                                 style="text-decoration: none; color:#212529;">
                                                 <div class="single-box cancel-order">
@@ -278,7 +286,7 @@
                                                 </div>
                                             </a>
                                         </div>
-                                        <div class="col-xl-8 col-lg-4 col-md-4 col-8 order-5 order-xl-4 px-2">
+                                        <div class="col-xl-8 col-lg-8 col-md-4  col-8 order-5 order-xl-4 px-2">
                                             <div class="customer-supporrt p-sm-0">
                                                 <a href="#">
                                                     <div
@@ -295,7 +303,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-xl-4 col-lg-2 col-md-2 col-4 order-4 order-xl-6 px-2">
+                                        <div class="col-xl-4 col-lg-4  col-md-2 col-4 order-4 order-xl-6 px-2">
                                             <a href="{{ route('u.fdk.index') }}"
                                                 style="text-decoration: none; color:#212529;">
                                                 <div class="single-box previous-order">
@@ -310,7 +318,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-sm-6 col-12 m-lg-0 m-auto d-xl-block d-none">
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-12 order-1 order-xl-2">
+                            <div class="row row-gap-3 row-gap-sm-4">
+                                <div class="col-12 m-lg-0 m-auto d-xl-block d-none">
                                     <div class="log-out text-left">
                                         <a href="javascript:void(0)" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
