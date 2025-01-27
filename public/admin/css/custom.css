@@ -1,7 +1,7 @@
 /* Datatable Print Update */
 @media print {
-    .dataTable.table>thead>tr>th,
-    .dataTable.table>tbody>tr>td {
+    .dataTable.table > thead > tr > th,
+    .dataTable.table > tbody > tr > td {
         color: #000 !important;
         background: transparent !important;
     }
@@ -34,11 +34,11 @@
     .navbar button.navbar-toggler[data-target="#navigation"] {
         padding-top: 6px;
     }
-    .sidebar_show{
+    .sidebar_show {
         top: 97px !important;
         left: 260px !important;
     }
-    .main-panel>.navbar{
+    .main-panel > .navbar {
         position: fixed;
         width: 260px;
     }
@@ -47,40 +47,53 @@
 /*=============================================================
                 CK Editor 5 CSS
  =============================================================*/
- .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content .ck-toolbar {
+.ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content .ck-toolbar {
     background: transparent;
 }
 /* .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
     min-height: 200px !important;
 } */
-.ck.ck-editor__main>.ck-editor__editable {
+.ck.ck-editor__main > .ck-editor__editable {
     min-height: 200px;
     background-color: transparent !important;
 }
 
-strong{
+strong {
     font-weight: bold !important;
 }
-
 
 /*=============================================================
                 Start Overwrite CSS
  =============================================================*/
 
 :root {
-    --primary-color: #0093E9;
-    --primary-bg-image: linear-gradient( 288deg,  rgba(0,85,255,1) 1.5%, rgb(4, 56, 115) 91.6% );
+    --primary-color: #0093e9;
+    --primary-bg-image: linear-gradient(
+        288deg,
+        rgba(0, 85, 255, 1) 1.5%,
+        rgb(4, 56, 115) 91.6%
+    );
     --secondary-color: #043873;
-    --secondary-bg-image: linear-gradient( 288deg, rgba(4,56,115,1) 1.5%, rgba(0,85,255,1) 91.6% );
+    --secondary-bg-image: linear-gradient(
+        288deg,
+        rgba(4, 56, 115, 1) 1.5%,
+        rgba(0, 85, 255, 1) 91.6%
+    );
 
     --btn-bg-color: #263148;
-    --btn-bg-image: linear-gradient(to bottom left, #344675, #263148, #344675) !important;
+    --btn-bg-image: linear-gradient(
+        to bottom left,
+        #344675,
+        #263148,
+        #344675
+    ) !important;
 }
-body{
+body {
     overflow-x: hidden;
 }
 
-.sidebar .nav li>a, .off-canvas-sidebar .nav li>a{
+.sidebar .nav li > a,
+.off-canvas-sidebar .nav li > a {
     font-size: 0.58rem;
 }
 
@@ -91,25 +104,25 @@ body{
     margin-top: 0;
     max-height: 45px;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .sidebar {
-    background-color:var(--primary-color) !important;
-    background-image:var(--primary-bg-image) !important;
+    background-color: var(--primary-color) !important;
+    background-image: var(--primary-bg-image) !important;
 }
 
-.btn:not([data-action]):hover{
-    background-color:var(--secondary-color) !important;
-    background-image:var(--secondary-bg-image) !important;
+.btn:not([data-action]):hover {
+    background-color: var(--secondary-color) !important;
+    background-image: var(--secondary-bg-image) !important;
 }
 
-.white-content .footer .copyright a{
-    color:var(--primary-color) !important;
+.white-content .footer .copyright a {
+    color: var(--primary-color) !important;
 }
 
-.white-content .footer .copyright a:hover{
-    color:var(--secondary-color) !important;
+.white-content .footer .copyright a:hover {
+    color: var(--secondary-color) !important;
 }
 
 .main-panel {
@@ -119,32 +132,41 @@ body{
 }
 
 .btn-primary {
-    background:var(--primary-color) !important;
-    background-image:var(--primary-bg-image) !important;
+    background: var(--primary-color) !important;
+    background-image: var(--primary-bg-image) !important;
 }
 
 .form-control:focus {
     border-color: var(--primary-color) !important;
 }
 
-.form-group input[type=file] {
+.form-group input[type="file"] {
     height: auto !important;
 }
 
-.form-check input[type="checkbox"]:checked+.form-check-sign::before, .form-check input[type="checkbox"]:checked+.form-check-sign::before {
+.form-check input[type="checkbox"]:checked + .form-check-sign::before,
+.form-check input[type="checkbox"]:checked + .form-check-sign::before {
     background-color: var(--primary-color) !important;
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:focus, .btn-primary.active:hover {
-    background:var(--primary-color) !important;
-    background-image:var(--primary-bg-image) !important;
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.btn-primary.active:focus,
+.btn-primary.active:hover {
+    background: var(--primary-color) !important;
+    background-image: var(--primary-bg-image) !important;
 }
 
 .white-content .btn:not([data-action]):hover {
     box-shadow: none !important;
 }
 
-.btn:not([data-action]):hover, .navbar .navbar-nav>a.btn:not([data-action]):hover {
+.btn:not([data-action]):hover,
+.navbar .navbar-nav > a.btn:not([data-action]):hover {
     box-shadow: none !important;
     transform: none !important;
     -webkit-transform: none !important;
@@ -182,7 +204,7 @@ textarea.form-control {
                 Start DM Profile CSS
  =============================================================*/
 
- .profile-section .profile_image .camera-icon {
+.profile-section .profile_image .camera-icon {
     position: absolute;
     bottom: -10%;
     font-size: 15px;
@@ -206,7 +228,7 @@ textarea.form-control {
 }
 
 .profile-section .profile_image .overly::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -215,8 +237,8 @@ textarea.form-control {
     height: 100%;
     width: 100%;
     border-radius: 50%;
-    opacity: .5;
-    transition: .4s;
+    opacity: 0.5;
+    transition: 0.4s;
     z-index: 99;
 }
 
@@ -255,7 +277,7 @@ textarea.form-control {
 /*=============================================================
                 Start Site Settings CSS
  =============================================================*/
- .site_settings .tab {
+.site_settings .tab {
     border-radius: 5px 0 0 5px;
     border: 1px solid #ccc;
     min-height: 80vh;
@@ -288,7 +310,7 @@ textarea.form-control {
 @media only screen and (max-width: 767px) {
     .site_settings .tab button {
         width: auto !important;
-        font-size: .6em;
+        font-size: 0.6em;
     }
 
     .site_settings .tab {
@@ -307,7 +329,7 @@ textarea.form-control {
                 Start Select2 CSS
  =============================================================*/
 
- /* Select 2 */
+/* Select 2 */
 /* .select2 {
     width: 100% !important;
 } */
@@ -317,24 +339,28 @@ textarea.form-control {
     height: calc(2.25rem + 2px) !important;
 }
 
-.select2-container--default .select2-selection--single ,
+.select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--multiple {
     border-color: rgba(29, 37, 59, 0.5) !important;
     border-radius: 0.4285rem !important;
 }
 
-.select2-container--default .select2-selection--single ,
+.select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--multiple {
     display: flex !important;
     align-items: center !important;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow ,
-.select2-container--default .select2-selection--multiple .select2-selection__arrow {
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow,
+.select2-container--default
+    .select2-selection--multiple
+    .select2-selection__arrow {
     top: 16% !important;
 }
 
-.select2-container .select2-selection--single .select2-selection__rendered ,
+.select2-container .select2-selection--single .select2-selection__rendered,
 .select2-container .select2-selection--multiple .select2-selection__rendered {
     margin: 0;
 }
@@ -353,11 +379,11 @@ textarea.form-control {
 
 .imagePreviewDiv {
     position: relative;
-    margin: .3rem;
+    margin: 0.3rem;
 }
 
 .imagePreview {
-    object-fit: cover;
+    object-fit: contain;
     width: auto;
     height: 6rem;
 }
@@ -377,57 +403,59 @@ textarea.form-control {
                 Start Product Management CSS
  =============================================================*/
 
- .medicine_price_card .bdt_button{
-        background: var( --primary-color );
-        display: flex;
-        align-items: center;
-        padding: 0 20px;
-        color: #fff;
- }
+.medicine_price_card .bdt_button {
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    color: #fff;
+}
 
 /*=============================================================
                 End Product Management CSS
  =============================================================*/
 
- .badge.badge-secondary{
+.badge.badge-secondary {
     color: #000;
- }
+}
 
- /*=============================================================
+/*=============================================================
                 Earning CSS
  =============================================================*/
- .earning .wrap{
+.earning .wrap {
     min-height: 91vh;
- }
- .earning .box {
-    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%) !important;
+}
+.earning .box {
+    background: linear-gradient(
+        to bottom,
+        rgba(230, 230, 230, 0.1) 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    ) !important;
     border-color: rgba(0, 0, 0, 0.3);
 }
- .earning .amount .my_amount {
+.earning .amount .my_amount {
     font-size: 30px;
     font-weight: 900;
     margin: 15px 0;
     font-family: auto;
 }
- .earning .myTab.active {
+.earning .myTab.active {
     color: var(--primary-color) !important;
     border: 0;
     border-bottom: 1px solid var(--primary) !important;
     background: transparent !important;
 }
- .earning .drp-buttons .cancelBtn.btn {
+.earning .drp-buttons .cancelBtn.btn {
     background: var(--bs-btn-bg) !important;
 }
- .form-group > .select2-container {
+.form-group > .select2-container {
     width: 100% !important;
- }
+}
 
-
-
-  /*=============================================================
+/*=============================================================
                 Admin > Profiles CSS
  =============================================================*/
- .profile #nav-tabContent .tab-pane {
+.profile #nav-tabContent .tab-pane {
     display: none;
 }
 
@@ -435,12 +463,16 @@ textarea.form-control {
     display: block;
 }
 
- .profile .card-user {
-    font-family: 'sans-serif';
+.profile .card-user {
+    font-family: "sans-serif";
 }
 
 .profile .card-user .contact_info {
-    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+    background: linear-gradient(
+        to bottom,
+        rgba(230, 230, 230, 0.1) 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 5px;
 }
@@ -471,7 +503,11 @@ textarea.form-control {
 
 .profile .card-user .earning_info .card {
     border-color: rgba(0, 0, 0, 0.3);
-    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+    background: linear-gradient(
+        to bottom,
+        rgba(230, 230, 230, 0.1) 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
 }
 
 .profile .card-user .card-body {
@@ -492,6 +528,10 @@ textarea.form-control {
 }
 
 .profile .earning .box {
-    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%) !important;
+    background: linear-gradient(
+        to bottom,
+        rgba(230, 230, 230, 0.1) 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    ) !important;
     border-color: rgba(0, 0, 0, 0.3);
 }
