@@ -54,9 +54,9 @@
                                                 </div>
                                                 <div class="col-8 col-sm-9 details">
                                                     <h4 class="product_title">${product.name}</h4>
-                                                    <p class="product_sub_cat">${product.pro_sub_cat.name}</p>
-                                                    <p>${product.generic.name}</p>
-                                                    <p>${product.company.name}</p>
+                                                    <p class="product_sub_cat">${product.pro_cat.name}</p>
+                                                    <p>${product.generic ? product.generic.name : ''}</p>
+                                                    <p>${product.company ? product.company.name : ''}</p>
                                                 </div>
                                             </div>
                                         </div>

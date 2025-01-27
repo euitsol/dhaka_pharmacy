@@ -37,6 +37,23 @@ class MedicineController extends Controller
         if ($request->ajax()) {
             $data = Medicine::with(['pro_cat', 'created_user', 'discounts', 'company']);
 
+            // Apply filters
+            if ($request->has('company_id') && $request->company_id != '') {
+                $data->where('company_id', $request->company_id);
+            }
+            if ($request->has('generic_id') && $request->generic_id != '') {
+                $data->where('generic_id', $request->generic_id);
+            }
+            if ($request->has('status') && $request->status != '') {
+                $data->where('status', $request->status);
+            }
+            if ($request->has('category_id') && $request->category_id != '') {
+                $data->where('pro_cat_id', $request->category_id);
+            }
+            if ($request->has('created_at') && $request->created_at != '') {
+                $data->whereDate('created_at', $request->created_at);
+            }
+
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('created_at', function ($data) {
@@ -44,7 +61,9 @@ class MedicineController extends Controller
                 })
                 ->editColumn('name', function ($data) {
                     $companyName = optional($data->company)->name ?? 'No Company';
-                    return $data->name . ' (' . $companyName . ')';
+                    $strengthName = optional($data->strength)->name ?? 'No Strength';
+                    $dosageFormName = optional($data->dosage)->name ?? 'No Dosage';
+                    return $data->name.' - '.$strengthName .' - '. $dosageFormName. ' (' . $companyName . ')';
                 })
                 ->addColumn('created_user', function ($data) {
                     return $data->created_user->name ?? 'System';

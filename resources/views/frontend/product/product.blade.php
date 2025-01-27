@@ -59,7 +59,7 @@
                                                                             alt="{{ $sub_cat->name }}">
                                                                         <div class="category_name"
                                                                             title="{{ $sub_cat->pro_cat->name }}">
-                                                                            <h3>{{ str_limit($sub_cat->pro_cat->name, 12, '..') }}
+                                                                            <h3>{{ str_limit(optional($sub_cat->pro_cat)->name ?? $sub_cat->pro_cat->name, 12, '..') }}
                                                                             </h3>
                                                                         </div>
                                                                         <div class="sub_category_name"
@@ -119,12 +119,12 @@
                                                     </h3>
                                                 </a>
                                             </div>
-                                            <p><a href="" title="{{ $product->pro_sub_cat->name }}">{{ $product->pro_sub_cat->name }}</a></p>
-                                            <p><a href="generic-name" class="generic-name" title="{{ $product->generic->name }}">
-                                                {{ $product->generic->name }}
+                                            <p><a href="" title="{{ optional($product->pro_sub_cat)->name }}">{{ optional($product->pro_sub_cat)->name }}</a></p>
+                                            <p><a href="generic-name" class="generic-name" title="{{ optional($product->generic)->name }}">
+                                                {{ optional($product->generic)->name }}
                                             </a></p>
-                                            <p><a href="" class="company-name" title="{{ $product->company->name }}">
-                                                {{ $product->company->name }}
+                                            <p><a href="" class="company-name" title="{{ optional($product->company)->name }}">
+                                                {{ optional($product->company)->name }}
                                             </a></p>
                                             <h4> <span> {!! get_taka_icon() !!} {{ number_format($proDisPrice, 2) }}</span>
                                                 @if ($proDisPrice != $product->price)
@@ -140,7 +140,7 @@
                                                     <span class="d-block d-xl-none">Add To Cart</span>
                                                 </a>
                                             </div>
-                                            
+
                                         </div>
 
                                     </div>

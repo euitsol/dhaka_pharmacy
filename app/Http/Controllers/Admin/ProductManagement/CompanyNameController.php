@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
+use Illuminate\Http\Request;
 
 
 class CompanyNameController extends Controller
@@ -81,5 +82,15 @@ class CompanyNameController extends Controller
         $company_name->delete();
         flash()->addSuccess('Company name ' . $company_name->name . ' deleted successfully.');
         return redirect()->route('product.company_name.company_name_list');
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $search = $request->get('q');
+        $company_names = CompanyName::where('name', 'LIKE', "%{$search}%")
+            ->select('id', 'name')
+            ->get();
+
+        return response()->json($company_names);
     }
 }

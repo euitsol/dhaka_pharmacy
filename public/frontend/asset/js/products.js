@@ -39,19 +39,17 @@ $(document).ready(function () {
                                     </h3>
                                 </a>
                             </div>
-                            <p><a href="">${ product.pro_sub_cat.name }</a></p>
+                            <p><a href="">${product.pro_sub_cat ? product.pro_sub_cat.name : ""}</a></p>
                             <p><a href="#" class="generic-name">${
-                                product.generic.name
+                                product.generic ? product.generic.name : ""
                             }</a></p>
                             <p><a href="#" class="company-name">${
-                                product.company.name
+                                product.company ? product.company.name : ""
                             }</a></p>
-                            
+
                             <h4><span>${taka_icon} ${numberFormat(product.discounted_price, 2)}</span>  ${discount_amount}</h4>
                             <div class="add_to_card">
-                                <a class="cart-btn" data-unit_id="${
-                                    product.units[0]["id"]
-                                }" href="javascript:void(0)" data-product_slug="${product.slug}">
+                                <a class="cart-btn" href="javascript:void(0)" data-product_slug="${product.slug}">
                                     <i class="fa-solid fa-cart-plus"></i>
                                     <span class="d-block d-xl-none">Add To Cart</span>
                                 </a>
