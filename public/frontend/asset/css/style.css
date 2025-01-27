@@ -1250,14 +1250,16 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 
 .footer-section .main-footer-row .footer-nav li a {
-  text-decoration: none;
-  font-family: "Open Sans", sans-serif;
-  font-size: 17px;
-  line-height: 40px;
-  font-weight: 400;
-  color: var(--text-color-white);
-  position: relative;
-  transition: 0.4s;
+    text-decoration: none;
+    font-family: "Open Sans", sans-serif;
+    font-size: 17px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    font-weight: 400;
+    display: inline-block;
+    color: var(--text-color-white);
+    position: relative;
+    transition: 0.4s;
 }
 
 .footer-section .main-footer-row .footer-menu .footer-nav li a::before {
@@ -1300,7 +1302,7 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 
 .footer-section .main-footer-row .footer-contact .footer-nav li a.map::before {
   content: "\f3c5";
-  top: 45%;
+  top: 16px;
 }
 
 .footer-section .main-footer-row .footer-contact .footer-nav li a.phn::before {
