@@ -9,13 +9,13 @@
             <div class="row">
                 <div class="admin-container">
                     <div class="row row-gap-4">
-                        <div class="col-md-4">
+                        <div class="col-lg-4 d-none d-lg-block">
                             <div class="image-col d-flex align-items-center justify-content-between">
                                 <img src="{{ asset('admin/image/adminlogin.png') }}" alt="adminloginimage">
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="form ps-md-4 ps-0 d-flex align-items-center justify-content-center h-100">
+                        <div class="col-lg-8 col-12">
+                            <div class="form d-flex align-items-center justify-content-center h-100">
                                 <div class="form-content w-100">
                                     <h2 class="text-center mb-0">{{ __('Forgot Your Password?') }}</h2>
                                     <p class="mb-4 text-center">
@@ -30,6 +30,7 @@
                                                     name="email" class="form-control" placeholder="Enter your email"
                                                     required>
                                             </div>
+                                            @include('alerts.feedback', ['field' => 'email'])
                                         </div>
                                         <button type="submit"
                                             class="btn btn-primary w-100 login-button">{{ __('SEND OTP') }}</button>

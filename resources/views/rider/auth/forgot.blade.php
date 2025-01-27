@@ -1,17 +1,17 @@
 @extends('frontend.layouts.master')
-@section('title', 'Local Area Manager Forgot Password')
+@section('title', 'Rider Forgot Password')
 @push('css')
-    <link rel="stylesheet" href="{{ asset('lam/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('rider/css/login.css') }}">
 @endpush
 @section('content')
-    <section class="lam-section py-5">
+    <section class="rider-section py-5">
         <div class="container">
             <div class="row">
-                <div class="lam-container">
+                <div class="rider-container">
                     <div class="row row-gap-4">
                         <div class="col-lg-5 d-none d-lg-block">
-                            <div class="image-col pe-md-4 pe-0">
-                                <img src="{{ asset('lam/image/distric.png') }}" alt="dsitrict login">
+                            <div class="image-col">
+                                <img src="{{ asset('rider/img/rider.png') }}" alt="rider login">
                             </div>
                         </div>
                         <div class="col-lg-7 col-12">
@@ -21,14 +21,14 @@
                                     <p class="mb-4 text-center">
                                         {{ __('Please enter the account phone for which you want to reset the password.') }}
                                     </p>
-                                    <form action="{{ route('local_area_manager.forgot.send_otp') }}" method="POST">
+                                    <form action="{{ route('rider.forgot.send_otp') }}" method="POST">
                                         @csrf
                                         <div class="mb-4">
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-                                                <input type="text" name="phone" value="{{ old('phone') }}"
-                                                    id="number" class="form-control"
-                                                    placeholder="Enter your phone number" required>
+                                                <input type="text" id="number" name="phone"
+                                                    value="{{ old('phone') }}" class="form-control"
+                                                    placeholder="Enter your phone" required>
                                             </div>
                                             @include('alerts.feedback', ['field' => 'phone'])
                                         </div>

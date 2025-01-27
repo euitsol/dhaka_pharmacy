@@ -98,14 +98,14 @@
 }
 .checkout-section .order-info-row .left h5{
     font-family: var(--secondry-font);
-    font-size: 14px;
+    font-size: 17px;
     line-height: 21px;
     font-weight: 500;
     color: var(--text-black);
 }
 .checkout-section .order-info-row .left p{
     font-family: var(--secondry-font);
-    font-size: 10px;
+    font-size: 12px;
     line-height: 15px;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.5);

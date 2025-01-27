@@ -6,9 +6,9 @@
             <div class="order-info-cont">
                 <!-- Order-status-row-start -->
                 <div class="row  align-items-center">
-                    <div class="col-md-8 col-12">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div class="order-status-row d-flex align-items-center py-4">
+                    <div class="col-md-8 col-sm-9 col-12">
+                        <div class="d-block d-md-flex align-items-center ">
+                            <div class="order-status-row d-flex align-items-center justify-content-md-start justify-content-between py-2 py-sm-4">
                                 <div class="img me-sm-3 me-2">
                                     <img src="{{ asset('user/asset/img/order-status.png') }}" alt="">
                                 </div>
@@ -18,14 +18,14 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4 col-12 fs-1 pb-4">
+                    <div class="col-md-4 col-sm-3 col-12 fs-1 pb-3">
                         @if ($order->status != -1)
                             @if ($order->otp)
                                 <div class="order-status-row py-5 otp d-flex justify-content-center align-items-center">
                                     <p class="mb-0 fw-bold">{{ __('OTP: ') }}{{ $order->otp }}</p>
                                 </div>
                             @elseif($order->status < 2)
-                                <div class="order-status m-0 text-end">
+                                <div class="order-status m-0 text-start text-sm-end">
                                     <a class="cancle text-center text-danger"
                                         href="{{ route('u.order.cancel', encrypt($order->id)) }}">{{ __('Cancel') }}</a>
                                 </div>
@@ -45,8 +45,7 @@
                     <div class="order-traking-row">
 
                         <div class="progress-box d-md-flex justify-content-between">
-                            <div
-                                class="step d-flex d-md-block gap-4 gap-md-0 step-1 text-md-center {{ $order->status > 1 ? 'active' : '' }}">
+                            <div class="step d-flex d-md-block gap-4 gap-md-0 step-1 text-md-center {{ $order->status > 1 ? 'active' : '' }}">
                                 <div class="icon {{ $order->status >= 1 ? 'confirm' : '' }} text-md-center mb-2">
                                     @if ($order->status >= 1)
                                         <img src="{{ asset('user/asset/img/check.png') }}" alt="">
@@ -59,8 +58,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div
-                                class="step d-flex d-md-block gap-4 gap-md-0 step-2 text-md-center {{ $order->status > 3 ? 'active' : '' }}">
+                            <div class="step d-flex d-md-block gap-4 gap-md-0 step-2 text-md-center {{ $order->status > 3 ? 'active' : '' }}">
                                 <div class="icon {{ $order->status >= 2 ? 'confirm' : '' }} text-md-center mb-2">
                                     @if ($order->status >= 2)
                                         <img src="{{ asset('user/asset/img/check.png') }}" alt="">
@@ -73,8 +71,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div
-                                class="step d-flex d-md-block gap-4 gap-md-0 step-3 text-md-center {{ $order->status > 4 ? 'active' : '' }}">
+                            <div class="step d-flex d-md-block gap-4 gap-md-0 step-3 text-md-center {{ $order->status > 4 ? 'active' : '' }}">
                                 <div class="icon {{ $order->status >= 4 ? 'confirm' : '' }}  text-md-center mb-2">
                                     @if ($order->status >= 4)
                                         <img src="{{ asset('user/asset/img/check.png') }}" alt="">
@@ -89,8 +86,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div
-                                class="step d-flex d-md-block gap-4 gap-md-0 step-4 text-md-center {{ $order->status > 5 ? 'active' : '' }}">
+                            <div class="step d-flex d-md-block gap-4 gap-md-0 step-4 text-md-center {{ $order->status > 5 ? 'active' : '' }}">
                                 <div class="icon {{ $order->status >= 5 ? 'confirm' : '' }}  text-md-center mb-2">
                                     @if ($order->status >= 5)
                                         <img src="{{ asset('user/asset/img/check.png') }}" alt="">
@@ -170,12 +166,13 @@
                             <div class="left">
                                 @foreach ($order->products as $product)
                                     <div class="row align-items-center py-2">
-                                        <div class="col-sm-3 col-4">
+                                        <div class="col-sm-3 col-4 px-0 px-sm-3">
                                             <div class="img">
                                                 <img src="{{ $product->image }}" alt="">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 col-8">
+
+                                        <!-- <div class="col-sm-6 col-8">
                                             <h5 class="mb-1" title="{{ $product->attr_title }}">{{ $product->name }}
                                             </h5>
                                             <p class="mb-0">{{ $product->generic->name }}</p>
@@ -187,7 +184,27 @@
                                             <p class="qt mb-0">
                                                 {{ __('Pack: ') }}<span>{{ $product->pivot->unit->name }}</span>
                                             </p>
+                                        </div> -->
+
+                                        <div class="col-sm-9 col-8 px-0 px-sm-3">
+                                            <div class="row align-items-center row-gap-2">
+                                                <div class="col-sm-8 col-12">
+                                                    <h5 class="mb-1" title="{{ $product->attr_title }}">{{ $product->name }}
+                                                    </h5>
+                                                    <p class="mb-0">{{ $product->generic->name }}</p>
+                                                    <p class="mb-0">{{ $product->company->name }}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-12 ms-auto d-flex d-sm-block gap-sm-0 gap-3">
+                                                    <p class="qt mb-1">
+                                                        {{ __('Qty: ') }}<span>{{ $product->pivot->quantity }}</span></p>
+                                                    <p class="qt mb-0">
+                                                        {{ __('Pack: ') }}<span>{{ $product->pivot->unit->name }}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
+
+
                                     </div>
                                 @endforeach
                             </div>
@@ -197,23 +214,23 @@
                             <div class="right d-flex flex-column justify-content-center">
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Total Price') }}</h5>
-                                    <p>{!! get_taka_icon() . number_format($order->totalPrice, 2) !!}</p>
+                                    <p class="text-right">{!! get_taka_icon() . number_format($order->totalPrice, 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Discount') }}</h5>
-                                    <p>{!! get_taka_icon() . number_format($order->totalPrice - $order->totalDiscountPrice, 2) !!}</p>
+                                    <p class="text-right">{!! get_taka_icon() . number_format($order->totalPrice - $order->totalDiscountPrice, 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Sub Total') }}</h5>
-                                    <p>{!! get_taka_icon() . number_format(ceil($order->totalDiscountPrice), 2) !!}</p>
+                                    <p class="text-align-right">{!! get_taka_icon() . number_format(ceil($order->totalDiscountPrice), 2) !!}</p>
                                 </div>
                                 <div class="total-border d-flex justify-content-between mb-3">
                                     <h5>{{ __('Delivery Charge') }}</h5>
-                                    <p>{!! get_taka_icon() . number_format($order->delivery_fee, 2) !!}</p>
+                                    <p class="text-align-right">{!! get_taka_icon() . number_format($order->delivery_fee, 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Payable Amount') }}</h5>
-                                    <p>{!! get_taka_icon() . number_format(ceil($order->totalDiscountPrice + $order->delivery_fee), 2) !!}</p>
+                                    <p class="text-align-right">{!! get_taka_icon() . number_format(ceil($order->totalDiscountPrice + $order->delivery_fee), 2) !!}</p>
                                 </div>
                             </div>
                         </div>
