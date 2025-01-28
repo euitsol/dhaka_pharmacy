@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
+use Illuminate\Http\Request;
 
 
 class ProductCategoryController extends Controller
@@ -122,5 +123,16 @@ class ProductCategoryController extends Controller
         $product_category->delete();
         flash()->addSuccess('Product category ' . $product_category->name . ' deleted successfully.');
         return redirect()->route('product.product_category.product_category_list');
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $search = $request->get('q');
+        $categories = ProductCategory::where('name', 'LIKE', "%{$search}%")
+            ->activated()
+            ->select('id', 'name')
+            ->get();
+
+        return response()->json($categories);
     }
 }
