@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\API\Frontend;
 
-use App\Rules\ApiRules\CartProductRule;
+use App\Rules\CartProductRule;
 use App\Http\Requests\API\BaseRequest;
+use App\Rules\UnitAssignedToMedicine;
 
 class AddToCartRequest extends BaseRequest
 {
@@ -22,10 +23,9 @@ class AddToCartRequest extends BaseRequest
      */
     public function rules(): array
     {
-        $user = $this->user();
         return [
-            'product_slug' => 'required|string|exists:medicines,slug',
-            'unit_id' => 'nullable|exists:medicine_units,id',
+            'product_slug' =>  ['required', 'string', 'exists:medicines,slug', new CartProductRule(auth()->user())],
+            'unit_id' => ['nullable', 'exists:medicine_units,id', new UnitAssignedToMedicine($this->input('product_slug'))],
             'quantity' => 'nullable|numeric'
         ];
     }

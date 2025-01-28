@@ -78,7 +78,7 @@ class ProductController extends BaseController
     }
     public function products(Request $request): JsonResponse
     {
-        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units', 'reviews.customer']);
+        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units', 'reviews.customer'])->activated();
 
         //By Category
         if ($request->has('category') && $request->category !== 'all') {
@@ -121,7 +121,7 @@ class ProductController extends BaseController
 
         // Pagination
         $perPage = $request->get('per_page', 15);
-        $products = $query->paginate($perPage);
+        $products = $query->paginate($perPage)->withQueryString();
 
         $data = $query->get()->each(function ($product) {
             $product = $this->transformProduct($product, 30);
@@ -133,7 +133,23 @@ class ProductController extends BaseController
             'last_page' => $products->lastPage(),
             'per_page' => $products->perPage(),
             'total' => $products->total(),
+            'next_page_url' => $products->nextPageUrl(),
+            'prev_page_url' => $products->previousPageUrl()
         ];
         return sendResponse(true, null, $data, 200, $additional);
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $search_value = $request->name;
+        $query = Medicine::search($search_value);
+
+        $data['products'] = $query->get()
+            ->load(['pro_cat', 'generic', 'company', 'strength', 'discounts'])
+            ->take(10)
+            ->each(function ($product) {
+                return $this->transformProduct($product, 30);
+            });
+        return sendResponse(true, null, $data);
     }
 }
