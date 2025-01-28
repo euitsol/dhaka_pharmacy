@@ -29,15 +29,19 @@ class CartAjaxController extends BaseController
 
     public function products(Request $request): JsonResponse
     {
-        $carts = AddToCart::with([
-            'product',
-            'product.pro_cat',
-            'product.generic',
-            'product.pro_sub_cat',
-            'product.company',
-            'product.discounts',
-            'unit',
+        $carts = AddToCart::select('id','product_id','customer_id','unit_id','quantity', 'is_check', 'status')
+        ->with([
+            'product:id,name,image,slug,status,pro_cat_id,pro_sub_cat_id,company_id,generic_id,strength_id,dose_id,price,description,image,prescription_required,kyc_required,max_quantity,created_at,status,is_best_selling',
+            'product.pro_cat:id,name,slug,status',
+            'product.generic:id,name,slug,status',
+            'product.pro_sub_cat:id,name,slug,status',
+            'product.company:id,name,slug,status',
+            'product.discounts:id,pro_id,unit_id,discount_amount,discount_percentage,status',
+            'unit:id,name,quantity',
+            'product.strength:id,name,status',
+            'product.dosage:id,name,slug,status',
             'product.units' => function ($q) {
+                $q->select('medicine_units.id', 'medicine_units.name', 'medicine_units.quantity', 'medicine_units.image', 'medicine_units.status');
                 $q->orderBy('quantity', 'asc');
             }
         ])->where('customer_id', auth()->user()->id)->get();
