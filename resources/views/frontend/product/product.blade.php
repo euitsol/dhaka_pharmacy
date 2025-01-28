@@ -49,9 +49,7 @@
                                                         @foreach ($sub_cats as $sub_cat)
                                                             <li
                                                                 class="sub_cat_item {{ $key == 0 ? 'uk-slide-active active' : '' }}">
-                                                                <a href="javascript:void(0)" class="sub_cat_link"
-                                                                    data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
-                                                                    data-sub_cat_slug="{{ $sub_cat->slug }}">
+                                                                <a href="{{ request()->fullUrlWithQuery(['sub_category' => $sub_cat->slug]) }}" class="">
                                                                     <div
                                                                         class="card {{ isset($sub_category) && $sub_category->id == $sub_cat->id ? ' active' : '' }}">
                                                                         <img class="sub_cat_img"
@@ -150,9 +148,8 @@
                         @if (count($products) > 5)
                             <div class="row show-more mt-2 mt-lg-5">
                                 <a class="all-pdct-btn text-center more"
-                                    data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
-                                    data-sub_cat_slug="{{ isset($sub_category) ? $sub_category->slug : '' }}"
-                                    data-offset="6" href="javascript:void(0)">{{ __('SEE MORE') }}</a>
+                                    data-total="{{ $products->total() }}" data-pages="{{ $products->lastPage() }}"
+                                    data-next-page-url="{{ $products->nextPageUrl() }}" href="javascript:void(0)">{{ __('SEE MORE') }}</a>
                             </div>
                         @endif
                     </div>

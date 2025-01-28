@@ -47,11 +47,25 @@
                             <option value="">Select Generic Name</option>
                         </select>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <select id="statusFilter" class="select2">
-                            <option value="">Select Status</option>
+                            <option disabled selected>Status</option>
                             <option value="1">Active</option>
                             <option value="0">Deactive</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <select id="featuredFilter" class="select2">
+                            <option disabled selected>Featured</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <select id="bestSellingFilter" class="select2">
+                            <option disabled selected>Best Selling</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -205,6 +219,8 @@
                         d.status = $('#statusFilter').val();
                         d.category_id = $('#categoryFilter').val();
                         d.date = $('#dateFilter').val();
+                        d.is_featured = $('#featuredFilter').val();
+                        d.is_best_selling = $('#bestSellingFilter').val();
                     }
                 },
                 columns: [

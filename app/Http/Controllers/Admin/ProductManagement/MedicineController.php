@@ -53,6 +53,12 @@ class MedicineController extends Controller
             if ($request->has('created_at') && $request->created_at != '') {
                 $data->whereDate('created_at', $request->created_at);
             }
+            if($request->has('is_featured') && $request->is_featured != '') {
+                $data->where('is_featured', $request->is_featured);
+            }
+            if($request->has('is_best_selling') && $request->is_best_selling != '') {
+                $data->where('is_best_selling', $request->is_best_selling);
+            }
 
             return Datatables::of($data)
                 ->addIndexColumn()

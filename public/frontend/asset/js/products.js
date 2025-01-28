@@ -72,66 +72,94 @@ $(document).ready(function () {
         });
     }
 
-    $(".sub_cat_link").on("click", function () {
-        $(".sub_cat_link .card").removeClass("active");
-        $(this).find(".card").addClass("active");
+    // $(".sub_cat_link").on("click", function () {
+    //     $(".sub_cat_link .card").removeClass("active");
+    //     $(this).find(".card").addClass("active");
 
-        let cat_slug = $(this).data("cat_slug");
-        let sub_cat_slug = $(this).data("sub_cat_slug");
-        $(".more").attr("data-offset", 6);
-        $(".more").attr("data-sub_cat_slug", sub_cat_slug);
+    //     let cat_slug = $(this).data("cat_slug");
+    //     let sub_cat_slug = $(this).data("sub_cat_slug");
+    //     $(".more").attr("data-offset", 6);
+    //     $(".more").attr("data-sub_cat_slug", sub_cat_slug);
 
-        let url = datas.cat_products;
-        let dynamicUrl = url
-            .replace("cat_slug", cat_slug)
-            .replace("sub_cat_slug", sub_cat_slug);
-        dynamicUrl = dynamicUrl;
-        dynamicUrl = dynamicUrl.replace(/&amp;/g, "&");
+    //     let url = datas.cat_products;
+    //     let dynamicUrl = url
+    //         .replace("cat_slug", cat_slug)
+    //         .replace("sub_cat_slug", sub_cat_slug);
+    //     dynamicUrl = dynamicUrl;
+    //     dynamicUrl = dynamicUrl.replace(/&amp;/g, "&");
 
-        fetchData(
-            dynamicUrl,
-            function (data) {
-                window.history.pushState(
-                    {
-                        path: data.url,
-                    },
-                    "",
-                    data.url
-                );
+    //     fetchData(
+    //         dynamicUrl,
+    //         function (data) {
+    //             window.history.pushState(
+    //                 {
+    //                     path: data.url,
+    //                 },
+    //                 "",
+    //                 data.url
+    //             );
 
-                let result = renderProducts(data.products);
-                $(".all-products").html(result);
-                $(".show-more").toggle(data.products.length >= 1);
-            },
-            function (xhr, status, error) {
-                console.error("Error fetching products:", error);
-            }
-        );
-    });
+    //             let result = renderProducts(data.products);
+    //             $(".all-products").html(result);
+    //             $(".show-more").toggle(data.products.length >= 1);
+    //         },
+    //         function (xhr, status, error) {
+    //             console.error("Error fetching products:", error);
+    //         }
+    //     );
+    // });
 
     $(".more").on("click", function () {
-        let limit = 6;
-        let offset = parseInt($(this).attr("data-offset"));
-        let cat_slug = $(this).attr("data-cat_slug");
-        let sub_cat_slug = $(this).attr("data-sub_cat_slug");
-        let url = datas.more_products;
-        let dynamicUrl = url
-            .replace("cat_slug", cat_slug)
-            .replace("_offset", offset)
-            .replace("sub_cat_slug", sub_cat_slug);
-        dynamicUrl = dynamicUrl.replace(/&amp;/g, "&");
+        // let limit = 12;
+        // let offset = parseInt($(this).attr("data-offset"));
+        // let cat_slug = $(this).attr("data-cat_slug");
+        // let sub_cat_slug = $(this).attr("data-sub_cat_slug");
+        // let url = datas.more_products;
+        // let dynamicUrl = url
+        //     .replace("cat_slug", cat_slug)
+        //     .replace("_offset", offset)
+        //     .replace("sub_cat_slug", sub_cat_slug);
+        // dynamicUrl = dynamicUrl.replace(/&amp;/g, "&");
+
+        // fetchData(
+        //     dynamicUrl,
+        //     function (data) {
+        //         $(".more").attr("data-offset", offset + limit);
+        //         let result = renderProducts(data.products);
+        //         $(".all-products").append(result);
+        //         $(".more")
+        //             .parent()
+        //             .toggle(data.products.length >= limit);
+        //     },
+        //     function (xhr, status, error) {
+        //         console.error("Error fetching products:", error);
+        //     }
+        // );
+
+        const nextPageUrl = this.getAttribute("data-next-page-url");
+
+        if (!nextPageUrl) {
+            console.log("No more pages to load.");
+            return;
+        }
 
         fetchData(
-            dynamicUrl,
-            function (data) {
-                $(".more").attr("data-offset", offset + limit);
-                let result = renderProducts(data.products);
-                $(".all-products").append(result);
-                $(".more")
-                    .parent()
-                    .toggle(data.products.length >= limit);
+            nextPageUrl,
+            (data) => {
+                console.log(data);
+                console.log(data.products);
+
+                const result = renderProducts(data.products); // Adjust for the `data` field in Laravel's paginated response
+                document.querySelector(".all-products").insertAdjacentHTML("beforeend", result);
+
+                // Update the "next page" URL or hide the button if no more pages
+                if (data.next_page_url) {
+                    this.setAttribute("data-next-page-url", data.next_page_url);
+                } else {
+                    this.style.display = "none";
+                }
             },
-            function (xhr, status, error) {
+            (error) => {
                 console.error("Error fetching products:", error);
             }
         );
