@@ -30,8 +30,6 @@ trait TransformProductTrait
 
     private function setProductNames(&$product, $limit)
     {
-        Log::info('Generic Name Before:', ['name' => optional($product->generic)->name]);
-
         $product->attr_title = Str::ucfirst(Str::title($product->name));
         $product->name = Str::limit(Str::ucfirst(Str::lower($product->name . ($product->strength_info))), $limit, '..');
         optional($product->pro_cat)->name = Str::limit(Str::title(optional($product->pro_cat)->name), $limit, '..');
@@ -39,8 +37,6 @@ trait TransformProductTrait
         optional($product->generic)->name = Str::limit(Str::title(optional($product->generic)->name), $limit, '..');
         optional($product->strength)->name = Str::limit(Str::title(optional($product->strength)->name), $limit, '..');
         optional($product->company)->name = Str::limit(Str::title(optional($product->company)->name), $limit, '..');
-
-        Log::info('Generic Name After:', ['name' => Str::limit(Str::title(optional($product->generic)->name), $limit, '..')]);
     }
 
     private function setDiscountInformation(&$product)
