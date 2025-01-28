@@ -49,9 +49,7 @@
                                                         @foreach ($sub_cats as $sub_cat)
                                                             <li
                                                                 class="sub_cat_item {{ $key == 0 ? 'uk-slide-active active' : '' }}">
-                                                                <a href="javascript:void(0)" class="sub_cat_link"
-                                                                    data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
-                                                                    data-sub_cat_slug="{{ $sub_cat->slug }}">
+                                                                <a href="{{ request()->fullUrlWithQuery(['sub_category' => $sub_cat->slug]) }}" class="">
                                                                     <div
                                                                         class="card {{ isset($sub_category) && $sub_category->id == $sub_cat->id ? ' active' : '' }}">
                                                                         <img class="sub_cat_img"
@@ -59,7 +57,7 @@
                                                                             alt="{{ $sub_cat->name }}">
                                                                         <div class="category_name"
                                                                             title="{{ $sub_cat->pro_cat->name }}">
-                                                                            <h3>{{ str_limit($sub_cat->pro_cat->name, 12, '..') }}
+                                                                            <h3>{{ str_limit(optional($sub_cat->pro_cat)->name ?? $sub_cat->pro_cat->name, 12, '..') }}
                                                                             </h3>
                                                                         </div>
                                                                         <div class="sub_category_name"
@@ -119,12 +117,12 @@
                                                     </h3>
                                                 </a>
                                             </div>
-                                            <p><a href="" title="{{ $product->pro_sub_cat->name }}">{{ $product->pro_sub_cat->name }}</a></p>
-                                            <p><a href="generic-name" class="generic-name" title="{{ $product->generic->name }}">
-                                                {{ $product->generic->name }}
+                                            <p><a href="" title="{{ optional($product->pro_sub_cat)->name }}">{{ optional($product->pro_sub_cat)->name }}</a></p>
+                                            <p><a href="generic-name" class="generic-name" title="{{ optional($product->generic)->name }}">
+                                                {{ optional($product->generic)->name }}
                                             </a></p>
-                                            <p><a href="" class="company-name" title="{{ $product->company->name }}">
-                                                {{ $product->company->name }}
+                                            <p><a href="" class="company-name" title="{{ optional($product->company)->name }}">
+                                                {{ optional($product->company)->name }}
                                             </a></p>
                                             <h4> <span> {!! get_taka_icon() !!} {{ number_format($proDisPrice, 2) }}</span>
                                                 @if ($proDisPrice != $product->price)
@@ -140,7 +138,7 @@
                                                     <span class="d-block d-xl-none">Add To Cart</span>
                                                 </a>
                                             </div>
-                                            
+
                                         </div>
 
                                     </div>
@@ -150,9 +148,8 @@
                         @if (count($products) > 5)
                             <div class="row show-more mt-2 mt-lg-5">
                                 <a class="all-pdct-btn text-center more"
-                                    data-cat_slug="{{ isset($category) ? $category->slug : 'all' }}"
-                                    data-sub_cat_slug="{{ isset($sub_category) ? $sub_category->slug : '' }}"
-                                    data-offset="6" href="javascript:void(0)">{{ __('SEE MORE') }}</a>
+                                    data-total="{{ $products->total() }}" data-pages="{{ $products->lastPage() }}"
+                                    data-next-page-url="{{ $products->nextPageUrl() }}" href="javascript:void(0)">{{ __('SEE MORE') }}</a>
                             </div>
                         @endif
                     </div>
