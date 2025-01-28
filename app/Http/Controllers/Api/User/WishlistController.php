@@ -17,13 +17,18 @@ class WishlistController extends BaseController
     {
         $user = $request->user();
         $filter_val = $request->filter ?? 7;
-        $query = WishList::activated()->where('user_id', $user->id)->with([
-            'product.pro_sub_cat',
-            'product.generic',
-            'product.company',
-            'product.strength',
-            'product.discounts',
+        $query = WishList::select('id','user_id', 'product_id', 'status')
+        ->activated()->where('user_id', $user->id)->with([
+            'product:id,name,image,slug,status,pro_cat_id,pro_sub_cat_id,company_id,generic_id,strength_id,dose_id,price,description,image,prescription_required,kyc_required,max_quantity,created_at,status,is_best_selling',
+            'product.pro_cat:id,name,slug,status',
+            'product.pro_sub_cat:id,name,slug,status',
+            'product.generic:id,name,slug,status',
+            'product.company:id,name,slug,status',
+            'product.strength:id,name,status',
+            'product.discounts:id,pro_id,unit_id,discount_amount,discount_percentage,status',
+            'product.dosage:id,name,slug,status',
             'product.units' => function ($q) {
+                $q->select('medicine_units.id', 'medicine_units.name', 'medicine_units.quantity', 'medicine_units.image', 'medicine_units.status');
                 $q->orderBy('quantity', 'asc');
             }
         ])->orderBy('updated_at', 'asc');
