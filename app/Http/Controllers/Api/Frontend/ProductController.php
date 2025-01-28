@@ -22,21 +22,25 @@ class ProductController extends BaseController
     public function product(Request $request): JsonResponse
     {
         if ($request->has('slug') && !empty($request->slug)) {
-            $sp = Medicine::with([
-                'pro_cat',
-                'pro_sub_cat',
-                'generic',
-                'company',
-                'strength',
-                'dosage',
-                'discounts',
-                'reviews.customer',
+            $sp = Medicine::select(['medicines.id', 'medicines.name', 'medicines.slug', 'medicines.pro_cat_id', 'medicines.pro_sub_cat_id', 'medicines.company_id', 'medicines.generic_id', 'medicines.strength_id', 'medicines.dose_id', 'medicines.price', 'medicines.description', 'medicines.image', 'medicines.prescription_required', 'medicines.kyc_required', 'medicines.max_quantity', 'medicines.created_at', 'medicines.status', 'medicines.is_best_selling'])
+            ->with([
+                'pro_cat:id,name,slug,status',
+                'pro_sub_cat:id,name,slug,status',
+                'generic:id,name,slug,status',
+                'company:id,name,slug,status',
+                'strength:id,name,status',
+                'dosage:id,name,slug,status',
+                'discounts:id,pro_id,unit_id,discount_amount,discount_percentage,status',
+                'reviews:id,product_id,customer_id,description,status',
+                'reviews.customer:id,name,status',
                 'wish' => function ($query) {
+                    $query->select('wishlists.id', 'wishlists.product_id', 'wishlists.user_id', 'wishlists.status');
                     if (auth()->guard('api-user')->check()) {
                         $query->where('user_id', auth()->guard('api-user')->user()->id)->where('status', 1);
                     }
                 },
                 'units' => function ($q) {
+                    $q->select('medicine_units.id', 'medicine_units.name', 'medicine_units.quantity', 'medicine_units.image', 'medicine_units.status');
                     $q->orderBy('quantity', 'asc');
                 }
             ])->activated()->where('slug', $request->slug)->first();
@@ -47,23 +51,19 @@ class ProductController extends BaseController
             }
             $sp = $this->transformProduct($sp, 100);
 
-            $simps = Medicine::with([
-                'pro_cat',
-                'pro_sub_cat',
-                'generic',
-                'company',
-                'strength',
-                'dosage',
-                'discounts',
-                'reviews.customer',
-                'units' => function ($q) {
-                    $q->orderBy('quantity', 'asc');
-                }
+            $simps = Medicine::select(['medicines.id', 'medicines.name', 'medicines.slug', 'medicines.pro_cat_id', 'medicines.pro_sub_cat_id', 'medicines.company_id', 'medicines.generic_id', 'medicines.strength_id', 'medicines.dose_id', 'medicines.price', 'medicines.description', 'medicines.image', 'medicines.prescription_required', 'medicines.kyc_required', 'medicines.max_quantity', 'medicines.created_at', 'medicines.status', 'medicines.is_best_selling'])
+            ->with([
+                'pro_cat:id,name,slug,status',
+                'pro_sub_cat:id,name,slug,status',
+                'generic:id,name,slug,status',
+                'company:id,name,slug,status',
+                'strength:id,name,status',
+                'dosage:id,name,slug,status',
+                'discounts:id,pro_id,unit_id,discount_amount,discount_percentage,status',
             ])->activated()->where('generic_id', $sp->generic_id)
                 ->where('id', '!=', $sp->id)
-                ->latest()
+                ->orderBy('price', 'asc')
                 ->get()
-                ->shuffle()
                 ->each(function (&$product) {
                     $product = $this->transformProduct($product, 26);
                 });
@@ -80,7 +80,8 @@ class ProductController extends BaseController
     }
     public function products(Request $request): JsonResponse
     {
-        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units','strength', 'dosage','reviews.customer'])->activated();
+        $query = Medicine::select(['medicines.id', 'medicines.name', 'medicines.slug', 'medicines.pro_cat_id', 'medicines.pro_sub_cat_id', 'medicines.company_id', 'medicines.generic_id', 'medicines.strength_id', 'medicines.dose_id', 'medicines.price', 'medicines.description', 'medicines.image', 'medicines.prescription_required', 'medicines.kyc_required', 'medicines.max_quantity', 'medicines.created_at', 'medicines.status', 'medicines.is_best_selling'])
+        ->with(['company:id,name,slug,status', 'generic:id,name,slug,status', 'pro_cat:id,name,slug,status', 'pro_sub_cat:id,name,slug,status', 'discounts:id,pro_id,unit_id,discount_amount,discount_percentage,status', 'units:id,name,quantity,image,status','strength:id,name,status', 'dosage:id,name,slug,status'])->activated();
 
         //By Category
         if ($request->has('category') && $request->category !== 'all') {

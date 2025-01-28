@@ -21,10 +21,9 @@ class AddressRequest extends BaseRequest
      */
     public function rules(): array
     {
-        return [
-
-            'latitude' => 'required|string',
-            'longitude' => 'required|string',
+        $rules = [
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'street_address' => 'required|string|max:255',
@@ -33,5 +32,11 @@ class AddressRequest extends BaseRequest
             'delivery_instruction' => 'nullable|string|max:1000',
             'note' => 'nullable|string|max:1000',
         ];
+
+        if (request()->has('address_id')) {
+            $rules['address_id'] = 'required|exists:addresses,id';
+        }
+
+        return $rules;
     }
 }
