@@ -3,6 +3,8 @@
 namespace App\Http\Requests\API\Frontend;
 
 use App\Http\Requests\API\BaseRequest;
+use App\Rules\CartBelongsToUserRule;
+use App\Rules\CartMedicineUnitRule;
 
 class CartUpdateRequest extends BaseRequest
 {
@@ -22,8 +24,8 @@ class CartUpdateRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'cart_id' => 'required|exists:add_to_carts,id',
-            'unit_id' => 'nullable|exists:medicine_units,id',
+            'cart_id' => ['required','exists:add_to_carts,id',new CartBelongsToUserRule($this->user())],
+            'unit_id' => ['nullable','exists:medicine_units,id', new CartMedicineUnitRule($this->input('cart_id'))],
             'quantity' => 'nullable|numeric'
         ];
     }
