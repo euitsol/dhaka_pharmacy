@@ -28,6 +28,7 @@ class ProductController extends BaseController
                 'generic',
                 'company',
                 'strength',
+                'dosage',
                 'discounts',
                 'reviews.customer',
                 'wish' => function ($query) {
@@ -52,6 +53,7 @@ class ProductController extends BaseController
                 'generic',
                 'company',
                 'strength',
+                'dosage',
                 'discounts',
                 'reviews.customer',
                 'units' => function ($q) {
@@ -78,7 +80,7 @@ class ProductController extends BaseController
     }
     public function products(Request $request): JsonResponse
     {
-        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units', 'reviews.customer'])->activated();
+        $query = Medicine::with(['company', 'generic', 'pro_cat', 'pro_sub_cat', 'discounts', 'units','strength', 'dosage','reviews.customer'])->activated();
 
         //By Category
         if ($request->has('category') && $request->category !== 'all') {
