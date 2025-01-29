@@ -400,18 +400,26 @@
                                                         </h3>
                                                     </a>
                                                 </div>
-                                                <p><a href="" title="{{ optional($product->pro_sub_cat)->name }}">
-                                                        {{ optional($product->pro_sub_cat)->name }}
-                                                    </a></p>
-                                                <p><a href="#" class="generic-name"
-                                                        title="{{ optional($product->generic)->name }}">
-                                                        {{ optional($product->generic)->name }}
-                                                    </a></p>
-                                                <p><a href="#" class="company-name"
-                                                        title="{{ optional($product->company)->name }}">
-                                                        {{ optional($product->company)->name }}
-                                                    </a></p>
+                                                <div class="all-product-containt">
+                                                    <p>
+                                                        <a href="" title="{{ optional($product->pro_sub_cat)->name }}">
+                                                            {{ optional($product->pro_sub_cat)->name }}
+                                                        </a>
+                                                    </p>
+                                                    <p>
+                                                        <a href="#" class="generic-name"
+                                                            title="{{ optional($product->generic)->name }}">
+                                                            {{ optional($product->generic)->name }}
+                                                        </a>
+                                                    </p>
+                                                    <p>
+                                                        <a href="#" class="company-name"
+                                                            title="{{ optional($product->company)->name }}">
+                                                            {{ optional($product->company)->name }}
+                                                        </a>
+                                                    </p>
 
+                                                </div>
                                                 <h4> <span> {!! get_taka_icon() !!}
                                                         {{ number_format($similarProDisPrice, 2) }}</span>
                                                     @if ($similarProDisPrice != $product->price)
@@ -469,7 +477,7 @@
 @endpush
 @push('js')
 <script>
-    let errors = {!! json_encode($errors->all()) !!};
+    let errors = "{!! json_encode($errors->all()) !!}";
         if (errors.length > 0) {
             errors.forEach(function(error) {
                 toastr.error(error);

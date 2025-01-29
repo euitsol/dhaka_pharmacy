@@ -1,3 +1,14 @@
+.product_content .product_price .quantity_input {
+    border-style: solid;
+    border-width: 1px 0;
+    border-color: var(--border-1);
+    outline: none; 
+}
+
+.product_content .product_price .quantity_input:focus {
+    border-color: #79b241; 
+}
+
 .product_content .product_price .boxed label {
     display: inline-block;
     width: 60px;
@@ -20,7 +31,7 @@
     object-fit: contain;
 }
 .product_content .sp_quantity a {
-    background-color: var(--nav-asent-color);
+    background: var(--btn-bg-color);
     color: var(--nav-text-color);
     line-height: 2;
     display: inline-block !important;
