@@ -12,7 +12,7 @@ header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 .header-section .main-header .logo a {
-    height: 65px !important;
+    height: 3.5rem;
     display: block;
 }
 .header-section .main-header .logo a img {

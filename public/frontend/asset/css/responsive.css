@@ -1248,6 +1248,9 @@
         font-size: 10px;
         line-height: 12px;
     }
+    .header-section .main-header .logo a {
+        height: 3rem;
+    }
 }
 @media screen and (max-width: 640px) {
     /*============================================
@@ -1343,7 +1346,9 @@
         width: inherit;
         padding: 5px !important;
     }
-
+    .header-section .main-header .logo a {
+        height: 2.5rem;
+    }
     /* ===============================================
         product,about section responsive code
     ================================================*/
