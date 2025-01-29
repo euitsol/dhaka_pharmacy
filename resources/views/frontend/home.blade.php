@@ -2,12 +2,6 @@
 @section('title', 'Home')
 @section('content')
 <div class="row pt-3 pt-lg-4">
-    <!--===========  Sidebar-Category-Section-Include ==============-->
-    <!-- <div class="col-3 col-xxl-2 col-12 col-lg-3 d-none d-lg-block home-cat-sidebar">
-                    @if ($menuItems->isNotEmpty())
-    @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
-    @endif
-                </div> -->
 
     <!--=========== slider-section-include ==============-->
     <div class="d-block d-lg-none">
@@ -32,18 +26,6 @@
         </div>
         <!--========= Slider-Section-Include ========-->
 
-        <!--========= Slider-Section-Include ========-->
-        <!-- @include('frontend.includes.home.slider') -->
-        <!--========= Slider-Section-Include ========-->
-
-
-        <!--===========  Sidebar-Category-Section-Include ==============-->
-        <!-- <div class="d-block d-lg-none">
-                    @if ($menuItems->isNotEmpty())
-    @include('frontend.includes.home.sidebar', ['menuItems' => $menuItems])
-    @endif
-                </div> -->
-        <!--=========== Sidebar-Category-Section-Include  ==============-->
 
 
         <!--========= Product-Section-Start ========-->
@@ -61,50 +43,49 @@
                                     <div class="single-item">
                                         <div class=" row align-items-center">
                                             {{-- <div class=""> --}}
-                                                <div class="col-12 px-xxl-2 col-xxl-4 img">
-                                                    <a href="{{ route('product.single_product', $item->slug) }}">
-                                                        <img height="90"
-                                                            class="w-100 border border-1 rounded-1 lg-rounded-0"
-                                                            src="{{ $item->image }}" alt="{{ $item->name }}">
-                                                    </a>
-                                                </div>
-                                                <div class="col-12 px-xxl-1 col-xxl-8">
-                                                    <div class="bst-product-content mt-xl-2 mt-lg-2 mt-xxl-0">
-                                                        <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
-                                                                href="{{ route('product.single_product', $item->slug) }}">{{
+                                            <div class="col-12 px-xxl-2 col-xxl-4 img">
+                                                <a href="{{ route('product.single_product', $item->slug) }}">
+                                                    <img height="90"
+                                                        class="w-100 border border-1 rounded-1 lg-rounded-0"
+                                                        src="{{ $item->image }}" alt="{{ $item->name }}">
+                                                </a>
+                                            </div>
+                                            <div class="col-12 px-xxl-1 col-xxl-8">
+                                                <div class="bst-product-content mt-xl-2 mt-lg-2 mt-xxl-0">
+                                                    <h3 class="pdct-title" title="{{ $item->attr_title }}"><a
+                                                            href="{{ route('product.single_product', $item->slug) }}">{{
                                                                 $item->name }}</a>
-                                                        </h3>
-                                                        <p class="d-block d-xl-none"><a href=""
-                                                                title="{{ optional($item->pro_sub_cat)->name }}">
-                                                                {{ optional($item->pro_sub_cat)->name }}
-                                                            </a></p>
-                                                        <p><a href="" title="{{ optional($item->generic)->name }}">
-                                                                {{ optional($item->generic)->name }}
-                                                            </a></p>
-                                                        <p><a href="" title="{{ optional($item->company)->name }}">
-                                                                {{ optional($item->company)->name }}
-                                                            </a></p>
-                                                        <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                                {{ number_format($item->discounted_price, 2) }}</span>
-                                                            @if ($item->discounted_price != $item->price)
-                                                            <span class="regular_price">
-                                                                <del>{!! get_taka_icon() !!}
-                                                                    {{ number_format($item->price, 2) }}</del></span>
-                                                            @endif
-                                                        </h4>
+                                                    </h3>
+                                                    <p class="d-block d-xl-none"><a href=""
+                                                            title="{{ optional($item->pro_sub_cat)->name }}">
+                                                            {{ optional($item->pro_sub_cat)->name }}
+                                                        </a></p>
+                                                    <p><a href="" title="{{ optional($item->generic)->name }}">
+                                                            {{ optional($item->generic)->name }}
+                                                        </a></p>
+                                                    <p><a href="" title="{{ optional($item->company)->name }}">
+                                                            {{ optional($item->company)->name }}
+                                                        </a></p>
+                                                    <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
+                                                            {{ number_format($item->discounted_price, 2) }}</span>
+                                                        @if ($item->discounted_price != $item->price)
+                                                        <span class="regular_price">
+                                                            <del>{!! get_taka_icon() !!}
+                                                                {{ number_format($item->price, 2) }}</del></span>
+                                                        @endif
+                                                    </h4>
 
-                                                        <!-- add to cart button -->
-                                                        <div class="add_to_card d-block d-xl-none mt-2">
-                                                            <a class="cart-btn" data-product_slug="{{ $item->slug }}"
-                                                                data-unit_id="" href="javascript:void(0)">
-                                                                <i class="fa-solid fa-cart-plus"></i>
-                                                                <span class="d-block d-xl-none">Add To Cart</span>
-                                                            </a>
-                                                        </div>
+                                                    <!-- add to cart button -->
+                                                    <div class="add_to_card d-block d-xl-none mt-2">
+                                                        <a class="cart-btn" data-product_slug="{{ $item->slug }}"
+                                                            data-unit_id="" href="javascript:void(0)">
+                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                            <span class="d-block d-xl-none">Add To Cart</span>
+                                                        </a>
                                                     </div>
-
                                                 </div>
-                                                {{--
+                                            </div>
+                                            {{--
                                             </div> --}}
                                         </div>
                                     </div>
@@ -127,8 +108,7 @@
                             <div class="slider-col" uk-slider="finite: true">
                                 <div class="uk-position-relative">
                                     <div class="uk-slider-container uk-light">
-                                        <ul
-                                            class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
+                                        <ul class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
                                             <li
                                                 class=" active d-flex align-content-center justify-content-center m-auto ">
                                                 <a href="javascript:void(0)" class="featured_category"
@@ -141,22 +121,23 @@
                                             </li>
                                             @endforeach
                                         </ul>
+
+
                                     </div>
 
-                                    <div class="uk-hidden@s uk-light btn-arrow">
+                                    <div class="uk-light btn-arrow">
                                         <a class="uk-position-center-left uk-position-small" href uk-slidenav-previous
                                             uk-slider-item="previous"></a>
                                         <a class="uk-position-center-right uk-position-small" href uk-slidenav-next
                                             uk-slider-item="next"></a>
                                     </div>
 
-                                    <div class="uk-visible@s
-btn-arrow">
+                                    <!-- <div class="uk-visible@sbtn-arrow">
                                         <a class="uk-position-center-left-out uk-position-small" href
                                             uk-slidenav-previous uk-slider-item="previous"></a>
                                         <a class="uk-position-center-right-out uk-position-small" href uk-slidenav-next
                                             uk-slider-item="next"></a>
-                                    </div>
+                                    </div> -->
 
                                 </div>
                             </div>
@@ -184,15 +165,27 @@ btn-arrow">
                                             </h3>
                                         </a>
                                     </div>
-                                    <p><a href="" title="{{ optional($product->pro_sub_cat)->name }}">
-                                            {{ optional($product->pro_sub_cat)->name }}
-                                        </a></p>
-                                    <p><a href="#" class="generic-name" title="{{ optional($product->generic)->name }}">
-                                            {{ optional($product->generic)->name }}
-                                        </a></p>
-                                    <p><a href="#" class="company-name" title="{{ optional($product->company)->name }}">
-                                            {{ optional($product->company)->name }}
-                                        </a></p>
+
+                                    <div class="all-product-containt">
+                                        <p>
+                                            <a href="" title="{{ optional($product->pro_sub_cat)->name }}">
+                                                {{ optional($product->pro_sub_cat)->name }}
+                                            </a>
+                                        </p>
+                                        <p>
+                                            <a href="#" class="generic-name"
+                                                title="{{ optional($product->generic)->name }}">
+                                                {{ optional($product->generic)->name }}
+                                            </a>
+                                        </p>
+                                        <p>
+                                            <a href="#" class="company-name"
+                                                title="{{ optional($product->company)->name }}">
+                                                {{ optional($product->company)->name }}
+                                            </a>
+                                        </p>
+                                    </div>
+
                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
                                             {{ number_format($product->discounted_price, 2) }}</span>
                                         @if ($product->discounted_price != $product->price)
@@ -277,12 +270,12 @@ btn-arrow">
 @endsection
 @push('js')
 <script>
-    const datas = {
-            'featured_products': `{{ route('home.featured_products', ['category' => 'slug']) }}`,
-            'all_products': `{{ route('category.products', ['category' => 'slug']) }}`,
-            'single_product': `{{ route('product.single_product', ['slug']) }}`,
-        };
-        const taka_icon = `{!! get_taka_icon() !!}`;
+const datas = {
+    'featured_products': `{{ route('home.featured_products', ['category' => 'slug']) }}`,
+    'all_products': `{{ route('category.products', ['category' => 'slug']) }}`,
+    'single_product': `{{ route('product.single_product', ['slug']) }}`,
+};
+const taka_icon = `{!! get_taka_icon() !!}`;
 </script>
 <script src="{{ asset('frontend/asset/js/home.js') }}"></script>
 @endpush

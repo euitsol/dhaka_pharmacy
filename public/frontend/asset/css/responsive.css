@@ -174,13 +174,13 @@
         width: 54% !important;
     }
     .add_to_card .cart-btn {
-        border: 1px solid var(--secundary-color) !important;
+        border: 1px solid var(--border-2) !important;
         display: flex;
         justify-content: center;
         align-items: center;
     }
     .order_button .order-btn {
-        border: 1px solid var(--secundary-color) !important;
+        border: 1px solid var(--border-2) !important;
     }
 
     /*================================================
@@ -215,6 +215,9 @@
         object-fit: contain; */
         padding: 0px !important;
     }
+    .product-section .feature-product .cat-filter-row .slider-col {
+        margin-right: 0px;
+    }
     .product-section
         .best-selling-col
         .best-selling-products
@@ -247,7 +250,11 @@
     .best-selling-products .bst-product-content {
         padding: 10px;
     }
-
+    .product-section .align-items-baseline .feature-product .slider-col .uk-position-small {
+        margin: 0px -12px 0px 0px;
+        top: 16px;
+        margin-left: 0px;
+    }
     /*===================================================
        cart button design css code here
     =====================================================*/
@@ -267,13 +274,14 @@
         overflow: visible !important;
     }
     .add_to_card .cart-btn {
-        border: 1px solid var(--secundary-color) !important;
+        border: 1px solid var(--border-2) !important;
         font-size: 12px !important;
         width: 100% !important;
         /* padding: 12px !important; */
         display: flex !important;
         background: transparent !important;
         align-items: center !important;
+        color: var(--border-1) !important;
     }
     .add_to_card .cart-btn span {
         font-size: 14px !important;
@@ -371,13 +379,9 @@
     .product-section .feature-product .cat-filter-row .slider-col {
         margin-right: 0px;
     }
-    .product-section
-        .align-items-baseline
-        .feature-product
-        .slider-col
-        .uk-position-small {
-        /* margin: 0px 19px 0px 0px; */
-        /* top: 16px; */
+    .product-section .align-items-baseline .feature-product .slider-col .uk-position-small {
+        margin: 0px 19px 0px 0px;
+        top: 16px;
         margin-left: -28px;
     }
     .sidebar-cat-section .single-cat:nth-child(2n + 1) {
@@ -566,6 +570,9 @@
     .footer-section .socket-row {
         padding-bottom: 120px !important;
     }
+    .footer-section .main-footer-row .footer-nav li a{
+        margin-bottom: 0px !important;
+    }
 
     /*==============================================
        contact page responsive code here
@@ -597,7 +604,7 @@
         position: fixed;
         bottom: 95px;
         right: 20px;
-        z-index: 9999;
+        z-index: 999;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -823,6 +830,9 @@
         border-radius: 5px;
         height: 50px !important;
         padding-right: 20px !important;
+        /* padding-left: 60px !important; */
+    }
+    .log-with-pass .left-col form .phone{
         padding-left: 60px !important;
     }
     .log-with-pass .left-col form .register_button.submit_button {
@@ -892,7 +902,7 @@
         bottom: 0;
         box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
         z-index: 9999;
-        background-color: var(--info-bg);
+        background: var(--secondary-color);
     }
     .mobile-footer .main-mobile-col {
         text-align: center;
@@ -905,7 +915,7 @@
     }
     .mobile-footer .row .col {
         box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-        background: #2d98daa6;
+        background: var(--btn-bg-color);
         border-radius: 5px;
         padding: 0px !important;
     }
@@ -1258,7 +1268,7 @@
         left: 95%;
     }
     .breadcrumb_wrap .breadcrumb.wizard li a {
-        padding: 7px 6px 9px 32px;
+        padding: 7px 6px 9px 38px;
     }
 
     /* product section sub category uk left right arrow slider responsive code  */
