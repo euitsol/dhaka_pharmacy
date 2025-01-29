@@ -15,14 +15,8 @@ class UserController extends BaseController
 {
     public function info(Request $request): JsonResponse
     {
-        $user = $request->user();
-
-        if ($user) {
-            $user->image = auth_storage_url($user->image, $user->gender);
-            return sendResponse(true, 'User information retrived successfully', $user);
-        } else {
-            return sendResponse(false, 'User is invalid', null);
-        }
+        $user = $request->user()->only(['id', 'name', 'email', 'phone', 'image', 'bio', 'status', 'kyc_status', 'age', 'dob', 'gender', 'is_verify']);
+        return sendResponse(true, 'User information retrived successfully', $user);
     }
     public function update(UserRequest $request): JsonResponse
     {
@@ -40,10 +34,6 @@ class UserController extends BaseController
             }
             if (isset($request->bio)) {
                 $user->bio = $request->bio;
-            }
-
-            if (isset($request->designation)) {
-                $user->designation = $request->designation;
             }
             if (isset($request->email)) {
                 $user->email = $request->email;

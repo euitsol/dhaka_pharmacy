@@ -19,7 +19,7 @@ class LoginRequest extends BaseRequest
     {
         return [
             'phone' => 'required|string|exists:users,phone',
-            'password' => 'required'
+            'password' => 'required|min:4'
         ];
     }
 }

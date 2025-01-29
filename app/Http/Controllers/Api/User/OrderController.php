@@ -83,7 +83,6 @@ class OrderController extends BaseController
             'products.pro_sub_cat',
             'products.units',
             'products.discounts',
-            'products.pivot.unit',
             'products.company',
             'products.generic',
             'products.strength'

@@ -54,7 +54,7 @@ class Medicine extends BaseModel
     }
     public function units()
     {
-        return $this->belongsToMany(MedicineUnit::class, 'medicine_unit_bkdns', 'medicine_id', 'unit_id');
+        return $this->belongsToMany(MedicineUnit::class, 'medicine_unit_bkdns', 'medicine_id', 'unit_id')->withPivot('price');
     }
     public function strength()
     {

@@ -7,6 +7,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\API\BaseRequest;
+use App\Rules\CartBelongsToUserRule;
 
 class CartDeleteRequest extends BaseRequest
 {
@@ -27,7 +28,7 @@ class CartDeleteRequest extends BaseRequest
     {
         return [
             'carts' => 'required|array',
-            'carts.*' => 'required|integer|exists:add_to_carts,id',
+            'carts.*' => ['required','integer','exists:add_to_carts,id',new CartBelongsToUserRule($this->user())],
         ];
     }
 }
