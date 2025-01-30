@@ -143,7 +143,7 @@ return [
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
             Medicine::class => [
-                'filterableAttributes'=> ['id', 'name', 'category_id'],
+                'filterableAttributes'=> ['id', 'name', 'category_id', 'slug', 'price', 'status', 'best_selling', 'featured', 'units', 'dose'],
             ],
         ],
     ],

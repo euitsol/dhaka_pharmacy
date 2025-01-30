@@ -141,12 +141,17 @@ class Medicine extends BaseModel
             'company_name' => optional($this->company)->name,
             'company_slug' => optional($this->company)->slug,
             'strength' => optional($this->strength)->name,
-            'category' => optional($this->pro_cat)->name,
             'category_id' => optional($this->pro_cat)->id,
-            'sub_category' => optional($this->pro_sub_cat)->name,
+            'category' => optional($this->pro_cat)->name,
             'sub_category_id' => optional($this->pro_sub_cat)->id,
+            'sub_category' => optional($this->pro_sub_cat)->name,
             'price' => $this->price,
             'status' => $this->status,
+            'best_selling' => $this->is_best_selling ? 'Bestselling' : 'No',
+            'featured' => $this->is_featured ? 'Featured' : 'No',
+            'image' => $this->image ? storage_url($this->image) : null,
+            'units' => $this->units->pluck('name')->toArray(),
+            'dose' => optional($this->dosage)->name,
         ];
     }
 
