@@ -1349,6 +1349,10 @@
     .header-section .main-header .logo a {
         height: 2.5rem;
     }
+    .header-section .right-col .wish-btn span{
+        display: none;
+        
+    }
     /* ===============================================
         product,about section responsive code
     ================================================*/

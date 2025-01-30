@@ -22,7 +22,7 @@ $(document).ready(function () {
 const editors = [];
 function initializeCKEditor(textAreas) {
     textAreas.each((index, textArea) => {
-        $(textArea).attr("data-index", index);
+        $(textArea).attr("data-index", index ?? 0);
         const currentConfig = { ...CkEditorConfig };
         currentConfig.initialData = textArea.value;
 
