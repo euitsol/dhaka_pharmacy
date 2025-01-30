@@ -133,7 +133,7 @@
         // Update
         $(document).ready(function() {
             $('#updateEmailTemplate').click(function() {
-                let template_value = editors[$('#template').attr('data-index', 0)].getData();
+                let template_value = editors[$('#template').attr('data-index')].getData();
                 var form = $('#emailTemplateForm');
                 let id = $(this).data('id');
                 let _url = ("{{ route('settings.email_templates.site_settings', ['id']) }}");
