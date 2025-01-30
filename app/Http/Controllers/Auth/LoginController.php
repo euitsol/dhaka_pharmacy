@@ -89,6 +89,7 @@ class LoginController extends Controller
 
     public function facebookCallback()
     {
+        Log::info(Socialite::driver('facebook')->user());
         try {
             $facebookUser = Socialite::driver('facebook')->user();
         } catch (Exception $e) {
@@ -115,7 +116,7 @@ class LoginController extends Controller
 
     public function fb_delete(Request $request)
     {
-
+        
         $accessToken = $request->input('access_token');
 
         // Validate access token with Facebook API
