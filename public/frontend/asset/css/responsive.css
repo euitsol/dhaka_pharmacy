@@ -830,7 +830,7 @@
         border-radius: 5px;
         height: 50px !important;
         padding-right: 20px !important;
-        /* padding-left: 60px !important; */
+        padding-left: 60px !important;
     }
     .log-with-pass .left-col form .phone{
         padding-left: 60px !important;
@@ -842,7 +842,7 @@
         left: 25px !important;
     }
     .log-with-pass .left-col form input[type="submit"] {
-        padding: none !important;
+        padding: 0px !important;
     }
     .log-with-pass .left-col form .otp_button {
         height: 50px !important;
@@ -1251,6 +1251,11 @@
     .header-section .main-header .logo a {
         height: 3rem;
     }
+    .faq-section .nav-pills .nav-item button.active{
+        color: var(--text-color-white) !important;
+        padding: 0px 10px !important;
+        background-color: var(--btn-bg-color) !important;
+    }
 }
 @media screen and (max-width: 640px) {
     /*============================================
@@ -1351,7 +1356,7 @@
     }
     .header-section .right-col .wish-btn span{
         display: none;
-        
+
     }
     /* ===============================================
         product,about section responsive code

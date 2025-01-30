@@ -36,6 +36,7 @@
     /* btn color */
     /* --secondary-bg: #1869aa; */
     --btn-bg-color: #1869aa;
+    --btn-bg-2: #1869aa;
     --border-1: #1869aa;
     --border-2:  #46b7e3;
 
@@ -1497,25 +1498,25 @@ a {
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li.active a {
-    background: var(--btn-bg-color);
+    background: var(--btn-bg-color) !important;
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li.completed a {
     /* background: var(--primary-bg); */
-    background: var(--secondary-color) !important;
+    background: var(--btn-bg-color) !important;
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li.active a:after {
-    border-left: 30px solid var(--secondary-color);
+    border-left: 30px solid var(--btn-bg-color);
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li.completed a:after {
-    border-left: 30px solid var(--border-2);
+    border-left: 30px solid var(--border-1);
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li a {
     color: var(--text-color-white);
-    background: var(--secondary-color) !important;
+    background: var(--btn-bg-color) !important;
     text-decoration: none;
     padding: 10px 0 10px 45px;
     position: relative;
@@ -1531,7 +1532,7 @@ a {
     height: 0;
     border-top: 50px solid transparent;
     border-bottom: 50px solid transparent;
-    border-left: 30px solid var(--border-2) !important;
+    border-left: 30px solid var(--border-1) !important;
     position: absolute;
     top: 50%;
     margin-top: -50px;
@@ -1546,7 +1547,7 @@ a {
     height: 0;
     border-top: 50px solid transparent;
     border-bottom: 50px solid transparent;
-    border-left: 35px solid var(--btn-bg-color);
+    border-left: 35px solid var(--border-2);
     position: absolute;
     top: 50%;
     margin-top: -50px;
