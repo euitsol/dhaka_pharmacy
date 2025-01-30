@@ -15,4 +15,8 @@ class ContactPageController extends Controller
     {
         return view('frontend.contact');
     }
+
+    public function contact_submit(Request $request): RedirectResponse{
+        return redirect()->route('contact_us');
+    }
 }
