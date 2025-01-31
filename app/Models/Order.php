@@ -9,22 +9,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use App\Observers\OrderModelObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 // #[ObservedBy([OrderModelObserver::class])]
 class Order extends BaseModel
 {
     use HasFactory, SoftDeletes, EagerLoadPivotTrait;
     protected $fillable = [
-        'status',
-        'address_id',
-        'ref_user',
-        'carts',
-        'status',
-        'payment_getway',
         'order_id',
-        'promo_code',
+        'customer_id',
+        'customer_type',
+        'address_id',
+        'voucher_id',
+        'sub_total',
+        'voucher_discount',
         'delivery_fee',
-        'delivery_type',
+        'product_discount',
+        'status'
     ];
 
     public function address()
@@ -59,95 +60,11 @@ class Order extends BaseModel
         }
     }
 
-    public function scopeStatus($query, $status)
-    {
-        // $status = ($status == 'success') ? 2 : (($status == 'pending') ? 1 : (($status == 'initiated') ? 0 : (($status == 'failed') ? -1 : (($status == 'cancel') ? -2 : 3))));
-
-        switch ($status) {
-            case 'canceled':
-                $status = -1;
-                break;
-            case 'initiated':
-                $status = 0;
-                break;
-            case 'submitted':
-                $status = 1;
-                break;
-            case 'processed':
-                $status = 2;
-                break;
-            case 'waiting-for-rider':
-                $status = 3;
-                break;
-            case 'assigned':
-                $status = 4;
-                break;
-            case 'picked-up':
-                return 5;
-                break;
-            case 'delivered':
-                return 6;
-                break;
-            default:
-                return 'Not-defined';
-        }
-        return $query->where('status', $status);
-    }
-
     public function od(): HasOne
     {
         return $this->hasOne(OrderDistribution::class);
     }
 
-
-    public function statusBg()
-    {
-        switch ($this->status) {
-            case -1:
-                return 'badge bg-danger';
-            case 0:
-                return 'badge bg-secondary';
-            case 1:
-                return 'badge bg-info';
-            case 2:
-                return 'badge bg-warning';
-            case 3:
-                return 'badge bg-danger';
-            case 4:
-                return 'badge bg-info';
-            case 5:
-                return 'badge bg-primary';
-            case 6:
-                return 'badge bg-success';
-            default:
-                return 'badge bg-dark';
-        }
-    }
-
-    public function statusTitle()
-    {
-        switch ($this->status) {
-            case -1:
-                return 'Canceled';
-            case 0:
-                return 'Initiated';
-            case 1:
-                return 'Submitted';
-            case 2:
-                return 'Processed';
-            case 3:
-                return 'Waiting-for-rider';
-            case 4:
-                return 'Assigned';
-            case 5:
-                return 'Picked up';
-            case 6:
-                return 'Delivered';
-
-            default:
-                return 'Not-defined';
-        }
-    }
     public function orderType()
     {
         return $this->obp_id != null ? 'Order By Prescription' : 'Manual Order';
@@ -155,9 +72,15 @@ class Order extends BaseModel
 
     public function products()
     {
+        // return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
+        //     ->using(OrderProduct::class)
+        //     ->withPivot('id', 'unit_id', 'quantity', 'unit_price','unit_discount', 'total_price', 'status');
+
+
         return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
-            ->using(OrderProduct::class)
-            ->withPivot('id', 'unit_id', 'quantity');
+        ->using(OrderProduct::class)
+        ->withPivot('id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status', 'medicine_units.name as pivot_unit_name', 'medicine_units.image as pivot_unit_image', 'medicine_units.status as pivot_unit_status')
+        ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id');
     }
 
     public function scopeInitiated($query)
@@ -171,16 +94,15 @@ class Order extends BaseModel
             ->where('creater_id', user()->id);
     }
 
-    /**
-     * Scope to filter orders where at least one payment is paid.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function scopePaid($query)
     {
         return $query->whereHas('payments', function ($subQuery) {
             $subQuery->where('status', 1)->orWhere('payment_method', 'cod');
         });
+    }
+
+    public function voucher():BelongsTo
+    {
+        return $this->belongsTo(Voucher::class);
     }
 }

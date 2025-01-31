@@ -197,8 +197,8 @@ function unit_image($url)
 }
 function timeFormate($time)
 {
-    $dateFormat = env('DATE_FORMAT', 'd-M-Y');
-    $timeFormat = env('TIME_FORMAT', 'H:i A');
+    $dateFormat = config('datetime.date_format');
+    $timeFormat = config('datetime.time_format');
     return date($dateFormat . " " . $timeFormat, strtotime($time));
 }
 

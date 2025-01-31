@@ -14,6 +14,7 @@ class Medicine extends BaseModel
 {
     use HasFactory, SoftDeletes, Searchable;
 
+    // protected $appends = ['final_discount'];
 
     public function pro_cat()
     {
@@ -31,9 +32,14 @@ class Medicine extends BaseModel
     {
         return $this->belongsTo(CompanyName::class, 'company_id');
     }
+
     public function discounts()
     {
         return $this->hasMany(Discount::class, 'pro_id', 'id');
+    }
+    public function active_discounts()
+    {
+        return $this->hasMany(Discount::class, 'pro_id', 'id')->where('status', 1);
     }
     public function reviews()
     {
@@ -164,4 +170,24 @@ class Medicine extends BaseModel
     {
         return $this->isActived();
     }
+
+    // public function getFinalDiscountAttribute()
+    // {
+    //     $discounts = $this->discounts;
+
+    //     if ($discounts->isEmpty()) {
+    //         return 0;
+    //     }
+
+    //     $maxDiscount = $discounts->each(function ($discount) {
+    //         if ($discount->discount_percentage) {
+    //             return ($this->units->find($discount->unit_id)->price * $discount->discount_percentage) / 100;
+    //         } elseif ($discount->discount_amount) {
+    //             return $discount->discount_amount;
+    //         }
+    //         return 0;
+    //     })->max();
+
+    //     return $maxDiscount;
+    // }
 }

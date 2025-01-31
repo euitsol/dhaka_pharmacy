@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
+    protected function getDateTimeFormat()
+    {
+        return config('datetime.date_format') . ' ' . config('datetime.time_format');
+    }
     public function created_user()
     {
         return $this->belongsTo(Admin::class, 'created_by');

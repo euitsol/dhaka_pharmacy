@@ -17,88 +17,84 @@ use App\Models\Address;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Services\OrderService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class OrderController extends BaseController
 {
     use TransformProductTrait, TransformOrderItemTrait, DeliveryTrait;
+
+    protected $orderService;
+
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
+
     public function int_order(InitiatedRequest $request): JsonResponse
     {
-        $user = $request->user();
-        $orderId = generateOrderId();
-        $order = new Order();
-
-        $order->customer()->associate($user);
-        $order->status = 0; //Order initiated
-        $order->order_id = $orderId;
-        $order->creater()->associate($user);
-        $order->save();
-
-        foreach ($request->carts as $id) {
-            $cart = AddToCart::where('customer_id', $user->id)
-                ->where('status', 1)->where('id', $id)->first();
-
-            if ($cart) {
-                $op = new OrderProduct();
-                $op->order_id = $order->id;
-                $op->product_id = $cart->product_id;
-                $op->unit_id = $cart->unit_id;
-                $op->quantity = $cart->quantity;
-                $op->save();
-
-                $cart->forceDelete();
-            }
+        try {
+            $this->orderService->setUser($request->user());
+            $order = $this->orderService->processOrder($request->validated());
+            return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->order_id]);
+        }catch (ModelNotFoundException $e) {
+            return sendResponse(false, $e->getMessage(), null, 404);
+        }catch (\Exception $e) {
+            return sendResponse(false, 'Something went wrong, please try again', null, 500);
         }
-        return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->id]);
     }
 
     public function int_single_order(IntSingleOrderRequest $request): JsonResponse
     {
-        $user = $request->user();
-        $orderId = generateOrderId();
-        $order = new Order();
-
-        $order->customer()->associate($user);
-        $order->status = 0; //Order initiated
-        $order->order_id = $orderId;
-        $order->creater()->associate($user);
-        $order->save();
-
-        $op = new OrderProduct();
-        $op->order_id = $order->id;
-        $op->product_id = $request->product_id;
-        $op->unit_id = $request->unit_id;
-        $op->quantity = $request->quantity;
-        $op->save();
-        return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->id]);
+        try {
+            $this->orderService->setUser($request->user());
+            $order = $this->orderService->processOrder($request->validated(), isDirectOrder: true);
+            return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->order_id]);
+        }catch (ModelNotFoundException $e) {
+            return sendResponse(false, $e->getMessage(), null, 404);
+        }catch (\Exception $e) {
+            return sendResponse(false, 'Something went wrong, please try again', null, 500);
+        }
     }
     public function details(Request $request): JsonResponse
     {
-        $user = $request->user();
-        $order = Order::with([
-            'customer',
-            'address',
-            'payments',
-            'od.odrs',
-            'products.pro_cat',
-            'products.pro_sub_cat',
-            'products.units',
-            'products.discounts',
-            'products.company',
-            'products.generic',
-            'products.strength'
-        ])
-            ->where('creater_type', get_class($user))
-            ->where('creater_id', $user->id)
-            ->where('id', $request->order_id)->first();
-        if ($order) {
-            $order->products->each(function (&$product) {
-                $product = $this->transformProduct($product);
-            });
-            $this->calculateOrderTotalDiscountPrice($order);
+        try {
+            $this->orderService->setUser(user: $request->user());
+            $order = $this->orderService->getOrderDetails($request->order_id);
             return sendResponse(true, 'Order details retrived successfully', ['order' => $order]);
-        } else {
-            return sendResponse(false, 'Something went wrong, please try again');
+        }catch (ModelNotFoundException $e) {
+            return sendResponse(false, $e->getMessage(), null, 404);
+        }catch (\Exception $e) {
+            return sendResponse(false, $e->getMessage(), null, 500);
         }
+
+
+        // $user = $request->user();
+        // $order = Order::with([
+        //     'customer',
+        //     'address',
+        //     'payments',
+        //     'od.odrs',
+        //     'products.pro_cat',
+        //     'products.pro_sub_cat',
+        //     'products.units',
+        //     'products.discounts',
+        //     'products.company',
+        //     'products.generic',
+        //     'products.strength'
+        // ])
+        //     ->where('creater_type', get_class($user))
+        //     ->where('creater_id', $user->id)
+        //     ->where('id', $request->order_id)->first();
+        // if ($order) {
+        //     $order->products->each(function (&$product) {
+        //         $product = $this->transformProduct($product);
+        //     });
+        //     $this->calculateOrderTotalDiscountPrice($order);
+        //     return sendResponse(true, 'Order details retrived successfully', ['order' => $order]);
+        // } else {
+        //     return sendResponse(false, 'Something went wrong, please try again');
+        // }
     }
 
     public function order_confirm(OrderConfirmRequest $request): JsonResponse
