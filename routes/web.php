@@ -45,6 +45,7 @@ use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
 use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\Admin\OrderByPrescription\OrderByPrescriptionController as AdminOrderByPrescriptionController;
 use App\Http\Controllers\Admin\User\ReviewController as AdminReviewController;
+use App\Http\Controllers\Admin\ProductManagement\VoucherController as AdminVoucherController;
 
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
@@ -628,6 +629,18 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('featured/{id}', 'featured')->name('featured.medicine_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_delete');
         });
+
+        Route::controller(AdminVoucherController::class)->prefix('vouchers')->name('vouchers.')->group(function () {
+            Route::get('index', 'index')->name('voucher_list');
+            Route::get('create', 'create')->name('voucher_create');
+            Route::post('create', 'store')->name('voucher_create');
+            Route::get('edit/{id}', 'edit')->name('voucher_edit');
+            Route::put('edit/{id}', 'update')->name('voucher_edit');
+            Route::get('status/{id}', 'status')->name('status.voucher_edit');
+            Route::get('delete/{id}', 'delete')->name('voucher_delete');
+            Route::get('details/{id}', 'details')->name('details.voucher_list');
+        });
+
     });
 
 

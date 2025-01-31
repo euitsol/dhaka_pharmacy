@@ -30,7 +30,7 @@ class UnitAssignedToMedicine implements ValidationRule
         }
 
         if (!$medicine->units()->where('medicine_units.id', $value)->exists()) {
-            $fail('The selected unit is not associated with the specified medicine.');
+            $fail('The selected unit is not associated with the specified product.');
         }
     }
 }
