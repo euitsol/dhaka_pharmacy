@@ -25,22 +25,22 @@
                             @csrf
                             <div class="mb-3 mb-md-3">
                                 <label for="name" class="form-label">{{ __('Name') }}<span class="required">*</span></label>
-                                <input type="text" class="form-control" id="name" name="name"
+                                <input type="text" class="form-control" value="{{ old('name') }}" id="name" name="name"
                                     placeholder="Enter your name" required>
                             </div>
                             <div class="mb-3 mb-md-3">
                                 <label for="phone" class="form-label">{{ __('Phone') }}</label>
-                                <input type="tel" class="form-control" id="phone" name="phone"
+                                <input type="tel" class="form-control" value="{{ old('phone') }}" id="phone" name="phone"
                                     placeholder="Enter your phone number">
                             </div>
                             <div class="mb-3 mb-md-3">
                                 <label for="email" class="form-label">{{ __('E-Mail') }}<span class="required">*</span></label>
-                                <input type="email" class="form-control" id="email" name="email"
+                                <input type="email" class="form-control" value="{{ old('email') }}" id="email" name="email"
                                     placeholder="Enter your e-mail" required>
                             </div>
                             <div class="mb-3 mb-md-3">
                                 <label for="message" class="form-label">{{ __('Message') }}<span class="required">*</span></label>
-                                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Write your message" required></textarea>
+                                <textarea class="form-control" id="message" value="{{ old('message') }}" name="message" rows="4" placeholder="Write your message" required></textarea>
                             </div>
                             <div class="btn w-100 p-0">
                                 <button type="submit" class="btn btn-send send-button">{{ __('SEND') }}</button>
