@@ -291,5 +291,11 @@ class DocumentationSeeder extends Seeder
             'type' => NULL,
             'documentation' => "<p><strong>API URL </strong>: This field is required. It is a text field where you enter the base URL of the SMS API (e.g., <code>https://api.smsprovider.com</code>).</p><p><strong>API Key </strong>: This field is required. It is a text field where you provide the API key issued by your SMS service provider for authentication.</p><p><strong>API Secret </strong>: This field is required. It is a text field where you enter the API secret provided by your SMS service provider to ensure secure communication.</p><p><strong>API Sender ID </strong>: This field is required. It is a text field where you specify the sender ID to be used for sending SMS messages (e.g., <code>MyBusiness</code>).</p><p><strong>API Status Code </strong>: This field is optional. It is a text field where you can define or monitor the status codes expected from the SMS API for various responses (e.g., <code>200</code> for success).</p>"
         ]);
+        Documentation::create([
+            'title' => 'Contact Settings Configuration Documentation',
+            'module_key' => 'contact_settings',
+            'type' => NULL,
+            'documentation' => "<p><strong>Reciever Email </strong>: This field is required. It is a email field with a maximum character limit of 255. The entered value must follow the standard email format (e.g., noreply@example.com).</p>"
+        ]);
     }
 }

@@ -22,10 +22,11 @@ class ContactPageController extends Controller
         return view('frontend.contact');
     }
 
-    public function contact_submit(ContactRequest $request): RedirectResponse{
+    public function contact_submit(ContactRequest $request): RedirectResponse
+    {
 
-        if(session()->has('cf_submitted_at') && Carbon::now()->diffInMinutes(session('cf_submitted_at')) < $this->cf_resubmit_delay) {
-            flash()->addWarning('Please wait '.$this->cf_resubmit_delay.' minutes before resubmitting.');
+        if (session()->has('cf_submitted_at') && Carbon::now()->diffInMinutes(session('cf_submitted_at')) < $this->cf_resubmit_delay) {
+            flash()->addWarning('Please wait ' . $this->cf_resubmit_delay . ' minutes before resubmitting.');
             return redirect()->route('contact_us')->withInput();
         }
         try {
@@ -41,7 +42,7 @@ class ContactPageController extends Controller
             $mail_data['email'] = $contact->email;
             $mail_data['phone'] = $contact->phone;
 
-            Mail::to('noreply@dhakapharmacy.com.bd')->send(new ContactMail($mail_data));
+            Mail::to(config('mail.contact_reciever_email'))->send(new ContactMail($mail_data));
             session()->put('cf_submitted_at', Carbon::now());
         } catch (\Exception $e) {
             // flash()->addError($e->getMessage());
