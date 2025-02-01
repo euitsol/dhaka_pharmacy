@@ -4,6 +4,7 @@ namespace App\Http\Requests\API\Order;
 
 use App\Http\Requests\API\BaseRequest;
 use App\Rules\ApiRules\OrderItemStatusCheck;
+use App\Rules\CartBelongsToUserRule;
 
 class InitiatedRequest extends BaseRequest
 {
@@ -28,7 +29,9 @@ class InitiatedRequest extends BaseRequest
     {
         return [
             'carts' => 'required|array',
-            'carts.*' => ['required', 'exists:add_to_carts,id', new OrderItemStatusCheck()],
+            'carts.*' => ['required', 'exists:add_to_carts,id', new OrderItemStatusCheck(), new CartBelongsToUserRule($this->user())],
+            'address_id' => 'nullable|exists:addresses,id',
+            'voucher_id' => 'nullable|exists:vouchers,id',
         ];
     }
 }
