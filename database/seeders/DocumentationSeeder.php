@@ -189,6 +189,23 @@ class DocumentationSeeder extends Seeder
             'type' => 'update',
             'documentation' => '<p><strong>Name : </strong>This field is required. It is a text field with character limit of 4-255 characters.</p><p><strong>Slug : </strong>This field is required and must be unique. It is automatically generated from the <strong>"Name"</strong> but you can also customize it. This field represents the URL for the product category.</p><p><strong>Image :</strong> This field is optional. It supports file uploads in jpeg, png, jpg, gif, &amp; svg format, with a maximum size limit of 2MB.</p>'
         ]);
+
+
+        Documentation::create([
+            'title' => 'Medicine Dose Create Documentation',
+            'module_key' => 'medicine_dose',
+            'type' => 'create',
+            'documentation' => '<p><strong>Name : </strong>This field is required. It is a text field with character limit of 4-255 characters.</p><p><strong>Slug : </strong>This field is required and must be unique. It is automatically generated from the <strong>"Name"</strong> but you can also customize it. This field represents the URL for the medicine dose.</p><p><strong>Image :</strong> This field is optional. It supports file uploads in jpeg, png, jpg, gif, &amp; svg format, with a maximum size limit of 2MB.</p><p><strong>Description </strong>: This field is optional. It is a CK-Editor field for adding a detailed description of the medicine dose.</p>'
+        ]);
+        Documentation::create([
+            'title' => 'Medicine Dose Edit Documentation',
+            'module_key' => 'product_category',
+            'type' => 'update',
+            'documentation' => '<p><strong>Name : </strong>This field is required. It is a text field with character limit of 4-255 characters.</p><p><strong>Slug : </strong>This field is required and must be unique. It is automatically generated from the <strong>"Name"</strong> but you can also customize it. This field represents the URL for the medicine dose.</p><p><strong>Image :</strong> This field is optional. It supports file uploads in jpeg, png, jpg, gif, &amp; svg format, with a maximum size limit of 2MB.</p><p><strong>Description </strong>: This field is optional. It is a CK-Editor field for adding a detailed description of the medicine dose.</p>'
+        ]);
+
+
+
         Documentation::create([
             'title' => 'Product Sub Category Create Documentation',
             'module_key' => 'product_sub_category',
