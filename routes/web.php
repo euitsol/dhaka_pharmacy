@@ -1207,7 +1207,10 @@ Route::get('/frequently-asked-question', [FaqPageController::class, 'faq'])->nam
 Route::get('/privacy-policy', [PrivacyPolicyPageController::class, 'privacy_policy'])->name('privacy_policy');
 Route::get('/terms-and-conditions', [TermsAndConditionsPageController::class, 'terms_and_conditions'])->name('terms_and_conditions');
 Route::get('/about-us', [AboutPageController::class, 'about'])->name('about_us');
-Route::get('/contact-us', [ContactPageController::class, 'contact'])->name('contact_us');
+Route::controller(ContactPageController::class)->group(function () {
+    Route::get('/contact-us', 'contact')->name('contact_us');
+    Route::post('/contact-us/submit', 'contact_submit')->name('contact_us.submit');
+});
 
 
 
