@@ -82,7 +82,7 @@
                                         'routeName' => 'um.user.user_list',
                                         'label' => 'users',
                                     ],
-
+                            
                                     [
                                         'pageSlug' => ['us_kyc_list', 'u_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -131,7 +131,7 @@
                                         'routeName' => 'pm.pharmacy.pharmacy_list',
                                         'label' => 'Pharmacies',
                                     ],
-
+                            
                                     [
                                         'pageSlug' => ['ps_kyc_list', 'p_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -277,7 +277,7 @@
                                         'routeName' => 'rm.rider.rider_list',
                                         'label' => 'Riders',
                                     ],
-
+                            
                                     [
                                         'pageSlug' => ['rs_kyc_list', 'r_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -372,6 +372,7 @@
                         'company_name_list',
                         'medicine_strength_list',
                         'medicine_unit_list',
+                        'medicine_dose_list',
                     ],
                 ]))
                 <li>
@@ -382,6 +383,7 @@
                             $pageSlug == 'medicine_category' ||
                             $pageSlug == 'product_category' ||
                             $pageSlug == 'product_sub_category' ||
+                            $pageSlug == 'medicine_dose' ||
                             $pageSlug == 'medicine' ||
                             $pageSlug == 'medicine_unit') @else collapsed @endif" data-toggle="collapse"
                         href="#product_management"
@@ -392,6 +394,7 @@
                                 $pageSlug == 'medicine_category' ||
                                 $pageSlug == 'product_category' ||
                                 $pageSlug == 'product_sub_category' ||
+                                $pageSlug == 'medicine_dose' ||
                                 $pageSlug == 'medicine' ||
                                 $pageSlug == 'medicine_unit') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-capsules"></i>
@@ -405,6 +408,7 @@
                             $pageSlug == 'medicine_strength' ||
                             $pageSlug == 'medicine_category' ||
                             $pageSlug == 'product_category' ||
+                            $pageSlug == 'medicine_dose' ||
                             $pageSlug == 'product_sub_category' ||
                             $pageSlug == 'medicine' ||
                             $pageSlug == 'medicine_unit') show @endif" id="product_management">
@@ -450,6 +454,11 @@
                                         'pageSlug' => 'medicine_unit',
                                         'routeName' => 'product.medicine_unit.medicine_unit_list',
                                         'label' => 'Medicine Unit',
+                                    ],
+                                    [
+                                        'pageSlug' => 'medicine_dose',
+                                        'routeName' => 'product.medicine_dose.medicine_dose_list',
+                                        'label' => 'Medicine Dose',
                                     ],
                                 ],
                             ])
