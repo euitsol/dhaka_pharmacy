@@ -126,6 +126,8 @@ use App\Http\Controllers\Pharmacy\WithdrawMethodController as PharmacyWithdrawMe
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
 use App\Http\Controllers\Rider\OperationalAreaController as RiderOperationalAreaController;
 use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodController;
+use App\Http\Controllers\Hub\Auth\LoginController as StaffLoginController;
+use App\Http\Controllers\Hub\DashboardController as HubDashboardController;
 use App\Http\Controllers\User\KYC\KycVerificationController as UserKycVerificationController;
 use App\Http\Controllers\User\NotificationController as UserNotificationController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
@@ -178,6 +180,22 @@ Route::controller(AdminLoginController::class)->prefix('admin')->name('admin.')-
     Route::get('/password/reset/{admin_id}', 'resetPassword')->name('reset.password');
     Route::post('/password/reset/{admin_id}', 'resetPasswordStore')->name('reset.password');
 });
+
+// Staff Login Routes
+Route::controller(StaffLoginController::class)->prefix('staff')->name('staff.')->group(function () {
+    Route::get('/login', 'staffLogin')->name('login');
+    Route::post('/login', 'staffLoginCheck')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+
+    Route::get('/forgot', 'forgot')->name('forgot');
+    Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
+    Route::get('/forgot/verify-otp/{staff_id}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{staff_id}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{staff_id}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{staff_id}', 'resetPasswordStore')->name('reset.password');
+});
+
+
 
 
 // Pharmacy Login Routes
@@ -1211,6 +1229,24 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     //     Route::post('message/send', 'message_send')->name('message.send');
     // });
 });
+
+
+Route::group(['middleware' => ['auth:staff', 'permission'], 'prefix' => 'hub'], function () {
+    Route::get('/dashboard', [HubDashboardController::class, 'dashboard'])->name('hub.dashboard');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Guest Live Chat
 // Live Chat

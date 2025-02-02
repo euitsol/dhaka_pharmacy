@@ -24,8 +24,6 @@ class HubStaffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'gender' => ['required', 'integer', Rule::in([HubStaff::GENDER_MALE, HubStaff::GENDER_FEMALE, HubStaff::GENDER_OTHER])],
-
             'name' => 'required|min:4',
             'hub' => 'required|exists:hubs,id',
 

@@ -30,6 +30,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('otp')->nullable();
             $table->string('age')->nullable();
+            $table->timestamp('date_of_birth')->nullable();
             $table->tinyInteger('gender')->nullable();
             $table->rememberToken();
             $table->timestamps();
