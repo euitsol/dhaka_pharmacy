@@ -46,6 +46,7 @@ use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\Admin\OrderByPrescription\OrderByPrescriptionController as AdminOrderByPrescriptionController;
 use App\Http\Controllers\Admin\User\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\ProductManagement\VoucherController as AdminVoucherController;
+use App\Http\Controllers\Admin\Delivery\ZonesController as AdminDeliveryZonesController;
 
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
@@ -643,6 +644,12 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
 
     });
 
+    //Delivery zones
+    Route::group(['as' => 'delivery.', 'prefix' => 'delivery-management'], function () {
+        Route::controller(AdminDeliveryZonesController::class)->prefix('zones')->name('zones.')->group(function () {
+            Route::get('index', 'index')->name('delivery_zones_list');
+        });
+    });
 
 
     // Notification Settings
@@ -1137,8 +1144,8 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
         Route::post('store', 'store')->name('store');
         Route::get('details/{id}', 'details')->name('details');
         Route::put('update', 'update')->name('update');
-
         Route::get('delete/{id}', 'delete')->name('delete');
+        Route::get('cities', 'cities')->name('cities');
     });
     //User Feedback
     Route::controller(UserFeedbackController::class)->prefix('feedback')->name('u.fdk.')->group(function () {

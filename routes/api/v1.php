@@ -38,6 +38,7 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::post('/store', 'store')->name('store');
         Route::post('/update', 'update')->name('update');
         Route::get('/list', 'list')->name('list');
+        Route::get('/cities', 'cities')->name('cities');
     });
     // Cart API
     Route::controller(CartAjaxController::class)->middleware('auth:api-user')->prefix('cart')->name('cart.')->group(function () {
