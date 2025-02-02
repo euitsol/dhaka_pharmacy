@@ -6,7 +6,9 @@
 </head>
 
 <body>
+
     <h2>{{ __('Dear Sir,') }}</h2>
+    <p>New contact request submitted from {{ config('app.name') }} website</p>
     <p>{{ $mailData['message'] }}</p>
 
     <p><strong>{{ __('Best Regards,') }}</strong></p>

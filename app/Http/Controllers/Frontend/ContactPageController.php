@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 
+
 class ContactPageController extends Controller
 {
     private $cf_resubmit_delay = 1;
