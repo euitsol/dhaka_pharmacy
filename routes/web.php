@@ -101,6 +101,7 @@ use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
 use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\Admin\HubManagement\HubController;
 use App\Http\Controllers\Admin\MapboxSettingsController;
 use App\Http\Controllers\Admin\PaymentClearanceController;
 use App\Http\Controllers\Admin\ProductManagement\MedicineDosesController;
@@ -402,6 +403,21 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
                 Route::get('/details/{id}', 'details')->name('p_kyc_details');
                 // Route::get('/status/{id}', 'status')->name('p_kyc_status');
             });
+        });
+    });
+
+    // Admin Hub Management Routes
+    Route::group(['as' => 'hm.', 'prefix' => 'hub-management'], function () {
+
+        Route::controller(HubController::class)->prefix('hub')->name('hub.')->group(function () {
+            Route::get('index', 'index')->name('hub_list');
+            Route::get('details/{id}', 'details')->name('details.hub_list');
+            Route::get('create', 'create')->name('hub_create');
+            Route::post('create', 'store')->name('hub_create');
+            Route::get('edit/{id}', 'edit')->name('hub_edit');
+            Route::put('edit/{id}', 'update')->name('hub_edit');
+            Route::get('status/{id}', 'status')->name('status.hub_edit');
+            Route::get('delete/{id}', 'delete')->name('hub_delete');
         });
     });
     //Admin Operational Area Management Routes

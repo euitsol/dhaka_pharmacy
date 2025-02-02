@@ -361,6 +361,36 @@
                 </li>
             @endif
 
+            {{-- Hub Management --}}
+            @if (mainMenuCheck([
+                    'prefixes' => ['hm.'],
+                    'routes' => ['hub_list'],
+                ]))
+                <li>
+                    <a class="@if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') @else collapsed @endif" data-toggle="collapse"
+                        href="#hub"
+                        @if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-earth-americas"></i>
+                        <span class="nav-link-text">{{ __('Hub Management') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') show @endif" id="hub">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'hub',
+                                        'routeName' => 'hm.hub.hub_list',
+                                        'label' => 'Hubs',
+                                    ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
             {{-- Product Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['product.'],
