@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
-    use AuditColumnsTrait,SoftDeletes;
+    use AuditColumnsTrait, SoftDeletes;
 
     /**
      * Run the migrations.
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
 
             $table->text('name');
-            $table->text('slug');
+            $table->text('slug')->unique();
             $table->string('icon')->nullable();
             $table->text('description')->nullable();
             $table->boolean('status')->default(1);

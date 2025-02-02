@@ -1,22 +1,19 @@
-@extends('admin.layouts.master', ['pageSlug' => 'product_category'])
-@section('title', 'Product Category List')
+@extends('admin.layouts.master', ['pageSlug' => 'medicine_dose'])
+@section('title', 'Medicine Dose List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-danger {{ $menuItemsCount % 2 == 0 ? 'd-none' : '' }}">
-                <span>{{ __("Please add an even number of categories to the menu for design purposes. Now you have a total of $menuItemsCount categories in your menu.") }}</span>
-            </div>
             <div class="card ">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Product Category List') }}</h4>
+                            <h4 class="card-title">{{ __('Medicine Dose List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             @include('admin.partials.button', [
-                                'routeName' => 'product.product_category.product_category_create',
+                                'routeName' => 'product.medicine_dose.medicine_dose_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new product category',
+                                'label' => 'Add new medicine dose',
                             ])
                         </div>
                     </div>
@@ -27,9 +24,8 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
+                                <th>{{ __('Slug') }}</th>
                                 <th>{{ __('Image') }}</th>
-                                <th>{{ __('Menu') }}</th>
-                                <th>{{ __('Featured') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -37,65 +33,44 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($product_categories as $product_category)
+                            @foreach ($medicine_doses as $medicine_dose)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $product_category->name }} </td>
+                                    <td> {{ $medicine_dose->name }} </td>
+                                    <td> {{ $medicine_dose->slug }} </td>
                                     <td> <img height="70px" width="70px" style="object-fit: contain"
-                                            src="{{ storage_url($product_category->image) }}"> </td>
+                                            src="{{ storage_url($medicine_dose->icon) }}"> </td>
                                     <td>
                                         <span
-                                            class="{{ $product_category->getMenuBadgeClass() }}">{{ $product_category->getMenu() }}</span>
+                                            class="{{ $medicine_dose->getStatusBadgeClass() }}">{{ $medicine_dose->getStatus() }}</span>
                                     </td>
-                                    <td>
-                                        <span
-                                            class="{{ $product_category->getFeaturedBadgeClass() }}">{{ $product_category->getFeatured() }}</span>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="{{ $product_category->getStatusBadgeClass() }}">{{ $product_category->getStatus() }}</span>
-                                    </td>
-                                    <td>{{ timeFormate($product_category->created_at) }}</td>
+                                    <td>{{ timeFormate($medicine_dose->created_at) }}</td>
 
-                                    <td> {{ c_user_name($product_category->created_user) }} </td>
+                                    <td> {{ c_user_name($medicine_dose->created_user) }} </td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
                                                     'routeName' => 'javascript:void(0)',
-                                                    'params' => [$product_category->id],
+                                                    'params' => [$medicine_dose->id],
                                                     'label' => 'View Details',
                                                     'className' => 'view',
-                                                    'data-id' => $product_category->id,
+                                                    'data-id' => $medicine_dose->id,
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'product.product_category.product_category_edit',
-                                                    'params' => [$product_category->slug],
+                                                    'routeName' => 'product.medicine_dose.medicine_dose_edit',
+                                                    'params' => [$medicine_dose->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [
                                                     'routeName' =>
-                                                        'product.product_category.menu.product_category_edit',
-                                                    'params' => [$product_category->id],
-                                                    'label' => $product_category->getBtnMenu(),
+                                                        'product.medicine_dose.status.medicine_dose_edit',
+                                                    'params' => [$medicine_dose->id],
+                                                    'label' => $medicine_dose->getBtnStatus(),
                                                 ],
                                                 [
-                                                    'routeName' =>
-                                                        'product.product_category.featured.product_category_edit',
-                                                    'params' => [$product_category->id],
-                                                    'label' => $product_category->getBtnFeatured(),
-                                                ],
-                                                [
-                                                    'routeName' =>
-                                                        'product.product_category.status.product_category_edit',
-                                                    'params' => [$product_category->id],
-                                                    'label' => $product_category->getBtnStatus(),
-                                                ],
-                                                [
-                                                    'routeName' =>
-                                                        'product.product_category.product_category_delete',
-                                                    'params' => [$product_category->id],
+                                                    'routeName' => 'product.medicine_dose.medicine_dose_delete',
+                                                    'params' => [$medicine_dose->id],
                                                     'label' => 'Delete',
                                                     'delete' => true,
                                                 ],
@@ -117,12 +92,12 @@
     </div>
 
     {{-- District Manager Details Modal  --}}
-    <div class="modal view_modal fade" id="productCategoryModal" tabindex="-1" role="dialog"
-        aria-labelledby="productCategoryModalLabel" aria-hidden="true">
+    <div class="modal view_modal fade" id="medicineDoseModal" tabindex="-1" role="dialog"
+        aria-labelledby="medicineDoseModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="productCategoryModalLabel">{{ __('Product Category Details') }}</h5>
+                    <h5 class="modal-title" id="medicineDoseModalLabel">{{ __('Medicine Dose Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -133,14 +108,14 @@
         </div>
     </div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6]])
 @push('js')
     <script>
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
                 let url = (
-                    "{{ route('product.product_category.details.product_category_list', ['id']) }}");
+                    "{{ route('product.medicine_dose.details.medicine_dose_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -150,12 +125,6 @@
                         let status = data.status === 1 ? 'Active' : 'Deactive';
                         let statusClass = data.status === 1 ? 'badge-success' :
                             'badge-warning';
-                        let menu = data.is_menu === 1 ? 'Yes' : 'No';
-                        let menuClass = data.is_menu === 1 ? 'badge-primary' :
-                            'badge-info';
-                        let featured = data.is_featured === 1 ? 'Yes' : 'No';
-                        let featuredClass = data.is_featured === 1 ? 'badge-primary' :
-                            'badge-info';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -164,24 +133,24 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
+                                        <th class="text-nowrap">Slug</th>
+                                        <th>:</th>
+                                        <td>${data.slug}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="text-nowrap">Image</th>
                                         <th>:</th>
                                         <td><img height='100px' width='100px' class='border p-2' src="${data.image}"></td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Menu</th>
-                                        <th>:</th>
-                                        <td><span class="badge ${menuClass}">${menu}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Featured</th>
-                                        <th>:</th>
-                                        <td><span class="badge ${featuredClass}">${featured}</span></td>
-                                    </tr>
-                                    <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
                                         <td><span class="badge ${statusClass}">${status}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Description</th>
+                                        <th>:</th>
+                                        <td><span class="badge ${data.description}">${data.description}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created Date</th>
