@@ -29,7 +29,7 @@ class AddressController extends BaseController
         }catch(ModelNotFoundException $e){
             return sendResponse(false, $e->getMessage());
         }catch(Exception $e){
-            return sendResponse(false, 'Something went wrong. Please try again later');
+            return sendResponse(false, $e->getMessage());
         }
     }
     public function store(AddressRequest $request): JsonResponse
@@ -40,7 +40,7 @@ class AddressController extends BaseController
         }catch(ModelNotFoundException $e){
             return sendResponse(false, $e->getMessage());
         }catch(Exception $e){
-            return sendResponse(false, 'Something went wrong. Please try again later');
+            return sendResponse(false, $e->getMessage());
         }
     }
     public function update(AddressRequest $request): JsonResponse
@@ -51,7 +51,7 @@ class AddressController extends BaseController
         }catch(ModelNotFoundException $e){
             return sendResponse(false, $e->getMessage());
         }catch(Exception $e){
-            return sendResponse(false, 'Something went wrong. Please try again later');
+            return sendResponse(false, $e->getMessage());
         }
     }
 

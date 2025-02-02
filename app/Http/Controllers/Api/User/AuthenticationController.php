@@ -88,9 +88,9 @@ class AuthenticationController extends BaseController
         $user->password = $request->password;
         $user->save();
 
-        $this->sendVerificationSms($user);
+        // $this->sendVerificationSms($user);
 
-        return sendResponse(true, 'Your registration is successful, and a verification code has been sent to your phone.', $user->only('id'), 200);
+        return sendResponse(true, 'Your registration is successful', $user->only('id'), 200);
     }
     public function fp_phone_check(ForgotPasswordRequest $request)
     {

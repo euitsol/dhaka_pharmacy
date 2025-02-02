@@ -101,7 +101,7 @@ class AddressService
 
         if ($zoneCity) {
             $address->zone_id = $zoneCity->delivery_zone_id;
-            $address->load('deliveryZone');
+            $address->load('zone');
             $this->handleExpressEligibility($address, $zoneCity->deliveryZone);
         } else {
             $this->setOutsideDhaka($address);
@@ -125,7 +125,7 @@ class AddressService
     private function appendDeliveryDetails(Address $address, bool $isDelivery = false): array
     {
         $details = [];
-        $details['delivery_options'] = [];
+        $details['delivery_options'] = null;
 
 
         if ($isDelivery && $address->zone && $address->zone->status == 1) {
@@ -155,7 +155,7 @@ class AddressService
             'type' => $type,
             'charge' => $charge,
             'delivery_time_hours' => $hours,
-            'expected_delivery_date' => $deliveryDate->format('D, M j g:i A'),
+            'expected_delivery_date' => $deliveryDate->format('d, M j g:i A'),
         ];
     }
 
