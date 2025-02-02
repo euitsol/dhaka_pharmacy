@@ -102,6 +102,7 @@ use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\HubManagement\HubController;
+use App\Http\Controllers\Admin\HubManagement\HubStaffController;
 use App\Http\Controllers\Admin\MapboxSettingsController;
 use App\Http\Controllers\Admin\PaymentClearanceController;
 use App\Http\Controllers\Admin\ProductManagement\MedicineDosesController;
@@ -418,6 +419,17 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::put('edit/{id}', 'update')->name('hub_edit');
             Route::get('status/{id}', 'status')->name('status.hub_edit');
             Route::get('delete/{id}', 'delete')->name('hub_delete');
+        });
+
+        Route::controller(HubStaffController::class)->prefix('hub-staff')->name('hub_staff.')->group(function () {
+            Route::get('index', 'index')->name('hub_staff_list');
+            Route::get('details/{id}', 'details')->name('details.hub_staff_list');
+            Route::get('create', 'create')->name('hub_staff_create');
+            Route::post('create', 'store')->name('hub_staff_create');
+            Route::get('edit/{id}', 'edit')->name('hub_staff_edit');
+            Route::put('edit/{id}', 'update')->name('hub_staff_edit');
+            Route::get('status/{id}', 'status')->name('status.hub_staff_edit');
+            Route::get('delete/{id}', 'delete')->name('hub_staff_delete');
         });
     });
     //Admin Operational Area Management Routes

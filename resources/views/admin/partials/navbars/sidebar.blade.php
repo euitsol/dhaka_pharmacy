@@ -364,7 +364,7 @@
             {{-- Hub Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['hm.'],
-                    'routes' => ['hub_list'],
+                    'routes' => ['hub_list', 'hub_staff_list'],
                 ]))
                 <li>
                     <a class="@if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') @else collapsed @endif" data-toggle="collapse"
@@ -383,6 +383,11 @@
                                         'pageSlug' => 'hub',
                                         'routeName' => 'hm.hub.hub_list',
                                         'label' => 'Hubs',
+                                    ],
+                                    [
+                                        'pageSlug' => 'hub_staff',
+                                        'routeName' => 'hm.hub_staff.hub_staff_list',
+                                        'label' => 'Hub Staffs',
                                     ],
                                 ],
                             ])

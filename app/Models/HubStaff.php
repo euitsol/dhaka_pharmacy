@@ -17,8 +17,11 @@ class HubStaff extends AuthenticateBaseModel
     protected $casts = [
         'gender' => 'integer',
         'status' => 'boolean',
-        'is_verify' => 'boolean'
+        'is_verify' => 'boolean',
+        'password' => 'hashed',
+        'email_verified_at' => 'datetime',
     ];
+
 
     protected $fillable = [
         'hub_id',
@@ -37,9 +40,41 @@ class HubStaff extends AuthenticateBaseModel
         'remember_token',
     ];
 
+    protected $appends = [
+        'gender_label'
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
 
     public function hub()
     {
         return $this->belongsTo(Hub::class);
+    }
+
+    public function setGenderAttribute($value)
+    {
+        $validGenders = [self::GENDER_MALE, self::GENDER_FEMALE, self::GENDER_OTHER];
+        if (!in_array($value, $validGenders)) {
+            throw new \InvalidArgumentException("Invalid gender value. Allowed values are: " . implode(', ', $validGenders));
+        }
+        $this->attributes['gender'] = $value;
+    }
+
+    public static function getGenderOptions()
+    {
+        return [
+            self::GENDER_MALE => 'Male',
+            self::GENDER_FEMALE => 'Female',
+            self::GENDER_OTHER => 'Other',
+        ];
+    }
+    public function getGenderLabelAttribute()
+    {
+        $genderOptions = self::getGenderOptions();
+        return $genderOptions[$this->gender] ?? 'Unknown';
     }
 }

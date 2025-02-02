@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('hub_id');
             $table->string('name');
             $table->string('phone')->nullable();
+            $table->boolean('status')->default(1);
             $table->string('emergency_phone')->nullable();
             $table->string('email');
             $table->string('password');

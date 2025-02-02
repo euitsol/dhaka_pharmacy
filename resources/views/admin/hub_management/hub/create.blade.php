@@ -24,7 +24,8 @@
                         <div class="form-group">
 
                             <label>{{ __('Name') }}</label>
-                            <input type="text" id="title" name="name" class="form-control"
+                            <input type="text" id="title" name="name"
+                                class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                 placeholder="Enter name" value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>

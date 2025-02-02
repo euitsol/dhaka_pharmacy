@@ -14,15 +14,29 @@ class HubRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'description' => 'required|string',
+        ]
+            +
+            ($this->isMethod('POST') ? $this->store() : $this->update());
+    }
+
+    protected function store(): array
+    {
+        return [
+            'name' => 'required|unique:hubs,name',
+            'slug' => 'required|unique:hubs,slug',
+
+        ];
+    }
+
+    protected function update(): array
+    {
+        return [
+            'name' => 'required|unique:hubs,name,' . $this->route('id'),
+            'slug' => 'required|unique:hubs,slug,' . $this->route('id'),
         ];
     }
 }
