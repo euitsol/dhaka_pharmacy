@@ -1,4 +1,4 @@
-name: Deploy Application to Live Server
+name: Deploy Application to Staging Server
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  laravel-deploy:
+  sandbox-deploy:
     runs-on: ubuntu-latest
 
     steps:
