@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\{Address, DeliveryZone, User, DeliveryZoneCity};
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\{DB, Log};
 
@@ -10,10 +12,21 @@ use Illuminate\Support\Facades\{DB, Log};
 class AddressService
 {
     protected User $user;
+    protected Address $address;
 
     public function setUser(User $user): self
     {
         $this->user = $user;
+        return $this;
+    }
+
+    public function setAddress(int|null $addressId): self
+    {
+        $address = Address::find($addressId);
+        if (!$address) {
+            throw new ModelNotFoundException('Address not found.');
+        }
+        $this->address = $address;
         return $this;
     }
 
@@ -169,6 +182,20 @@ class AddressService
         }
 
         return $deliveryDate;
+    }
+
+    public function getDeliveryCharge(string $deliveryType='standard'): array
+    {
+        if($this->address->zone->allows_express && $deliveryType == 'express'){
+            return [
+                'charge' => $this->address->zone->express_charge,
+                'delivery_type' => 'express'
+            ];
+        }
+        return [
+            'charge' => $this->address->zone->charge,
+            'delivery_type' => 'standard'
+        ];
     }
 
 }

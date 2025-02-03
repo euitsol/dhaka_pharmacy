@@ -13,12 +13,13 @@ use App\Http\Controllers\Api\User\PaymentController;
 use App\Http\Controllers\Api\User\SocialLoginController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\WishlistController;
+use App\Http\Controllers\Api\User\VoucherController;
 
 Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 
     Route::controller(AuthenticationController::class)->prefix('authentication')->name('auth.')->group(function () {
         Route::post('password-login', 'pass_login')->name('l.p');
-        Route::post('send-otp', 'send_otp')->name('s.o');
+        Route::post('senduri: -otp', 'send_otp')->name('s.o');
         Route::post('verify-otp', 'otp_verify')->name('v.o');
         Route::post('registration', 'registration')->name('reg');
         Route::post('forgot-password/phone-check', 'fp_phone_check')->name('fp.pc');
@@ -53,8 +54,9 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::get('details', 'details')->name('d');
         Route::get('cancel', 'cancel')->name('cancel');
         Route::post('confirm', 'order_confirm')->name('c');
-
         Route::get('list', 'list')->name('l');
+        Route::post('update-address', 'address')->name('update.address');
+        Route::post('update-voucher', 'voucher')->name('update.voucher');
     });
     Route::controller(PaymentController::class)->middleware('auth:api-user')->prefix('payment')->name('payment.')->group(function () {
         Route::get('list', 'list')->name('l');
@@ -63,6 +65,10 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
     Route::controller(WishlistController::class)->middleware('auth:api-user')->prefix('wishlist')->name('wishlist.')->group(function () {
         Route::get('list', 'list')->name('l');
         Route::get('details', 'update')->name('d');
+    });
+
+    Route::controller(VoucherController::class)->middleware('auth:api-user')->prefix('voucher')->name('vouchers.')->group(function () {
+        Route::post('check', 'check')->name('check');
     });
 });
 

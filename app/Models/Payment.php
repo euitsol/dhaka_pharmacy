@@ -10,6 +10,19 @@ class Payment extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
+    public const STATUS_INITIATED = 0;
+    public const STATUS_PAID = 1;
+    public const STATUS_FAILED = -1;
+    public const STATUS_CANCELLED = -2;
+
+    protected $fillable = [
+        'order_id', 'status', 'customer_id', 'customer_type', 'amount', 'transaction_id','currency', 'details', 'payment_method'
+    ];
+
+    protected $appends = [
+        'status_string',
+    ];
+
     public function customer()
     {
         return $this->morphTo();
@@ -71,4 +84,17 @@ class Payment extends BaseModel
                 return 'Unknown';
         }
     }
+
+    public function getStatusStringAttribute(): string
+    {
+        return match($this->status) {
+            self::STATUS_INITIATED => 'Initiated',
+            self::STATUS_PAID => 'Paid',
+            self::STATUS_FAILED => 'Failed',
+            self::STATUS_CANCELLED => 'Cancel',
+            default => 'Unknown',
+        };
+    }
+
+
 }

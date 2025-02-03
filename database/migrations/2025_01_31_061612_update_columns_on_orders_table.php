@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('product_discount', 12, 2)->default(0)->after('voucher_discount')->comment('Calculated product discount amount');
             $table->decimal('total_amount', 12, 2)->storedAs('sub_total + delivery_fee - voucher_discount - product_discount')->after('product_discount')->comment('Final payable amount');
 
+            $table->string('delivery_type')->change();
         });
     }
 
@@ -41,6 +42,7 @@ return new class extends Migration
             ]);
 
             $table->decimal('delivery_fee', 10, 2)->nullable()->change();
+            $table->tinyInteger('delivery_type')->change();
 
             $table->dropForeign(['voucher_id']);
             $table->dropColumn('voucher_id');

@@ -3,8 +3,9 @@
 namespace App\Http\Requests\API\Order;
 
 use App\Http\Requests\API\BaseRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class OrderConfirmRequest extends BaseRequest
+class AddressUpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +24,8 @@ class OrderConfirmRequest extends BaseRequest
     {
         return [
             'order_id' => 'required|exists:orders,order_id',
-            'payment_method' => 'required|string|in:bkash,nogod,roket,upay,ssl,cod',
+            'address_id' => 'required|exists:addresses,id',
+            'delivery_type' => 'required|string|in:standard,express',
         ];
     }
 }
