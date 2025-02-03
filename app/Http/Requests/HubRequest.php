@@ -18,6 +18,15 @@ class HubRequest extends FormRequest
     {
         return [
             'description' => 'required|string',
+            'lat' => 'required|string',
+            'long' => 'required|string',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'street' => 'required|string|max:255',
+            'apartment' => 'required|string|max:255',
+            'floor' => 'required|string|max:255',
+            'instruction' => 'nullable|string|max:1000',
+            'note' => 'nullable|string|max:1000',
         ]
             +
             ($this->isMethod('POST') ? $this->store() : $this->update());

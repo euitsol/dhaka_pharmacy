@@ -58,6 +58,17 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
+                                                    'routeName' => 'hm.hub_staff.login_as.hub_staff_profile',
+                                                    'params' => [encrypt($hub_staff->id)],
+                                                    'label' => 'Login As',
+                                                    'target' => '_blank',
+                                                ],
+                                                [
+                                                    'routeName' => 'hm.hub_staff.hub_staff_profile',
+                                                    'params' => [encrypt($hub_staff->id)],
+                                                    'label' => 'Profile',
+                                                ],
+                                                [
                                                     'routeName' => 'javascript:void(0)',
                                                     'params' => [$hub_staff->id],
                                                     'label' => 'View Details',

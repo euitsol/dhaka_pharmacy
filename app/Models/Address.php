@@ -10,6 +10,17 @@ class Address extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'longitude',
+        'latitude',
+        'address',
+        'city',
+        'street_address',
+        'apartment',
+        'floor',
+        'delivery_instruction'
+    ];
+
     public function getFeaturedStatus()
     {
         if ($this->is_default == 1) {

@@ -55,6 +55,7 @@ class HubStaff extends AuthenticateBaseModel
         return $this->belongsTo(Hub::class);
     }
 
+
     public function setGenderAttribute($value)
     {
         $validGenders = [self::GENDER_MALE, self::GENDER_FEMALE, self::GENDER_OTHER];

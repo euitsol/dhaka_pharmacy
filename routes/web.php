@@ -442,6 +442,8 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         Route::controller(HubStaffController::class)->prefix('hub-staff')->name('hub_staff.')->group(function () {
             Route::get('index', 'index')->name('hub_staff_list');
             Route::get('details/{id}', 'details')->name('details.hub_staff_list');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.hub_staff_profile');
+            Route::get('profile/{id}', 'profile')->name('hub_staff_profile');
             Route::get('create', 'create')->name('hub_staff_create');
             Route::post('create', 'store')->name('hub_staff_create');
             Route::get('edit/{id}', 'edit')->name('hub_staff_edit');

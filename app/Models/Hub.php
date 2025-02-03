@@ -25,4 +25,8 @@ class Hub extends BaseModel
     {
         return $this->hasMany(HubStaff::class);
     }
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'creater');
+    }
 }

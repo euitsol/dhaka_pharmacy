@@ -11,6 +11,7 @@ use App\Models\HubStaff;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 
@@ -31,6 +32,22 @@ class HubStaffController extends Controller
         $data = HubStaff::with('hub')->findOrFail($id);
         $this->morphColumnData($data);
         return response()->json($data);
+    }
+    public function profile($id): View
+    {
+        $data['hub_staff'] = HubStaff::with(['creater', 'address', 'updater'])->findOrFail(decrypt($id));
+        return view('admin.hub_management.hub_staff.profile', $data);
+    }
+    public function loginAs($id)
+    {
+        $staff = HubStaff::findOrFail(decrypt($id));
+        if ($staff) {
+            Auth::guard('staff')->login($staff);
+            return redirect()->route('hub.dashboard');
+        } else {
+            flash()->addError('Hub staff not found');
+            return redirect()->back();
+        }
     }
     public function create(): View
     {
