@@ -3,8 +3,9 @@
 namespace App\Http\Requests\API\Order;
 
 use App\Http\Requests\API\BaseRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class OrderConfirmRequest extends BaseRequest
+class VoucherUpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +24,7 @@ class OrderConfirmRequest extends BaseRequest
     {
         return [
             'order_id' => 'required|exists:orders,order_id',
-            'payment_method' => 'required|string|in:bkash,nogod,roket,upay,ssl,cod',
+            'voucher_code' => 'required|exists:vouchers,code',
         ];
     }
 }

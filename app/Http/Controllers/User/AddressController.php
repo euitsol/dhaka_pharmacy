@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Requests\User\AddressRequest;
 use SebastianBergmann\Type\VoidType;
+use App\Models\DeliveryZoneCity;
 
 
 class AddressController extends Controller
@@ -17,7 +18,7 @@ class AddressController extends Controller
     //
 
     public function __construct() {
-        return $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     public function store(AddressRequest $request): RedirectResponse
@@ -116,5 +117,15 @@ class AddressController extends Controller
             }
         }
 
+    }
+
+    public function cities(Request $request): JsonResponse
+    {
+        $cities = DeliveryZoneCity::query();
+        if($request->has('q')){
+            $cities->where('city_name', 'like', '%'.$request->q.'%');
+        }
+        $cities = $cities->orderBy('city_name', 'asc')->select('id', 'city_name')->get();
+        return response()->json($cities);
     }
 }

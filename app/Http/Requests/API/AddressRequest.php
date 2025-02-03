@@ -25,12 +25,13 @@ class AddressRequest extends BaseRequest
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
             'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
+            'city' => 'required|exists:delivery_zone_cities,city_name',
             'street_address' => 'required|string|max:255',
             'apartment' => 'required|string|max:255',
             'floor' => 'required|string|max:255',
             'delivery_instruction' => 'nullable|string|max:1000',
             'note' => 'nullable|string|max:1000',
+            'is_default' => 'nullable|boolean',
         ];
 
         if (request()->has('address_id')) {

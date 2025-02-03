@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 
 class Voucher extends BaseModel
 {
@@ -28,7 +29,6 @@ class Voucher extends BaseModel
     protected $casts = [
         'starts_at' => 'datetime',
         'expires_at' => 'datetime',
-        'status' => 'boolean',
     ];
 
     protected $appends = [
@@ -74,6 +74,9 @@ class Voucher extends BaseModel
 
     public function isActivePeriod(): bool
     {
+        Log::info("Starts At: {$this->starts_at}");
+        Log::info("Expires At: {$this->expires_at}");
+        Log::info("Now: " . now());
         return now()->between($this->starts_at, $this->expires_at);
     }
 
@@ -134,5 +137,13 @@ class Voucher extends BaseModel
     public function getStatusBadgeClassAttribute(): string
     {
         return $this->status ? 'badge-success' : 'badge-danger';
+    }
+
+    public function isMinOrderAmountReached(Order $order): bool
+    {
+       if ($this->min_order_amount > 0) {
+            return $order->total_amount >= $this->min_order_amount;
+        }
+        return true;
     }
 }
