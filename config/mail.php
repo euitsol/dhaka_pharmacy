@@ -123,4 +123,6 @@ return [
         ],
     ],
 
+    'contact_reciever_email' => env('CONTACT_RECEIVER_EMAIL', 'noreply@dhakapharmacy.com.bd'),
+
 ];

@@ -12,12 +12,20 @@ class CategoryController extends BaseController
 {
     public function categories(Request $request): JsonResponse
     {
-        $query = ProductCategory::with(['pro_sub_cats']);
+        $query = ProductCategory::select(['id', 'name', 'slug', 'image', 'status', 'is_featured', 'is_menu'])
+        ->with(['pro_sub_cats:id,name,slug,image,status,is_menu,pro_cat_id']);
 
         //Featured Category
         if ($request->has('featured') && !empty($request->featured)) {
             if($request->featured == true){
                 $query = $query->featured();
+            }
+        }
+
+        //Menu Category
+        if ($request->has('menu') && !empty($request->menu)) {
+            if($request->menu == true){
+                $query = $query->menu();
             }
         }
 

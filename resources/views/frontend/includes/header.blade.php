@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-xl-4 col-lg-5  ps-0 right-col order-1 order-lg-2">
+                <div class="col-12 col-xl-4 col-lg-5 right-col order-1 order-lg-2">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-4 col-md-3 col-sm-4 logo-col d-block d-lg-none">
                             <div class="logo">

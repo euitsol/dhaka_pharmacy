@@ -21,17 +21,23 @@ class AddressRequest extends BaseRequest
      */
     public function rules(): array
     {
-        return [
-
-            'latitude' => 'required|string',
-            'longitude' => 'required|string',
+        $rules = [
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
             'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
+            'city' => 'required|exists:delivery_zone_cities,city_name',
             'street_address' => 'required|string|max:255',
             'apartment' => 'required|string|max:255',
             'floor' => 'required|string|max:255',
             'delivery_instruction' => 'nullable|string|max:1000',
             'note' => 'nullable|string|max:1000',
+            'is_default' => 'nullable|boolean',
         ];
+
+        if (request()->has('address_id')) {
+            $rules['address_id'] = 'required|exists:addresses,id';
+        }
+
+        return $rules;
     }
 }

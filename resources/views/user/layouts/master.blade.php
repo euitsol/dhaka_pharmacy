@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'User Dashboard'){{ __(' - Dhaka Pharmacy') }}</title>
     <link rel="icon" href="{{ storage_url(settings('site_favicon')) }}">
+
     <!------- Bootstrap-CSS-CDN-Link ------->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -25,6 +26,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
         integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <!------ Custom-CSS ------->
     @stack('css_link')
     <link rel="stylesheet" href="{{ asset('user/asset/css/style.css') }}">
@@ -38,6 +41,16 @@
         const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
         const user_id = `{{ user() ? user()->id : false }}`;
         const content_image_upload_url = "{{ route('file.ci_upload') }}";
+    </script>
+    <script>
+        const routes = {
+            'cart_products': `{{ route('cart.products') }}`,
+            'cart_add': `{{ route('cart.add') }}`,
+            'cart_update': `{{ route('cart.update') }}`,
+            'cart_delete': `{{ route('cart.delete') }}`,
+            'login': `{{ route('login') }}`,
+            'city_search': `{{ route('u.as.cities') }}`
+        };
     </script>
 </head>
 
@@ -67,18 +80,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @stack('js_link')
     <script src="{{ asset('user/asset/js/custom.js') }}"></script>
     <script src="{{ asset('user/asset/js/notificaiton.js') }}"></script>
-    <script>
-        const routes = {
-            'cart_products': `{{ route('cart.products') }}`,
-            'cart_add': `{{ route('cart.add') }}`,
-            'cart_update': `{{ route('cart.update') }}`,
-            'cart_delete': `{{ route('cart.delete') }}`,
-            'login': `{{ route('login') }}`,
-        };
-    </script>
+    <script src="{{ asset('user/asset/js/address.js') }}"></script>
     @include('frontend.includes.add_to_cart_js')
     <script>
         $(document).ready(function() {

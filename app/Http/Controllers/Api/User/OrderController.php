@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Requests\API\Order\AddressUpdateRequest;
 use App\Http\Requests\API\Order\InitiatedRequest;
 use App\Http\Requests\API\Order\IntSingleOrderRequest;
 use App\Http\Requests\API\Order\OrderConfirmRequest;
+use App\Http\Requests\API\Order\VoucherUpdateRequest;
 use App\Http\Traits\DeliveryTrait;
 use App\Models\AddToCart;
 use App\Models\Order;
@@ -17,121 +19,97 @@ use App\Models\Address;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Services\OrderService;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class OrderController extends BaseController
 {
     use TransformProductTrait, TransformOrderItemTrait, DeliveryTrait;
+
+    protected $orderService;
+
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
+
     public function int_order(InitiatedRequest $request): JsonResponse
     {
-        $user = $request->user();
-        $orderId = generateOrderId();
-        $order = new Order();
-
-        $order->customer()->associate($user);
-        $order->status = 0; //Order initiated
-        $order->order_id = $orderId;
-        $order->creater()->associate($user);
-        $order->save();
-
-        foreach ($request->carts as $id) {
-            $cart = AddToCart::where('customer_id', $user->id)
-                ->where('status', 1)->where('id', $id)->first();
-
-            if ($cart) {
-                $op = new OrderProduct();
-                $op->order_id = $order->id;
-                $op->product_id = $cart->product_id;
-                $op->unit_id = $cart->unit_id;
-                $op->quantity = $cart->quantity;
-                $op->save();
-
-                $cart->forceDelete();
-            }
+        try {
+            $this->orderService->setUser($request->user());
+            $order = $this->orderService->processOrder($request->validated());
+            return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->order_id]);
+        }catch (ModelNotFoundException $e) {
+            return sendResponse(false, $e->getMessage(), null, 404);
+        }catch (Exception $e) {
+            return sendResponse(false, $e->getMessage(), null, 500);
         }
-        return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->id]);
     }
 
     public function int_single_order(IntSingleOrderRequest $request): JsonResponse
     {
-        $user = $request->user();
-        $orderId = generateOrderId();
-        $order = new Order();
-
-        $order->customer()->associate($user);
-        $order->status = 0; //Order initiated
-        $order->order_id = $orderId;
-        $order->creater()->associate($user);
-        $order->save();
-
-        $op = new OrderProduct();
-        $op->order_id = $order->id;
-        $op->product_id = $request->product_id;
-        $op->unit_id = $request->unit_id;
-        $op->quantity = $request->quantity;
-        $op->save();
-        return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->id]);
+        try {
+            $this->orderService->setUser($request->user());
+            $order = $this->orderService->processOrder($request->validated(), isDirectOrder: true);
+            return sendResponse(true, 'Order initiated successfully', ['order_id' => $order->order_id]);
+        }catch (ModelNotFoundException $e) {
+            return sendResponse(false, $e->getMessage(), null, 404);
+        }catch (Exception $e) {
+            return sendResponse(false, $e->getMessage(), null, 500);
+        }
     }
     public function details(Request $request): JsonResponse
     {
-        $user = $request->user();
-        $order = Order::with([
-            'customer',
-            'address',
-            'payments',
-            'od.odrs',
-            'products.pro_cat',
-            'products.pro_sub_cat',
-            'products.units',
-            'products.discounts',
-            'products.pivot.unit',
-            'products.company',
-            'products.generic',
-            'products.strength'
-        ])
-            ->where('creater_type', get_class($user))
-            ->where('creater_id', $user->id)
-            ->where('id', $request->order_id)->first();
-        if ($order) {
-            $order->products->each(function (&$product) {
-                $product = $this->transformProduct($product);
-            });
-            $this->calculateOrderTotalDiscountPrice($order);
+        try {
+            $this->orderService->setUser(user: $request->user());
+            $order = $this->orderService->getOrderDetails($request->order_id, 'user');
             return sendResponse(true, 'Order details retrived successfully', ['order' => $order]);
-        } else {
-            return sendResponse(false, 'Something went wrong, please try again');
+        }catch (ModelNotFoundException $e) {
+            return sendResponse(false, $e->getMessage(), null, 404);
+        }catch (Exception $e) {
+            return sendResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
+    public function address(AddressUpdateRequest $request): JsonResponse
+    {
+        try {
+            $this->orderService->setUser($request->user());
+            $this->orderService->setOrder($request->get('order_id', null));
+            $this->orderService->addAddress($request->get('address_id', null), $request->get('delivery_type', null));
+            return sendResponse(true, 'Address added successfully');
+        }catch (ModelNotFoundException $e) {
+            return sendResponse(false, $e->getMessage(), null, 404);
+        }catch (Exception $e) {
+            return sendResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
+    public function voucher(VoucherUpdateRequest $request): JsonResponse
+    {
+        try {
+            $this->orderService->setUser($request->user());
+            $this->orderService->setOrder($request->get('order_id', null));
+            $this->orderService->addVoucher($request->get('voucher_code', null));
+            return sendResponse(true, 'Voucher added successfully');
+        }catch (ModelNotFoundException $e) {
+            return sendResponse(false, $e->getMessage(), null, 404);
+        }catch (Exception $e) {
+            return sendResponse(false, $e->getMessage(), null, 500);
         }
     }
 
     public function order_confirm(OrderConfirmRequest $request): JsonResponse
     {
-        $user = $request->user();
-        $address =  Address::where('creater_id', $user->id)->where('creater_type', get_class($user))->where('id', $request->address)->first();
-        if (!$address) {
-            return sendResponse(false, 'Address not found');
-        }
-        $order = Order::with(['products', 'address'])
-            ->where('creater_type', get_class($user))
-            ->where('creater_id', $user->id)
-            ->where('id', $request->order_id)->first();
-        if ($order) {
-            $order->address_id = $request->address;
-            $order->status = 1; //Order Submit
-            $order->delivery_type = 0;
-            $order->delivery_fee = $this->getDeliveryCharge($address->latitude, $address->longitude);
-            $order->save();
-            $this->calculateOrderTotalDiscountPrice($order);
-
-            $payment = new Payment();
-            $payment->customer()->associate($user);
-            $payment->payment_method = $request->payment_method;
-            $payment->amount = $order->totalDiscountPrice + $order->delivery_fee;
-            $payment->order_id = $order->id;
-            $payment->status = 0; //Initialize
-            $payment->creater()->associate($user);
-            $payment->save();
-            return sendResponse(true, 'Order confirm successfully', ['payment_id' => $payment->id, 'amount' => $payment->amount, 'tran_id' => generateTranId()]);
-        } else {
-            return sendResponse(false, 'Something went wrong, please try again');
+        try {
+            $this->orderService->setUser($request->user());
+            $payment = $this->orderService->confirmOrder($request->validated());
+            return sendResponse(true, 'Order confirm successfully', ['transaction_id' => $payment->transaction_id, 'amount' => $payment->amount, 'payment_method' => $payment->payment_method]);
+        }catch (ModelNotFoundException $e) {
+            return sendResponse(false, $e->getMessage(), null, 404);
+        }catch (Exception $e) {
+            return sendResponse(false, $e->getMessage(), null, 500);
         }
     }
 
@@ -154,17 +132,28 @@ class OrderController extends BaseController
 
     public function cancel(Request $request): JsonResponse
     {
-        $user = $request->user();
-        $order = Order::where('creater_type', get_class($user))
-            ->where('creater_id', $user->id)
-            ->where('id', $request->order_id)->first();
-        if ($order && $order->status < 2 && $order->status != -1) {
-            $order->update(['status' => -1]);
+        try {
+            $this->orderService->setUser($request->user());
+            $this->orderService->setOrder($request->get('order_id', null));
+            $this->orderService->cancelOrder();
             return sendResponse(true, 'Order canceled successfully');
-        } else {
-            return sendResponse(false, 'You can not cancel order which is in progress. Please contact with our customer care team.');
+        }catch (ModelNotFoundException $e) {
+            return sendResponse(false, $e->getMessage(), null, 404);
+        }catch (Exception $e) {
+            return sendResponse(false, $e->getMessage(), null, 500);
         }
-        return sendResponse(false, 'Something went wrong, please try again');
+
+        // $user = $request->user();
+        // $order = Order::where('creater_type', get_class($user))
+        //     ->where('creater_id', $user->id)
+        //     ->where('id', $request->order_id)->first();
+        // if ($order && $order->status < 2 && $order->status != -1) {
+        //     $order->update(['status' => -1]);
+        //     return sendResponse(true, 'Order canceled successfully');
+        // } else {
+        //     return sendResponse(false, 'You can not cancel order which is in progress. Please contact with our customer care team.');
+        // }
+        // return sendResponse(false, 'Something went wrong, please try again');
     }
 
     private function buildOrderQuery($user, $status)

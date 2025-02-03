@@ -169,5 +169,47 @@ class SettingsSeeder extends Seeder
             'value' => '',
             'env_key' => 'SMS_API_STATUS',
         ]);
+
+        SiteSetting::create([
+            'key' => 'google_client_id',
+            'value' => '',
+            'env_key' => 'GOOGLE_CLIENT_ID',
+        ]);
+
+        SiteSetting::create([
+            'key' => 'google_client_secret',
+            'value' => '',
+            'env_key' => 'GOOGLE_CLIENT_SECRET',
+        ]);
+
+        SiteSetting::create([
+            'key' => 'google_redirect_url',
+            'value' => '',
+            'env_key' => 'GOOGLE_REDIRECT_URL',
+        ]);
+
+        SiteSetting::create([
+            'key' => 'facebook_client_id',
+            'value' => '',
+            'env_key' => 'FACEBOOK_CLIENT_ID',
+        ]);
+
+        SiteSetting::create([
+            'key' => 'facebook_client_secret',
+            'value' => '',
+            'env_key' => 'FACEBOOK_CLIENT_SECRET',
+        ]);
+
+        SiteSetting::create([
+            'key' => 'facebook_redirect_url',
+            'value' => '',
+            'env_key' => 'FACEBOOK_REDIRECT_URL',
+        ]);
+
+        SiteSetting::create([
+            'key' => 'contact_receiver_email',
+            'value' => '',
+            'env_key' => 'CONTACT_RECEIVER_EMAIL',
+        ]);
     }
 }

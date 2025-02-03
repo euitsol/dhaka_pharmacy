@@ -26,7 +26,6 @@ class UserRequest extends BaseRequest
             'name' => 'sometimes|required|min:4',
             'image' => 'nullable|image|mimes:jpeg,png,gif,jpg,webp',
             'bio' => 'nullable',
-            'designation' => 'nullable',
             'email' => 'nullable|unique:users,email,' . $id,
             'age' => 'nullable|numeric|digits:2',
             'identification_type' => 'nullable|numeric',

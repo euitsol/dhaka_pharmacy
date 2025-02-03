@@ -31,8 +31,10 @@
                                 <div class="form-group col-md-6 p-2">
                                     <label for="city">{{ __('City') }} <small
                                             class="text-danger">*</small></label>
-                                    <input type="text" class="form-control mt-1" id="city" name="city"
-                                        placeholder="Enter your city name">
+                                    <select name="city" id="city_select" class="select2">
+                                        <option value="">{{ __('Select City') }}</option>
+                                        <option value="Dhaka">Dhaka</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-6 p-2">
                                     <label for="street">{{ __('Street Name') }} <small

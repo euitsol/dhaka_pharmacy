@@ -9,6 +9,13 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class CartProductRule implements ValidationRule
 {
+
+    protected $user;
+
+    public function __construct($user)
+    {
+        $this->user = $user;
+    }
     /**
      * Run the validation rule.
      *
@@ -17,15 +24,17 @@ class CartProductRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $product = Medicine::where('slug', $value)->first();
-        $user = user();
 
-        $query = AddToCart::query();
-
-        if ($user && $product) {
-            if ($query->where('customer_id', $user->id)->where('product_id', $product->id)->where('status', 1)->exists()) {
-                $fail('This product is already in your cart!');
-            }
+        if (!$product) {
+            return; // Product existence will already be validated by 'exists' in the request rules
         }
-        return;
+
+        $exists = AddToCart::where('customer_id', $this->user->id)
+            ->where('product_id', $product->id)
+            ->exists();
+
+        if ($exists) {
+            $fail('This product is already in your cart!');
+        }
     }
 }

@@ -37,7 +37,9 @@ class SiteSettingsController extends Controller
             ->orWhere('module_key', 'notification_settings')
             ->orWhere('module_key', 'email_templates')
             ->orWhere('module_key', 'point_settings')
-            ->orWhere('module_key', 'map_settings')
+            ->orWhere('module_key', 'mapbox_settings')
+            ->orWhere('module_key', 'social_login_settings')
+            ->orWhere('module_key', 'contact_settings')
             ->get();
         $data['availableTimezones'] = availableTimezones();
         return view('admin.site_settings.index', $data);
