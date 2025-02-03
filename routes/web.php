@@ -104,6 +104,7 @@ use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\MapboxSettingsController;
 use App\Http\Controllers\Admin\PaymentClearanceController;
+use App\Http\Controllers\Admin\ProductManagement\MedicineDosesController;
 use App\Http\Controllers\Admin\Support\TicketController as SupportTicketController;
 use App\Http\Controllers\Admin\User\TipsController;
 use App\Http\Controllers\Admin\WithdrawMethodController as AdminWithdrawMethodController;
@@ -592,6 +593,16 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('status/{id}', 'status')->name('status.medicine_strength_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_strength_delete');
         });
+        Route::controller(MedicineDosesController::class)->prefix('medicine-dose')->name('medicine_dose.')->group(function () {
+            Route::get('index', 'index')->name('medicine_dose_list');
+            Route::get('details/{id}', 'details')->name('details.medicine_dose_list');
+            Route::get('create', 'create')->name('medicine_dose_create');
+            Route::post('create', 'store')->name('medicine_dose_create');
+            Route::get('edit/{slug}', 'edit')->name('medicine_dose_edit');
+            Route::put('edit/{id}', 'update')->name('medicine_dose_edit');
+            Route::get('status/{id}', 'status')->name('status.medicine_dose_edit');
+            Route::get('delete/{id}', 'delete')->name('medicine_dose_delete');
+        });
 
         Route::controller(ProductCategoryController::class)->prefix('product-category')->name('product_category.')->group(function () {
             Route::get('index', 'index')->name('product_category_list');
@@ -641,7 +652,6 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('delete/{id}', 'delete')->name('voucher_delete');
             Route::get('details/{id}', 'details')->name('details.voucher_list');
         });
-
     });
 
     //Delivery zones
@@ -1214,7 +1224,10 @@ Route::get('/frequently-asked-question', [FaqPageController::class, 'faq'])->nam
 Route::get('/privacy-policy', [PrivacyPolicyPageController::class, 'privacy_policy'])->name('privacy_policy');
 Route::get('/terms-and-conditions', [TermsAndConditionsPageController::class, 'terms_and_conditions'])->name('terms_and_conditions');
 Route::get('/about-us', [AboutPageController::class, 'about'])->name('about_us');
-Route::get('/contact-us', [ContactPageController::class, 'contact'])->name('contact_us');
+Route::controller(ContactPageController::class)->group(function () {
+    Route::get('/contact-us', 'contact')->name('contact_us');
+    Route::post('/contact-us/submit', 'contact_submit')->name('contact_us.submit');
+});
 
 
 

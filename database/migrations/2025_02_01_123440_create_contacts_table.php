@@ -15,18 +15,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medicine_doses', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-
-            $table->text('name');
-            $table->text('slug')->unique();
-            $table->string('icon')->nullable();
-            $table->text('description')->nullable();
+            $table->string('name');
             $table->boolean('status')->default(1);
-
+            $table->string('email');
+            $table->string('phone')->nullable();
+            $table->longText('message');
             $table->timestamps();
             $table->softDeletes();
-            $this->addAuditColumns($table);
+            $this->addMorphedAuditColumns($table);
         });
     }
 
@@ -35,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medicine_doses');
+        Schema::dropIfExists('contacts');
     }
 };

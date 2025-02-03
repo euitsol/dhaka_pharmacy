@@ -15,7 +15,7 @@
         <div class="tab col-md-2 p-md-3 pl-sm-3">
             <button id="tab1Btn" class="tablinks p-3 btn-success text-white"
                 onclick="openTab(event, 'tab1')">{{ __('General
-                                                                                                                                                                                                                                                                                                                                Settings') }}</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Settings') }}</button>
             <button id="tab2Btn" class="tablinks p-3" onclick="openTab(event, 'tab2')">{{ __('Email Settings') }}</button>
             <button id="tab3Btn" class="tablinks p-3"
                 onclick="openTab(event, 'tab3')">{{ __('Database Settings') }}</button>
@@ -28,6 +28,8 @@
             <button id="tab8Btn" class="tablinks p-3" onclick="openTab(event, 'tab8')">{{ __('Mapbox Setting') }}</button>
             <button id="tab9Btn" class="tablinks p-3"
                 onclick="openTab(event, 'tab9')">{{ __('Social Login Setting') }}</button>
+            <button id="tab10Btn" class="tablinks p-3"
+                onclick="openTab(event, 'tab10')">{{ __('Contact Setting') }}</button>
         </div>
         <div class="col-md-10 p-0">
             {{-- Tab-1 --}}
@@ -84,6 +86,12 @@
                     $document = $documents->where('module_key', 'social_login_settings')->first();
                 @endphp
                 @include('admin.site_settings.social_login_settings', ['document' => $document])
+            </div>
+            <div id="tab10" class="tabcontent py-3" style="display: none">
+                @php
+                    $document = $documents->where('module_key', 'contact_settings')->first();
+                @endphp
+                @include('admin.site_settings.contact_settings', ['document' => $document])
             </div>
 
 
