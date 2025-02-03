@@ -20,7 +20,6 @@ jobs:
           password: ${{ secrets.LIVE_PASSWORD }}
           script: |
             cd /home/sandbox.dhakapharmacy.com.bd/public_html
-            git config --global --add safe.directory /home/sandbox.dhakapharmacy.com.bd/public_html
             git fetch --all
             git reset --hard origin/main
             php artisan optimize:clear
