@@ -33,7 +33,7 @@
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
         const map_center = `[{{ config('mapbox.center_location_lng') }}, {{ config('mapbox.center_location_lat') }}]`;
         const pharmacy_radious = `{{ config('mapbox.pharmacy_radious') }}`;
-        const mapbox_style_id = `{{ config('mapbox.pharmacy_radious') }}`;
+        const mapbox_style_id = `{{ config('mapbox.mapbox_style_id') }}`;
         const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
         const admin_id = `{{ admin() ? admin()->id : false }}`;
         const content_image_upload_url = "{{ route('file.ci_upload') }}";

@@ -10,11 +10,26 @@ use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use App\Observers\OrderModelObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 // #[ObservedBy([OrderModelObserver::class])]
 class Order extends BaseModel
 {
     use HasFactory, SoftDeletes, EagerLoadPivotTrait;
+
+    public CONST INITIATED = 0;
+    public CONST SUBMITTED = 1;
+    public CONST HUB_ASSIGNED = 2;
+    public CONST ITEMS_COLLECTING = 3;
+    public CONST HUB_REASSIGNED = 4;
+    public CONST ITEMS_COLLECTED = 5;
+    public CONST PACHAGE_PREPARED = 6;
+    public CONST DISPATCHED = 7;
+    public CONST DELIVERED = 8;
+
+    public const CANCELLED = -1;
+    public const RETURNED = -2;
+
     protected $fillable = [
         'order_id',
         'customer_id',
@@ -24,9 +39,11 @@ class Order extends BaseModel
         'sub_total',
         'voucher_discount',
         'delivery_fee',
+        'delivery_type',
         'product_discount',
         'status'
     ];
+
 
     public function address()
     {
@@ -105,4 +122,10 @@ class Order extends BaseModel
     {
         return $this->belongsTo(Voucher::class);
     }
+
+    public function timelines():HasMany
+    {
+        return $this->hasMany(OrderTimeline::class, 'order_id', 'id');
+    }
+
 }

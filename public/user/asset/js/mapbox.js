@@ -155,9 +155,9 @@ $(document).ready(function () {
                         $("#address_edit_modal input[name='address']").val(
                             response.address
                         );
-                        $("#address_edit_modal input[name='city']").val(
-                            response.city
-                        );
+                        // $("#address_edit_modal input[name='city']").val(
+                        //     response.city
+                        // );
                         $("#address_edit_modal input[name='street']").val(
                             response.street_address
                         );
