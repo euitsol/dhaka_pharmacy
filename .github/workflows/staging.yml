@@ -23,6 +23,6 @@ jobs:
             cd sandbox.dhakapharmacy.com.bd
             cd public_html
             git fetch --all
-            git reset --hard origin/live
+            git reset --hard origin/main
             git pull
             php artisan optimize:clear
