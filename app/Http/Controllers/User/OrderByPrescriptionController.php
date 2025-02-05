@@ -29,16 +29,16 @@ class OrderByPrescriptionController extends Controller
             $address = Address::findOrFail($request->address_id);
             $temp_file = TempFile::findOrFail($request->image);
             if ($temp_file) {
-                $from_path = 'public/' . $temp_file->path . '/' . $temp_file->filename;
+                $from_path = $temp_file->path . '/' . $temp_file->filename;
                 $to_path = 'prescription/' . str_replace(' ', '-', user()->name) . '/' . time() . '/' . $temp_file->filename;
-                Storage::move($from_path, 'public/' . $to_path);
+                Storage::disk('public')->move($from_path, $to_path);
                 $up->image = $to_path;
                 $up->address_id = $request->address_id;
                 $up->delivery_type = 1;
                 $up->delivery_fee = $this->getDeliveryCharge($address->latitude, $address->longitude);
                 $up->user_id = user()->id;
                 $up->save();
-                Storage::deleteDirectory('public/' . $temp_file->path);
+                Storage::disk('public')->deleteDirectory($temp_file->path);
                 $temp_file->forceDelete();
                 $data['message'] = 'Order by prescription successfully done';
             } else {
