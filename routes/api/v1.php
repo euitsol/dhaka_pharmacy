@@ -19,7 +19,7 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 
     Route::controller(AuthenticationController::class)->prefix('authentication')->name('auth.')->group(function () {
         Route::post('password-login', 'pass_login')->name('l.p');
-        Route::post('senduri: -otp', 'send_otp')->name('s.o');
+        Route::post('send-otp', 'send_otp')->name('s.o');
         Route::post('verify-otp', 'otp_verify')->name('v.o');
         Route::post('registration', 'registration')->name('reg');
         Route::post('forgot-password/phone-check', 'fp_phone_check')->name('fp.pc');
