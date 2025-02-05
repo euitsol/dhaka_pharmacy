@@ -46,7 +46,7 @@ class OrderByPrescriptionController extends Controller
             }
             return response()->json($data);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Somethings is wrong'], 500);
+            return response()->json(['message' => 'Somethings is wrong' . $e->getMessage()], 500);
         }
     }
     public function check_auth()
