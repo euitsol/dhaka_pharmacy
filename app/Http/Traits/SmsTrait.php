@@ -14,7 +14,7 @@ trait SmsTrait
         $data = [
             'api_key' => $api_key,
             'api_secret' => $api_secret,
-            'request_type' => 'SINGLE_SMS',
+            'request_type' => 'OTP',
             'message_type' => 'TEXT', // or 'UNICODE' if needed
             'mobile' => $mobile,
             'message_body' => $message,
