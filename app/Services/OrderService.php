@@ -94,8 +94,17 @@ class OrderService
 
             // Calculate order values
             $subTotal = $this->calculateSubTotal(carts: $carts);
-            $voucherDiscount = $this->calculateVoucherDiscount($data['voucher_id'] ?? null, $subTotal);
-            $deliveryFee = $this->calculateDeliveryFee($data['address_id'] ?? null);
+            if(isset($data['address_id']) && $data['address_id'] !== null){
+                $deliveryFee = $this->calculateDeliveryFee($data['address_id'] ?? null);
+            }else{
+                $deliveryFee = 0;
+            }
+
+            if(isset($data['voucher_id']) && $data['voucher_id'] !== null){
+                $voucherDiscount = $this->calculateVoucherDiscount($data['voucher_id'] ?? null, $subTotal);
+            } else {
+                $voucherDiscount = 0;
+            }
 
             // Create order
             $order = Order::create([
