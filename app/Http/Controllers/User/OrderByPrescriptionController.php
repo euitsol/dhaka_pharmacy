@@ -28,25 +28,38 @@ class OrderByPrescriptionController extends Controller
             $up = new OrderPrescription();
             $address = Address::findOrFail($request->address_id);
             $temp_file = TempFile::findOrFail($request->image);
+
             if ($temp_file) {
-                $from_path = 'public/' . $temp_file->path . '/' . $temp_file->filename;
-                $to_path = 'prescription/' . str_replace(' ', '-', user()->name) . '/' . time() . '/' . $temp_file->filename;
-                Storage::move($from_path, 'public/' . $to_path);
+                $from_path = $temp_file->path . '/' . $temp_file->filename;
+                $parent_directory = 'prescription/' . str_replace(' ', '-', user()->name);
+                $to_path = $parent_directory . '/' . time() . '/' . $temp_file->filename;
+
+                // Ensure the parent directory exists
+                Storage::disk('public')->makeDirectory($parent_directory);
+
+                // Move the file
+                Storage::disk('public')->move($from_path, $to_path);
+
+                // Save the order prescription
                 $up->image = $to_path;
                 $up->address_id = $request->address_id;
                 $up->delivery_type = 1;
                 $up->delivery_fee = $this->getDeliveryCharge($address->latitude, $address->longitude);
                 $up->user_id = user()->id;
                 $up->save();
-                Storage::deleteDirectory('public/' . $temp_file->path);
+
+                // Clean up temporary files
+                Storage::disk('public')->deleteDirectory($temp_file->path);
                 $temp_file->forceDelete();
+
                 $data['message'] = 'Order by prescription successfully done';
             } else {
                 $data['message'] = 'Something is wrong, please try again';
             }
+
             return response()->json($data);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Somethings is wrong'], 500);
+            return response()->json(['message' => 'Something went wrong: ' . $e->getMessage()], 500);
         }
     }
     public function check_auth()

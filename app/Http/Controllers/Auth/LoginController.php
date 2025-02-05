@@ -116,7 +116,7 @@ class LoginController extends Controller
 
     public function fb_delete(Request $request)
     {
-        
+
         $accessToken = $request->input('access_token');
 
         // Validate access token with Facebook API
