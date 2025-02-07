@@ -115,19 +115,53 @@ class OrderController extends BaseController
 
     public function list(Request $request): JsonResponse
     {
-        $user = $request->user();
-        $status = $request->status;
-        $filter_val = $request->filter ?? 7;
+        $query = Order::select(['id','order_id', 'customer_id', 'customer_type', 'address_id', 'voucher_id', 'sub_total', 'voucher_discount', 'product_discount','total_amount', 'delivery_fee','delivery_type', 'status'])
+            ->with([
+            'customer:id,name,phone',
+            'products:id,name,slug,status,pro_cat_id,pro_sub_cat_id,company_id,generic_id,strength_id,dose_id,price,image',
+            'products.pro_cat:id,name,slug,status',
+            'products.generic:id,name,slug,status',
+            'products.pro_sub_cat:id,name,slug,status',
+            'products.company:id,name,slug,status',
+            'address:id,name,phone,city,street_address,latitude,longitude,apartment,floor,delivery_instruction,address',
+            'voucher:id,code,type,discount_amount,usage_limit',
+            'timelines.statusRule',
+            'payments:id,order_id,customer_id,customer_type,amount,status,payment_method,transaction_id,creater_id,creater_type'
+        ])
+        ->where('customer_id', $request->user()->id)
+        ->where('customer_type', get_class($request->user()));
 
-
-        $query = $this->buildOrderQuery($user, $status);
-        $query->with(['od', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength']);
-        if ($filter_val != 'all') {
-            $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
+        if($request->has('status')) {
+            $query->where('status', $request->status);
         }
-        $orders =  $query->latest()->get();
-        $this->prepareOrderData($orders);
-        return sendResponse(true, 'Order list retrived successfully', ['orders' => $orders]);
+
+
+        $orders = $query->paginate($request->get('per_page', 10))->withQueryString();
+
+
+
+        // $user = $request->user();
+        // $status = $request->status;
+        // $filter_val = $request->filter ?? 7;
+
+
+        // $query = $this->buildOrderQuery($user, $status);
+        // $query->with(['od', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength']);
+        // if ($filter_val != 'all') {
+        //     $query->where('created_at', '>=', Carbon::now()->subDays($filter_val));
+        // }
+        // $orders =  $query->latest()->get();
+        // $this->prepareOrderData($orders);
+        $additional = [
+            'current_page' => $orders->currentPage(),
+            'last_page' => $orders->lastPage(),
+            'per_page' => $orders->perPage(),
+            'total' => $orders->total(),
+            'next_page_url' => $orders->nextPageUrl(),
+            'prev_page_url' => $orders->previousPageUrl()
+        ];
+
+        return sendResponse(true, 'Order list retrived successfully', ['orders' => $query->get()], 200, $additional);
     }
 
     public function cancel(Request $request): JsonResponse

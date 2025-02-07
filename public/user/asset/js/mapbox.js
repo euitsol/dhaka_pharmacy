@@ -132,6 +132,29 @@ $(document).ready(function () {
 
 //Edit Address
 $(document).ready(function () {
+    // if($('#city_select')){
+    //     $('#city_select').select2({
+    //         placeholder: 'Select City',
+    //         allowClear: true,
+    //         searchable: true,
+    //         ajax: {
+    //             url: routes.city_search,
+    //             dataType: 'json',
+    //             delay: 250,
+    //             processResults: function (data) {
+    //                 return {
+    //                     results: $.map(data, function (item) {
+    //                         return {
+    //                             text: item.name,
+    //                             id: item.name,
+    //                         };
+    //                     }),
+    //                 };
+    //             },
+    //         },
+    //     });
+    // }
+
     $(".edit-btn").on("click", function () {
         let id = $(this).attr("data-id");
         if (id) {

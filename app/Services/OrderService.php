@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\{AddToCart, Order, Voucher, Address, Medicine, Payment, User};
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
@@ -40,18 +41,20 @@ class OrderService
             throw new ModelNotFoundException('Invalid order id');
         }
         $this->order = $order;
+
+        Log::info($this->order->order_id."Set successfully");
         return $this;
     }
 
-    public function processOrder(array $data,  bool $isDirectOrder = false)
+    public function processOrder(array $data,  bool $isDirectOrder = false, string $type = 'api')
     {
         if (!$this->user) {
             throw new Exception('User not found.');
         }
 
-        return DB::transaction(function () use ($data, $isDirectOrder) {
+        return DB::transaction(function () use ($data, $isDirectOrder, $type) {
             $carts = collect(); // Initialize an empty collection
-
+            Log::info($data);
             if ($isDirectOrder) {
                 // Handle direct order
                 $product = Medicine::with([
@@ -94,12 +97,22 @@ class OrderService
 
             // Calculate order values
             $subTotal = $this->calculateSubTotal(carts: $carts);
-            $voucherDiscount = $this->calculateVoucherDiscount($data['voucher_id'] ?? null, $subTotal);
-            $deliveryFee = $this->calculateDeliveryFee($data['address_id'] ?? null);
+            if(isset($data['voucher_id']) && $data['voucher_id'] != null){
+                $voucherDiscount = $this->calculateVoucherDiscount($data['voucher_id'], $subTotal);
+            }else{
+                $voucherDiscount = 0;
+            }
+            if(isset($data['address_id']) && $data['address_id'] != null){
+                $deliveryFee = $this->calculateDeliveryFee($data['address_id'])['charge'];
+                $deliveryType = $this->calculateDeliveryFee($data['address_id'])['delivery_type'];
+            }else{
+                $deliveryFee = 0;
+                $deliveryType = null;
+            }
 
             // Create order
             $order = Order::create([
-                'order_id' => generateOrderId('api'),
+                'order_id' => generateOrderId($type),
                 'customer_id' => $this->user->id,
                 'customer_type' => get_class($this->user),
                 'creater_id' => $this->user->id,
@@ -108,8 +121,9 @@ class OrderService
                 'voucher_id' => $data['voucher_id'] ?? null,
                 'sub_total' => $subTotal,
                 'voucher_discount' => $voucherDiscount,
-                'product_discount' => 0, //will be added later
+                'product_discount' => 0, //will be added in order product
                 'delivery_fee' => $deliveryFee,
+                'delivery_type' => $deliveryType,
                 'status' => Order::INITIATED
             ]);
 
@@ -170,12 +184,20 @@ class OrderService
 
     public function confirmOrder(array $data):Payment
     {
-        $this->setOrder($data['order_id']);
+        if(!isset($this->order)){
+            $this->setOrder($data['order_id']);
+        }
+
+        Log::info($this->order->order_id."Payload".$data['payment_method']);
+
         $this->checkConfirmAbility($this->order);
         $this->paymentService->setOrder($this->order)->setUser($this->user)->setPaymentMethod($data['payment_method']);
         $payment = $this->paymentService->createPayment();
-        $this->order->update(['status' => Order::SUBMITTED]);
         $this->orderTimelineService->updateTimelineStatus($this->order, ORDER::SUBMITTED);
+        $this->order->update(['status' => Order::SUBMITTED]);
+
+        Log::info($this->order->order_id."Confirmed");
+
         return $payment;
     }
 
@@ -216,6 +238,11 @@ class OrderService
         $order->update($data);
     }
 
+    // public function list(array|null $data): Collection
+    // {
+
+    // }
+
     private function calculateSubTotal($carts)
     {
         return $carts->sum(function ($cart) {
@@ -247,19 +274,20 @@ class OrderService
             $quantity = $cart->quantity;
 
             // Fetch discount from discounts table
-            $discount = $product->active_discounts()->where('unit_id', $cart->unit_id)->first();
+            $discount = $product->active_discounts()->first();
+            Log::info("Discount: " . $discount);
             $productDiscount = 0;
 
             if ($discount) {
                 if ($discount->discount_percentage) {
-                    $productDiscount = ($unitPrice * $discount->discount_percentage) / 100;
+                    $productDiscount = ceil(($unitPrice * $discount->discount_percentage) / 100);
                 } elseif ($discount->discount_amount) {
-                    $productDiscount = $discount->discount_amount;
+                    $productDiscount = ceil($discount->discount_amount);
                 }
             }
 
             $totalDiscount += $productDiscount * $quantity;
-
+            Log::info("totalDiscount: " . $productDiscount * $quantity);
             return [
                 'product_id' => $product->id,
                 'unit_id' => $cart->unit_id,
@@ -304,6 +332,8 @@ class OrderService
         if($order->total_amount <= 0){
             throw new ModelNotFoundException('Order total amount is invalid');
         }
+
+        Log::info($order->order_id."Checked confirm ability");
     }
     private function checkCancelAbility(Order $order):void
     {

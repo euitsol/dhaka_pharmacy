@@ -96,7 +96,7 @@
                                 @include('frontend.includes.wishlist_slide')
                             </div>
                             <div class="item">
-                                <button class="cart-btn" type="button" data-bs-toggle="offcanvas"
+                                <button class="cart-btn" id="cart_icon_btn" type="button" data-bs-toggle="offcanvas"
                                     data-bs-target="#cartbtn" aria-controls="offcanvasRight">
                                     <i class="fa-solid fa-cart-shopping me-1"></i>
                                     <span>{{ __('Cart') }}</span><sup><strong id="cart_btn_quantity"></strong></sup>

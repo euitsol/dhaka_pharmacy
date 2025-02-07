@@ -26,7 +26,7 @@ class AddToCartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug' => ['required', 'string', 'exists:medicines,slug', new CartProductRule()],
+            'slug' => ['required', 'string', 'exists:medicines,slug', new CartProductRule(auth()->user())],
             'unit' => 'nullable|exists:medicine_units,id',
             'quantity' => 'nullable|numeric'
         ];
@@ -37,9 +37,9 @@ class AddToCartRequest extends FormRequest
         $errors = $validator->errors();
         $response = new JsonResponse([
             'success' => false,
-            'errors' => $errors->messages(),
-        ], 200);
-
+            'message' => 'Validation errors occurred.',
+            'errors' => $errors->messages()
+        ], status: 422);
         throw new HttpResponseException($response);
     }
 }

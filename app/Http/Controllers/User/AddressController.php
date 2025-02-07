@@ -11,14 +11,18 @@ use Illuminate\View\View;
 use App\Http\Requests\User\AddressRequest;
 use SebastianBergmann\Type\VoidType;
 use App\Models\DeliveryZoneCity;
+use App\Services\AddressService;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class AddressController extends Controller
 {
-    //
+    protected AddressService $addressService;
 
-    public function __construct() {
+    public function __construct(AddressService $addressService) {
         $this->middleware('auth');
+        $this->addressService = $addressService;
     }
 
     public function store(AddressRequest $request): RedirectResponse
@@ -47,8 +51,15 @@ class AddressController extends Controller
 
     public function details($id): JsonResponse
     {
-        $data = Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->where('id', $id)->get()->first();
-        return response()->json($data);
+        try{
+            $data = $this->addressService->setUser(user())->list(true, $id);
+            return response()->json($data, 200);
+        }catch(ModelNotFoundException $e){
+            return response()->json($e->getMessage(), 404);
+        }catch(Exception $e){
+            return response()->json($e->getMessage(), 500);
+        }
+
     }
 
     public function update(AddressRequest $request): RedirectResponse

@@ -68,7 +68,14 @@
     /* Adding this new global variable */
     --bg-2: #f4f4f4;
     --bg-3: #eaf1fb;
+    --bg-4: #d9d9d922;
     --btn-bg-2: #7db6e3;
+    --btn-bg-3: #1869aa;
+}
+
+/* Box shadow */
+:root {
+    --box-shadow-1: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /*====================================
@@ -2644,4 +2651,53 @@ a {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+/* Full-Screen Overlay */
+#loading-animation {
+    position: fixed;
+    top: 0;
+    right: 0 !important;
+    width: 37.5rem;
+    height: 100%;
+    background-image: linear-gradient(to right, #d8e5ec81, #dae3eb8c, #def0e791);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999999999999999;
+}
+
+/* Logo with Breathing Animation */
+#loading-animation img {
+    max-width: 20rem; /* Adjust the size as needed */
+    animation: breathing 2s ease-in-out infinite;
+}
+
+/* Keyframes for the Breathing Effect */
+@keyframes breathing {
+    0% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+}
+
+.unit-badge {
+    background-color: var(--btn-bg-2);
+    color: var(--text-color-black);
+    border: 1px solid var(--border-1);
+    font-size: 14px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
 }

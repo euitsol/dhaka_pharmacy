@@ -6,15 +6,16 @@ use App\Models\{Voucher, User, VoucherRedemption, Order};
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Log;
 
 class VoucherService
 {
-    protected User $user;
+    protected User|Authenticatable $user;
     protected Order $order;
 
 
-    public function setUser(User $user): self
+    public function setUser(User|Authenticatable $user): self
     {
         $this->user = $user;
         return $this;
@@ -73,15 +74,19 @@ class VoucherService
         }
 
         //Order-specific checks
-        if($this->order){
+        if (isset($this->order) && $this->order) {
             if (!$voucher->isMinOrderAmountReached($this->order)) {
                 return ['valid' => false, 'message' => 'Minimum order amount not met'];
             }
         }
-        return ['valid' => true, 'message' => ''];
+
+        if($voucher->min_order_amount > 0 && !(isset($this->order) && $this->order)){
+            return ['valid' => false, 'message' => 'Minimum order amount not met'];
+        }
+        return ['valid' => true, 'message' => 'Voucher is valid'];
     }
 
-    public function updateVoucherUsage(Voucher $voucher, User $user, Order $order): void
+    public function updateVoucherUsage(Voucher $voucher, User|Authenticatable $user, Order $order): void
     {
         $voucher->redemptions()->forceDelete();
         $voucher->redemptions()->create([
