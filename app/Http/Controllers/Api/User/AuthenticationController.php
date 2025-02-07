@@ -45,7 +45,7 @@ class AuthenticationController extends BaseController
 
             if (!$user) {
                 $user = new User();
-                $user->name = "User";
+                $user->name = "Unknown User";
                 $user->phone = $request->phone;
                 $user->save();
             }

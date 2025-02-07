@@ -148,7 +148,7 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::routes();
 
-Route::controller(CartAjaxController::class)->prefix('cart')->name('cart.')->group(function () {
+Route::controller(CartAjaxController::class)->prefix('cart')->middleware('auth:web')->name('cart.')->group(function () {
     Route::post('add', 'add')->name('add');
     Route::get('products', 'products')->name('products');
     Route::post('update', 'update')->name('update');
@@ -1111,10 +1111,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
         Route::post('/update/image', 'updateImage')->name('update.img');
         Route::get('file/download/{url}', 'view_or_download')->name('file.download');
     });
-    // Checkout Routes
-    Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
-        Route::post('/single-order', 'single_order')->name('product.single_order');
-    });
+
     // KYC Verification Center Routes
     Route::controller(UserKycVerificationController::class)->prefix('kyc')->name('u.kyc.')->group(function () {
         Route::post('/store', 'kyc_store')->name('store');
@@ -1125,9 +1122,11 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
 
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
         Route::post('init', 'int_order')->name('init');
+        Route::post('single-order', 'single_order')->name('product.single_order');
         Route::get('order/{o_id}', 'checkout')->name('index');
-        Route::get('/address/{id}', 'address')->name('address');
-        Route::post('/order/confirm/{order_id}', 'order_confirm')->name('product.order.confirm');
+        Route::get('address/{id}', 'address')->name('address');
+        Route::post('order-confirm', 'confirm_order')->name('product.order.confirm');
+        Route::post('voucher/check', 'voucher_check')->name('voucher.check');
     });
 
     Route::controller(UserPaymentController::class)->prefix('payment')->name('u.payment.')->group(function () {

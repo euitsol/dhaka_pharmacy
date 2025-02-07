@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Frontend;
 
+use App\Rules\CartBelongsToUserRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
@@ -26,7 +27,7 @@ class CartDeleteRequest extends FormRequest
     {
         return [
             'carts' => 'required|array',
-            'carts.*' => 'required|integer|exists:add_to_carts,id',
+            'carts.*' => ['required','integer','exists:add_to_carts,id',new CartBelongsToUserRule($this->user())],
         ];
     }
 
@@ -36,7 +37,7 @@ class CartDeleteRequest extends FormRequest
         $response = new JsonResponse([
             'success' => false,
             'errors' => $errors->messages(),
-        ], 200);
+        ], 422);
 
         throw new HttpResponseException($response);
     }

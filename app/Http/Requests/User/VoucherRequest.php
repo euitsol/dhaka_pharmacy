@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\User;
 
-use App\Rules\ApiRules\PasswordNotSet;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\JsonResponse;
 
-class LoginRequest extends FormRequest
+class VoucherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +25,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required', 'string', 'exists:users,phone', new PasswordNotSet()],
-            'password' => 'required',
+            'voucher_code' => 'required|string|max:100|exists:vouchers,code',
         ];
     }
 }

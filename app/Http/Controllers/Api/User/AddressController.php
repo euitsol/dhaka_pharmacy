@@ -59,7 +59,7 @@ class AddressController extends BaseController
     {
         try{
             $delivery_details = $request->query('delivery_details', false) == true;
-            return sendResponse(true, 'Address list retrived successfully', $this->addressService->setUser($request->user())->list($delivery_details));
+            return sendResponse(true, 'Address list retrived successfully', $this->addressService->setUser($request->user())->list($delivery_details, $request->get('address_id', null)));
         }catch(ModelNotFoundException $e){
             return sendResponse(false, $e->getMessage());
         }catch(Exception $e){

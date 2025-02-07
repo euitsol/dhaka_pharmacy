@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Api\User;
 
-use App\Rules\ApiRules\PasswordNotSet;
+use App\Http\Requests\API\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class PaymentRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required', 'string', 'exists:users,phone', new PasswordNotSet()],
-            'password' => 'required',
+            'transaction_id' => 'required|string|exists:payments,transaction_id',
         ];
     }
 }

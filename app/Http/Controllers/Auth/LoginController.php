@@ -210,7 +210,7 @@ class LoginController extends Controller
 
             if (!$user) {
                 $user = new User();
-                $user->name = "User";
+                $user->name = "Unkhnown User";
                 $user->phone = $req->phone;
                 $user->save();
             }

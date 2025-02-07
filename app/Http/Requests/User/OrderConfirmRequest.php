@@ -14,17 +14,20 @@ class OrderConfirmRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'order_id' => decrypt($this->input('order_id')),
+        ]);
+    }
+
     public function rules(): array
     {
         return [
+            'order_id' => 'required|exists:orders,order_id',
             'address' => 'required|exists:addresses,id',
-            'delivery_type' => 'nullable|numeric',
-            'payment_method' => 'required',
+            'delivery_type' => 'required|string|in:standard,express',
+            'payment_method' => 'required|string|in:bkash,nogod,roket,upay,ssl,cod',
         ];
     }
 }

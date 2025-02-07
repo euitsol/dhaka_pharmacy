@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\{Order, OrderStatusRule, OrderTimeline};
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class OrderTimelineService
 {
@@ -28,8 +29,11 @@ class OrderTimelineService
 
         if ($timelineEntry) {
             $timelineEntry->update([
+                'status' => OrderTimeline::DONE,
                 'actual_completion_time' => now()
             ]);
+
+            Log::info($order->order_id."Timeline updated successfully".$currentStatus);
         }
     }
 

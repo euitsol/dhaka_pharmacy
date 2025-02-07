@@ -54,25 +54,48 @@
             'center_location_lat': `{{ config('mapbox.center_location_lat') }}`,
             'center_location_lng': `{{ config('mapbox.center_location_lng') }}`,
         };
+        const images = {
+            'dp': `{{ storage_url('frontend/asset/img/dp.png') }}`
+        };
+        const TICKET_ID = `{{ getTicketId() }}`;
+        const content_image_upload_url = "{{ route('file.ci_upload') }}";
+    </script>
+    <script>
         const routes = {
             'cart_products': `{{ route('cart.products') }}`,
             'cart_add': `{{ route('cart.add') }}`,
             'cart_update': `{{ route('cart.update') }}`,
             'cart_delete': `{{ route('cart.delete') }}`,
             'login': `{{ route('login') }}`,
-
-            // Live Chat
+            'city_search': `{{ route('u.as.cities') }}`,
             'getMessages': `{{ route('ticket.messages') }}`,
         };
-
-        const TICKET_ID = `{{ getTicketId() }}`;
-
-
-        const content_image_upload_url = "{{ route('file.ci_upload') }}";
     </script>
+    <script>
+        window.AppConfig = {
+            'urls': {
+                'cart': {
+                    'products': @json(route('cart.products')),
+                    'add': @json(route('cart.add')),
+                    'update': @json(route('cart.update')),
+                    'delete': @json(route('cart.delete')),
+                },
+                'address': {
+                    'cities': @json(route('u.as.cities')),
+                    'details': @json(route('u.as.details', 'id')),
+                },
+                'voucher': {
+                    'check': @json(route('u.ck.voucher.check')),
+                }
+            }
+        }
+    </script>
+
+
 </head>
 
 <body>
+    @include('frontend.includes.preloder')
     @include('frontend.includes.chat_bubble.support')
     <header>
         @include('frontend.includes.header')
@@ -100,18 +123,14 @@
     </script>
     <!--========= uikit-js ===========-->
     <script src="{{ asset('frontend/vendor/uikit/js/uikit.min.js') }}"></script>
+    <script src="{{ asset('frontend/asset/js/cart.js') }}"></script>
     @stack('js_link')
     <!--========== custom-js ===========-->
     <script src="{{ asset('frontend/asset/js/custom.js') }}"></script>
     <script src="{{ asset('frontend/asset/js/support.js') }}"></script>
-    @include('frontend.includes.add_to_cart_js')
+    {{-- @include('frontend.includes.add_to_cart_js') --}}
     @include('frontend.includes.search_js')
     @include('frontend.includes.wishlist_js')
-    <script>
-        $(document).ready(function() {
-            refreshCart();
-        });
-    </script>
     {{-- @livewireScripts <!-- Include Livewire scripts here --> --}}
     @stack('js')
 </body>
