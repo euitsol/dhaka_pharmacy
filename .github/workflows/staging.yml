@@ -24,3 +24,4 @@ jobs:
             git reset --hard origin/main
             php artisan optimize:clear
             php artisan migrate
+            php artisan migrate --force
