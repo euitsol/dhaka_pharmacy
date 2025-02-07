@@ -7,7 +7,7 @@ on:
     branches: ["live"]
 
 jobs:
-  laravel-deploy:
+  live-server-deploy:
     runs-on: ubuntu-latest
 
     steps:

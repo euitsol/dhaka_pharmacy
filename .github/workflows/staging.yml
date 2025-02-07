@@ -1,4 +1,4 @@
-name: Deploy Application to Live Server
+name: Deploy Application to Staging Server
 
 on:
   push:
@@ -7,22 +7,19 @@ on:
     branches: ["main"]
 
 jobs:
-  laravel-deploy:
+  sandbox-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.LIVE_HOST }}
-          port: ${{ secrets.LIVE_PORT }}
-          username: ${{ secrets.LIVE_USERNAME }}
-          password: ${{ secrets.LIVE_PASSWORD }}
+          host: "sandbox.dhakapharmacy.com.bd"
+          port: 22
+          username: "sandb3927"
+          password: "DP@2025EuitSols"
           script: |
-            cd home
-            cd sandbox.dhakapharmacy.com.bd
-            cd public_html
+            cd /home/sandbox.dhakapharmacy.com.bd/public_html
             git fetch --all
-            git reset --hard origin/live
-            git pull
+            git reset --hard origin/main
             php artisan optimize:clear
