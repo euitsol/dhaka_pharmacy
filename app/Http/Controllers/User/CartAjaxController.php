@@ -9,106 +9,81 @@ use App\Http\Requests\Frontend\CartUpdateRequest;
 use App\Http\Traits\TransformProductTrait;
 use App\Models\AddToCart;
 use App\Models\Medicine;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-
+use SebastianBergmann\Type\VoidType;
+use App\Services\CartService;
+use Exception;
 
 class CartAjaxController extends Controller
 {
     use TransformProductTrait;
 
-    public function __construct() {}
+    private CartService $cartService;
 
-    public function add(AddToCartRequest $request): JsonResponse
+    public function __construct(CartService $cartService)
     {
+        $this->cartService = $cartService;
+    }
 
-        if (!auth()->guard('web')->check()) {
-            return response()->json([
-                'requiresLogin' => true,
-                'message' => 'You need to log in to add items to your cart.',
-            ]);
-        }
-
-        $customer_id = user()->id;
-
+    public function add(AddToCartRequest $request): JsonResponse|VoidType
+    {
+        $user = user();
         $product = Medicine::activated()->where('slug', $request->slug)->first();
-        if (!empty($product)) {
-            $atc = new AddToCart();
-            $atc->product_id = $product->id;
-            $atc->customer_id = $customer_id;
-            $atc->unit_id = $request->unit ?? null;
-            $atc->quantity = $request->quantity ?? 1;
-            $atc->save();
 
+        try {
+            $atc = $this->cartService->setUser($user)
+            ->addItem($product, $request->validated());
             return response()->json([
                 'success' => true,
                 'message' =>   $atc->product->name . ' has been added to your cart!',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
             ]);
         }
     }
 
     public function products(): JsonResponse
     {
-        if (!auth()->guard('web')->check()) {
+        $user = user();
+
+        try {
+            $this->cartService->setUser($user);
+            $items = $this->cartService->currentCart();
+
             return response()->json([
-                'requiresLogin' => true,
-                'message' => 'You need to log in to add items to your cart.',
+                'success' => true,
+                'data' => $items,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
             ]);
         }
-
-        $customer_id = user()->id;
-
-        $atc = AddToCart::with([
-            'product',
-            'product.pro_cat',
-            'product.generic',
-            'product.pro_sub_cat',
-            'product.company',
-            'product.discounts',
-            'unit',
-            'product.units' => function ($q) {
-                $q->orderBy('quantity', 'asc');
-            },
-        ])->currentCart()->get();
-
-        $products = $atc->each(function (&$atc) {
-            $atc->product = $this->transformProduct($atc->product);
-        });
-        return response()->json([
-            'success' => true,
-            'data' => $products,
-        ]);
     }
 
     public function update(CartUpdateRequest $request): JsonResponse
     {
-        $atc = AddToCart::with([
-            'product',
-            'product.pro_cat',
-            'product.generic',
-            'product.pro_sub_cat',
-            'product.company',
-            'product.discounts',
-            'unit',
-            'product.units' => function ($q) {
-                $q->orderBy('quantity', 'asc');
-            },
-        ])->where('id', $request->cart)->first();
-        if (!empty($atc)) {
-            $atc->unit_id = $request->unit ? $request->unit : $atc->unit_id;
-            $atc->quantity = $request->quantity ? $request->quantity : $atc->quantity;
-            $atc->save();
-
-            $atc->load('unit');
-            $atc->product = $this->transformProduct($atc->product);
-
-
+        $user = user();
+        try {
+            $this->cartService->setUser($user);
+            $atc = $this->cartService->setCart($request->cart_id)->updateCart($request->all());
             return response()->json([
                 'success' => true,
                 'data' => $atc,
-                'message' => ($request->unit ? 'Unit' : 'Quantity') . ' has been updated successfully!',
+                'message' => ($request->unit_id ? 'Unit' : 'Quantity') . ' has been updated successfully!',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
             ]);
         }
     }

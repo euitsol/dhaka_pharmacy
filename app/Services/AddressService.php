@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\{Address, DeliveryZone, User, DeliveryZoneCity};
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -11,10 +12,10 @@ use Illuminate\Support\Facades\{DB, Log};
 
 class AddressService
 {
-    protected User $user;
+    protected User|Authenticatable $user;
     protected Address $address;
 
-    public function setUser(User $user): self
+    public function setUser(User|Authenticatable $user): self
     {
         $this->user = $user;
         return $this;
@@ -61,17 +62,28 @@ class AddressService
         });
     }
 
-    public function list(bool $isDelivery = false): Collection
+    public function list(bool $isDelivery = false, int|null $addressId = null): Collection|Address|ModelNotFoundException|array
     {
-        return Address::select('id', 'zone_id', 'latitude', 'longitude', 'address', 'city', 'street_address', 'apartment', 'floor', 'delivery_instruction', 'is_default')
+        $query = Address::select('id', 'zone_id', 'latitude', 'longitude', 'address', 'city', 'street_address', 'apartment', 'floor', 'delivery_instruction', 'is_default')
             ->where('creater_id', $this->user->id)
             ->where('creater_type', get_class($this->user))
             ->with('zone:id,name,charge,allows_express,express_charge,delivery_time_hours,express_delivery_time_hours,status')
             ->orderBy('is_default', 'desc')
-            ->get()
-            ->map(function ($address) use ($isDelivery) {
+            ->when($addressId, fn($q) => $q->where('id', $addressId));
+
+        $addresses = $query->get();
+
+        if ($addressId && !$addresses->contains('id', $addressId)) {
+            throw new ModelNotFoundException('Address not found.');
+        }
+
+        if($isDelivery){
+            $addresses = $addresses->map(function ($address) use ($isDelivery) {
                 return $this->appendDeliveryDetails($address, $isDelivery);
             });
+        }
+
+        return $addressId ? $addresses->first() : $addresses;
     }
 
     public function getCities(?string $query = null): Collection
@@ -196,6 +208,14 @@ class AddressService
             'charge' => $this->address->zone->charge,
             'delivery_type' => 'standard'
         ];
+    }
+
+    public function defaultAddress(): ?Address
+    {
+        return Address::where('creater_id', $this->user->id)
+            ->where('creater_type', get_class($this->user))
+            ->where('is_default', 1)
+            ->first();
     }
 
 }

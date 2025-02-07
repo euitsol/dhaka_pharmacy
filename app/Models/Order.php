@@ -44,6 +44,10 @@ class Order extends BaseModel
         'status'
     ];
 
+    protected $appends = [
+        'status_string',
+    ];
+
 
     public function address()
     {
@@ -105,10 +109,10 @@ class Order extends BaseModel
         return $query->where('status', 0);
     }
 
-    public function scopeSelf($query)
+    public function scopeSelf($query, $user)
     {
-        return $query->where('creater_type', User::class)
-            ->where('creater_id', user()->id);
+        return $query->where('creater_type', get_class($user))
+            ->where('creater_id', $user->id);
     }
 
     public function scopePaid($query)
@@ -126,6 +130,22 @@ class Order extends BaseModel
     public function timelines():HasMany
     {
         return $this->hasMany(OrderTimeline::class, 'order_id', 'id');
+    }
+
+    public function getStatusStringAttribute():string
+    {
+        return match($this->status) {
+            self::INITIATED => 'Initiated',
+            self::SUBMITTED => 'Submitted',
+            self::HUB_ASSIGNED => 'Hub Assigned',
+            self::ITEMS_COLLECTING => 'Items Collecting',
+            self::HUB_REASSIGNED => 'Hub Reassigned',
+            self::ITEMS_COLLECTED => 'Items Collected',
+            self::PACHAGE_PREPARED => 'Package Prepared',
+            self::DISPATCHED => 'Dispatched',
+            self::DELIVERED => 'Delivered',
+            default => 'Unknown Status',
+        };
     }
 
 }

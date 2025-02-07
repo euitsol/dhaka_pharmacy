@@ -86,11 +86,6 @@
     <script src="{{ asset('user/asset/js/notificaiton.js') }}"></script>
     <script src="{{ asset('user/asset/js/address.js') }}"></script>
     @include('frontend.includes.add_to_cart_js')
-    <script>
-        $(document).ready(function() {
-            refreshCart();
-        });
-    </script>
     @stack('js')
 </body>
 

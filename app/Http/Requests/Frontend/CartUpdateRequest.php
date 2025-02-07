@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Frontend;
 
+use App\Rules\CartBelongsToUserRule;
+use App\Rules\CartMedicineUnitRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
@@ -25,8 +27,8 @@ class CartUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cart' => 'required|exists:add_to_carts,id',
-            'unit' => 'nullable|exists:medicine_units,id',
+            'cart_id' => ['required','exists:add_to_carts,id',new CartBelongsToUserRule($this->user())],
+            'unit_id' => ['nullable','exists:medicine_units,id', new CartMedicineUnitRule($this->input('cart_id'))],
             'quantity' => 'nullable|numeric'
         ];
     }
@@ -37,7 +39,7 @@ class CartUpdateRequest extends FormRequest
         $response = new JsonResponse([
             'success' => false,
             'errors' => $errors->messages(),
-        ], 200);
+        ], 422);
 
         throw new HttpResponseException($response);
     }

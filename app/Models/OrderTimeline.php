@@ -18,6 +18,9 @@ class OrderTimeline extends BaseModel
         'actual_completion_time'
     ];
 
+    public const DONE = 1;
+    public const PENDING = 0;
+
     protected $appends = ['status_string'];
 
     public function order(): BelongsTo

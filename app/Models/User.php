@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -42,5 +43,10 @@ class User extends AuthenticateBaseModel
     public function messages()
     {
         return $this->morphMany(Message::class, 'sender');
+    }
+
+    public function addToCart():MorphMany
+    {
+        return $this->morphMany(AddToCart::class, 'creater');
     }
 }

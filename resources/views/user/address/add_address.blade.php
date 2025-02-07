@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="address_add_modalLabel">{{ __('Add New Address') }}</h5>
 
-                <button type="button" class="close btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
 
@@ -31,9 +31,12 @@
                                 <div class="form-group col-md-6 p-2">
                                     <label for="city">{{ __('City') }} <small
                                             class="text-danger">*</small></label>
-                                    <select name="city" id="city_select" class="select2">
+                                    <select name="city" id="city_select" class="form-control">
                                         <option value="">{{ __('Select City') }}</option>
-                                        <option value="Dhaka">Dhaka</option>
+                                        <option value="Dhaka City">Dhaka City</option>
+                                        <option value="Gaibanda">Gaibanda</option>
+                                        <option value="Narayanganj">Narayanganj</option>
+                                        <option value="Rajshahi">Rajshahi</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6 p-2">
