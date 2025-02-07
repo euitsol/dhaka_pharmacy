@@ -14,12 +14,13 @@ jobs:
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
         with:
-          host: ${{SANDBOX_HOST}}
-          port: ${{SANDBOX_PORT}}
-          username: ${{SANDBOX_USERNAME}}
-          password: ${{SANDBOX_PASSWORD}}
+          host: ${{ secrets.SANDBOX_HOST  }}
+          port: ${{ secrets.SANDBOX_PORT }}
+          username: ${{ secrets.SANDBOX_USERNAME }}
+          password: ${{ secrets.SANDBOX_PASSWORD }}
           script: |
             cd /home/sandbox.dhakapharmacy.com.bd/public_html
             git fetch --all
             git reset --hard origin/main
             php artisan optimize:clear
+            php artisan migrate
