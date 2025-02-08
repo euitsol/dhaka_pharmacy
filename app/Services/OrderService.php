@@ -243,7 +243,7 @@ class OrderService
 
     public function list(array|null $data): LengthAwarePaginator|Collection
     {
-        $query = Order::select(['id','order_id', 'customer_id', 'customer_type', 'address_id', 'voucher_id', 'sub_total', 'voucher_discount', 'product_discount','total_amount', 'delivery_fee','delivery_type', 'status'])
+        $query = Order::select(['id','order_id', 'customer_id', 'customer_type', 'address_id', 'voucher_id', 'sub_total', 'voucher_discount', 'product_discount','total_amount', 'delivery_fee','delivery_type', 'status', 'created_at'])
             ->with([
                 'customer:id,name,phone',
                 'products:id,name,slug,status,pro_cat_id,pro_sub_cat_id,company_id,generic_id,strength_id,dose_id,price,image',
@@ -257,7 +257,8 @@ class OrderService
                 'payments:id,order_id,customer_id,customer_type,amount,status,payment_method,transaction_id,creater_id,creater_type'
             ])
             ->where('customer_id', $this->user->id)
-            ->where('customer_type', get_class($this->user));
+            ->where('customer_type', get_class($this->user))
+            ->latest();
 
         if(isset($data['status'])) {
             $query->where('status', $data['status']);
