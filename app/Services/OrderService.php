@@ -182,6 +182,11 @@ class OrderService
             );
         }
 
+        $order->products->transform(function ($product) {
+            $this->transformProduct($product, 60);
+            return $product;
+        });
+
         return $order;
     }
 
@@ -378,5 +383,13 @@ class OrderService
         if($order->customer_id !== $this->user->id || $order->customer_type !== get_class($this->user)){
             throw new ModelNotFoundException('Order ownership mismatch');
         }
+    }
+
+    public function transformOrder(Order $order):Order
+    {
+        $order->products()->each(function ($product) {
+            $this->transformProduct($product, 60);
+        });
+        return $order;
     }
 }
