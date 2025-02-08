@@ -9,9 +9,12 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use App\Services\{OrderTimelineService, VoucherService, AddressService, PaymentService};
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use App\Http\Traits\TransformProductTrait;
 
 class OrderService
 {
+    use TransformProductTrait;
     private User $user;
     private OrderTimelineService $orderTimelineService;
     private VoucherService $voucherService;
@@ -238,10 +241,41 @@ class OrderService
         $order->update($data);
     }
 
-    // public function list(array|null $data): Collection
-    // {
+    public function list(array|null $data): LengthAwarePaginator|Collection
+    {
+        $query = Order::select(['id','order_id', 'customer_id', 'customer_type', 'address_id', 'voucher_id', 'sub_total', 'voucher_discount', 'product_discount','total_amount', 'delivery_fee','delivery_type', 'status'])
+            ->with([
+                'customer:id,name,phone',
+                'products:id,name,slug,status,pro_cat_id,pro_sub_cat_id,company_id,generic_id,strength_id,dose_id,price,image',
+                'products.pro_cat:id,name,slug,status',
+                'products.generic:id,name,slug,status',
+                'products.pro_sub_cat:id,name,slug,status',
+                'products.company:id,name,slug,status',
+                'address:id,name,phone,city,street_address,latitude,longitude,apartment,floor,delivery_instruction,address',
+                'voucher:id,code,type,discount_amount,usage_limit',
+                'timelines.statusRule',
+                'payments:id,order_id,customer_id,customer_type,amount,status,payment_method,transaction_id,creater_id,creater_type'
+            ])
+            ->where('customer_id', $this->user->id)
+            ->where('customer_type', get_class($this->user));
 
-    // }
+        if(isset($data['status'])) {
+            $query->where('status', $data['status']);
+        }
+
+        $orders = $query->paginate($data['per_page'] ?? 10)->withQueryString();
+
+        // Transform products for each order
+        $orders->getCollection()->transform(function ($order) {
+            $order->products->transform(function ($product) {
+                $this->transformProduct($product, 60);
+                return $product;
+            });
+            return $order;
+        });
+
+        return $orders;
+    }
 
     private function calculateSubTotal($carts)
     {
