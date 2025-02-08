@@ -15,6 +15,9 @@ class Medicine extends BaseModel
     use HasFactory, SoftDeletes, Searchable;
 
     // protected $appends = ['final_discount'];
+    protected $appends = [
+        'modified_image',
+    ];
 
     public function pro_cat()
     {
@@ -195,4 +198,9 @@ class Medicine extends BaseModel
 
     //     return $maxDiscount;
     // }
+
+    public function getModifiedImageAttribute()
+    {
+        return $this->image ? product_image($this->image) : null;
+    }
 }

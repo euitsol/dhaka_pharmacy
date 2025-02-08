@@ -182,11 +182,6 @@ class OrderService
             );
         }
 
-        $order->products->transform(function ($product) {
-            $this->transformProduct($product, 60);
-            return $product;
-        });
-
         return $order;
     }
 
@@ -385,11 +380,4 @@ class OrderService
         }
     }
 
-    public function transformOrder(Order $order):Order
-    {
-        $order->products()->each(function ($product) {
-            $this->transformProduct($product, 60);
-        });
-        return $order;
-    }
 }
