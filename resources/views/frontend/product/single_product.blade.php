@@ -77,13 +77,13 @@
                                         </div>
                                     </div>
                                     <div class="col-7 col-xxl-6 col-12 col-md-7">
-                                        <form action="{{ route('u.ck.init') }}" id="single_order_form" method="POST">
+                                        <form action="{{ route('u.ck.single') }}" id="single_order_form" method="POST">
                                             @csrf
                                             <div class="product_content">
                                                 <h1>{{ __($single_product->name) }} </h1>
-                                                {{-- <input type="hidden" name="slug"
-                                                    value="{{ $single_product->slug }}"> --}}
-                                                <input type="hidden" name="product" value="{{ $single_product->id }}">
+                                                <input type="hidden" name="slug"
+                                                    value="{{ $single_product->slug }}">
+
                                                 <p>{{ __(optional($single_product->pro_sub_cat)->name) }}</p>
                                                 <p>{{ __(optional($single_product->generic)->name) }}</p>
                                                 <p>{{ __(optional($single_product->company)->name) }}</p>
@@ -153,11 +153,8 @@
                                                         {{ __('Add to Cart') }}</a>
                                                 </div>
                                                 <div class="order_button mt-4">
-                                                    <button class="order-btn" type="submit">{{ __('Order Now')
-                                                        }}</button>
+                                                    <button class="order-btn" type="submit">{{ __('Order Now') }}</button>
                                                 </div>
-
-
                                             </div>
                                         </form>
                                     </div>
