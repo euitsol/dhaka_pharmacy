@@ -161,6 +161,11 @@ class Medicine extends BaseModel
         ];
     }
 
+    public function searchableAs()
+    {
+        return 'medicines';
+    }
+
     public function isActived():bool
     {
         return $this->status == 1;
