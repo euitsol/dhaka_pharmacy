@@ -1,8 +1,18 @@
 <script>
     $(document).ready(function() {
+        var suggestionBox = $('#suggestionBox');
+
+        //Hide suggest box if clicked outside
+
+        $(document).click(function(event) {
+            if (suggestionBox.is(':visible')) {
+                if (!$(event.target).closest('#suggestionBox').length) {
+                    suggestionBox.hide();
+                }
+            }
+        });
         var searchInput = $('#searchInput');
         var categorySelect = $('#categorySelect');
-        var suggestionBox = $('#suggestionBox');
 
         searchInput.on('input', function() {
 
@@ -32,8 +42,6 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        console.log(data);
-
                         var result = ''
                         if (!data.products || data.products.length === 0) {
                             result = `
