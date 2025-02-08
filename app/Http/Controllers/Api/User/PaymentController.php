@@ -48,14 +48,14 @@ class PaymentController extends BaseController
 
         return sendResponse(true, 'Payment list retrived successfully', ['payments' => $payments], 200, $additional);
     }
-    public function details(PaymentRequest $request): JsonResponse
+    public function details(Request $request): JsonResponse
     {
         $payment = Payment::select(['id','order_id', 'customer_id', 'customer_type', 'status', 'amount', 'payment_method', 'transaction_id', 'created_at'])
         ->with([
             'customer:id,name,phone',
             'order:id,order_id,status',
             'order.address:id,name,phone,city,street_address,latitude,longitude,apartment,floor,delivery_instruction,address',
-            ])->where('transaction_id', $request->validated('transaction_id'))->first();
+            ])->where('transaction_id', $request->get('transaction_id', null))->first();
         return sendResponse(true, 'Payment details retrived successfully', ['payment' => $payment]);
     }
 }
