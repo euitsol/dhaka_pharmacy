@@ -5,10 +5,8 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="page-title mb-3">
-                        <h3>{{ __(isset($status) ? slugToTitle($status) : 'My Orders') }}</h3>
-                    </div>
                     <div class="show-order d-flex align-items-center">
+                        <h3>{{ __('My Orders') }}</h3>
                     </div>
                 </div>
             </div>
@@ -24,7 +22,7 @@
                                                 {{ __('Order: ') }}<span>{{ $order->order_id }}</span>
                                             </h3>
                                             <p class="date-time">
-                                                {{ __('Placed on ') }}<span>{{ $order->place_date }}</span>
+                                                {{ __('Placed on ') }}<span>{{ timeFormate($order->created_at) }}</span>
                                             </p>
                                         </div>
                                         <div class="status ms-0 ms-sm-4 mt-1 mt-sm-0 ms-md-2 ms-lg-3 order-info-section">

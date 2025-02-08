@@ -1122,7 +1122,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
 
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
         Route::post('init', 'int_order')->name('init');
-        Route::post('single-order', 'single_order')->name('product.single_order');
+        Route::post('single-order', 'single_order')->name('single');
         Route::get('order/{o_id}', 'checkout')->name('index');
         Route::get('address/{id}', 'address')->name('address');
         Route::post('order-confirm', 'confirm_order')->name('product.order.confirm');
