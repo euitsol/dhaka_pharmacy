@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\PrescriptionRequest;
 use App\Http\Requests\User\PrescriptionImageRequest;
-use App\Http\Services\PrescriptionService;
+use App\Services\PrescriptionService;
 use App\Models\User;
 use Exception;
 
