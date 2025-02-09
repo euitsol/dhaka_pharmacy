@@ -31,6 +31,14 @@ class AddressService
         return $this;
     }
 
+    public function delete(int $addressId): void
+    {
+        $address = Address::find($addressId);
+        if (!$address) {
+            throw new ModelNotFoundException('Address not found.');
+        }
+        $address->delete();
+    }
     public function create(array $data): Address
     {
         return DB::transaction(function () use ($data) {

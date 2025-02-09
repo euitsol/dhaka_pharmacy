@@ -22,7 +22,7 @@ class PaymentController extends BaseController
         $query = Payment::select(['id','order_id', 'customer_id', 'customer_type', 'status', 'amount', 'payment_method', 'transaction_id', 'created_at'])
         ->with([
             'customer:id,name,phone',
-            'order:id,order_id,status'
+            'order:id,order_id,status,delivery_fee,sub_total,voucher_discount,product_discount,total_amount,created_at',
             ])
         ->where([
             'customer_id' => $request->user()->id,
