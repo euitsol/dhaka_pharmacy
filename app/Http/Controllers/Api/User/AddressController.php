@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\API\AddressRequest;
+use App\Http\Requests\Api\User\AddressDeleteRequest;
 use App\Models\Address;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -60,6 +61,18 @@ class AddressController extends BaseController
         try{
             $delivery_details = $request->query('delivery_details', false) == true;
             return sendResponse(true, 'Address list retrived successfully', $this->addressService->setUser($request->user())->list($delivery_details, $request->get('address_id', null)));
+        }catch(ModelNotFoundException $e){
+            return sendResponse(false, $e->getMessage());
+        }catch(Exception $e){
+            return sendResponse(false, $e->getMessage());
+        }
+    }
+
+    public function delete(AddressDeleteRequest $request)
+    {
+        try{
+            $this->addressService->setUser($request->user())->delete($request->id);
+            return sendResponse(true, 'Address deleted successfully.');
         }catch(ModelNotFoundException $e){
             return sendResponse(false, $e->getMessage());
         }catch(Exception $e){

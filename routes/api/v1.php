@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\User\SocialLoginController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\WishlistController;
 use App\Http\Controllers\Api\User\VoucherController;
+use App\Http\Controllers\Api\User\PrescriptionController;
 
 Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 
@@ -40,6 +41,7 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::post('/update', 'update')->name('update');
         Route::get('/list', 'list')->name('list');
         Route::get('/cities', 'cities')->name('cities');
+        Route::post('/delete', 'delete')->name('delete');
     });
     // Cart API
     Route::controller(CartAjaxController::class)->middleware('auth:api-user')->prefix('cart')->name('cart.')->group(function () {
@@ -69,6 +71,11 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 
     Route::controller(VoucherController::class)->middleware('auth:api-user')->prefix('voucher')->name('vouchers.')->group(function () {
         Route::post('check', 'check')->name('check');
+    });
+
+    Route::controller(PrescriptionController::class)->prefix('prescription')->name('prescription.')->group(function () {
+        Route::post('upload', 'upload')->name('upload');
+        Route::post('create', 'create')->name('create');
     });
 });
 

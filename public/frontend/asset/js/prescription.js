@@ -2,6 +2,7 @@ $(document).ready(function() {
     const $fileInput = $('#prescription');
     const $previewContainer = $('.image-preview');
     const $uploadArea = $('.upload-area');
+    const maxLimit = 2;
 
     // File input change event
     $fileInput.on('change', handleFiles);
@@ -23,14 +24,25 @@ $(document).ready(function() {
         handleFiles(e.originalEvent);
     });
 
+    function checkLimit(count=0) {
+        if(parseInt($('.img-id').length) + parseInt(count) > maxLimit) {
+            toastr.error(`Only ${maxLimit} images are allowed.`);
+            return false;
+        }
+
+        return true;
+    }
+
     function handleFiles(e) {
         let files = e.target.files || e.dataTransfer.files;
-        Array.from(files).forEach(uploadFile);
+        if(checkLimit(files.length)){
+            Array.from(files).forEach(uploadFile);
+        }
     }
 
     function uploadFile(file) {
         if (!file.type.startsWith('image/')) {
-            alert('Please upload only image files.');
+            toastr.error('Please upload only image files.');
             return;
         }
 
@@ -70,14 +82,10 @@ $(document).ready(function() {
 
                     $('<input>').attr({
                         'type': 'hidden',
-                        'name': 'uploaded_image[]',
+                        'class': 'img-id d-none',
+                        'name': 'uploaded_image['+response.data.id+']',
                         'value': response.data.id
                     }).appendTo($preview);
-
-                    var idArray = $('input[name="uploaded_image[]"]').map(function() {
-                        return $(this).val();
-                    }).get();
-                    console.log(idArray);
 
                     addRemoveButton($preview);
                     $preview.addClass('loaded');
