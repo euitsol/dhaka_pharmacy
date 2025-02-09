@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\API\AddressRequest;
-use App\Http\Requests\Api\User\AddressDeleteRequest;
+use App\Http\Requests\API\User\AddressDeleteRequest;
 use App\Models\Address;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
