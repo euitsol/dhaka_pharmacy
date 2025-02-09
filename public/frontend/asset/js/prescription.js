@@ -38,11 +38,11 @@ $(document).ready(function() {
         if(checkLimit(files.length)){
             Array.from(files).forEach(uploadFile);
         }
+    }
 
     function uploadFile(file) {
         if (!file.type.startsWith('image/')) {
             toastr.error('Please upload only image files.');
-            alert('Please upload only image files.');
             return;
         }
 

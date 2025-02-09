@@ -46,7 +46,6 @@ class PrescriptionService
         return $this;
     }
 
-
     public function processPrescription(array $data): Prescription
     {
         $this->setUserByPhone($data['phone']);
@@ -56,6 +55,7 @@ class PrescriptionService
         }
         return $prescription;
     }
+
 
     public function uploadPrescriptionImage(UploadedFile $file): array
     {
@@ -84,16 +84,6 @@ class PrescriptionService
 
     public function createPrescriptionImage($path):PrescriptionImage|Exception
     {
-        $image = PrescriptionImage::create([
-            'path' => $path,
-            'status' => 0,
-        ]);
-        return $image;
-    }
-
-    public function updatePrescriptionImage(int $id, array $data): void
-    {
-        PrescriptionImage::findOrFail($id)->update($data);
         if(isset($this->prescription) && $this->prescription instanceof Prescription){
             $image = PrescriptionImage::create([
                 'prescription_id' => $this->prescription->id,
@@ -102,6 +92,7 @@ class PrescriptionService
             return $image;
         }
         return new Exception("Prescription not found");
+
     }
 
     public function createPrescription(array $data): Prescription
@@ -113,12 +104,41 @@ class PrescriptionService
                 $data['creater_type'] = get_class($this->user);
             }
             $data['status'] = 0;
-
             $prescription = Prescription::create($data);
 
             $this->prescription = $prescription;
             return $prescription;
         });
+    }
+
+    // public function createPrescriptionOrder(array $data, int $userId): Order
+    // {
+    //     return DB::transaction(function () use ($data, $userId) {
+    //         $order = Order::create($data['order_data']);
+
+    //         foreach ($data['file_uuids'] as $uuid) {
+    //             $this->processFile($uuid, $order, $userId);
+    //         }
+
+    //         return $order->load('prescriptionImages');
+    //     });
+    // }
+
+    protected function processFile(string $uuid, Order $order, int $userId): void
+    {
+        $tempPath = $this->generateTempPath($userId, $uuid);
+        $newPath = $this->generatePermanentPath($uuid);
+
+        if (!Storage::disk('s3')->exists($tempPath)) {
+            throw new NotFoundHttpException("File not found for UUID: $uuid");
+        }
+
+        Storage::disk('s3')->move($tempPath, $newPath);
+
+        PrescriptionImage::create([
+            'prescription_id' => $order->id,
+            'path' => $newPath,
+        ]);
     }
 
     protected function generateTempPath(string $uuid, string $extension = ''): string
