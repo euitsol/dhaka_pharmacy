@@ -143,7 +143,7 @@ class OrderService
 
     public function getOrderDetails(string $orderId, string $timelineType = 'user')
     {
-        $order = Order::select(['id','order_id', 'customer_id', 'customer_type', 'address_id', 'voucher_id', 'sub_total', 'voucher_discount', 'product_discount','total_amount', 'delivery_fee','delivery_type', 'status'])->with([
+        $order = Order::select(['id','order_id', 'customer_id', 'customer_type', 'address_id', 'voucher_id', 'sub_total', 'voucher_discount', 'product_discount','total_amount', 'delivery_fee','delivery_type', 'status', 'created_at'])->with([
                     'customer:id,name,phone',
                     'products:id,name,slug,status,pro_cat_id,pro_sub_cat_id,company_id,generic_id,strength_id,dose_id,price,image',
                     'products.pro_cat:id,name,slug,status',

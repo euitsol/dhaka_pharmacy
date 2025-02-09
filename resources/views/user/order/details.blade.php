@@ -1,5 +1,92 @@
 @extends('user.layouts.master', ['pageSlug' => 'order'])
 @section('title', 'Order Details')
+@push('css')
+<style>
+
+/* Timeline Styles */
+.order-timeline {
+    --primary-color: #10B981;
+    --inactive-color: #E5E7EB;
+    --text-muted: #6B7280;
+    padding: 1rem 0;
+}
+
+/* Progress Bar */
+.progress-bar-wrapper {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    right: 2rem;
+    height: 4px;
+    z-index: 0;
+}
+
+.progress-line {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--inactive-color);
+    border-radius: 2px;
+}
+
+.progress-line-active {
+    position: absolute;
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Timeline Steps */
+.timeline-step {
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+/* Vertical Line (Mobile) */
+.vertical-line {
+    position: absolute;
+    left: 1.25rem;
+    top: 3rem;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--inactive-color);
+}
+
+.timeline-step.active .vertical-line-active {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: height 0.5s ease-in-out;
+}
+
+/* Icon */
+.icon-wrapper {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1rem;
+}
+
+.icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: white;
+    border: 2px solid var(--inactive-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.timeline-step.active .icon {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+</style>
+@endpush
 @section('content')
     <section class="order-info-section">
         <div class="container">
@@ -13,12 +100,12 @@
                                     <img src="{{ asset('user/asset/img/order-status.png') }}" alt="">
                                 </div>
                                 <h2 class="mb-0 me-sm-4">{{ __('Order ID: ') }}<span>{{ $order->order_id }}</span></h2>
-                                <p class="mb-0 fw-bold">{{ slugToTitle($order->statusTitle) }}</p>
+                                <p class="mb-0 fw-bold">{{ slugToTitle($order->status_string) }}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-4 col-sm-3 col-12 fs-1 pb-3">
+                    {{-- <div class="col-md-4 col-sm-3 col-12 fs-1 pb-3">
                         @if ($order->status != -1)
                             @if ($order->otp)
                                 <div class="order-status-row py-5 otp d-flex justify-content-center align-items-center">
@@ -31,90 +118,59 @@
                                 </div>
                             @endif
                         @endif
-                    </div>
+                    </div> --}}
+
                 </div>
 
                 <!-- Order-status-row-end -->
 
                 <!-- Order Tracking row start-->
                 @if ($order->status != -1)
-                    <div class="d-flex align-items-center mb-4 gap-4">
-                        <h2 class="title">{{ __('Order Tracking') }}</h2>
+                    <div class="">
+                        <h2 class="mb-4 fw-bold">{{ __('Order Tracking') }}</h2>
+                        <div class="position-relative order-timeline">
+                            <!-- Progress Bar -->
+                            <div class="progress-bar-wrapper d-none d-md-block">
+                                <div class="progress-line"></div>
+                                <div class="progress-line-active" style="width: {{ 100/(count($order->timelines) - 1) }}%"></div>
+                            </div>
 
-                    </div>
-                    <div class="order-traking-row">
+                            <!-- Timeline Steps -->
+                            <div class="row position-relative">
+                                @foreach($order->timelines as $timeline)
+                                    @if ($timeline->status != -1)
+                                        <div class="col-12 col-md timeline-step {{ $timeline->actual_completion_time != null ? 'active' : '' }}">
+                                            <!-- Vertical line for mobile -->
+                                            <div class="vertical-line d-md-none">
+                                                <div class="vertical-line-active"></div>
+                                            </div>
 
-                        <div class="progress-box d-md-flex justify-content-between">
-                            <div class="step d-flex d-md-block gap-4 gap-md-0 step-1 text-md-center {{ $order->status > 1 ? 'active' : '' }}">
-                                <div class="icon {{ $order->status >= 1 ? 'confirm' : '' }} text-md-center mb-2">
-                                    @if ($order->status >= 1)
-                                        <img src="{{ asset('user/asset/img/check.png') }}" alt="">
+                                            <!-- Icon -->
+                                            <div class="icon-wrapper">
+                                                <div class="icon">
+                                                    @if($timeline->actual_completion_time != null)
+                                                        <i class="fas fa-check"></i>
+                                                    @else
+                                                        <i class="fa-regular fa-hourglass"></i>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <!-- Content -->
+                                            <div class="content-wrapper">
+                                                <h5 class="timeline-title">{{ __($timeline->status_string) }}</h5>
+                                                @if ($timeline->actual_completion_time != null)
+                                                    <p class="timeline-text">Completed at {{ timeFormate($timeline->actual_completion_time) }}</p>
+                                                @endif
+                                                @if($timeline->expected_completion_time != null)
+                                                    <p class="timeline-text">Expected at {{ timeFormate($timeline->expected_completion_time) }}</p>
+                                                @endif
+                                            </div>
+                                        </div>
                                     @endif
-                                </div>
-                                <div class="content-wrap">
-                                    <h5>{{ __('Order Submitted') }}</h5>
-                                    @if ($order->status >= 1)
-                                        <p class="m-0">{{ orderTimeFormat($order->created_at) }}</p>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="step d-flex d-md-block gap-4 gap-md-0 step-2 text-md-center {{ $order->status > 3 ? 'active' : '' }}">
-                                <div class="icon {{ $order->status >= 2 ? 'confirm' : '' }} text-md-center mb-2">
-                                    @if ($order->status >= 2)
-                                        <img src="{{ asset('user/asset/img/check.png') }}" alt="">
-                                    @endif
-                                </div>
-                                <div class="content-wrap">
-                                    <h5>{{ __('Order Proccesing') }}</h5>
-                                    @if ($order->status >= 2)
-                                        <p class="m-0">{{ orderTimeFormat($order->od->created_at) }}</p>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="step d-flex d-md-block gap-4 gap-md-0 step-3 text-md-center {{ $order->status > 4 ? 'active' : '' }}">
-                                <div class="icon {{ $order->status >= 4 ? 'confirm' : '' }}  text-md-center mb-2">
-                                    @if ($order->status >= 4)
-                                        <img src="{{ asset('user/asset/img/check.png') }}" alt="">
-                                    @endif
-                                </div>
-                                <div class="content-wrap">
-                                    <h5>{{ __('Order Shipped') }}</h5>
-                                    @if ($order->status >= 4)
-                                        <p class="m-0">
-                                            {{ orderTimeFormat($order->od->odrs->where('status', '!=', -1)->first()->created_at) }}
-                                        </p>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="step d-flex d-md-block gap-4 gap-md-0 step-4 text-md-center {{ $order->status > 5 ? 'active' : '' }}">
-                                <div class="icon {{ $order->status >= 5 ? 'confirm' : '' }}  text-md-center mb-2">
-                                    @if ($order->status >= 5)
-                                        <img src="{{ asset('user/asset/img/check.png') }}" alt="">
-                                    @endif
-                                </div>
-                                <div class="content-wrap">
-                                    <h5>{{ __('Out For Delivery') }}</h5>
-                                    @if ($order->status >= 5)
-                                        <p class="m-0">{{ orderTimeFormat($order->od->rider_collected_at) }}</p>
-                                    @endif
-                                </div>
-                            </div>
-                            <div
-                                class="step d-flex d-md-block gap-4 gap-md-0 step-5 text-md-center {{ $order->status >= 6 ? 'active' : '' }}">
-                                <div class="icon {{ $order->status >= 6 ? 'confirm' : '' }} text-md-center mb-2">
-                                    @if ($order->status >= 6)
-                                        <img src="{{ asset('user/asset/img/check.png') }}" alt="">
-                                    @endif
-                                </div>
-                                <div class="content-wrap">
-                                    <h5>{{ __('Delivered') }}</h5>
-                                    @if ($order->status >= 6)
-                                        <p class="m-0">{{ orderTimeFormat($order->od->rider_delivered_at) }}</p>
-                                    @endif
-                                </div>
+                                @endforeach
                             </div>
                         </div>
-
                     </div>
                 @else
                     <h2 class="text-danger">{{ __('Order Canceled') }}</h2>
@@ -127,18 +183,16 @@
                     <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Order Date') }}</span>
-                            <p>{{ $order->place_date }}</p>
+                            <p>{{ timeFormate($order->created_at) }}</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
-                        <div class="order-details">
-                            <span>{{ __('Delivery Time') }}</span>
-                            @if ($order->status != -1)
-                                <p>Est. delivery 5 hours</p>
-                            @else
-                                <p>----</p>
-                            @endif
-                        </div>
+                        @if ($order->timelines->where('status', App\Models\Order::DELIVERED)->first()->actual_completion_time != null)
+                            <div class="order-details">
+                                <span>{{ __('Delivery Time') }}</span>
+                                <p>Est. {{ timeFormate($order->timelines->where('status', App\Models\Order::DELIVERED)->first()->actual_completion_time) }}</p>
+                            </div>
+                        @endif
                     </div>
                     <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
