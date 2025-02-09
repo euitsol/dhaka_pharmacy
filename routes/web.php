@@ -1122,7 +1122,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
 
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
         Route::post('init', 'int_order')->name('init');
-        Route::post('single-order', 'single_order')->name('product.single_order');
+        Route::post('single-order', 'single_order')->name('single');
         Route::get('order/{o_id}', 'checkout')->name('index');
         Route::get('address/{id}', 'address')->name('address');
         Route::post('order-confirm', 'confirm_order')->name('product.order.confirm');
@@ -1141,9 +1141,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
 
 
     //Order By Prescription
-    Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
-        Route::post('/upload-prescription', 'prescription_upload')->name('up');
-    });
+
 
 
 
@@ -1230,6 +1228,15 @@ Route::controller(ContactPageController::class)->group(function () {
 
 
 
+
+Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
+    Route::post('upload-prescription', 'prescription_upload')->name('up');
+    Route::post('prescription/upload/image', 'image_upload')->name('upload');
+    Route::post('prescription/create', 'create')->name('create');
+    Route::put('prescription/update/{id}', 'update')->name('update');
+    Route::get('prescription/delete/{id}', 'delete')->name('delete');
+    Route::post('prescription/verify', 'verify')->name('verify');
+});
 
 
 

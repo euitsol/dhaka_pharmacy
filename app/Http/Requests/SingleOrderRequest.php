@@ -17,7 +17,8 @@ class SingleOrderRequest extends FormRequest
     {
         return [
             'unit_id' => 'required|exists:medicine_units,id',
-            'slug' => 'required|exists:medicines,slug'
+            'slug' => 'required|exists:medicines,slug',
+            'quantity' => 'required|numeric|min:1',
         ];
     }
 }

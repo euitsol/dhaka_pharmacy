@@ -38,11 +38,16 @@ $(document).ready(function() {
         if(checkLimit(files.length)){
             Array.from(files).forEach(uploadFile);
         }
+
+    function handleFiles(e) {
+        let files = e.target.files || e.dataTransfer.files;
+        Array.from(files).forEach(uploadFile);
     }
 
     function uploadFile(file) {
         if (!file.type.startsWith('image/')) {
             toastr.error('Please upload only image files.');
+            alert('Please upload only image files.');
             return;
         }
 
@@ -86,11 +91,6 @@ $(document).ready(function() {
                         'name': 'uploaded_image['+response.data.id+']',
                         'value': response.data.id
                     }).appendTo($preview);
-
-                    // var idArray = $('input[name="uploaded_image[]"]').map(function() {
-                    //     return $(this).val();
-                    // }).get();
-                    // console.log(idArray);
 
                     addRemoveButton($preview);
                     $preview.addClass('loaded');

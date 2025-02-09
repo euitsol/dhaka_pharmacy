@@ -169,7 +169,7 @@
                 </div>
                 <div class="col text-center">
                     <div class="upload_prescription w-100">
-                        <a class="cat-title up_button text-center"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="javascript:void(0)" class="cat-title  text-center" data-bs-toggle="modal" data-bs-target="#prescriptionModal"><i class="fas fa-upload"></i></a>
                     </div>
                 </div>
             </div>

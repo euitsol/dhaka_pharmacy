@@ -66,6 +66,27 @@ class CheckoutController extends Controller
         }
     }
 
+    public function single_order(SingleOrderRequest $req)
+    {
+        try {
+            $data['user'] = User::findOrFail(user()->id);
+            $this->orderService->setUser($data['user']);
+
+            $data['product_slug'] = $req->validated()['slug'];
+            $data['unit_id'] = $req->validated()['unit_id'];
+            $data['quantity'] = $req->validated()['quantity'];
+
+            $data['order'] = $this->orderService->processOrder($data, true, 'web');
+            return redirect()->route('u.ck.index', encrypt($data['order']->order_id));
+        } catch (ModelNotFoundException $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }catch (Exception $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }
+    }
+
     public function checkout($order_id)
     {
         try {

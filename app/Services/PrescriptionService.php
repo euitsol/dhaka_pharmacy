@@ -46,6 +46,7 @@ class PrescriptionService
         return $this;
     }
 
+
     public function processPrescription(array $data): Prescription
     {
         $this->setUserByPhone($data['phone']);
@@ -72,6 +73,10 @@ class PrescriptionService
             throw new \RuntimeException('Failed to upload file');
         }
 
+        if(!isset($this->prescription) || !$this->prescription instanceof Prescription){
+            $this->prescription = $this->createPrescription([]);
+        }
+
         $image = $this->createPrescriptionImage($path);
 
         return [
@@ -93,6 +98,14 @@ class PrescriptionService
     public function updatePrescriptionImage(int $id, array $data): void
     {
         PrescriptionImage::findOrFail($id)->update($data);
+        if(isset($this->prescription) && $this->prescription instanceof Prescription){
+            $image = PrescriptionImage::create([
+                'prescription_id' => $this->prescription->id,
+                'path' => $path,
+            ]);
+            return $image;
+        }
+        return new Exception("Prescription not found");
     }
 
     public function createPrescription(array $data): Prescription
@@ -104,7 +117,6 @@ class PrescriptionService
                 $data['creater_type'] = get_class($this->user);
             }
             $data['status'] = 0;
-
             $prescription = Prescription::create($data);
 
             $this->prescription = $prescription;
