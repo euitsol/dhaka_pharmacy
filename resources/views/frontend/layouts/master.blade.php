@@ -29,6 +29,8 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
 
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
 
     <!--========= Select2 =========-->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
@@ -36,6 +38,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/nav.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/asset/css/prescription.css') }}">
 
     <!--======== FontAwesome cdn ==========-->
     <script src="https://kit.fontawesome.com/db6820c2b5.js" crossorigin="anonymous"></script>
@@ -86,6 +89,11 @@
                 },
                 'voucher': {
                     'check': @json(route('u.ck.voucher.check')),
+                },
+                'prescription': {
+                    'create': @json(route('u.obp.create')),
+                    'upload': @json(route('u.obp.upload')),
+                    'delete': @json(route('u.obp.delete', 'id')),
                 }
             }
         }
@@ -121,6 +129,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
+
     <!--========= uikit-js ===========-->
     <script src="{{ asset('frontend/vendor/uikit/js/uikit.min.js') }}"></script>
     <script src="{{ asset('frontend/asset/js/cart.js') }}"></script>
@@ -128,6 +137,7 @@
     <!--========== custom-js ===========-->
     <script src="{{ asset('frontend/asset/js/custom.js') }}"></script>
     <script src="{{ asset('frontend/asset/js/support.js') }}"></script>
+    <script src="{{ asset('frontend/asset/js/prescription.js') }}"></script>
     {{-- @include('frontend.includes.add_to_cart_js') --}}
     @include('frontend.includes.search_js')
     @include('frontend.includes.wishlist_js')
