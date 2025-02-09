@@ -10,7 +10,7 @@
                 <form>
                     <!-- File Upload Area -->
                     <div class="mb-4">
-                        <input type="file" id="prescription" accept="image/*" capture="environment" class="d-none" multiple>
+                        <input type="file" id="prescription" accept="image/*" class="d-none" multiple>
                         <label for="prescription" class="upload-area d-flex flex-column align-items-center justify-content-center">
                             <div class="upload-icon position-relative">
                                 <i class="fas fa-camera fa-3x"></i>
