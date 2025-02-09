@@ -16,7 +16,7 @@ class Medicine extends BaseModel
 
     // protected $appends = ['final_discount'];
     protected $appends = [
-        'modified_image', //used in API
+        'modified_image',
     ];
 
     public function pro_cat()
@@ -198,4 +198,9 @@ class Medicine extends BaseModel
 
     //     return $maxDiscount;
     // }
+
+    public function getModifiedImageAttribute()
+    {
+        return $this->image ? product_image($this->image) : null;
+    }
 }
