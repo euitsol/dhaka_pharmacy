@@ -25,7 +25,7 @@ trait TransformProductTrait
 
     private function setStrengthInfo(&$product)
     {
-        if (!$product->strength) return;
+        if (!isset($product->strength)) return;
         $product->strength_info = ' (' . Str::limit($product->strength->name, 10, '..') . ')';
     }
 

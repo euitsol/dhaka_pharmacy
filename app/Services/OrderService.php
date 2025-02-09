@@ -153,7 +153,7 @@ class OrderService
                     'address:id,name,phone,city,street_address,latitude,longitude,apartment,floor,delivery_instruction,address',
                     'voucher:id,code,type,discount_amount,usage_limit',
                     'timelines.statusRule',
-                    'payments:id,order_id,customer_id,customer_type,amount,status,payment_method,transaction_id,creater_id,creater_type'
+                    'payments:id,order_id,customer_id,customer_type,amount,status,payment_method,transaction_id,creater_id,creater_type,created_at'
                 ])
             ->where('order_id', $orderId)
             ->first();

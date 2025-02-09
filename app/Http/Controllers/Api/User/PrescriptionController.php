@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\User\PrescriptionCreateRequest;
+use App\Http\Requests\API\User\PrescriptionCreateRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class PrescriptionController extends Controller
             $data = $this->prescriptionService->uploadPrescriptionImage($request->file('file'));
             return sendResponse(true, 'Prescription image uploaded successfully', $data);
         } catch (Exception $e) {
-            return sendResponse(false, 'An error occurred while uploading the prescription.', [], 500);
+            return sendResponse(false, $e->getMessage(), [], 500);
         }
     }
 
@@ -36,7 +36,7 @@ class PrescriptionController extends Controller
             $data = $this->prescriptionService->processPrescription($request->all());
             return sendResponse(true, 'Prescription created successfully', $data);
         } catch (Exception $e) {
-            return sendResponse(false, 'An error occurred while creating the prescription.', [], 500);
+            return sendResponse(false, $e->getMessage(), [], 500);
         }
     }
 }
