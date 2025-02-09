@@ -73,10 +73,6 @@ class PrescriptionService
             throw new \RuntimeException('Failed to upload file');
         }
 
-        if(!isset($this->prescription) || !$this->prescription instanceof Prescription){
-            $this->prescription = $this->createPrescription([]);
-        }
-
         $image = $this->createPrescriptionImage($path);
 
         return [
@@ -117,6 +113,7 @@ class PrescriptionService
                 $data['creater_type'] = get_class($this->user);
             }
             $data['status'] = 0;
+
             $prescription = Prescription::create($data);
 
             $this->prescription = $prescription;

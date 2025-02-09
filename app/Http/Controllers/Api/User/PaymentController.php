@@ -54,7 +54,6 @@ class PaymentController extends BaseController
         ->with([
             'customer:id,name,phone',
             'order:id,order_id,status',
-            'order.address:id,name,phone,city,street_address,latitude,longitude,apartment,floor,delivery_instruction,address',
             ])->where('transaction_id', $request->get('transaction_id', null))->first();
         return sendResponse(true, 'Payment details retrived successfully', ['payment' => $payment]);
     }
