@@ -9,6 +9,11 @@
     --p-moadl-icon-2: #46b7e3;
 
     --p-text-white: #ffffff;
+    --p-text-primary: #00204b;
+}
+
+.prescriptionModal{
+    z-index: 99999 !important;
 }
 
 .prescriptionModal .btn-primary {
@@ -49,7 +54,7 @@
 }
 
 .prescriptionModal .upload-area:hover {
-  background-color: var(--muted);
+  background-color: var(--p-modal-muted-bg);
 }
 
 .prescriptionModal .upload-icon {

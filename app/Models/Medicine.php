@@ -15,6 +15,9 @@ class Medicine extends BaseModel
     use HasFactory, SoftDeletes, Searchable;
 
     // protected $appends = ['final_discount'];
+    protected $appends = [
+        'modified_image', //used in API
+    ];
 
     public function pro_cat()
     {
