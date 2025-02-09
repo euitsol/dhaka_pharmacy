@@ -5,21 +5,8 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="page-title mb-3">
-                        <h3>{{ __(isset($status) ? slugToTitle($status) : 'My Orders') }}</h3>
-                    </div>
                     <div class="show-order d-flex align-items-center">
-                        <h4 class="me-2">{{ __('Show:') }}</h4>
-                        <select class="form-select order_filter" aria-label="Default select example">
-                            <option value="all" {{ $filterValue == 'all' ? 'selected' : '' }}>{{ __('All orders') }}
-                            </option>
-                            <option value="7" {{ $filterValue == '7' ? 'selected' : '' }}>{{ __('Last 7 days') }}
-                            </option>
-                            <option value="15" {{ $filterValue == '15' ? 'selected' : '' }}>{{ __('Last 15 days') }}
-                            </option>
-                            <option value="30" {{ $filterValue == '30' ? 'selected' : '' }}>{{ __('Last 30 days') }}
-                            </option>
-                        </select>
+                        <h3>{{ __('My Orders') }}</h3>
                     </div>
                 </div>
             </div>
@@ -28,14 +15,14 @@
                     <div class="order-row">
                         <div class="order-id-row">
                             <div class="row align-content-center">
-                                <div class="col-xl-10 col-md-8" >
+                                <div class="col-xl-9 col-md-7" >
                                     <div class="d-flex flex-sm-row flex-column" style="position: relative">
                                         <div class="text">
                                             <h3 class="order-num">
                                                 {{ __('Order: ') }}<span>{{ $order->order_id }}</span>
                                             </h3>
                                             <p class="date-time">
-                                                {{ __('Placed on ') }}<span>{{ $order->place_date }}</span>
+                                                {{ __('Placed on ') }}<span>{{ timeFormate($order->created_at) }}</span>
                                             </p>
                                         </div>
                                         <div class="status ms-0 ms-sm-4 mt-1 mt-sm-0 ms-md-2 ms-lg-3 order-info-section">
@@ -48,24 +35,28 @@
                                             </div>
                                             <p class="total p-0">
                                                 {{ __('Total Amount: ') }}<span
-                                                    class="fw-bold">{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee), 2) }}{{ __('tk') }}</span>
-                                                @if ($order->totalPrice != $order->totalDiscountPrice)
+                                                    class="fw-bold">{{ number_format(($order->total_amount), 2) }}{{ __('tk') }}</span>
+                                                @if ($order->product_discount > 0 || $order->voucher_discount > 0)
                                                     <sup
-                                                        class="text-danger"><del>{{ number_format(ceil($order->totalPrice + $order->delivery_fee), 2) }}{{ __('tk') }}</del></sup>
+                                                        class="text-danger"><del>{{ number_format(($order->sub_total+$order->delivery_fee), 2) }}{{ __('tk') }}</del></sup>
                                                 @endif
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-2 col-md-4 text-md-end text-start pb-3">
+                                <div class="col-xl-3 col-md-5 text-md-end text-start pb-3">
                                     <div class="order-status">
-                                        <div class="btn p-0 d-flex gap-1">
-                                            <a
-                                                href="{{ route('u.order.details', $order->encrypt_oid) }}">{{ __('Details') }}</a>
-                                            @if ($order->status < 2 && $order->status != -1)
-                                                <a class="cancle text-danger"
-                                                    href="{{ route('u.order.cancel', $order->encrypt_oid) }}">{{ __('Cancel') }}</a>
+                                        <div class="p-0 d-flex gap-1">
+                                            <a class="btn btn-info"
+                                                href="{{ route('u.order.details', encrypt($order->order_id)) }}">{{ __('Details') }}</a>
+                                            @if ($order->status =App\Models\Order::INITIATED)
+                                                <a class="btn btn-success text-white" href="javascript:void(0)">{{ __('Pay Now') }}</a>
+
+                                            @elseif($order->status !=App\Models\Order::SUBMITTED)
+                                                <a class="btn btn-danger"
+                                                    href="{{ route('u.order.cancel', encrypt($order->order_id)) }}">{{ __('Cancel') }}</a>
                                             @endif
+                                            <a class="btn btn-primary">{{ __('Re-order') }}</a>
                                         </div>
 
                                     </div>
@@ -81,40 +72,23 @@
                                                 <img class="w-100" src="{{ $product->image }}" alt="">
                                             </div>
                                         </div>
-                                        <!-- <div class="col-md-7 col-sm-5 col-7">
-                                            <div class="product-info">
-                                                <h2 class="name" title="{{ $product->attr_title }}">
-                                                    {{ $product->name }}</h2>
-                                                <p class="cat" title="{{ $product->pro_sub_cat->name }}" >{{ $product->pro_sub_cat->name }}</p>
-                                                <p class="cat" title="{{ $product->generic->name }}" >{{ $product->generic->name }}</p>
-                                                <p class="cat" title="{{ $product->company->name }}" >{{ $product->company->name }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mt-3 mt-sm-0 col-sm-4 col-12 d-flex d-sm-block gap-4 gap-sm-0">
-                                            <p class="qty">
-                                                {{ __('Qty: ') }}<span>{{ $product->pivot->quantity < 10 ? '0' . $product->pivot->quantity : $product->pivot->quantity }}</span>
-                                            </p>
-                                            <p class="qty">
-                                                {{ __('Unit: ') }}<span>{{ $product->pivot->unit->name }}</span>
-                                            </p>
-                                        </div> -->
                                         <div class="col-md-10 col-sm-9 col-8">
                                             <div class="row justify-content-between">
                                                 <div class="col-md-9 col-sm-8 col-12">
                                                     <div class="product-info">
                                                         <h2 class="name" title="{{ $product->attr_title }}">
                                                             {{ $product->name }}</h2>
-                                                        <p class="cat" title="{{ $product->pro_sub_cat->name }}" >{{ $product->pro_sub_cat->name }}</p>
-                                                        <p class="cat" title="{{ $product->generic->name }}" >{{ $product->generic->name }}</p>
-                                                        <p class="cat" title="{{ $product->company->name }}" >{{ $product->company->name }}</p>
+                                                        <p class="cat" title="{{ optional($product->pro_sub_cat)->name }}" >{{ optional($product->pro_sub_cat)->name }}</p>
+                                                        <p class="cat" title="{{ optional($product->generic)->name }}" >{{optional($product->generic)->name }}</p>
+                                                        <p class="cat" title="{{ optional($product->company)->name }}" >{{optional($product->company)->name }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 mt-2 mt-sm-0 col-sm-4 col-12 d-flex d-sm-block gap-4 gap-sm-0">
                                                     <p class="qty">
-                                                        {{ __('Qty: ') }}<span>{{ $product->pivot->quantity < 10 ? '0' . $product->pivot->quantity : $product->pivot->quantity }}</span>
+                                                        {{ __('Qty: ') }}<span>{{ optional($product->pivot)->quantity < 10 ? '0' . $product->pivot->quantity : $product->pivot->quantity }}</span>
                                                     </p>
                                                     <p class="qty">
-                                                        {{ __('Unit: ') }}<span>{{ $product->pivot->unit->name }}</span>
+                                                        {{ __('Unit: ') }}<span>{{ optional($product->pivot)->unit->name }}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -129,14 +103,17 @@
                 @endforelse
             </div>
             <div class="paginate mt-3">
-                {!! $pagination !!}
+                <span class="float-end">
+                    {{ $orders->firstItem() }} - {{ $orders->lastItem() }} {{ __('of') }} {{ $orders->total() }} {{ __('items') }}
+                </span>
+                {{ $orders->links('pagination::bootstrap-4') }}
             </div>
 
         </div>
     </section>
 @endsection
 @push('js')
-    <script>
+    {{-- <script>
         const myDatas = {
             'status': `{{ $status }}`,
             'filter': `{{ $filterValue }}`,
@@ -144,6 +121,6 @@
             'details_route': `{{ route('u.order.details', ['order_id']) }}`,
             'cancel_route': `{{ route('u.order.cancel', ['order_id']) }}`,
         };
-    </script>
-    <script src="{{ asset('user/asset/js/order_list.js') }}"></script>
+    </script> --}}
+    {{-- <script src="{{ asset('user/asset/js/order_list.js') }}"></script> --}}
 @endpush

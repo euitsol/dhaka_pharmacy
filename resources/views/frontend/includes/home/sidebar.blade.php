@@ -1,8 +1,11 @@
-@include('frontend.includes.upload_prescription')
+{{-- @include('frontend.includes.upload_prescription') --}}
+@include('frontend.includes.new-upload-prescription')
 <section class="col-3 col-xxl-2 col-12 col-lg-3 sidebar-cat-section">
     <div class="col sticky-col pb-2 pb-lg-4">
         <div class="upload_prescription mb-2">
-            <h2 class="text-center cat-title up_button d-none d-lg-block">{{ __('Upload Prescription') }}</h2>
+            <h2 class="text-center cat-title d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#prescriptionModal">
+                <i class="fas fa-upload me-2"></i> {{ __('Upload Prescription') }}
+            </h2>
         </div>
         <div class="categories_menu">
             <h2 class="text-center cat-title d-lg-block d-none">{{ __('Categories') }}</h2>
@@ -16,7 +19,7 @@
                         <h2 class="mt-2">{{ __($item->name) }}</h2>
                     </a>
                 @endforeach
-               
+
             </div>
         </div>
     </div>

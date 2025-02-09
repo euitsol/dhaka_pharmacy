@@ -3,23 +3,119 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\PrescriptionImageRequest;
+use App\Http\Requests\User\PrescriptionRequest;
 use App\Http\Requests\User\UploadPrescriptionRequest;
 use App\Http\Traits\DeliveryTrait;
 use App\Models\Address;
 use App\Models\OrderPrescription;
+use App\Models\Prescription;
+use App\Models\PrescriptionImage;
 use App\Models\TempFile;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use App\Services\PrescriptionService;
+use Exception;
+use App\Models\User;
 
 class OrderByPrescriptionController extends Controller
 {
     use DeliveryTrait;
 
-    public function __construct()
+    protected PrescriptionService $prescriptionService;
+
+    public function __construct(PrescriptionService $prescriptionService)
     {
-        // return $this->middleware('auth');
+        $this->prescriptionService = $prescriptionService;
     }
+
+    public function verify(Request $request)
+    {
+        dd($request->all());
+    }
+
+    public function create(PrescriptionRequest $request)
+    {
+        $prescription = new Prescription();
+        if($request->has('phone')){
+            $user = User::where('phone', $request->phone)->first();
+            if($user){
+                $prescription->creater_id = $user->id;
+                $prescription->creater_type = get_class($user);
+            }
+            $prescription->phone = $request->phone;
+        }
+
+        if($request->has('information')){
+            $prescription->information = $request->information;
+        }
+
+        $prescription->status = 1;
+        $prescription->save();
+
+        if($request->has('uploaded_image')){
+            foreach($request->uploaded_image as $image){
+                $prescriptionImage = PrescriptionImage::find($image);
+                if($prescriptionImage){
+                    $prescriptionImage->update([
+                        'prescription_id' => $prescription->id,
+                        'status' => 1
+                    ]);
+                }else{
+                    throw new Exception("Invalid image. Please try again");
+                }
+            }
+        }
+
+        flash()->addSuccess('Prescription submitted successfully. Our team will contact you soon.');
+        return redirect()->route('home');
+
+        // try {
+        //     if(user()){
+        //         $this->prescriptionService->setUser(User::find(user()->id));
+        //     }
+        //     $data = $this->prescriptionService->createPrescription($request->validated());
+        //     return response()->json([
+        //         'message' => 'Prescription created successfully',
+        //         'data' => $data
+        //     ], 200);
+        // } catch (Exception $e) {
+        //     return response()->json([
+        //         'message' => 'An error occurred while creating the prescription.',
+        //         'error' => $e->getMessage()
+        //     ], 500);
+        // }
+    }
+
+    public function image_upload(PrescriptionImageRequest $request)
+    {
+        try {
+            $file = $request->file('file');
+
+            if(user()){
+                $this->prescriptionService->setUser(User::find(user()->id));
+            }
+
+            if($request->has('prescription_id')){
+                $this->prescriptionService
+                    ->setPrescription($request->prescription_id);
+            }
+
+            $data = $this->prescriptionService->uploadPrescriptionImage($file);
+
+            return response()->json([
+                'message' => 'Prescription image uploaded successfully',
+                'data' => $data
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while uploading the prescription image.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function prescription_upload(UploadPrescriptionRequest $request): JsonResponse
     {
 
@@ -62,6 +158,7 @@ class OrderByPrescriptionController extends Controller
             return response()->json(['message' => 'Something went wrong: ' . $e->getMessage()], 500);
         }
     }
+
     public function check_auth()
     {
         if (!auth()->guard('web')->check()) {
