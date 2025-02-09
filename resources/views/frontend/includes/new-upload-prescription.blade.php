@@ -7,7 +7,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form class="prescriptionForm" id="prescriptionForm" action="{{ route('u.obp.create') }}" method="POST">
+                    @csrf
                     <!-- File Upload Area -->
                     <div class="mb-4">
                         <input type="file" id="prescription" accept="image/*" class="d-none" multiple>
@@ -28,11 +29,11 @@
                     <!-- Contact Number -->
                     <div class="mb-3">
                         <label for="phone" class="form-label">{{ __('Contact Number') }} <span class="text-danger">*</span> <small class="text-muted">{{ __('Required') }}</small></label>
-                        <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" value="{{ user() ? user()->phone : old('phone') }}">
+                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter your phone number" value="{{ user() ? user()->phone : old('phone') }}">
                     </div>
                     <div class="mb-3">
-                        <label for="instruction" class="form-label">{{ __('Instructions') }}</label>
-                        <textarea class="form-control" id="instruction" rows="3" placeholder="Enter any special instructions"></textarea>
+                        <label for="information" class="form-label">{{ __('Additional Information') }}</label>
+                        <textarea class="form-control" name="information" id="information" rows="3" placeholder="Enter any special instructions"></textarea>
                     </div>
 
                     <!-- Instructions -->

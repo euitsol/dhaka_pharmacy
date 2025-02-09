@@ -1230,8 +1230,8 @@ Route::controller(ContactPageController::class)->group(function () {
 
 
 Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
-    Route::post('/upload-prescription', 'prescription_upload')->name('up');
-    Route::post('/prescription/upload/image', 'image_upload')->name('upload');
+    Route::post('upload-prescription', 'prescription_upload')->name('up');
+    Route::post('prescription/upload/image', 'image_upload')->name('upload');
     Route::post('prescription/create', 'create')->name('create');
     Route::put('prescription/update/{id}', 'update')->name('update');
     Route::get('prescription/delete/{id}', 'delete')->name('delete');

@@ -70,9 +70,14 @@ $(document).ready(function() {
 
                     $('<input>').attr({
                         'type': 'hidden',
-                        'name': 'uploaded_image['+response.data.id+']',
+                        'name': 'uploaded_image[]',
                         'value': response.data.id
                     }).appendTo($preview);
+
+                    var idArray = $('input[name="uploaded_image[]"]').map(function() {
+                        return $(this).val();
+                    }).get();
+                    console.log(idArray);
 
                     addRemoveButton($preview);
                     $preview.addClass('loaded');

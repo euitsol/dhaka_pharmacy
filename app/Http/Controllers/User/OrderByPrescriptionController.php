@@ -9,6 +9,7 @@ use App\Http\Requests\User\UploadPrescriptionRequest;
 use App\Http\Traits\DeliveryTrait;
 use App\Models\Address;
 use App\Models\OrderPrescription;
+use App\Models\Prescription;
 use App\Models\PrescriptionImage;
 use App\Models\TempFile;
 use Illuminate\Http\JsonResponse;
@@ -34,23 +35,57 @@ class OrderByPrescriptionController extends Controller
         dd($request->all());
     }
 
-    public function create(PrescriptionRequest $request): JsonResponse
+    public function create(PrescriptionRequest $request)
     {
-        try {
-            if(user()){
-                $this->prescriptionService->setUser(User::find(user()->id));
+        $prescription = new Prescription();
+        if($request->has('phone')){
+            $user = User::where('phone', $request->phone)->first();
+            if($user){
+                $prescription->creater_id = $user->id;
+                $prescription->creater_type = get_class($user);
             }
-            $data = $this->prescriptionService->createPrescription($request->validated());
-            return response()->json([
-                'message' => 'Prescription created successfully',
-                'data' => $data
-            ], 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'message' => 'An error occurred while creating the prescription.',
-                'error' => $e->getMessage()
-            ], 500);
+            $prescription->phone = $request->phone;
         }
+
+        if($request->has('information')){
+            $prescription->information = $request->information;
+        }
+
+        $prescription->status = 1;
+        $prescription->save();
+
+        if($request->has('uploaded_image')){
+            foreach($request->uploaded_image as $image){
+                $prescriptionImage = PrescriptionImage::find($image);
+                if($prescriptionImage){
+                    $prescriptionImage->update([
+                        'prescription_id' => $prescription->id,
+                        'status' => 1
+                    ]);
+                }else{
+                    throw new Exception("Invalid image. Please try again");
+                }
+            }
+        }
+
+        flash()->addSuccess('Prescription submitted successfully. Our team will contact you soon.');
+        return redirect()->route('home');
+
+        // try {
+        //     if(user()){
+        //         $this->prescriptionService->setUser(User::find(user()->id));
+        //     }
+        //     $data = $this->prescriptionService->createPrescription($request->validated());
+        //     return response()->json([
+        //         'message' => 'Prescription created successfully',
+        //         'data' => $data
+        //     ], 200);
+        // } catch (Exception $e) {
+        //     return response()->json([
+        //         'message' => 'An error occurred while creating the prescription.',
+        //         'error' => $e->getMessage()
+        //     ], 500);
+        // }
     }
 
     public function image_upload(PrescriptionImageRequest $request)
