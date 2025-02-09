@@ -25,8 +25,7 @@ class PrescriptionImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'nullable|image|max:2048',
-            'prescription_id' => 'nullable|exists:prescriptions,id',
+            'file' => 'required|image|max:2048',
         ];
     }
 
