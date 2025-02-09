@@ -44,23 +44,35 @@ class OrderController extends Controller
     }
 
 
-    public function details($id): View
+    public function details($id): View|RedirectResponse
     {
-        $order = Order::with(['customer', 'address', 'payments', 'od.odrs', 'products.pro_cat', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength'])->findOrFail(decrypt($id));
-        $order->place_date = date('M d,Y', strtotime($order->created_at));
-        $this->calculateOrderTotalPrice($order);
-        $this->calculateOrderTotalDiscountPrice($order);
-        $order->totalRegularPrice = ($order->totalPrice - $order->totalDiscountPrice);
-        $order->statusBg = $order->statusBg();
-        $order->statusTitle = slugToTitle($order->statusTitle());
-        $order->products->each(function (&$product) {
-            $this->transformProduct($product, 60);
-        });
-        if (isset($order->od) && $order->od->status == 4) {
-            $order->otp = $order->od->delivery_active_otps->first()?->otp;
+        try {
+            $this->orderService->setUser(user());
+            $data['order'] = $this->orderService->getOrderDetails(decrypt($id), 'user');
+            // dd($data['order']);
+            return view('user.order.details', $data);
+        }catch (ModelNotFoundException $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }catch (Exception $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
         }
-        $data['order'] = $order;
-        return view('user.order.details', $data);
+        // $order = Order::with(['customer', 'address', 'payments', 'od.odrs', 'products.pro_cat', 'products.pro_sub_cat', 'products.units', 'products.discounts', 'products.pivot.unit', 'products.company', 'products.generic', 'products.strength'])->where('order_id', decrypt($id))->first();
+        // $order->place_date = date('M d,Y', strtotime($order->created_at));
+        // $this->calculateOrderTotalPrice($order);
+        // $this->calculateOrderTotalDiscountPrice($order);
+        // $order->totalRegularPrice = ($order->totalPrice - $order->totalDiscountPrice);
+        // $order->statusBg = $order->statusBg();
+        // $order->statusTitle = slugToTitle($order->statusTitle());
+        // $order->products->each(function (&$product) {
+        //     $this->transformProduct($product, 60);
+        // });
+        // if (isset($order->od) && $order->od->status == 4) {
+        //     $order->otp = $order->od->delivery_active_otps->first()?->otp;
+        // }
+        // $data['order'] = $order;
+        // return view('user.order.details', $data);
     }
 
     public function cancel($id): RedirectResponse
