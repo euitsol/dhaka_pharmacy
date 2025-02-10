@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/about.css') }}">
 @endpush
 @section('content')
-    <div class="about-section my-0 my-lg-4">
+    <div class="about-section mt-4">
         <div class="container">
             <div class="about-container">
                 <div class="row my-0 my-lg-5 align-items-start align-items-xxl-end mt-4 mt-lg-0">

@@ -18,7 +18,7 @@ class ProductCategoryController extends Controller
     use DetailsCommonDataTrait;
     public function __construct()
     {
-        return $this->middleware('admin');
+        $this->middleware('admin');
     }
 
     public function index(): View

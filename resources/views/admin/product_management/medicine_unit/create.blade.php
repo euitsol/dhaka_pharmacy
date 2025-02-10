@@ -25,37 +25,10 @@
                         <div class="row">
                             <div class="form-group ">
 
-                                <label>{{ __('Name') }}</label>
+                                <label>{{ __('Name') }}<span class="text-danger">*</span></label>
                                 <input type="text" name="name" class="form-control" placeholder="Enter name"
                                     value="{{ old('name') }}">
                                 @include('alerts.feedback', ['field' => 'name'])
-                            </div>
-                            <div class="form-group ">
-
-                                <label>{{ __('Quantity') }}</label>
-                                <input type="text" name="quantity" class="form-control" placeholder="Enter quantity"
-                                    value="{{ old('quantity') }}">
-                                @include('alerts.feedback', ['field' => 'quantity'])
-                            </div>
-
-                            <div class="form-group mb-4">
-                                <label>{{ __('Type') }}</label>
-                                <select name="type" class="form-control">
-                                    <option selected hidden value=" ">{{ __('Select type') }}</option>
-                                    <option value="tablet" {{ old('type') == 'tablet' ? 'selected' : '' }}>
-                                        {{ __('Tablet') }}</option>
-                                    <option value="capsul" {{ old('type') == 'capsul' ? 'selected' : '' }}>
-                                        {{ __('Capsul') }}</option>
-                                    <option value="cream" {{ old('type') == 'cream' ? 'selected' : '' }}>
-                                        {{ __('Cream') }}</option>
-                                    <option value="pad" {{ old('type') == 'pad' ? 'selected' : '' }}>
-                                        {{ __('Pad') }}</option>
-                                    <option value="bottle" {{ old('type') == 'bottle' ? 'selected' : '' }}>
-                                        {{ __('Bottle') }}</option>
-                                    <option value="syringe" {{ old('type') == 'syringe' ? 'selected' : '' }}>
-                                        {{ __('Syringe') }}</option>
-                                </select>
-                                @include('alerts.feedback', ['field' => 'type'])
                             </div>
                             <div class="form-group ">
                                 <label>{{ __('Image') }}</label>

@@ -26,21 +26,21 @@
                         <div class="row">
                             <div class="form-group col-md-6">
 
-                                <label>{{ __('Name') }}</label>
+                                <label>{{ __('Name') }} <span class="text-danger">*</span> </label>
                                 <input type="text" name="name" id="title"
                                     class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                     placeholder="Enter name" value="{{ old('name') }}">
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ _('Slug') }}</label>
+                                <label>{{ _('Slug') }}<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}"
                                     id="slug" name="slug" value="{{ old('slug') }}"
                                     placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
                                 @include('alerts.feedback', ['field' => 'slug'])
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ __('Product Category') }}</label>
+                                <label>{{ __('Product Category') }}<span class="text-danger">*</span></label>
                                 <select name="pro_cat_id"
                                     class="form-control {{ $errors->has('pro_cat_id') ? ' is-invalid' : '' }} pro_cat">
                                     <option selected hidden value=" ">{{ __('Select product category') }}</option>
@@ -62,7 +62,7 @@
                                 @include('alerts.feedback', ['field' => 'pro_sub_cat_id'])
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ __('Generic Name') }}</label>
+                                <label>{{ __('Generic Name') }}<span class="text-danger">*</span></label>
                                 <select name="generic_id"
                                     class="form-control {{ $errors->has('generic_id') ? ' is-invalid' : '' }}">
                                     <option selected hidden value=" ">{{ __('Select generic name') }}</option>
@@ -87,19 +87,19 @@
                                 </select>
                                 @include('alerts.feedback', ['field' => 'company_id'])
                             </div>
-                            {{-- <div class="form-group col-md-6">
+                            <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Dosage') }}</label>
-                                <select name="medicine_cat_id"
-                                    class="form-control {{ $errors->has('medicine_cat_id') ? ' is-invalid' : '' }}">
+                                <select name="medicine_dosage"
+                                    class="form-control {{ $errors->has('medicine_dosage') ? ' is-invalid' : '' }}">
                                     <option selected hidden value=" ">{{ __('Select medicine dosage') }}</option>
-                                    @foreach ($medicine_cats as $medicine_cat)
-                                        <option value="{{ $medicine_cat->id }}"
-                                            {{ $medicine_cat->id == old('medicine_cat_id') ? 'selected' : '' }}>
-                                            {{ $medicine_cat->name }}</option>
+                                    @foreach ($medicine_doses as $dose)
+                                        <option value="{{ $dose->id }}"
+                                            {{ $dose->id == old('medicine_dosage') ? 'selected' : '' }}>
+                                            {{ $dose->name }}</option>
                                     @endforeach
                                 </select>
-                                @include('alerts.feedback', ['field' => 'medicine_cat_id'])
-                            </div> --}}
+                                @include('alerts.feedback', ['field' => 'medicine_dosage'])
+                            </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Strength') }}</label>
                                 <select name="strength_id"
@@ -115,7 +115,7 @@
                                 @include('alerts.feedback', ['field' => 'strength_id'])
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ __('Medicine Unit') }}</label>
+                                <label>{{ __('Product Unit') }}<span class="text-danger">*</span></label>
                                 <select name="unit[]"
                                     class="form-control unit {{ $errors->has('unit') ? ' is-invalid' : '' }}"
                                     multiple="multiple">
@@ -196,7 +196,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label>{{ __('Maximum Retail Price') }} <small>{{ __('(MRP)') }}</small></label>
+                                <label>{{ __('Maximum Retail Price') }} <small>{{ __('(MRP)') }}</small><span class="text-danger">*</span></label>
                                 <div class="input-group" role="group">
                                     <input type="text" name="price"
                                         class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
@@ -239,6 +239,7 @@
                                     placeholder="Enter discount amount" value="{{ old('discount_amount') }}">
                                 @include('alerts.feedback', ['field' => 'discount_amount'])
                             </div>
+                            <div class="form-group col-md-12 row mt-2" id="unit-prices-container"></div>
                         </div>
                     </div>
                 </div>
@@ -399,6 +400,31 @@
             });
             $('#discount_percentage, #discount_amount').on('input, keyup', function() {
                 toggleFieldDisabled();
+            });
+
+
+            $('.unit').on('change', function() {
+                var selectedOptions = $(this).find('option:selected'); // Get selected options
+                var container = $('#unit-prices-container');
+                container.empty();
+
+                if (selectedOptions.length > 0) {
+                    selectedOptions.each(function() {
+                        var unitId = $(this).val();
+                        var unitName = $(this).text().trim();
+                        var priceDiv = $('<div class="form-group col-md-6 unit-price-item">');
+                        var label = $('<label for="price-unit-' + unitId + '">Price for Unit: ' + unitName + ' (ID: ' + unitId + ')</label>');
+                        priceDiv.append(label);
+
+                        var input = $(`
+                                    <input type="hidden" class="d-none" id="unit-${unitId}" name="units[${unitId}][id]" value="${unitId}">
+                                    <input type="number" class="form-control" id="price-unit-${unitId}" name="units[${unitId}][price]" placeholder="Enter price for ${unitName}">
+                        `);
+                        priceDiv.append(input);
+
+                        container.append(priceDiv);
+                    });
+                }
             });
         });
     </script>

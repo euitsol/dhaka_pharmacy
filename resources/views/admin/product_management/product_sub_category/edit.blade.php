@@ -25,7 +25,7 @@
                     @method('PUT')
                     <div class="card-body">
                         <div class="form-group">
-                            <label>{{ __('Product Category') }}</label>
+                            <label>{{ __('Product Category') }}<span class="text-danger">*</span></label>
                             <select name="pro_cat_id" class="form-control">
                                 @foreach ($pro_cats as $cat)
                                     <option value="{{ $cat->id }}"
@@ -36,13 +36,13 @@
                             @include('alerts.feedback', ['field' => 'pro_cat_id'])
                         </div>
                         <div class="form-group">
-                            <label>{{ __('Name') }}</label>
+                            <label>{{ __('Name') }}<span class="text-danger">*</span></label>
                             <input type="text" id="title" name="name" class="form-control"
                                 placeholder="Enter name" value="{{ $product_sub_category->name }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>{{ _('Slug') }}</label>
+                            <label>{{ _('Slug') }}<span class="text-danger">*</span></label>
                             <input type="text" value="{{ $product_sub_category->slug }}"
                                 class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug"
                                 name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">

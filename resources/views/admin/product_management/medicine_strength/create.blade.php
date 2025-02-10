@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <div class="inptu-group">
                                 <div class="name">
-                                    <label>{{ __('Name') }}</label>
+                                    <label>{{ __('Name') }}<span class="text-danger">*</span></label>
                                     <input type="text" name="name" class="form-control" placeholder="Enter strength name"
                                         value="{{ old('name') }}">
                                     @include('alerts.feedback', ['field' => 'name'])

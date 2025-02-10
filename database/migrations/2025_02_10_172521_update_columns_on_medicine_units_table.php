@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('prescription_images', function (Blueprint $table) {
-            $table->unsignedBigInteger('prescription_id')->nullable()->change();
+
+        Schema::table('medicine_units', function (Blueprint $table) {
+            $table->string('quantity')->nullable()->change();
         });
     }
 
@@ -21,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('prescription_images', function (Blueprint $table) {
-            $table->unsignedBigInteger('prescription_id')->nullable(false)->change();
+        Schema::table('medicine_units', function (Blueprint $table) {
+            $table->string('quantity')->nullable(false)->change();
         });
     }
 };

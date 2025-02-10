@@ -18,7 +18,7 @@ class MedicineDosesController extends Controller
     use DetailsCommonDataTrait;
     public function __construct()
     {
-        return $this->middleware('admin');
+        $this->middleware('admin');
     }
 
     public function index(): View
@@ -41,7 +41,6 @@ class MedicineDosesController extends Controller
     }
     public function store(MedicineDosesRequest $req): RedirectResponse
     {
-        dd($req->all());
         $medicine_dose = new MedicineDose();
 
         if ($req->hasFile('icon')) {

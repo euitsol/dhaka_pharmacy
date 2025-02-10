@@ -22,9 +22,7 @@ class MedicineUnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required',
-            'quantity'=>'required|numeric',
-            'type'=>'nullable',
+            'name'=>'required|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,gif,jpg,webp|max:2048',
         ];
     }
