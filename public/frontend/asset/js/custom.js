@@ -399,3 +399,4 @@ function formatPercentageNumber(number) {
 //     // Initial type animation
 //     typeSubcategory(subCategories[currentIndex].textContent);
 // });
+
