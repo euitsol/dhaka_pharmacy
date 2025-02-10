@@ -10,6 +10,7 @@ use App\Models\Documentation;
 use App\Models\GenericName;
 use App\Models\Medicine;
 use App\Models\MedicineCategory;
+use App\Models\MedicineDose;
 use App\Models\MedicineStrength;
 use App\Models\MedicineUnit;
 use App\Models\MedicineUnitBkdn;
@@ -152,6 +153,7 @@ class MedicineController extends Controller
         $data['generics'] = GenericName::activated()->orderBy('name')->get();
         $data['companies'] = CompanyName::activated()->orderBy('name')->get();
         $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->get();
+        $data['medicine_doses'] = MedicineDose::activated()->orderBy('name')->get();
         $data['strengths'] = MedicineStrength::activated()->orderBy('quantity')->get();
         $data['units'] = MedicineUnit::activated()->orderBy('name')->get();
         $data['document'] = Documentation::where([['module_key', 'product'], ['type', 'create']])->first();
@@ -170,12 +172,14 @@ class MedicineController extends Controller
         }
         $medicine->name = $req->name;
         $medicine->slug = $req->slug;
+
         $medicine->pro_cat_id = $req->pro_cat_id;
-        $medicine->pro_sub_cat_id = $req->pro_sub_cat_id;
-        $medicine->generic_id = $req->generic_id;
-        $medicine->company_id = $req->company_id;
-        // $medicine->medicine_cat_id = $req->medicine_cat_id;
-        $medicine->strength_id = $req->strength_id;
+
+        $medicine->pro_sub_cat_id = $req->pro_sub_cat_id ?? null;
+        $medicine->generic_id = $req->generic_id ?? null;
+        $medicine->company_id = $req->company_id ?? null;
+        $medicine->strength_id = $req->strength_id ?? null;
+
         $medicine->price = $req->price;
         $medicine->description = $req->description;
         $medicine->prescription_required = $req->prescription_required;
@@ -183,13 +187,16 @@ class MedicineController extends Controller
         $medicine->max_quantity = $req->max_quantity;
         $medicine->created_by = admin()->id;
         $medicine->save();
+
         //medicine unit bkdn
         foreach ($req->unit as $unit) {
             MedicineUnitBkdn::create([
                 'medicine_id' => $medicine->id,
-                'unit_id' => $unit
+                'unit_id' => $unit->id,
+                'price' => $unit->price,
             ]);
         }
+
         $discount = new Discount();
         $discount->pro_id = $medicine->id;
         $discount->discount_amount = $req->discount_amount;
@@ -197,7 +204,7 @@ class MedicineController extends Controller
         $discount->created_by = admin()->id;
         $discount->save();
 
-        if ($req->precaution) {
+        if ($req->has('precaution')) {
             ProductPrecaution::create([
                 'description' => $req->precaution,
                 'status' => $req->precaution_status ?? 0,

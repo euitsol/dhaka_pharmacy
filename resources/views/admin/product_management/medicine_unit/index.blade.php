@@ -25,8 +25,6 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Image') }}</th>
-                                <th>{{ __('Quantity') }}</th>
-                                <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Created date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -40,8 +38,6 @@
                                     <td> {{ $medicine_unit->name }} </td>
                                     <td> <img height="60px" width="60px" style="object-fit: contain"
                                             src="{{ storage_url($medicine_unit->image) }}" alt=""> </td>
-                                    <td> {{ $medicine_unit->quantity }} </td>
-                                    <td> {{ $medicine_unit->type ? $medicine_unit->type : '-' }} </td>
                                     <td>
                                         <span
                                             class="{{ $medicine_unit->getStatusBadgeClass() }}">{{ $medicine_unit->getStatus() }}</span>
@@ -131,24 +127,14 @@
                                     <tr>
                                         <th class="text-nowrap">Image</th>
                                         <th>:</th>
-                                        <td> 
-                                            <img height='100px' width='100px' class='border p-2' src="${data.image}">   
+                                        <td>
+                                            <img height='100px' width='100px' class='border p-2' src="${data.image}">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Name</th>
                                         <th>:</th>
                                         <td>${data.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Quantity</th>
-                                        <th>:</th>
-                                        <td>${data.quantity}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Type</th>
-                                        <th>:</th>
-                                        <td>${data.type}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>

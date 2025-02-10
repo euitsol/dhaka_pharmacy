@@ -25,37 +25,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group">
-                                <label>{{ __('Name') }}</label>
+                                <label>{{ __('Name') }}<span class="text-danger">*</span></label>
                                 <input type="text" name="name" class="form-control" placeholder="Enter name"
                                     value="{{ $medicine_unit->name }}">
                                 @include('alerts.feedback', ['field' => 'name'])
-                            </div>
-                            <div class="form-group">
-
-                                <label>{{ __('Quantity') }}</label>
-                                <input type="text" name="quantity" class="form-control" placeholder="Enter quantity"
-                                    value="{{ $medicine_unit->quantity }}">
-                                @include('alerts.feedback', ['field' => 'quantity'])
-                            </div>
-
-                            <div class="form-group mb-4">
-                                <label>{{ __('Type') }}</label>
-                                <select name="type" class="form-control">
-                                    <option selected hidden value=" ">{{ __('Select type') }}</option>
-                                    <option value="tablet" {{ $medicine_unit->type == 'tablet' ? 'selected' : '' }}>
-                                        {{ __('Tablet') }}</option>
-                                    <option value="capsul" {{ $medicine_unit->type == 'capsul' ? 'selected' : '' }}>
-                                        {{ __('Capsul') }}</option>
-                                    <option value="cream" {{ $medicine_unit->type == 'cream' ? 'selected' : '' }}>
-                                        {{ __('Cream') }}</option>
-                                    <option value="pad" {{ $medicine_unit->type == 'pad' ? 'selected' : '' }}>
-                                        {{ __('Pad') }}</option>
-                                    <option value="bottle" {{ $medicine_unit->type == 'bottle' ? 'selected' : '' }}>
-                                        {{ __('Bottle') }}</option>
-                                    <option value="syringe" {{ $medicine_unit->type == 'syringe' ? 'selected' : '' }}>
-                                        {{ __('Syringe') }}</option>
-                                </select>
-                                @include('alerts.feedback', ['field' => 'type'])
                             </div>
                             <div class="form-group">
                                 <label>{{ __('Image') }}</label>
