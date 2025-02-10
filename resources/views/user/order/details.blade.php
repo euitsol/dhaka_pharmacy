@@ -43,13 +43,17 @@
     padding-bottom: 2rem;
 }
 
-/* Vertical Line (Mobile) */
+/* Vertical Line (Mobile) */'
+
+.order-timeline .content-wrapper{
+    padding-left: 2rem;
+}
 .vertical-line {
     position: absolute;
-    left: 1.25rem;
-    top: 3rem;
+    left: 1.9rem;
+    top: 2.5rem;
     bottom: 0;
-    width: 2px;
+    width: 5px;
     background-color: var(--inactive-color);
 }
 
