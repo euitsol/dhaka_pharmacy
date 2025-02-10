@@ -7,7 +7,7 @@ on:
     branches: ["live"]
 
 jobs:
-  laravel-deploy:
+  live-server-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,5 +24,5 @@ jobs:
             cd public_html
             git fetch --all
             git reset --hard origin/live
-            git pull
             php artisan optimize:clear
+            php artisan migrate --force

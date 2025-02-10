@@ -117,12 +117,12 @@
     </div>
 
     {{-- District Manager Details Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal view_modal fade" id="productCategoryModal" tabindex="-1" role="dialog"
+        aria-labelledby="productCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Medicine Dosage Details') }}</h5>
+                    <h5 class="modal-title" id="productCategoryModalLabel">{{ __('Product Category Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

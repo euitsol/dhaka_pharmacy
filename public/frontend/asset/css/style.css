@@ -25,7 +25,6 @@
     --primary-color: #00204b;
     /* --secundary-color: #28a349; */
 
-
     /* new color variable start */
 
     --primary-bg: #1869aa;
@@ -46,8 +45,6 @@
 
     /* new color variable end */
 
-
-
     /* --asent-color: #28a349; */
     --text-color-black: #373f50;
     --text-color-white: #fff;
@@ -66,15 +63,20 @@
     /* --border-1: #2d98da;
     --border-2: #28a349; */
 
-
-
     --secondry-font: "Poppins", sans-serif;
     --commoninner_bg: #d9d9d922;
 
     /* Adding this new global variable */
     --bg-2: #f4f4f4;
     --bg-3: #eaf1fb;
+    --bg-4: #d9d9d922;
     --btn-bg-2: #7db6e3;
+    --btn-bg-3: #1869aa;
+}
+
+/* Box shadow */
+:root {
+    --box-shadow-1: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /*====================================
@@ -191,7 +193,7 @@ h2.title {
 .related_product #related-product-slider .single-pdct .pdct-img > img {
     border-radius: 15px 15px 0 0;
     height: 12.575rem;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .single-pdct .pdct-info {
@@ -442,7 +444,7 @@ a {
 .order_button .order-btn:hover {
     color: var(--text-color-white) !important;
     border: 2px solid var(--border-2) !important;
-    background: var(--secundary-color) !important;
+    background: var(--primary-color) !important;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 
@@ -554,6 +556,7 @@ a {
 .sidebar-cat-section .single-cat:hover{
     background: var(--secondary-color);
 }
+
 .sidebar-cat-section .single-cat.active {
     background: var(--secondary-color);
 }
@@ -732,9 +735,11 @@ a {
 .slider-sction .uk-slideshow .uk-dotnav .uk-active a {
     background: var(--border-1);
 }
+
 .slider-sction .uk-slideshow .uk-dotnav a:hover{
     background: var(--border-1) !important;
 }
+
 .uk-child-width-1-5\@m > * {
     width: 21% !important;
 }
@@ -763,9 +768,7 @@ a {
     padding: 10px 0px;
 }
 
-
 /* scrollber design css code here */
-
 
 /* For Chrome, Safari, and Edge */
 /* 
@@ -797,9 +800,6 @@ a {
     scrollbar-width: thin;
     scrollbar-color: var(--secondary-color) var(--border-1);
 } */
-
-
-
 
 /* Firefox e customize scrollbar */
 
@@ -849,8 +849,6 @@ a {
         transparent
     );
 }
-
-
 
 .product-section .best-selling-col .all-product {
     padding: 0px 5px;
@@ -1554,7 +1552,6 @@ a {
     margin-left: 1px;
     left: 100%;
     z-index: 1;
-
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li:first-child a {
@@ -1567,7 +1564,7 @@ a {
 
 .breadcrumb_wrap .breadcrumb.wizard li a:hover:after {
     border-left-color: var(--btn-bg-color) !important;
-} 
+}
 
 .breadcrumb_wrap .favorite {
     position: absolute;
@@ -2702,4 +2699,53 @@ a {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+/* Full-Screen Overlay */
+#loading-animation {
+    position: fixed;
+    top: 0;
+    right: 0 !important;
+    width: 37.5rem;
+    height: 100%;
+    background-image: linear-gradient(to right, #d8e5ec81, #dae3eb8c, #def0e791);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999999999999999;
+}
+
+/* Logo with Breathing Animation */
+#loading-animation img {
+    max-width: 20rem; /* Adjust the size as needed */
+    animation: breathing 2s ease-in-out infinite;
+}
+
+/* Keyframes for the Breathing Effect */
+@keyframes breathing {
+    0% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+}
+
+.unit-badge {
+    background-color: var(--btn-bg-2);
+    color: var(--text-color-black);
+    border: 1px solid var(--border-1);
+    font-size: 14px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
 }

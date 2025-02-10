@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\User\PaymentController;
 use App\Http\Controllers\Api\User\SocialLoginController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\WishlistController;
+use App\Http\Controllers\Api\User\VoucherController;
+use App\Http\Controllers\Api\User\PrescriptionController;
 
 Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 
@@ -38,6 +40,8 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::post('/store', 'store')->name('store');
         Route::post('/update', 'update')->name('update');
         Route::get('/list', 'list')->name('list');
+        Route::get('/cities', 'cities')->name('cities');
+        Route::post('/delete', 'delete')->name('delete');
     });
     // Cart API
     Route::controller(CartAjaxController::class)->middleware('auth:api-user')->prefix('cart')->name('cart.')->group(function () {
@@ -52,8 +56,9 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
         Route::get('details', 'details')->name('d');
         Route::get('cancel', 'cancel')->name('cancel');
         Route::post('confirm', 'order_confirm')->name('c');
-
         Route::get('list', 'list')->name('l');
+        Route::post('update-address', 'address')->name('update.address');
+        Route::post('update-voucher', 'voucher')->name('update.voucher');
     });
     Route::controller(PaymentController::class)->middleware('auth:api-user')->prefix('payment')->name('payment.')->group(function () {
         Route::get('list', 'list')->name('l');
@@ -62,6 +67,15 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
     Route::controller(WishlistController::class)->middleware('auth:api-user')->prefix('wishlist')->name('wishlist.')->group(function () {
         Route::get('list', 'list')->name('l');
         Route::get('details', 'update')->name('d');
+    });
+
+    Route::controller(VoucherController::class)->middleware('auth:api-user')->prefix('voucher')->name('vouchers.')->group(function () {
+        Route::post('check', 'check')->name('check');
+    });
+
+    Route::controller(PrescriptionController::class)->prefix('prescription')->name('prescription.')->group(function () {
+        Route::post('upload', 'upload')->name('upload');
+        Route::post('create', 'create')->name('create');
     });
 });
 

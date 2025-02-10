@@ -74,7 +74,7 @@ class PaymentController extends Controller
         if ($payment->payment_method == 'ssl') {
             return redirect()->route('u.payment.index', encrypt($payment_id));
         } else {
-            flash()->addWarning('Selected payment gateway not implement yet!');
+            flash()->addWarning('Please select SSL Commerz payment gateway to proceed.');
             Order::findOrFail($payment->order->id)->update(['status' => 0]);
             return redirect()->route('u.ck.index', encrypt($payment->order->id));
         }

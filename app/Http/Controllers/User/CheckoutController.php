@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SingleOrderRequest;
 use App\Http\Requests\User\OrderConfirmRequest;
 use App\Http\Requests\User\OrderIntRequest;
+use App\Http\Requests\User\VoucherRequest;
 use App\Http\Traits\DeliveryTrait;
 use App\Http\Traits\OrderTrait;
 use App\Models\Address;
@@ -20,84 +21,130 @@ use Illuminate\Http\Request;
 use App\Http\Traits\TransformProductTrait;
 use App\Http\Traits\TransformOrderItemTrait;
 use App\Models\Payment;
+use App\Services\AddressService;
+use App\Services\OrderService;
+use App\Services\VoucherService;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
     use TransformProductTrait, OrderTrait, TransformOrderItemTrait, DeliveryTrait;
 
-    public function int_order(OrderIntRequest $request)
+    private OrderService $orderService;
+    private AddressService $addressService;
+    private VoucherService $voucherService;
+
+    public function __construct(OrderService $orderService, AddressService $addressService, VoucherService $voucherService)
     {
-        $order = $this->createOrder();
+        $this->orderService = $orderService;
+        $this->addressService = $addressService;
+        $this->voucherService = $voucherService;
+    }
 
-        if (isset($request->product)) { // for single order int
-            $op = new OrderProduct();
-            $op->order_id = $order->id;
-            $op->product_id = $request->product;
-            $op->unit_id = $request->unit_id;
-            $op->quantity = $request->quantity;
-            $op->save();
-        } else { // for multiple order int
+    public function int_order(Request $request)
+    {
 
-            $carts = AddToCart::currentCart()->get();
-            foreach ($carts as $cart) {
-                $op = new OrderProduct();
-                $op->order_id = $order->id;
-                $op->product_id = $cart->product_id;
-                $op->unit_id = $cart->unit_id;
-                $op->quantity = $cart->quantity;
-                $op->save();
-                $cart->forceDelete();
+        try {
+            $cartIds = AddToCart::currentCart(user())->get()->pluck('id')->toArray();
+            $user = User::findOrFail(user()->id);
+            $this->orderService->setUser($user);
+            $address = $this->addressService->setUser($user)->defaultAddress();
+            if($address){
+                $order = $this->orderService->processOrder(['carts' => $cartIds, 'address_id' => $address->id, 'delivery_type' => 'standard'], false, 'web');
+            }else{
+                $order = $this->orderService->processOrder(['carts' => $cartIds], false, 'web');
             }
+            return redirect()->route('u.ck.index', encrypt($order->order_id));
+        } catch (ModelNotFoundException $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        } catch (Exception $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
         }
+    }
 
-        return redirect()->route('u.ck.index', encrypt($order->id));
+    public function single_order(SingleOrderRequest $req)
+    {
+        try {
+            $data['user'] = User::findOrFail(user()->id);
+            $this->orderService->setUser($data['user']);
+
+            $data['product_slug'] = $req->validated()['slug'];
+            $data['unit_id'] = $req->validated()['unit_id'];
+            $data['quantity'] = $req->validated()['quantity'];
+
+            $data['order'] = $this->orderService->processOrder($data, true, 'web');
+            return redirect()->route('u.ck.index', encrypt($data['order']->order_id));
+        } catch (ModelNotFoundException $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }catch (Exception $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function checkout($order_id)
     {
-        $data['order'] = Order::with([
-            'products',
-            'products.pro_cat',
-            'products.generic',
-            'products.pro_sub_cat',
-            'products.company',
-            'products.discounts',
-            'products.units',
-        ])->initiated()->self()->findOrFail(decrypt($order_id));
-        $data['order']->products->each(function (&$product) {
-            $product = $this->transformProduct($product);
-        });
-        $data['customer'] = User::with(['address'])->findOrFail(user()->id);
-        $data['customer']->address->each(function (&$address) {
-            $address->delivery_charge = $this->getDeliveryCharge($address->latitude, $address->longitude);
-        });
-        return view('user.product_order.checkout', $data);
+        try {
+            $data['user'] = User::findOrFail(user()->id);
+            $this->orderService->setUser($data['user']);
+            $data['order'] = $this->orderService->getOrderDetails(decrypt($order_id), 'user');
+            return view('user.product_order.checkout', $data);
+        } catch (ModelNotFoundException $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->route('home');
+        }catch (Exception $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->route('home');
+        }
     }
-    public function order_confirm(OrderConfirmRequest $req, $order_id)
+    public function confirm_order(OrderConfirmRequest $req)
     {
-        $address =  Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->where('id', $req->address)->first();
-        $order = Order::with(['products'])->self()->findOrFail(decrypt($order_id));
-        $order->address_id = $req->address;
-        $order->status = 1; //Order Submit
-        $order->delivery_type = 0;
-        $order->delivery_fee = $this->getDeliveryCharge($address->latitude, $address->longitude);
-        $order->save();
-        $this->calculateOrderTotalDiscountPrice($order);
+        try {
+            $this->orderService->setUser(user());
+            $this->orderService->setOrder(order_id: $req->validated()['order_id']);
 
-        $payment = new Payment();
-        $payment->customer()->associate(user());
-        $payment->payment_method = $req->payment_method;
-        $payment->amount = $order->totalDiscountPrice + $order->delivery_fee;
-        $payment->order_id = $order->id;
-        $payment->status = 0; //Initialize
-        $payment->creater()->associate(user());
-        $payment->save();
+            Log::info($req->order_id."Requesting Confirm");
 
-        return redirect()->route('u.payment.int', encrypt($payment->id));
+            $this->orderService->addAddress($req->validated()['address'], $req->validated()['delivery_type']);
+            $payment = $this->orderService->confirmOrder(['payment_method' => $req->validated()['payment_method']]);
+            return redirect()->route('u.payment.int', encrypt($payment->id));
+        } catch (ModelNotFoundException $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        } catch (Exception $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }
     }
     public function address($id): JsonResponse
     {
         $data = Address::where('creater_id', user()->id)->where('creater_type', get_class(user()))->where('id', $id)->get()->first();
         return response()->json($data);
+    }
+
+    public function voucher_check(VoucherRequest $req)
+    {
+        try{
+
+            $this->orderService->setUser(user());
+            $this->orderService->setOrder(decrypt($req->order_id));
+            $this->orderService->addVoucher($req->voucher_code);
+
+            flash()->addSuccess('Voucher applied successfully.');
+            return redirect()->back();
+
+        }catch(ModelNotFoundException $e){
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }catch(Exception $e){
+            flash()->addWarning('Something went wrong. Please try again.');
+            return redirect()->back();
+        }
+
     }
 }

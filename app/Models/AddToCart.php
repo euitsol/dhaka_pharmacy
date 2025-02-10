@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,9 +10,13 @@ class AddToCart extends BaseModel
 {
     use HasFactory;
     protected $fillable = [
-        'status',
+        'product_id',
+        'customer_id',
         'unit_id',
         'quantity',
+        'status',
+        'creater_id',
+        'creater_type'
     ];
 
 
@@ -31,12 +36,7 @@ class AddToCart extends BaseModel
         return $query->where('is_check',1);
     }
 
-    public function scopeCurrentCart($query){
-        if (user()) {
-            return $query->where('customer_id', user()->id)
-                ->where('status', 1);
-        }
-
-        return $query;
+    public function scopeCurrentCart($query, Authenticatable $user){
+        return $query->where('creater_id', $user->id)->where('creater_type', get_class($user))->where('status', 1);
     }
 }

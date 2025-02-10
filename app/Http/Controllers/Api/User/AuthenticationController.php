@@ -40,22 +40,33 @@ class AuthenticationController extends BaseController
     }
     public function send_otp(SendOtpRequest $request): JsonResponse
     {
+        try {
+            $user = User::wherephone($request->phone)->get()->first();
 
-        $phone = $request->phone;
-        $user = User::wherephone($phone)->get()->first();
-        if (!empty($user)) {
-            if ($this->check_throttle($user)) {
-                return sendResponse(false, $this->check_throttle($user), null, 403);
-            } else {
-                $result = $this->sendVerificationSms($user);
-                if ($result == true) {
-                    return sendResponse(true, 'The verification code has been sent successfully.', $user->only('id'));
-                } else {
-                    return sendResponse(false, 'Oops! Something went wrong. Please try again.', null);
-                }
+            if (!$user) {
+                $user = new User();
+                $user->name = "Unknown User";
+                $user->phone = $request->phone;
+                $user->save();
             }
-        } else {
-            return sendResponse(false, 'Phone number didn\'t match.', null, 401);
+            if ($user) {
+                if ($this->check_throttle($user)) {
+                    return sendResponse(false, $this->check_throttle($user), null, 403);
+                } else {
+                    $result = $this->sendVerificationSms($user);
+                    if ($result == true) {
+                        return sendResponse(true, 'The verification code has been sent successfully.', $user->only('id'));
+                    } else {
+                        return sendResponse(false, 'Oops! Something went wrong. Please try again.', null);
+                    }
+                }
+            } else {
+                flash()->addError('Something went wrong! please try again.');
+                return redirect()->back()->withInput();
+            }
+        } catch (\Exception $e) {
+            flash()->addError($e->getMessage());
+            return redirect()->back()->withInput();
         }
     }
 
@@ -88,9 +99,9 @@ class AuthenticationController extends BaseController
         $user->password = $request->password;
         $user->save();
 
-        $this->sendVerificationSms($user);
+        // $this->sendVerificationSms($user);
 
-        return sendResponse(true, 'Your registration is successful, and a verification code has been sent to your phone.', $user->only('id'), 200);
+        return sendResponse(true, 'Your registration is successful', $user->only('id'), 200);
     }
     public function fp_phone_check(ForgotPasswordRequest $request)
     {
@@ -157,13 +168,14 @@ class AuthenticationController extends BaseController
         return false;
     }
 
-    private function sendVerificationSms($user) {
+    private function sendVerificationSms($user)
+    {
         // $user->otp = '123456';
         $user->otp = otp();
         $user->phone_verified_at = Carbon::now();
         $user->save();
 
-        $verification_sms = "Your verification code for ".config('app.name')." is $user->otp. Please enter this code to verify your phone.";
+        $verification_sms = "Your verification code for " . config('app.name') . " is $user->otp. Please enter this code to verify your phone.";
         $result = $this->sms_send($user->phone, $verification_sms);
 
         return $result;

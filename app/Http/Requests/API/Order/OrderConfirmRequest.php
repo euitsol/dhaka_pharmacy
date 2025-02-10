@@ -22,11 +22,8 @@ class OrderConfirmRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'order_id' => 'required|exists:orders,id',
-            'address' => 'required|exists:addresses,id',
-            // 'delivery_type' => 'required|numeric',
-            // 'delivery_fee' => 'required|numeric|min:1',
-            'payment_method' => 'required|in:bkash,nogod,roket,upay,ssl',
+            'order_id' => 'required|exists:orders,order_id',
+            'payment_method' => 'required|string|in:bkash,nogod,roket,upay,ssl,cod',
         ];
     }
 }

@@ -53,10 +53,10 @@ class MedicineController extends Controller
             if ($request->has('created_at') && $request->created_at != '') {
                 $data->whereDate('created_at', $request->created_at);
             }
-            if($request->has('is_featured') && $request->is_featured != '') {
+            if ($request->has('is_featured') && $request->is_featured != '') {
                 $data->where('is_featured', $request->is_featured);
             }
-            if($request->has('is_best_selling') && $request->is_best_selling != '') {
+            if ($request->has('is_best_selling') && $request->is_best_selling != '') {
                 $data->where('is_best_selling', $request->is_best_selling);
             }
 
@@ -69,7 +69,7 @@ class MedicineController extends Controller
                     $companyName = optional($data->company)->name ?? 'No Company';
                     $strengthName = optional($data->strength)->name ?? 'No Strength';
                     $dosageFormName = optional($data->dosage)->name ?? 'No Dosage';
-                    return $data->name.' - '.$strengthName .' - '. $dosageFormName. ' (' . $companyName . ')';
+                    return $data->name . ' - ' . $strengthName . ' - ' . $dosageFormName . ' (' . $companyName . ')';
                 })
                 ->addColumn('created_user', function ($data) {
                     return $data->created_user->name ?? 'System';

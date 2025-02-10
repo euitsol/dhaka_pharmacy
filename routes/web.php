@@ -45,6 +45,8 @@ use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
 use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\Admin\OrderByPrescription\OrderByPrescriptionController as AdminOrderByPrescriptionController;
 use App\Http\Controllers\Admin\User\ReviewController as AdminReviewController;
+use App\Http\Controllers\Admin\ProductManagement\VoucherController as AdminVoucherController;
+use App\Http\Controllers\Admin\Delivery\ZonesController as AdminDeliveryZonesController;
 
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
 use App\Http\Controllers\DM\DashboardController as DmDashboardController;
@@ -102,6 +104,7 @@ use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\MapboxSettingsController;
 use App\Http\Controllers\Admin\PaymentClearanceController;
+use App\Http\Controllers\Admin\ProductManagement\MedicineDosesController;
 use App\Http\Controllers\Admin\Support\TicketController as SupportTicketController;
 use App\Http\Controllers\Admin\User\TipsController;
 use App\Http\Controllers\Admin\WithdrawMethodController as AdminWithdrawMethodController;
@@ -145,7 +148,7 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::routes();
 
-Route::controller(CartAjaxController::class)->prefix('cart')->name('cart.')->group(function () {
+Route::controller(CartAjaxController::class)->prefix('cart')->middleware('auth:web')->name('cart.')->group(function () {
     Route::post('add', 'add')->name('add');
     Route::get('products', 'products')->name('products');
     Route::post('update', 'update')->name('update');
@@ -590,6 +593,16 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('status/{id}', 'status')->name('status.medicine_strength_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_strength_delete');
         });
+        Route::controller(MedicineDosesController::class)->prefix('medicine-dose')->name('medicine_dose.')->group(function () {
+            Route::get('index', 'index')->name('medicine_dose_list');
+            Route::get('details/{id}', 'details')->name('details.medicine_dose_list');
+            Route::get('create', 'create')->name('medicine_dose_create');
+            Route::post('create', 'store')->name('medicine_dose_create');
+            Route::get('edit/{slug}', 'edit')->name('medicine_dose_edit');
+            Route::put('edit/{id}', 'update')->name('medicine_dose_edit');
+            Route::get('status/{id}', 'status')->name('status.medicine_dose_edit');
+            Route::get('delete/{id}', 'delete')->name('medicine_dose_delete');
+        });
 
         Route::controller(ProductCategoryController::class)->prefix('product-category')->name('product_category.')->group(function () {
             Route::get('index', 'index')->name('product_category_list');
@@ -628,8 +641,25 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('featured/{id}', 'featured')->name('featured.medicine_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_delete');
         });
+
+        Route::controller(AdminVoucherController::class)->prefix('vouchers')->name('vouchers.')->group(function () {
+            Route::get('index', 'index')->name('voucher_list');
+            Route::get('create', 'create')->name('voucher_create');
+            Route::post('create', 'store')->name('voucher_create');
+            Route::get('edit/{id}', 'edit')->name('voucher_edit');
+            Route::put('edit/{id}', 'update')->name('voucher_edit');
+            Route::get('status/{id}', 'status')->name('status.voucher_edit');
+            Route::get('delete/{id}', 'delete')->name('voucher_delete');
+            Route::get('details/{id}', 'details')->name('details.voucher_list');
+        });
     });
 
+    //Delivery zones
+    Route::group(['as' => 'delivery.', 'prefix' => 'delivery-management'], function () {
+        Route::controller(AdminDeliveryZonesController::class)->prefix('zones')->name('zones.')->group(function () {
+            Route::get('index', 'index')->name('delivery_zones_list');
+        });
+    });
 
 
     // Notification Settings
@@ -1081,10 +1111,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
         Route::post('/update/image', 'updateImage')->name('update.img');
         Route::get('file/download/{url}', 'view_or_download')->name('file.download');
     });
-    // Checkout Routes
-    Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
-        Route::post('/single-order', 'single_order')->name('product.single_order');
-    });
+
     // KYC Verification Center Routes
     Route::controller(UserKycVerificationController::class)->prefix('kyc')->name('u.kyc.')->group(function () {
         Route::post('/store', 'kyc_store')->name('store');
@@ -1095,9 +1122,11 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
 
     Route::controller(CheckoutController::class)->prefix('checkout')->name('u.ck.')->group(function () {
         Route::post('init', 'int_order')->name('init');
+        Route::post('single-order', 'single_order')->name('single');
         Route::get('order/{o_id}', 'checkout')->name('index');
-        Route::get('/address/{id}', 'address')->name('address');
-        Route::post('/order/confirm/{order_id}', 'order_confirm')->name('product.order.confirm');
+        Route::get('address/{id}', 'address')->name('address');
+        Route::post('order-confirm', 'confirm_order')->name('product.order.confirm');
+        Route::post('voucher/check', 'voucher_check')->name('voucher.check');
     });
 
     Route::controller(UserPaymentController::class)->prefix('payment')->name('u.payment.')->group(function () {
@@ -1112,9 +1141,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
 
 
     //Order By Prescription
-    Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
-        Route::post('/upload-prescription', 'prescription_upload')->name('up');
-    });
+
 
 
 
@@ -1124,8 +1151,8 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
         Route::post('store', 'store')->name('store');
         Route::get('details/{id}', 'details')->name('details');
         Route::put('update', 'update')->name('update');
-
         Route::get('delete/{id}', 'delete')->name('delete');
+        Route::get('cities', 'cities')->name('cities');
     });
     //User Feedback
     Route::controller(UserFeedbackController::class)->prefix('feedback')->name('u.fdk.')->group(function () {
@@ -1194,10 +1221,22 @@ Route::get('/frequently-asked-question', [FaqPageController::class, 'faq'])->nam
 Route::get('/privacy-policy', [PrivacyPolicyPageController::class, 'privacy_policy'])->name('privacy_policy');
 Route::get('/terms-and-conditions', [TermsAndConditionsPageController::class, 'terms_and_conditions'])->name('terms_and_conditions');
 Route::get('/about-us', [AboutPageController::class, 'about'])->name('about_us');
-Route::get('/contact-us', [ContactPageController::class, 'contact'])->name('contact_us');
+Route::controller(ContactPageController::class)->group(function () {
+    Route::get('/contact-us', 'contact')->name('contact_us');
+    Route::post('/contact-us/submit', 'contact_submit')->name('contact_us.submit');
+});
 
 
 
+
+Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
+    Route::post('upload-prescription', 'prescription_upload')->name('up');
+    Route::post('prescription/upload/image', 'image_upload')->name('upload');
+    Route::post('prescription/create', 'create')->name('create');
+    Route::put('prescription/update/{id}', 'update')->name('update');
+    Route::get('prescription/delete/{id}', 'delete')->name('delete');
+    Route::post('prescription/verify', 'verify')->name('verify');
+});
 
 
 

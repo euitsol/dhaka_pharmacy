@@ -1,8 +1,18 @@
 <script>
     $(document).ready(function() {
+        var suggestionBox = $('#suggestionBox');
+
+        //Hide suggest box if clicked outside
+
+        $(document).click(function(event) {
+            if (suggestionBox.is(':visible')) {
+                if (!$(event.target).closest('#suggestionBox').length) {
+                    suggestionBox.hide();
+                }
+            }
+        });
         var searchInput = $('#searchInput');
         var categorySelect = $('#categorySelect');
-        var suggestionBox = $('#suggestionBox');
 
         searchInput.on('input', function() {
 
@@ -47,16 +57,19 @@
                                     <div class="card search_item mb-2">
                                         <div class="card-body py-2">
                                             <div class="row align-items-center">
-                                                <div class="image col-4 col-sm-3">
+                                                <div class="image">
                                                     <img class="w-100 border border-1 rounded-1"
                                                         src="${product.image}"
                                                         alt="${product.name}">
                                                 </div>
-                                                <div class="col-8 col-sm-9 details">
+                                                <div class="details">
                                                     <h4 class="product_title">${product.name}</h4>
                                                     <p class="product_sub_cat">${product.pro_cat.name}</p>
                                                     <p>${product.generic ? product.generic.name : ''}</p>
                                                     <p>${product.company ? product.company.name : ''}</p>
+                                                </div>
+                                                <div class="price text-center">
+                                                    <p class="product_price">${product.price} Tk</p>
                                                 </div>
                                             </div>
                                         </div>

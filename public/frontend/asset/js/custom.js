@@ -1,3 +1,4 @@
+
 // header-searchbar autocomplite
 // $(document).ready(function() {
 //     const $searchInput = $('#searchInput');
@@ -353,20 +354,13 @@ function formatPercentageNumber(number) {
 // messageSend("#guestChatForm");
 // messageSend("#authChatForm");
 
-
-
-
-
-
-
-// sub categories animation js code 
-
+// sub categories animation js code
 
 // document.addEventListener("DOMContentLoaded", () => {
 //     const subCategories = document.querySelectorAll(".sub-categories-list li");
-//     const animatedContainer = document.querySelector(".animated-subcategories"); 
+//     const animatedContainer = document.querySelector(".animated-subcategories");
 
-//     let currentIndex = 0; 
+//     let currentIndex = 0;
 
 //     // Function to start typing animation
 //     const typeSubcategory = (text) => {
@@ -378,7 +372,7 @@ function formatPercentageNumber(number) {
 //         // Re-enable animation for typing effect
 //         setTimeout(() => {
 //             animatedContainer.style.animation = `typing ${text.length * 0.1}s steps(${text.length}) 1s forwards, blink 0.75s step-end infinite`;
-            
+
 //             const typingInterval = setInterval(() => {
 //                 animatedContainer.textContent += text.charAt(i); // Append one character at a time
 //                 i++;
@@ -405,6 +399,4 @@ function formatPercentageNumber(number) {
 //     // Initial type animation
 //     typeSubcategory(subCategories[currentIndex].textContent);
 // });
-
-
 
