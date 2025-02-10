@@ -23,7 +23,7 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label>{{ __('Product Category') }}</label>
+                            <label>{{ __('Product Category') }}<span class="text-danger">*</span></label>
                             <select name="pro_cat_id" class="form-control">
                                 <option selected hidden value=" ">{{ __('Select Product Category') }}</option>
                                 @foreach ($pro_cats as $cat)
@@ -34,13 +34,13 @@
                             @include('alerts.feedback', ['field' => 'pro_cat_id'])
                         </div>
                         <div class="form-group">
-                            <label>{{ __('Name') }}</label>
+                            <label>{{ __('Name') }}<span class="text-danger">*</span></label>
                             <input type="text" id="title" name="name" class="form-control"
                                 placeholder="Enter name" value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>{{ _('Slug') }}</label>
+                            <label>{{ _('Slug') }}<span class="text-danger">*</span></label>
                             <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}"
                                 id="slug" name="slug" value="{{ old('slug') }}"
                                 placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">

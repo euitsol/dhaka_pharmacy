@@ -24,13 +24,13 @@
                     @method('PUT')
                     <div class="card-body">
                         <div class="form-group">
-                            <label>{{ __('Name') }}</label>
+                            <label>{{ __('Name') }}<span class="text-danger">*</span></label>
                             <input type="text" id="title" name="name" class="form-control"
                                 placeholder="Enter name" value="{{ $medicine_dose->name }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>{{ _('Slug') }}</label>
+                            <label>{{ _('Slug') }}<span class="text-danger">*</span></label>
                             <input type="text" value="{{ $medicine_dose->slug }}"
                                 class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug"
                                 name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">

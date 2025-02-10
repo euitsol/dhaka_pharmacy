@@ -70,31 +70,31 @@
                                                 ],
                                                 [
                                                     'routeName' =>
-                                                        'product.product_category.product_category_edit',
+                                                    'product.product_category.product_category_edit',
                                                     'params' => [$product_category->slug],
                                                     'label' => 'Update',
                                                 ],
                                                 [
                                                     'routeName' =>
-                                                        'product.product_category.menu.product_category_edit',
+                                                    'product.product_category.menu.product_category_edit',
                                                     'params' => [$product_category->id],
                                                     'label' => $product_category->getBtnMenu(),
                                                 ],
                                                 [
                                                     'routeName' =>
-                                                        'product.product_category.featured.product_category_edit',
+                                                    'product.product_category.featured.product_category_edit',
                                                     'params' => [$product_category->id],
                                                     'label' => $product_category->getBtnFeatured(),
                                                 ],
                                                 [
                                                     'routeName' =>
-                                                        'product.product_category.status.product_category_edit',
+                                                    'product.product_category.status.product_category_edit',
                                                     'params' => [$product_category->id],
                                                     'label' => $product_category->getBtnStatus(),
                                                 ],
                                                 [
                                                     'routeName' =>
-                                                        'product.product_category.product_category_delete',
+                                                    'product.product_category.product_category_delete',
                                                     'params' => [$product_category->id],
                                                     'label' => 'Delete',
                                                     'delete' => true,
