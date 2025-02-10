@@ -149,13 +149,13 @@ class MedicineController extends Controller
 
     public function create(): View
     {
-        $data['pro_cats'] = ProductCategory::activated()->orderBy('name')->get();
-        $data['generics'] = GenericName::activated()->orderBy('name')->get();
-        $data['companies'] = CompanyName::activated()->orderBy('name')->get();
-        $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->get();
-        $data['medicine_doses'] = MedicineDose::activated()->orderBy('name')->get();
-        $data['strengths'] = MedicineStrength::activated()->orderBy('quantity')->get();
-        $data['units'] = MedicineUnit::activated()->orderBy('name')->get();
+        $data['pro_cats'] = ProductCategory::activated()->orderBy('name')->latest()->get();
+        $data['generics'] = GenericName::activated()->orderBy('name')->latest()->get();
+        $data['companies'] = CompanyName::activated()->orderBy('name')->latest()->get();
+        $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->latest()->get();
+        $data['medicine_doses'] = MedicineDose::activated()->orderBy('name')->latest()->get();
+        $data['strengths'] = MedicineStrength::activated()->latest()->get();
+        $data['units'] = MedicineUnit::activated()->orderBy('name')->latest()->get();
         $data['document'] = Documentation::where([['module_key', 'product'], ['type', 'create']])->first();
         return view('admin.product_management.medicine.create', $data);
     }

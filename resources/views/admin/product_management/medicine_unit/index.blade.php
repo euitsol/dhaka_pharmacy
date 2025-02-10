@@ -110,7 +110,7 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('.view').on('click', function() {
+            $(document).on('click', '.view', function() {
                 let id = $(this).data('id');
                 let url = ("{{ route('product.medicine_unit.details.medicine_unit_list', ['id']) }}");
                 let _url = url.replace('id', id);

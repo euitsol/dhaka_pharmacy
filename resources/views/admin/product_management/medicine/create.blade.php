@@ -57,7 +57,7 @@
                                 <select name="pro_sub_cat_id"
                                     class="form-control {{ $errors->has('pro_sub_cat_id') ? ' is-invalid' : '' }} pro_sub_cat"
                                     disabled>
-                                    <option selected hidden value=" ">{{ __('Select product sub category') }}</option>
+                                    <option selected hidden value="">{{ __('Select product sub category') }}</option>
                                 </select>
                                 @include('alerts.feedback', ['field' => 'pro_sub_cat_id'])
                             </div>
@@ -327,7 +327,7 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        var result = '';
+                        var result = '<option value="">Select Sub Category</option>';
                         data.pro_sub_cats.forEach(function(cat) {
                             result += `<option value="${cat.id}">${cat.name}</option>`;
                         });
