@@ -771,7 +771,7 @@ a {
 /* scrollber design css code here */
 
 /* For Chrome, Safari, and Edge */
-/* 
+/*
 .product-section .best-selling-products::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px var(--border-1);
     border-radius: 10px;
@@ -805,7 +805,7 @@ a {
 
 @-moz-document url-prefix() {
     .product-section .best-selling-products {
-        scrollbar-width: thin; 
+        scrollbar-width: thin;
         scrollbar-color: var(--secondary-color) var(--border-1);
     }
     .product-section .best-selling-products::-moz-scrollbar {
@@ -836,11 +836,11 @@ a {
 }
 .product-section .best-selling-products::-webkit-scrollbar-track {
     background: var(--border-1);
-    border-radius: 10px; 
+    border-radius: 10px;
 }
 .product-section .best-selling-products::-webkit-scrollbar-thumb {
     background: var(--secondary-color);
-    border-radius: 10px; 
+    border-radius: 10px;
     background-image: linear-gradient(
         90deg,
         transparent,
@@ -2703,10 +2703,10 @@ a {
 
 /* Full-Screen Overlay */
 #loading-animation {
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 0 !important;
-    width: 37.5rem;
+    width: 100%;
     height: 100%;
     background-image: linear-gradient(to right, #d8e5ec81, #dae3eb8c, #def0e791);
     display: flex;
@@ -2717,7 +2717,7 @@ a {
 
 /* Logo with Breathing Animation */
 #loading-animation img {
-    max-width: 20rem; /* Adjust the size as needed */
+    width: 100%; /* Adjust the size as needed */
     animation: breathing 2s ease-in-out infinite;
 }
 
