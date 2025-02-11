@@ -70,6 +70,7 @@
                                 <label>{{ __('Product Sub Category') }}</label>
                                 <select name="pro_sub_cat_id"
                                     class="form-control {{ $errors->has('pro_sub_cat_id') ? ' is-invalid' : '' }} pro_sub_cat">
+                                    <option value="">{{ __('Select subcategory') }}</option>
                                     @foreach ($pro_sub_cats as $cat)
                                         <option value="{{ $cat->id }}"
                                             {{ $cat->id == $medicine->pro_sub_cat_id ? 'selected' : '' }}>
@@ -134,7 +135,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Unit') }}</label>
-                                <select name="unit[]" class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }}"
+                                <select name="unit[]" class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }} unit"
                                     multiple="multiple">
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}"
@@ -162,7 +163,7 @@
 
                 {{-- Product Requirements  --}}
                 <div class="card">
-                    <div class="card-header">pan
+                    <div class="card-header">
                         <div class="row">
                             <div class="col-12">
                                 <h4 class="card-title">{{ __('Medicine Requirements') }}</h4>
@@ -272,6 +273,7 @@
                                     value="{{ optional($discount)->discount_amount }}">
                                 @include('alerts.feedback', ['field' => 'discount_amount'])
                             </div>
+                            <div class="form-group col-md-12 row mt-2" id="unit-prices-container"></div>
                         </div>
                     </div>
                 </div>
@@ -504,6 +506,30 @@
             });
             $('#discount_percentage, #discount_amount').on('input, keyup', function() {
                 toggleFieldDisabled();
+            });
+
+            $('.unit').on('change', function() {
+                var selectedOptions = $(this).find('option:selected'); // Get selected options
+                var container = $('#unit-prices-container');
+                container.empty();
+
+                if (selectedOptions.length > 0) {
+                    selectedOptions.each(function() {
+                        var unitId = $(this).val();
+                        var unitName = $(this).text().trim();
+                        var priceDiv = $('<div class="form-group col-md-6 unit-price-item">');
+                        var label = $('<label for="price-unit-' + unitId + '">Price for Unit: ' + unitName + ' (ID: ' + unitId + ')</label>');
+                        priceDiv.append(label);
+
+                        var input = $(`
+                                    <input type="hidden" class="d-none" id="unit-${unitId}" name="units[${unitId}][id]" value="${unitId}">
+                                    <input type="number" class="form-control" id="price-unit-${unitId}" name="units[${unitId}][price]" placeholder="Enter price for ${unitName}">
+                        `);
+                        priceDiv.append(input);
+
+                        container.append(priceDiv);
+                    });
+                }
             });
         });
     </script>
