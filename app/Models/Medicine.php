@@ -15,6 +15,30 @@ class Medicine extends BaseModel
     use HasFactory, SoftDeletes, Searchable;
 
     // protected $appends = ['final_discount'];
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'generic_id',
+        'pro_cat_id',
+        'pro_sub_cat_id',
+        'company_id',
+        'strength_id',
+        'price',
+        'image',
+        'description',
+        'status',
+        'is_best_selling',
+        'is_featured',
+        'prescription_required',
+        'kyc_required',
+        'max_quantity',
+        'created_by',
+        'updated_by',
+        'use_for',
+        'dar'
+
+    ];
     protected $appends = [
         'modified_image',
     ];

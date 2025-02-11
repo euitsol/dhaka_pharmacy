@@ -18,11 +18,11 @@ class MedicineRequest extends FormRequest
             'pro_cat_id'=>'required|exists:product_categories,id',
             'pro_sub_cat_id'=>'nullable|exists:product_sub_categories,id',
             'generic_id'=>'required|exists:generic_names,id',
-            'company_id'=>'nullable|exists:company_names,id',
+            'company_id'=>'required|exists:company_names,id',
             'strength_id'=>'nullable',
 
-            'unit'=>'required|min:1',
-            'unit.*'=>'required|exists:medicine_units,id',
+            'unit'=>'nullable|min:1',
+            'unit.*'=>'nullable|exists:medicine_units,id',
 
             'units.*.id'=>'required|exists:medicine_units,id',
             'units.*.price'=>'required|numeric',

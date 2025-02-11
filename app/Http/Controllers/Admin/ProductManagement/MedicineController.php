@@ -23,14 +23,19 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
+use App\Services\MedicineEntryService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class MedicineController extends Controller
 {
-    //
+    protected MedicineEntryService$medicineEntryService;
 
-    public function __construct()
+    public function __construct(MedicineEntryService $medicineEntryService)
     {
         $this->middleware('admin');
+        $this->medicineEntryService = $medicineEntryService;
     }
 
     public function index(Request $request): View|JsonResponse
@@ -349,5 +354,26 @@ class MedicineController extends Controller
     {
         $data['pro_sub_cats'] = ProductSubCategory::where('pro_cat_id', $id)->activated()->orderBy('name')->get();
         return response()->json($data);
+    }
+
+    public function bulkEntry()
+    {
+        $data['pro_cats'] = ProductCategory::activated()->orderBy('name')->latest()->get();
+        $data['generics'] = GenericName::activated()->orderBy('name')->latest()->get();
+        $data['companies'] = CompanyName::activated()->orderBy('name')->latest()->get();
+        $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->latest()->get();
+        $data['medicine_doses'] = MedicineDose::activated()->orderBy('name')->latest()->get();
+        $data['strengths'] = MedicineStrength::activated()->latest()->get();
+        $data['units'] = MedicineUnit::activated()->orderBy('name')->latest()->get();
+        $data['document'] = Documentation::where([['module_key', 'product'], ['type', 'create']])->first();
+
+        return view('admin.product_management.medicine.bulk_entry', $data);
+    }
+
+    public function bulkImport(Request $request)
+    {
+        $medicine = $request->input('medicine', []);
+        $result = $this->medicineEntryService->storeMedicine($medicine);
+        return response()->json($result);
     }
 }

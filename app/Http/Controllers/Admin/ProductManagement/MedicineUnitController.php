@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
-
+use Illuminate\Http\Request;
 
 class MedicineUnitController extends Controller
 {
@@ -92,5 +92,16 @@ class MedicineUnitController extends Controller
         $medicine_unit->delete();
         flash()->addSuccess('Medici generic name ' . $medicine_unit->name . ' deleted successfully.');
         return redirect()->route('product.medicine_unit.medicine_unit_list');
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $search = $request->get('q');
+        $medicine_units = MedicineUnit::when($search, function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%");
+        })->activated()
+        ->select('id', 'name')
+        ->get();
+        return response()->json($medicine_units);
     }
 }
