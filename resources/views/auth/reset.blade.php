@@ -8,12 +8,12 @@
     <section class="log-with-pass">
         <div class="container">
             <div class="row">
-                <div class="col-5">
+                <div class="col-lg-6 col-xxl-6 col-md-10 mx-auto">
                     <div class="left-col login_wrap">
                         <div class="form-title">
                             <h1 class="otp_title">{{ __('UPDATE YOUR PASSWORD') }}</h1>
                             <h3>{{ __('Follow the instructions to make it easier to reset password and you will be able to explore
-                                                                                                                                                inside.') }}
+                                                                                                                                                                                                        inside.') }}
                             </h3>
                         </div>
                         <form action="{{ route('user.reset.password', $user_id) }}" method="POST" autocomplete="off">
@@ -37,7 +37,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-7">
+                <div class="col-lg-6 col-xxl-6 d-none d-lg-block">
                     <div class="right-col">
 
                     </div>

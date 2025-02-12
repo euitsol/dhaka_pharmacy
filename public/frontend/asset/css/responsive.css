@@ -944,8 +944,8 @@
     .log-with-pass .left-col form input {
         border-radius: 5px;
         height: 50px !important;
-        padding-right: 20px !important;
-        padding-left: 60px !important;
+        /* padding-right: 20px !important;
+        padding-left: 60px !important; */
     }
 
     .log-with-pass .left-col form .phone{
