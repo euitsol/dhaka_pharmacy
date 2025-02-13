@@ -11,7 +11,8 @@
             cartButton: '.cart-btn',
             minusQty: '.minus_qty',
             plusQty: '.plus_qty',
-            productContent: '.product_content'
+            productContent: '.product_content',
+            discount: '.discount_amount', // This element holds the discount percentage.
         },
 
         init() {
@@ -32,6 +33,7 @@
             this.$totalRegularPrice = $(this.selectors.totalRegularPrice);
             this.$cartButton = $(this.selectors.cartButton);
             this.$quantityInput = $(this.selectors.quantityInput);
+            this.$discount = $(this.selectors.discount);
         },
 
         initializeEventHandlers() {
@@ -76,8 +78,15 @@
 
             this.safeUpdate(this.$unitName, unit.data('name'));
 
-            const price = this.calculatePrice(unit.data('total_price'), quantity);
-            const regularPrice = this.calculatePrice(unit.data('total_regular_price'), quantity);
+            const discountPercentage = parseFloat(this.$discount.data('discount_precenteage')) || 0;
+
+            const unitRegularPrice = parseFloat(unit.data('total_regular_price'));
+
+            const unitPrice = discountPercentage > 0
+                ? unitRegularPrice * ((100 - discountPercentage) / 100)
+                : unitRegularPrice;
+            const price = this.calculatePrice(unitPrice, quantity);
+            const regularPrice = this.calculatePrice(unitRegularPrice, quantity);
 
             this.safeUpdate(this.$totalPrice, price);
             this.safeUpdate(this.$totalRegularPrice, regularPrice);

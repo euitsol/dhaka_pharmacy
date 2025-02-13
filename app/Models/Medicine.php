@@ -48,6 +48,8 @@ class Medicine extends BaseModel
         'strength_info',
         'attr_title',
         'formatted_name',
+        'is_tba',
+        'is_orderable'
     ];
 
     public function pro_cat()
@@ -248,9 +250,9 @@ class Medicine extends BaseModel
         }
 
         if (!empty($discount->discount_percentage)) {
-            return ceil($this->price * ($discount->discount_percentage / 100));
+            return $this->price * ($discount->discount_percentage / 100);
         } elseif (!empty($discount->discount_amount)) {
-            return ceil($discount->discount_amount);
+            return $discount->discount_amount;
         }
 
         return 0.00;
@@ -258,7 +260,7 @@ class Medicine extends BaseModel
 
     public function getDiscountedPriceAttribute(): int|float
     {
-        $discounted_price = ceil($this->price - $this->discount_amount);
+        $discounted_price = $this->price - $this->discount_amount;
         if($discounted_price > 0) {
             return $discounted_price;
         }
@@ -268,7 +270,7 @@ class Medicine extends BaseModel
     public function getDiscountPercentageAttribute(): float
     {
         if ($this->price > 0) {
-            return ceil(($this->discount_amount / $this->price) * 100);
+            return ($this->discount_amount / $this->price) * 100;
         }
         return 0.00;
     }
@@ -293,4 +295,23 @@ class Medicine extends BaseModel
         return Str::limit(Str::ucfirst(Str::lower($this->attr_title . ($this->strength_info))), 30, '..');
     }
 
+    public function getIsTbaAttribute(): bool
+    {
+        if (!$this->relationLoaded('units')) {
+            $this->load('units');
+        }
+        if($this->price < 0 || ($this->units->isEmpty())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getIsOrderableAttribute(): bool
+    {
+        if($this->is_tba|| ($this->prescription_required == true)){
+            return false;
+        }
+        return true;
+    }
 }

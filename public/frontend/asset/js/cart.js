@@ -85,7 +85,7 @@ function updateCartDisplay(data) {
 
         selectedUnitId = cart.selected_unit ? cart.selected_unit.id : cart.unit_id;
         selectedUnitTotalDiscountedPrice = cart.selected_unit ? cart.selected_unit.discounted_price * cart.quantity : 0;
-
+        console.log(product);
         append = `
         <div class="card add_to_cart_item mb-2">
             <div class="card-body py-2">
@@ -153,7 +153,7 @@ function updateCartDisplay(data) {
                                     ${isChecked ? 'checked':''}
                                     >
                                 <label for="unit_${cart.id +'_'+ unit.id}">
-                                    <img src="${unitImage(unit.image)}" title="${unit.name}">
+                                    <img src="${unit.image}" title="${unit.name}">
                                 </label>
                                 `;
                             }).join('')}

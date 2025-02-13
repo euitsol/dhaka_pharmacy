@@ -65,7 +65,7 @@ class CartService
             'product.discounts',
             'unit',
             'product.units' => function ($q) {
-                $q->orderBy('quantity', 'asc');
+                $q->orderBy('price', 'asc');
             },
         ])->currentCart($this->user)->get()->each(function (&$cart) {
             $cart->product = $this->productService->modifyProduct($cart->product);

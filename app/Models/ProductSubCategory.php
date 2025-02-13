@@ -24,4 +24,9 @@ class ProductSubCategory extends BaseModel
     {
         return $this->belongsTo(ProductCategory::class, 'pro_cat_id');
     }
+
+    public function getImageAttribute($value)
+    {
+        return storage_url($value);
+    }
 }
