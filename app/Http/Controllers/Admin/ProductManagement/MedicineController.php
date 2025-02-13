@@ -194,11 +194,11 @@ class MedicineController extends Controller
         $medicine->save();
 
         //medicine unit bkdn
-        foreach ($req->unit as $unit) {
+        foreach ($req->units as $unit) {
             MedicineUnitBkdn::create([
                 'medicine_id' => $medicine->id,
-                'unit_id' => $unit->id,
-                'price' => $unit->price,
+                'unit_id' => $unit['id'],
+                'price' => $unit['price'],
             ]);
         }
 
@@ -223,9 +223,17 @@ class MedicineController extends Controller
     }
     public function edit($slug): View
     {
-        $data['medicine'] = Medicine::with(['discounts', 'units' => function ($q) {
-            $q->orderBy('quantity', 'asc');
-        }])->where('slug', $slug)->first();
+        $data['medicine'] = Medicine::with([
+            'pro_cat',
+            'pro_sub_cat',
+            'generic',
+            'company',
+            'strength',
+            'discounts',
+            'units' => function ($q) {
+                $q->orderBy('price', 'asc');
+            },
+        ])->where('slug', $slug)->first();
         if ($data['medicine']->discounts) {
             $data['discount'] = $data['medicine']->discounts->where('status', 1)->first();
         }
@@ -244,6 +252,7 @@ class MedicineController extends Controller
     }
     public function update(MedicineRequest $req, $id): RedirectResponse
     {
+        DB::beginTransaction();
         $medicine = Medicine::findOrFail($id);
 
         if ($req->hasFile('image')) {
@@ -275,11 +284,14 @@ class MedicineController extends Controller
 
         //medicine unit bkdn
         MedicineUnitBkdn::where('medicine_id', $medicine->id)->forceDelete();
-        foreach ($req->unit as $unit) {
-            MedicineUnitBkdn::create([
-                'medicine_id' => $medicine->id,
-                'unit_id' => $unit
-            ]);
+        if ($req->units) {
+            foreach ($req->units as $unit) {
+                MedicineUnitBkdn::create([
+                    'medicine_id' => $medicine->id,
+                    'unit_id' => $unit['id'],
+                    'price' => $unit['price'],
+                ]);
+            }
         }
 
         $check = Discount::activated()
@@ -314,6 +326,7 @@ class MedicineController extends Controller
                 ]);
             }
         }
+        DB::commit();
         flash()->addSuccess('Medicine ' . $medicine->name . ' updated successfully.');
         return redirect()->route('product.medicine.medicine_list');
     }

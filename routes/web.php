@@ -645,7 +645,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('delete/{id}', 'delete')->name('medicine_delete');
             Route::get('bulk-entry', 'bulkEntry')->name('index.bulk_entry');
             Route::post('bulk-import', 'bulkImport')->name('store.bulk_entry');
-            Route::get('sub-cat/{id}', 'getSubCat')->name('sub_cat.medicine_list');
+            Route::get('sub-cat/{id}', 'get_sub_cat')->name('sub_cat.medicine_list');
         });
 
         Route::controller(AdminVoucherController::class)->prefix('vouchers')->name('vouchers.')->group(function () {

@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/prescription.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/asset/css/errors.css') }}">
 
     <!--======== FontAwesome cdn ==========-->
     <script src="https://kit.fontawesome.com/db6820c2b5.js" crossorigin="anonymous"></script>
@@ -116,6 +117,9 @@
     <footer>
         @include('frontend.includes.footer')
     </footer>
+
+    {{-- Upload Prescription Modal --}}
+    @include('frontend.includes.new-upload-prescription')
 
     <!--========= jquery-cdn ===========-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"

@@ -273,7 +273,15 @@
                                     value="{{ optional($discount)->discount_amount }}">
                                 @include('alerts.feedback', ['field' => 'discount_amount'])
                             </div>
-                            <div class="form-group col-md-12 row mt-2" id="unit-prices-container"></div>
+                            <div class="form-group col-md-12 row mt-2" id="unit-prices-container">
+                                @foreach ($medicine->units as $unit)
+                                    <div class="form-group col-md-6 unit-price-item">
+                                        <label for="price-unit-14">Price for Unit: {{ $unit->name }}</label>
+                                        <input type="hidden" class="d-none" id="unit-14" name="units[{{ $unit->id }}][id]" value="{{ $unit->id }}">
+                                        <input type="number" value="{{ $unit->pivot->price }}" class="form-control" id="price-unit-{{ $unit->id }}" name="units[{{ $unit->id }}][price]" placeholder="Enter price for {{ $unit->name }}">
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -285,10 +293,14 @@
                             <div class="col-12">
                                 <h4 class="card-title">{{ __('Product Image') }}</h4>
                             </div>
+
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-4">
+                                <img src="{{ $medicine->image }}" alt="">
+                            </div>
                             <div class="form-group col-md-12">
 
                                 <label>{{ __('Image') }}</label>

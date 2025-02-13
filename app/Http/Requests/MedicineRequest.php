@@ -24,10 +24,10 @@ class MedicineRequest extends FormRequest
             'unit'=>'nullable|min:1',
             'unit.*'=>'nullable|exists:medicine_units,id',
 
-            'units.*.id'=>'required|exists:medicine_units,id',
-            'units.*.price'=>'required|numeric',
+            'units.*.id'=>'nullable|exists:medicine_units,id',
+            'units.*.price'=>'nullable|numeric',
 
-            'description'=>'nullable|min:50',
+            'description'=>'nullable',
             'prescription_required'=>'boolean|nullable',
             'kyc_required'=>'boolean|nullable',
             'max_quantity'=>'nullable|numeric',

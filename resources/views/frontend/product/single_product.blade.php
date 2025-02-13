@@ -45,7 +45,7 @@
                                 </div>
 
                                 <div class="row gx-4">
-                                    <div class="col-5 col-xxl-6 col-12 col-md-5 mb-3 mb-sm-0">
+                                    <div class="col-5 col-xxl-5 col-12 col-md-5 mb-3 mb-sm-0">
                                         <div class="card h-100">
                                             <div class="card-body h-100">
                                                 <div class="product_image xzoom-container">
@@ -88,73 +88,9 @@
                                                 <p>{{ __(optional($single_product->generic)->name) }}</p>
                                                 <p>{{ __(optional($single_product->company)->name) }}</p>
 
-
-                                                <div class="product_price mt-3">
-                                                    @if ($singleProDisPrice != $single_product->price)
-                                                    <p><del class="text-danger">{{ __('MRP Tk') }} <span
-                                                                class="total_regular_price">{{
-                                                                __(number_format($single_product->price, 2))
-                                                                }}</span></del>
-                                                        <span class="badge bg-danger">{{
-                                                            formatPercentageNumber($single_product->discount_percentage)
-                                                            . '% 0ff' }}</span>
-                                                    </p>
-                                                    @endif
-                                                    <p><strong>{{ __('Price: Tk') }} <span class="total_price">{{
-                                                                __(number_format($singleProDisPrice, 2)) }}
-                                                            </span></strong> /<span class="unit_name">{{ __('piece')
-                                                            }}</span> </p>
-
-                                                    <div
-                                                        class="d-block d-md-flex align-items-center justify-content-between">
-                                                        <div class="form-group my-4 boxed">
-                                                            @foreach ($single_product->units as $key => $unit)
-                                                            <input type="radio" value="{{ $unit->id }}" name="unit_id"
-                                                                data-id="{{ $unit->id }}" data-name="{{ $unit->name }}"
-                                                                @if ($key==0) checked @endif class="item_quantity"
-                                                                id="android-{{ $key }}" name="data"
-                                                                data-total_price="{{ $singleProDisPrice * $unit->quantity }}"
-                                                                data-total_regular_price="{{ $single_product->price * $unit->quantity }}">
-                                                            <label for="android-{{ $key }}">
-                                                                <img src="{{ storage_url($unit->image) }}"
-                                                                    title="{{ $unit->name }}">
-                                                            </label>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="sp_quantity w-25 mb-4 mb-md-0">
-                                                            <div class="form-group">
-                                                                <div class="input-group align-items-center"
-                                                                    role="group">
-                                                                    <a href="javascript:void(0)"
-                                                                        class="btn btn-sm minus_qty disabled d-flex align-items-center justify-content-center">
-                                                                        <i class="fa-solid fa-minus"></i>
-                                                                    </a>
-                                                                    <input type="text" style="line-height: 1.5"
-                                                                        class="form-control text-center quantity_input"
-                                                                        name="quantity" value="1">
-                                                                    <a href="javascript:void(0)"
-                                                                        class="btn btn-sm plus_qty d-flex align-items-center justify-content-center">
-                                                                        <i class="fa-solid fa-plus"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @include('frontend.product.includes.product_price', ['single_product' => $single_product])
 
 
-                                                <div class="add_to_card">
-                                                    <a class="cart-btn d-flex align-items-center justify-content-center"
-                                                        href="javascript:void(0)"
-                                                        data-product_slug="{{ $single_product->slug }}"
-                                                        data-quantity="1"
-                                                        data-unit_id="{{ $single_product->units[0]['id'] }}">
-                                                        <i class="fa-solid fa-cart-plus"></i>
-                                                        {{ __('Add to Cart') }}</a>
-                                                </div>
-                                                <div class="order_button mt-4">
-                                                    <button class="order-btn" type="submit">{{ __('Order Now') }}</button>
-                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -228,7 +164,7 @@
                                                         @endif
                                                     </table>
                                                 </div>
-                                                <div class="tab-pane fade" id="description" role="tabpanel"
+                                                <div class="tab-pane fade ck ck-reset ck-editor ck-rounded-corners" id="description" role="tabpanel"
                                                     aria-labelledby="description-tab">{!! $single_product->description
                                                     !!}
                                                 </div>
@@ -471,6 +407,7 @@
 </script>
 <script type="text/javascript" src="{{ asset('frontend/plugin/xzoom/xzoom.min.js') }}"></script>
 <script src="{{ asset('frontend/asset/js/single_product.js') }}"></script>
+<script src="{{ asset('frontend/asset/js/single_price_handle.js') }}"></script>
 @endpush
 @push('js')
 <script>
