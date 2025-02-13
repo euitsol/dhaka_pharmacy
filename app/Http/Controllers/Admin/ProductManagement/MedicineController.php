@@ -328,7 +328,8 @@ class MedicineController extends Controller
         }
         DB::commit();
         flash()->addSuccess('Medicine ' . $medicine->name . ' updated successfully.');
-        return redirect()->route('product.medicine.medicine_list');
+        // return redirect()->route('product.medicine.medicine_list');
+        return redirect()->route('product.medicine.details.medicine_list', $medicine->slug);
     }
     public function status($id): RedirectResponse
     {

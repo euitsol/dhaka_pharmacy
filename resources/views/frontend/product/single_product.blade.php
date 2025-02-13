@@ -55,7 +55,7 @@
                                                     $single_product->discounts,
                                                     );
                                                     @endphp
-                                                    @if ($singleProDisPrice != $single_product->price)
+                                                    @if ($single_product->discount_percentage > 0)
                                                     <span class="discount_tag">{{
                                                         formatPercentageNumber($single_product->discount_percentage) .
                                                         '% 0ff' }}</span>
@@ -264,11 +264,15 @@
                                                                 {{ optional($product->company)->name }}
                                                             </a></p>
                                                         <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                                {{ number_format($ProDisPrice, 2) }}</span>
-                                                            @if ($ProDisPrice != $product->price)
-                                                            <span class="regular_price">
-                                                                <del>{!! get_taka_icon() !!}
-                                                                    {{ number_format($product->price, 2) }}</del></span>
+                                                            @if ($product->price > 0)
+                                                                {{ number_format($product->discounted_price, 2) }}</span>
+
+                                                                @if ($product->discount_percentage > 0)
+                                                                <span class="regular_price"> <del>{!! get_taka_icon() !!}
+                                                                        {{ number_format($product->price, 2) }}</del></span>
+                                                                @endif
+                                                            @else
+                                                                <span>{{ __('TBA') }}</span>
                                                             @endif
                                                         </h4>
                                                         <!-- add to cart button -->

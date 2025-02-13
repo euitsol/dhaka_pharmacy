@@ -20,30 +20,30 @@ trait TransformProductTrait
 
     private function setProductImage(&$product)
     {
-        $product->image = product_image($product->image);
+        // $product->image = product_image($product->image);
     }
 
     private function setStrengthInfo(&$product)
     {
-        if (!isset($product->strength)) return;
-        $product->strength_info = ' (' . Str::limit($product->strength->name, 10, '..') . ')';
+        // if (!isset($product->strength)) return;
+        // $product->strength_info = ' (' . Str::limit($product->strength->name, 10, '..') . ')';
     }
 
     private function setProductNames(&$product, $limit)
     {
-        $product->attr_title = Str::ucfirst(Str::title($product->name));
-        $product->name = Str::limit(Str::ucfirst(Str::lower($product->name . ($product->strength_info))), $limit, '..');
-        optional($product->pro_cat)->name = Str::limit(Str::title(optional($product->pro_cat)->name), $limit, '..');
-        optional($product->pro_sub_cat)->name = Str::limit(Str::title(optional($product->pro_sub_cat)->name), $limit, '..');
-        optional($product->generic)->name = Str::limit(Str::title(optional($product->generic)->name), $limit, '..');
-        optional($product->strength)->name = Str::limit(Str::title(optional($product->strength)->name), $limit, '..');
-        optional($product->company)->name = Str::limit(Str::title(optional($product->company)->name), $limit, '..');
+    //     $product->attr_title = Str::ucfirst(Str::title($product->name));
+    //     $product->name = Str::limit(Str::ucfirst(Str::lower($product->name . ($product->strength_info))), $limit, '..');
+    //     optional($product->pro_cat)->name = Str::limit(Str::title(optional($product->pro_cat)->name), $limit, '..');
+    //     optional($product->pro_sub_cat)->name = Str::limit(Str::title(optional($product->pro_sub_cat)->name), $limit, '..');
+    //     optional($product->generic)->name = Str::limit(Str::title(optional($product->generic)->name), $limit, '..');
+    //     optional($product->strength)->name = Str::limit(Str::title(optional($product->strength)->name), $limit, '..');
+    //     optional($product->company)->name = Str::limit(Str::title(optional($product->company)->name), $limit, '..');
     }
 
     private function setDiscountInformation(&$product)
     {
-        $product->discount_amount = calculateProductDiscount($product, false);
-        $product->discount_percentage = calculateProductDiscount($product, true);
-        $product->discounted_price = proDisPrice($product->price, $product->discounts);
+        // $product->discount_amount = calculateProductDiscount($product, false);
+        // $product->discount_percentage = calculateProductDiscount($product, true);
+        // $product->discounted_price = proDisPrice($product->price, $product->discounts);
     }
 }

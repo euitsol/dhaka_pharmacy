@@ -28,4 +28,9 @@ class ProductCategory extends BaseModel
     {
         return $this->hasMany(Medicine::class, 'pro_cat_id')->orderBy('name');
     }
+
+    public function getImageAttribute($value)
+    {
+        return storage_url($value);
+    }
 }

@@ -1,6 +1,5 @@
 <div class="row justify-content-center align-items-center mt-4 upload_prescription">
     <div class="col-md-12 text-justify">
-        <h6 class="text-danger">{{  __('This product is requires a prescription') }}</h6>
         <div class="lead mb-4">
             <p>{{ __('You can always upload your prescription. We will take care of the rest') }}</p>
         </div>

@@ -26,7 +26,6 @@ class SingleProductController extends Controller
             $this->productService->setProduct($slug);
             $data['single_product'] = $this->productService->details();
             $data['similar_products'] = $this->productService->relatedProducts();
-            // dd($data['single_product']->toArray());
         }catch(Exception $e){
             abort(404);
         }
