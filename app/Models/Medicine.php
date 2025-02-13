@@ -9,14 +9,45 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Scout\Searchable;
+use Illuminate\Support\Str;
 
 class Medicine extends BaseModel
 {
     use HasFactory, SoftDeletes, Searchable;
 
     // protected $appends = ['final_discount'];
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'generic_id',
+        'pro_cat_id',
+        'pro_sub_cat_id',
+        'company_id',
+        'strength_id',
+        'price',
+        'image',
+        'description',
+        'status',
+        'is_best_selling',
+        'is_featured',
+        'prescription_required',
+        'kyc_required',
+        'max_quantity',
+        'created_by',
+        'updated_by',
+        'use_for',
+        'dar'
+
+    ];
     protected $appends = [
         'modified_image',
+        'discount_amount',
+        'discount_percentage',
+        'discounted_price',
+        'strength_info',
+        'attr_title',
+        'formatted_name',
     ];
 
     public function pro_cat()
@@ -203,4 +234,63 @@ class Medicine extends BaseModel
     {
         return $this->image ? product_image($this->image) : null;
     }
+
+    public function getDiscountAmountAttribute(): int|float
+    {
+        if (!$this->relationLoaded('discounts')) {
+            $this->load('discounts');
+        }
+
+        $discount = $this->discounts()->where('status', 1)->first();
+
+        if (!$discount) {
+            return 0.00;
+        }
+
+        if (!empty($discount->discount_percentage)) {
+            return ceil($this->price * ($discount->discount_percentage / 100));
+        } elseif (!empty($discount->discount_amount)) {
+            return ceil($discount->discount_amount);
+        }
+
+        return 0.00;
+    }
+
+    public function getDiscountedPriceAttribute(): int|float
+    {
+        $discounted_price = ceil($this->price - $this->discount_amount);
+        if($discounted_price > 0) {
+            return $discounted_price;
+        }
+        return 0.00;
+    }
+
+    public function getDiscountPercentageAttribute(): float
+    {
+        if ($this->price > 0) {
+            return ceil(($this->discount_amount / $this->price) * 100);
+        }
+        return 0.00;
+    }
+
+    public function getImageAttribute($image): string
+    {
+        return product_image($image);
+    }
+
+    public function getStrengthInfoAttribute():string
+    {
+        return Str::limit(optional($this->strength)->name, 20, '..');
+    }
+
+    public function getAttrTitleAttribute($name): string
+    {
+        return Str::ucfirst(Str::title($name));
+    }
+
+    public function getFormattedNameAttribute(): string
+    {
+        return Str::limit(Str::ucfirst(Str::lower($this->attr_title . ($this->strength_info))), 30, '..');
+    }
+
 }

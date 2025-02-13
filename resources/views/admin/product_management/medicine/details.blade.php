@@ -16,6 +16,13 @@
                                 'className' => 'btn-primary',
                                 'label' => 'Back',
                             ])
+
+                            @include('admin.partials.button', [
+                                'routeName' => 'product.medicine.medicine_edit',
+                                'params' => $medicine->slug,
+                                'className' => 'btn-info text-white',
+                                'label' => 'Edit',
+                            ])
                         </div>
                     </div>
                 </div>
@@ -47,18 +54,16 @@
                                 <th>{{ __(':') }}</th>
                                 <td>{{ __(optional($medicine->company)->name) }}</td>
                             </tr>
-                            {{-- <tr>
+                            <tr>
                                     <th>{{ __('Medicine Dosage') }}</th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ $medicine->medicine_cat->name }} </td>
-                                </tr> --}}
+                                    <td> {{ optional($medicine->dose)->name }} </td>
+                                </tr>
                             @if ($medicine->strength_id)
                                 <tr>
                                     <th>{{ __('Medicine Strength') }}</th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ optional($medicine->strength)->quantity }}
-                                        <small>{{ optional($medicine->strength)->unit }}</small>
-                                    </td>
+                                    <td> {{ optional($medicine->strength)->name }} </td>
                                 </tr>
                             @endif
                             <tr>
@@ -66,7 +71,7 @@
                                 <th>{{ __(':') }}</th>
                                 <td>
                                     @foreach ($medicine->units as $unit)
-                                        {{ $unit->name }}
+                                        {{ $unit->name }} <small>({{ $unit->price }})</small>
                                         @if (!$loop->last)
                                             ,
                                         @endif
@@ -155,6 +160,7 @@
                                 <th>{{ __(':') }}</th>
                                 <td> {{ number_format($medicine->price, 2) }}{{ __(' BDT') }} </td>
                             </tr>
+
                             <tr>
                                 <th>{{ __('Discount Amount') }} </th>
                                 <th>{{ __(':') }}</th>
@@ -173,6 +179,14 @@
                                 <td> {{ number_format(proDisPrice($medicine->price, $medicine->discounts), 2) }}{{ __(' BDT') }}
                                 </td>
                             </tr>
+                            @foreach ($medicine->units as $unit)
+
+                                <tr>
+                                    <th>{{ __('Unit Price') }} <small>({{ $unit->name }})</small></th>
+                                    <th>{{ __(':') }}</th>
+                                    <td> {{ number_format($unit->price, 2) }}{{ __(' BDT') }} </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

@@ -808,14 +808,17 @@ a {
         scrollbar-width: thin;
         scrollbar-color: var(--secondary-color) var(--border-1);
     }
+
     .product-section .best-selling-products::-moz-scrollbar {
         width: 8px;
         border-radius: 10px !important;
     }
+
     .product-section .best-selling-products::-moz-scrollbar-track {
         background: var(--border-1);
         border-radius: 10px !important;
     }
+
     .product-section .best-selling-products::-moz-scrollbar-thumb {
         background: var(--secondary-color);
         border-radius: 10px !important;
@@ -834,10 +837,12 @@ a {
 .product-section .best-selling-products::-webkit-scrollbar {
     width: 8px;
 }
+
 .product-section .best-selling-products::-webkit-scrollbar-track {
     background: var(--border-1);
     border-radius: 10px;
 }
+
 .product-section .best-selling-products::-webkit-scrollbar-thumb {
     background: var(--secondary-color);
     border-radius: 10px;
@@ -1605,7 +1610,7 @@ a {
 
 .single_product_section .single_product .product_image .xzoom {
     width: 100% !important;
-    /* height: 21vw !important; */
+    height: 21rem !important;
     object-fit: contain;
 }
 

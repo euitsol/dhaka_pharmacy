@@ -11,14 +11,14 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
-
+use Illuminate\Http\Request;
 
 class ProductSubCategoryController extends Controller
 {
     use DetailsCommonDataTrait;
     public function __construct()
     {
-        return $this->middleware('admin');
+        $this->middleware('admin');
     }
 
     public function index(): View
@@ -118,5 +118,16 @@ class ProductSubCategoryController extends Controller
         $product_sub_category->delete();
         flash()->addSuccess('Product Sub category ' . $product_sub_category->name . ' deleted successfully.');
         return redirect()->route('product.product_sub_category.product_sub_category_list');
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $search = $request->get('q');
+        $categories = ProductSubCategory::where('name', 'LIKE', "%{$search}%")
+            ->activated()
+            ->select('id', 'name')
+            ->get();
+
+        return response()->json($categories);
     }
 }

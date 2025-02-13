@@ -9,4 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TempFile extends BaseModel
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'filename',
+        'path',
+        'creater_id',
+        'creater_type',
+    ];
 }

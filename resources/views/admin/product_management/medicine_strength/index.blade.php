@@ -109,7 +109,7 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('.view').on('click', function() {
+            $(document).on('click', '.view', function() {
                 let id = $(this).data('id');
                 let url = (
                     "{{ route('product.medicine_strength.details.medicine_strength_list', ['id']) }}");
@@ -119,6 +119,8 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
+                        console.log(data);
+
                         let status = data.status == 1 ? 'Active' : 'Deactive';
                         let statusClass = data.status == 1 ? 'badge-success' :
                             'badge-warning';
