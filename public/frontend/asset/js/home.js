@@ -18,21 +18,22 @@ $(document).ready(function () {
             success: function (data) {
                 var result = "";
                 data.products.forEach(function (product) {
-                    let discount_percentage = "";
-                    let discount_amount = "";
+                    let discount_percentage_html = "";
+                    let discount_amount_html = "";
 
-                    if (product.discount_percentage) {
-                        discount_percentage = `<span class="discount_tag">${formatPercentageNumber(
+                    if (product.discount_percentage && product.discount_percentage > 0) {
+                        discount_percentage_html = `<span class="discount_tag">${formatPercentageNumber(
                             product.discount_percentage
                         )}% 0ff</span>`;
                     }
 
                     if (product.discount_amount) {
-                        discount_amount = `<span class="regular_price"> <del>${taka_icon} ${numberFormat(
+                        discount_amount_html = `<span class="regular_price"> <del>${taka_icon} ${numberFormat(
                             product.price,
                             2
                         )}</del></span>`;
                     }
+
                     let route = datas.single_product;
                     let _route = route.replace("slug", product.slug);
                     result += `
@@ -40,7 +41,7 @@ $(document).ready(function () {
                             <div class="single-pdct">
                                     <a href="${_route}">
                                         <div class="pdct-img">
-                                            ${discount_percentage}
+                                            ${discount_percentage_html}
                                             <img class="w-100"
                                                 src="${product.image}"
                                                 alt="Product Image">
@@ -64,11 +65,10 @@ $(document).ready(function () {
                                             ${product.company.name}
                                         </a></p>
 
-                                        
                                         <h4> <span> ${taka_icon} ${numberFormat(
                         product.discounted_price,
                         2
-                    )}</span>  ${discount_amount}</h4>
+                    )}</span>  ${discount_amount_html}</h4>
                                         <div class="add_to_card ">
                                             <a class="cart-btn" data-product_slug="${
                                                 product.slug

@@ -95,13 +95,13 @@
                     <div class="row all-products mt-2 mt-lg-3">
                         @foreach ($products as $product)
                         @php
-                        $proDisPrice = proDisPrice($product->price, $product->discounts);
+                        $proDisPrice = $product->discounted_price;
                         @endphp
                         <div class="px-2 single-pdct-wrapper col-xxl-2 col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2">
                             <div class="single-pdct">
                                 <a href="{{ route('product.single_product', $product->slug) }}">
                                     <div class="pdct-img">
-                                        @if ($proDisPrice != $product->price)
+                                        @if ($product->discount_percentage > 0)
                                         <span
                                             class="discount_tag">{{ formatPercentageNumber($product->discount_percentage) . '% 0ff' }}</span>
                                         @endif
@@ -135,20 +135,37 @@
                                         </p>
                                     </div>
 
-                                    <h4> <span> {!! get_taka_icon() !!} {{ number_format($proDisPrice, 2) }}</span>
-                                        @if ($proDisPrice != $product->price)
-                                        <span class="regular_price"> <del>{!! get_taka_icon() !!}
-                                                {{ number_format($product->price, 2) }}</del></span>
+                                    <h4>
+                                        <span> {!! get_taka_icon() !!}
+
+                                        @if ($product->price > 0)
+                                            {{ number_format($product->discounted_price, 2) }}</span>
+
+                                            @if ($product->discount_percentage > 0)
+                                            <span class="regular_price"> <del>{!! get_taka_icon() !!}
+                                                    {{ number_format($product->price, 2) }}</del></span>
+                                            @endif
+                                        @else
+                                             <span>{{ __('TBA') }}</span>
                                         @endif
                                     </h4>
                                     <!-- add to cart button -->
-                                    <div class="add_to_card">
-                                        <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id=""
-                                            href="javascript:void(0)">
-                                            <i class="fa-solid fa-cart-plus"></i>
-                                            <span class="d-block d-xl-none">Add To Cart</span>
-                                        </a>
-                                    </div>
+                                    @if ($product->price > 0)
+                                        <div class="add_to_card">
+                                            <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id=""
+                                                href="javascript:void(0)">
+                                                <i class="fa-solid fa-cart-plus"></i>
+                                                <span class="d-block d-xl-none">Add To Cart</span>
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="add_to_card">
+                                            <a class="cart-btn" href="{{ route('product.single_product', $product->slug) }}">
+                                                <i class="fa-solid fa-info"></i>
+                                                <span class="d-block d-xl-none">Details</span>
+                                            </a>
+                                        </div>
+                                    @endif
 
                                 </div>
 
