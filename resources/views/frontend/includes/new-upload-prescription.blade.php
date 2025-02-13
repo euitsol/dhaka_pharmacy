@@ -11,7 +11,7 @@
                     @csrf
                     <!-- File Upload Area -->
                     <div class="mb-4">
-                        <input type="file" id="prescription" accept="image/*" class="d-none" multiple>
+                        <input type="file" id="fileInput" accept="image/*" class="d-none" multiple>
                         <input type="file" id="cameraInput"  accept="image/*"  capture="environment"  class="d-none">
 
                             <div class="upload-area d-flex flex-column align-items-center justify-content-center">
