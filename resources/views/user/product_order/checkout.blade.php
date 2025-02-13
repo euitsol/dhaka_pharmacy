@@ -37,18 +37,47 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-md-6 mb-3 mb-md-0">
-                                            <div class="add-new-box border text-center py-2 py-md-2">
-                                                <a href="javascript:void(0)" class="address_btn text-decoration-none"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#address_add_modal">{{ __('+ Add New Delivery Address') }}</a>
+                                        <div class="col-xxl-6 mb-3 mb-xxl-0">
+                                            <div class="add-new-box border rounded hover-shadow">
+                                                <a href="javascript:void(0)"
+                                                    class="address_btn text-decoration-none d-flex align-items-center justify-content-center gap-2 py-3"
+                                                    data-bs-toggle="modal" data-bs-target="#address_add_modal">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path
+                                                            d="M19 10c0 3.976-7 11-7 11s-7-7.024-7-11c0-3.866 3.134-7 7-7s7 3.134 7 7z" />
+                                                        <path
+                                                            d="M15 10c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z" />
+                                                        <path d="M9 6.5V5c0-1.105.895-2 2-2h2c1.105 0 2 .895 2 2v1.5" />
+                                                        <path d="M12 7v2" />
+                                                        <path d="M10.5 8.5h3" />
+                                                    </svg>
+                                                    <span class="fw-medium">{{ __('Add New Delivery Address') }}</span>
+                                                </a>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="add-new-box border text-center py-2 py-md-2">
-                                                <a href="javascript:void(0)" class="address_btn text-decoration-none"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#addVoucherModal">{{ __('+ Add Voucher Code') }}</a>
+                                        <div class="col-xxl-6">
+                                            <div class="add-new-box border rounded hover-shadow">
+                                                <a href="javascript:void(0)"
+                                                    class="address_btn text-decoration-none d-flex align-items-center justify-content-center gap-2 py-3"
+                                                    data-bs-toggle="modal" data-bs-target="#addVoucherModal">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path
+                                                            d="M21 5H3a1 1 0 0 0-1 1v4c0 .6.4 1 1 1h18c.6 0 1-.4 1-1V6c0-.6-.4-1-1-1z" />
+                                                        <path
+                                                            d="M21 13H3a1 1 0 0 0-1 1v4c0 .6.4 1 1 1h18c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1z" />
+                                                        <path d="M6.5 5v14" />
+                                                        <path d="M17.5 5v14" />
+                                                        <path d="m9 8.5 2-2" />
+                                                        <path d="m9 6.5 2 2" />
+                                                        <path d="m13 16.5 2-2" />
+                                                        <path d="m13 14.5 2 2" />
+                                                    </svg>
+                                                    <span class="fw-medium">{{ __('Add Voucher Code') }}</span>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -156,7 +185,7 @@
                                     </p>
                                 </div>
                                 <div class="delivery-section p-3 bg-white rounded shadow-sm">
-                                    <h5 class="mb-2">Delivery Type</h5>
+                                    <h5 class="mb-2">{{ __('Delivery Type') }}</h5>
                                     <div class="row g-4" id="delivery_type_container">
                                         <div class="text-center w-100">{{ __('Please add a delivery address') }}</div>
                                     </div>

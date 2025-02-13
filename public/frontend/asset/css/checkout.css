@@ -297,11 +297,12 @@
 
 .delivery-section .radio-circle {
     height: 1.25rem;
-    width: 1.75rem;
+    width: 1.25rem;
     border: 2px solid var(--border-2);
     border-radius: 50%;
     position: relative;
     margin-top: 2px;
+    flex: none;
 }
 
 .delivery-section .delivery-radio:checked + .delivery-label .radio-circle {
@@ -336,4 +337,76 @@
 /* Optional: Add focus styles for accessibility */
 .delivery-section .delivery-radio:focus + .delivery-label .card {
     box-shadow: 0 0 0 0.25rem var(--border-1);
+}
+
+
+
+/* Button CSS  */
+.add-new-box {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #e5e7eb !important;
+    background: linear-gradient(to bottom, #ffffff, #f8fafc);
+}
+
+.add-new-box:hover {
+    transform: translateY(-2px);
+    border-color: #2563eb !important;
+    background: linear-gradient(to bottom, #ffffff, #f0f9ff);
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 4px 15px -3px rgba(37, 99, 235, 0.1), 0 2px 8px -2px rgba(37, 99, 235, 0.05);
+}
+
+.address_btn {
+    color: #2563eb;
+    position: relative;
+    overflow: hidden;
+}
+
+.address_btn:hover {
+    color: #1d4ed8;
+}
+
+.address_btn:hover svg {
+    transform: scale(1.1);
+}
+
+.address_btn svg {
+    transition: transform 0.2s ease;
+}
+
+.gap-2 {
+    gap: 0.75rem;
+}
+
+/* Add subtle animation for icon stroke */
+@keyframes strokeAnimation {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.address_btn svg path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: strokeAnimation 1.5s ease-out forwards;
+}
+
+/* Add a subtle gradient overlay on hover */
+.add-new-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(37, 99, 235, 0.03), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.add-new-box:hover::after {
+    opacity: 1;
 }
