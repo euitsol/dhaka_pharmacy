@@ -23,14 +23,19 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
+use App\Services\MedicineEntryService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class MedicineController extends Controller
 {
-    //
+    protected MedicineEntryService$medicineEntryService;
 
-    public function __construct()
+    public function __construct(MedicineEntryService $medicineEntryService)
     {
         $this->middleware('admin');
+        $this->medicineEntryService = $medicineEntryService;
     }
 
     public function index(Request $request): View|JsonResponse
@@ -149,13 +154,13 @@ class MedicineController extends Controller
 
     public function create(): View
     {
-        $data['pro_cats'] = ProductCategory::activated()->orderBy('name')->get();
-        $data['generics'] = GenericName::activated()->orderBy('name')->get();
-        $data['companies'] = CompanyName::activated()->orderBy('name')->get();
-        $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->get();
-        $data['medicine_doses'] = MedicineDose::activated()->orderBy('name')->get();
-        $data['strengths'] = MedicineStrength::activated()->orderBy('quantity')->get();
-        $data['units'] = MedicineUnit::activated()->orderBy('name')->get();
+        $data['pro_cats'] = ProductCategory::activated()->orderBy('name')->latest()->get();
+        $data['generics'] = GenericName::activated()->orderBy('name')->latest()->get();
+        $data['companies'] = CompanyName::activated()->orderBy('name')->latest()->get();
+        $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->latest()->get();
+        $data['medicine_doses'] = MedicineDose::activated()->orderBy('name')->latest()->get();
+        $data['strengths'] = MedicineStrength::activated()->latest()->get();
+        $data['units'] = MedicineUnit::activated()->orderBy('name')->latest()->get();
         $data['document'] = Documentation::where([['module_key', 'product'], ['type', 'create']])->first();
         return view('admin.product_management.medicine.create', $data);
     }
@@ -189,11 +194,11 @@ class MedicineController extends Controller
         $medicine->save();
 
         //medicine unit bkdn
-        foreach ($req->unit as $unit) {
+        foreach ($req->units as $unit) {
             MedicineUnitBkdn::create([
                 'medicine_id' => $medicine->id,
-                'unit_id' => $unit->id,
-                'price' => $unit->price,
+                'unit_id' => $unit['id'],
+                'price' => $unit['price'],
             ]);
         }
 
@@ -218,9 +223,17 @@ class MedicineController extends Controller
     }
     public function edit($slug): View
     {
-        $data['medicine'] = Medicine::with(['discounts', 'units' => function ($q) {
-            $q->orderBy('quantity', 'asc');
-        }])->where('slug', $slug)->first();
+        $data['medicine'] = Medicine::with([
+            'pro_cat',
+            'pro_sub_cat',
+            'generic',
+            'company',
+            'strength',
+            'discounts',
+            'units' => function ($q) {
+                $q->orderBy('price', 'asc');
+            },
+        ])->where('slug', $slug)->first();
         if ($data['medicine']->discounts) {
             $data['discount'] = $data['medicine']->discounts->where('status', 1)->first();
         }
@@ -239,6 +252,7 @@ class MedicineController extends Controller
     }
     public function update(MedicineRequest $req, $id): RedirectResponse
     {
+        DB::beginTransaction();
         $medicine = Medicine::findOrFail($id);
 
         if ($req->hasFile('image')) {
@@ -270,11 +284,14 @@ class MedicineController extends Controller
 
         //medicine unit bkdn
         MedicineUnitBkdn::where('medicine_id', $medicine->id)->forceDelete();
-        foreach ($req->unit as $unit) {
-            MedicineUnitBkdn::create([
-                'medicine_id' => $medicine->id,
-                'unit_id' => $unit
-            ]);
+        if ($req->units) {
+            foreach ($req->units as $unit) {
+                MedicineUnitBkdn::create([
+                    'medicine_id' => $medicine->id,
+                    'unit_id' => $unit['id'],
+                    'price' => $unit['price'],
+                ]);
+            }
         }
 
         $check = Discount::activated()
@@ -309,6 +326,7 @@ class MedicineController extends Controller
                 ]);
             }
         }
+        DB::commit();
         flash()->addSuccess('Medicine ' . $medicine->name . ' updated successfully.');
         return redirect()->route('product.medicine.medicine_list');
     }
@@ -349,5 +367,26 @@ class MedicineController extends Controller
     {
         $data['pro_sub_cats'] = ProductSubCategory::where('pro_cat_id', $id)->activated()->orderBy('name')->get();
         return response()->json($data);
+    }
+
+    public function bulkEntry()
+    {
+        $data['pro_cats'] = ProductCategory::activated()->orderBy('name')->latest()->get();
+        $data['generics'] = GenericName::activated()->orderBy('name')->latest()->get();
+        $data['companies'] = CompanyName::activated()->orderBy('name')->latest()->get();
+        $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->latest()->get();
+        $data['medicine_doses'] = MedicineDose::activated()->orderBy('name')->latest()->get();
+        $data['strengths'] = MedicineStrength::activated()->latest()->get();
+        $data['units'] = MedicineUnit::activated()->orderBy('name')->latest()->get();
+        $data['document'] = Documentation::where([['module_key', 'product'], ['type', 'create']])->first();
+
+        return view('admin.product_management.medicine.bulk_entry', $data);
+    }
+
+    public function bulkImport(Request $request)
+    {
+        $medicine = $request->input('medicine', []);
+        $result = $this->medicineEntryService->storeMedicine($medicine);
+        return response()->json($result);
     }
 }

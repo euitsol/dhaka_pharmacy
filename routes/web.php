@@ -548,7 +548,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::put('edit/{id}', 'update')->name('generic_name_edit');
             Route::get('status/{id}', 'status')->name('status.generic_name_edit');
             Route::get('delete/{id}', 'delete')->name('generic_name_delete');
-            Route::get('/search', 'search')->name('search'); //ajax search route
+            Route::get('search', 'search')->name('search'); //ajax search route
         });
         Route::controller(CompanyNameController::class)->prefix('company-name')->name('company_name.')->group(function () {
             Route::get('index', 'index')->name('company_name_list');
@@ -561,17 +561,18 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('delete/{id}', 'delete')->name('company_name_delete');
             Route::get('/search', 'search')->name('search'); //ajax search route
         });
-        Route::controller(MedicineCategoryController::class)->prefix('medicine-category')->name('medicine_category.')->group(function () {
-            Route::get('index', 'index')->name('medicine_category_list');
-            Route::get('details/{slug}', 'details')->name('details.medicine_category_list');
-            Route::get('create', 'create')->name('medicine_category_create');
-            Route::post('create', 'store')->name('medicine_category_create');
-            Route::get('edit/{slug}', 'edit')->name('medicine_category_edit');
-            Route::put('edit/{id}', 'update')->name('medicine_category_edit');
-            Route::get('status/{id}', 'status')->name('status.medicine_category_edit');
-            Route::get('featured/{id}', 'featured')->name('featured.medicine_category_edit');
-            Route::get('delete/{id}', 'delete')->name('medicine_category_delete');
-        });
+        //Not used
+        // Route::controller(MedicineCategoryController::class)->prefix('medicine-category')->name('medicine_category.')->group(function () {
+        //     Route::get('index', 'index')->name('medicine_category_list');
+        //     Route::get('details/{slug}', 'details')->name('details.medicine_category_list');
+        //     Route::get('create', 'create')->name('medicine_category_create');
+        //     Route::post('create', 'store')->name('medicine_category_create');
+        //     Route::get('edit/{slug}', 'edit')->name('medicine_category_edit');
+        //     Route::put('edit/{id}', 'update')->name('medicine_category_edit');
+        //     Route::get('status/{id}', 'status')->name('status.medicine_category_edit');
+        //     Route::get('featured/{id}', 'featured')->name('featured.medicine_category_edit');
+        //     Route::get('delete/{id}', 'delete')->name('medicine_category_delete');
+        // });
 
         Route::controller(MedicineUnitController::class)->prefix('medicine-unit')->name('medicine_unit.')->group(function () {
             Route::get('index', 'index')->name('medicine_unit_list');
@@ -582,6 +583,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::put('edit/{id}', 'update')->name('medicine_unit_edit');
             Route::get('status/{id}', 'status')->name('status.medicine_unit_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_unit_delete');
+            Route::get('search', 'search')->name('search'); //ajax search route
         });
         Route::controller(MedicineStrengthController::class)->prefix('medicine-strength')->name('medicine_strength.')->group(function () {
             Route::get('index', 'index')->name('medicine_strength_list');
@@ -627,6 +629,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('status/{id}', 'status')->name('status.product_sub_category_edit');
             Route::get('menu/{id}', 'menu')->name('menu.product_sub_category_edit');
             Route::get('delete/{id}', 'delete')->name('product_sub_category_delete');
+            Route::get('search', 'search')->name('search'); //ajax search route
         });
         Route::controller(MedicineController::class)->prefix('medicine')->name('medicine.')->group(function () {
             Route::get('index', 'index')->name('medicine_list');
@@ -640,6 +643,9 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('best-selling/{id}', 'best_selling')->name('best_selling.medicine_edit');
             Route::get('featured/{id}', 'featured')->name('featured.medicine_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_delete');
+            Route::get('bulk-entry', 'bulkEntry')->name('index.bulk_entry');
+            Route::post('bulk-import', 'bulkImport')->name('store.bulk_entry');
+            Route::get('sub-cat/{id}', 'get_sub_cat')->name('sub_cat.medicine_list');
         });
 
         Route::controller(AdminVoucherController::class)->prefix('vouchers')->name('vouchers.')->group(function () {
@@ -835,7 +841,6 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     Route::controller(PharmacyProfileController::class)->prefix('profile')->name('profile.')->group(function () {
         Route::get('/', 'profile')->name('index');
         Route::put('/update', 'update')->name('update');
-        Route::post('/address/store', 'address')->name('address');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
         Route::get('file/download/{url}', 'view_or_download')->name('file.download');

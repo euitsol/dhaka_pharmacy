@@ -10,10 +10,10 @@ trait TransformProductTrait
 {
     private function transformProduct($product, $limit = 30)
     {
-        $this->setStrengthInfo($product);
-        $this->setProductNames($product, $limit);
-        $this->setDiscountInformation($product);
-        $this->setProductImage($product);
+        // $this->setStrengthInfo($product);
+        // $this->setProductNames($product, $limit);
+        // $this->setDiscountInformation($product);
+        // $this->setProductImage($product);
 
         return $product;
     }

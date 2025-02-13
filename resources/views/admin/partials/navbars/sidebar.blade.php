@@ -82,7 +82,7 @@
                                         'routeName' => 'um.user.user_list',
                                         'label' => 'users',
                                     ],
-                            
+
                                     [
                                         'pageSlug' => ['us_kyc_list', 'u_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -131,7 +131,7 @@
                                         'routeName' => 'pm.pharmacy.pharmacy_list',
                                         'label' => 'Pharmacies',
                                     ],
-                            
+
                                     [
                                         'pageSlug' => ['ps_kyc_list', 'p_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -277,7 +277,7 @@
                                         'routeName' => 'rm.rider.rider_list',
                                         'label' => 'Riders',
                                     ],
-                            
+
                                     [
                                         'pageSlug' => ['rs_kyc_list', 'r_kyc_settings'],
                                         'routeName' => 'submenu',
@@ -385,7 +385,8 @@
                             $pageSlug == 'product_sub_category' ||
                             $pageSlug == 'medicine_dose' ||
                             $pageSlug == 'medicine' ||
-                            $pageSlug == 'medicine_unit') @else collapsed @endif" data-toggle="collapse"
+                            $pageSlug == 'medicine_unit' ||
+                            $pageSlug == 'bulk_entry') @else collapsed @endif" data-toggle="collapse"
                         href="#product_management"
                         @if (
                             $pageSlug == 'medicine_generic_name' ||
@@ -396,7 +397,8 @@
                                 $pageSlug == 'product_sub_category' ||
                                 $pageSlug == 'medicine_dose' ||
                                 $pageSlug == 'medicine' ||
-                                $pageSlug == 'medicine_unit') aria-expanded="true" @else aria-expanded="false" @endif>
+                                $pageSlug == 'medicine_unit' ||
+                                $pageSlug == 'bulk_entry') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-capsules"></i>
                         <span class="nav-link-text">{{ __('Product Management') }}</span>
                         <b class="caret mt-1"></b>
@@ -411,7 +413,8 @@
                             $pageSlug == 'medicine_dose' ||
                             $pageSlug == 'product_sub_category' ||
                             $pageSlug == 'medicine' ||
-                            $pageSlug == 'medicine_unit') show @endif" id="product_management">
+                            $pageSlug == 'medicine_unit' ||
+                            $pageSlug == 'bulk_entry') show @endif" id="product_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -460,6 +463,11 @@
                                         'routeName' => 'product.medicine_dose.medicine_dose_list',
                                         'label' => 'Medicine Dose',
                                     ],
+                                    [
+                                        'pageSlug' => 'bulk_entry',
+                                        'routeName' => 'product.medicine.index.bulk_entry',
+                                        'label' => 'Bulk Product Entry',
+                                    ]
                                 ],
                             ])
                         </ul>

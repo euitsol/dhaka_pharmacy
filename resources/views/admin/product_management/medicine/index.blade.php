@@ -127,8 +127,6 @@
                     };
                 },
                 processResults: function (data) {
-                    console.log(data);
-
                     return {
                         results: data.map(function(category) {
                             return {
