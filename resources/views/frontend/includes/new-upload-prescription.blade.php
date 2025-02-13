@@ -12,14 +12,16 @@
                     <!-- File Upload Area -->
                     <div class="mb-4">
                         <input type="file" id="prescription" accept="image/*" class="d-none" multiple>
-                        <label for="prescription" class="upload-area d-flex flex-column align-items-center justify-content-center">
-                            <div class="upload-icon position-relative">
-                                <i class="fas fa-camera fa-3x"></i>
-                            </div>
+                        <input type="file" id="cameraInput"  accept="image/*"  capture="environment"  class="d-none">
 
-                            <p class="mt-3 mb-1">{{ __('Drag & drop your prescription or') }}</p>
-                            <p class="small">{{ __('Click to capture or upload') }}</p>
-                        </label>
+                            <div class="upload-area d-flex flex-column align-items-center justify-content-center">
+                                <button type="button" id="openCamera" class="btn btn-outline-primary mb-2">
+                                    <i class="fas fa-camera"></i> {{ __('Capture from Camera') }}
+                                </button>
+                                <button type="button" id="uploadFile" class="btn btn-outline-secondary">
+                                    <i class="fas fa-upload"></i> {{ __('Upload from Device') }}
+                                </button>
+                            </div>
                     </div>
 
                     <div class="image-preview">
