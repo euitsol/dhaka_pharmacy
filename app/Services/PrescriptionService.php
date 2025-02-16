@@ -151,7 +151,7 @@ class PrescriptionService
                 'prescription_id' => $prescription->id,
                 'status' => 0,
                 'creater_id' => $this->user->id ?? null,
-                'creater_type' => get_class($this->user) ?? null,
+                'creater_type' => $this->user ? get_class($this->user) : null,
             ]);
         });
     }
