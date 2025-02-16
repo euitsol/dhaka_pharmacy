@@ -34,10 +34,6 @@ class OrderByPrescriptionController extends Controller
         try {
             $file = $request->file('file');
 
-            if(user()){
-                $this->prescriptionService->setUser(User::find(user()->id));
-            }
-
             $data = $this->prescriptionService->uploadPrescriptionImage($file);
 
             return response()->json([
