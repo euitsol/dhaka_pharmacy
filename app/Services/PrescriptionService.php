@@ -30,14 +30,13 @@ class PrescriptionService
         return $this;
     }
 
-    public function setUserByPhone(int $phone): self
+    public function setUserByPhone(int $phone): self|null
     {
         $user = User::where('phone', $phone)->first();
-        if(!$user){
-            throw new ModelNotFoundException("User not found");
-        }
-        $this->user = $user;
-        return $this;
+        if($user){
+            $this->user = $user;
+            return $this;
+        }return null;
     }
 
     public function setPrescription(int $prescriptionId): self
