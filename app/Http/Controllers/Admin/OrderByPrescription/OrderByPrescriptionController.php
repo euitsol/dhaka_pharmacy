@@ -153,7 +153,7 @@ class OrderByPrescriptionController extends Controller
         ]);
     }
 
-    public function deliveryAddress(Request $request)
+    public function addressList(Request $request)
     {
         if($request->has('user_id')){
             $user_id = decrypt($request->user_id);
@@ -164,19 +164,5 @@ class OrderByPrescriptionController extends Controller
         }else{
             return response()->json(null);
         }
-    }
-
-    public function storeDeliveryAddress(APIAddressRequest $request)
-    {
-        if($request->has('user_id')){
-            $user_id = decrypt($request->user_id);
-            $data['user'] = User::findOrFail($user_id);
-            $this->addressService->setUser($data['user']);
-            $address = $this->addressService->create($request->all());
-            return response()->json($address);
-        }else{
-            return response()->json(null);
-        }
-
     }
 }

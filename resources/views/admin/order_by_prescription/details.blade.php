@@ -7,11 +7,12 @@
 @endpush
 
 @push('css')
-<style>
-    .borderless td, .borderless th {
-        border: none;
-    }
-</style>
+    <style>
+        .borderless td,
+        .borderless th {
+            border: none;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -72,8 +73,8 @@
                                             <td>
                                                 <button class="btn btn-sm btn-primary" type="button"
                                                     onclick="">{{ __('View Address') }}</button>
-                                                <button class="btn btn-sm btn-primary" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#address_add_modal">{{ __(key: 'Create New Address') }}</button>
+                                                {{-- <button class="btn btn-sm btn-primary" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#address_add_modal">{{ __(key: 'Create New Address') }}</button> --}}
                                             </td>
                                         </tr>
                                     </table>
@@ -196,17 +197,12 @@
                                                         <h5>{{ __('Delivery Information') }}</h5>
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="form-group">
-                                                            <label>{{ __('Delivery Address') }} <small class="text-danger">*</small></label>
-                                                            <select name="delivery_address" id="delivery_address" class="form-control" required>
-                                                                <option value="">{{ __('Select Delivery Address') }}</option>
-                                                            </select>
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-3"></div>
-                                            <div class="col-md-3 p-2">
+                                            <div class="col-md-3">
                                                 <table class="table borderless">
                                                     <tr>
                                                         <td class="fw-bolder">{{ __('Total Amount') }}</td>
