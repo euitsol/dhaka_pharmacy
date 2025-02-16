@@ -1,95 +1,105 @@
 @extends('user.layouts.master', ['pageSlug' => 'order'])
 @section('title', 'Order Details')
 @push('css')
-<style>
+    <style>
+        /* Timeline Styles */
+        .order-timeline {
+            --primary-color: #10B981;
+            --inactive-color: #E5E7EB;
+            --text-muted: #6B7280;
+            padding: 1rem 0;
+        }
 
-/* Timeline Styles */
-.order-timeline {
-    --primary-color: #10B981;
-    --inactive-color: #E5E7EB;
-    --text-muted: #6B7280;
-    padding: 1rem 0;
-}
+        /* Progress Bar */
+        .progress-bar-wrapper {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            right: 2rem;
+            height: 4px;
+            z-index: 0;
+        }
 
-/* Progress Bar */
-.progress-bar-wrapper {
-    position: absolute;
-    top: 2rem;
-    left: 2rem;
-    right: 2rem;
-    height: 4px;
-    z-index: 0;
-}
+        .progress-line {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--inactive-color);
+            border-radius: 2px;
+        }
 
-.progress-line {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: var(--inactive-color);
-    border-radius: 2px;
-}
+        .progress-line-active {
+            position: absolute;
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+            transition: width 0.5s ease-in-out;
+        }
 
-.progress-line-active {
-    position: absolute;
-    height: 100%;
-    background-color: var(--primary-color);
-    border-radius: 2px;
-    transition: width 0.5s ease-in-out;
-}
+        /* Timeline Steps */
+        .timeline-step {
+            position: relative;
+            padding-bottom: 2rem;
+        }
 
-/* Timeline Steps */
-.timeline-step {
-    position: relative;
-    padding-bottom: 2rem;
-}
+        /* Vertical Line (Mobile) */
+        '
 
-/* Vertical Line (Mobile) */'
 
-.order-timeline .content-wrapper{
-    padding-left: 2rem;
-}
-.vertical-line {
-    position: absolute;
-    left: 1.9rem;
-    top: 2.5rem;
-    bottom: 0;
-    width: 5px;
-    background-color: var(--inactive-color);
-}
+        .order-timeline .content-wrapper {
+            padding-left: 2rem;
+        }
 
-.timeline-step.active .vertical-line-active {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: var(--primary-color);
-    transition: height 0.5s ease-in-out;
-}
+        .vertical-line {
+            position: absolute;
+            left: 1.9rem;
+            top: 2.5rem;
+            bottom: 0;
+            width: 5px;
+            background-color: var(--inactive-color);
+        }
 
-/* Icon */
-.icon-wrapper {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 1rem;
-}
+        .timeline-step.active .vertical-line-active {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: height 0.5s ease-in-out;
+        }
 
-.icon {
-    width: 2.5rem;
-    height: 2.5rem;
-    background-color: white;
-    border: 2px solid var(--inactive-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease-in-out;
-}
+        /* Icon */
+        .icon-wrapper {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1rem;
+        }
 
-.timeline-step.active .icon {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    color: white;
-}
-</style>
+        .icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: white;
+            border: 2px solid var(--inactive-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .timeline-step.active .icon {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        @media screen and (max-width: 767px) {
+            .order-timeline .content-wrapper {
+                position: absolute;
+                top: 10px;
+                left: 60px;
+            }
+        }
+    </style>
 @endpush
 @section('content')
     <section class="order-info-section">
@@ -99,7 +109,8 @@
                 <div class="row  align-items-center">
                     <div class="col-md-8 col-sm-9 col-12">
                         <div class="d-block d-md-flex align-items-center ">
-                            <div class="order-status-row d-flex align-items-center justify-content-md-start justify-content-between py-2 py-sm-4">
+                            <div
+                                class="order-status-row d-flex align-items-center justify-content-md-start justify-content-between py-2 py-sm-4">
                                 <div class="img me-sm-3 me-2">
                                     <img src="{{ asset('user/asset/img/order-status.png') }}" alt="">
                                 </div>
@@ -136,14 +147,17 @@
                             <!-- Progress Bar -->
                             <div class="progress-bar-wrapper d-none d-md-block">
                                 <div class="progress-line"></div>
-                                <div class="progress-line-active" style="width: {{ 100/(count($order->timelines) - 1) }}%"></div>
+                                <div class="progress-line-active"
+                                    style="width: {{ 100 / (count($order->timelines) - 1) }}%">
+                                </div>
                             </div>
 
                             <!-- Timeline Steps -->
                             <div class="row position-relative">
-                                @foreach($order->timelines as $timeline)
+                                @foreach ($order->timelines as $timeline)
                                     @if ($timeline->status != -1)
-                                        <div class="col-12 col-md timeline-step {{ $timeline->actual_completion_time != null ? 'active' : '' }}">
+                                        <div
+                                            class="col-12 col-md timeline-step {{ $timeline->actual_completion_time != null ? 'active' : '' }}">
                                             <!-- Vertical line for mobile -->
                                             <div class="vertical-line d-md-none">
                                                 <div class="vertical-line-active"></div>
@@ -152,7 +166,7 @@
                                             <!-- Icon -->
                                             <div class="icon-wrapper">
                                                 <div class="icon">
-                                                    @if($timeline->actual_completion_time != null)
+                                                    @if ($timeline->actual_completion_time != null)
                                                         <i class="fas fa-check"></i>
                                                     @else
                                                         <i class="fa-regular fa-hourglass"></i>
@@ -164,10 +178,12 @@
                                             <div class="content-wrapper">
                                                 <h5 class="timeline-title">{{ __($timeline->status_string) }}</h5>
                                                 @if ($timeline->actual_completion_time != null)
-                                                    <p class="timeline-text">Completed at {{ timeFormate($timeline->actual_completion_time) }}</p>
+                                                    <p class="timeline-text">{{ __('Completed at') }}
+                                                        {{ timeFormate($timeline->actual_completion_time) }}</p>
                                                 @endif
-                                                @if($timeline->expected_completion_time != null)
-                                                    <p class="timeline-text">Expected at {{ timeFormate($timeline->expected_completion_time) }}</p>
+                                                @if ($timeline->expected_completion_time != null)
+                                                    <p class="timeline-text">{{ __('Expected at') }}
+                                                        {{ timeFormate($timeline->expected_completion_time) }}</p>
                                                 @endif
                                             </div>
                                         </div>
@@ -191,14 +207,6 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
-                        @if ($order->timelines->where('status', App\Models\Order::DELIVERED)->first()->actual_completion_time != null)
-                            <div class="order-details">
-                                <span>{{ __('Delivery Time') }}</span>
-                                <p>Est. {{ timeFormate($order->timelines->where('status', App\Models\Order::DELIVERED)->first()->actual_completion_time) }}</p>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Receiver Name') }} </span>
                             <p class="mb-0">{{ $order->customer->name }}</p>
@@ -212,6 +220,16 @@
                             <span>{{ __('Delivery Address') }}</span>
                             <p>{{ __(optional($order->address)->address) }}</p>
                         </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
+                        @if ($order->timelines->where('status', App\Models\Order::DELIVERED)->first()->actual_completion_time != null)
+                            <div class="order-details">
+                                <span>{{ __('Delivery Time') }}</span>
+                                <p>Est.
+                                    {{ timeFormate($order->timelines->where('status', App\Models\Order::DELIVERED)->first()->actual_completion_time) }}
+                                </p>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <!-- Order-details-row-end -->
@@ -231,30 +249,32 @@
                                         </div>
 
                                         <!-- <div class="col-sm-6 col-8">
-                                            <h5 class="mb-1" title="{{ $product->attr_title }}">{{ $product->name }}
-                                            </h5>
-                                            <p class="mb-0">{{ $product->generic->name }}</p>
-                                            <p class="mb-0">{{ $product->company->name }}</p>
-                                        </div>
-                                        <div class="col-sm-3 col-8 ms-auto d-flex d-sm-block gap-sm-0 gap-3">
-                                            <p class="qt mb-1">
-                                                {{ __('Qty: ') }}<span>{{ $product->pivot->quantity }}</span></p>
-                                            <p class="qt mb-0">
-                                                {{ __('Pack: ') }}<span>{{ $product->pivot->unit->name }}</span>
-                                            </p>
-                                        </div> -->
+                                                                                                                                                                        <h5 class="mb-1" title="{{ $product->attr_title }}">{{ $product->name }}
+                                                                                                                                                                        </h5>
+                                                                                                                                                                        <p class="mb-0">{{ $product->generic->name }}</p>
+                                                                                                                                                                        <p class="mb-0">{{ $product->company->name }}</p>
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div class="col-sm-3 col-8 ms-auto d-flex d-sm-block gap-sm-0 gap-3">
+                                                                                                                                                                        <p class="qt mb-1">
+                                                                                                                                                                            {{ __('Qty: ') }}<span>{{ $product->pivot->quantity }}</span></p>
+                                                                                                                                                                        <p class="qt mb-0">
+                                                                                                                                                                            {{ __('Pack: ') }}<span>{{ $product->pivot->unit->name }}</span>
+                                                                                                                                                                        </p>
+                                                                                                                                                                    </div> -->
 
                                         <div class="col-sm-9 col-8 px-0 px-sm-3">
                                             <div class="row align-items-center row-gap-2">
                                                 <div class="col-sm-8 col-12">
-                                                    <h5 class="mb-1" title="{{ $product->attr_title }}">{{ $product->name }}
+                                                    <h5 class="mb-1" title="{{ $product->attr_title }}">
+                                                        {{ $product->name }}
                                                     </h5>
                                                     <p class="mb-0">{{ $product->generic->name }}</p>
                                                     <p class="mb-0">{{ $product->company->name }}</p>
                                                 </div>
                                                 <div class="col-sm-4 col-12 ms-auto d-flex d-sm-block gap-sm-0 gap-3">
                                                     <p class="qt mb-1">
-                                                        {{ __('Qty: ') }}<span>{{ $product->pivot->quantity }}</span></p>
+                                                        {{ __('Qty: ') }}<span>{{ $product->pivot->quantity }}</span>
+                                                    </p>
                                                     <p class="qt mb-0">
                                                         {{ __('Pack: ') }}<span>{{ $product->pivot->unit->name }}</span>
                                                     </p>
@@ -272,15 +292,15 @@
                             <div class="right d-flex flex-column justify-content-center">
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Total Price') }}</h5>
-                                    <p class="text-right">{!! get_taka_icon() . number_format($order->totalPrice, 2) !!}</p>
+                                    <p class="text-right">{!! get_taka_icon() . number_format($order->total_amount - $order->delivery_fee, 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Discount') }}</h5>
-                                    <p class="text-right">{!! get_taka_icon() . number_format($order->totalPrice - $order->totalDiscountPrice, 2) !!}</p>
+                                    <p class="text-right">{!! get_taka_icon() . number_format($order->product_discount - $order->voucher_discount, 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Sub Total') }}</h5>
-                                    <p class="text-align-right">{!! get_taka_icon() . number_format(ceil($order->totalDiscountPrice), 2) !!}</p>
+                                    <p class="text-align-right">{!! get_taka_icon() . number_format(ceil($order->sub_total), 2) !!}</p>
                                 </div>
                                 <div class="total-border d-flex justify-content-between mb-3">
                                     <h5>{{ __('Delivery Charge') }}</h5>
@@ -288,7 +308,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Payable Amount') }}</h5>
-                                    <p class="text-align-right">{!! get_taka_icon() . number_format(ceil($order->totalDiscountPrice + $order->delivery_fee), 2) !!}</p>
+                                    <p class="text-align-right">{!! get_taka_icon() . number_format(ceil($order->total_amount), 2) !!}</p>
                                 </div>
                             </div>
                         </div>

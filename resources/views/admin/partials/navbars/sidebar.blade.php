@@ -528,7 +528,7 @@
                                         'pageSlug' => 'ubp_pending',
                                         'routeName' => 'obp.obp_list',
                                         'params' => 'pending',
-                                        'label' => 'Pending',
+                                        'label' => 'Submitted',
                                     ],
                                     [
                                         'pageSlug' => 'ubp_ordered',

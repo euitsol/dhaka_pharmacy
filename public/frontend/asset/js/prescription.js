@@ -1,11 +1,15 @@
 $(document).ready(function() {
-    const $fileInput = $('#prescription');
     const $previewContainer = $('.image-preview');
     const $uploadArea = $('.upload-area');
-    const maxLimit = 2;
+    const maxLimit = 10;
+    const $cameraInput = $('#cameraInput');
+    const $openCamera = $('#openCamera');
+    const $uploadFile = $('#uploadFile');
+    const $fileInput = $('#fileInput');
 
     // File input change event
     $fileInput.on('change', handleFiles);
+    $cameraInput.on('change', handleFiles);
 
     // Drag and drop events
     $uploadArea.on('dragover', function(e) {
@@ -22,6 +26,15 @@ $(document).ready(function() {
         e.preventDefault();
         $(this).removeClass('drag-over');
         handleFiles(e.originalEvent);
+    });
+
+    $openCamera.on('click', function() {
+        $cameraInput.trigger('click');
+    });
+
+    // When the user clicks the upload button, open the file upload input
+    $uploadFile.on('click', function() {
+        $fileInput.trigger('click');
     });
 
     function checkLimit(count=0) {
@@ -55,6 +68,7 @@ $(document).ready(function() {
         let $previewWrapper = $('<div>').addClass('preview-wrapper').appendTo($preview);
         let $progressRing = createProgressRing().appendTo($previewWrapper);
         $previewContainer.append($preview);
+        $previewContainer.show();
 
         $.ajax({
             url: window.AppConfig.urls.prescription.upload,

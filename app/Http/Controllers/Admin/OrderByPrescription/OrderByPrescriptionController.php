@@ -14,27 +14,43 @@ use App\Models\Order;
 use App\Http\Traits\TransformOrderItemTrait;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
+use App\Services\PrescriptionService;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 
 class OrderByPrescriptionController extends Controller
 {
     use TransformProductTrait, TransformOrderItemTrait;
-    public function __construct()
+
+    protected PrescriptionService $prescriptionService;
+    public function __construct(PrescriptionService $prescriptionService)
     {
-        return $this->middleware('admin');
+        $this->middleware('admin');
+        $this->prescriptionService = $prescriptionService;
     }
-    public function list($status): View
+    public function list($status): View|RedirectResponse
     {
-        $data['status'] = $status;
-        $status = $this->status($status);
-        $data['statusBg'] = $this->statusBg($status);
-        $data['ups'] = OrderPrescription::with(['customer', 'address'])->where('status', $status)->latest()->get();
-        return view('admin.order_by_prescription.list', $data);
+        try {
+            $data['order_prescriptions'] = $this->prescriptionService->getOrderPrescriptions($this->prescriptionService->resolveStatus($status));
+            $data['status'] = $status;
+            return view('admin.order_by_prescription.list', $data);
+        } catch (Exception $e) {
+            flash()->addError($e->getMessage());
+            return redirect()->back();
+        }
     }
-    public function details($id): View
+    public function details($id): View|RedirectResponse
     {
         $id = decrypt($id);
-        $data['up'] = OrderPrescription::with(['customer', 'address'])->findOrFail($id);
-        $data['medicines'] = Medicine::activated()->orderBy('name', 'asc')->take(10)->get();
+        try{
+            $prescription = $this->prescriptionService->setOrderPrescription($id);
+            $data['details'] = $prescription->getOrderPrescriptionsDetails();
+            // dd($data['details']->toArray());
+        }
+        catch(Exception $e){
+            flash()->addError($e->getMessage());
+            return redirect()->back();
+        }
         return view('admin.order_by_prescription.details', $data);
     }
     public function getUnit($id): JsonResponse
@@ -115,30 +131,5 @@ class OrderByPrescriptionController extends Controller
         return response()->json([
             'items' => $medicines
         ]);
-    }
-
-
-
-    private function statusBg($status)
-    {
-        switch ($status) {
-            case 0:
-                return 'badge badge-info';
-            case 1:
-                return 'badge bg-success';
-            case 2:
-                return 'badge badge-danger';
-        }
-    }
-    private function status($status)
-    {
-        switch ($status) {
-            case 'pending':
-                return 0;
-            case 'ordered':
-                return 1;
-            case 'cancel':
-                return 2;
-        }
     }
 }

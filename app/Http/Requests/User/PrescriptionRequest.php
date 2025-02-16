@@ -26,9 +26,9 @@ class PrescriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone'=>'nullable|numeric|digits:11',
+            'phone'=>'required|string|digits:11',
             'instruction'=>'nullable|string|max:1000',
-            'uploaded_image'=> 'required|array',
+            'uploaded_image'=> 'required|array|min:1|max:10',
             'uploaded_image.*'=>'required|exists:prescription_images,id',
         ];
     }
