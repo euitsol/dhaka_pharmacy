@@ -39,4 +39,14 @@ trait AuditColumnsTrait
         $table->dropColumn('updated_by');
         $table->dropColumn('deleted_by');
     }
+
+    public function dropMorphedAuditColumns(Blueprint $table): void
+    {
+        $table->dropForeign(['creater_id']);
+        $table->dropForeign(['updater_id']);
+        $table->dropForeign(['deleter_id']);
+
+        $table->dropColumn(['creater_id', 'updater_id', 'deleter_id']);
+        $table->dropColumn(['creater_type', 'updater_type', 'deleter_type']);
+    }
 }

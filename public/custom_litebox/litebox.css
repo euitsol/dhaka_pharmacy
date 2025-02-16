@@ -40,12 +40,13 @@
     text-align: center;
     border: 1px solid #fff;
 }
+
 .close_button:hover {
     color: #fff;
 }
 
 .new-lightbox-content {
-    width: 60vw;
+    width: 80vw;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -56,7 +57,7 @@
 }
 
 .new-lightbox img {
-    width: 48% !important;
+    width: 90% !important;
     height: auto !important;
     object-fit: contain;
     transition: 0.4s;

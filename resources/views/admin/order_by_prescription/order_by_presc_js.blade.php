@@ -1,4 +1,4 @@
-<script>
+{{-- <script>
     let count = 1;
 
     function renumberItems() {
@@ -170,4 +170,4 @@
             templateSelection: formatMedicineSelection
         });
     });
-</script>
+</script> --}}

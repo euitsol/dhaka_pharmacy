@@ -1,7 +1,7 @@
 $(document).ready(function() {
     const $previewContainer = $('.image-preview');
     const $uploadArea = $('.upload-area');
-    const maxLimit = 2;
+    const maxLimit = 10;
     const $cameraInput = $('#cameraInput');
     const $openCamera = $('#openCamera');
     const $uploadFile = $('#uploadFile');
@@ -68,6 +68,7 @@ $(document).ready(function() {
         let $previewWrapper = $('<div>').addClass('preview-wrapper').appendTo($preview);
         let $progressRing = createProgressRing().appendTo($previewWrapper);
         $previewContainer.append($preview);
+        $previewContainer.show();
 
         $.ajax({
             url: window.AppConfig.urls.prescription.upload,

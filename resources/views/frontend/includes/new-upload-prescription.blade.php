@@ -14,17 +14,17 @@
                         <input type="file" id="fileInput" accept="image/*" class="d-none" multiple>
                         <input type="file" id="cameraInput"  accept="image/*"  capture="environment"  class="d-none">
 
-                            <div class="upload-area d-flex flex-column align-items-center justify-content-center">
-                                <button type="button" id="openCamera" class="btn btn-outline-primary mb-2">
-                                    <i class="fas fa-camera"></i> {{ __('Capture from Camera') }}
-                                </button>
-                                <button type="button" id="uploadFile" class="btn btn-outline-secondary">
-                                    <i class="fas fa-upload"></i> {{ __('Upload from Device') }}
-                                </button>
-                            </div>
+                        <div class="upload-area d-flex flex-column align-items-center justify-content-center">
+                            <button type="button" id="openCamera" class="btn btn-outline-primary mb-2">
+                                <i class="fas fa-camera"></i> {{ __('Capture from Camera') }}
+                            </button>
+                            <button type="button" id="uploadFile" class="btn btn-outline-secondary">
+                                <i class="fas fa-upload"></i> {{ __('Upload from Device') }}
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="image-preview">
+                    <div class="image-preview" style="display: none">
 
                     </div>
 
