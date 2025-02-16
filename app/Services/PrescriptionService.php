@@ -51,7 +51,7 @@ class PrescriptionService
 
     public function setOrderPrescription(int $op_id): self
     {
-        $orderPrescription = OrderPrescription::with('prescriptions')->where('id', $op_id)->first();
+        $orderPrescription = OrderPrescription::with('prescription')->where('id', $op_id)->first();
         if(!$orderPrescription){
             throw new ModelNotFoundException("Order Prescription not found");
         }
@@ -131,14 +131,14 @@ class PrescriptionService
 
     public function getOrderPrescriptions(int $status): Collection
     {
-        return OrderPrescription::with(['order', 'prescriptions', 'prescriptions.images', 'creater' ])
+        return OrderPrescription::with(['order', 'prescription', 'prescription.images', 'creater' ])
                 ->where('status', $status)->get();
     }
 
     public function getOrderPrescriptionsDetails(): OrderPrescription
     {
         if(isset($this->orderPrescription) && $this->orderPrescription instanceof OrderPrescription){
-            return $this->orderPrescription->load(['order', 'prescriptions', 'prescriptions.images', 'creater' ]);
+            return $this->orderPrescription->load(['order', 'prescription', 'prescription.images', 'creater' ]);
         }
         throw new ModelNotFoundException("Order Prescription not found");
     }

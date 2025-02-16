@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin\OrderByPrescription;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\AddressRequest as APIAddressRequest;
 use App\Http\Requests\PrescriptionOrderCreateRequest;
+use App\Http\Requests\User\AddressRequest;
 use App\Models\Medicine;
 use App\Models\OrderPrescription;
 use Illuminate\Http\JsonResponse;
@@ -12,21 +14,26 @@ use App\Http\Traits\TransformProductTrait;
 use App\Models\AddToCart;
 use App\Models\Order;
 use App\Http\Traits\TransformOrderItemTrait;
+use App\Models\Address;
 use App\Models\OrderProduct;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\PrescriptionService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use App\Services\AddressService;
 
 class OrderByPrescriptionController extends Controller
 {
     use TransformProductTrait, TransformOrderItemTrait;
 
     protected PrescriptionService $prescriptionService;
-    public function __construct(PrescriptionService $prescriptionService)
+    protected AddressService $addressService;
+    public function __construct(PrescriptionService $prescriptionService, AddressService $addressService)
     {
         $this->middleware('admin');
         $this->prescriptionService = $prescriptionService;
+        $this->addressService = $addressService;
     }
     public function list($status): View|RedirectResponse
     {
@@ -45,7 +52,7 @@ class OrderByPrescriptionController extends Controller
         try{
             $prescription = $this->prescriptionService->setOrderPrescription($id);
             $data['details'] = $prescription->getOrderPrescriptionsDetails();
-            // dd($data['details']->toArray());
+            $data['cities'] = $this->addressService->getCities();
         }
         catch(Exception $e){
             flash()->addError($e->getMessage());
@@ -131,5 +138,45 @@ class OrderByPrescriptionController extends Controller
         return response()->json([
             'items' => $medicines
         ]);
+    }
+
+    public function productSearch(Request $request)
+    {
+        $param = $request->input('q');
+
+        $query = Medicine::search($param);
+
+        $data['products'] = $query->get()
+            ->load(['units', 'pro_cat', 'generic', 'company', 'strength', 'discounts', 'dosage']);
+        return response()->json([
+            'items' => $data['products']
+        ]);
+    }
+
+    public function deliveryAddress(Request $request)
+    {
+        if($request->has('user_id')){
+            $user_id = decrypt($request->user_id);
+            $data['user'] = User::findOrFail($user_id);
+            $this->addressService->setUser($data['user']);
+            $data['addresses'] = $this->addressService->list(true);
+            return response()->json($data);
+        }else{
+            return response()->json(null);
+        }
+    }
+
+    public function storeDeliveryAddress(APIAddressRequest $request)
+    {
+        if($request->has('user_id')){
+            $user_id = decrypt($request->user_id);
+            $data['user'] = User::findOrFail($user_id);
+            $this->addressService->setUser($data['user']);
+            $address = $this->addressService->create($request->all());
+            return response()->json($address);
+        }else{
+            return response()->json(null);
+        }
+
     }
 }

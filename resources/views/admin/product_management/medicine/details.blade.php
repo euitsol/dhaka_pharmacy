@@ -55,10 +55,10 @@
                                 <td>{{ __(optional($medicine->company)->name) }}</td>
                             </tr>
                             <tr>
-                                    <th>{{ __('Medicine Dosage') }}</th>
-                                    <th>{{ __(':') }}</th>
-                                    <td> {{ optional($medicine->dose)->name }} </td>
-                                </tr>
+                                <th>{{ __('Medicine Dosage') }}</th>
+                                <th>{{ __(':') }}</th>
+                                <td> {{ optional($medicine->dose)->name }} </td>
+                            </tr>
                             @if ($medicine->strength_id)
                                 <tr>
                                     <th>{{ __('Medicine Strength') }}</th>
@@ -71,7 +71,7 @@
                                 <th>{{ __(':') }}</th>
                                 <td>
                                     @foreach ($medicine->units as $unit)
-                                        {{ $unit->name }} <small>({{ $unit->price }})</small>
+                                        {{ $unit->name }} <small>({{ $unit->pivot->price }})</small>
                                         @if (!$loop->last)
                                             ,
                                         @endif
@@ -180,11 +180,10 @@
                                 </td>
                             </tr>
                             @foreach ($medicine->units as $unit)
-
                                 <tr>
                                     <th>{{ __('Unit Price') }} <small>({{ $unit->name }})</small></th>
                                     <th>{{ __(':') }}</th>
-                                    <td> {{ number_format($unit->price, 2) }}{{ __(' BDT') }} </td>
+                                    <td> {{ number_format($unit->pivot->price, 2) }}{{ __(' BDT') }} </td>
                                 </tr>
                             @endforeach
                         </tbody>

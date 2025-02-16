@@ -41,4 +41,9 @@ class PrescriptionImage extends BaseModel
     {
         return $this->belongsTo(Prescription::class);
     }
+
+    public function getPathAttribute($value)
+    {
+        return storage_url($value);
+    }
 }
