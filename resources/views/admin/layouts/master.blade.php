@@ -55,7 +55,7 @@
                 },
                 'obp': {
                     'product_search': @json(route('obp.search.obp_details')),
-                    'delivery_address': @json(route('obp.delivery_address.obp_details'))
+                    'delivery_address': @json(route('obp.list.obp_details'))
                 }
 
             }
