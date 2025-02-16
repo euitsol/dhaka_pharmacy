@@ -24,8 +24,8 @@ class Prescription extends BaseModel
     ];
 
     public const STATUS_PENDING = 0;
-    public const STATUS_SUBMITTED = 1;
-    public const STATUS_CANCELLED = -1;
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_INACTIVE = -1;
 
     public function images(): HasMany
     {
@@ -36,9 +36,11 @@ class Prescription extends BaseModel
     {
         return match ($this->status) {
             self::STATUS_PENDING => 'Pending',
-            self::STATUS_SUBMITTED => 'Submitted',
-            self::STATUS_CANCELLED => 'Cancelled',
+            self::STATUS_ACTIVE => 'Active',
+            self::STATUS_INACTIVE => 'Inactive',
             default => 'Unknown',
         };
     }
+
+
 }

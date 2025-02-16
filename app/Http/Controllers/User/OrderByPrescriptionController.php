@@ -20,7 +20,7 @@ class OrderByPrescriptionController extends Controller
     public function create(PrescriptionRequest $request)
     {
         try{
-            $prescription = $this->prescriptionService->processPrescription($request->all());
+            $prescription = $this->prescriptionService->processPrescription($request->all(), true);
             flash()->addSuccess('Prescription submitted successfully. Our team will contact you soon.');
             return redirect()->route('home');
         }catch(Exception $e){

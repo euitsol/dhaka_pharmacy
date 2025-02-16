@@ -1,5 +1,5 @@
 @extends('admin.layouts.master', ['pageSlug' => "ubp_$status"])
-@section('title', 'Order By Prescription List')
+@section('title', 'Submitted Prescription List')
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
 @endpush
@@ -10,10 +10,10 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">{{ __('Order By Prescription List') }}</h4>
+                            <h4 class="card-title">{{ __('Submitted Prescription List') }}</h4>
                         </div>
                         <div class="col-4 text-end">
-                            <span class="{{ $statusBg }}">{{ $status }}</span>
+                            <span class="">{{ slugToTitle($status) }}</span>
                         </div>
                     </div>
                 </div>
@@ -22,39 +22,41 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Customer Name') }}</th>
-                                <th>{{ __('Delivery Address') }}</th>
-                                <th>{{ __('Delivery Type') }}</th>
-                                <th>{{ __('Prescription Image') }}</th>
+                                <th>{{ __('Prescription ID') }}</th>
+                                <th>{{ __('Prescription Images') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Order date') }}</th>
+                                <th>{{ __('Submitted at') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($ups as $up)
+                            @foreach ($order_prescriptions as $order_prescription)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td>{{ $up->customer->name }}</td>
-                                    <td>{{ str_limit($up->address->address, 30) }}</td>
-                                    <td>{{ $up->deliveryType() }}</td>
-                                    <td>
-                                        <div id="lightbox" class="lightbox">
-                                            <div class="lightbox-content">
-                                                <img src="{{ storage_url($up->image) }}" class="lightbox_image">
-                                            </div>
-                                            <div class="close_button fa-beat">X</div>
-                                        </div>
+                                    <td>{{ $order_prescription->id}}</td>
+                                    <td class="d-flex align-items-center">
+                                        @if (optional($order_prescription->prescriptions))
+                                            @foreach ($order_prescription->prescriptions as $prescription)
+                                                @foreach ($prescription->images as $image)
+                                                    <div id="lightbox" class="lightbox mr-2">
+                                                        <div class="lightbox-content">
+                                                            <img src="{{ storage_url($image->path) }}" class="lightbox_image">
+                                                        </div>
+                                                        <div class="close_button fa-beat">X</div>
+                                                    </div>
+                                                @endforeach
+                                            @endforeach
+                                        @endif
                                     </td>
-                                    <td><span class="{{ $up->statusBg() }}">{{ $up->statusTitle() }}</span></td>
-                                    <td>{{ timeFormate($up->created_at) }}</td>
+                                    <td><span class=" badge {{ $order_prescription->statusBg() }}">{{ $order_prescription->status_string }}</span></td>
+                                    <td>{{ timeFormate($order_prescription->created_at) }}</td>
                                     <td>
-                                        @if ($up->status == 1)
+                                        @if ($order_prescription->status == 1)
                                             @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
                                                     [
                                                         'routeName' => 'obp.order.obp_details',
-                                                        'params' => [encrypt($up->order->id)],
+                                                        'params' => [encrypt($order_prescription->id)],
                                                         'label' => 'Details',
                                                     ],
                                                 ],
@@ -64,7 +66,7 @@
                                                 'menuItems' => [
                                                     [
                                                         'routeName' => 'obp.obp_details',
-                                                        'params' => [encrypt($up->id)],
+                                                        'params' => [encrypt($order_prescription->id)],
                                                         'label' => 'Details',
                                                     ],
                                                 ],
