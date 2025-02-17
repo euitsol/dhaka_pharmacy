@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\OrderByPrescription;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\OrderByPrescriptionRequest;
 use App\Http\Requests\API\AddressRequest as APIAddressRequest;
 use App\Http\Requests\PrescriptionOrderCreateRequest;
 use App\Http\Requests\User\AddressRequest;
@@ -22,6 +23,8 @@ use App\Services\PrescriptionService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use App\Services\AddressService;
+use App\Services\OrderService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class OrderByPrescriptionController extends Controller
@@ -30,11 +33,14 @@ class OrderByPrescriptionController extends Controller
 
     protected PrescriptionService $prescriptionService;
     protected AddressService $addressService;
-    public function __construct(PrescriptionService $prescriptionService, AddressService $addressService)
+    protected OrderService $orderService;
+
+    public function __construct(PrescriptionService $prescriptionService, AddressService $addressService, OrderService $orderService)
     {
         $this->middleware('admin');
         $this->prescriptionService = $prescriptionService;
         $this->addressService = $addressService;
+        $this->orderService = $orderService;
     }
     public function list($status): View|RedirectResponse
     {
@@ -164,7 +170,6 @@ class OrderByPrescriptionController extends Controller
             $data['user'] = User::findOrFail($user_id);
             $this->addressService->setUser($data['user']);
             $addresses = $this->addressService->list(true, null, $request->q);
-            Log::info($addresses);
 
             // Capture the mapped collection in a new variable (or reassign to $addresses)
             $mappedAddresses = $addresses->map(function($address) {
@@ -193,6 +198,47 @@ class OrderByPrescriptionController extends Controller
             return response()->json(['status' => true]);
         }catch(Exception $e){
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function store(OrderByPrescriptionRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $validated = $request->validated();
+            // Get the user
+            $user = User::findOrFail(decrypt($validated['user_id']));
+
+            // Process the order
+            $order = $this->orderService
+                ->setUser($user)
+                ->processOrder([
+                    'products' => $validated['products'],
+                    'address_id' => $validated['address_id'],
+                    'delivery_type' => $validated['delivery_type']
+                ], true, 'prescription');
+
+            // Update the order_prescription with order_id
+            OrderPrescription::where('prescription_id', $validated['prescription_id'])
+                ->update(['order_id' => $order->id, 'status' => OrderPrescription::STATUS_ACCEPTED]);
+
+            //Accept the order
+            // $this->orderService->setOrder($order->order_id);
+
+            // $payment = $this->orderService->confirmOrder([
+            //     'payment_method' => $validated['payment_method']
+            // ]);
+
+            DB::commit();
+
+            flash()->addSuccess('Order created successfully.');
+            return redirect()->route('obp.obp_list', 'pending');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
         }
     }
 }

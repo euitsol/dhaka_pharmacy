@@ -83,6 +83,7 @@ $(document).ready(() => {
     };
 
     const initMedicineSearch = ($row) => {
+        var rowCounter = $row.data('row-id');
         const $searchWrapper = $('<div>', { class: 'position-relative' });
         const $searchInput = $('<input>', {
             type: 'text',
@@ -93,7 +94,7 @@ $(document).ready(() => {
         const $medicineIdInput = $('<input>', {
             type: 'hidden',
             class: 'medicine-id medicine-data',
-            name: 'medicine_id[]'
+            name: `products[${rowCounter}][product_id]`
         });
 
         $row.find('.medicine-select').replaceWith($searchWrapper);
@@ -218,13 +219,13 @@ $(document).ready(() => {
         const newRow = `
             <tr data-row-id="${rowCounter}">
                 <td>${rowCounter}</td>
-                <td><div class="medicine-select"></div></td>
+                <td><div class="medicine-select" data-name="products[${rowCounter}][product_id]"></div></td>
                 <td>
-                    <select class="form-control unit-select" required>
+                    <select class="form-control unit-select" name="products[${rowCounter}][unit_id]" required>
                         <option value="">Select Unit</option>
                     </select>
                 </td>
-                <td><input type="number" class="form-control quantity-input" min="1" required></td>
+                <td><input type="number" name="products[${rowCounter}][quantity]" class="form-control quantity-input" min="1" required></td>
                 <td><button type="button" class="btn btn-sm btn-danger remove-row"><i class="fas fa-trash"></i></button></td>
             </tr>`;
 

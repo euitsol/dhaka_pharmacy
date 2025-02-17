@@ -58,7 +58,29 @@ class OrderService
         return DB::transaction(function () use ($data, $isDirectOrder, $type) {
             $carts = collect(); // Initialize an empty collection
             Log::info($data);
-            if ($isDirectOrder) {
+
+            if ($type === 'prescription') {
+                // Handle prescription order
+                foreach ($data['products'] as $item) {
+                    $product = Medicine::with([
+                        'units' => function ($query) {
+                            $query->select('medicine_units.id', 'medicine_unit_bkdns.price');
+                        },
+                        'active_discounts',
+                    ])->findOrFail($item['product_id']);
+
+                    $unit = $product->units->find($item['unit_id']);
+                    if (!$unit) {
+                        throw new ModelNotFoundException("Unit not found for product {$product->name}");
+                    }
+
+                    $carts->push((object)[
+                        'product' => $product,
+                        'unit_id' => $item['unit_id'],
+                        'quantity' => $item['quantity'],
+                    ]);
+                }
+            } else if ($isDirectOrder) {
                 // Handle direct order
                 $product = Medicine::with([
                     'units' => function ($query) {
@@ -106,8 +128,8 @@ class OrderService
                 $voucherDiscount = 0;
             }
             if(isset($data['address_id']) && $data['address_id'] != null){
-                $deliveryFee = $this->calculateDeliveryFee($data['address_id'])['charge'];
-                $deliveryType = $this->calculateDeliveryFee($data['address_id'])['delivery_type'];
+                $deliveryFee = $this->calculateDeliveryFee($data['address_id'], $data['delivery_type'] ?? 'standard')['charge'];
+                $deliveryType = $this->calculateDeliveryFee($data['address_id'], $data['delivery_type'] ?? 'standard')['delivery_type'];
             }else{
                 $deliveryFee = 0;
                 $deliveryType = null;

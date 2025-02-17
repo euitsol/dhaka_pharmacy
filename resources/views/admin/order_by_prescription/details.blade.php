@@ -40,7 +40,6 @@
                                             <td>:</td>
                                             <td>
                                                 {{ optional($details->creater)->name ?? '--' }}
-                                                <input type="hidden" name="user_id" id="user_id" value="{{ encrypt(optional($details->creater)->id ?? '') }}" class="d-none">
                                             </td>
                                         </tr>
                                         <tr>
@@ -175,8 +174,10 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="POST">
+                                    <form action="{{ route('obp.store.obp_details') }}" method="POST">
                                         @csrf
+                                        <input type="hidden" name="user_id" id="user_id" value="{{ encrypt(optional($details->creater)->id ?? '') }}" class="d-none">
+                                        <input type="hidden" name="prescription_id" value="{{ encrypt(optional($details->prescription)->id ?? '') }}" class="d-none">
 
                                         <table class="table" id="medicine-order-table">
                                             <thead>
@@ -209,7 +210,7 @@
                                                     <div class="card-body">
                                                         <div class="form-group">
                                                             <label>{{ __('Select Delivery Address') }}</label>
-                                                            <select class="form-control" id="delivery-address" style="">
+                                                            <select class="form-control" id="delivery-address" style="" name="address_id" required>
                                                                 <option value="">{{ __('Select Address') }}</option>
                                                                 @foreach ($addresses as $address)
                                                                     <option value="{{ $address['id'] }}">{{ $address['address'] }}</option>
@@ -219,8 +220,27 @@
 
                                                         <div class="form-group mt-3">
                                                             <label>{{ __('Delivery Type') }}</label>
-                                                            <select class="form-control" id="delivery-type" style="" disabled>
+                                                            <select class="form-control" id="delivery-type" style="" disabled name="delivery_type" required>
                                                                 <option value="">{{ __('Select Delivery Type') }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>{{ __('Payment Information') }}</h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="form-group">
+                                                            <label for="payemt_method">{{ __('Payment Method') }}</label>
+                                                            <select class="form-control" id="payemt_method" style="" name="payment_method" required>
+                                                                <option value="">{{ __('Select Payment Method') }}</option>
+                                                                <option value="cod">{{ __('Cash On Delivery') }}</option>
+                                                                <option value="bkash">{{ __('Bkash') }}</option>
+                                                                <option value="nagad">{{ __('Nagad') }}</option>
+                                                                <option value="rocket">{{ __('Rocket') }}</option>
+                                                                <option value="ssl">{{ __('SSLCOMMERZ') }}</option>
+
                                                             </select>
                                                         </div>
                                                     </div>
