@@ -52,7 +52,13 @@
                 'file': {
                     'upload': @json(route('file.upload')),
                     'delete': @json(route('file.delete')),
+                },
+                'obp': {
+                    'product_search': @json(route('obp.search.obp_details')),
+                    'delivery_address': @json(route('obp.delivery.list.obp_details')),
+                    'delivery_store': @json(route('obp.delivery.create.obp_details')),
                 }
+
             }
         }
     </script>

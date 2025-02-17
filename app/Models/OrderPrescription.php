@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -28,18 +30,23 @@ class OrderPrescription extends BaseModel
         'status',
     ];
 
+    protected $casts = [
+        'status' => 'integer',
+    ];
+
     protected $appends = [
         'status_string',
     ];
 
-    public function order(): HasOne
+
+    public function order(): BelongsTo
     {
-        return $this->hasOne(Order::class, 'id', 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
-    public function prescriptions(): HasMany
+    public function prescription(): BelongsTo
     {
-        return $this->hasMany(Prescription::class, 'id', 'prescription_id');
+        return $this->belongsTo(Prescription::class, 'prescription_id');
     }
 
     public function getStatusStringAttribute()

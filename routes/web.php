@@ -756,11 +756,15 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
     Route::controller(AdminOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('obp.')->group(function () {
         Route::get('/list/{status}', 'list')->name('obp_list');
         Route::get('/details/{id}', 'details')->name('obp_details');
-        Route::get('/details/order/{order_id}', 'orderDetails')->name('order.obp_details');
-        Route::get('/get-unit/{mid}', 'getUnit')->name('get_unit.obp_details');
-        Route::get('/get-select-medicine', 'getSelectMedicine')->name('get_select_medicine.obp_details');
-        Route::post('/order/create/{up_id}', 'order_create')->name('obp_order_create');
-        Route::get('/status-update/{status}/{id}', 'statusUpdate')->name('status_update');
+        // Route::get('/details/order/{order_id}', 'orderDetails')->name('order.obp_details');
+        // Route::get('/get-unit/{mid}', 'getUnit')->name('get_unit.obp_details');
+        // Route::get('/get-select-medicine', 'getSelectMedicine')->name('get_select_medicine.obp_details');
+        // Route::post('/order/create/{up_id}', 'order_create')->name('obp_order_create');
+        // Route::get('/status-update/{status}/{id}', 'statusUpdate')->name('status_update');
+        Route::post('/store', 'store')->name('store.obp_details');
+        Route::get('/product-search', 'productSearch')->name('search.obp_details');
+        Route::get('/delivery-address/list', 'addressList')->name('delivery.list.obp_details');
+        Route::post('/delivery-address/create', 'storeAddressDetails')->name('delivery.create.obp_details');
     });
 
     // Latest Offer

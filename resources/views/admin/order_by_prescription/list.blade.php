@@ -35,16 +35,14 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $order_prescription->id}}</td>
                                     <td class="d-flex align-items-center">
-                                        @if (optional($order_prescription->prescriptions))
-                                            @foreach ($order_prescription->prescriptions as $prescription)
-                                                @foreach ($prescription->images as $image)
-                                                    <div id="lightbox" class="lightbox mr-2">
-                                                        <div class="lightbox-content">
-                                                            <img src="{{ storage_url($image->path) }}" class="lightbox_image">
-                                                        </div>
-                                                        <div class="close_button fa-beat">X</div>
+                                        @if (optional($order_prescription->prescription)->images)
+                                            @foreach ($order_prescription->prescription->images as $image)
+                                                <div id="lightbox" class="lightbox mr-2">
+                                                    <div class="lightbox-content">
+                                                        <img src="{{ storage_url($image->path) }}" class="lightbox_image">
                                                     </div>
-                                                @endforeach
+                                                    <div class="close_button fa-beat">X</div>
+                                                </div>
                                             @endforeach
                                         @endif
                                     </td>

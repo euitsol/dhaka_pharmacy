@@ -84,10 +84,10 @@ class MedicineController extends Controller
                     return number_format($data->price, 2) . ' BDT';
                 })
                 ->addColumn('discount', function ($data) {
-                    return number_format(calculateProductDiscount($data, false), 2) . ' BDT';
+                    return $data->discount_percentage . ' %';
                 })
                 ->addColumn('discounted_price', function ($data) {
-                    return number_format(proDisPrice($data->price, $data->discounts), 2) . ' BDT';
+                    return number_format($data->discounted_price, 2) . ' BDT';
                 })
                 ->addColumn('best_selling', function ($data) {
                     return '<span class="' . $data->getBestSellingBadgeClass() . '">' . $data->getBestSelling() . '</span>';
