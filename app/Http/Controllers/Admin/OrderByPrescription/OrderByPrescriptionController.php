@@ -22,6 +22,7 @@ use App\Services\PrescriptionService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use App\Services\AddressService;
+use Illuminate\Support\Facades\Log;
 
 class OrderByPrescriptionController extends Controller
 {
@@ -53,11 +54,14 @@ class OrderByPrescriptionController extends Controller
             $prescription = $this->prescriptionService->setOrderPrescription($id);
             $data['details'] = $prescription->getOrderPrescriptionsDetails();
             $data['cities'] = $this->addressService->getCities();
+            $this->addressService->setUser($data['details']->creater);
+            $data['addresses'] = $this->addressService->list(true);
         }
         catch(Exception $e){
             flash()->addError($e->getMessage());
             return redirect()->back();
         }
+        // dd($data['addresses']);
         return view('admin.order_by_prescription.details', $data);
     }
     public function getUnit($id): JsonResponse
@@ -155,14 +159,40 @@ class OrderByPrescriptionController extends Controller
 
     public function addressList(Request $request)
     {
-        if($request->has('user_id')){
-            $user_id = decrypt($request->user_id);
+        $user_id = decrypt($request->data['user_id']);
+        if($user_id){
             $data['user'] = User::findOrFail($user_id);
             $this->addressService->setUser($data['user']);
-            $data['addresses'] = $this->addressService->list(true);
+            $addresses = $this->addressService->list(true, null, $request->q);
+            Log::info($addresses);
+
+            // Capture the mapped collection in a new variable (or reassign to $addresses)
+            $mappedAddresses = $addresses->map(function($address) {
+                return [
+                    'id'         => $address['id'],
+                    'name'       => $address['address'] . ' City: ' . $address['city'] . ' | ' . ($address['is_default'] ? 'Default' : 'Not Default') .' | Zone: '. $address['zone']['name'],
+                    'address'    => $address['address'],
+                    'is_default' => $address['is_default'],
+                    'options'    => $address['delivery_options']
+                ];
+            });
+
+            $data['addresses'] = $mappedAddresses;
             return response()->json($data);
         }else{
             return response()->json(null);
+        }
+    }
+
+    public function storeAddressDetails(AddressRequest $request)
+    {
+        $user_id = decrypt($request->user_id);
+        $user = User::findOrFail($user_id);
+        try{
+            $this->addressService->setUser($user)->create($request->validated());
+            return response()->json(['status' => true]);
+        }catch(Exception $e){
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
 }

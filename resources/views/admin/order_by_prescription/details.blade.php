@@ -12,6 +12,10 @@
         .borderless th {
             border: none;
         }
+        .scrollable_content{
+            max-height: 10rem;
+            overflow-y: auto;
+        }
     </style>
 @endpush
 
@@ -34,7 +38,10 @@
                                         <tr>
                                             <td>{{ __('Name') }}</td>
                                             <td>:</td>
-                                            <td>{{ optional($details->creater)->name ?? '--' }}</td>
+                                            <td>
+                                                {{ optional($details->creater)->name ?? '--' }}
+                                                <input type="hidden" name="user_id" id="user_id" value="{{ encrypt(optional($details->creater)->id ?? '') }}" class="d-none">
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>{{ __('Phone') }}</td>
@@ -48,6 +55,10 @@
                                                 <span
                                                     class=" badge bg-{{ optional($details->creater)->name ? 'success' : 'secondary' }}">
                                                     {{ optional($details->creater)->name ? 'Authenticated' : 'Not Authenticated' }}
+                                                </span>
+
+                                                <span class="ml-2 badge bg-{{ optional($details->creater)->verified ? 'success' : 'secondary' }}">
+                                                    {{ optional($details->creater)->verified ? 'Verified' : 'Unverified'}}
                                                 </span>
                                             </td>
                                         </tr>
@@ -65,16 +76,6 @@
                                                     class="{{ optional($details->creater)->getStatusBadgeClass() ?? 'secondary' }}">
                                                     {{ optional($details->creater)->getStatus() ?? '--' }}
                                                 </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ __('Delivery Address') }}</td>
-                                            <td>:</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-primary" type="button"
-                                                    onclick="">{{ __('View Address') }}</button>
-                                                {{-- <button class="btn btn-sm btn-primary" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#address_add_modal">{{ __(key: 'Create New Address') }}</button> --}}
                                             </td>
                                         </tr>
                                     </table>
@@ -128,8 +129,10 @@
                                         <tr>
                                             <td>{{ __('Additional Information') }}</td>
                                             <td>:</td>
-                                            <td style="height: 5rem; overflow-y: scroll">
-                                                {{ optional($details->prescription)->additional_information ?? '--' }}
+                                            <td>
+                                                <div class="scrollable_content">
+                                                    {{ optional($details->prescription)->information ?? '--' }}
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
@@ -194,10 +197,32 @@
                                             <div class="col-md-6">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5>{{ __('Delivery Information') }}</h5>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <h5>{{ __('Delivery Information') }}</h5>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <button type="button" class="btn btn-primary float-end" id="add-delivery-address" data-bs-toggle="modal" data-bs-target="#address_add_modal"><i class="fas fa-plus"></i> {{ __('Add Delivery Address') }}</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="card-body">
+                                                        <div class="form-group">
+                                                            <label>{{ __('Select Delivery Address') }}</label>
+                                                            <select class="form-control" id="delivery-address" style="">
+                                                                <option value="">{{ __('Select Address') }}</option>
+                                                                @foreach ($addresses as $address)
+                                                                    <option value="{{ $address['id'] }}">{{ $address['address'] }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
 
+                                                        <div class="form-group mt-3">
+                                                            <label>{{ __('Delivery Type') }}</label>
+                                                            <select class="form-control" id="delivery-type" style="" disabled>
+                                                                <option value="">{{ __('Select Delivery Type') }}</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -250,10 +275,11 @@
         </div>
     </div>
 
-    @include('admin.order_by_prescription.partials.modal.create_address', ['cities' => $cities])
+    @include('admin.order_by_prescription.partials.modal.create_address', ['cities' => $cities, 'user' => $details->creater])
 @endsection
 
 @push('js_link')
-    <script src="{{ asset('admin/js/ordermanagement.js') }}"></script>
+    {{-- <script src="{{ asset('admin/js/ordermanagement.js') }}"></script> --}}
+    <script src="{{ asset('admin/js/on.js') }}"></script>
     <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
 @endpush

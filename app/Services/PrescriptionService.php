@@ -17,12 +17,19 @@ use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Instanceof_;
 use RuntimeException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Services\UserService;
 
 class PrescriptionService
 {
     protected ?User $user=null;
     protected ?Prescription $prescription=null;
     protected ?OrderPrescription $orderPrescription=null;
+    protected ?UserService $userService=null;
+
+    public function __construct(?UserService $userService=null)
+    {
+        $this->userService = $userService;
+    }
 
     public function setUser(User $user): self
     {
@@ -30,13 +37,17 @@ class PrescriptionService
         return $this;
     }
 
-    public function setUserByPhone(int $phone): self|null
+    public function setUserByPhone(int $phone): self
     {
         $user = User::where('phone', $phone)->first();
         if($user){
             $this->user = $user;
             return $this;
-        }return null;
+        }else{
+            $user = $this->userService->createUser(['phone'=>$phone]);
+            $this->user = $user;
+            return $this;
+        }
     }
 
     public function setPrescription(int $prescriptionId): self

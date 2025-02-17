@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\{DB, Log};
+use Illuminate\Support\Str;
 
 
 class AddressService
@@ -46,7 +47,7 @@ class AddressService
             $address->creater()->associate($this->user);
             $address->save();
 
-            if ($data['is_default'] == true) {
+            if (isset($data['is_default']) && $data['is_default'] == true) {
                 $this->updateDefaultStatus($address, false);
             }else{
                 $this->ensureDefaultAddress($address);
@@ -70,14 +71,15 @@ class AddressService
         });
     }
 
-    public function list(bool $isDelivery = false, int|null $addressId = null): Collection|Address|ModelNotFoundException|array
+    public function list(bool $isDelivery = false, int|null $addressId = null, string|null $search=null): Collection|Address|ModelNotFoundException|array
     {
         $query = Address::select('id', 'zone_id', 'latitude', 'longitude', 'address', 'city', 'street_address', 'apartment', 'floor', 'delivery_instruction', 'is_default')
             ->where('creater_id', $this->user->id)
             ->where('creater_type', get_class($this->user))
             ->with('zone:id,name,charge,allows_express,express_charge,delivery_time_hours,express_delivery_time_hours,status')
             ->orderBy('is_default', 'desc')
-            ->when($addressId, fn($q) => $q->where('id', $addressId));
+            ->when($addressId, fn($q) => $q->where('id', $addressId))
+            ->when($search, fn($q) => $q->where('address', 'like', "%$search%"));
 
         $addresses = $query->get();
 
@@ -101,7 +103,7 @@ class AddressService
             $cities->where('city_name', 'like', "%{$query}%");
         }
         return $cities->orderBy('city_name', 'asc')
-                      ->select('city_name')
+                      ->select('id','city_name')
                       ->get();
     }
 
@@ -185,6 +187,7 @@ class AddressService
         $deliveryDate = $this->calculateDeliveryDate($hours);
 
         return [
+            'name' => Str::title($type),
             'type' => $type,
             'charge' => $charge,
             'delivery_time_hours' => $hours,
