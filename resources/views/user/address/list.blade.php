@@ -1,10 +1,10 @@
 @extends('user.layouts.master', ['pageSlug' => 'address'])
 @section('title', 'Address')
 @push('css_link')
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+    {{-- <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
     <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
-        type="text/css" />
+        type="text/css" /> --}}
     <link rel="stylesheet" href="{{ asset('user/asset/css/address.css') }}">
 @endpush
 
@@ -67,13 +67,13 @@
                                             <div class="col-md-12 mt-sm-3">
                                                 <span class="strong">Instruction: </span> {!! $address->delivery_instruction !!}
                                             </div>
-                                            <div class="col-md-12 mt-sm-3 mt-4">
+                                            {{-- <div class="col-md-12 mt-sm-3 mt-4">
                                                 @if (!empty($address->latitude) && !empty($address->longitude))
                                                     <div class="my-map" id="map{{ $key }}"
                                                     data-lat={{ $address->latitude }} data-lng={{ $address->longitude }}></div>
                                                 @endif
 
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -94,9 +94,9 @@
 @endsection
 
 @push('js_link')
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    {{-- <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
-    </script>
+    </script> --}}
     <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
 @endpush
 

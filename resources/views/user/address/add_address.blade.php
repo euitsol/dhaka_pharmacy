@@ -13,9 +13,9 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <div class="map" id="user_a_map"></div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-12">
                         <form action="{{ route('u.as.store') }}" method="POST">
                             @csrf
@@ -31,7 +31,7 @@
                                 <div class="form-group col-md-6 p-2">
                                     <label for="city">{{ __('City') }} <small
                                             class="text-danger">*</small></label>
-                                    <select name="city" id="city_select" class="form-control">
+                                    <select name="city" id="city_select" class="form-control city_select">
                                         <option value="">{{ __('Select City') }}</option>
                                         <option value="Dhaka City">Dhaka City</option>
                                         <option value="Gaibanda">Gaibanda</option>

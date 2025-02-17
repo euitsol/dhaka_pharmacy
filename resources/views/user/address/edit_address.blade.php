@@ -4,15 +4,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="address_modalLabel">Update Address</h5>
-                <button type="button" class="close btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <div class="map" id="user_e_map"></div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-12 m-2">
                         <form action="{{ route('u.as.update') }}" method="POST">
                             @method('put')
@@ -27,9 +27,15 @@
                                         placeholder="Enter your full address">
                                 </div>
                                 <div class="form-group col-md-6 p-2">
-                                    <label for="city">City <small class="text-danger">*</small></label>
-                                    <input type="text" class="form-control mt-1" id="city" name="city"
-                                        placeholder="Enter your city name" value="">
+                                    <label for="city">{{ __('City') }} <small
+                                            class="text-danger">*</small></label>
+                                    <select name="city" id="city_select_edit" class="form-control city_select">
+                                        <option value="">{{ __('Select City') }}</option>
+                                        <option value="Dhaka City">Dhaka City</option>
+                                        <option value="Gaibanda">Gaibanda</option>
+                                        <option value="Narayanganj">Narayanganj</option>
+                                        <option value="Rajshahi">Rajshahi</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-6 p-2">
                                     <label for="street">Street Name <small class="text-danger">*</small></label>
@@ -52,11 +58,12 @@
                                 </div>
                                 <div class="form-group col-md-12 p-2">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="is_default" value="1" id="is_default">
+                                        <input class="form-check-input" type="checkbox" name="is_default" value="1"
+                                            id="is_default">
                                         <label class="form-check-label" for="is_default">
                                             Set as default
                                         </label>
-                                      </div>
+                                    </div>
                                 </div>
                                 <div class="form-group col-md-12 p-2">
                                     <button type="submit" class="btn btn-sm btn-success w-100">Update</button>
