@@ -49,17 +49,6 @@
                                     <td><span class=" badge {{ $order_prescription->statusBg() }}">{{ $order_prescription->status_string }}</span></td>
                                     <td>{{ timeFormate($order_prescription->created_at) }}</td>
                                     <td>
-                                        @if ($order_prescription->status == 1)
-                                            @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    [
-                                                        'routeName' => 'obp.order.obp_details',
-                                                        'params' => [encrypt($order_prescription->id)],
-                                                        'label' => 'Details',
-                                                    ],
-                                                ],
-                                            ])
-                                        @else
                                             @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
                                                     [
@@ -69,7 +58,6 @@
                                                     ],
                                                 ],
                                             ])
-                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

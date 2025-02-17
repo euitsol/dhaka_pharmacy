@@ -148,4 +148,20 @@ class Order extends BaseModel
         };
     }
 
+    public function getStatusBg():string
+    {
+        return match($this->status) {
+            self::INITIATED => 'bg-warning',
+            self::SUBMITTED => 'bg-success',
+            self::HUB_ASSIGNED => 'bg-info',
+            self::ITEMS_COLLECTING => 'bg-info',
+            self::HUB_REASSIGNED => 'bg-info',
+            self::ITEMS_COLLECTED => 'bg-info',
+            self::PACHAGE_PREPARED => 'bg-info',
+            self::DISPATCHED => 'bg-info',
+            self::DELIVERED => 'bg-info',
+            default => 'bg-secondary',
+        };
+    }
+
 }

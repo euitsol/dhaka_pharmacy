@@ -533,7 +533,7 @@
                                     [
                                         'pageSlug' => 'ubp_ordered',
                                         'routeName' => 'obp.obp_list',
-                                        'params' => 'ordered',
+                                        'params' => 'accepted',
                                         'label' => 'Ordered',
                                     ],
                                     [

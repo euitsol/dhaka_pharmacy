@@ -17,6 +17,7 @@ use App\Models\Order;
 use App\Http\Traits\TransformOrderItemTrait;
 use App\Models\Address;
 use App\Models\OrderProduct;
+use App\Models\Prescription;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\PrescriptionService;
@@ -222,6 +223,8 @@ class OrderByPrescriptionController extends Controller
             // Update the order_prescription with order_id
             OrderPrescription::where('prescription_id', $validated['prescription_id'])
                 ->update(['order_id' => $order->id, 'status' => OrderPrescription::STATUS_ACCEPTED]);
+
+            Prescription::find($validated['prescription_id'])->update(['status' => Prescription::STATUS_ACTIVE]);
 
             //Accept the order
             $this->orderService->setOrder($order->order_id);

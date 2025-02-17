@@ -123,7 +123,11 @@
                                         <tr>
                                             <td>{{ __('Prescription status') }}</td>
                                             <td>:</td>
-                                            <td>{{ optional($details->prescription)->prescription ?? '--' }}</td>
+                                            <td>
+                                                <span class="badge {{ optional($details->prescription)->statusBg() }}">
+                                                    {{ optional($details->prescription)->status_string ?? '--' }}
+                                                </span>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>{{ __('Additional Information') }}</td>
@@ -153,8 +157,8 @@
                                             <td>:</td>
                                             <td>
                                                 <span
-                                                    class="{{ optional($details->order)->getStatusBadgeClass() ?? 'secondary' }}">
-                                                    {{ optional($details->order)->getStatus() ?? '--' }}
+                                                    class="badge {{ optional($details->order)->getStatusBg() ?? 'bg-secondary' }}">
+                                                    {{ optional($details->order)->status_string ?? '--' }}
                                                 </span>
                                             </td>
                                         </tr>
