@@ -49,6 +49,13 @@
                                                         <small>{{ __('Pack :') }}
                                                             {{ optional($product->pivot)->unit->name ?? '--' }}</small>
                                                     </div>
+                                                    <div class="col my-auto unit_total" style="display: none;">
+                                                        <small>
+                                                            {{ __('Unit Total Price :') }}
+                                                            {!! get_taka_icon() !!}
+                                                            <span class="unit_total_price"></span>
+                                                        </small>
+                                                    </div>
                                                     {{-- @if ($collecting)
                                                         <div class="col my-auto">
                                                             <small>
@@ -105,18 +112,29 @@
                 @if ($collecting)
                 <div class="col-12">
                     <div class="row mt-3">
-                        <div class="form-group col-md-12">
-                            <label>{{ __('Total Collecting Price') }}</label>
-                            <span class="total_collecting_price"></span>
-                        </div>
-                        {{-- <div class="form-group col-md-12">
+                        <div class="col-md-9">
                             <label>{{ __('Note') }}</label>
-                            <textarea name="note" @if (isset($order->od) && $order->od->status == 0) disabled @endif
-                                class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}"
-                                placeholder="Enter order instraction for pharmacy">{{ isset($order->od->note) ? $order->od->note : old('note') }}</textarea>
+                            <textarea name="note" class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}">
+                                {{ old('note') }}
+                            </textarea>
                             @include('alerts.feedback', [
                                 'field' => 'note',
                             ])
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <table class="table table-striped">
+                                <tr>
+                                    <td class="fw-bolder">{{ __('Total Collecting Price') }}</td>
+                                    <td>:</td>
+                                    <td class="fw-bolder">
+                                        {!! get_taka_icon() !!}
+                                        <span class="total_collecting_price"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {{-- <div class="form-group col-md-12">
+
                         </div> --}}
                         <div class="form-group col-md-12 text-end">
                             <input type="submit" value="Collect"
@@ -129,3 +147,4 @@
         </div>
     </div>
 </form>
+

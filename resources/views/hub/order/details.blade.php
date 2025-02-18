@@ -53,3 +53,27 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+<script>
+$(document).ready(function() {
+    $(document).on('input', '.unit_price', function() {
+        let row = $(this).closest('.card');
+        let quantity = parseFloat(row.find('.quantity').text()) || 0;
+        let price = parseFloat($(this).val()) || 0;
+
+        // Calculate unit total
+        let unitTotal = quantity * price;
+        row.find('.unit_total_price').text(unitTotal.toFixed(2));
+        row.find('.unit_total').show();
+
+        // Calculate grand total
+        let grandTotal = 0;
+        $('.unit_total_price').each(function() {
+            grandTotal += parseFloat($(this).text()) || 0;
+        });
+        $('.total_collecting_price').text(grandTotal.toFixed(2));
+    });
+});
+</script>
+@endpush
