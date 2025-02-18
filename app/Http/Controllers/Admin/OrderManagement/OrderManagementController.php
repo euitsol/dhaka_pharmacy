@@ -51,18 +51,9 @@ class OrderManagementController extends Controller
             case 'submitted':
                 $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
-            // case 'processed':
-            //     $data['dos'] = OrderDistribution::with(['order.products', 'odps', 'creater'])
-            //         ->withCount(['odps' => function ($query) {
-            //             $query->where('status', '!=', -1);
-            //         }])
-            //         ->where('status', 1)
-            //         ->orWhere('status', 0)
-            //         ->latest()->get()
-            //         ->each(function (&$do) {
-            //             $this->calculateOrderTotalDiscountPrice($do->order);
-            //         });
-            //     return view('admin.order_management.distributed_order.index', $data);
+            case 'hub_assigned':
+                $data['orders'] = Order::with(['productsWithHub'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
+                return view('admin.order_management.index', $data);
             // case 'waiting-for-rider':
             //     $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'odps', 'creater'])
             //         ->withCount(['odps' => function ($query) {
@@ -119,7 +110,7 @@ class OrderManagementController extends Controller
     public function details($id): View
     {
         $data['hubs'] = Hub::with(['address'])->activated()->get();
-        $data['order'] = Order::with(['products', 'timelines'])->findOrFail(decrypt($id));
+        $data['order'] = Order::with(['productsWithHub', 'timelines'])->findOrFail(decrypt($id));
         // dd($data['order']->toArray());
         return view('admin.order_management.details', $data);
     }

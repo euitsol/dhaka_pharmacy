@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'order_' . $order->status_string])
+@extends('admin.layouts.master', ['pageSlug' => 'order-'.titleToSlug($order->status_string)])
 @section('title', slugToTitle($order->status_string).' Order Details')
 @push('css')
     <link rel="stylesheet" href="{{ asset('admin/css/ordermanagement.css') }}">
@@ -6,6 +6,12 @@
         .order_details, .order_timeline{
             height: 25rem;
             overflow:auto;
+        }
+        .hub-display {
+            padding: 6px 12px;
+            border-radius: 4px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
         }
     </style>
 @endpush
@@ -27,8 +33,9 @@
                             ])
                         </div>
                         <div class="col-md-12">
+
                             @include('admin.order_management.partials.order_items', [
-                                'products' => $order->products,
+                                'products' => $order->productsWithHub,
                                 'order_status' => $order->status,
                                 'order_id' => $order->id,
                                 'hubs' => $hubs

@@ -104,6 +104,17 @@ class Order extends BaseModel
         ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id');
     }
 
+    public function productsWithHub()
+    {
+        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
+        ->using(OrderProduct::class)
+        ->withPivot('id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status', 'medicine_units.name as pivot_unit_name', 'medicine_units.image as pivot_unit_image', 'medicine_units.status as pivot_unit_status', 'hubs.name as pivot_hub_name', 'hubs.id as pivot_hub_id')
+        ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id')
+        ->leftJoin('order_hub_products', 'order_hub_products.order_product_id', '=', 'order_products.id')
+        ->leftJoin('order_hubs', 'order_hubs.id', '=', 'order_hub_products.order_hub_id')
+        ->leftJoin('hubs', 'hubs.id', '=', 'order_hubs.hub_id');
+    }
+
     public function scopeInitiated($query)
     {
         return $query->where('status', 0);

@@ -591,9 +591,9 @@
                 ]))
                 <li>
                     <a class="@if (
-                        $pageSlug == 'order_initiated' ||
-                            $pageSlug == 'order_Submitted' ||
-                            $pageSlug == 'order_Processed' ||
+                        $pageSlug == 'order-initiated' ||
+                            $pageSlug == 'order-submitted' ||
+                            $pageSlug == 'order-hub-assigned' ||
                             $pageSlug == 'order_Waiting-for-rider' ||
                             $pageSlug == 'order_Delivered' ||
                             $pageSlug == 'order_Assigned' ||
@@ -601,8 +601,8 @@
                         href="#order_management"
                         @if (
                             $pageSlug == 'order_initiated' ||
-                                $pageSlug == 'order_Submitted' ||
-                                $pageSlug == 'order_Processed' ||
+                                $pageSlug == 'order-submitted' ||
+                                $pageSlug == 'order-hub-assigned' ||
                                 $pageSlug == 'order_Waiting-for-rider' ||
                                 $pageSlug == 'order_Delivered' ||
                                 $pageSlug == 'order_Assigned' ||
@@ -613,9 +613,9 @@
                     </a>
 
                     <div class="collapse @if (
-                        $pageSlug == 'order_initiated' ||
-                            $pageSlug == 'order_Submitted' ||
-                            $pageSlug == 'order_Processed' ||
+                        $pageSlug == 'order-initiated' ||
+                            $pageSlug == 'order-submitted' ||
+                            $pageSlug == 'order-hub-assigned' ||
                             $pageSlug == 'order_Waiting-for-rider' ||
                             $pageSlug == 'order_Delivered' ||
                             $pageSlug == 'order_Assigned' ||
@@ -624,25 +624,25 @@
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
                                     [
-                                        'pageSlug' => 'order_initiated',
+                                        'pageSlug' => 'order-initiated',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'initiated',
                                         'label' => 'Initiated Orders',
                                     ],
                                     [
-                                        'pageSlug' => 'order_Submitted',
+                                        'pageSlug' => 'order-submitted',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'submitted',
                                         'label' => 'Submitted Orders',
                                     ],
                                     [
-                                        'pageSlug' => 'order_Processed',
+                                        'pageSlug' => 'order-hub-assigned',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'processed',
-                                        'label' => 'Processed Orders',
+                                        'params' => 'hub_assigned',
+                                        'label' => 'Hub Assigned Orders',
                                     ],
                                     [
                                         'pageSlug' => 'order_Waiting-for-rider',

@@ -14,7 +14,7 @@
         </div>
         <div class="card-body order_items">
             <div class="row">
-                @foreach ($order->products as $key => $product)
+                @foreach ($products as $key => $product)
                     <div class="col-12">
                         <input type="hidden" name="data[{{ $key }}][p_id]" value="{{ $product->id }}">
                         <div class="card card-2 mb-3">
@@ -65,24 +65,40 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    @if ($submitted)
+                                    {{-- Hub Assignment Column --}}
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label>{{ __('Assign Hub') }}</label>
-                                            <select class="form-control no-slect" name="data[{{ $key }}][hub_id]">
-                                                <option value="">Select Hub</option>
-                                                @foreach ($hubs as $hub)
-                                                    <option value="{{ $hub->id }}"
-                                                        {{ old('hub_id') == $hub->id ? 'selected' : '' }}>
-                                                        {{ $hub->name.' | '.$hub->address->address }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                            @if($order->status === \App\Models\Order::SUBMITTED)
+                                                {{-- Editable Hub Selection --}}
+                                                <label>{{ __('Assign Hub') }}</label>
+                                                <select class="form-control no-select" name="data[{{ $key }}][hub_id]">
+                                                    <option value="">Select Hub</option>
+                                                    @foreach ($hubs as $hub)
+                                                        <option value="{{ $hub->id }}"
+                                                            {{ $product->hub?->id === $hub->id ? 'selected' : '' }}>
+                                                            {{ $hub->name.' | '.$hub->address->address }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            @else
+                                                {{-- Read-only Hub Display --}}
+                                                <label>{{ __('Assigned Hub') }}</label>
+                                                <div class="hub-display">
+                                                    @if(isset($product->pivot->hub_id) && !empty($product->pivot->hub_id))
+                                                        <div class="text-success">
+                                                            <i class="fas fa-warehouse"></i>
+                                                            {{ $product->pivot->hub_name }}
+                                                        </div>
+                                                    @else
+                                                        <div class="text-danger">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                            {{ __('Not assigned') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
-                                    @else
-                                    @endif
                                 </div>
                             </div>
                         </div>
