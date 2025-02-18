@@ -238,6 +238,7 @@ function staff()
     return auth()->guard('staff')->user();
 }
 
+
 function mainMenuCheck($array)
 {
     $check = false;
