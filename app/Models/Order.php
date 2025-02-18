@@ -10,9 +10,10 @@ use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use App\Observers\OrderModelObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-// #[ObservedBy([OrderModelObserver::class])]
+#[ObservedBy([OrderModelObserver::class])]
 class Order extends BaseModel
 {
     use HasFactory, SoftDeletes, EagerLoadPivotTrait;
@@ -26,7 +27,6 @@ class Order extends BaseModel
     public CONST PACHAGE_PREPARED = 6;
     public CONST DISPATCHED = 7;
     public CONST DELIVERED = 8;
-
     public const CANCELLED = -1;
     public const RETURNED = -2;
 
@@ -122,6 +122,11 @@ class Order extends BaseModel
         });
     }
 
+    public function scopeStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
+
     public function voucher():BelongsTo
     {
         return $this->belongsTo(Voucher::class);
@@ -164,4 +169,17 @@ class Order extends BaseModel
         };
     }
 
+    public function hubs():BelongsToMany
+    {
+        return $this->belongsToMany(Hub::class, 'order_hubs', 'order_id', 'hub_id')
+            ->using(OrderHub::class)
+            ->withPivot('status');
+    }
+
+    public function assignStatusToHubs(int $status)
+    {
+        foreach ($this->hubs as $hub) {
+            $this->hubs()->updateExistingPivot($hub->id, ['status' => $status]);
+        }
+    }
 }

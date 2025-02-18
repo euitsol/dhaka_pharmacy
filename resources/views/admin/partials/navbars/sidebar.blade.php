@@ -591,7 +591,7 @@
                 ]))
                 <li>
                     <a class="@if (
-                        $pageSlug == 'order_Initiated' ||
+                        $pageSlug == 'order_initiated' ||
                             $pageSlug == 'order_Submitted' ||
                             $pageSlug == 'order_Processed' ||
                             $pageSlug == 'order_Waiting-for-rider' ||
@@ -600,7 +600,7 @@
                             $pageSlug == 'order_Canceled') @else collapsed @endif" data-toggle="collapse"
                         href="#order_management"
                         @if (
-                            $pageSlug == 'order_Initiated' ||
+                            $pageSlug == 'order_initiated' ||
                                 $pageSlug == 'order_Submitted' ||
                                 $pageSlug == 'order_Processed' ||
                                 $pageSlug == 'order_Waiting-for-rider' ||
@@ -613,7 +613,7 @@
                     </a>
 
                     <div class="collapse @if (
-                        $pageSlug == 'order_Initiated' ||
+                        $pageSlug == 'order_initiated' ||
                             $pageSlug == 'order_Submitted' ||
                             $pageSlug == 'order_Processed' ||
                             $pageSlug == 'order_Waiting-for-rider' ||
@@ -624,7 +624,7 @@
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
                                     [
-                                        'pageSlug' => 'order_Initiated',
+                                        'pageSlug' => 'order_initiated',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'initiated',

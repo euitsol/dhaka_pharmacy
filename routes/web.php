@@ -736,6 +736,12 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         Route::controller(OrderManagementController::class)->prefix('order')->name('order.')->group(function () {
             Route::get('/{status}', 'index')->name('order_list');
             Route::get('/details/{id}', 'details')->name('order_details');
+            Route::post('/hub-assign', 'hubAssign')->name('hub_assign');
+
+
+
+
+
             Route::get('/order-distribution/{id}', 'order_distribution')->name('order_distribution');
             Route::post('/order-distribution/{order_id}', 'order_distribution_store')->name('order_distribution');
             Route::get('/distribution/details/{do_id}', 'distribution_details')->name('details.order_distribution');
