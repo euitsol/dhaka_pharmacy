@@ -10,9 +10,10 @@ use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use App\Observers\OrderModelObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-// #[ObservedBy([OrderModelObserver::class])]
+#[ObservedBy([OrderModelObserver::class])]
 class Order extends BaseModel
 {
     use HasFactory, SoftDeletes, EagerLoadPivotTrait;
@@ -26,7 +27,6 @@ class Order extends BaseModel
     public CONST PACHAGE_PREPARED = 6;
     public CONST DISPATCHED = 7;
     public CONST DELIVERED = 8;
-
     public const CANCELLED = -1;
     public const RETURNED = -2;
 
@@ -104,6 +104,17 @@ class Order extends BaseModel
         ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id');
     }
 
+    public function productsWithHub()
+    {
+        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
+        ->using(OrderProduct::class)
+        ->withPivot('id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status', 'medicine_units.name as pivot_unit_name', 'medicine_units.image as pivot_unit_image', 'medicine_units.status as pivot_unit_status', 'hubs.name as pivot_hub_name', 'hubs.id as pivot_hub_id')
+        ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id')
+        ->leftJoin('order_hub_products', 'order_hub_products.order_product_id', '=', 'order_products.id')
+        ->leftJoin('order_hubs', 'order_hubs.id', '=', 'order_hub_products.order_hub_id')
+        ->leftJoin('hubs', 'hubs.id', '=', 'order_hubs.hub_id');
+    }
+
     public function scopeInitiated($query)
     {
         return $query->where('status', 0);
@@ -120,6 +131,11 @@ class Order extends BaseModel
         return $query->whereHas('payments', function ($subQuery) {
             $subQuery->where('status', 1)->orWhere('payment_method', 'cod');
         });
+    }
+
+    public function scopeStatus($query, $status)
+    {
+        return $query->where('status', $status);
     }
 
     public function voucher():BelongsTo
@@ -164,4 +180,17 @@ class Order extends BaseModel
         };
     }
 
+    public function hubs():BelongsToMany
+    {
+        return $this->belongsToMany(Hub::class, 'order_hubs', 'order_id', 'hub_id')
+            ->using(OrderHub::class)
+            ->withPivot('status');
+    }
+
+    public function assignStatusToHubs(int $status)
+    {
+        foreach ($this->hubs as $hub) {
+            $this->hubs()->updateExistingPivot($hub->id, ['status' => $status]);
+        }
+    }
 }

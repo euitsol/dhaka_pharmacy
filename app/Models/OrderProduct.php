@@ -31,4 +31,9 @@ class OrderProduct extends Pivot
     {
         return $this->belongsTo(Medicine::class, 'product_id');
     }
+
+    public function hub()
+    {
+        return $this->belongsTo(OrderHub::class, 'id', 'order_product_id');
+    }
 }

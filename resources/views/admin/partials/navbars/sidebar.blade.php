@@ -108,6 +108,41 @@
                 </li>
             @endif
 
+            {{-- Hub Management --}}
+            @if (mainMenuCheck([
+                'prefixes' => ['hm.'],
+                'routes' => ['hub_list', 'hub_staff_list'],
+            ]))
+            <li>
+                <a class="@if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') @else collapsed @endif" data-toggle="collapse"
+                    href="#hub"
+                    @if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-warehouse"></i>
+                    <span class="nav-link-text">{{ __('Hub Management') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') show @endif" id="hub">
+                    <ul class="nav pl-2">
+                        @include('admin.partials.menu_buttons', [
+                            'menuItems' => [
+                                [
+                                    'pageSlug' => 'hub',
+                                    'routeName' => 'hm.hub.hub_list',
+                                    'label' => 'Hubs',
+                                ],
+                                [
+                                    'pageSlug' => 'hub_staff',
+                                    'routeName' => 'hm.hub_staff.hub_staff_list',
+                                    'label' => 'Hub Staffs',
+                                ],
+                            ],
+                        ])
+                    </ul>
+                </div>
+            </li>
+            @endif
+
             {{-- Pharmacy Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['pm.'],
@@ -360,42 +395,6 @@
                     </div>
                 </li>
             @endif
-
-            {{-- Hub Management --}}
-            @if (mainMenuCheck([
-                    'prefixes' => ['hm.'],
-                    'routes' => ['hub_list', 'hub_staff_list'],
-                ]))
-                <li>
-                    <a class="@if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') @else collapsed @endif" data-toggle="collapse"
-                        href="#hub"
-                        @if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') aria-expanded="true" @else aria-expanded="false" @endif>
-                        <i class="fa-solid fa-earth-americas"></i>
-                        <span class="nav-link-text">{{ __('Hub Management') }}</span>
-                        <b class="caret mt-1"></b>
-                    </a>
-
-                    <div class="collapse @if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') show @endif" id="hub">
-                        <ul class="nav pl-2">
-                            @include('admin.partials.menu_buttons', [
-                                'menuItems' => [
-                                    [
-                                        'pageSlug' => 'hub',
-                                        'routeName' => 'hm.hub.hub_list',
-                                        'label' => 'Hubs',
-                                    ],
-                                    [
-                                        'pageSlug' => 'hub_staff',
-                                        'routeName' => 'hm.hub_staff.hub_staff_list',
-                                        'label' => 'Hub Staffs',
-                                    ],
-                                ],
-                            ])
-                        </ul>
-                    </div>
-                </li>
-            @endif
-
             {{-- Product Management --}}
             @if (mainMenuCheck([
                     'prefixes' => ['product.'],
@@ -591,18 +590,18 @@
                 ]))
                 <li>
                     <a class="@if (
-                        $pageSlug == 'order_Initiated' ||
-                            $pageSlug == 'order_Submitted' ||
-                            $pageSlug == 'order_Processed' ||
+                        $pageSlug == 'order-initiated' ||
+                            $pageSlug == 'order-submitted' ||
+                            $pageSlug == 'order-hub-assigned' ||
                             $pageSlug == 'order_Waiting-for-rider' ||
                             $pageSlug == 'order_Delivered' ||
                             $pageSlug == 'order_Assigned' ||
                             $pageSlug == 'order_Canceled') @else collapsed @endif" data-toggle="collapse"
                         href="#order_management"
                         @if (
-                            $pageSlug == 'order_Initiated' ||
-                                $pageSlug == 'order_Submitted' ||
-                                $pageSlug == 'order_Processed' ||
+                            $pageSlug == 'order_initiated' ||
+                                $pageSlug == 'order-submitted' ||
+                                $pageSlug == 'order-hub-assigned' ||
                                 $pageSlug == 'order_Waiting-for-rider' ||
                                 $pageSlug == 'order_Delivered' ||
                                 $pageSlug == 'order_Assigned' ||
@@ -613,9 +612,9 @@
                     </a>
 
                     <div class="collapse @if (
-                        $pageSlug == 'order_Initiated' ||
-                            $pageSlug == 'order_Submitted' ||
-                            $pageSlug == 'order_Processed' ||
+                        $pageSlug == 'order-initiated' ||
+                            $pageSlug == 'order-submitted' ||
+                            $pageSlug == 'order-hub-assigned' ||
                             $pageSlug == 'order_Waiting-for-rider' ||
                             $pageSlug == 'order_Delivered' ||
                             $pageSlug == 'order_Assigned' ||
@@ -624,25 +623,25 @@
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
                                     [
-                                        'pageSlug' => 'order_Initiated',
+                                        'pageSlug' => 'order-initiated',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'initiated',
                                         'label' => 'Initiated Orders',
                                     ],
                                     [
-                                        'pageSlug' => 'order_Submitted',
+                                        'pageSlug' => 'order-submitted',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'submitted',
                                         'label' => 'Submitted Orders',
                                     ],
                                     [
-                                        'pageSlug' => 'order_Processed',
+                                        'pageSlug' => 'order-hub-assigned',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
-                                        'params' => 'processed',
-                                        'label' => 'Processed Orders',
+                                        'params' => 'hub_assigned',
+                                        'label' => 'Hub Assigned Orders',
                                     ],
                                     [
                                         'pageSlug' => 'order_Waiting-for-rider',
