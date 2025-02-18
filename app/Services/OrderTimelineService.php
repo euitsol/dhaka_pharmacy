@@ -29,7 +29,6 @@ class OrderTimelineService
 
         if ($timelineEntry) {
             $timelineEntry->update([
-                'status' => OrderTimeline::DONE,
                 'actual_completion_time' => now()
             ]);
 

@@ -17,6 +17,12 @@ class OrderHubProduct extends BaseModel
         'status',
     ];
 
+    protected $appends = [
+        'status_string',
+    ];
+    public const ACTIVE = 1;
+    public const INACTIVE = 0;
+
     public function orderHub(): BelongsTo
     {
         return $this->belongsTo(OrderHub::class, 'order_hub_id', 'id');
@@ -25,5 +31,10 @@ class OrderHubProduct extends BaseModel
     public function orderProduct(): BelongsTo
     {
         return $this->belongsTo(OrderProduct::class, 'order_product_id', 'id');
+    }
+
+    public function getStatusStringAttribute()
+    {
+        return $this->status == self::ACTIVE ? 'Active' : 'Inactive';
     }
 }

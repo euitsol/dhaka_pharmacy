@@ -5,12 +5,23 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\OrderHub;
 use App\Models\OrderHubProduct;
+use App\Models\OrderProduct;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Events\OrderStatusChanged;
+use App\Exceptions\InvalidStatusException;
+use App\Exceptions\InvalidStatusTransitionException;
 
 class OrderManagementService
 {
     private Order $order;
+    private OrderTimelineService $orderTimelineService;
+
+    public function __construct(OrderTimelineService $orderTimelineService)
+    {
+        $this->orderTimelineService = $orderTimelineService;
+    }
 
     public function setOrder(Order $order): self
     {
@@ -71,5 +82,114 @@ class OrderManagementService
         }
 
         return array_unique($hubIds);
+    }
+
+    public function assignOrderToHub(array $data): void
+    {
+        $this->validateHubAssignmentData($data);
+
+        DB::transaction(function () use ($data) {
+            $orderHubs = $this->processHubAssignments($data);
+            $hubProducts = $this->mapProductsToHubs($data, $orderHubs);
+            $this->saveHubProductMappings($hubProducts);
+            $this->markHubAssigned();
+        });
+    }
+
+    private function validateHubAssignmentData(array $data): void
+    {
+        $this->validateOrder();
+
+        if (empty($data['data']) || !is_array($data['data'])) {
+            throw new \InvalidArgumentException('Invalid product-hub mapping data');
+        }
+    }
+
+    private function validateOrder(): void
+    {
+        if (!$this->order->exists) {
+            throw new \RuntimeException('Order must be set before assignment');
+        }
+    }
+
+    private function processHubAssignments(array $data): Collection
+    {
+        return collect($this->getUniqueHubIds($data))
+            ->map(fn($hubId) => OrderHub::updateOrCreate(
+                ['order_id' => $this->order->id, 'hub_id' => $hubId],
+                ['note' => $data['note'] ?? null, 'status' => OrderHub::ASSIGNED]
+            ));
+    }
+
+    private function mapProductsToHubs(array $data, Collection $orderHubs): array
+    {
+        return collect($data['data'])
+            ->map(function ($item) use ($orderHubs) {
+                $orderProduct = OrderProduct::where('order_id', $this->order->id)
+                    ->where('product_id', $item['p_id'])
+                    ->firstOrFail();
+
+                return [
+                    'order_hub_id' => $orderHubs->firstWhere('hub_id', $item['hub_id'])->id,
+                    'order_product_id' => $orderProduct->id,
+                    'status' => OrderHubProduct::ACTIVE
+                ];
+            })
+            ->all();
+    }
+
+    private function saveHubProductMappings(array $hubProducts): void
+    {
+        OrderHubProduct::upsert(
+            $hubProducts,
+            ['order_hub_id', 'order_product_id'],
+            ['status', 'updated_at']
+        );
+    }
+
+    public function updateOrderStatus(int $newStatus): void
+    {
+        $this->validateOrder();
+        DB::transaction(function () use ($newStatus) {
+            $previousStatus = $this->order->status;
+
+            $this->order->update(['status' => $newStatus]);
+
+            $this->orderTimelineService->updateTimelineStatus(
+                $this->order,
+                $newStatus
+            );
+        });
+    }
+
+
+    public function markHubAssigned(): void
+    {
+        $this->updateOrderStatus(Order::HUB_ASSIGNED);
+    }
+
+    public function markItemsCollecting(): void
+    {
+        $this->updateOrderStatus(Order::ITEMS_COLLECTING);
+    }
+
+    public function markItemsCollected(): void
+    {
+        $this->updateOrderStatus(Order::ITEMS_COLLECTED);
+    }
+
+    public function markPackagePrepared(): void
+    {
+        $this->updateOrderStatus(Order::PACHAGE_PREPARED);
+    }
+
+    public function markDispatched(): void
+    {
+        $this->updateOrderStatus(Order::DISPATCHED);
+    }
+
+    public function markDelivered(): void
+    {
+        $this->updateOrderStatus(Order::DELIVERED);
     }
 }

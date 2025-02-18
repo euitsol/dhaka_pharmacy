@@ -130,8 +130,9 @@ class OrderManagementController extends Controller
             $order = Order::findOrFail($request->order_id);
             $this->orderManagementService->setOrder($order);
             $this->orderManagementService->assignOrderToHub($request->validated());
+            flash()->addSuccess('Order assigned to hub successfully');
+            return redirect()->back();
         }catch (Exception $e) {
-            dd($e->getMessage());
             flash()->addError($e->getMessage());
             return redirect()->back();
         }
