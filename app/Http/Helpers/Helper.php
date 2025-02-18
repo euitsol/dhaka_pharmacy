@@ -233,6 +233,10 @@ function rider()
 {
     return auth()->guard('rider')->user();
 }
+function staff()
+{
+    return auth()->guard('staff')->user();
+}
 
 function mainMenuCheck($array)
 {
