@@ -63,6 +63,10 @@ class Kernel extends HttpKernel
             'web',
             'auth:rider', // Use the 'rider' guard for rider routes
         ],
+        'staff' => [
+            'web',
+            'auth:staff', // Use the 'rider' guard for rider routes
+        ],
     ];
 
     /**
@@ -92,5 +96,6 @@ class Kernel extends HttpKernel
         'rider' => \App\Http\Middleware\RiderMiddleware::class,
         'user_phone_verify' => \App\Http\Middleware\UserPhoneVerify::class,
         'check_kyc' => \App\Http\Middleware\CheckKycMiddleware::class,
+        'staff' => \App\Http\Middleware\StaffMiddleware::class,
     ];
 }

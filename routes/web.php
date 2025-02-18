@@ -102,6 +102,8 @@ use App\Http\Controllers\DM\FeedbackController as DmFeedbackController;
 use App\Http\Controllers\LAM\FeedbackController as LamFeedbackController;
 use App\Http\Controllers\Rider\FeedbackController as RiderFeedbackController;
 use App\Http\Controllers\Admin\Feedback\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\Admin\HubManagement\HubController;
+use App\Http\Controllers\Admin\HubManagement\HubStaffController;
 use App\Http\Controllers\Admin\MapboxSettingsController;
 use App\Http\Controllers\Admin\PaymentClearanceController;
 use App\Http\Controllers\Admin\ProductManagement\MedicineDosesController;
@@ -125,6 +127,8 @@ use App\Http\Controllers\Pharmacy\WithdrawMethodController as PharmacyWithdrawMe
 use App\Http\Controllers\Rider\EarningController as RiderEarningController;
 use App\Http\Controllers\Rider\OperationalAreaController as RiderOperationalAreaController;
 use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodController;
+use App\Http\Controllers\Hub\Auth\LoginController as StaffLoginController;
+use App\Http\Controllers\Hub\DashboardController as HubDashboardController;
 use App\Http\Controllers\User\KYC\KycVerificationController as UserKycVerificationController;
 use App\Http\Controllers\User\NotificationController as UserNotificationController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
@@ -177,6 +181,22 @@ Route::controller(AdminLoginController::class)->prefix('admin')->name('admin.')-
     Route::get('/password/reset/{admin_id}', 'resetPassword')->name('reset.password');
     Route::post('/password/reset/{admin_id}', 'resetPasswordStore')->name('reset.password');
 });
+
+// Staff Login Routes
+Route::controller(StaffLoginController::class)->prefix('staff')->name('staff.')->group(function () {
+    Route::get('/login', 'staffLogin')->name('login');
+    Route::post('/login', 'staffLoginCheck')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+
+    Route::get('/forgot', 'forgot')->name('forgot');
+    Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
+    Route::get('/forgot/verify-otp/{staff_id}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{staff_id}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{staff_id}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{staff_id}', 'resetPasswordStore')->name('reset.password');
+});
+
+
 
 
 // Pharmacy Login Routes
@@ -403,6 +423,34 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
                 Route::get('/details/{id}', 'details')->name('p_kyc_details');
                 // Route::get('/status/{id}', 'status')->name('p_kyc_status');
             });
+        });
+    });
+
+    // Admin Hub Management Routes
+    Route::group(['as' => 'hm.', 'prefix' => 'hub-management'], function () {
+
+        Route::controller(HubController::class)->prefix('hub')->name('hub.')->group(function () {
+            Route::get('index', 'index')->name('hub_list');
+            Route::get('details/{id}', 'details')->name('details.hub_list');
+            Route::get('create', 'create')->name('hub_create');
+            Route::post('create', 'store')->name('hub_create');
+            Route::get('edit/{id}', 'edit')->name('hub_edit');
+            Route::put('edit/{id}', 'update')->name('hub_edit');
+            Route::get('status/{id}', 'status')->name('status.hub_edit');
+            Route::get('delete/{id}', 'delete')->name('hub_delete');
+        });
+
+        Route::controller(HubStaffController::class)->prefix('hub-staff')->name('hub_staff.')->group(function () {
+            Route::get('index', 'index')->name('hub_staff_list');
+            Route::get('details/{id}', 'details')->name('details.hub_staff_list');
+            Route::get('dashboard/{id}', 'loginAs')->name('login_as.hub_staff_profile');
+            Route::get('profile/{id}', 'profile')->name('hub_staff_profile');
+            Route::get('create', 'create')->name('hub_staff_create');
+            Route::post('create', 'store')->name('hub_staff_create');
+            Route::get('edit/{id}', 'edit')->name('hub_staff_edit');
+            Route::put('edit/{id}', 'update')->name('hub_staff_edit');
+            Route::get('status/{id}', 'status')->name('status.hub_staff_edit');
+            Route::get('delete/{id}', 'delete')->name('hub_staff_delete');
         });
     });
     //Admin Operational Area Management Routes
@@ -1197,6 +1245,24 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     //     Route::post('message/send', 'message_send')->name('message.send');
     // });
 });
+
+
+Route::group(['middleware' => ['auth:staff', 'permission'], 'prefix' => 'hub'], function () {
+    Route::get('/dashboard', [HubDashboardController::class, 'dashboard'])->name('hub.dashboard');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Guest Live Chat
 // Live Chat

@@ -63,6 +63,10 @@ return [
         'api-user' => [
             'driver' => 'passport',
             'provider' => 'users',
+        ],
+        'staff' => [
+            'driver' => 'session',
+            'provider' => 'hub_staff',
         ]
     ],
 
@@ -109,6 +113,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Rider::class,
         ],
+        'hub_staff' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\HubStaff::class,
+        ]
     ],
 
     /*
