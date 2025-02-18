@@ -18,24 +18,29 @@ class OrderHubManagementService
 
     public function resolveStatus(string $status): string
     {
-        return match (strtolower($status)) {
-            'initiated' => 'Assigned',
-            'submitted' => 'Collecting',
-            'hub_assigned' => 'Assigned',
-            'processing' => 'Preparing',
-            'delivered' => 'Delivered',
-            'returned' => 'Returned',
+        $status = strtolower($status);
+        return match ($status) {
+            'assigned' => OrderHub::ASSIGNED,
+            'collecting' => OrderHub::COLLECTING,
+            'collected' => OrderHub::COLLECTED,
+            'preparing' => OrderHub::PREPARING,
+            'prepared' => OrderHub::PREPARED,
+            'shipped' => OrderHub::SHIPPED,
+            'delivered' => OrderHub::DELIVERED,
+            'returned' => OrderHub::RETURNED,
             default => throw new \InvalidArgumentException("Invalid status: $status"),
         };
     }
-    
+
     public function resolveStatusBg(string $status): string
     {
         return match (strtolower($status)) {
-            'initiated' => 'bg-warning',
-            'submitted' => 'bg-info',
-            'hub_assigned' => 'bg-warning',
-            'processing' => 'bg-success',
+            'assigned' => 'bg-warning',
+            'collecting' => 'bg-info',
+            'collected' => 'bg-info',
+            'preparing' => 'bg-success',
+            'prepared' => 'bg-success',
+            'shipped' => 'bg-success',
             'delivered' => 'bg-success',
             'returned' => 'bg-danger',
             default => throw new \InvalidArgumentException("Invalid status: $status"),

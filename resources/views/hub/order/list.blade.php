@@ -57,8 +57,8 @@
                                     @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'om.order.order_details',
-                                                    'params' => [encrypt(optional($oh->order)->id)],
+                                                    'routeName' => 'hub.order.details',
+                                                    'params' => [encrypt($oh->id)],
                                                     'label' => 'Details',
                                                 ],
                                             ],

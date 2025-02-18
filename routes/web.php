@@ -1258,6 +1258,7 @@ Route::group(['middleware' => ['auth:staff', 'permission'], 'prefix' => 'hub'], 
 
     Route::controller(HubOrderManagementController::class)->prefix('orders')->name('hub.order.')->group(function () {
         Route::get('status/{status}', 'list')->name('list');
+        Route::get('details/{id}', 'details')->name('details');
     });
 });
 
