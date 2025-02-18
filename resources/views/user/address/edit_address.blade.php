@@ -27,14 +27,10 @@
                                         placeholder="Enter your full address">
                                 </div>
                                 <div class="form-group col-md-6 p-2">
-                                    <label for="city">{{ __('City') }} <small
+                                    <label for="city" class="mb-1">{{ __('City') }} <small
                                             class="text-danger">*</small></label>
                                     <select name="city" id="city_select_edit" class="form-control city_select">
-                                        <option value="">{{ __('Select City') }}</option>
-                                        <option value="Dhaka City">Dhaka City</option>
-                                        <option value="Gaibanda">Gaibanda</option>
-                                        <option value="Narayanganj">Narayanganj</option>
-                                        <option value="Rajshahi">Rajshahi</option>
+
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6 p-2">
