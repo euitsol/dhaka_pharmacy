@@ -148,7 +148,7 @@ class ProductController extends BaseController
         $query = Medicine::search($search_value);
 
         $data['products'] = $query->get()
-            ->load(['pro_cat', 'generic', 'company', 'strength', 'discounts'])
+            ->load(['pro_cat:id,name,slug,status', 'generic:id,name,slug,status', 'company:id,name,slug,status', 'strength:id,name,status'])
             ->take(10)
             ->each(function ($product) {
                 return $this->transformProduct($product, 30);

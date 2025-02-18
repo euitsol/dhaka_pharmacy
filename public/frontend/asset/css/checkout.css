@@ -22,27 +22,23 @@
     object-fit: contain;
 }
 
-
-
-
-
-
-
-
 .checkout-section .container{
     max-width: 1280px;
 }
+
 .checkout-section .order-info-row .add-new-box{
     border-color: rgba(0, 0, 0, 0.15);
   border-radius: 5px;
 }
-.checkout-section .order-info-row .add-new-box a{ 
+
+.checkout-section .order-info-row .add-new-box a{
     font-family: var(--secondry-font);
     font-size: 22px;
     line-height: 33px;
     font-weight: 400;
     color: var(--asent-color);
 }
+
 .checkout-section .order-info-row .left,
 .checkout-section .order-info-row .right{
     border: 1px solid;
@@ -50,23 +46,28 @@
     border-radius: 5px;
     padding: 20px 30px;
 }
+
 .checkout-section .order-info-row .right{
     padding: 20px 15px;
 }
+
 .checkout-section .order-info-row .right select{
     border: 1px solid;
     border-radius: 5px;
     border-color: rgba(0, 0, 0, 0.15);
 }
+
 .checkout-section .order-info-row .right select:focus-visible{
     border: 2px solid;
     outline:none;
     border-radius: 5px;
     border-color: var(--text-black);
 }
+
 .checkout-section .order-info-row .right .payment{
     column-gap: 6px;
 }
+
 .checkout-section .order-info-row .place-order{
     font-size: 16px;
     text-transform: uppercase;
@@ -79,23 +80,28 @@
     border-radius: 5px;
     margin-top: 10px;
 }
+
 .checkout-section .order-info-row .place-order img {
 	margin-top: -5px;
 	margin-left: 10px;
 }
+
 .checkout-section .order-info-row .left .row{
     border-bottom: 1px solid;
     border-color: rgba(0, 0, 0, 0.25);
 }
+
 .checkout-section .order-info-row .left .row:last-child{
     border: none;
 }
+
 /* .checkout-section .order-info-row .left .img{
     width: 86px;
 } */
 .checkout-section .order-info-row .left .img img{
     width: 100%;
 }
+
 .checkout-section .order-info-row .left h5{
     font-family: var(--secondry-font);
     font-size: 17px;
@@ -103,6 +109,7 @@
     font-weight: 500;
     color: var(--text-black);
 }
+
 .checkout-section .order-info-row .left p{
     font-family: var(--secondry-font);
     font-size: 12px;
@@ -110,16 +117,20 @@
     font-weight: 400;
     color: rgba(0, 0, 0, 0.5);
 }
+
 .checkout-section .order-info-row .left .offer{
     color: #F54848;
 }
+
 .checkout-section .order-info-row .left .qt span{
     font-weight: 500;
     color: var(--text-black);
 }
+
 .checkout-section .order-info-row .right{
     background: rgba(247, 247, 247, 1);
 }
+
 .checkout-section .order-info-row .right h5{
     font-family: var(--secondry-font);
     font-size: 16px;
@@ -127,6 +138,7 @@
     font-weight: 500;
     color: rgba(0, 0, 0, 0.5);
 }
+
 .checkout-section .order-info-row .right p{
     font-family: var(--secondry-font);
     font-size: 18px;
@@ -135,13 +147,16 @@
     color: var(--text-black);
     min-width: 80px;
 }
+
 .checkout-section .order-info-row .right div:last-child p{
     font-weight: 700;
 }
+
 .checkout-section .order-info-row .right div.total-border{
     border-bottom: 2px solid;
     border-color: rgba(0, 0, 0, 0.54);
 }
+
 .checkout-section .order-info-row .title{
     font-family: var(--secondry-font);
     font-size: 24px;
@@ -149,9 +164,11 @@
     font-weight: 500;
     color: var(--text-black);
 }
+
 .checkout-section .order-info-row .right .title{
     font-size: 20px;
 }
+
 .checkout-section .order-traking-row .icon{
     width: 21px;
     height: 21px;
@@ -163,9 +180,11 @@
     background-color: rgba(217, 217, 217, 1);
     position: relative;
 }
+
 .checkout-section .order-traking-row .confirm{
     background-color: rgba(40, 163, 73, 1);
 }
+
 .checkout-section .order-traking-row .step-1 .icon::before{
     position: absolute;
     content: "";
@@ -174,6 +193,7 @@
     background-color: rgba(40, 163, 73, 1);
     left: -55px;
 }
+
 .checkout-section .order-traking-row .step .icon::after{
     position: absolute;
     content: "";
@@ -182,10 +202,12 @@
     background-color: rgba(40, 163, 73, 1);
     right: -240px;
 }
+
 .checkout-section .order-traking-row .step-5 .icon::after{
     width: 48px;
     right: -55px;
 }
+
 .checkout-section .order-traking-row .step h5{
     font-family: var(--secondry-font);
     font-size: 14px;
@@ -193,6 +215,7 @@
     font-weight: 400;
     color: var(--text-black);
 }
+
 .checkout-section .order-traking-row .step h5{
     font-family: var(--secondry-font);
     font-size: 14px;
@@ -201,9 +224,11 @@
     color: var(--text-black);
     margin-bottom: 0;
 }
+
 .checkout-section .order-traking-row .step p{
     color: rgba(0, 0, 0, 0.58);
 }
+
 .checkout-section .order-traking-row .progress-box{
     background: rgba(247, 247, 247, 1);
     border: 1px solid;
@@ -212,6 +237,7 @@
     padding: 20px 15px;
     padding-top: 35px;
 }
+
 .checkout-section .title{
     font-family: var(--secondry-font);
     font-size: 20px;
@@ -223,4 +249,164 @@
 .modal-header .close {
 	padding: 0px 15px !important;
 	font-size: 24px;
+}
+
+/* Delivery Type */
+.delivery-option {
+    position: relative;
+}
+
+.delivery-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.delivery-label {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    margin: 0;
+}
+
+.card {
+    border: 2px solid var(--border-2);
+    transition: all 0.2s ease;
+}
+
+.delivery-section p{
+    font-weight: 700 !important;
+    font-size: .75rem !important;
+    line-height: .8rem !important;
+}
+
+.delivery-section .card-body {
+    padding: 0.5rem;
+}
+
+.delivery-section .delivery-radio:checked + .delivery-label .card {
+    border-color: var(--border-1);
+    background-color: var(--bs-body-bg);
+}
+
+.delivery-section .delivery-label:hover .card {
+    border-color: var(--border-1);
+    transform: translateY(-2px);
+}
+
+.delivery-section .radio-circle {
+    height: 1.25rem;
+    width: 1.25rem;
+    border: 2px solid var(--border-2);
+    border-radius: 50%;
+    position: relative;
+    margin-top: 2px;
+    flex: none;
+}
+
+.delivery-section .delivery-radio:checked + .delivery-label .radio-circle {
+    border-color: var(--border-1);
+}
+
+.delivery-section .delivery-radio:checked + .delivery-label .radio-circle:after {
+    content: '';
+    width: .65rem;
+    height: .65rem;
+    background: var(--border-1);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.delivery-section .delivery-time {
+    font-size: 0.6rem;
+    color: var(--text-black);
+    display: block;
+    margin-top: 0.4rem;
+    line-height: .7rem;
+}
+
+/* Optional: Add box shadow on hover */
+.delivery-section .delivery-label:hover .card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Optional: Add focus styles for accessibility */
+.delivery-section .delivery-radio:focus + .delivery-label .card {
+    box-shadow: 0 0 0 0.25rem var(--border-1);
+}
+
+
+
+/* Button CSS  */
+.add-new-box {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #e5e7eb !important;
+    background: linear-gradient(to bottom, #ffffff, #f8fafc);
+}
+
+.add-new-box:hover {
+    transform: translateY(-2px);
+    border-color: #2563eb !important;
+    background: linear-gradient(to bottom, #ffffff, #f0f9ff);
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 4px 15px -3px rgba(37, 99, 235, 0.1), 0 2px 8px -2px rgba(37, 99, 235, 0.05);
+}
+
+.address_btn {
+    color: #2563eb;
+    position: relative;
+    overflow: hidden;
+}
+
+.address_btn:hover {
+    color: #1d4ed8;
+}
+
+.address_btn:hover svg {
+    transform: scale(1.1);
+}
+
+.address_btn svg {
+    transition: transform 0.2s ease;
+}
+
+.gap-2 {
+    gap: 0.75rem;
+}
+
+/* Add subtle animation for icon stroke */
+@keyframes strokeAnimation {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.address_btn svg path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: strokeAnimation 1.5s ease-out forwards;
+}
+
+/* Add a subtle gradient overlay on hover */
+.add-new-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(37, 99, 235, 0.03), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.add-new-box:hover::after {
+    opacity: 1;
 }

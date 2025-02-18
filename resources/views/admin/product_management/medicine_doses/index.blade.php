@@ -112,7 +112,7 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('.view').on('click', function() {
+            $(document).on('click', '.view', function() {
                 let id = $(this).data('id');
                 let url = (
                     "{{ route('product.medicine_dose.details.medicine_dose_list', ['id']) }}");

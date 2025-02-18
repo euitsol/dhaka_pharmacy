@@ -20,7 +20,7 @@
 }
 .faq-section .nav-pills .nav-item button.active{
     font-weight: 500;
-    color: var(--text);
+    color: var(--border-1);
 }
 .faq-section .accordion-item{
     margin-bottom: 10px;

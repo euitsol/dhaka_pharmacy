@@ -16,25 +16,29 @@ class MedicineRequest extends FormRequest
         return [
             'price'=>'required|numeric',
             'pro_cat_id'=>'required|exists:product_categories,id',
-            'pro_sub_cat_id'=>'required|exists:product_sub_categories,id',
+            'pro_sub_cat_id'=>'nullable|exists:product_sub_categories,id',
             'generic_id'=>'required|exists:generic_names,id',
             'company_id'=>'required|exists:company_names,id',
-            'medicine_cat_id'=>'nullable|exists:medicine_categories,id',
             'strength_id'=>'nullable',
-            'unit'=>'required',
-            'description'=>'required|min:50',
+
+            'unit'=>'nullable|min:1',
+            'unit.*'=>'nullable|exists:medicine_units,id',
+
+            'units.*.id'=>'nullable|exists:medicine_units,id',
+            'units.*.price'=>'nullable|numeric',
+
+            'description'=>'nullable',
             'prescription_required'=>'boolean|nullable',
             'kyc_required'=>'boolean|nullable',
             'max_quantity'=>'nullable|numeric',
 
             'discount_amount'=>'nullable|numeric',
             'discount_percentage'=>'nullable|numeric',
-            'unit_id'=>'nullable|exists:medicine_units,id',
         ]
         +
             ($this->isMethod('POST') ? $this->store() : $this->update());
         }
-    
+
         protected function store(): array
         {
             return [
@@ -43,7 +47,7 @@ class MedicineRequest extends FormRequest
 
             ];
         }
-    
+
         protected function update(): array
         {
             return [

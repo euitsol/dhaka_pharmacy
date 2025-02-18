@@ -161,25 +161,15 @@
                 <div class="col">
                     <div class="right-col">
                         <a href="javascript:void(0)" class="cart-btn text-center d-block" type="button"
-                            data-bs-toggle="offcanvas" data-bs-target="#cartbtn" aria-controls="offcanvasRight">
+                            data-bs-toggle="offcanvas" data-bs-target="#cartbtn" aria-controls="offcanvasRight" >
                             <span><i class="fa-solid fa-cart-plus"></i></span><sup><strong
                                     id="cart_btn_quantity"></strong></sup>
                         </a>
-                        @include('frontend.includes.add_to_cart_slide')
                     </div>
-                    {{-- <div class="item">
-                        <button class="cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"
-                            aria-controls="offcanvasRight">
-                            <i class="fa-solid fa-cart-shopping me-1"></i>
-                            <span>{{ __('Cart') }}</span><sup><strong id="cart_btn_quantity"></strong></sup>
-                        </button>
-                        @include('frontend.includes.add_to_cart_slide')
-                    </div> --}}
                 </div>
-                @include('frontend.includes.upload_prescription')
                 <div class="col text-center">
                     <div class="upload_prescription w-100">
-                        <a class="cat-title up_button text-center"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="javascript:void(0)" class="cat-title  text-center" data-bs-toggle="modal" data-bs-target="#prescriptionModal"><i class="fas fa-upload"></i></a>
                     </div>
                 </div>
             </div>

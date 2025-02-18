@@ -39,9 +39,19 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
+            'permissions' => [
+                'file' => [
+                    'public' => 0644, // Default file permissions for public files
+                    'private' => 0600, // Default file permissions for private files
+                ],
+                'dir' => [
+                    'public' => 0755, // Default directory permissions for public directories
+                    'private' => 0700, // Default directory permissions for private directories
+                ],
+            ],
         ],
 
         's3' => [

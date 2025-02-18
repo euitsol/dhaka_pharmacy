@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin\OrderByPrescription;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\OrderByPrescriptionRequest;
+use App\Http\Requests\API\AddressRequest as APIAddressRequest;
 use App\Http\Requests\PrescriptionOrderCreateRequest;
+use App\Http\Requests\User\AddressRequest;
 use App\Models\Medicine;
 use App\Models\OrderPrescription;
 use Illuminate\Http\JsonResponse;
@@ -12,29 +15,59 @@ use App\Http\Traits\TransformProductTrait;
 use App\Models\AddToCart;
 use App\Models\Order;
 use App\Http\Traits\TransformOrderItemTrait;
+use App\Models\Address;
 use App\Models\OrderProduct;
+use App\Models\Prescription;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\PrescriptionService;
+use Exception;
+use Illuminate\Http\RedirectResponse;
+use App\Services\AddressService;
+use App\Services\OrderService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderByPrescriptionController extends Controller
 {
     use TransformProductTrait, TransformOrderItemTrait;
-    public function __construct()
+
+    protected PrescriptionService $prescriptionService;
+    protected AddressService $addressService;
+    protected OrderService $orderService;
+
+    public function __construct(PrescriptionService $prescriptionService, AddressService $addressService, OrderService $orderService)
     {
-        return $this->middleware('admin');
+        $this->middleware('admin');
+        $this->prescriptionService = $prescriptionService;
+        $this->addressService = $addressService;
+        $this->orderService = $orderService;
     }
-    public function list($status): View
+    public function list($status): View|RedirectResponse
     {
-        $data['status'] = $status;
-        $status = $this->status($status);
-        $data['statusBg'] = $this->statusBg($status);
-        $data['ups'] = OrderPrescription::with(['customer', 'address'])->where('status', $status)->latest()->get();
-        return view('admin.order_by_prescription.list', $data);
+        try {
+            $data['order_prescriptions'] = $this->prescriptionService->getOrderPrescriptions($this->prescriptionService->resolveStatus($status));
+            $data['status'] = $status;
+            return view('admin.order_by_prescription.list', $data);
+        } catch (Exception $e) {
+            flash()->addError($e->getMessage());
+            return redirect()->back();
+        }
     }
-    public function details($id): View
+    public function details($id): View|RedirectResponse
     {
         $id = decrypt($id);
-        $data['up'] = OrderPrescription::with(['customer', 'address'])->findOrFail($id);
-        $data['medicines'] = Medicine::activated()->orderBy('name', 'asc')->take(10)->get();
+        try{
+            $prescription = $this->prescriptionService->setOrderPrescription($id);
+            $data['details'] = $prescription->getOrderPrescriptionsDetails();
+            $data['cities'] = $this->addressService->getCities();
+            $this->addressService->setUser($data['details']->creater);
+            $data['addresses'] = $this->addressService->list(true);
+        }
+        catch(Exception $e){
+            flash()->addError($e->getMessage());
+            return redirect()->back();
+        }
         return view('admin.order_by_prescription.details', $data);
     }
     public function getUnit($id): JsonResponse
@@ -117,28 +150,123 @@ class OrderByPrescriptionController extends Controller
         ]);
     }
 
-
-
-    private function statusBg($status)
+    public function productSearch(Request $request)
     {
-        switch ($status) {
-            case 0:
-                return 'badge badge-info';
-            case 1:
-                return 'badge bg-success';
-            case 2:
-                return 'badge badge-danger';
+        $param = $request->input('q');
+
+        $query = Medicine::search($param);
+
+        $data['products'] = $query->get()
+            ->load(['units', 'pro_cat', 'generic', 'company', 'strength', 'discounts', 'dosage']);
+        return response()->json([
+            'items' => $data['products']
+        ]);
+    }
+
+    public function addressList(Request $request)
+    {
+        $user_id = decrypt($request->data['user_id']);
+        if($user_id){
+            $data['user'] = User::findOrFail($user_id);
+            $this->addressService->setUser($data['user']);
+            $addresses = $this->addressService->list(true, null, $request->q);
+
+            // Capture the mapped collection in a new variable (or reassign to $addresses)
+            $mappedAddresses = $addresses->map(function($address) {
+                return [
+                    'id'         => $address['id'],
+                    'name'       => $address['address'] . ' City: ' . $address['city'] . ' | ' . ($address['is_default'] ? 'Default' : 'Not Default') .' | Zone: '. $address['zone']['name'],
+                    'address'    => $address['address'],
+                    'is_default' => $address['is_default'],
+                    'options'    => $address['delivery_options']
+                ];
+            });
+
+            $data['addresses'] = $mappedAddresses;
+            return response()->json($data);
+        }else{
+            return response()->json(null);
         }
     }
-    private function status($status)
+
+    public function storeAddressDetails(AddressRequest $request)
     {
-        switch ($status) {
-            case 'pending':
-                return 0;
-            case 'ordered':
-                return 1;
-            case 'cancel':
-                return 2;
+        $user_id = decrypt($request->user_id);
+        $user = User::findOrFail($user_id);
+        try{
+            $this->addressService->setUser($user)->create($request->validated());
+            return response()->json(['status' => true]);
+        }catch(Exception $e){
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function store(OrderByPrescriptionRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $validated = $request->validated();
+            // Get the user
+            $user = User::findOrFail($validated['user_id']);
+
+            // Process the order
+            $order = $this->orderService
+                ->setUser($user)
+                ->processOrder([
+                    'products' => $validated['products'],
+                    'address_id' => $validated['address_id'],
+                    'delivery_type' => $validated['delivery_type']
+                ], true, 'prescription');
+
+            // Update the order_prescription with order_id
+            OrderPrescription::where('prescription_id', $validated['prescription_id'])
+                ->update(['order_id' => $order->id, 'status' => OrderPrescription::STATUS_ACCEPTED]);
+
+            // Prescription::find($validated['prescription_id'])->update(['status' => Prescription::STATUS_ACTIVE]);
+
+            //Accept the order
+            $this->orderService->setOrder($order->order_id);
+
+            $payment = $this->orderService->confirmOrder([
+                'payment_method' => $validated['payment_method']
+            ]);
+
+            DB::commit();
+
+            flash()->addSuccess('Order created successfully.');
+            return redirect()->back();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }
+    }
+    public function cancel($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $details = OrderPrescription::with(['creater', 'prescription'])->findOrFail(decrypt($id));
+
+            if($details->order_id){
+                $this->orderService->setOrder($details->order_id);
+                $this->orderService->setUser($details->creater);
+                $this->orderService->cancelOrder();
+            }
+
+            $details->update(['status' => OrderPrescription::STATUS_REJECTED]);
+            // $details->prescription->update(['status' => Prescription::STATUS_INACTIVE]);
+
+            DB::commit();
+            flash()->addSuccess('Order cancelled successfully.');
+            return redirect()->back();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
         }
     }
 }

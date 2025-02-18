@@ -149,7 +149,7 @@
                             <div class="single-pdct">
                                 <a href="{{ route('product.single_product', $product->slug) }}">
                                     <div class="pdct-img">
-                                        @if ($product->discounted_price != $product->price)
+                                        @if ($product->discount_percentage > 0)
                                         <span class="discount_tag">{{
                                             formatPercentageNumber($product->discount_percentage) . '% 0ff' }}</span>
                                         @endif

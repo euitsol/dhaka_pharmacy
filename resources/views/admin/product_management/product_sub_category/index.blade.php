@@ -128,7 +128,7 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('.view').on('click', function() {
+            $(document).on('click', '.view', function() {
                 let id = $(this).data('id');
                 let url = (
                     "{{ route('product.product_sub_category.details.product_sub_category_list', ['id']) }}"
@@ -168,7 +168,7 @@
                                         <th>:</th>
                                         <td><span class="badge ${menuClass}">${menu}</span></td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>

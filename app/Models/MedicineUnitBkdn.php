@@ -13,6 +13,7 @@ class MedicineUnitBkdn extends BaseModel
     protected $fillable = [
         'unit_id',
         'medicine_id',
+        'price'
     ];
 
 }

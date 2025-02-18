@@ -7,6 +7,7 @@ function numberFormat(value, decimals) {
 
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
 function getHtml(orders) {
     var result = "";
     orders.forEach(function (order) {
@@ -189,9 +190,11 @@ $(document).ready(function () {
                 if (data.filterValue) {
                     updateUrlParameter("filter", data.filterValue);
                 }
+
                 if (data.status) {
                     updateUrlParameter("status", data.status);
                 }
+
                 updateUrlParameter("page", 1);
             },
             error: function (xhr, status, error) {

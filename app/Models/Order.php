@@ -10,11 +10,26 @@ use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use App\Observers\OrderModelObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 // #[ObservedBy([OrderModelObserver::class])]
 class Order extends BaseModel
 {
     use HasFactory, SoftDeletes, EagerLoadPivotTrait;
+
+    public CONST INITIATED = 0;
+    public CONST SUBMITTED = 1;
+    public CONST HUB_ASSIGNED = 2;
+    public CONST ITEMS_COLLECTING = 3;
+    public CONST HUB_REASSIGNED = 4;
+    public CONST ITEMS_COLLECTED = 5;
+    public CONST PACHAGE_PREPARED = 6;
+    public CONST DISPATCHED = 7;
+    public CONST DELIVERED = 8;
+
+    public const CANCELLED = -1;
+    public const RETURNED = -2;
+
     protected $fillable = [
         'order_id',
         'customer_id',
@@ -24,9 +39,15 @@ class Order extends BaseModel
         'sub_total',
         'voucher_discount',
         'delivery_fee',
+        'delivery_type',
         'product_discount',
         'status'
     ];
+
+    protected $appends = [
+        'status_string',
+    ];
+
 
     public function address()
     {
@@ -88,10 +109,10 @@ class Order extends BaseModel
         return $query->where('status', 0);
     }
 
-    public function scopeSelf($query)
+    public function scopeSelf($query, $user)
     {
-        return $query->where('creater_type', User::class)
-            ->where('creater_id', user()->id);
+        return $query->where('creater_type', get_class($user))
+            ->where('creater_id', $user->id);
     }
 
     public function scopePaid($query)
@@ -105,4 +126,42 @@ class Order extends BaseModel
     {
         return $this->belongsTo(Voucher::class);
     }
+
+    public function timelines():HasMany
+    {
+        return $this->hasMany(OrderTimeline::class, 'order_id', 'id');
+    }
+
+    public function getStatusStringAttribute():string
+    {
+        return match($this->status) {
+            self::INITIATED => 'Initiated',
+            self::SUBMITTED => 'Submitted',
+            self::HUB_ASSIGNED => 'Hub Assigned',
+            self::ITEMS_COLLECTING => 'Items Collecting',
+            self::HUB_REASSIGNED => 'Hub Reassigned',
+            self::ITEMS_COLLECTED => 'Items Collected',
+            self::PACHAGE_PREPARED => 'Package Prepared',
+            self::DISPATCHED => 'Dispatched',
+            self::DELIVERED => 'Delivered',
+            default => 'Unknown Status',
+        };
+    }
+
+    public function getStatusBg():string
+    {
+        return match($this->status) {
+            self::INITIATED => 'bg-warning',
+            self::SUBMITTED => 'bg-success',
+            self::HUB_ASSIGNED => 'bg-info',
+            self::ITEMS_COLLECTING => 'bg-info',
+            self::HUB_REASSIGNED => 'bg-info',
+            self::ITEMS_COLLECTED => 'bg-info',
+            self::PACHAGE_PREPARED => 'bg-info',
+            self::DISPATCHED => 'bg-info',
+            self::DELIVERED => 'bg-info',
+            default => 'bg-secondary',
+        };
+    }
+
 }

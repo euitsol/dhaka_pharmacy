@@ -23,7 +23,7 @@ class UploadPrescriptionRequest extends FormRequest
     {
         return [
             'address_id' => 'required|exists:addresses,id',
-            'delivery_type' => 'required',
+            // 'delivery_type' => 'required',
         ];
     }
 }

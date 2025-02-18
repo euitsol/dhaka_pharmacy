@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Rules\ApiRules\PasswordNotSet;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
@@ -22,7 +23,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => 'required|numeric|digits:11|exists:users,phone',
+            'phone' => ['required', 'string', 'exists:users,phone', new PasswordNotSet()],
             'password' => 'required',
         ];
     }

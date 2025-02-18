@@ -41,6 +41,8 @@ class ProductSearchController extends Controller
             $query = $query->where('category_id', $category);
         }
 
+        // $query = $query->orderBy('price', 'asc');
+
         $data['products'] = $query->get()
             ->load(['pro_cat', 'generic', 'company', 'strength', 'discounts'])
             ->take(10)

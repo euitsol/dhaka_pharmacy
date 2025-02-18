@@ -35,6 +35,7 @@
     /* btn color */
     /* --secondary-bg: #1869aa; */
     --btn-bg-color: #1869aa;
+    --btn-bg-2: #1869aa;
     --border-1: #1869aa;
     --border-2:  #46b7e3;
 
@@ -68,7 +69,14 @@
     /* Adding this new global variable */
     --bg-2: #f4f4f4;
     --bg-3: #eaf1fb;
+    --bg-4: #d9d9d922;
     --btn-bg-2: #7db6e3;
+    --btn-bg-3: #1869aa;
+}
+
+/* Box shadow */
+:root {
+    --box-shadow-1: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /*====================================
@@ -436,7 +444,7 @@ a {
 .order_button .order-btn:hover {
     color: var(--text-color-white) !important;
     border: 2px solid var(--border-2) !important;
-    background: var(--secundary-color) !important;
+    background: var(--primary-color) !important;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
 
@@ -763,7 +771,7 @@ a {
 /* scrollber design css code here */
 
 /* For Chrome, Safari, and Edge */
-
+/*
 .product-section .best-selling-products::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px var(--border-1);
     border-radius: 10px;
@@ -785,7 +793,7 @@ a {
         transparent,
         transparent
     );
-}
+} */
 
 /* For Firefox */
 /* .product-section #scrooling {
@@ -793,10 +801,62 @@ a {
     scrollbar-color: var(--secondary-color) var(--border-1);
 } */
 
+/* Firefox e customize scrollbar */
+
+@-moz-document url-prefix() {
+    .product-section .best-selling-products {
+        scrollbar-width: thin;
+        scrollbar-color: var(--secondary-color) var(--border-1);
+    }
+
+    .product-section .best-selling-products::-moz-scrollbar {
+        width: 8px;
+        border-radius: 10px !important;
+    }
+
+    .product-section .best-selling-products::-moz-scrollbar-track {
+        background: var(--border-1);
+        border-radius: 10px !important;
+    }
+
+    .product-section .best-selling-products::-moz-scrollbar-thumb {
+        background: var(--secondary-color);
+        border-radius: 10px !important;
+        background-image: linear-gradient(
+            90deg,
+            transparent,
+            var(--secondary-color) 50%,
+            transparent,
+            transparent
+        );
+    }
+}
+
+/* For Webkit Browsers (Chrome, Safari, Edge) */
+
+.product-section .best-selling-products::-webkit-scrollbar {
+    width: 8px;
+}
+
+.product-section .best-selling-products::-webkit-scrollbar-track {
+    background: var(--border-1);
+    border-radius: 10px;
+}
+
+.product-section .best-selling-products::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 10px;
+    background-image: linear-gradient(
+        90deg,
+        transparent,
+        var(--secondary-color) 50%,
+        transparent,
+        transparent
+    );
+}
+
 .product-section .best-selling-col .all-product {
     padding: 0px 5px;
-    /* display: flex;
-  flex-wrap: wrap; */
 }
 
 .product-section .cat-filter-row {
@@ -1441,25 +1501,25 @@ a {
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li.active a {
-    background: var(--btn-bg-color);
+    background: var(--btn-bg-color) !important;
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li.completed a {
     /* background: var(--primary-bg); */
-    background: var(--secondary-color) !important;
+    background: var(--btn-bg-color) !important;
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li.active a:after {
-    border-left: 30px solid var(--secondary-color);
+    border-left: 30px solid var(--btn-bg-color);
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li.completed a:after {
-    border-left: 30px solid var(--border-2);
+    border-left: 30px solid var(--border-1);
 }
 
 .breadcrumb_wrap .breadcrumb.wizard li a {
     color: var(--text-color-white);
-    background: var(--secondary-color) !important;
+    background: var(--btn-bg-color) !important;
     text-decoration: none;
     padding: 10px 0 10px 45px;
     position: relative;
@@ -1475,7 +1535,7 @@ a {
     height: 0;
     border-top: 50px solid transparent;
     border-bottom: 50px solid transparent;
-    border-left: 30px solid var(--border-2) !important;
+    border-left: 30px solid var(--border-1) !important;
     position: absolute;
     top: 50%;
     margin-top: -50px;
@@ -1490,7 +1550,7 @@ a {
     height: 0;
     border-top: 50px solid transparent;
     border-bottom: 50px solid transparent;
-    border-left: 35px solid var(--btn-bg-color);
+    border-left: 35px solid var(--border-2);
     position: absolute;
     top: 50%;
     margin-top: -50px;
@@ -1550,7 +1610,7 @@ a {
 
 .single_product_section .single_product .product_image .xzoom {
     width: 100% !important;
-    /* height: 21vw !important; */
+    height: 21rem !important;
     object-fit: contain;
 }
 
@@ -2644,4 +2704,53 @@ a {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+/* Full-Screen Overlay */
+#loading-animation {
+    position: absolute;
+    top: 0;
+    right: 0 !important;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, #d8e5ec81, #dae3eb8c, #def0e791);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999999999999999;
+}
+
+/* Logo with Breathing Animation */
+#loading-animation img {
+    width: 100%; /* Adjust the size as needed */
+    animation: breathing 2s ease-in-out infinite;
+}
+
+/* Keyframes for the Breathing Effect */
+@keyframes breathing {
+    0% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+}
+
+.unit-badge {
+    background-color: var(--btn-bg-2);
+    color: var(--text-color-black);
+    border: 1px solid var(--border-1);
+    font-size: 14px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
 }

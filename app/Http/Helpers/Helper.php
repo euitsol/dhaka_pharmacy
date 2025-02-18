@@ -43,9 +43,6 @@ function get_permission_routes()
 //This will check the permission of the given route name. Can be used for buttons
 function check_access_by_route_name($routeName = null): bool
 {
-
-
-
     if ($routeName == null) {
         $routeName = Route::currentRouteName();
     }
@@ -54,8 +51,13 @@ function check_access_by_route_name($routeName = null): bool
     $shouldCheckPermission = false;
     foreach ($allowedPrefixes as $prefix) {
         if (str_starts_with($routeName, $prefix)) {
-            $shouldCheckPermission = true;
-            break;
+            if(str_ends_with($routeName, 'search')){
+                $shouldCheckPermission = false;
+                break;
+            }else{
+                $shouldCheckPermission = true;
+                break;
+            }
         }
     }
 

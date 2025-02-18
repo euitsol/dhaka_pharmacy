@@ -33,10 +33,34 @@
         const mapbox_token = `{{ config('mapbox.mapbox_token') }}`;
         const map_center = `[{{ config('mapbox.center_location_lng') }}, {{ config('mapbox.center_location_lat') }}]`;
         const pharmacy_radious = `{{ config('mapbox.pharmacy_radious') }}`;
-        const mapbox_style_id = `{{ config('mapbox.pharmacy_radious') }}`;
+        const mapbox_style_id = `{{ config('mapbox.mapbox_style_id') }}`;
         const audio_url = `{{ asset('admin/mp3/order-notification.mp3') }}`;
         const admin_id = `{{ admin() ? admin()->id : false }}`;
         const content_image_upload_url = "{{ route('file.ci_upload') }}";
+    </script>
+    <script>
+        window.AppConfig = {
+            'urls': {
+                'product': {
+                    'generics': @json(route('product.generic_name.search')),
+                    'categories': @json(route('product.product_category.search')),
+                    'sub_categories': @json(route('product.product_sub_category.search')),
+                    'companies': @json(route('product.company_name.search')),
+                    'units': @json(route('product.medicine_unit.search')),
+                    'bulk_create': @json(route('product.medicine.store.bulk_entry')),
+                },
+                'file': {
+                    'upload': @json(route('file.upload')),
+                    'delete': @json(route('file.delete')),
+                },
+                'obp': {
+                    'product_search': @json(route('obp.search.obp_details')),
+                    'delivery_address': @json(route('obp.delivery.list.obp_details')),
+                    'delivery_store': @json(route('obp.delivery.create.obp_details')),
+                }
+
+            }
+        }
     </script>
 </head>
 
@@ -69,11 +93,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    @stack('js_link')
+
     <script src="{{ asset('admin/js/custom.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('admin/js/realtime-notification.js') }}"></script>
     <script src="{{ asset('ckEditor5/main.js') }}"></script>
+    @stack('js_link')
 
     @stack('js')
 

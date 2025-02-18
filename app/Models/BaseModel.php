@@ -119,7 +119,7 @@ class BaseModel extends Model
         if ($this->is_menu == 1) {
             return 'Remove from menu';
         } else {
-            return 'Added on menu';
+            return 'Add on menu';
         }
     }
 

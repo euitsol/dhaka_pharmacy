@@ -2,29 +2,26 @@ name: Deploy Application to Staging Server
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-  laravel-deploy:
-
+  sandbox-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        passphrase: ${{ secrets.PASSPHRASE }}
-        script: |
-            cd www
-            cd sandeepc7.sg-host.com
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SANDBOX_HOST  }}
+          port: ${{ secrets.SANDBOX_PORT }}
+          username: ${{ secrets.SANDBOX_USERNAME }}
+          password: ${{ secrets.SANDBOX_PASSWORD }}
+          script: |
+            cd /home/sandbox.dhakapharmacy.com.bd/public_html
             git fetch --all
             git reset --hard origin/main
-            git pull
-            /usr/local/php82/bin/php-cli artisan optimize:clear
-            
+            php artisan optimize:clear
+            php artisan migrate
+            php artisan migrate --force

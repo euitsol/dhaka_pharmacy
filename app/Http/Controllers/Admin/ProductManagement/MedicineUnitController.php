@@ -10,14 +10,14 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Traits\DetailsCommonDataTrait;
-
+use Illuminate\Http\Request;
 
 class MedicineUnitController extends Controller
 {
     use DetailsCommonDataTrait;
     public function __construct()
     {
-        return $this->middleware('admin');
+        $this->middleware('admin');
     }
 
     public function index(): View
@@ -47,9 +47,7 @@ class MedicineUnitController extends Controller
             $path = $image->storeAs($folderName, $imageName, 'public');
             $medicine_unit->image = $path;
         }
-        $medicine_unit->type = $req->type;
         $medicine_unit->name = $req->name;
-        $medicine_unit->quantity = $req->quantity;
         $medicine_unit->created_by = admin()->id;
         $medicine_unit->save();
         flash()->addSuccess('Medici generic name ' . $medicine_unit->name . ' created successfully.');
@@ -75,9 +73,7 @@ class MedicineUnitController extends Controller
             $medicine_unit->image = $path;
         }
 
-        $medicine_unit->type = $req->type;
         $medicine_unit->name = $req->name;
-        $medicine_unit->quantity = $req->quantity;
         $medicine_unit->updated_by = admin()->id;
         $medicine_unit->update();
         flash()->addSuccess('Medici generic name ' . $medicine_unit->name . ' updated successfully.');
@@ -96,5 +92,16 @@ class MedicineUnitController extends Controller
         $medicine_unit->delete();
         flash()->addSuccess('Medici generic name ' . $medicine_unit->name . ' deleted successfully.');
         return redirect()->route('product.medicine_unit.medicine_unit_list');
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $search = $request->get('q');
+        $medicine_units = MedicineUnit::when($search, function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%");
+        })->activated()
+        ->select('id', 'name')
+        ->get();
+        return response()->json($medicine_units);
     }
 }
