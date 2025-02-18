@@ -1,6 +1,15 @@
 @extends('hub.layouts.master', ['pageSlug' => 'order_'.titleToSlug($oh->status_string)])
 @section('title', 'Order Details')
+@push('css_link')
+    <link rel="stylesheet" href="{{ asset('hub/css/order_details.css') }}">
+@endpush
 @push('css')
+<style>
+    .order_details, .order_timeline{
+        height: 25rem;
+        overflow:auto;
+    }
+</style>
 @endpush
 
 @section('content')
@@ -22,6 +31,20 @@
                     <div class="col-md-6">
                         @include('hub.order.includes.order_details',[
                             'order_hub' => $oh,
+                        ])
+                    </div>
+                    <div class="col-md-6">
+                        @include('hub.order.includes.order_timeline',[
+                            'timelines' => $timelines,
+                            'order_status' => optional($oh->order)->status
+                        ])
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        @include('hub.order.includes.order_items',[
+                            'products' => optional($oh->order)->productsWithHub,
+                            'order' => $oh->order,
+                            'order_hub_id' => $oh->id,
+                            'pharmacies' => $pharmacies
                         ])
                     </div>
                 </div>

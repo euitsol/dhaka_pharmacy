@@ -12,10 +12,41 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Events\OrderStatusChanged;
 use App\Exceptions\InvalidStatusException;
 use App\Exceptions\InvalidStatusTransitionException;
+use App\Services\OrderTimelineService;
 
 class OrderHubManagementService
 {
+    protected OrderHub $orderHub;
+    protected OrderTimelineService $orderTimelineService;
 
+    public function __construct(OrderTimelineService $orderTimelineService)
+    {
+        $this->orderTimelineService = $orderTimelineService;
+    }
+
+    public function setOrderHub(OrderHub $orderHub):self
+    {
+        $this->orderHub = $orderHub;
+        return $this;
+    }
+
+    public function collect()
+    {
+        DB::beginTransaction();
+        $orderHub = $this->orderHub->load('order');
+        $orderHub->update(['status' => Order::ITEMS_COLLECTING]);
+        $this->updateOrderStatus($orderHub->order, Order::ITEMS_COLLECTING);
+        DB::commit();
+    }
+
+protected function updateOrderStatus(Order $order, $newstatus)
+{
+    $order->update(['status' => $newstatus]);
+    $this->orderTimelineService->updateTimelineStatus(
+        $order,
+        $newstatus
+    );
+}
     public function resolveStatus(string $status): string
     {
         $status = strtolower($status);
