@@ -512,15 +512,15 @@
                     'routes' => ['obp_list'],
                 ]))
                 <li>
-                    <a class="@if ($pageSlug == 'ubp_pending' || $pageSlug == 'ubp_ordered' || $pageSlug == 'ubp_cancel') @else collapsed @endif" data-toggle="collapse"
+                    <a class="@if ($pageSlug == 'ubp_pending' || $pageSlug == 'ubp_accepted' || $pageSlug == 'ubp_rejected') @else collapsed @endif" data-toggle="collapse"
                         href="#ubp"
-                        @if ($pageSlug == 'ubp_pending' || $pageSlug == 'ubp_ordered' || $pageSlug == 'ubp_cancel') aria-expanded="true" @else aria-expanded="false" @endif>
+                        @if ($pageSlug == 'ubp_pending' || $pageSlug == 'ubp_accepted' || $pageSlug == 'ubp_rejected') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-regular fa-newspaper"></i>
                         <span class="nav-link-text">{{ __('Order By Prescription') }}</span>
                         <b class="caret mt-1"></b>
                     </a>
 
-                    <div class="collapse @if ($pageSlug == 'ubp_pending' || $pageSlug == 'ubp_ordered' || $pageSlug == 'ubp_cancel') show @endif" id="ubp">
+                    <div class="collapse @if ($pageSlug == 'ubp_pending' || $pageSlug == 'ubp_accepted' || $pageSlug == 'ubp_rejected') show @endif" id="ubp">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -531,13 +531,13 @@
                                         'label' => 'Submitted',
                                     ],
                                     [
-                                        'pageSlug' => 'ubp_ordered',
+                                        'pageSlug' => 'ubp_accepted',
                                         'routeName' => 'obp.obp_list',
                                         'params' => 'accepted',
                                         'label' => 'Ordered',
                                     ],
                                     [
-                                        'pageSlug' => 'ubp_cancel',
+                                        'pageSlug' => 'ubp_rejected',
                                         'routeName' => 'obp.obp_list',
                                         'params' => 'cancel',
                                         'label' => 'Cancel',

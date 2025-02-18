@@ -68,7 +68,6 @@ class OrderByPrescriptionController extends Controller
             flash()->addError($e->getMessage());
             return redirect()->back();
         }
-        // dd($data['addresses']);
         return view('admin.order_by_prescription.details', $data);
     }
     public function getUnit($id): JsonResponse
@@ -224,7 +223,7 @@ class OrderByPrescriptionController extends Controller
             OrderPrescription::where('prescription_id', $validated['prescription_id'])
                 ->update(['order_id' => $order->id, 'status' => OrderPrescription::STATUS_ACCEPTED]);
 
-            Prescription::find($validated['prescription_id'])->update(['status' => Prescription::STATUS_ACTIVE]);
+            // Prescription::find($validated['prescription_id'])->update(['status' => Prescription::STATUS_ACTIVE]);
 
             //Accept the order
             $this->orderService->setOrder($order->order_id);
@@ -236,7 +235,33 @@ class OrderByPrescriptionController extends Controller
             DB::commit();
 
             flash()->addSuccess('Order created successfully.');
-            return redirect()->route('obp.obp_list', 'pending');
+            return redirect()->back();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }
+    }
+    public function cancel($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $details = OrderPrescription::with(['creater', 'prescription'])->findOrFail(decrypt($id));
+
+            if($details->order_id){
+                $this->orderService->setOrder($details->order_id);
+                $this->orderService->setUser($details->creater);
+                $this->orderService->cancelOrder();
+            }
+
+            $details->update(['status' => OrderPrescription::STATUS_REJECTED]);
+            // $details->prescription->update(['status' => Prescription::STATUS_INACTIVE]);
+
+            DB::commit();
+            flash()->addSuccess('Order cancelled successfully.');
+            return redirect()->back();
 
         } catch (Exception $e) {
             DB::rollBack();

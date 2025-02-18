@@ -185,6 +185,7 @@ class PrescriptionService
 
     public function resolveStatus(string $status): int
     {
+        $status = strtolower($status);
         return match ($status) {
             'pending' => OrderPrescription::STATUS_PENDING,
             'accepted' => OrderPrescription::STATUS_ACCEPTED,

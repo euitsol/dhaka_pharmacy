@@ -253,6 +253,8 @@ $(document).ready(() => {
     $('#delivery-form').on('submit', function(e) {
         e.preventDefault();
 
+        alert('Are you sure you want to submit this Order?');
+
         const $form = $(this);
         const $submitBtn = $form.find('button[type="submit"]');
 
@@ -281,5 +283,11 @@ $(document).ready(() => {
                 $submitBtn.prop('disabled', false);
             }
         });
+    });
+
+    $('.cancel').on('click', function(e) {
+        e.preventDefault();
+        alert('Are you sure you want to reject this Prescription?');
+        window.location.href = $(this).attr('href');
     });
 });

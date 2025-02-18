@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Prescription ID') }}</th>
+                                <th>{{ __('Order Prescription ID') }}</th>
                                 <th>{{ __('Prescription Images') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Submitted at') }}</th>
