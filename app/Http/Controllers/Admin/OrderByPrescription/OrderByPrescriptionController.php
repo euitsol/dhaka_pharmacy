@@ -208,7 +208,7 @@ class OrderByPrescriptionController extends Controller
 
             $validated = $request->validated();
             // Get the user
-            $user = User::findOrFail(decrypt($validated['user_id']));
+            $user = User::findOrFail($validated['user_id']);
 
             // Process the order
             $order = $this->orderService
@@ -224,11 +224,11 @@ class OrderByPrescriptionController extends Controller
                 ->update(['order_id' => $order->id, 'status' => OrderPrescription::STATUS_ACCEPTED]);
 
             //Accept the order
-            // $this->orderService->setOrder($order->order_id);
+            $this->orderService->setOrder($order->order_id);
 
-            // $payment = $this->orderService->confirmOrder([
-            //     'payment_method' => $validated['payment_method']
-            // ]);
+            $payment = $this->orderService->confirmOrder([
+                'payment_method' => $validated['payment_method']
+            ]);
 
             DB::commit();
 
