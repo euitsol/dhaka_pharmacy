@@ -765,6 +765,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         Route::get('/product-search', 'productSearch')->name('search.obp_details');
         Route::get('/delivery-address/list', 'addressList')->name('delivery.list.obp_details');
         Route::post('/delivery-address/create', 'storeAddressDetails')->name('delivery.create.obp_details');
+        Route::get('/cancel/{id}', 'cancel')->name('obp_cancel');
     });
 
     // Latest Offer
