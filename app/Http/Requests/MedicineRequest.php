@@ -17,7 +17,7 @@ class MedicineRequest extends FormRequest
             'price'=>'required|numeric',
             'pro_cat_id'=>'required|exists:product_categories,id',
             'pro_sub_cat_id'=>'nullable|exists:product_sub_categories,id',
-            'generic_id'=>'required|exists:generic_names,id',
+            'generic_id'=>'nullable|exists:generic_names,id',
             'company_id'=>'required|exists:company_names,id',
             'strength_id'=>'nullable',
 
