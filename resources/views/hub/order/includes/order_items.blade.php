@@ -3,7 +3,7 @@
     $assigend = \App\Models\Order::HUB_ASSIGNED == $order->status;
 @endphp
 
-<form action="" method="POST" class="px-0">
+<form action="" method="POST" class="px-0" id="order_collecting_form">
     @csrf
     <input type="hidden" name="order_id" value="" class="d-none">
     <div class="card ">
@@ -15,9 +15,9 @@
         </div>
         <div class="card-body order_items">
             <div class="row">
-                @foreach ($products as $key => $product)
+                @foreach ($order_hub_products as $key => $ohp)
                     <div class="col-12">
-                        <input type="hidden" name="data[{{ $key }}][p_id]" value="{{ $product->id }}">
+                        <input type="hidden" name="data[{{ $key }}][p_id]" value="{{ optional($ohp->product)->id }}">
                         <div class="card card-2 mb-3">
                             <div class="card-body">
                                 <div class="row align-items-center">
@@ -25,29 +25,29 @@
                                         <div class="media">
                                             <div class="sq align-self-center "> <img
                                                     class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
-                                                    src="{{ $product->image }}"
-                                                    width="50" height="50" /> </div>
+                                                    src="{{ optional($ohp->product)->image }}"
+                                                    width="50" height="50"/> </div>
                                             <div class="media-body my-auto text-center">
                                                 <div
                                                     class="row  my-auto flex-column flex-md-row px-3">
                                                     <div class="col my-auto">
                                                         <h6 class="mb-0 text-start">
-                                                            {{ $product->name }}</h6>
+                                                            {{ optional($ohp->product)->name }}</h6>
                                                     </div>
                                                     <div class="col-auto my-auto">
-                                                        <small>{{ optional($product->pro_cat)->name }}
+                                                        <small>{{ optional(optional($ohp->product)->pro_cat)->name }}
                                                         </small>
                                                     </div>
                                                     <div class="col my-auto">
                                                         <small>{{ __('Qty :') }}
                                                             <span class="quantity">
-                                                                {{ optional($product->pivot)->quantity }}
+                                                                {{ $ohp->quantity ?? '--' }}
                                                             </span>
                                                         </small>
                                                     </div>
                                                     <div class="col my-auto">
-                                                        <small>{{ __('Pack :') }}
-                                                            {{ optional($product->pivot)->unit->name ?? '--' }}</small>
+                                                        <small>{{ __('Unit :') }}
+                                                            {{ optional($ohp->pivot)->unit_name ?? '--' }}</small>
                                                     </div>
                                                     <div class="col my-auto unit_total" style="display: none;">
                                                         <small>
@@ -77,10 +77,11 @@
                                         </div>
                                     </div>
                                     {{-- Hub Assignment Column --}}
+                                    @if ($collecting)
                                     <div class="col-5">
                                         <div class="form-group">
                                             <label>{{ __('Collected from Pharmacy') }}</label>
-                                            <select class="form-control" name="data[{{ $key }}][pharmacy_id]" class="no-select">
+                                            <select class="form-control pharmacy_id" name="data[{{ $key }}][pharmacy_id]" class="no-select" required>
                                                 <option value="">{{ __('Select Pharmacy') }}</option>
                                                 @foreach ($pharmacies as $pharmacy)
                                                     <option value="{{ $pharmacy->id }}"
@@ -91,9 +92,10 @@
                                         </div>
                                         <div class="form-group">
                                             <label>{{ __('Collecting Price Per Unit') }}</label>
-                                            <input type="number" class="form-control unit_price" name="data[{{ $key }}][collecting_price]" value="{{ optional($product->pivot)->collecting_price ?? '' }}">
+                                            <input type="number" class="form-control unit_price" name="data[{{ $key }}][collecting_price]" value="{{ optional(optional($ohp->product)->pivot)->collecting_price ?? '' }}" required>
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -103,7 +105,7 @@
                 <div class="col-12">
                     <div class="row mt-3">
                         <div class="form-group col-md-12 text-end">
-                            <a type="button" href="{{ route('hub.order.collect', encrypt($order_hub_id)) }}"
+                            <a type="button" href="{{ route('hub.order.collect', encrypt($order->id)) }}"
                                 class="btn btn-primary" onclick="return confirm('Are you sure?')">{{ __('Start Collecting') }}</a>
                         </div>
                     </div>

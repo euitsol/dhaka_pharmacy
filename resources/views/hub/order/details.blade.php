@@ -23,6 +23,7 @@
                     </div>
                     <div class="col-4 text-end">
                         <span class="badge {{ $oh->status_bg }}">{{ slugToTitle($oh->status_string) }}</span>
+                        {{ 'order_'.titleToSlug($oh->status_string) }}
                     </div>
                 </div>
             </div>
@@ -40,11 +41,9 @@
                         ])
                     </div>
                     <div class="col-md-12 mt-3">
-                        @include('hub.order.includes.order_items',[
-                            'products' => optional($oh->order)->productsWithHub,
-                            'order' => $oh->order,
-                            'order_hub_id' => $oh->id,
-                            'pharmacies' => $pharmacies
+                        @include('hub.order.includes.order_items', [
+                            'order_hub_products' => $oh->orderhubproducts,
+                            'order' => $oh->order
                         ])
                     </div>
                 </div>
@@ -74,6 +73,12 @@ $(document).ready(function() {
         });
         $('.total_collecting_price').text(grandTotal.toFixed(2));
     });
+
+    $('#order_collecting_form').on('submit', function(e) {
+        e.preventDefault();
+
+        // $('.pharmacy_id')
+    })
 });
 </script>
 @endpush

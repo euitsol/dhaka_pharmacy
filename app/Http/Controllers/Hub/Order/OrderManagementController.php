@@ -28,7 +28,10 @@ class OrderManagementController extends Controller
 
         switch ($status) {
             case 'assigned':
-                $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub(staff()->hub->id)->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
+                $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
+                return view('hub.order.list', $data);
+            case 'collecting':
+                $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
                 return view('hub.order.list', $data);
             default:
                 flash()->addWarning('Invalid status');
@@ -38,7 +41,8 @@ class OrderManagementController extends Controller
 
     public function details($id)
     {
-        $data['oh'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub(staff()->hub->id)->findOrFail(decrypt($id));
+        $data['oh'] = OrderHub::with(['hub', 'orderhubproducts.product', 'order'])->ownedByHub()->where('id', decrypt($id))->get()->first();
+        // dd($data['oh']->toArray());
         $data['pharmacies'] = Pharmacy::activated()->latest()->get();
         try{
             $data['timelines'] = $this->orderTimelineService->getHubProcessedTimeline($data['oh']->order);
@@ -53,10 +57,11 @@ class OrderManagementController extends Controller
     {
         $id = decrypt($id);
         try{
-            $orderHub = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub(staff()->hub->id)->findOrFail($id);
+            $orderHub = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('order_id', $id)->get()->first();
+
             $this->orderHubManagementService->setOrderHub($orderHub);
             $this->orderHubManagementService->collect();
-            flash()->addSuccess('Order collected successfully');
+            sweetalert()->addSuccess('You have successfully entered into the collecting stage.');
             return redirect()->back();
         }catch(\Exception $e){
             flash()->addError($e->getMessage());

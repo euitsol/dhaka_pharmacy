@@ -35,14 +35,22 @@ class OrderHub extends BaseModel
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
+    public function orderhubproducts()
+    {
+        return $this->belongsToMany(OrderProduct::class, 'order_hub_products', 'order_hub_id', 'order_product_id')
+            ->withPivot('status')
+            ->join('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id')
+            ->select('order_products.*', 'medicine_units.name as pivot_unit_name');
+    }
+
     public function hub(): BelongsTo
     {
         return $this->belongsTo(Hub::class, 'hub_id', 'id');
     }
 
-    public function scopeOwnedByHub($query, $hubId)
+    public function scopeOwnedByHub($query)
     {
-        return $query->where('hub_id', $hubId);
+        return $query->where('hub_id', staff()->hub_id);
     }
 
     public function getStatusStringAttribute():string
