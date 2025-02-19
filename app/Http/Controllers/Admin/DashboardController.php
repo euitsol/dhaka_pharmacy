@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use App\Services\AnalyticsService;
-
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -28,7 +28,8 @@ class DashboardController extends Controller
     }
     public function dashboard(): View
     {
-        dd($this->analyticsService->getPageViews());
+        $data['analytics_data'] = $this->analyticsService->getPageViews(7);
+
         $data['customers'] = User::activated()->count();
         $data['pharmacies'] = Pharmacy::activated()->count();
         $data['dms'] = DistrictManager::activated()->count();
@@ -67,6 +68,7 @@ class DashboardController extends Controller
 
     public function chartUpdate(Request $request)
     {
+        // Verification comment - please delete after confirming workflow
         $status = $request->get('status', null);
         $currentMonth = $request->get('month', now()->month);
         $currentYear = now()->year;

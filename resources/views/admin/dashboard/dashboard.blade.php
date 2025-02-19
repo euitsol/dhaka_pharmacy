@@ -437,6 +437,56 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">{{ __('Page Analytics') }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>{{ __('Top 5 pages') }}</h6>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>{{ __('Last 7 days') }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ __('Page') }}</th>
+                                                    <th>{{ __('Active Users') }}</th>
+                                                    <th>{{ __('Views') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($analytics_data as $ad)
+                                                    <tr>
+                                                        <td>{{ $ad['pageTitle'] }}</td>
+                                                        <td>{{ $ad['activeUsers'] }}</td>
+                                                        <td>{{ $ad['screenPageViews'] }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('js')
     <script src="{{ asset('white/js/plugins/chartjs.min.js') }}"></script>
