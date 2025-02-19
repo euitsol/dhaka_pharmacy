@@ -1,0 +1,14 @@
+.toast-success {
+    background-color: #28a745 !important; /* Green */
+    color: #ffffff !important;
+  }
+
+  .toast-error {
+    background-color: #dc3545 !important; /* Red */
+    color: #ffffff !important;
+  }
+
+  .toast-warning {
+    background-color: #ffc107 !important; /* Yellow */
+    color: #212529 !important;
+  }

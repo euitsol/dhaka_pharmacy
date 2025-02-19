@@ -3,9 +3,9 @@
     $assigend = \App\Models\Order::HUB_ASSIGNED == $order->status;
 @endphp
 
-<form action="" method="POST" class="px-0" id="order_collecting_form">
+<form action="{{ route('hub.order.collected') }}" method="POST" class="px-0" id="order_collecting_form">
     @csrf
-    <input type="hidden" name="order_id" value="" class="d-none">
+    <input type="hidden" name="order_id" value="{{ encrypt($order->id) }}" class="d-none">
     <div class="card ">
         <div class="card-header">
             <div class="col-auto">
@@ -16,7 +16,7 @@
         <div class="card-body order_items">
             <div class="row">
                 @foreach ($order_hub_products as $key => $ohp)
-                    <div class="col-12">
+                    <div class="col-12 product-container">
                         <input type="hidden" name="data[{{ $key }}][p_id]" value="{{ optional($ohp->product)->id }}">
                         <div class="card card-2 mb-3">
                             <div class="card-body">
@@ -92,7 +92,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>{{ __('Collecting Price Per Unit') }}</label>
-                                            <input type="number" class="form-control unit_price" name="data[{{ $key }}][collecting_price]" value="{{ optional(optional($ohp->product)->pivot)->collecting_price ?? '' }}" required>
+                                            <input type="number" class="form-control unit_price" name="data[{{ $key }}][unit_collecting_price]" value="{{ optional(optional($ohp->product)->pivot)->collecting_price ?? '' }}" required>
                                         </div>
                                     </div>
                                     @endif
@@ -105,7 +105,7 @@
                 <div class="col-12">
                     <div class="row mt-3">
                         <div class="form-group col-md-12 text-end">
-                            <a type="button" href="{{ route('hub.order.collect', encrypt($order->id)) }}"
+                            <a type="button" href="{{ route('hub.order.collecting', encrypt($order->id)) }}"
                                 class="btn btn-primary" onclick="return confirm('Are you sure?')">{{ __('Start Collecting') }}</a>
                         </div>
                     </div>

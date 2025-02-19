@@ -30,7 +30,7 @@ class OrderHubManagementService
         return $this;
     }
 
-    public function collect()
+    public function collecting()
     {
         DB::beginTransaction();
         $orderHub = $this->orderHub->load('order');

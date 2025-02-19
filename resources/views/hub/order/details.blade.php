@@ -95,7 +95,7 @@ $(document).ready(function() {
             $('.pharmacy_id, .unit_price').removeClass('is-invalid');
 
             // Validate each order item
-            $('.card').each(function(index) {
+            $('.product-container').each(function(index) {
                 const pharmacySelect = $(this).find('.pharmacy_id');
                 const unitPrice = $(this).find('.unit_price');
                 const itemNumber = index + 1;
@@ -124,6 +124,7 @@ $(document).ready(function() {
 
             if (!validation.isValid) {
                 e.preventDefault();
+                confirm('Are you sure collect this order?')
                 toastr.error(validation.errors.join('\n'));
                 return false;
             }

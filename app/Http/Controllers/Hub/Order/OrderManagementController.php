@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Hub\Order;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Hub\ItemCollectRequest;
 use App\Models\{Hub, Order, OrderHub, Pharmacy};
 use App\Services\{OrderHubManagementService, OrderTimelineService};
 use Illuminate\Http\JsonResponse;
@@ -53,19 +54,24 @@ class OrderManagementController extends Controller
         return view('hub.order.details', $data);
     }
 
-    public function collect($id)
+    public function collecting($id)
     {
         $id = decrypt($id);
         try{
             $orderHub = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('order_id', $id)->get()->first();
 
             $this->orderHubManagementService->setOrderHub($orderHub);
-            $this->orderHubManagementService->collect();
+            $this->orderHubManagementService->collecting();
             sweetalert()->addSuccess('You have successfully entered into the collecting stage.');
             return redirect()->back();
         }catch(\Exception $e){
             flash()->addError($e->getMessage());
             return redirect()->back();
         }
+    }
+
+    public function collected(ItemCollectRequest $request)
+    {
+        dd($request->all());
     }
 }
