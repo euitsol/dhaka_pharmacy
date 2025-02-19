@@ -2,7 +2,6 @@
 .order_details_wrap p {
     font-size: 14px;
     margin-bottom: 7px;
-
 }
 
 .order_details_wrap .small {
@@ -17,7 +16,6 @@
     background-color: rgba(248, 248, 248, 0.667);
 }
 
-
 .order_details_wrap .bold {
     font-weight: 500;
 }
@@ -28,7 +26,6 @@
 
 .order_details_wrap .card-2 {
     box-shadow: 1px 1px 3px 0px rgb(112, 115, 139);
-
 }
 
 .order_details_wrap .fa-circle.active {
@@ -44,6 +41,7 @@
 .order_details_wrap .rounded {
     border-radius: 2.25rem !important;
 }
+
 .order_details_wrap .invoice {
     position: relative;
     top: -70px;
@@ -58,6 +56,7 @@
     background-color: #0093E9;
     background-image: linear-gradient( 288deg,  rgba(0,85,255,1) 1.5%, rgb(4, 56, 115) 91.6% );
 }
+
 .order_details_wrap .card-footer h2,
 .order_details_wrap .card-footer h1{
     color: #fff;
@@ -82,11 +81,9 @@
     .order_details_wrap .border-line {
         border-right: 0px solid rgb(226, 206, 226) !important;
     }
-
 }
 
 @media (max-width: 700px) {
-
     .order_details_wrap h2 {
         color: rgb(78, 0, 92);
         font-size: 17px;
@@ -106,9 +103,11 @@
 .order_details_wrap .border-line {
     border-right: 1px solid rgb(226, 206, 226)
 }
+
 .order_details_wrap .order_items{
     overflow-y: auto;
 }
+
 .order_details_wrap .order_items{
     background: var(--text-color-white);
     box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
@@ -160,3 +159,40 @@
                                               transparent,
                                               transparent)
   }
+
+/* Timelines */
+:root {
+    --timeline-primary-color: #333;
+    --timeline-secondary-color: #6c757d;
+    --timeline-success-color: #28a745;
+    --timeline-pending-color: #6c757d;
+}
+
+.timeline-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.timeline-icon.completed {
+    color: var(--timeline-success-color);
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+.timeline-icon.pending {
+    color: var(--timeline-pending-color);
+    background-color: rgba(108, 117, 125, 0.1);
+}
+
+.timeline-content {
+    padding-left: 1rem;
+    /* border-left: 2px solid #e9ecef; */
+}
+
+.timeline-item:last-child .timeline-content {
+    border-left: none;
+}

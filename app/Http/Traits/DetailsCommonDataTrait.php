@@ -6,6 +6,7 @@ trait DetailsCommonDataTrait
 {
     private function morphColumnData($data)
     {
+        $data->loadMissing(['creater', 'updater']);
         $data->creating_time = timeFormate($data->created_at);
         $data->updating_time = $data->created_at != $data->updated_at ? timeFormate($data->updated_at) : 'null';
         $data->created_by = c_user_name($data->creater);
@@ -23,7 +24,7 @@ trait DetailsCommonDataTrait
             : 'N/A';
 
         $data->updating_time = ($data->created_at && $data->updated_at &&
-                            $data->created_at->ne($data->updated_at))
+            $data->created_at->ne($data->updated_at))
             ? timeFormate($data->updated_at)
             : 'Not updated yet';
 

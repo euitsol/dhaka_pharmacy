@@ -10,7 +10,7 @@
                             <h4 class="card-title">{{ __(slugToTitle($status) . ' Order List') }}</h4>
                         </div>
                         <div class="col-4 text-end">
-                            <span class="{{ $statusBgColor }}">{{ slugToTitle($status) }}</span>
+                            <span class="badge {{ $status_bg_color }}">{{ slugToTitle($status) }}</span>
                         </div>
                     </div>
                 </div>
@@ -21,26 +21,42 @@
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Order ID') }}</th>
                                 <th>{{ __('Total Product') }}</th>
-                                <th>{{ __('Total Amount') }}</th>
+                                <th>{{ __('Total Payable') }}</th>
                                 <th>{{ __('Delivery Type') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>{{ __('Order date') }}</th>
+                                <th>{{ __('Ordered At') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($orders as $order)
                                 <tr>
-                                    <td> {{ $loop->iteration }} </td>
-                                    <td>{{ $order->order_id }}</td>
-                                    <td>{{ $order->products->count() }}</td>
-                                    <td>{!! get_taka_icon() !!}{{ number_format(ceil($order->totalDiscountPrice + $order->delivery_fee)) }}
-                                    </td>
-                                    <td>{{ $order->deliveryType() }}</td>
-                                    <td><span class="{{ $order->statusBg() }}">{{ $order->statusTitle() }}</span></td>
-                                    <td>{{ timeFormate($order->created_at) }}</td>
                                     <td>
-                                        @if ($order->status == 1)
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td>
+                                        {{ $order->order_id }}
+                                    </td>
+                                    <td>
+                                        {{ $order->products->count() }}
+                                    </td>
+                                    <td>
+                                        {!! get_taka_icon() !!}
+                                        {{ number_format(ceil($order->total_amount)) }}
+                                    </td>
+                                    <td>
+                                        {{ $order->delivery_type ?? '--'}}
+                                    </td>
+                                    <td>
+                                        <span class=" badge {{ $order->getStatusBg() }}">
+                                            {{ $order->status_string }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {{ timeFormate($order->created_at) }}
+                                    </td>
+                                    <td>
+                                        {{-- @if ($order->status == 1)
                                             @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
                                                     [
@@ -65,7 +81,17 @@
                                                     ],
                                                 ],
                                             ])
-                                        @endif
+                                        @endif --}}
+
+                                        @include('admin.partials.action_buttons', [
+                                                'menuItems' => [
+                                                    [
+                                                        'routeName' => 'om.order.order_details',
+                                                        'params' => [encrypt($order->id)],
+                                                        'label' => 'Details',
+                                                    ],
+                                                ],
+                                            ])
                                     </td>
                                 </tr>
                             @endforeach

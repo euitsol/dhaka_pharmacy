@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\OrderManagement;
 
 use App\Events\OrderStatusChangeEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\HubAssignRequest;
 use App\Http\Requests\DisputeOrderRequest;
 use App\Http\Requests\OrderDistributionRequest;
 use App\Http\Requests\OrderDistributionRiderRequest;
@@ -22,98 +23,85 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Traits\TransformOrderItemTrait;
+use App\Models\Hub;
 use App\Models\OrderDistributionRider;
 use App\Models\Rider;
+use App\Services\OrderManagementService;
+use Exception;
 
 class OrderManagementController extends Controller
 {
     use TransformOrderItemTrait, OTPTrait, DeliveryTrait;
 
-    public function __construct()
+    protected OrderManagementService $orderManagementService;
+
+    public function __construct(OrderManagementService $orderManagementService)
     {
         $this->middleware('admin');
+        $this->orderManagementService = $orderManagementService;
     }
     public function index($status): View|RedirectResponse
     {
-        $data['status'] = ucfirst($status);
-        $data['statusBgColor'] = $this->getOrderStatusBgColor($status);
+        $data['status'] = $status;
+        $data['status_bg_color'] = $this->orderManagementService->resolveStatusBg($status);
         switch ($status) {
             case 'initiated':
-                $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od')->status($status)->latest()->get()
-                    ->each(
-                        function (&$order) {
-                            $this->calculateOrderTotalDiscountPrice($order);
-                        }
-                    );
+                $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
             case 'submitted':
-                $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od',)->status($status)->latest()->get()
-                    ->each(
-                        function (&$order) {
-                            $this->calculateOrderTotalDiscountPrice($order);
-                        }
-                    );
+                $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
-            case 'processed':
-                $data['dos'] = OrderDistribution::with(['order.products', 'odps', 'creater'])
-                    ->withCount(['odps' => function ($query) {
-                        $query->where('status', '!=', -1);
-                    }])
-                    ->where('status', 1)
-                    ->orWhere('status', 0)
-                    ->latest()->get()
-                    ->each(function (&$do) {
-                        $this->calculateOrderTotalDiscountPrice($do->order);
-                    });
-                return view('admin.order_management.distributed_order.index', $data);
-            case 'waiting-for-rider':
-                $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'odps', 'creater'])
-                    ->withCount(['odps' => function ($query) {
-                        $query->where('status', '!=', -1);
-                    }])
-                    ->whereHas('order', function ($query) {
-                        $query->where('status', 3);
-                    })
-                    ->where('status', 2)
-                    ->latest()->get()
-                    ->each(function (&$do) {
-                        $this->calculateOrderTotalDiscountPrice($do->order);
-                    });
-                return view('admin.order_management.distributed_order.index', $data);
-            case 'assigned':
-                $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'assignedRider', 'assignedRider.rider', 'creater'])
-                    ->withCount(['odps' => function ($query) {
-                        $query->where('status', '!=', -1);
-                    }])
-                    ->whereHas('order', function ($query) {
-                        $query->whereIn('status', [4, 5]);
-                    })
-                    ->latest()->get()
-                    ->each(function (&$do) {
-                        $this->calculateOrderTotalDiscountPrice($do->order);
-                    });
-                return view('admin.order_management.distributed_order.index', $data);
-            case 'delivered':
-                $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'assignedRider', 'assignedRider.rider', 'creater'])
-                    ->withCount(['odps' => function ($query) {
-                        $query->where('status', '!=', -1);
-                    }])
-                    ->whereHas('order', function ($query) {
-                        $query->where('status', 6);
-                    })
-                    ->latest()->get()
-                    ->each(function (&$do) {
-                        $this->calculateOrderTotalDiscountPrice($do->order);
-                    });
-                return view('admin.order_management.distributed_order.index', $data);
-            case 'canceled':
-                $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od',)->status($status)->latest()->get()
-                    ->each(
-                        function (&$order) {
-                            $this->calculateOrderTotalDiscountPrice($order);
-                        }
-                    );
+            case 'hub_assigned':
+                $data['orders'] = Order::with(['productsWithHub'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
+            // case 'waiting-for-rider':
+            //     $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'odps', 'creater'])
+            //         ->withCount(['odps' => function ($query) {
+            //             $query->where('status', '!=', -1);
+            //         }])
+            //         ->whereHas('order', function ($query) {
+            //             $query->where('status', 3);
+            //         })
+            //         ->where('status', 2)
+            //         ->latest()->get()
+            //         ->each(function (&$do) {
+            //             $this->calculateOrderTotalDiscountPrice($do->order);
+            //         });
+            //     return view('admin.order_management.distributed_order.index', $data);
+            // case 'assigned':
+            //     $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'assignedRider', 'assignedRider.rider', 'creater'])
+            //         ->withCount(['odps' => function ($query) {
+            //             $query->where('status', '!=', -1);
+            //         }])
+            //         ->whereHas('order', function ($query) {
+            //             $query->whereIn('status', [4, 5]);
+            //         })
+            //         ->latest()->get()
+            //         ->each(function (&$do) {
+            //             $this->calculateOrderTotalDiscountPrice($do->order);
+            //         });
+            //     return view('admin.order_management.distributed_order.index', $data);
+            // case 'delivered':
+            //     $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'assignedRider', 'assignedRider.rider', 'creater'])
+            //         ->withCount(['odps' => function ($query) {
+            //             $query->where('status', '!=', -1);
+            //         }])
+            //         ->whereHas('order', function ($query) {
+            //             $query->where('status', 6);
+            //         })
+            //         ->latest()->get()
+            //         ->each(function (&$do) {
+            //             $this->calculateOrderTotalDiscountPrice($do->order);
+            //         });
+            //     return view('admin.order_management.distributed_order.index', $data);
+            // case 'canceled':
+            //     $data['orders'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit', 'od',)->status($status)->latest()->get()
+            //         ->each(
+            //             function (&$order) {
+            //                 $this->calculateOrderTotalDiscountPrice($order);
+            //             }
+            //         );
+            //     return view('admin.order_management.index', $data);
             default:
                 flash()->addError('Something went wrong');
                 return redirect()->back();
@@ -121,10 +109,25 @@ class OrderManagementController extends Controller
     }
     public function details($id): View
     {
-        $data['order'] = Order::with('products', 'products.units', 'products.discounts', 'products.pivot.unit')->findOrFail(decrypt($id));
-        $this->calculateOrderTotalPrice($data['order']);
-        $this->calculateOrderTotalDiscountPrice($data['order']);
+        $data['hubs'] = Hub::with(['address'])->activated()->get();
+        $data['order'] = Order::with(['productsWithHub', 'timelines'])->findOrFail(decrypt($id));
+        // dd($data['order']->toArray());
         return view('admin.order_management.details', $data);
+    }
+
+    public function hubAssign(HubAssignRequest $request)
+    {
+        try{
+            $order = Order::findOrFail($request->order_id);
+            $this->orderManagementService->setOrder($order);
+            $this->orderManagementService->assignOrderToHub($request->validated());
+            flash()->addSuccess('Order assigned to hub successfully');
+            return redirect()->back();
+        }catch (Exception $e) {
+            flash()->addError($e->getMessage());
+            return redirect()->back();
+        }
+
     }
 
     public function order_distribution($id)

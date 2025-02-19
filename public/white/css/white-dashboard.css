@@ -16705,7 +16705,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 }
 
 .card form label+.form-control {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .card .map-title {

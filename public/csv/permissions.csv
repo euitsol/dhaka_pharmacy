@@ -136,3 +136,11 @@ pc_details,admin,"Payment Clearance"
 pc_accept,admin,"Payment Clearance"
 pc_declined,admin,"Payment Clearance"
 assign_order,admin,"Distributed Orders"
+hub_create,admin,Hub
+hub_list,admin,Hub
+hub_edit,admin,Hub
+hub_delete,admin,Hub
+hub_staff_list,admin,"Hub Staff"
+hub_staff_create,admin,"Hub Staff"
+hub_staff_edit,admin,"Hub Staff"
+hub_staff_delete,admin,"Hub Staff"

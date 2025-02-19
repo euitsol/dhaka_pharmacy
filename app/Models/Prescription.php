@@ -42,5 +42,15 @@ class Prescription extends BaseModel
         };
     }
 
+    public function statusBg(): string
+    {
+        return match ($this->status) {
+            self::STATUS_PENDING => 'bg-warning',
+            self::STATUS_ACTIVE => 'bg-success',
+            self::STATUS_INACTIVE => 'bg-danger',
+            default => 'bg-secondary',
+        };
+    }
+
 
 }

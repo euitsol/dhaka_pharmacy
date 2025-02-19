@@ -149,7 +149,7 @@ class PrescriptionService
     public function getOrderPrescriptionsDetails(): OrderPrescription
     {
         if(isset($this->orderPrescription) && $this->orderPrescription instanceof OrderPrescription){
-            return $this->orderPrescription->load(['order', 'prescription', 'prescription.images', 'creater' ]);
+            return $this->orderPrescription->load(['order', 'prescription', 'prescription.images', 'creater', 'order.address', 'order.customer', 'order.products']);
         }
         throw new ModelNotFoundException("Order Prescription not found");
     }
@@ -185,6 +185,7 @@ class PrescriptionService
 
     public function resolveStatus(string $status): int
     {
+        $status = strtolower($status);
         return match ($status) {
             'pending' => OrderPrescription::STATUS_PENDING,
             'accepted' => OrderPrescription::STATUS_ACCEPTED,

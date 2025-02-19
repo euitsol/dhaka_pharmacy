@@ -1,0 +1,37 @@
+
+/* Timelines */
+:root {
+    --timeline-primary-color: #333;
+    --timeline-secondary-color: #6c757d;
+    --timeline-success-color: #28a745;
+    --timeline-pending-color: #6c757d;
+}
+
+.timeline-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.timeline-icon.completed {
+    color: var(--timeline-success-color);
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+.timeline-icon.pending {
+    color: var(--timeline-pending-color);
+    background-color: rgba(108, 117, 125, 0.1);
+}
+
+.timeline-content {
+    padding-left: 1rem;
+    /* border-left: 2px solid #e9ecef; */
+}
+
+.timeline-item:last-child .timeline-content {
+    border-left: none;
+}
