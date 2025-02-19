@@ -191,6 +191,10 @@
         .select2-container--default .select2-selection--single .select2-selection__arrow b {
             margin-top: -4px !important;
         }
+        .top_pages_table tr th,
+        .top_pages_table tr td{
+            background-color: transparent !important;
+        }
     </style>
 @endpush
 @section('content')
@@ -441,47 +445,42 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">{{ __('Page Analytics') }}</h4>
+                <div class="card-header border-0">
+                    <h5 class="mb-0">{{ __('Top Pages') }}</h5>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6>{{ __('Top 5 pages') }}</h6>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h6>{{ __('Last 7 days') }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>{{ __('Page') }}</th>
-                                                    <th>{{ __('Active Users') }}</th>
-                                                    <th>{{ __('Views') }}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($analytics_data as $ad)
-                                                    <tr>
-                                                        <td>{{ $ad['pageTitle'] }}</td>
-                                                        <td>{{ $ad['activeUsers'] }}</td>
-                                                        <td>{{ $ad['screenPageViews'] }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="card-body mt-2 p-3">
+                    <div class="table-responsive top_pages_table">
+                        <table class="table align-items-center table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7">{{ __('Page') }}</th>
+                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">{{ __('Users') }}</th>
+                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">{{ __('Views') }}</th>
+                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">{{ __('View Rate') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($analytics_data as $ad)
+                                    <tr>
+                                        <td class="ps-4">
+                                            <p class="text-sm mb-0">{{ $ad['pageTitle'] }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-sm mb-0">{{ $ad['activeUsers'] }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-sm mb-0">{{ $ad['screenPageViews'] }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-sm text-secondary mb-0">N/A</p>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <small class="float-end">
+                            <p>{{ __('This data is based on Google Analytics past 7 days records') }}</p>
+                        </small>
                     </div>
                 </div>
             </div>
