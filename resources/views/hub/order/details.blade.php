@@ -56,29 +56,82 @@
 @push('js')
 <script>
 $(document).ready(function() {
-    $(document).on('input', '.unit_price', function() {
-        let row = $(this).closest('.card');
-        let quantity = parseFloat(row.find('.quantity').text()) || 0;
-        let price = parseFloat($(this).val()) || 0;
+    const OrderCollector = {
+        init: function() {
+            this.bindEvents();
+        },
 
-        // Calculate unit total
-        let unitTotal = quantity * price;
-        row.find('.unit_total_price').text(unitTotal.toFixed(2));
-        row.find('.unit_total').show();
+        bindEvents: function() {
+            $(document).on('input', '.unit_price', this.handlePriceCalculation);
+            $('#order_collecting_form').on('submit', this.handleFormSubmission);
+        },
 
-        // Calculate grand total
-        let grandTotal = 0;
-        $('.unit_total_price').each(function() {
-            grandTotal += parseFloat($(this).text()) || 0;
-        });
-        $('.total_collecting_price').text(grandTotal.toFixed(2));
-    });
+        handlePriceCalculation: function() {
+            const row = $(this).closest('.card');
+            const quantity = parseFloat(row.find('.quantity').text()) || 0;
+            const price = parseFloat($(this).val()) || 0;
 
-    $('#order_collecting_form').on('submit', function(e) {
-        e.preventDefault();
+            // Calculate unit total
+            const unitTotal = quantity * price;
+            row.find('.unit_total_price').text(unitTotal.toFixed(2));
+            row.find('.unit_total').show();
 
-        // $('.pharmacy_id')
-    })
+            OrderCollector.updateGrandTotal();
+        },
+
+        updateGrandTotal: function() {
+            let grandTotal = 0;
+            $('.unit_total_price').each(function() {
+                grandTotal += parseFloat($(this).text()) || 0;
+            });
+            $('.total_collecting_price').text(grandTotal.toFixed(2));
+        },
+
+        validateForm: function() {
+            let isValid = true;
+            const errors = [];
+
+            // Reset previous validation states
+            $('.pharmacy_id, .unit_price').removeClass('is-invalid');
+
+            // Validate each order item
+            $('.card').each(function(index) {
+                const pharmacySelect = $(this).find('.pharmacy_id');
+                const unitPrice = $(this).find('.unit_price');
+                const itemNumber = index + 1;
+
+                if (!pharmacySelect.val()) {
+                    isValid = false;
+                    pharmacySelect.addClass('is-invalid');
+                    errors.push(`Please select pharmacy for item #${itemNumber}`);
+                }
+
+                if (!unitPrice.val() || parseFloat(unitPrice.val()) <= 0) {
+                    isValid = false;
+                    unitPrice.addClass('is-invalid');
+                    errors.push(`Please enter valid collecting price for item #${itemNumber}`);
+                }
+            });
+
+            return {
+                isValid: isValid,
+                errors: errors
+            };
+        },
+
+        handleFormSubmission: function(e) {
+            const validation = OrderCollector.validateForm();
+
+            if (!validation.isValid) {
+                e.preventDefault();
+                toastr.error(validation.errors.join('\n'));
+                return false;
+            }
+
+            return true;
+        }
+    };
+    OrderCollector.init();
 });
 </script>
 @endpush
