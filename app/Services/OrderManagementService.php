@@ -48,7 +48,7 @@ class OrderManagementService
         };
     }
 
-    public function resolveStatusBgColor(string $status): string
+    public function resolveStatusBg(string $status): string
     {
         return match ($status) {
             'initiated' => 'bg-warning',

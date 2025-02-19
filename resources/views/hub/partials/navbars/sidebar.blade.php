@@ -15,6 +15,33 @@
                     ],
                 ],
             ])
+
+            <li>
+                <a class="@if ($pageSlug == 'order_assigned') @else collapsed @endif" data-toggle="collapse"
+                    href="#om"
+                    @if ($pageSlug == 'order_assigned') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-truck"></i>
+                    <span class="nav-link-text">{{ __('Order Management') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'order_assigned') show @endif" id="om">
+                    <ul class="nav pl-2">
+                        @include('hub.partials.menu_buttons', [
+                            'menuItems' => [
+                                [
+                                    'pageSlug' => 'order_assigned',
+                                    'routeName' => 'hub.order.list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'assigned',
+                                    'label' => 'Assigned Orders',
+                                ],
+                            ],
+                        ])
+                    </ul>
+                </div>
+            </li>
+
         </ul>
     </div>
 </div>

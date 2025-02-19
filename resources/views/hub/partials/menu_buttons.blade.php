@@ -10,7 +10,7 @@
         }else{
             $check = check_access_by_route_name($menuItem['routeName']);
         }
-        
+
         //Parameters
         $parameterArray = isset($menuItem['params']) ? $menuItem['params'] : [];
         $subParameterArray = isset($menuItem['subMenu']['subParams']) ? $menuItem['subMenu']['subParams'] : [];
@@ -39,8 +39,8 @@
                         <span class="nav-link-text" >{{ $menuItem['label'] }}</span>
                         <b class="caret mt-1"></b>
                     </a>
-                
-                        
+
+
                         <div class="collapse @if (isset($menuItem['subMenu']) && (collect($menuItem['pageSlug'])->contains($pageSlug))) show @endif" id="@if(isset($menuItem['id'])){{$menuItem['id']}}@endif">
                             <ul class="nav pl-2">
                                 @foreach($menuItem['subMenu'] as $subMenu)
@@ -48,7 +48,8 @@
                                         if(!isset($subMenu['subRouteName']) || $subMenu['subRouteName'] == '' || $subMenu['subRouteName'] == null){
                                             $check = false;
                                         }else{
-                                            $check = check_access_by_route_name($subMenu['subRouteName']);
+                                            // $check = check_access_by_route_name($subMenu['subRouteName']);
+                                            $check = true;
                                         }
                                     @endphp
                                     @if($check)
@@ -64,7 +65,7 @@
                         </div>
                 </li>
             @endif
-        
+
     @endif
     {{-- For Main Menus  --}}
     @if(!isset($menuItem['routeName']) || $menuItem['routeName'] == '' || $menuItem['routeName'] == null)

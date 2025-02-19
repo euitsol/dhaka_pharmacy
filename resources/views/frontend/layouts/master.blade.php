@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    {{-- Google Tag --}}
+    @include('frontend.includes.google_tag')
+
     <!-- CSRF Token -->
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
 

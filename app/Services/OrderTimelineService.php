@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\{Order, OrderStatusRule, OrderTimeline};
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use App\Models\OrderHub; // added this line
 
 class OrderTimelineService
 {
@@ -52,5 +53,30 @@ class OrderTimelineService
             return $entry->statusRule->sort_order;
         })->values();
 
+    }
+
+    public function getHubProcessedTimeline(Order $order): Collection
+    {
+        $query = $order->timelines()->select('id','order_id','status','expected_completion_time','actual_completion_time')
+            ->with('statusRule:id,status_code,status_name,sort_order')
+            ->orderBy('created_at');
+
+        return $query->get()
+            ->filter(function ($entry) {
+                return in_array($entry->status, [
+                    Order::HUB_ASSIGNED,
+                    Order::ITEMS_COLLECTING,
+                    Order::ITEMS_COLLECTED,
+                    Order::PACHAGE_PREPARED,
+                    Order::DISPATCHED,
+                    Order::DELIVERED,
+                    Order::CANCELLED,
+                    Order::RETURNED
+                ]);
+            })
+            ->sortBy(function ($entry) {
+                return $entry->statusRule->sort_order;
+            })
+            ->values();
     }
 }

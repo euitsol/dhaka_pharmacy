@@ -129,6 +129,7 @@ use App\Http\Controllers\Rider\OperationalAreaController as RiderOperationalArea
 use App\Http\Controllers\Rider\WithdrawMethodController as RiderWithdrawMethodController;
 use App\Http\Controllers\Hub\Auth\LoginController as StaffLoginController;
 use App\Http\Controllers\Hub\DashboardController as HubDashboardController;
+use App\Http\Controllers\Hub\Order\OrderManagementController as HubOrderManagementController;
 use App\Http\Controllers\User\KYC\KycVerificationController as UserKycVerificationController;
 use App\Http\Controllers\User\NotificationController as UserNotificationController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
@@ -183,7 +184,7 @@ Route::controller(AdminLoginController::class)->prefix('admin')->name('admin.')-
 });
 
 // Staff Login Routes
-Route::controller(StaffLoginController::class)->prefix('staff')->name('staff.')->group(function () {
+Route::controller(StaffLoginController::class)->prefix('hub')->name('staff.')->group(function () {
     Route::get('/login', 'staffLogin')->name('login');
     Route::post('/login', 'staffLoginCheck')->name('login');
     Route::post('/logout', 'logout')->name('logout');
@@ -762,7 +763,6 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
     // });
 
 
-
     // Admin Payment Management
     Route::group(['as' => 'pym.', 'prefix' => 'payment-management'], function () {
         Route::controller(PaymentManagementController::class)->prefix('payment')->name('payment.')->group(function () {
@@ -1255,6 +1255,12 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
 
 Route::group(['middleware' => ['auth:staff', 'permission'], 'prefix' => 'hub'], function () {
     Route::get('/dashboard', [HubDashboardController::class, 'dashboard'])->name('hub.dashboard');
+
+    Route::controller(HubOrderManagementController::class)->prefix('orders')->name('hub.order.')->group(function () {
+        Route::get('status/{status}', 'list')->name('list');
+        Route::get('details/{id}', 'details')->name('details');
+        Route::get('collect/{id}', 'collect')->name('collect');
+    });
 });
 
 

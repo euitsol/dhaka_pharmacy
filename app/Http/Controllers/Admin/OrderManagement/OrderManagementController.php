@@ -43,7 +43,7 @@ class OrderManagementController extends Controller
     public function index($status): View|RedirectResponse
     {
         $data['status'] = $status;
-        $data['status_bg_color'] = $this->orderManagementService->resolveStatusBgColor($status);
+        $data['status_bg_color'] = $this->orderManagementService->resolveStatusBg($status);
         switch ($status) {
             case 'initiated':
                 $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
