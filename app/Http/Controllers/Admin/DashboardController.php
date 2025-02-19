@@ -15,16 +15,20 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use App\Services\AnalyticsService;
 
 
 class DashboardController extends Controller
 {
-    public function __construct()
+    protected AnalyticsService $analyticsService;
+    public function __construct(AnalyticsService $analyticsService)
     {
         $this->middleware('admin');
+        $this->analyticsService = $analyticsService;
     }
     public function dashboard(): View
     {
+        dd($this->analyticsService->getPageViews());
         $data['customers'] = User::activated()->count();
         $data['pharmacies'] = Pharmacy::activated()->count();
         $data['dms'] = DistrictManager::activated()->count();
