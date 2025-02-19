@@ -1,10 +1,10 @@
 @extends('user.layouts.master', ['pageSlug' => 'address'])
 @section('title', 'Address')
 @push('css_link')
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+    {{-- <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
     <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
-        type="text/css" />
+        type="text/css" /> --}}
     <link rel="stylesheet" href="{{ asset('user/asset/css/address.css') }}">
 @endpush
 
@@ -17,8 +17,8 @@
                         <h4>{{ __('My Address') }}</h4>
                     </div>
                     <div>
-                        <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal"
-                            data-target="#address_add_modal">Add
+                        <a href="javascript:void(0)" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#address_add_modal">Add
                             Address</a>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                                         {{ $address->address }} <span
                                             class="ml-2 badge {{ $address->getFeaturedBadgeClass() }}">{{ $address->getFeaturedStatus() }}</span>
                                     </button>
-                                    <div class="action-btns d-flex align-items-center justify-content-between ">
+                                    <div class="action-btns d-flex align-items-center justify-content-between gap-3 px-3">
                                         <a href="javascript:void(0)" data-id="{{ $address->id }}" class="edit-btn"><i
                                                 class="fa-solid fa-pen-to-square text-info"></i></a>
                                         <a href="{{ route('u.as.delete', $address->id) }}" class="dlt-btn"
@@ -67,13 +67,13 @@
                                             <div class="col-md-12 mt-sm-3">
                                                 <span class="strong">Instruction: </span> {!! $address->delivery_instruction !!}
                                             </div>
-                                            <div class="col-md-12 mt-sm-3 mt-4">
+                                            {{-- <div class="col-md-12 mt-sm-3 mt-4">
                                                 @if (!empty($address->latitude) && !empty($address->longitude))
                                                     <div class="my-map" id="map{{ $key }}"
                                                     data-lat={{ $address->latitude }} data-lng={{ $address->longitude }}></div>
                                                 @endif
 
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -94,10 +94,10 @@
 @endsection
 
 @push('js_link')
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    {{-- <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
-    </script>
-    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
+    </script> --}}
+    {{-- <script src="{{ asset('user/asset/js/mapbox.js') }}"></script> --}}
 @endpush
 
 @push('js')

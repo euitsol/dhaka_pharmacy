@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="address_add_modalLabel">{{ __('Add New Address') }}</h5>
 
-                <button type="button" class="close btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
 
@@ -13,9 +13,9 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <div class="map" id="user_a_map"></div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-12">
                         <form action="{{ route('u.as.store') }}" method="POST">
                             @csrf
@@ -29,14 +29,10 @@
                                         placeholder="Enter your full address">
                                 </div>
                                 <div class="form-group col-md-6 p-2">
-                                    <label for="city">{{ __('City') }} <small
+                                    <label for="city" class="mb-1">{{ __('City') }} <small
                                             class="text-danger">*</small></label>
-                                    <select name="city" id="city_select" class="form-control">
-                                        <option value="">{{ __('Select City') }}</option>
-                                        <option value="Dhaka City">Dhaka City</option>
-                                        <option value="Gaibanda">Gaibanda</option>
-                                        <option value="Narayanganj">Narayanganj</option>
-                                        <option value="Rajshahi">Rajshahi</option>
+                                    <select name="city" id="city_select" class="form-control city_select">
+
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6 p-2">
@@ -46,14 +42,12 @@
                                         placeholder="Enter your street name">
                                 </div>
                                 <div class="form-group col-md-6 p-2">
-                                    <label for="apartment">{{ __('Apartment Name') }} <small
-                                            class="text-danger">*</small></label>
+                                    <label for="apartment">{{ __('Apartment Name') }}</label>
                                     <input type="text" class="form-control mt-1" id="apartment" name="apartment"
                                         placeholder="Enter your apartment name">
                                 </div>
                                 <div class="form-group col-md-6 p-2">
-                                    <label for="floor">{{ __('Floor') }} <small
-                                            class="text-danger">*</small></label>
+                                    <label for="floor">{{ __('Floor') }}</label>
                                     <input type="text" class="form-control mt-1" id="floor" name="floor"
                                         placeholder="Enter your apartment floor">
                                 </div>
