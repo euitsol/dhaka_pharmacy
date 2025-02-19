@@ -22,13 +22,13 @@ class AddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lat' => 'required|string',
-            'long' => 'required|string',
+            'lat' => 'nullable|string',
+            'long' => 'nullable|string',
             'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
+            'city' => 'required|exists:delivery_zone_cities,city_name',
             'street' => 'required|string|max:255',
-            'apartment' => 'required|string|max:255',
-            'floor' => 'required|string|max:255',
+            'apartment' => 'nullable|string|max:255',
+            'floor' => 'nullable|string|max:255',
             'instruction' => 'nullable|string|max:1000',
             'note' => 'nullable|string|max:1000'
         ];

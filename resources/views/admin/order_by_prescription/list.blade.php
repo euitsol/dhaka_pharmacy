@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Prescription ID') }}</th>
+                                <th>{{ __('Order Prescription ID') }}</th>
                                 <th>{{ __('Prescription Images') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Submitted at') }}</th>
@@ -35,33 +35,20 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td>{{ $order_prescription->id}}</td>
                                     <td class="d-flex align-items-center">
-                                        @if (optional($order_prescription->prescriptions))
-                                            @foreach ($order_prescription->prescriptions as $prescription)
-                                                @foreach ($prescription->images as $image)
-                                                    <div id="lightbox" class="lightbox mr-2">
-                                                        <div class="lightbox-content">
-                                                            <img src="{{ storage_url($image->path) }}" class="lightbox_image">
-                                                        </div>
-                                                        <div class="close_button fa-beat">X</div>
+                                        @if (optional($order_prescription->prescription)->images)
+                                            @foreach ($order_prescription->prescription->images as $image)
+                                                <div id="lightbox" class="lightbox mr-2">
+                                                    <div class="lightbox-content">
+                                                        <img src="{{ storage_url($image->path) }}" class="lightbox_image">
                                                     </div>
-                                                @endforeach
+                                                    <div class="close_button fa-beat">X</div>
+                                                </div>
                                             @endforeach
                                         @endif
                                     </td>
                                     <td><span class=" badge {{ $order_prescription->statusBg() }}">{{ $order_prescription->status_string }}</span></td>
                                     <td>{{ timeFormate($order_prescription->created_at) }}</td>
                                     <td>
-                                        @if ($order_prescription->status == 1)
-                                            @include('admin.partials.action_buttons', [
-                                                'menuItems' => [
-                                                    [
-                                                        'routeName' => 'obp.order.obp_details',
-                                                        'params' => [encrypt($order_prescription->id)],
-                                                        'label' => 'Details',
-                                                    ],
-                                                ],
-                                            ])
-                                        @else
                                             @include('admin.partials.action_buttons', [
                                                 'menuItems' => [
                                                     [
@@ -71,7 +58,6 @@
                                                     ],
                                                 ],
                                             ])
-                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

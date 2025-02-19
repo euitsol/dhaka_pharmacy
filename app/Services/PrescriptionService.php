@@ -17,12 +17,19 @@ use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Instanceof_;
 use RuntimeException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Services\UserService;
 
 class PrescriptionService
 {
     protected ?User $user=null;
     protected ?Prescription $prescription=null;
     protected ?OrderPrescription $orderPrescription=null;
+    protected ?UserService $userService=null;
+
+    public function __construct(?UserService $userService=null)
+    {
+        $this->userService = $userService;
+    }
 
     public function setUser(User $user): self
     {
@@ -30,13 +37,17 @@ class PrescriptionService
         return $this;
     }
 
-    public function setUserByPhone(int $phone): self|null
+    public function setUserByPhone(int $phone): self
     {
         $user = User::where('phone', $phone)->first();
         if($user){
             $this->user = $user;
             return $this;
-        }return null;
+        }else{
+            $user = $this->userService->createUser(['phone'=>$phone]);
+            $this->user = $user;
+            return $this;
+        }
     }
 
     public function setPrescription(int $prescriptionId): self
@@ -51,7 +62,7 @@ class PrescriptionService
 
     public function setOrderPrescription(int $op_id): self
     {
-        $orderPrescription = OrderPrescription::with('prescriptions')->where('id', $op_id)->first();
+        $orderPrescription = OrderPrescription::with('prescription')->where('id', $op_id)->first();
         if(!$orderPrescription){
             throw new ModelNotFoundException("Order Prescription not found");
         }
@@ -131,14 +142,14 @@ class PrescriptionService
 
     public function getOrderPrescriptions(int $status): Collection
     {
-        return OrderPrescription::with(['order', 'prescriptions', 'prescriptions.images', 'creater' ])
+        return OrderPrescription::with(['order', 'prescription', 'prescription.images', 'creater' ])
                 ->where('status', $status)->get();
     }
 
     public function getOrderPrescriptionsDetails(): OrderPrescription
     {
         if(isset($this->orderPrescription) && $this->orderPrescription instanceof OrderPrescription){
-            return $this->orderPrescription->load(['order', 'prescriptions', 'prescriptions.images', 'creater' ]);
+            return $this->orderPrescription->load(['order', 'prescription', 'prescription.images', 'creater', 'order.address', 'order.customer', 'order.products']);
         }
         throw new ModelNotFoundException("Order Prescription not found");
     }
@@ -174,6 +185,7 @@ class PrescriptionService
 
     public function resolveStatus(string $status): int
     {
+        $status = strtolower($status);
         return match ($status) {
             'pending' => OrderPrescription::STATUS_PENDING,
             'accepted' => OrderPrescription::STATUS_ACCEPTED,

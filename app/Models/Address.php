@@ -52,7 +52,6 @@ class Address extends BaseModel
             return 'badge bg-info';
         }
     }
-
     public function zone():BelongsTo
     {
         return $this->belongsTo(DeliveryZone::class);
