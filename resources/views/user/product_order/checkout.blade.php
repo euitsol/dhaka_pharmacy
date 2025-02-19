@@ -4,13 +4,12 @@
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/checkout.css') }}">
 @endpush
 @push('css_link')
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+    {{-- <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
     <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
-        type="text/css" />
-    <link rel="stylesheet" href="{{ asset('user/asset/css/address.css') }}">
+        type="text/css" /> --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('frontend/asset/css/address-modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('user/asset/css/address.css') }}">
     <script>
         const data = {
             'details_url': `{{ route('u.ck.address', ['param']) }}`,
@@ -240,11 +239,11 @@
 @endsection
 
 @push('js_link')
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    {{-- <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
-    </script>
+    </script> --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
+    <script src="{{ asset('user/asset/js/address.js') }}"></script>
     <script src="{{ asset('frontend/asset/js/checkout.js') }}"></script>
 @endpush
 

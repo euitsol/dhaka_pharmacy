@@ -26,7 +26,7 @@ class AddressRequest extends BaseRequest
             'longitude' => 'nullable|numeric|between:-180,180',
             'address' => 'required|string|max:255',
             'city' => 'required|exists:delivery_zone_cities,city_name',
-            'street_address' => 'nullable|string|max:255',
+            'street_address' => 'required|string|max:255',
             'apartment' => 'nullable|string|max:255',
             'floor' => 'nullable|string|max:255',
             'delivery_instruction' => 'nullable|string|max:1000',
