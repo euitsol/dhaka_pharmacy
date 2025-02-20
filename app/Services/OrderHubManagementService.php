@@ -56,6 +56,20 @@ class OrderHubManagementService
         );
     }
 
+    public function prepareOrder(array $formData)
+    {
+        DB::beginTransaction();
+        $orderHub = OrderHub::where('order_id', $this->order->id)->ownedByHub()->get()->first();
+        $this->setOrderHub($orderHub);
+        $this->orderHub->update(['status' => OrderHub::PREPARED]);
+        $this->updateOrderStatus($this->order, Order::PACHAGE_PREPARED);
+        $this->orderTimelineService->updateTimelineStatus(
+            $this->order,
+            Order::PACHAGE_PREPARED
+        );
+        DB::commit();
+    }
+
     public function resolveStatus(string $status): string
     {
         $status = strtolower($status);

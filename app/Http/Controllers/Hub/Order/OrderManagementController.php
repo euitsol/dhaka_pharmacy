@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hub\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Hub\ItemCollectRequest;
+use App\Http\Requests\Hub\ItemPreparedRequest;
 use App\Models\{Hub, Order, OrderHub, Pharmacy};
 use App\Services\{OrderHubManagementService, OrderTimelineService};
 use Illuminate\Http\JsonResponse;
@@ -46,8 +47,8 @@ class OrderManagementController extends Controller
     public function details($id)
     {
         $data['oh'] = OrderHub::with(['hub', 'orderhubproducts', 'order'])->ownedByHub()->where('id', decrypt($id))->get()->first();
-        dd($data['oh']->toArray());
         $data['pharmacies'] = Pharmacy::activated()->latest()->get();
+        // dd($data['oh']->toArray());
         try{
             $data['timelines'] = $this->orderTimelineService->getHubProcessedTimeline($data['oh']->order);
         }catch(\Exception $e){
@@ -80,7 +81,21 @@ class OrderManagementController extends Controller
             $this->orderHubManagementService->setOrder($order);
             $this->orderHubManagementService->collectOrderItems($request->validated());
             sweetalert()->addSuccess('You have successfully collected the order. Next step is to pack the order.');
-            return redirect()->route('hub.order.details', encrypt($order->order_id));
+            return redirect()->route('hub.order.details', encrypt($order->id));
+        } catch (\Exception $e) {
+            sweetalert()->addError($e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function prepared(ItemPreparedRequest $request)
+    {
+        try {
+            $order = Order::findOrFail($request->order_id);
+            $this->orderHubManagementService->setOrder($order);
+            $this->orderHubManagementService->prepareOrder($request->validated());
+            sweetalert()->addSuccess('You have successfully prepared the order. Next step is to dispatch the order. When stedfas arrives.');
+            return redirect()->route('hub.order.details', encrypt($order->id));
         } catch (\Exception $e) {
             sweetalert()->addError($e->getMessage());
             return redirect()->back();

@@ -9,6 +9,12 @@
         height: 25rem;
         overflow:auto;
     }
+    .hub-display {
+            padding: 6px 12px;
+            border-radius: 4px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+        }
 </style>
 @endpush
 
@@ -64,6 +70,7 @@ $(document).ready(function() {
         bindEvents: function() {
             $(document).on('input', '.unit_price', this.handlePriceCalculation);
             $('#order_collecting_form').on('submit', this.handleFormSubmission);
+            $('#order_prepared_form').on('submit', this.handlePreparedFormSubmission);
         },
 
         handlePriceCalculation: function() {
@@ -125,6 +132,22 @@ $(document).ready(function() {
             if (!validation.isValid) {
                 e.preventDefault();
                 confirm('Are you sure collect this order?')
+                toastr.error(validation.errors.join('\n'));
+                return false;
+            }
+
+            return true;
+        },
+
+        handlePreparedFormSubmission: function(e) {
+            const validation = {
+                isValid: true,
+                errors: []
+            };
+
+            if (!validation.isValid) {
+                e.preventDefault();
+                confirm('Are you sure prepared this order?')
                 toastr.error(validation.errors.join('\n'));
                 return false;
             }

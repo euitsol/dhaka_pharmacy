@@ -39,13 +39,22 @@ class OrderHub extends BaseModel
     {
         return $this->belongsToMany(OrderProduct::class, 'order_hub_products', 'order_hub_id', 'order_product_id')
             ->withPivot('status')
+            ->with('product.pro_cat')
             ->join('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id')
-            ->join('order_products', 'order_hub_products.order_product_id', '=', 'order_products.id')
-            ->join('products', 'order_products.product_id', '=', 'products.id')
+            ->leftJoin('order_hub_pharmacy_products', function($joinA) {
+                $joinA->on('order_hub_pharmacy_products.order_product_id', '=', 'order_products.id');
+            })
+            ->leftJoin('order_hub_pharmacies', function($joinB) {
+                $joinB->on('order_hub_pharmacies.id', '=', 'order_hub_pharmacy_products.order_hub_pharmacy_id');
+            })
+            ->leftJoin('pharmacies', 'order_hub_pharmacies.pharmacy_id', '=', 'pharmacies.id')
             ->select([
-                'order_products.id as pivot_order_product_id', 'order_products.quantity as pivot_order_product_quantity',
+                'order_products.id',
+                'order_products.quantity',
+                'order_products.product_id',
                 'medicine_units.name as pivot_unit_name',
-                'products.name as pivot_product_name',
+                'pharmacies.name as pivot_pharmacy_name',
+                'pharmacies.id as pivot_pharmacy_id',
             ]);
     }
 
