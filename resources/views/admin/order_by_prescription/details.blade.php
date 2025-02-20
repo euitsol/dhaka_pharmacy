@@ -433,8 +433,11 @@
                                             </div>
                                         </div>
 
+                                        @if ($editable)
                                         <button type="submit"
                                             class="btn btn-primary w-100">{{ __('Submit Order') }}</button>
+
+                                        @endif
                                     </form>
                                 </div>
                             </div>

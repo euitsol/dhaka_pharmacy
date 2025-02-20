@@ -1,6 +1,7 @@
-@extends('admin.layouts.master', ['pageSlug' => 'order_' . $status])
+@extends('admin.layouts.master', ['pageSlug' => 'order_' . titleToSlug($status, '_')])
 @section('title', slugToTitle($status) . ' Order List')
 @section('content')
+{{ 'order_' . titleToSlug($status, '_') }}
     <div class="row">
         <div class="col-md-12">
             <div class="card ">

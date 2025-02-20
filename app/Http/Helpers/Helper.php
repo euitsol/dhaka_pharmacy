@@ -569,12 +569,12 @@ function is_valid_route($routeOrUrl)
 
 function slugToTitle($slug)
 {
-    return ucwords(strtolower(str_replace('-', ' ', $slug)));
+    return ucwords(strtolower(str_replace(['-', '_'], ' ', $slug)));
 }
 
-function titleToSlug($title)
+function titleToSlug($title, $replace = '-')
 {
-    return strtolower(str_replace(' ', '-', $title));
+    return strtolower(str_replace(' ', $replace, $title));
 }
 function activatedTime($start_time, $end_time)
 {
