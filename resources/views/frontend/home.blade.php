@@ -33,7 +33,7 @@
                 <div class="row align-items-baseline">
                     @if ($bsItems->isNotEmpty())
                         <div class="col-12 col-xl-3 best-selling-col mb-3 mb-xl-0">
-                            <h2 class="title mb-0 mb-lg-2 mb-xl-3">{{ __('Best Selling') }}</h2>
+                            <h2 class="title mb-0 mb-lg-2 mb-xl-3">{{ __('Medicine Devices') }}</h2>
                             <div class="best-selling-products">
                                 <div class="all-product">
                                     <div class="row m-0">
@@ -147,11 +147,11 @@
                                             </div>
 
                                             <!-- <div class="uk-visible@sbtn-arrow">
-                                                                                                                                                                                                                                            <a class="uk-position-center-left-out uk-position-small" href
-                                                                                                                                                                                                                                                uk-slidenav-previous uk-slider-item="previous"></a>
-                                                                                                                                                                                                                                            <a class="uk-position-center-right-out uk-position-small" href uk-slidenav-next
-                                                                                                                                                                                                                                                uk-slider-item="next"></a>
-                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                <a class="uk-position-center-left-out uk-position-small" href
+                                                                                                                                                                                                                                                    uk-slidenav-previous uk-slider-item="previous"></a>
+                                                                                                                                                                                                                                                <a class="uk-position-center-right-out uk-position-small" href uk-slidenav-next
+                                                                                                                                                                                                                                                    uk-slider-item="next"></a>
+                                                                                                                                                                                                                                            </div> -->
 
                                         </div>
                                     </div>
