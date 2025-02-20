@@ -27,7 +27,7 @@ class ItemCollectRequest extends FormRequest
             'data' => 'required|array|min:1',
             'data.*.p_id' => 'required|exists:medicines,id',
             'data.*.pharmacy_id' => 'required|exists:pharmacies,id',
-            'data.*.unit_collecting_price' => ['required', 'numeric', 'min:0.01'],
+            'data.*.unit_payable_price' => ['required', 'numeric', 'min:0.01'],
         ];
     }
 
@@ -38,9 +38,9 @@ class ItemCollectRequest extends FormRequest
             'data.*.p_id.exists' => 'The selected medicine is invalid.',
             'data.*.pharmacy_id.required' => 'The pharmacy field is required.',
             'data.*.pharmacy_id.exists' => 'The selected pharmacy is invalid.',
-            'data.*.unit_collecting_price.required' => 'The unit collecting price field is required.',
-            'data.*.unit_collecting_price.numeric' => 'The unit collecting price must be numeric.',
-            'data.*.unit_collecting_price.min' => 'The unit collecting price must be at least 0.01.',
+            'data.*.unit_payable_price.required' => 'The unit collecting price field is required.',
+            'data.*.unit_payable_price.numeric' => 'The unit collecting price must be numeric.',
+            'data.*.unit_payable_price.min' => 'The unit collecting price must be at least 0.01.',
         ];
     }
 }

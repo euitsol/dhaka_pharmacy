@@ -1,5 +1,7 @@
 @php
     $submitted = \App\Models\Order::SUBMITTED == $order->status;
+    $assigend = \App\Models\Order::HUB_ASSIGNED == $order->status;
+    $collected = \App\Models\Order::ITEMS_COLLECTED == $order->status;
 @endphp
 
 <form action="{{ route('om.order.hub_assign') }}" method="POST" class="px-0">
@@ -68,7 +70,7 @@
                                     {{-- Hub Assignment Column --}}
                                     <div class="col-3">
                                         <div class="form-group">
-                                            @if($order->status === \App\Models\Order::SUBMITTED)
+                                            @if($submitted)
                                                 {{-- Editable Hub Selection --}}
                                                 <label>{{ __('Assign Hub') }}</label>
                                                 <select class="form-control no-select" name="data[{{ $key }}][hub_id]">
@@ -93,6 +95,22 @@
                                                         <div class="text-danger">
                                                             <i class="fas fa-exclamation-triangle"></i>
                                                             {{ __('Not assigned') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                            @if ($collected)
+                                                <label>{{ __('Collected from Pharmacy') }}</label>
+                                                <div class="hub-display">
+                                                    @if(isset($product->pivot->pharmacy_id) && !empty($product->pivot->pharmacy_id))
+                                                        <div class="text-success">
+                                                            <i class="fa-solid fa-shop"></i>
+                                                            {{ $product->pivot->pharmacy_name }}
+                                                        </div>
+                                                    @else
+                                                        <div class="text-danger">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                            {{ __('Not collected yet') }}
                                                         </div>
                                                     @endif
                                                 </div>

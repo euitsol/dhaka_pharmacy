@@ -48,6 +48,11 @@ class OrderHub extends BaseModel
         return $this->belongsTo(Hub::class, 'hub_id', 'id');
     }
 
+    public function pharmacy(): BelongsTo
+    {
+        return $this->belongsTo(Pharmacy::class, 'pharmacy_id', 'id');
+    }
+
     public function scopeOwnedByHub($query)
     {
         return $query->where('hub_id', staff()->hub_id);

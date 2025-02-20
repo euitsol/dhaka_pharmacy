@@ -15,12 +15,12 @@ class OrderManagementController extends Controller
 {
     protected OrderHubManagementService $orderHubManagementService;
     protected OrderTimelineService $orderTimelineService;
-
     public function __construct(OrderHubManagementService $orderHubManagementService, OrderTimelineService $orderTimelineService)
     {
         $this->orderHubManagementService = $orderHubManagementService;
         $this->orderTimelineService = $orderTimelineService;
     }
+
 
     public function list($status)
     {
@@ -48,7 +48,7 @@ class OrderManagementController extends Controller
         try{
             $data['timelines'] = $this->orderTimelineService->getHubProcessedTimeline($data['oh']->order);
         }catch(\Exception $e){
-            flash()->addError($e->getMessage());
+            sweetalert()->addError($e->getMessage());
             return redirect()->back();
         }
         return view('hub.order.details', $data);
@@ -62,16 +62,25 @@ class OrderManagementController extends Controller
 
             $this->orderHubManagementService->setOrderHub($orderHub);
             $this->orderHubManagementService->collecting();
-            sweetalert()->addSuccess('You have successfully entered into the collecting stage.');
+            sweetalert()->addSuccess('You have successfully entered into the collecting stage. Please collect the order items from the pharmacy and return to the hub.');
             return redirect()->back();
         }catch(\Exception $e){
-            flash()->addError($e->getMessage());
+            sweetalert()->addError($e->getMessage());
             return redirect()->back();
         }
     }
 
     public function collected(ItemCollectRequest $request)
     {
-        dd($request->all());
+        try {
+            $order = Order::findOrFail($request->order_id);
+            $this->orderHubManagementService->setOrder($order);
+            $this->orderHubManagementService->collectOrderItems($request->validated());
+            sweetalert()->addSuccess('You have successfully collected the order. Next step is to pack the order.');
+            return redirect()->route('hub.order.details', encrypt($order->order_id));
+        } catch (\Exception $e) {
+            sweetalert()->addError($e->getMessage());
+            return redirect()->back();
+        }
     }
 }

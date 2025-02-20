@@ -115,6 +115,36 @@ class Order extends BaseModel
         ->leftJoin('hubs', 'hubs.id', '=', 'order_hubs.hub_id');
     }
 
+    public function productsWithHubPharmacy()
+    {
+        return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
+            ->using(OrderProduct::class)
+            ->withPivot(['id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status'])
+            ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id')
+            ->leftJoin('order_hub_products', function($joinB){
+                $joinB->on('order_hub_products.order_product_id', '=', 'order_products.id');
+            })
+            ->leftJoin('order_hubs', function($joinA){
+                $joinA->on('order_hub_products.order_hub_id', '=', 'order_hubs.id');
+            })
+            ->leftJoin('hubs', 'order_hubs.hub_id', '=', 'hubs.id')
+            ->leftJoin('order_hub_pharmacy_products', function($joinB){
+                $joinB->on('order_hub_pharmacy_products.order_product_id', '=', 'order_products.id');
+            })
+            ->leftJoin('order_hub_pharmacies', function($joinA){
+                $joinA->on('order_hub_pharmacies.id', '=', 'order_hub_pharmacy_products.order_hub_pharmacy_id');
+            })
+            ->leftJoin('pharmacies', 'order_hub_pharmacies.pharmacy_id', '=', 'pharmacies.id')
+            ->select([
+                'medicines.*',
+                'order_products.*',
+                'medicine_units.name as pivot_unit_name',
+                'hubs.name as pivot_hub_name', 'hubs.id as pivot_hub_id',
+                'pharmacies.name as pivot_pharmacy_name', 'pharmacies.id as pivot_pharmacy_id',
+                'order_hub_pharmacies.id as pivot_order_hub_pharmacy_id', 'order_hub_pharmacies.total_payable_amount as pivot_order_hub_pharmacy_total_payable_amount',
+            ]);
+    }
+
     public function scopeInitiated($query)
     {
         return $query->where('status', 0);

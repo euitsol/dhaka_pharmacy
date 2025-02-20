@@ -52,7 +52,15 @@ class OrderManagementController extends Controller
                 $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
             case 'hub_assigned':
-                $data['orders'] = Order::with(['productsWithHub'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
+                $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
+                return view('admin.order_management.index', $data);
+
+            case 'items_collecting':
+                $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
+                return view('admin.order_management.index', $data);
+
+            case 'items_collected':
+                $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
             // case 'waiting-for-rider':
             //     $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'odps', 'creater'])
@@ -110,7 +118,7 @@ class OrderManagementController extends Controller
     public function details($id): View
     {
         $data['hubs'] = Hub::with(['address'])->activated()->get();
-        $data['order'] = Order::with(['productsWithHub', 'timelines'])->findOrFail(decrypt($id));
+        $data['order'] = Order::with(['timelines', 'productsWithHubPharmacy'])->findOrFail(decrypt($id));
         // dd($data['order']->toArray());
         return view('admin.order_management.details', $data);
     }

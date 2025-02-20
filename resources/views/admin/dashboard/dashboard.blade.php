@@ -454,7 +454,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7">{{ __('Page') }}</th>
-                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">{{ __('Users') }}</th>
+                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">{{ __('Active Users') }}</th>
                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">{{ __('Views') }}</th>
                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">{{ __('View Rate') }}</th>
                                 </tr>
@@ -479,7 +479,7 @@
                             </tbody>
                         </table>
                         <small class="float-end">
-                            <p>{{ __('This data is based on Google Analytics past 7 days records') }}</p>
+                            <p>{{ __('This data is based on Google Analytics records from the last 7 days.') }}</p>
                         </small>
                     </div>
                 </div>

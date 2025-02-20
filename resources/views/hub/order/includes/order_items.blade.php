@@ -1,6 +1,7 @@
 @php
     $collecting = \App\Models\Order::ITEMS_COLLECTING == $order->status;
     $assigend = \App\Models\Order::HUB_ASSIGNED == $order->status;
+    $collected = \App\Models\Order::ITEMS_COLLECTED == $order->status;
 @endphp
 
 <form action="{{ route('hub.order.collected') }}" method="POST" class="px-0" id="order_collecting_form">
@@ -91,8 +92,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>{{ __('Collecting Price Per Unit') }}</label>
-                                            <input type="number" class="form-control unit_price" name="data[{{ $key }}][unit_collecting_price]" value="{{ optional(optional($ohp->product)->pivot)->collecting_price ?? '' }}" required>
+                                            <label>{{ __('Payable Price Per Unit') }}</label>
+                                            <input type="number" class="form-control unit_price" name="data[{{ $key }}][unit_payable_price]" value="{{ optional(optional($ohp->product)->pivot)->collecting_price ?? '' }}" required>
                                         </div>
                                     </div>
                                     @endif
