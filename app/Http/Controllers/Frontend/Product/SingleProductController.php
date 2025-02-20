@@ -22,11 +22,12 @@ class SingleProductController extends Controller
 
     public function singleProduct($slug): View
     {
-        try{
+        try {
             $this->productService->setProduct($slug);
             $data['single_product'] = $this->productService->details();
             $data['similar_products'] = $this->productService->relatedProducts();
-        }catch(Exception $e){
+            $data['bsProducts'] = $this->productService->bestSellingProducts();
+        } catch (Exception $e) {
             abort(404);
         }
 

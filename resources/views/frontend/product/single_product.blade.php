@@ -154,7 +154,7 @@
                                                                     <td>{{ __(
                                                                         optional($single_product->strength)->quantity .
                                                                             '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ' .
                                                                             optional($single_product->strength)->unit,
                                                                     ) }}
                                                                     </td>
@@ -317,6 +317,103 @@
                             <div class="col-md-12">
                                 <div id="related-product-slider" class="owl-carousel">
                                     @foreach ($similar_products as $product)
+                                        <div class="px-2 py-1">
+                                            <div class="single-pdct">
+                                                <a href="{{ route('product.single_product', $product->slug) }}">
+                                                    <div class="pdct-img">
+                                                        @if ($product->discount_percentage > 0)
+                                                            <span
+                                                                class="discount_tag">{{ formatPercentageNumber($product->discount_percentage) . '% off' }}</span>
+                                                        @endif
+                                                        <img class="w-100" src="{{ $product->image }}"
+                                                            alt="Product Image">
+                                                    </div>
+                                                </a>
+                                                <div class="pdct-info">
+                                                    <div class="product_title">
+                                                        <a href="{{ route('product.single_product', $product->slug) }}">
+                                                            <h3 class="fw-bold" title="{{ $product->attr_title }}">
+                                                                {{ $product->formatted_name }}
+                                                            </h3>
+                                                        </a>
+                                                    </div>
+                                                    <div class="all-product-containt">
+                                                        <p>
+                                                            <a href=""
+                                                                title="{{ optional($product->pro_sub_cat)->name }}">
+                                                                {{ $product->formatted_sub_cat }}
+                                                            </a>
+                                                        </p>
+                                                        <p>
+                                                            <a href="#" class="generic-name"
+                                                                title="{{ optional($product->generic)->name }}">
+                                                                {{ $product->generic_info }}
+                                                            </a>
+                                                        </p>
+                                                        <p>
+                                                            <a href="#" class="company-name"
+                                                                title="{{ optional($product->company)->name }}">
+                                                                {{ $product->company_info }}
+                                                            </a>
+                                                        </p>
+
+                                                    </div>
+                                                    @if ($product->is_tba)
+                                                        <h4><span>{{ __('TBA') }}</span></h4>
+                                                        <div class="add_to_card">
+                                                            <a class="cart-btn no-cart"
+                                                                href="{{ route('product.single_product', $product->slug) }}">
+                                                                <i class="fa-solid fa-info"></i>
+                                                                <span class="d-block d-xl-none">{{ __('Details') }}</span>
+                                                            </a>
+                                                        </div>
+                                                    @else
+                                                        <h4> <span> {!! get_taka_icon() !!}
+                                                                {{ number_format($product->discounted_price, 2) }}</span>
+                                                            @if ($product->discount_percentage > 0)
+                                                                <span class="regular_price">
+                                                                    <del>{!! get_taka_icon() !!}
+                                                                        {{ number_format($product->price, 2) }}</del></span>
+                                                            @endif
+                                                        </h4>
+                                                        <div class="add_to_card">
+                                                            <a class="cart-btn" href="javascript:void(0)"
+                                                                data-product_slug="{{ $product->slug }}">
+                                                                <i class="fa-solid fa-cart-plus"></i>
+                                                                <span
+                                                                    class="d-block d-xl-none">{{ __('Add To Cart') }}</span>
+                                                            </a>
+                                                        </div>
+                                                    @endif
+
+
+                                                    <!-- add to cart button -->
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+    @if ($bsProducts->isNotEmpty())
+        <section class="related_product_section pb-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="related_product">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="title mb-3 mb-lg-4">{{ __('Medical Devices') }}</h2>
+                            </div>
+                            <div class="col-md-12">
+                                <div id="bs-product-slider" class="owl-carousel">
+                                    @foreach ($bsProducts as $product)
                                         <div class="px-2 py-1">
                                             <div class="single-pdct">
                                                 <a href="{{ route('product.single_product', $product->slug) }}">

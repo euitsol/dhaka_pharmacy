@@ -190,7 +190,8 @@ h2.title {
     border-bottom: 1px solid rgba(112, 112, 112, 0.34);
 }
 
-.related_product #related-product-slider .single-pdct .pdct-img > img {
+.related_product #related-product-slider .single-pdct .pdct-img > img,
+.related_product #bs-product-slider .single-pdct .pdct-img > img {
     border-radius: 15px 15px 0 0;
     height: 12.575rem;
     object-fit: cover;
