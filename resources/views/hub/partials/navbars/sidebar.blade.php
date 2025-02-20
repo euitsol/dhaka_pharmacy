@@ -17,15 +17,15 @@
             ])
 
             <li>
-                <a class="@if ($pageSlug == 'order_assigned') @else collapsed @endif" data-toggle="collapse"
+                <a class="@if ($pageSlug == 'order_assigned' || $pageSlug == 'order_collecting' || $pageSlug == 'order_collected') @else collapsed @endif" data-toggle="collapse"
                     href="#om"
-                    @if ($pageSlug == 'order_assigned') aria-expanded="true" @else aria-expanded="false" @endif>
+                    @if ($pageSlug == 'order_assigned' || $pageSlug == 'order_collecting' || $pageSlug == 'order_collected') aria-expanded="true" @else aria-expanded="false" @endif>
                     <i class="fa-solid fa-truck"></i>
                     <span class="nav-link-text">{{ __('Order Management') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'order_assigned') show @endif" id="om">
+                <div class="collapse @if ($pageSlug == 'order_assigned' || $pageSlug == 'order_collecting' || $pageSlug == 'order_collected') show @endif" id="om">
                     <ul class="nav pl-2">
                         @include('hub.partials.menu_buttons', [
                             'menuItems' => [
@@ -36,6 +36,20 @@
                                     'params' => 'assigned',
                                     'label' => 'Assigned Orders',
                                 ],
+                                [
+                                    'pageSlug' => 'order_collecting',
+                                    'routeName' => 'hub.order.list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'collecting',
+                                    'label' => 'Collecting Orders',
+                                ],
+                                [
+                                    'pageSlug' => 'order_collected',
+                                    'routeName' => 'hub.order.list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'collected',
+                                    'label' => 'Collected Orders',
+                                ]
                             ],
                         ])
                     </ul>

@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'order-'.titleToSlug($order->status_string)])
+@extends('admin.layouts.master', ['pageSlug' => 'order_'.titleToSlug($order->status_string, '_')])
 @section('title', slugToTitle($order->status_string).' Order Details')
 @push('css')
     <link rel="stylesheet" href="{{ asset('admin/css/ordermanagement.css') }}">
@@ -16,6 +16,7 @@
     </style>
 @endpush
 @section('content')
+{{ 'order_'.titleToSlug($order->status_string, '_') }}
     <div class="order_details_wrap">
         <div class="row px-3">
             <div class="card px-0">
@@ -32,10 +33,9 @@
                                 'order_status' => $order->status,
                             ])
                         </div>
-                        <div class="col-md-12">
-
+                        <div class="col-md-12 mt-2">
                             @include('admin.order_management.partials.order_items', [
-                                'products' => $order->productsWithHub,
+                                'products' => $order->productsWithHubPharmacy,
                                 'order_status' => $order->status,
                                 'order_id' => $order->id,
                                 'hubs' => $hubs

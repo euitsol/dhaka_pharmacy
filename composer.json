@@ -27,6 +27,7 @@
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-analytics": "^5.5",
         "spatie/laravel-permission": "^6.2",
+        "steadfast-courier/steadfast-courier-laravel-package": "^1.1",
         "stichoza/google-translate-php": "^5.1",
         "tanmuhittin/laravel-google-translate": "^2.2",
         "yajra/laravel-datatables-oracle": "^10.3.1"

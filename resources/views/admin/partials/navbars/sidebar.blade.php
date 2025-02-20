@@ -590,20 +590,20 @@
                 ]))
                 <li>
                     <a class="@if (
-                        $pageSlug == 'order-initiated' ||
-                            $pageSlug == 'order-submitted' ||
-                            $pageSlug == 'order-hub-assigned' ||
-                            $pageSlug == 'order_Waiting-for-rider' ||
-                            $pageSlug == 'order_Delivered' ||
+                        $pageSlug == 'order_initiated' ||
+                            $pageSlug == 'order_submitted' ||
+                            $pageSlug == 'order_hub_assigned' ||
+                            $pageSlug == 'order_items_collecting' ||
+                            $pageSlug == 'order_items_collected' ||
                             $pageSlug == 'order_Assigned' ||
                             $pageSlug == 'order_Canceled') @else collapsed @endif" data-toggle="collapse"
                         href="#order_management"
                         @if (
                             $pageSlug == 'order_initiated' ||
-                                $pageSlug == 'order-submitted' ||
-                                $pageSlug == 'order-hub-assigned' ||
-                                $pageSlug == 'order_Waiting-for-rider' ||
-                                $pageSlug == 'order_Delivered' ||
+                                $pageSlug == 'order_submitted' ||
+                                $pageSlug == 'order_hub_assigned' ||
+                                $pageSlug == 'order_items_collecting' ||
+                                $pageSlug == 'order_items_collected' ||
                                 $pageSlug == 'order_Assigned' ||
                                 $pageSlug == 'order_Canceled') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-truck-fast"></i>
@@ -612,44 +612,51 @@
                     </a>
 
                     <div class="collapse @if (
-                        $pageSlug == 'order-initiated' ||
-                            $pageSlug == 'order-submitted' ||
-                            $pageSlug == 'order-hub-assigned' ||
-                            $pageSlug == 'order_Waiting-for-rider' ||
-                            $pageSlug == 'order_Delivered' ||
+                        $pageSlug == 'order_initiated' ||
+                            $pageSlug == 'order_submitted' ||
+                            $pageSlug == 'order_hub_assigned' ||
+                            $pageSlug == 'order_items_collecting' ||
+                            $pageSlug == 'order_items_collected' ||
                             $pageSlug == 'order_Assigned' ||
                             $pageSlug == 'order_Canceled') show @endif" id="order_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
                                     [
-                                        'pageSlug' => 'order-initiated',
+                                        'pageSlug' => 'order_initiated',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'initiated',
                                         'label' => 'Initiated Orders',
                                     ],
                                     [
-                                        'pageSlug' => 'order-submitted',
+                                        'pageSlug' => 'order_submitted',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'submitted',
                                         'label' => 'Submitted Orders',
                                     ],
                                     [
-                                        'pageSlug' => 'order-hub-assigned',
+                                        'pageSlug' => 'order_hub_assigned',
                                         'routeName' => 'om.order.order_list',
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'hub_assigned',
                                         'label' => 'Hub Assigned Orders',
                                     ],
-                                    // [
-                                    //     'pageSlug' => 'order_Waiting-for-rider',
-                                    //     'routeName' => 'om.order.order_list',
-                                    //     'iconClass' => 'fa-solid fa-minus',
-                                    //     'params' => 'waiting-for-rider',
-                                    //     'label' => 'Waiting For Rider',
-                                    // ],
+                                    [
+                                        'pageSlug' => 'order_items_collecting',
+                                        'routeName' => 'om.order.order_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'items_collecting',
+                                        'label' => 'Hub Collecting Orders',
+                                    ],
+                                    [
+                                        'pageSlug' => 'order_items_collected',
+                                        'routeName' => 'om.order.order_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'items_collected',
+                                        'label' => 'Hub Collected Orders',
+                                    ],
                                     // [
                                     //     'pageSlug' => 'order_Assigned',
                                     //     'routeName' => 'om.order.order_list',

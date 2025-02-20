@@ -54,7 +54,7 @@
     }
 
     .sidebar-cat-section .cat-title {
-        font-size: 16px;
+        font-size: 15px;
         line-height: 24px;
     }
 
@@ -178,7 +178,7 @@
         border: none !important;
         border-radius: 15px 15px 0 0;
         height: 12.575rem !important;
-        object-fit: contain;
+        object-fit: cover;
     }
 
     .single_product_section .similar_products_card {
@@ -492,7 +492,7 @@
     }
 
     .sidebar-cat-section .cat-title {
-        font-size: 16px;
+        font-size: 15px;
         line-height: 23px;
     }
 
@@ -1154,6 +1154,9 @@
 }
 
 @media screen and (max-width: 767px) {
+    .single_product_section .single_product .product_image .xzoom{
+        height: 23rem !important;
+    }
     /*=============================================
         product-section responsive code here
     ===============================================*/
@@ -1492,6 +1495,10 @@
 }
 
 @media screen and (max-width: 575px) {
+
+    .single_product_section .single_product .product_image .xzoom{
+        height: 14rem !important;
+    }
     /*============================================
         uk future tap text slider responsive code
     ===============================================*/
