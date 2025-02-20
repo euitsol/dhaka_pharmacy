@@ -1477,7 +1477,7 @@ margin: 0;
 .dashboard-main-section .col-right .google-map {
     background: var(--primary);
     border-radius: 15px;
-    height: 326px !important;
+    height: 340px !important;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
         rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
@@ -1492,7 +1492,7 @@ margin: 0;
 }
 
 .dashboard-main-section .col-right .google-map .address-btn {
-    padding: 30px 15px;
+    padding: 10px 15px;
 }
 
 .dashboard-main-section .col-right .google-map .address-btn a {
