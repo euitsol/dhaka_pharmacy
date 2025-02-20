@@ -7,6 +7,14 @@ $(document).ready(function () {
 
                 let discount_percentage = "";
                 let discount_amount = "";
+                let product_price = `<span>${taka_icon} ${numberFormat(
+                    product.discounted_price,
+                    2
+                )}</span>  ${discount_amount}`;
+                let product_btn = `<a class="cart-btn" href="javascript:void(0)" data-product_slug="${product.slug}">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span class="d-block d-xl-none">Add To Cart</span>
+                                </a>`;
                 if (product.discount_percentage) {
                     discount_percentage = `<span class="discount_tag">${formatPercentageNumber(
                         product.discount_percentage
@@ -18,6 +26,15 @@ $(document).ready(function () {
                         product.price,
                         2
                     )}</del></span>`;
+                }
+
+                if (product.is_tba) {
+                    product_price = `TBA`;
+
+                    product_btn = `<a class="cart-btn no-cart" href="${_route}">
+                                                <i class="fa-solid fa-info"></i>
+                                                <span class="d-block d-xl-none">Details</span>
+                                            </a>`;
                 }
 
                 return `
@@ -39,7 +56,12 @@ $(document).ready(function () {
                                     </h3>
                                 </a>
                             </div>
-                            <p><a href="">${product.pro_sub_cat ? product.pro_sub_cat.name : ""}</a></p>
+
+                            <p><a href="">${
+                                product.pro_sub_cat
+                                    ? product.pro_sub_cat.name
+                                    : ""
+                            }</a></p>
                             <p><a href="#" class="generic-name">${
                                 product.generic ? product.generic.name : ""
                             }</a></p>
@@ -47,12 +69,9 @@ $(document).ready(function () {
                                 product.company ? product.company.name : ""
                             }</a></p>
 
-                            <h4><span>${taka_icon} ${numberFormat(product.discounted_price, 2)}</span>  ${discount_amount}</h4>
+                            <h4>${product_price}</h4>
                             <div class="add_to_card">
-                                <a class="cart-btn" href="javascript:void(0)" data-product_slug="${product.slug}">
-                                    <i class="fa-solid fa-cart-plus"></i>
-                                    <span class="d-block d-xl-none">Add To Cart</span>
-                                </a>
+                                ${product_btn}
                             </div>
                         </div>
                     </div>
@@ -150,7 +169,9 @@ $(document).ready(function () {
                 console.log(data.products);
 
                 const result = renderProducts(data.products); // Adjust for the `data` field in Laravel's paginated response
-                document.querySelector(".all-products").insertAdjacentHTML("beforeend", result);
+                document
+                    .querySelector(".all-products")
+                    .insertAdjacentHTML("beforeend", result);
 
                 // Update the "next page" URL or hide the button if no more pages
                 if (data.next_page_url) {
