@@ -165,12 +165,12 @@ class Medicine extends BaseModel
         return $query->where('pro_sub_cat_id', $scategoryId);
     }
 
-    public function precaution():HasOne
+    public function precaution(): HasOne
     {
         return $this->hasOne(ProductPrecaution::class, 'product_id');
     }
 
-    public function toSearchableArray():array
+    public function toSearchableArray(): array
     {
         return [
             'id' => $this->id,
@@ -202,7 +202,7 @@ class Medicine extends BaseModel
         return 'medicines';
     }
 
-    public function isActived():bool
+    public function isActived(): bool
     {
         return $this->status == 1;
     }
@@ -261,7 +261,7 @@ class Medicine extends BaseModel
     public function getDiscountedPriceAttribute(): int|float
     {
         $discounted_price = $this->price - $this->discount_amount;
-        if($discounted_price > 0) {
+        if ($discounted_price > 0) {
             return $discounted_price;
         }
         return 0.00;
@@ -280,7 +280,7 @@ class Medicine extends BaseModel
         return product_image($image);
     }
 
-    public function getStrengthInfoAttribute():string
+    public function getStrengthInfoAttribute(): string
     {
         return Str::limit(optional($this->strength)->name, 20, '..');
     }
@@ -300,7 +300,7 @@ class Medicine extends BaseModel
         if (!$this->relationLoaded('units')) {
             $this->load('units');
         }
-        if($this->price < 0 || ($this->units->isEmpty())) {
+        if ($this->price <= 0 || ($this->units->isEmpty())) {
             return true;
         }
 
@@ -309,7 +309,7 @@ class Medicine extends BaseModel
 
     public function getIsOrderableAttribute(): bool
     {
-        if($this->is_tba|| ($this->prescription_required == true)){
+        if ($this->is_tba || ($this->prescription_required == true)) {
             return false;
         }
         return true;

@@ -154,7 +154,7 @@
                                                                     <td>{{ __(
                                                                         optional($single_product->strength)->quantity .
                                                                             '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ' .
                                                                             optional($single_product->strength)->unit,
                                                                     ) }}
                                                                     </td>
@@ -258,7 +258,9 @@
                                                                             {{ optional($product->company)->name }}
                                                                         </a></p>
                                                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                                            @if ($product->price > 0)
+                                                                            @if ($product->is_tba)
+                                                                                <span>{{ __('TBA') }}</span>
+                                                                            @else
                                                                                 {{ number_format($product->discounted_price, 2) }}
                                                                         </span>
 
@@ -267,18 +269,25 @@
                                                                                 <del>{!! get_taka_icon() !!}
                                                                                     {{ number_format($product->price, 2) }}</del></span>
                                                                         @endif
-                                                                    @else
-                                                                        <span>{{ __('TBA') }}</span>
                                                 @endif
                                                 </h4>
                                                 <!-- add to cart button -->
-                                                <div class="add_to_card d-block d-xxl-none">
-                                                    <a class="cart-btn">
-                                                        <i class="fa-solid fa-cart-plus"></i>
-                                                        <span class="d-block d-xxl-none">Add To
-                                                            Cart</span>
-                                                    </a>
+                                                <div class="add_to_card">
+                                                    @if ($product->is_tba)
+                                                        <a class="cart-btn no-cart"
+                                                            href="{{ route('product.single_product', $product->slug) }}">
+                                                            <i class="fa-solid fa-info"></i>
+                                                            <span class="d-block d-xl-none">{{ __('Details') }}</span>
+                                                        </a>
+                                                    @else
+                                                        <a class="cart-btn" href="javascript:void(0)"
+                                                            data-product_slug="{{ $product->slug }}">
+                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                            <span class="d-block d-xl-none">{{ __('Add To Cart') }}</span>
+                                                        </a>
+                                                    @endif
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -348,7 +357,16 @@
                                                         </p>
 
                                                     </div>
-                                                    @if ($product->price > 0)
+                                                    @if ($product->is_tba)
+                                                        <h4><span>{{ __('TBA') }}</span></h4>
+                                                        <div class="add_to_card">
+                                                            <a class="cart-btn no-cart"
+                                                                href="{{ route('product.single_product', $product->slug) }}">
+                                                                <i class="fa-solid fa-info"></i>
+                                                                <span class="d-block d-xl-none">{{ __('Details') }}</span>
+                                                            </a>
+                                                        </div>
+                                                    @else
                                                         <h4> <span> {!! get_taka_icon() !!}
                                                                 {{ number_format($product->discounted_price, 2) }}</span>
                                                             @if ($product->discount_percentage > 0)
@@ -357,19 +375,19 @@
                                                                         {{ number_format($product->price, 2) }}</del></span>
                                                             @endif
                                                         </h4>
-                                                    @else
-                                                        <h4><span>{{ __('TBA') }}</span></h4>
+                                                        <div class="add_to_card">
+                                                            <a class="cart-btn" href="javascript:void(0)"
+                                                                data-product_slug="{{ $product->slug }}">
+                                                                <i class="fa-solid fa-cart-plus"></i>
+                                                                <span
+                                                                    class="d-block d-xl-none">{{ __('Add To Cart') }}</span>
+                                                            </a>
+                                                        </div>
                                                     @endif
 
 
                                                     <!-- add to cart button -->
-                                                    <div class="add_to_card">
-                                                        <a class="cart-btn" href="javascript:void(0)"
-                                                            data-product_slug="{{ $product->slug }}">
-                                                            <i class="fa-solid fa-cart-plus"></i>
-                                                            <span class="d-block d-xl-none">Add To Cart</span>
-                                                        </a>
-                                                    </div>
+
                                                 </div>
 
                                             </div>
