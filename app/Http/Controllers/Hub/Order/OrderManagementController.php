@@ -34,6 +34,9 @@ class OrderManagementController extends Controller
             case 'collecting':
                 $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
                 return view('hub.order.list', $data);
+            case 'collected':
+                $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
+                return view('hub.order.list', $data);
             default:
                 flash()->addWarning('Invalid status');
                 return redirect()->back();
@@ -42,8 +45,8 @@ class OrderManagementController extends Controller
 
     public function details($id)
     {
-        $data['oh'] = OrderHub::with(['hub', 'orderhubproducts.product', 'order'])->ownedByHub()->where('id', decrypt($id))->get()->first();
-        // dd($data['oh']->toArray());
+        $data['oh'] = OrderHub::with(['hub', 'orderhubproducts', 'order'])->ownedByHub()->where('id', decrypt($id))->get()->first();
+        dd($data['oh']->toArray());
         $data['pharmacies'] = Pharmacy::activated()->latest()->get();
         try{
             $data['timelines'] = $this->orderTimelineService->getHubProcessedTimeline($data['oh']->order);

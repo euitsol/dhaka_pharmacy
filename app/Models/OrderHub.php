@@ -40,7 +40,13 @@ class OrderHub extends BaseModel
         return $this->belongsToMany(OrderProduct::class, 'order_hub_products', 'order_hub_id', 'order_product_id')
             ->withPivot('status')
             ->join('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id')
-            ->select('order_products.*', 'medicine_units.name as pivot_unit_name');
+            ->join('order_products', 'order_hub_products.order_product_id', '=', 'order_products.id')
+            ->join('products', 'order_products.product_id', '=', 'products.id')
+            ->select([
+                'order_products.id as pivot_order_product_id', 'order_products.quantity as pivot_order_product_quantity',
+                'medicine_units.name as pivot_unit_name',
+                'products.name as pivot_product_name',
+            ]);
     }
 
     public function hub(): BelongsTo
@@ -48,10 +54,18 @@ class OrderHub extends BaseModel
         return $this->belongsTo(Hub::class, 'hub_id', 'id');
     }
 
-    public function pharmacy(): BelongsTo
-    {
-        return $this->belongsTo(Pharmacy::class, 'pharmacy_id', 'id');
-    }
+    // public function getPharmacyProductsWithCollectedQuantity()
+    // {
+    //     return $this->hasMany(OrderHubPharmacy::class, 'hub_id', 'id') // Relation from OrderHub to OrderHubPharmacy via hub_id (and implicitly order_id if needed, but based on table structure, hub_id seems primary for filtering within hub context)
+    //         ->select([
+    //             'order_hub_pharmacies.*', // Select all columns from order_hub_pharmacies
+    //             'ohpp.order_product_id as ohpp_order_product_id', // Alias for clarity
+    //             'ohpp.quantity_collected as ohpp_quantity_collected', // Alias for clarity
+    //             'op.product_id as op_product_id' // For product info if needed
+    //         ])
+    //         ->join('order_hub_pharmacy_products as ohpp', 'order_hub_pharmacies.id', '=', 'ohpp.order_hub_pharmacy_id')
+    //         ->join('order_products as op', 'ohpp.order_product_id', '=', 'op.id');
+    // }
 
     public function scopeOwnedByHub($query)
     {
