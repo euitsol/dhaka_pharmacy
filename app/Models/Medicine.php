@@ -120,9 +120,9 @@ class Medicine extends BaseModel
     public function getBtnBestSelling()
     {
         if ($this->is_best_selling == 1) {
-            return 'Remove from best selling';
+            return 'Remove from medical device';
         } else {
-            return 'Make best selling';
+            return 'Make medical device';
         }
     }
 
