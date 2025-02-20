@@ -304,12 +304,12 @@ class Medicine extends BaseModel
 
     public function getFormattedNameAttribute(): string
     {
-        return Str::limit(Str::ucfirst(Str::lower($this->name . ($this->strength_info))), 25, '..');
+        return Str::limit(Str::ucfirst(Str::lower($this->name . ($this->strength_info))), 24, '..');
     }
 
     public function getFormattedSubCatAttribute(): string
     {
-        return $this->pro_sub_cat ? Str::limit($this->pro_sub_cat->name, 25, '..') : '';
+        return $this->pro_sub_cat ? Str::limit($this->pro_sub_cat->name, 24, '..') : '';
     }
     public function getIsTbaAttribute(): bool
     {

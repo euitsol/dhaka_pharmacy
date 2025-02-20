@@ -67,28 +67,38 @@
                                                                         title="{{ optional($item->company)->name }}">
                                                                         {{ $item->company_info }}
                                                                     </a></p>
-                                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                                        {{ number_format($item->discounted_price, 2) }}</span>
-                                                                    @if ($item->discounted_price != $item->price)
-                                                                        <span class="regular_price">
-                                                                            <del>{!! get_taka_icon() !!}
-                                                                                {{ number_format($item->price, 2) }}</del></span>
-                                                                    @endif
-                                                                </h4>
-
-                                                                <!-- add to cart button -->
-                                                                <div class="add_to_card d-block d-xl-none mt-2">
-                                                                    <a class="cart-btn"
-                                                                        data-product_slug="{{ $item->slug }}"
-                                                                        data-unit_id="" href="javascript:void(0)">
-                                                                        <i class="fa-solid fa-cart-plus"></i>
-                                                                        <span class="d-block d-xl-none">Add To Cart</span>
-                                                                    </a>
-                                                                </div>
+                                                                @if ($item->is_tba)
+                                                                    <h4><span>{{ __('TBA') }}</span></h4>
+                                                                    <div class="add_to_card d-block d-xl-none mt-2">
+                                                                        <a class="cart-btn no-cart"
+                                                                            href="{{ route('product.single_product', $item->slug) }}">
+                                                                            <i class="fa-solid fa-info"></i>
+                                                                            <span
+                                                                                class="d-block d-xl-none">{{ __('Details') }}</span>
+                                                                        </a>
+                                                                    </div>
+                                                                @else
+                                                                    <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
+                                                                            {{ number_format($item->discounted_price, 2) }}</span>
+                                                                        @if ($item->discount_percentage > 0)
+                                                                            <span class="regular_price">
+                                                                                <del>{!! get_taka_icon() !!}
+                                                                                    {{ number_format($item->price, 2) }}</del></span>
+                                                                        @endif
+                                                                    </h4>
+                                                                    <!-- add to cart button -->
+                                                                    <div class="add_to_card d-block d-xl-none mt-2">
+                                                                        <a class="cart-btn"
+                                                                            data-product_slug="{{ $item->slug }}"
+                                                                            data-unit_id="" href="javascript:void(0)">
+                                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                                            <span
+                                                                                class="d-block d-xl-none">{{ __('Add To Cart') }}</span>
+                                                                        </a>
+                                                                    </div>
+                                                                @endif
                                                             </div>
                                                         </div>
-                                                        {{--
-                                            </div> --}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,11 +147,11 @@
                                             </div>
 
                                             <!-- <div class="uk-visible@sbtn-arrow">
-                                                                                                                        <a class="uk-position-center-left-out uk-position-small" href
-                                                                                                                            uk-slidenav-previous uk-slider-item="previous"></a>
-                                                                                                                        <a class="uk-position-center-right-out uk-position-small" href uk-slidenav-next
-                                                                                                                            uk-slider-item="next"></a>
-                                                                                                                    </div> -->
+                                                                                                                                                                                                                                            <a class="uk-position-center-left-out uk-position-small" href
+                                                                                                                                                                                                                                                uk-slidenav-previous uk-slider-item="previous"></a>
+                                                                                                                                                                                                                                            <a class="uk-position-center-right-out uk-position-small" href uk-slidenav-next
+                                                                                                                                                                                                                                                uk-slider-item="next"></a>
+                                                                                                                                                                                                                                        </div> -->
 
                                         </div>
                                     </div>
@@ -190,24 +200,35 @@
                                                         </a>
                                                     </p>
                                                 </div>
+                                                @if ($product->is_tba)
+                                                    <h4><span>{{ __('TBA') }}</span></h4>
+                                                    <div class="add_to_card">
+                                                        <a class="cart-btn no-cart"
+                                                            href="{{ route('product.single_product', $product->slug) }}">
+                                                            <i class="fa-solid fa-info"></i>
+                                                            <span class="d-block d-xl-none">{{ __('Details') }}</span>
+                                                        </a>
+                                                    </div>
+                                                @else
+                                                    <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
+                                                            {{ number_format($product->discounted_price, 2) }}</span>
+                                                        @if ($product->discount_percentage > 0)
+                                                            <span class="regular_price"> <del>{!! get_taka_icon() !!}
+                                                                    {{ number_format($product->price, 2) }}</del></span>
+                                                        @endif
+                                                    </h4>
+                                                    <!-- add to cart button -->
 
-                                                <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
-                                                        {{ number_format($product->discounted_price, 2) }}</span>
-                                                    @if ($product->discounted_price != $product->price)
-                                                        <span class="regular_price"> <del>{!! get_taka_icon() !!}
-                                                                {{ number_format($product->price, 2) }}</del></span>
-                                                    @endif
-                                                </h4>
+                                                    <div class="add_to_card">
+                                                        <a class="cart-btn" data-product_slug="{{ $product->slug }}"
+                                                            data-unit_id="" href="javascript:void(0)">
+                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                            <span class="d-block d-xl-none">{{ __('Add To Cart') }}</span>
+                                                        </a>
+                                                    </div>
+                                                @endif
 
-                                                <!-- add to cart button -->
 
-                                                <div class="add_to_card">
-                                                    <a class="cart-btn" data-product_slug="{{ $product->slug }}"
-                                                        data-unit_id="" href="javascript:void(0)">
-                                                        <i class="fa-solid fa-cart-plus"></i>
-                                                        <span class="d-block d-xl-none">Add To Cart</span>
-                                                    </a>
-                                                </div>
 
                                             </div>
 
