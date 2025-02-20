@@ -21,7 +21,10 @@ $(document).ready(function () {
                     let discount_percentage_html = "";
                     let discount_amount_html = "";
 
-                    if (product.discount_percentage && product.discount_percentage > 0) {
+                    if (
+                        product.discount_percentage &&
+                        product.discount_percentage > 0
+                    ) {
                         discount_percentage_html = `<span class="discount_tag">${formatPercentageNumber(
                             product.discount_percentage
                         )}% 0ff</span>`;
@@ -33,9 +36,26 @@ $(document).ready(function () {
                             2
                         )}</del></span>`;
                     }
+                    let product_price = `<span> ${taka_icon} ${numberFormat(
+                        product.discounted_price,
+                        2
+                    )}</span>  ${discount_amount_html}`;
 
                     let route = datas.single_product;
                     let _route = route.replace("slug", product.slug);
+
+                    let cart_btn = `<a class="cart-btn" data-product_slug="${product.slug}" data-unit_id="" href="javascript:void(0)">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span class="d-block d-xl-none">Details</span>
+                    </a>`;
+                    if (product.is_tba) {
+                        product_price = `<span> ${taka_icon} TBA`;
+                        cart_btn = `<a class="cart-btn no-cart" href="${_route}">
+                        <i class="fa-solid fa-info"></i>
+                        <span class="d-block d-xl-none">Add To Cart</span>
+                    </a>`;
+                    }
+
                     result += `
                         <div class="px-2 col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-6 py-2 px-2">
                             <div class="single-pdct">
@@ -50,32 +70,38 @@ $(document).ready(function () {
                                     <div class="pdct-info">
                                         <div class="product_title">
                                             <a href="${_route}">
-                                                <h3 class="fw-bold">
-                                                    ${product.name}
+                                                <h3 class="fw-bold" tittle="${
+                                                    product.attr_title
+                                                }">
+                                                    ${product.formatted_name}
                                                 </h3>
                                             </a>
                                         </div>
-                                        <p><a href="">
-                                            ${ product.pro_sub_cat.name }
+                                        <p><a href="" tittle="${
+                                            product.pro_sub_cat
+                                                ? product.pro_sub_cat.name
+                                                : ""
+                                        }">
+                                            ${product.formatted_sub_cat}
                                         </a></p>
-                                        <p><a href="#" class="generic-name">
-                                            ${product.generic.name}
+                                        <p><a href="#" title="${
+                                            product.generic
+                                                ? product.generic.name
+                                                : ""
+                                        }" class="generic-name">
+                                            ${product.generic_info}
                                         </a></p>
-                                        <p><a href="#" class="company-name">
-                                            ${product.company.name}
+                                        <p><a href="#" title="${
+                                            product.company
+                                                ? product.company.name
+                                                : ""
+                                        }" class="company-name">
+                                            ${product.company_info}
                                         </a></p>
 
-                                        <h4> <span> ${taka_icon} ${numberFormat(
-                        product.discounted_price,
-                        2
-                    )}</span>  ${discount_amount_html}</h4>
+                                        <h4> ${product_price}</h4>
                                         <div class="add_to_card ">
-                                            <a class="cart-btn" data-product_slug="${
-                                                product.slug
-                                            }" data-unit_id="" href="javascript:void(0)">
-                                                <i class="fa-solid fa-cart-plus"></i>
-                                                <span class="d-block d-xl-none">Add To Cart</span>
-                                            </a>
+                                            ${cart_btn}
                                         </div>
                                     </div>
 

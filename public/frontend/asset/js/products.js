@@ -51,23 +51,25 @@ $(document).ready(function () {
                         <div class="pdct-info">
                             <div class="product_title">
                                 <a href="${_route}">
-                                    <h3 class="fw-bold">
-                                        ${product.name}
+                                    <h3 class="fw-bold" title="${
+                                        product.attr_title
+                                    }">
+                                        ${product.formatted_name}
                                     </h3>
                                 </a>
                             </div>
 
-                            <p><a href="">${
+                            <p><a href="" class="d-none" title='${
                                 product.pro_sub_cat
                                     ? product.pro_sub_cat.name
                                     : ""
-                            }</a></p>
-                            <p><a href="#" class="generic-name">${
+                            }'>${product.formatted_sub_cat}</a></p>
+                            <p><a href="#" class="generic-name" tittle="${
                                 product.generic ? product.generic.name : ""
-                            }</a></p>
-                            <p><a href="#" class="company-name">${
+                            }">${product.generic_info}</a></p>
+                            <p><a href="#" class="company-name" title='${
                                 product.company ? product.company.name : ""
-                            }</a></p>
+                            }'>${product.company_info}</a></p>
 
                             <h4>${product_price}</h4>
                             <div class="add_to_card">

@@ -424,6 +424,9 @@
     .upload_prescription {
         width: 25% !important;
     }
+    .single_product_card .upload_prescription {
+        width: 100% !important;
+    }
 
     .invalid-feedback {
         top: -5px !important;
@@ -1702,11 +1705,11 @@
     ============================================ */
 
     .add_to_card .cart-btn {
-        padding: 8px 5px !important;
+        padding: 3px 5px !important;
     }
 
     .pdct-info .add_to_card .cart-btn {
-        padding: 10px 5px !important;
+        padding: 3px 5px !important;
     }
 
     .pdct-info .add_to_card i {
