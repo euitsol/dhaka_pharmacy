@@ -19,24 +19,24 @@
                             <div class="col-12 d-flex align-items-center">
                                 <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
                                 <!-- <div class="sub-title">
-                                                                                        <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
-                                                                                    </div>
+                                                                                                    <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
+                                                                                                </div>
 
-                                                                                    <div class="sub-categories">
-                                                                                        <span class="animated-subcategories"></span>
-                                                                                    </div> -->
+                                                                                                <div class="sub-categories">
+                                                                                                    <span class="animated-subcategories"></span>
+                                                                                                </div> -->
 
                             </div>
 
                             <!-- @if (isset($sub_categories) && $sub_categories->isNotEmpty())
-                                                                                        <ul class="sub-categories-list d-none">
-                                                                                            @foreach ($sub_categories as $sub_cats)
+                                                                                                    <ul class="sub-categories-list d-none">
+                                                                                                        @foreach ($sub_categories as $sub_cats)
     @foreach ($sub_cats as $sub_cat)
     <li>{{ $sub_cat->name }}</li>
     @endforeach
     @endforeach
-                                                                                        </ul>
-                                                                                    @endif -->
+                                                                                                    </ul>
+                                                                                                @endif -->
 
 
                             @if (isset($sub_categories) && $sub_categories->isNotEmpty())
@@ -57,8 +57,8 @@
                                                                             src="{{ storage_url($sub_cat->image) }}"
                                                                             alt="{{ $sub_cat->name }}">
                                                                         <div class="category_name"
-                                                                            title="{{ $sub_cat->pro_cat->name }}">
-                                                                            <h3>{{ str_limit(optional($sub_cat->pro_cat)->name ?? $sub_cat->pro_cat->name, 12, '..') }}
+                                                                            title="{{ optional($sub_cat->pro_cat)->name }}">
+                                                                            <h3>{{ $sub_cat->pro_cat ? str_limit($sub_cat->pro_cat->name, 12, '..') : '' }}
                                                                             </h3>
                                                                         </div>
                                                                         <div class="sub_category_name"
@@ -115,7 +115,7 @@
                                             <div class="product_title">
                                                 <a href="{{ route('product.single_product', $product->slug) }}">
                                                     <h3 class="fw-bold" title="{{ $product->attr_title }}">
-                                                        {{ $product->name }}
+                                                        {{ $product->formatted_name }}
                                                     </h3>
                                                 </a>
                                             </div>
@@ -123,17 +123,17 @@
                                             <div class="all-product-containt">
                                                 <p>
                                                     <a href=""
-                                                        title="{{ optional($product->pro_sub_cat)->name }}">{{ optional($product->pro_sub_cat)->name }}</a>
+                                                        title="{{ optional($product->pro_sub_cat)->name }}">{{ $product->formatted_sub_cat }}</a>
                                                 </p>
                                                 <p>
                                                     <a href="generic-name" class="generic-name"
                                                         title="{{ optional($product->generic)->name }}">
-                                                        {{ optional($product->generic)->name }}</a>
+                                                        {{ $product->generic_info }}</a>
                                                 </p>
                                                 <p>
                                                     <a href="" class="company-name"
                                                         title="{{ optional($product->company)->name }}">
-                                                        {{ optional($product->company)->name }}
+                                                        {{ $product->company_info }}
                                                     </a>
                                                 </p>
                                             </div>
@@ -141,9 +141,7 @@
                                             <h4>
                                                 <span> {!! get_taka_icon() !!}
 
-                                                    @if ($product->is_tba)
-                                                        <span>{{ __('TBA') }}</span>
-                                                    @else
+                                                    @if ($product->price > 0)
                                                         {{ number_format($product->discounted_price, 2) }}
                                                 </span>
 
@@ -151,23 +149,24 @@
                                                     <span class="regular_price"> <del>{!! get_taka_icon() !!}
                                                             {{ number_format($product->price, 2) }}</del></span>
                                                 @endif
+                                            @else
+                                                <span>{{ __('TBA') }}</span>
                             @endif
                             </h4>
                             <!-- add to cart button -->
-                            @if ($product->is_tba)
-                                <div class="add_to_card ">
-                                    <a class="cart-btn no-cart"
-                                        href="{{ route('product.single_product', $product->slug) }}">
-                                        <i class="fa-solid fa-info"></i>
-                                        <span class="d-block d-xl-none">Details</span>
-                                    </a>
-                                </div>
-                            @else
+                            @if ($product->price > 0)
                                 <div class="add_to_card">
                                     <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id=""
                                         href="javascript:void(0)">
                                         <i class="fa-solid fa-cart-plus"></i>
-                                        <span class="d-block d-xl-none">Add To Cart</span>
+                                        <span class="d-block d-xl-none">{{ __('Add To Cart') }}</span>
+                                    </a>
+                                </div>
+                            @else
+                                <div class="add_to_card">
+                                    <a class="cart-btn" href="{{ route('product.single_product', $product->slug) }}">
+                                        <i class="fa-solid fa-info"></i>
+                                        <span class="d-block d-xl-none">{{ __('Details') }}</span>
                                     </a>
                                 </div>
                             @endif

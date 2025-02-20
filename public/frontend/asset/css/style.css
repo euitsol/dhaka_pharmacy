@@ -165,7 +165,7 @@ h2.title {
     left: 0;
     top: 15px;
     height: 30px;
-    width: 60px;
+    min-width: 60px;
     display: flex;
     align-items: center;
     background: var(--border-1);
@@ -181,7 +181,7 @@ h2.title {
     border-bottom: 15px solid var(--border-1);
     content: "";
     position: absolute;
-    right: -25%;
+    right: -15px;
     top: 0;
 }
 

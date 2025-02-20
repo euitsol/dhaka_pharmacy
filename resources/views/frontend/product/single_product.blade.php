@@ -154,7 +154,7 @@
                                                                     <td>{{ __(
                                                                         optional($single_product->strength)->quantity .
                                                                             '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ' .
                                                                             optional($single_product->strength)->unit,
                                                                     ) }}
                                                                     </td>
@@ -242,20 +242,20 @@
 
                                                                     <h3 class="pdct-title"
                                                                         title="{{ $product->attr_title }}"><a
-                                                                            href="{{ route('product.single_product', $product->slug) }}">{{ $product->name }}
+                                                                            href="{{ route('product.single_product', $product->slug) }}">{{ $product->formatted_name }}
                                                                         </a></h3>
 
-                                                                    <p class="d-block d-xxl-none"><a href=""
+                                                                    <p class="d-block"><a href=""
                                                                             title="{{ optional($product->pro_sub_cat)->name }}">
-                                                                            {{ optional($product->pro_sub_cat)->name }}
+                                                                            {{ $product->formatted_sub_cat }}
                                                                         </a></p>
                                                                     <p><a href=""
                                                                             title="{{ optional($product->generic)->name }}">
-                                                                            {{ optional($product->generic)->name }}
+                                                                            {{ $product->generic_info }}
                                                                         </a></p>
                                                                     <p><a href=""
                                                                             title="{{ optional($product->company)->name }}">
-                                                                            {{ optional($product->company)->name }}
+                                                                            {{ $product->company_info }}
                                                                         </a></p>
                                                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
                                                                             @if ($product->is_tba)
@@ -272,21 +272,22 @@
                                                 @endif
                                                 </h4>
                                                 <!-- add to cart button -->
-                                                <div class="add_to_card">
+                                                <div class="add_to_card d-xxl-none d-block">
                                                     @if ($product->is_tba)
                                                         <a class="cart-btn no-cart"
                                                             href="{{ route('product.single_product', $product->slug) }}">
                                                             <i class="fa-solid fa-info"></i>
-                                                            <span class="d-block d-xl-none">{{ __('Details') }}</span>
+                                                            <span class="d-block">{{ __('Details') }}</span>
                                                         </a>
                                                     @else
                                                         <a class="cart-btn" href="javascript:void(0)"
                                                             data-product_slug="{{ $product->slug }}">
                                                             <i class="fa-solid fa-cart-plus"></i>
-                                                            <span class="d-block d-xl-none">{{ __('Add To Cart') }}</span>
+                                                            <span class="d-block">{{ __('Add To Cart') }}</span>
                                                         </a>
                                                     @endif
                                                 </div>
+
 
                                             </div>
                                         </div>
@@ -332,7 +333,7 @@
                                                     <div class="product_title">
                                                         <a href="{{ route('product.single_product', $product->slug) }}">
                                                             <h3 class="fw-bold" title="{{ $product->attr_title }}">
-                                                                {{ $product->name }}
+                                                                {{ $product->formatted_name }}
                                                             </h3>
                                                         </a>
                                                     </div>
@@ -340,19 +341,19 @@
                                                         <p>
                                                             <a href=""
                                                                 title="{{ optional($product->pro_sub_cat)->name }}">
-                                                                {{ optional($product->pro_sub_cat)->name }}
+                                                                {{ $product->formatted_sub_cat }}
                                                             </a>
                                                         </p>
                                                         <p>
                                                             <a href="#" class="generic-name"
                                                                 title="{{ optional($product->generic)->name }}">
-                                                                {{ optional($product->generic)->name }}
+                                                                {{ $product->generic_info }}
                                                             </a>
                                                         </p>
                                                         <p>
                                                             <a href="#" class="company-name"
                                                                 title="{{ optional($product->company)->name }}">
-                                                                {{ optional($product->company)->name }}
+                                                                {{ $product->company_info }}
                                                             </a>
                                                         </p>
 
