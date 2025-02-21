@@ -106,10 +106,12 @@ class OrderManagementController extends Controller
 
     public function print(Order $order)
     {
-        return Pdf::view('print.invoice', [
-            'order' => $order->load(['products', 'customer', 'address']),
-        ])
-        ->format('a4')
-        ->save('invoice.pdf');
+
+        return view("print.invoice", compact('order'));
+        // return Pdf::view('print.invoice', [
+        //     'order' => $order->load(['products', 'customer', 'address']),
+        // ])
+        // ->format('a4')
+        // ->save('invoice.pdf');
     }
 }
