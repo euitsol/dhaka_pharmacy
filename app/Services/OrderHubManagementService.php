@@ -78,7 +78,7 @@ class OrderHubManagementService
 
     protected function createDeliveryRequest(string $type='steadfast')
     {
-        $this->orderDeliveryService->setOrderHub($this->orderHub)->setType($type)->processDelivery();
+        // $this->orderDeliveryService->setOrderHub($this->orderHub)->setType($type)->processDelivery();
     }
 
     public function resolveStatus(string $status): string
