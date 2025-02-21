@@ -94,7 +94,6 @@ class OrderManagementController extends Controller
 
     public function prepared(ItemPreparedRequest $request)
     {
-        dd($request->all());
         try {
             $order = Order::findOrFail($request->order_id);
             $this->orderHubManagementService->setOrder($order);
