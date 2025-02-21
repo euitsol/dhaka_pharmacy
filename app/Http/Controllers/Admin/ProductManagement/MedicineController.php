@@ -344,7 +344,7 @@ class MedicineController extends Controller
         $medicine = Medicine::findOrFail($id);
         $this->bestSellingChange($medicine);
 
-        flash()->addSuccess('Medicine ' . $medicine->name . ' best selling updated successfully.');
+        flash()->addSuccess('Medical device ' . $medicine->name . ' updated successfully.');
         return redirect()->route('product.medicine.medicine_list');
     }
     public function featured($id): RedirectResponse

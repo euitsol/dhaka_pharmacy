@@ -12,10 +12,10 @@ class ProductService
 
     protected Medicine $product;
 
-    public function setProduct(string $slug):self
+    public function setProduct(string $slug): self
     {
         $product = Medicine::where('slug', $slug)->activated()->first();
-        if(!$product){
+        if (!$product) {
             abort(404);
         }
         $this->product = $product;
@@ -28,7 +28,7 @@ class ProductService
     }
 
 
-    public function details():Medicine
+    public function details(): Medicine
     {
         $this->product->loadMissing(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'reviews.customer', 'units' => function ($q) {
             $q->orderBy('price', 'asc');
@@ -46,4 +46,12 @@ class ProductService
         return $products;
     }
 
+    public function bestSellingProducts(): Collection
+    {
+        $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'units' => function ($q) {
+            $q->orderBy('price', 'asc');
+        }])->activated()->bestSelling()->orderBy('price', 'asc')->limit(20)->get();
+
+        return $products;
+    }
 }

@@ -99,6 +99,11 @@
                 left: 60px;
             }
         }
+
+        .icon-wrapper-end {
+            text-align: -webkit-right !important;
+            text-align: right !important;
+        }
     </style>
 @endpush
 @section('content')
@@ -147,9 +152,9 @@
                             <!-- Progress Bar -->
                             <div class="progress-bar-wrapper d-none d-md-block">
                                 <div class="progress-line"></div>
-                                <div class="progress-line-active"
-                                    style="width: {{ 100 / (count($order->timelines) - 1) }}%">
-                                </div>
+                                {{-- <div class="progress-line-active"
+                                    style="width: {{ 100 / (count($order->timelines)) }}%">
+                                </div> --}}
                             </div>
 
                             <!-- Timeline Steps -->
@@ -169,7 +174,8 @@
                                                     @if ($timeline->actual_completion_time != null)
                                                         <i class="fas fa-check"></i>
                                                     @else
-                                                        <i class="fa-regular fa-hourglass"></i>
+                                                        <i class="fa-regular
+                                                        fa-hourglass"></i>
                                                     @endif
                                                 </div>
                                             </div>

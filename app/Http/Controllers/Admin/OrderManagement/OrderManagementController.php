@@ -119,7 +119,6 @@ class OrderManagementController extends Controller
     {
         $data['hubs'] = Hub::with(['address'])->activated()->get();
         $data['order'] = Order::with(['timelines', 'productsWithHubPharmacy'])->findOrFail(decrypt($id));
-        // dd($data['order']->toArray());
         return view('admin.order_management.details', $data);
     }
 

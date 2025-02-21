@@ -52,6 +52,13 @@
                             'order' => $oh->order
                         ])
                     </div>
+                    @if ($oh->status == \App\Models\OrderHub::PREPARED && !empty($delivery_info))
+                        <div class="col-md-12 mt-3">
+                            @include('hub.order.includes.delivery_info', [
+                                'delivery_info' => $delivery_info
+                            ])
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
