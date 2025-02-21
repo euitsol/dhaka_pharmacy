@@ -280,7 +280,14 @@ class MedicineController extends Controller
         $medicine->kyc_required = $req->kyc_required;
         $medicine->max_quantity = $req->max_quantity;
         $medicine->updated_by = admin()->id;
+
+        if($medicine->status != 1){
+            $medicine->status = 1;
+        }
+
         $medicine->save();
+
+
 
         //medicine unit bkdn
         MedicineUnitBkdn::where('medicine_id', $medicine->id)->forceDelete();
