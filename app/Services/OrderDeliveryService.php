@@ -37,7 +37,7 @@ class OrderDeliveryService
         $this->validateDelivery();
         $delivery = $this->createDelivery($this->orderHub);
         if($this->type === 'steadfast'){
-            $this->steadFastService->setDelivery($delivery)->createShipment();
+            // $this->steadFastService->setDelivery($delivery)->createShipment();
         }
     }
 
