@@ -16,7 +16,7 @@ class ProductService
     {
         $product = Medicine::where('slug', $slug)->activated()->first();
         if (!$product) {
-            abort(404);
+           throw new \Exception(__('Product not found'));
         }
         $this->product = $product;
         return $this;
