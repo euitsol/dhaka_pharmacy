@@ -1262,6 +1262,7 @@ Route::group(['middleware' => ['auth:staff', 'permission'], 'prefix' => 'hub'], 
         Route::get('collecting/{id}', 'collecting')->name('collecting');
         Route::post('collected', 'collected')->name('collected');
         Route::post('prepared', 'prepared')->name('prepared');
+        Route::get('print/{order}', 'print')->name('print');
     });
 });
 
