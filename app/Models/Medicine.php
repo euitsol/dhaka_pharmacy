@@ -46,8 +46,11 @@ class Medicine extends BaseModel
         'discount_percentage',
         'discounted_price',
         'strength_info',
+        'company_info',
+        'generic_info',
         'attr_title',
         'formatted_name',
+        'formatted_sub_cat',
         'is_tba',
         'is_orderable'
     ];
@@ -117,9 +120,9 @@ class Medicine extends BaseModel
     public function getBtnBestSelling()
     {
         if ($this->is_best_selling == 1) {
-            return 'Remove from best selling';
+            return 'Remove from medical device';
         } else {
-            return 'Make best selling';
+            return 'Make medical device';
         }
     }
 
@@ -282,7 +285,16 @@ class Medicine extends BaseModel
 
     public function getStrengthInfoAttribute(): string
     {
-        return Str::limit(optional($this->strength)->name, 20, '..');
+        return $this->strength ? Str::limit($this->strength->name, 20, '..') : '';
+    }
+    public function getCompanyInfoAttribute(): string
+    {
+        return $this->company ? Str::limit($this->company->name, 20, '..') : '';
+    }
+
+    public function getGenericInfoAttribute(): string
+    {
+        return $this->generic ? Str::limit($this->generic->name, 20, '..') : '';
     }
 
     public function getAttrTitleAttribute($name): string
@@ -292,9 +304,13 @@ class Medicine extends BaseModel
 
     public function getFormattedNameAttribute(): string
     {
-        return Str::limit(Str::ucfirst(Str::lower($this->attr_title . ($this->strength_info))), 30, '..');
+        return Str::limit(Str::ucfirst(Str::lower($this->name . ($this->strength_info))), 24, '..');
     }
 
+    public function getFormattedSubCatAttribute(): string
+    {
+        return $this->pro_sub_cat ? Str::limit($this->pro_sub_cat->name, 24, '..') : '';
+    }
     public function getIsTbaAttribute(): bool
     {
         if (!$this->relationLoaded('units')) {

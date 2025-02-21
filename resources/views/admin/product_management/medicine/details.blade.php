@@ -79,7 +79,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>{{ __('Best Selling') }}</th>
+                                <th>{{ __('Medical Device') }}</th>
                                 <th>{{ __(':') }}</th>
                                 <td>
                                     <span

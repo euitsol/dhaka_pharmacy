@@ -28,8 +28,22 @@ $(document).ready(function () {
     $("#related-product-slider").owlCarousel({
         items: 5,
         itemsDesktop: [1399, 3],
-        itemsDesktopSmall: [991, 4],
-        itemsTablet: [767, 4],
+        itemsDesktopSmall: [991, 3],
+        itemsTablet: [767, 3],
+        itemsMobile: [575, 2],
+        pagination: true,
+        navigation: false,
+        slideSpeed: 1000,
+        autoPlay: 2000,
+    });
+});
+$(document).ready(function () {
+    $("#bs-product-slider").owlCarousel({
+        items: 5,
+        rtl: true,
+        itemsDesktop: [1399, 3],
+        itemsDesktopSmall: [991, 3],
+        itemsTablet: [767, 3],
         itemsMobile: [575, 2],
         pagination: true,
         navigation: false,

@@ -21,3 +21,6 @@ composer.lock
 .htaccess
 config/broadcasting.php
 config/broadcasting.php
+
+*/google_tag.blade.php
+resources/views/frontend/includes/google_tag.blade.php
