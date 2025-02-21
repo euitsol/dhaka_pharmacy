@@ -18,16 +18,25 @@ return new class extends Migration
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
 
+            $table->string('invoice')->unique();
+            $table->string('type');
+
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-
-            $table->unsignedBigInteger('originater_id')->nullable();
-            $table->string('originater_type')->nullable();
 
             $table->json('payload')->nullable();
             $table->json('response')->nullable();
 
             $table->string('status_code')->nullable();
+
+            $table->unsignedBigInteger('receiver_id')->nullable();
+            $table->string('receiver_type')->nullable();
+
+            $table->unsignedBigInteger('address_id');
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
+
+            $table->timestamp('sent_at')->nullable();
+            $table->timestamp('received_at')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
