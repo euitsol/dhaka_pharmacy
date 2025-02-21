@@ -66,8 +66,6 @@ class OrderHubManagementService
         $orderHub = OrderHub::where('order_id', $this->order->id)->ownedByHub()->get()->first();
         $this->setOrderHub($orderHub);
 
-        Log::info($this->orderHub);
-
         $this->orderHub->update(['status' => OrderHub::PREPARED]);
         $this->updateOrderStatus($this->order, Order::PACHAGE_PREPARED);
         $this->orderTimelineService->updateTimelineStatus(

@@ -70,7 +70,7 @@ class OrderDeliveryService
 
                 'address_id' => $orderHub->order->address->id,
                 'created_at' => now(),
-                'creater_id' => staff()->hub_id,
+                'creater_id' => $orderHub->hub_id,
                 'creater_type' => Hub::class
             ]);
         });
