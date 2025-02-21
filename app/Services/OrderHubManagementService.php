@@ -72,8 +72,9 @@ class OrderHubManagementService
             $this->order,
             Order::PACHAGE_PREPARED
         );
-        // $this->createDeliveryRequest();
+        $this->createDeliveryRequest();
         DB::commit();
+        return $orderHub;
     }
 
     protected function createDeliveryRequest(string $type='steadfast')

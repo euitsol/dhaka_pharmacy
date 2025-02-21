@@ -52,7 +52,6 @@ class OrderManagementController extends Controller
             $data['oh'] = OrderHub::with(['hub', 'orderhubproducts', 'order'])->ownedByHub()->where('id', decrypt($id))->get()->first();
             $data['pharmacies'] = Pharmacy::activated()->latest()->get();
             $data['delivery_info'] = $this->orderDeliveryService->getDeliveryInfo($data['oh']->hub_id, $data['oh']->order_id);
-            // dd($data['delivery_info']);
             $data['timelines'] = $this->orderTimelineService->getHubProcessedTimeline($data['oh']->order);
         }catch(\Exception $e){
             sweetalert()->addError($e->getMessage());
@@ -69,7 +68,6 @@ class OrderManagementController extends Controller
             $this->orderHubManagementService->setOrderHub($orderHub);
             $this->orderHubManagementService->collecting();
             sweetalert()->addSuccess('You have successfully entered into the collecting stage. Please collect the order items from the pharmacy and return to the hub.');
-            // dd($orderHub->id);
             return redirect()->route('hub.order.details', encrypt($orderHub->id));
         }catch(\Exception $e){
             sweetalert()->addError($e->getMessage());
@@ -84,7 +82,6 @@ class OrderManagementController extends Controller
             $this->orderHubManagementService->setOrder($order);
             $orderHub = $this->orderHubManagementService->collectOrderItems($request->validated());
             sweetalert()->addSuccess('You have successfully collected the order. Next step is to pack the order.');
-            // dd($orderHub);
             return redirect()->route('hub.order.details', encrypt($orderHub->id));
         } catch (\Exception $e) {
             sweetalert()->addError($e->getMessage());
@@ -94,16 +91,16 @@ class OrderManagementController extends Controller
 
     public function prepared(ItemPreparedRequest $request)
     {
-        // try {
+        try {
             $order = Order::findOrFail($request->order_id);
             $this->orderHubManagementService->setOrder($order);
-            // $this->orderHubManagementService->prepareOrder($request->validated());
+            $orderHub = $this->orderHubManagementService->prepareOrder($request->validated());
             sweetalert()->addSuccess('Order has been successfully prepared. Please proceed with dispatch once the steadfast arrives.');
-            return redirect()->route('hub.order.details', encrypt($order->id));
-        // } catch (\Exception $e) {
-        //     sweetalert()->addError($e->getMessage());
-        //     return redirect()->back();
-        // }
+            return redirect()->route('hub.order.details', encrypt($orderHub->id));
+        } catch (\Exception $e) {
+            sweetalert()->addError($e->getMessage());
+            return redirect()->back();
+        }
     }
 
 
