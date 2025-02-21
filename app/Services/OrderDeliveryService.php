@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Services\SteadFastService;
 use App\Models\OrderHub;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderDeliveryService
 {
@@ -52,6 +53,7 @@ class OrderDeliveryService
             $invoice = $this->generateInvoice($orderHub);
             $recipientCredentials = $this->prepareRecipientCredentials($orderHub);
 
+            Log::info('COD:'.$orderHub->order->pament_status == Order::PAYMENT_COD ? $orderHub->order->total_amount : 0);
             return Delivery::create([
                 'type' => $this->type,
                 'order_id' => $orderHub->order_id,
@@ -61,7 +63,7 @@ class OrderDeliveryService
                     'recipient_name' => $recipientCredentials['name'],
                     'recipient_phone' => $recipientCredentials['phone'],
                     'recipient_address' => $recipientCredentials['address'],
-                    'cod_amount' => $orderHub->order->pament_status === Order::PAYMENT_COD ? $orderHub->order->total_amount : 0,
+                    'cod_amount' => $orderHub->order->pament_status == Order::PAYMENT_COD ? $orderHub->order->total_amount : 0,
                     'note' => $recipientCredentials['note'],
                 ]),
 
