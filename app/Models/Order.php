@@ -30,6 +30,10 @@ class Order extends BaseModel
     public const CANCELLED = -1;
     public const RETURNED = -2;
 
+    public CONST PAYMENT_PAID = 'paid';
+    public CONST PAYMENT_UNPAID = 'unpaid';
+    public CONST PAYMENT_COD = 'cod';
+
     protected $fillable = [
         'order_id',
         'customer_id',
@@ -41,7 +45,8 @@ class Order extends BaseModel
         'delivery_fee',
         'delivery_type',
         'product_discount',
-        'status'
+        'status',
+        'payment_status'
     ];
 
     protected $appends = [

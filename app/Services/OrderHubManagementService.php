@@ -14,16 +14,19 @@ use App\Exceptions\InvalidStatusException;
 use App\Exceptions\InvalidStatusTransitionException;
 use App\Models\OrderHubPharmacy;
 use App\Services\OrderTimelineService;
+use App\Services\OrderDeliveryService;
 
 class OrderHubManagementService
 {
     protected OrderHub $orderHub;
     protected OrderTimelineService $orderTimelineService;
     protected Order $order;
+    protected OrderDeliveryService $orderDeliveryService;
 
-    public function __construct(OrderTimelineService $orderTimelineService)
+    public function __construct(OrderTimelineService $orderTimelineService, OrderDeliveryService $orderDeliveryService)
     {
         $this->orderTimelineService = $orderTimelineService;
+        $this->orderDeliveryService = $orderDeliveryService;
     }
 
     public function setOrder(Order $order):self
@@ -61,13 +64,20 @@ class OrderHubManagementService
         DB::beginTransaction();
         $orderHub = OrderHub::where('order_id', $this->order->id)->ownedByHub()->get()->first();
         $this->setOrderHub($orderHub);
+
         $this->orderHub->update(['status' => OrderHub::PREPARED]);
         $this->updateOrderStatus($this->order, Order::PACHAGE_PREPARED);
         $this->orderTimelineService->updateTimelineStatus(
             $this->order,
             Order::PACHAGE_PREPARED
         );
+        $this->createDeliveryRequest();
         DB::commit();
+    }
+
+    protected function createDeliveryRequest(string $type='steadfast')
+    {
+        $this->orderDeliveryService->setOrderHub($this->orderHub)->setType($type)->processDelivery();
     }
 
     public function resolveStatus(string $status): string
@@ -99,10 +109,10 @@ class OrderHubManagementService
         };
     }
 
-    public function collectOrderItems(array $collectionData): void
+    public function collectOrderItems(array $collectionData)
     {
         $this->validateOrder(Order::ITEMS_COLLECTING);
-        DB::transaction(function () use ($collectionData) {
+        return DB::transaction(function () use ($collectionData) {
             // Get or create OrderHub
             $orderHub = OrderHub::where('order_id', $this->order->id)->ownedByHub()->get()->first();
 
@@ -152,6 +162,8 @@ class OrderHubManagementService
 
             // Create timeline entry
             $this->orderTimelineService->updateTimelineStatus($this->order, Order::ITEMS_COLLECTED);
+
+            return $orderHub;
         });
     }
 
