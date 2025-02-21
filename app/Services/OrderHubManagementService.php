@@ -15,6 +15,7 @@ use App\Exceptions\InvalidStatusTransitionException;
 use App\Models\OrderHubPharmacy;
 use App\Services\OrderTimelineService;
 use App\Services\OrderDeliveryService;
+use Illuminate\Support\Facades\Log;
 
 class OrderHubManagementService
 {
@@ -64,6 +65,8 @@ class OrderHubManagementService
         DB::beginTransaction();
         $orderHub = OrderHub::where('order_id', $this->order->id)->ownedByHub()->get()->first();
         $this->setOrderHub($orderHub);
+
+        Log::info($this->orderHub);
 
         $this->orderHub->update(['status' => OrderHub::PREPARED]);
         $this->updateOrderStatus($this->order, Order::PACHAGE_PREPARED);
@@ -139,6 +142,7 @@ class OrderHubManagementService
                         'unit_payable_price' => $item['unit_payable_price']
                     ];
                 }
+
 
                 $orderHubPharmacy = OrderHubPharmacy::query()->create([
                     'order_id' => $this->order->id,
