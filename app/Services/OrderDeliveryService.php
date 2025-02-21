@@ -119,7 +119,7 @@ class OrderDeliveryService
         $latestInvoice = Delivery::latest()->first();
 
         if ($latestInvoice) {
-            $lastNumber = (int) substr($latestInvoice->invoice, -5);
+            $lastNumber = (int) substr($latestInvoice->id, -5);
             $nextNumber = str_pad($lastNumber + 1, 5, '0', STR_PAD_LEFT);
         } else {
             $nextNumber = '00001';
