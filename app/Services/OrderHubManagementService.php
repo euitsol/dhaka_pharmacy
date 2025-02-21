@@ -115,6 +115,9 @@ class OrderHubManagementService
         return DB::transaction(function () use ($collectionData) {
             // Get or create OrderHub
             $orderHub = OrderHub::where('order_id', $this->order->id)->ownedByHub()->get()->first();
+            if (!$orderHub) {
+                Throw new ModelNotFoundException('OrderHub not found');
+            }
 
             $this->setOrderHub($orderHub);
 
