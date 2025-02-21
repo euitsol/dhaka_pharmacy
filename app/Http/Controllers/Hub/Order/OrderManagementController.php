@@ -97,7 +97,7 @@ class OrderManagementController extends Controller
         // try {
             $order = Order::findOrFail($request->order_id);
             $this->orderHubManagementService->setOrder($order);
-            $this->orderHubManagementService->prepareOrder($request->validated());
+            // $this->orderHubManagementService->prepareOrder($request->validated());
             sweetalert()->addSuccess('Order has been successfully prepared. Please proceed with dispatch once the steadfast arrives.');
             return redirect()->route('hub.order.details', encrypt($order->id));
         // } catch (\Exception $e) {
