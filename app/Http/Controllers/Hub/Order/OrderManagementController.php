@@ -69,7 +69,7 @@ class OrderManagementController extends Controller
             $this->orderHubManagementService->setOrderHub($orderHub);
             $this->orderHubManagementService->collecting();
             sweetalert()->addSuccess('You have successfully entered into the collecting stage. Please collect the order items from the pharmacy and return to the hub.');
-            dd($orderHub->id);
+            // dd($orderHub->id);
             return redirect()->route('hub.order.details', encrypt($orderHub->id));
         }catch(\Exception $e){
             sweetalert()->addError($e->getMessage());
@@ -84,7 +84,7 @@ class OrderManagementController extends Controller
             $this->orderHubManagementService->setOrder($order);
             $orderHub = $this->orderHubManagementService->collectOrderItems($request->validated());
             sweetalert()->addSuccess('You have successfully collected the order. Next step is to pack the order.');
-            dd($orderHub);
+            // dd($orderHub);
             return redirect()->route('hub.order.details', encrypt($orderHub->id));
         } catch (\Exception $e) {
             sweetalert()->addError($e->getMessage());
