@@ -122,7 +122,7 @@ class OrderDeliveryService
             $lastNumber = (int) substr($latestInvoice->id, -5);
             $nextNumber = str_pad($lastNumber + 1, 5, '0', STR_PAD_LEFT);
         } else {
-            $nextNumber = '00001';
+            $nextNumber = str_pad(rand(10000, 99999) + 1, 5, '0', STR_PAD_LEFT);
         }
 
         return "{$prefix}{$datePart}{$nextNumber}";
