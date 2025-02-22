@@ -49,5 +49,8 @@ return [
         'sender_id'      => env('SMS_API_SENDER_ID'),
         'status'      => env('SMS_API_STATUS', '200'),
     ],
+    'steadfast' => [
+        'webhook_secret' => env('STEADFAST_WEBHOOK_SECRET'),
+    ]
 
 ];
