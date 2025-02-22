@@ -16,8 +16,8 @@ class GenerateWebhookSecret extends Command
         $currentSecret = env($key);
 
         if (!empty($currentSecret)) {
-            $this->info('Webhook secret already exists in .env file.');
-            $this->line('If you want to generate a new secret, please remove the existing one from .env first.');
+            $this->info('A webhook secret already exists in the .env file.');
+            $this->line('To generate a new secret, please remove the existing one from the .env file first.');
             return;
         }
 
@@ -43,7 +43,7 @@ class GenerateWebhookSecret extends Command
         $content = implode(PHP_EOL, $lines);
         file_put_contents($envPath, $content . PHP_EOL);
 
-        $this->info('New webhook secret generated and saved to .env file.');
-        $this->warn('Please clear your configuration cache with "php artisan config:clear" if needed.');
+        $this->info('Webhook secret successfully generated and stored in .env file: ' . $newSecret);
+        $this->warn('Note: Run "php artisan config:clear" to apply the changes to your configuration.');
     }
 }
