@@ -44,9 +44,9 @@
 
                                     <div class="row gx-4">
                                         <div class="col-5 col-xxl-5 col-12 col-md-5 mb-3 mb-sm-0">
-                                            <div class="card h-100">
-                                                <div class="card-body h-100">
-                                                    <div class="product_image xzoom-container">
+                                            <div class="">
+                                                <div class="">
+                                                    <!-- <div class="product_image xzoom-container">
                                                         @if ($single_product->discount_percentage > 0)
                                                             <span
                                                                 class="discount_tag">{{ formatPercentageNumber($single_product->discount_percentage) . '% 0ff' }}</span>
@@ -55,7 +55,7 @@
                                                             src="{{ $single_product->image }}"
                                                             xoriginal="{{ $single_product->image }}">
 
-                                                        <!-- Thumbnails -->
+                                                
                                                         <div class="xzoom-thumbs">
                                                             <a href="{{ $single_product->image }}">
                                                                 <img class="xzoom-gallery xactive" width="80"
@@ -63,7 +63,21 @@
                                                                     xpreview="{{ $single_product->image }}">
                                                             </a>
                                                         </div>
+                                                    </div> -->
+
+                                                    <div class="product_image">
+                                                        @if ($single_product->discount_percentage > 0)
+                                                            <span
+                                                                class="discount_tag">{{ formatPercentageNumber($single_product->discount_percentage) . '% 0ff' }}</span>
+                                                        @endif
+                                                        <img class="" id=""
+                                                            src="{{ $single_product->image }}"
+                                                            xoriginal="{{ $single_product->image }}">
+
+                                                        <!-- Thumbnails -->
+                                                        
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
