@@ -43,7 +43,7 @@ class GenerateWebhookSecret extends Command
         $content = implode(PHP_EOL, $lines);
         file_put_contents($envPath, $content . PHP_EOL);
 
-        $this->info('Webhook secret successfully generated and stored in .env file: ' . $newSecret);
+        $this->info('Webhook secret successfully generated and stored in .env file: \"'. $newSecret.'\"');
         $this->warn('Note: Run "php artisan config:clear" to apply the changes to your configuration.');
     }
 }
