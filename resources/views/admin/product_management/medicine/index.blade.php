@@ -120,7 +120,7 @@
                 placeholder: 'Select Category',
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('product.product_category.search') }}',
+                    url: '{{ route('product.product_category.search.product_category_list') }}',
                     dataType: 'json',
                     delay: 250,
                     data: function(params) {
@@ -146,7 +146,7 @@
                 placeholder: 'Select Company',
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('product.company_name.search') }}',
+                    url: '{{ route('product.company_name.search.company_name_list') }}',
                     dataType: 'json',
                     delay: 250,
                     data: function(params) {
@@ -174,7 +174,7 @@
                 placeholder: 'Select Generic Name',
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('product.generic_name.search') }}',
+                    url: '{{ route('product.generic_name.search.generic_name_list') }}',
                     dataType: 'json',
                     delay: 250,
                     data: function(params) {

@@ -597,7 +597,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::put('edit/{id}', 'update')->name('generic_name_edit');
             Route::get('status/{id}', 'status')->name('status.generic_name_edit');
             Route::get('delete/{id}', 'delete')->name('generic_name_delete');
-            Route::get('search', 'search')->name('search'); //ajax search route
+            Route::get('search', 'search')->name('search.generic_name_list'); //ajax search route
         });
         Route::controller(CompanyNameController::class)->prefix('company-name')->name('company_name.')->group(function () {
             Route::get('index', 'index')->name('company_name_list');
@@ -608,7 +608,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::put('edit/{id}', 'update')->name('company_name_edit');
             Route::get('status/{id}', 'status')->name('status.company_name_edit');
             Route::get('delete/{id}', 'delete')->name('company_name_delete');
-            Route::get('/search', 'search')->name('search'); //ajax search route
+            Route::get('/search', 'search')->name('search.company_name_list'); //ajax search route
         });
         //Not used
         // Route::controller(MedicineCategoryController::class)->prefix('medicine-category')->name('medicine_category.')->group(function () {
@@ -632,7 +632,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::put('edit/{id}', 'update')->name('medicine_unit_edit');
             Route::get('status/{id}', 'status')->name('status.medicine_unit_edit');
             Route::get('delete/{id}', 'delete')->name('medicine_unit_delete');
-            Route::get('search', 'search')->name('search'); //ajax search route
+            Route::get('search', 'search')->name('search.medicine_unit_list'); //ajax search route
         });
         Route::controller(MedicineStrengthController::class)->prefix('medicine-strength')->name('medicine_strength.')->group(function () {
             Route::get('index', 'index')->name('medicine_strength_list');
@@ -666,7 +666,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('featured/{id}', 'featured')->name('featured.product_category_edit');
             Route::get('menu/{id}', 'menu')->name('menu.product_category_edit');
             Route::get('delete/{id}', 'delete')->name('product_category_delete');
-            Route::get('/search', 'search')->name('search'); //ajax search route
+            Route::get('/search', 'search')->name('search.product_category_list'); //ajax search route
         });
         Route::controller(ProductSubCategoryController::class)->prefix('product-sub-category')->name('product_sub_category.')->group(function () {
             Route::get('index', 'index')->name('product_sub_category_list');
@@ -678,7 +678,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::get('status/{id}', 'status')->name('status.product_sub_category_edit');
             Route::get('menu/{id}', 'menu')->name('menu.product_sub_category_edit');
             Route::get('delete/{id}', 'delete')->name('product_sub_category_delete');
-            Route::get('search', 'search')->name('search'); //ajax search route
+            Route::get('search', 'search')->name('search.product_sub_category_list'); //ajax search route
         });
         Route::controller(MedicineController::class)->prefix('medicine')->name('medicine.')->group(function () {
             Route::get('index', 'index')->name('medicine_list');
