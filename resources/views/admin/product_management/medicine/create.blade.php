@@ -103,12 +103,12 @@
                             <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Strength') }}</label>
                                 <select name="strength_id"
-                                    class="form-control {{ $errors->has('strength_id') ? ' is-invalid' : '' }} no-select">
+                                    class="form-control {{ $errors->has('strength_id') ? ' is-invalid' : '' }}">
                                     <option selected hidden value=" ">{{ __('Select medicine strength') }}</option>
                                     @foreach ($strengths as $strength)
                                         <option value="{{ $strength->id }}"
                                             {{ $strength->id == old('strength_id') ? 'selected' : '' }}>
-                                            <small>{{ $strength->quantity }} </small> {{ $strength->unit }}
+                                            {{ $strength->name }}
                                         </option>
                                     @endforeach
                                 </select>
