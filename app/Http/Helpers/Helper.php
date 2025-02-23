@@ -36,7 +36,16 @@ function get_permission_routes()
         'obp.',
         'om.',
         'withdraw_method.',
-        'withdraw.'
+        'withdraw.',
+        'hm.',
+        'latest_offer.',
+        'user_tips.',
+        'feedback.',
+        'review.',
+        'st.',
+        'pc.',
+        'doc.'
+
     ];
 }
 

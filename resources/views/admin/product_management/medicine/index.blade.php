@@ -51,6 +51,7 @@
                             <select id="statusFilter" class="select2">
                                 <option disabled selected>Status</option>
                                 <option value="1">Active</option>
+                                <option value="2">Pending</option>
                                 <option value="0">Deactive</option>
                             </select>
                         </div>

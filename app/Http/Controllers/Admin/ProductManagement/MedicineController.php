@@ -191,6 +191,9 @@ class MedicineController extends Controller
         $medicine->kyc_required = $req->kyc_required;
         $medicine->max_quantity = $req->max_quantity;
         $medicine->created_by = admin()->id;
+
+        $medicine->status = 2;
+
         $medicine->save();
 
         //medicine unit bkdn
@@ -281,9 +284,7 @@ class MedicineController extends Controller
         $medicine->max_quantity = $req->max_quantity;
         $medicine->updated_by = admin()->id;
 
-        if($medicine->status != 1){
-            $medicine->status = 1;
-        }
+        $medicine->status = 2;
 
         $medicine->save();
 

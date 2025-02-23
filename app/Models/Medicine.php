@@ -330,4 +330,32 @@ class Medicine extends BaseModel
         }
         return true;
     }
+
+    public function getStatusBadgeClass():string
+    {
+        switch($this->status){
+            case 0:
+                return 'badge bg-danger';
+            case 1:
+                return 'badge bg-success';
+            case 2:
+                return 'badge bg-warning';
+            default:
+                return 'badge bg-secondary';
+        }
+    }
+
+    public function getStatus()
+    {
+        switch($this->status){
+            case 0:
+                return 'Inactive';
+            case 1:
+                return 'Active';
+            case 2:
+                return 'Pending';
+            default:
+                return 'N/A';
+        }
+    }
 }
