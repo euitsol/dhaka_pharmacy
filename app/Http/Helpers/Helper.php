@@ -19,24 +19,24 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 function get_permission_routes()
 {
     return [
-        // 'am.',
-        // 'um.',
-        // 'pm.',
-        // 'pm.',
-        // 'rm.',
-        // 'opa.',
-        // 'do.',
-        // 'pym.',
-        // 'push.',
-        // 'settings.',
-        // 'dm_management.',
-        // 'lam_management.',
-        // 'product.',
-        // 'payment_gateway.',
-        // 'obp.',
-        // 'om.',
-        // 'withdraw_method.',
-        // 'withdraw.'
+        'am.',
+        'um.',
+        'pm.',
+        'pm.',
+        'rm.',
+        'opa.',
+        'do.',
+        'pym.',
+        'push.',
+        'settings.',
+        'dm_management.',
+        'lam_management.',
+        'product.',
+        'payment_gateway.',
+        'obp.',
+        'om.',
+        'withdraw_method.',
+        'withdraw.'
     ];
 }
 
