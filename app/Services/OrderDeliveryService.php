@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Services\SteadFastService;
 use App\Models\OrderHub;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderDeliveryService
 {
@@ -51,7 +52,6 @@ class OrderDeliveryService
         return DB::transaction(function () use ($orderHub) {
             $invoice = $this->generateInvoice($orderHub);
             $recipientCredentials = $this->prepareRecipientCredentials($orderHub);
-
             return Delivery::create([
                 'type' => $this->type,
                 'order_id' => $orderHub->order_id,
@@ -61,7 +61,7 @@ class OrderDeliveryService
                     'recipient_name' => $recipientCredentials['name'],
                     'recipient_phone' => $recipientCredentials['phone'],
                     'recipient_address' => $recipientCredentials['address'],
-                    'cod_amount' => $orderHub->order->pament_status === Order::PAYMENT_COD ? $orderHub->order->total_amount : 0,
+                    'cod_amount' => $orderHub->order->payment_status == Order::PAYMENT_COD ? $orderHub->order->total_amount : 0,
                     'note' => $recipientCredentials['note'],
                 ]),
 
@@ -70,7 +70,7 @@ class OrderDeliveryService
 
                 'address_id' => $orderHub->order->address->id,
                 'created_at' => now(),
-                'creater_id' => staff()->hub_id,
+                'creater_id' => $orderHub->hub_id,
                 'creater_type' => Hub::class
             ]);
         });
@@ -119,10 +119,10 @@ class OrderDeliveryService
         $latestInvoice = Delivery::latest()->first();
 
         if ($latestInvoice) {
-            $lastNumber = (int) substr($latestInvoice->invoice, -5);
+            $lastNumber = (int) substr($latestInvoice->id, -5);
             $nextNumber = str_pad($lastNumber + 1, 5, '0', STR_PAD_LEFT);
         } else {
-            $nextNumber = '00001';
+            $nextNumber = str_pad(rand(10000, 99999) + 1, 5, '0', STR_PAD_LEFT);
         }
 
         return "{$prefix}{$datePart}{$nextNumber}";

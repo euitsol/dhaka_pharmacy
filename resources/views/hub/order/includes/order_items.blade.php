@@ -172,7 +172,7 @@
     </div>
 </div>
 
-@if ($collected)
+@if (true)
 <div class="card-body">
     <form action="{{ route('hub.order.prepared') }}" id="order_prepared_form" method="POST">
         @csrf
