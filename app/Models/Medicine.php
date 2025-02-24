@@ -304,7 +304,7 @@ class Medicine extends BaseModel
 
     public function getFormattedNameAttribute(): string
     {
-        return Str::limit(Str::ucfirst(Str::lower($this->name . ($this->strength_info))), 24, '..');
+        return Str::limit(Str::ucfirst(Str::lower($this->name . ' ' . ($this->strength_info))), 24, '..');
     }
 
     public function getFormattedSubCatAttribute(): string
@@ -331,9 +331,9 @@ class Medicine extends BaseModel
         return true;
     }
 
-    public function getStatusBadgeClass():string
+    public function getStatusBadgeClass(): string
     {
-        switch($this->status){
+        switch ($this->status) {
             case 0:
                 return 'badge bg-danger';
             case 1:
@@ -347,7 +347,7 @@ class Medicine extends BaseModel
 
     public function getStatus()
     {
-        switch($this->status){
+        switch ($this->status) {
             case 0:
                 return 'Inactive';
             case 1:
