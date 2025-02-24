@@ -51,10 +51,21 @@ $(document).ready(function () {
                         <div class="pdct-info">
                             <div class="product_title">
                                 <a href="${_route}">
-                                    <h3 class="fw-bold" title="${
+                                    <h3 class="fw-bold mb-0" title="${
                                         product.attr_title
                                     }">
                                         ${product.formatted_name}
+                                    </h3>
+                                </a>
+                            </div>
+                            <div class="product_title">
+                                <a href="javascript:void(0)">
+                                    <h3 class="fw-bold mt-0 text-muted" title="${
+                                        product.strength
+                                            ? product.strength.name
+                                            : ""
+                                    }">
+                                        ${product.strength_info}
                                     </h3>
                                 </a>
                             </div>

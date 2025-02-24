@@ -304,7 +304,8 @@ class Medicine extends BaseModel
 
     public function getFormattedNameAttribute(): string
     {
-        return Str::limit(Str::ucfirst(Str::lower($this->name . ' ' . ($this->strength_info))), 24, '..');
+        // return Str::limit(Str::ucfirst(Str::lower($this->name . ' ' . ($this->strength_info))), 24, '..');
+        return Str::limit(Str::ucfirst(Str::lower($this->name)), 24, '..');
     }
 
     public function getFormattedSubCatAttribute(): string
