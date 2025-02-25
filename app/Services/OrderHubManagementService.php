@@ -15,6 +15,7 @@ use App\Exceptions\InvalidStatusTransitionException;
 use App\Models\OrderHubPharmacy;
 use App\Services\OrderTimelineService;
 use App\Services\OrderDeliveryService;
+use Illuminate\Support\Facades\Log;
 
 class OrderHubManagementService
 {
@@ -73,6 +74,7 @@ class OrderHubManagementService
         );
         $this->createDeliveryRequest();
         DB::commit();
+        return $orderHub;
     }
 
     protected function createDeliveryRequest(string $type='steadfast')
@@ -115,6 +117,9 @@ class OrderHubManagementService
         return DB::transaction(function () use ($collectionData) {
             // Get or create OrderHub
             $orderHub = OrderHub::where('order_id', $this->order->id)->ownedByHub()->get()->first();
+            if (!$orderHub->hub_id) {
+                Throw new ModelNotFoundException('OrderHub not found');
+            }
 
             $this->setOrderHub($orderHub);
 
@@ -137,9 +142,10 @@ class OrderHubManagementService
                     ];
                 }
 
+
                 $orderHubPharmacy = OrderHubPharmacy::query()->create([
                     'order_id' => $this->order->id,
-                    'hub_id' => $orderHub->hub_id,
+                    'hub_id' => $this->orderHub->hub_id,
                     'pharmacy_id' => $pharmacyId,
                     'total_payable_amount' => $totalPayableAmount,
                     'status' => OrderHubPharmacy::COLLECTED

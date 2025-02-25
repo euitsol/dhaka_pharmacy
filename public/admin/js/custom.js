@@ -47,6 +47,7 @@ $(document).on("change", ".image-upload", function () {
         mainDiv.classList.add("imagePreviewMainDiv");
         imageUploadContainer.appendChild(mainDiv);
     }
+
     const files = Array.from(this.files);
 
     // Remove previous images if not multiple
@@ -148,7 +149,9 @@ function populateImagePreview(file, deleteUrl, container) {
 
 //Select 2
 $(document).ready(function () {
-    $("select:not(.no-select)").select2();
+    $("select:not(.no-select)").select2({
+        cache: false
+    });
 });
 
 // Slug Generator
@@ -160,6 +163,7 @@ function generateSlug(str) {
         .replace(/--+/g, "-")
         .replace(/^-+|-+$/g, "");
 }
+
 $(document).ready(function () {
     $("#title").on("keyup", function () {
         const titleValue = $(this).val().trim();
@@ -176,6 +180,7 @@ function numberFormat(value, decimals) {
 
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
 $(document).ready(function () {
     $(".navbar-toggler").on("click", function () {
         $(".sidebar").toggleClass("sidebar_show");
