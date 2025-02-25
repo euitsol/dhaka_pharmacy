@@ -444,7 +444,7 @@ a {
 
 .order_button .order-btn:hover {
     color: var(--text-color-white) !important;
-    border: 2px solid var(--border-2) !important;
+    /* border: 2px solid var(--border-1) !important; */
     background: var(--primary-color) !important;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
@@ -1611,6 +1611,9 @@ a {
 
 .single_product_section .single_product .product_image {
     position: relative;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .single_product_section .single_product .product_image .xzoom {

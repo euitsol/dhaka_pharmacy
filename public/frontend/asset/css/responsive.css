@@ -1711,9 +1711,9 @@
         add to card responsive code
     ============================================ */
 
-    .add_to_card .cart-btn {
+    /* .add_to_card .cart-btn {
         padding: 3px 5px !important;
-    }
+    } */
 
     .pdct-info .add_to_card .cart-btn {
         padding: 3px 5px !important;
