@@ -535,7 +535,7 @@
 
                         var input = $(`
                                     <input type="hidden" class="d-none" id="unit-${unitId}" name="units[${unitId}][id]" value="${unitId}">
-                                    <input type="number" class="form-control" id="price-unit-${unitId}" name="units[${unitId}][price]" placeholder="Enter price for ${unitName}">
+                                    <input type="number" class="form-control" id="price-unit-${unitId}" name="units[${unitId}][price]" placeholder="Enter price for ${unitName}" step="0.01">
                         `);
                         priceDiv.append(input);
 
