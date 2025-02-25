@@ -72,7 +72,11 @@
                                                 method="POST">
                                                 @csrf
                                                 <div class="product_content">
-                                                    <h1>{{ __($single_product->name) }} </h1>
+                                                    <h1 class="mb-0">{{ $single_product->name }}
+                                                    </h1>
+                                                    <h1 class="text-muted fs-5">
+                                                        {{ optional($single_product->strength)->name }}
+                                                    </h1>
                                                     <input type="hidden" name="slug"
                                                         value="{{ $single_product->slug }}">
 
@@ -154,7 +158,7 @@
                                                                     <td>{{ __(
                                                                         optional($single_product->strength)->quantity .
                                                                             '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ' .
                                                                             optional($single_product->strength)->unit,
                                                                     ) }}
                                                                     </td>
@@ -163,7 +167,8 @@
                                                         </table>
                                                     </div>
                                                     <div class="tab-pane fade ck ck-reset ck-editor ck-rounded-corners"
-                                                        id="description" role="tabpanel" aria-labelledby="description-tab">
+                                                        id="description" role="tabpanel"
+                                                        aria-labelledby="description-tab">
                                                         {!! $single_product->description !!}
                                                     </div>
 
@@ -240,10 +245,17 @@
                                                                 <div
                                                                     class="col-12 col-xxl-8 content px-2 px-lg-3 px-xxl-2">
 
-                                                                    <h3 class="pdct-title"
+                                                                    <h3 class="pdct-title mb-0"
                                                                         title="{{ $product->attr_title }}"><a
                                                                             href="{{ route('product.single_product', $product->slug) }}">{{ $product->formatted_name }}
-                                                                        </a></h3>
+                                                                        </a>
+                                                                    </h3>
+                                                                    <h3 class="pdct-title"
+                                                                        title="{{ optional($product->strength)->name }}">
+                                                                        <a href="javascript:void(0)"
+                                                                            class="text-muted">{{ $product->strength_info }}
+                                                                        </a>
+                                                                    </h3>
 
                                                                     <p class="d-block"><a href=""
                                                                             title="{{ optional($product->pro_sub_cat)->name }}">
@@ -332,8 +344,16 @@
                                                 <div class="pdct-info">
                                                     <div class="product_title">
                                                         <a href="{{ route('product.single_product', $product->slug) }}">
-                                                            <h3 class="fw-bold" title="{{ $product->attr_title }}">
+                                                            <h3 class="fw-bold mb-0" title="{{ $product->attr_title }}">
                                                                 {{ $product->formatted_name }}
+                                                            </h3>
+                                                        </a>
+                                                    </div>
+                                                    <div class="product_title">
+                                                        <a href="javascript:void(0)">
+                                                            <h3 class="fw-bold text-muted mt-0"
+                                                                title="{{ optional($product->strength)->name }}">
+                                                                {{ $product->strength_info }}
                                                             </h3>
                                                         </a>
                                                     </div>
@@ -429,8 +449,16 @@
                                                 <div class="pdct-info">
                                                     <div class="product_title">
                                                         <a href="{{ route('product.single_product', $product->slug) }}">
-                                                            <h3 class="fw-bold" title="{{ $product->attr_title }}">
+                                                            <h3 class="fw-bold mb-0" title="{{ $product->attr_title }}">
                                                                 {{ $product->formatted_name }}
+                                                            </h3>
+                                                        </a>
+                                                    </div>
+                                                    <div class="product_title">
+                                                        <a href="javascript:void(0)">
+                                                            <h3 class="fw-bold text-muted mt-0"
+                                                                title="{{ optional($product->strength)->name }}">
+                                                                {{ $product->strength_info }}
                                                             </h3>
                                                         </a>
                                                     </div>
@@ -461,7 +489,8 @@
                                                             <a class="cart-btn no-cart"
                                                                 href="{{ route('product.single_product', $product->slug) }}">
                                                                 <i class="fa-solid fa-info"></i>
-                                                                <span class="d-block d-xl-none">{{ __('Details') }}</span>
+                                                                <span
+                                                                    class="d-block d-xl-none">{{ __('Details') }}</span>
                                                             </a>
                                                         </div>
                                                     @else

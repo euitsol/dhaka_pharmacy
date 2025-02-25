@@ -103,12 +103,12 @@
                             <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Strength') }}</label>
                                 <select name="strength_id"
-                                    class="form-control {{ $errors->has('strength_id') ? ' is-invalid' : '' }} no-select">
+                                    class="form-control {{ $errors->has('strength_id') ? ' is-invalid' : '' }}">
                                     <option selected hidden value=" ">{{ __('Select medicine strength') }}</option>
                                     @foreach ($strengths as $strength)
                                         <option value="{{ $strength->id }}"
                                             {{ $strength->id == old('strength_id') ? 'selected' : '' }}>
-                                            <small>{{ $strength->quantity }} </small> {{ $strength->unit }}
+                                            {{ $strength->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -417,7 +417,7 @@
                         priceDiv.append(label);
 
                         var input = $(`
-                                    <input type="hidden" class="d-none" id="unit-${unitId}" name="units[${unitId}][id]" value="${unitId}">
+                                    <input type="hidden" class="d-none" id="unit-${unitId}" name="units[${unitId}][id]" value="${unitId}" step="0.01">
                                     <input type="number" class="form-control" id="price-unit-${unitId}" name="units[${unitId}][price]" placeholder="Enter price for ${unitName}">
                         `);
                         priceDiv.append(input);

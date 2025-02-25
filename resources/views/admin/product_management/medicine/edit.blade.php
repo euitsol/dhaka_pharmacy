@@ -127,7 +127,7 @@
                                     @foreach ($strengths as $strength)
                                         <option value="{{ $strength->id }}"
                                             {{ $strength->id == $medicine->strength_id ? 'selected' : '' }}>
-                                            <small>{{ $strength->quantity }} </small> {{ $strength->unit }}
+                                            {{ $strength->name }}
                                         </option>
                                     @endforeach
                                 </select>
