@@ -43,7 +43,7 @@
                                     </div>
 
                                     <div class="row gx-4">
-                                        <div class="col-5 col-xxl-5 col-12 col-md-5 mb-3 mb-sm-0">
+                                        <div class="col-xxl-5 col-12 col-md-5 mb-3 mb-sm-0">
                                             <div class="">
                                                 <div class="">
                                                     <!-- <div class="product_image xzoom-container">
@@ -70,7 +70,7 @@
                                                             <span
                                                                 class="discount_tag">{{ formatPercentageNumber($single_product->discount_percentage) . '% 0ff' }}</span>
                                                         @endif
-                                                        <img class="" id=""
+                                                        <img class="w-100" id=""
                                                             src="{{ $single_product->image }}"
                                                             xoriginal="{{ $single_product->image }}">
 
@@ -81,7 +81,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-7 col-xxl-6 col-12 col-md-7">
+                                        <div class="col-xxl-7 col-12 col-md-7">
                                             <form action="{{ route('u.ck.single') }}" id="single_order_form"
                                                 method="POST">
                                                 @csrf

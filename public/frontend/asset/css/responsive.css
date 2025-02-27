@@ -231,6 +231,9 @@
     .header-section .search-filter {
         width: 100%;
     }
+    .checkout-section .fw-medium {
+        font-size: 15px !important;
+    }
 }
 
 @media screen and (max-width: 1199px) {
@@ -1122,7 +1125,13 @@
 
     .checkout-section .order-info-row .left,
     .checkout-section .order-info-row .right {
-        padding: 10px !important;
+        padding: 12px !important;
+    }
+
+
+    .checkout-section .common-scroll {
+        max-height: 100% !important; 
+        overflow: none !important; 
     }
 }
 

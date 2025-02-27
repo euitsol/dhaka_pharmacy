@@ -31,12 +31,12 @@
                 @csrf
                 <input type="hidden" name="order_id" value="{{ encrypt($order->order_id) }}">
                 <div class="row row-gap-4">
-                    <div class="col-12 col-lg-7 px-0 px-lg-3">
+                    <div class="col-12 col-lg-7 px-0 px-lg-3 h-100">
                         <div class="order-info-row">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-xxl-6 mb-3 mb-xxl-0">
+                                        <div class="col-12 col-sm-6 col-xxl-6 mb-3 mb-xxl-0">
                                             <div class="add-new-box border rounded hover-shadow">
                                                 <a href="javascript:void(0)"
                                                     class="address_btn text-decoration-none d-flex align-items-center justify-content-center gap-2 py-3"
@@ -56,7 +56,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-xxl-6">
+                                        <div class="col-12 col-sm-6 col-xxl-6">
                                             <div class="add-new-box border rounded hover-shadow">
                                                 <a href="javascript:void(0)"
                                                     class="address_btn text-decoration-none d-flex align-items-center justify-content-center gap-2 py-3"
@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     <h4 class="my-3 title">{{ __('Your Products') }} </h4>
-                                    <div class="left">
+                                    <div class="left common-scroll">
                                         @foreach ($order->products as $key => $product)
                                             <div class="row align-items-center py-2">
                                                 <div class="col-4 col-sm-3 col-md-2">
@@ -133,7 +133,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-5 px-0 px-lg-3">
+                    <div class="col-12 col-lg-5 px-0 px-lg-3 h-100">
                         <div class="order-info-row">
                             <div class="right d-flex flex-column justify-content-center">
                                 <h4 class="mb-3 title">{{ __('Delivery Address') }}</h4>
@@ -218,6 +218,12 @@
                                                 name="payment_method" value="ssl">
                                             <label for="android-4">
                                                 <img src="{{ asset('frontend/asset/img/ssl.png') }}"
+                                                    style="object-fit: contain">
+                                            </label>
+                                            <input type="radio" class="payment-method" id="android-5"
+                                                name="payment_method" value="ssl">
+                                            <label for="android-5">
+                                                <img src="{{ asset('frontend/asset/img/cod.png') }}"
                                                     style="object-fit: contain">
                                             </label>
                                         </div>
