@@ -378,6 +378,9 @@
     .header-section .right-col .offcanvas .wishes .details .order_btn {
         color: var(--secundary-color);
     }
+    .checkout-section .common-scroll {
+        max-height: 652px !important;
+    }
 }
 
 @media screen and (max-width: 1100px) {
@@ -728,7 +731,7 @@
     .single-pdct .pdct-info h3 {
         font-size: 11px !important;
         font-weight: 500 !important;
-        margin: 0.2rem 0rem !important;
+        margin: 0rem 0rem !important;
     }
 
     .product-section .sub_categories .sub_cat_item .card {
@@ -741,6 +744,8 @@
     /* .single-pdct .pdct-info h4 {
         margin: 0rem 0rem .6rem 0rem !important;
     } */
+
+
     /*==============================================
        about ua page responsive code here
     ================================================*/
@@ -849,6 +854,7 @@
         font-size: 16px !important;
         line-height: 30px !important;
     } */
+
     /*================================================
        categories responsive code here
     ==================================================*/
@@ -1130,7 +1136,7 @@
 
 
     .checkout-section .common-scroll {
-        max-height: 100% !important; 
+        max-height: 530px !important; 
         overflow: none !important; 
     }
 }
@@ -1192,7 +1198,7 @@
     }
 
     .single-pdct .pdct-info {
-        padding: 10px 7px 5px 7px !important;
+        padding: 5px 5px 5px 5px !important;
     }
 
     /*===============================================
@@ -1276,7 +1282,7 @@
     /* best selling products responsive code */
 
     .best-selling-products .bst-product-content {
-        padding: 10px 5px 5px 5px !important;
+        padding: 5px 5px 5px 5px !important;
     }
 
     /*===============================================
@@ -1372,12 +1378,18 @@
 
     .single-pdct .pdct-info h4 {
         font-size: 12px;
-        line-height: 20px;
+        line-height: 0px;
+        margin-top: 10px;
     }
-
+    .best-selling-products .single-item .pdct-price{
+        font-size: 12px !important;
+        line-height: 0px !important;
+        margin: 10px 0px !important;
+    }
     .single_product_section .similar_products .single-item .pdct-price {
-        font-size: 12px;
-        line-height: 20px;
+        font-size: 12px !important;
+        line-height: 0px !important;
+        margin: 10px 0px;
     }
 
     /* add to card responsive code */
@@ -1411,14 +1423,16 @@
     .best-selling-products .single-item img {
         height: 10.575rem !important;
     }
-
+    .product-section .all-products .single-pdct .pdct-img {
+        height: 10.575rem;
+    }
     .single-pdct .pdct-img > img {
         height: 10.575rem !important;
     }
 
     .single_product_section .similar_products .single-item .content {
-        padding: 5px 20px !important;
-        margin-top: 5px !important;
+        padding: 5px 20px 5px 20px !important;
+        margin-top: 0px !important;
     }
 
     /* =============================================
@@ -1455,6 +1469,12 @@
         color: var(--text-color-white) !important;
         padding: 0px 10px !important;
         background-color: var(--btn-bg-color) !important;
+    }
+    .all-product-containt{
+        padding: 4px 0px !important;
+    }
+    .single-pdct .pdct-info h4 {
+        margin: 10px 0px !important;
     }
 }
 
@@ -1496,10 +1516,18 @@
 
     .single-pdct .pdct-info h3 {
         font-size: 10px !important;
+        line-height: 12px !important;
     }
 
     .header-section .right-col .offcanvas {
         width: 95% !important;
+    }
+    .single-item .pdct-title {
+        margin-bottom: 0rem !important; 
+    }
+    .single_product_section .similar_products .single-item .pdct-title {
+        line-height: 5px;
+        margin-bottom: 0rem;
     }
 }
 
@@ -1727,6 +1755,12 @@
     .pdct-info .add_to_card .cart-btn {
         padding: 3px 5px !important;
     }
+    .best-selling-products .add_to_card .cart-btn{
+        padding: 3px 5px !important;
+    }
+    .single_product_section .similar_products_card .similar_products .add_to_card .cart-btn {
+        padding: 3px 5px !important;
+    }
 
     .pdct-info .add_to_card i {
         font-size: 12px !important;
@@ -1857,6 +1891,9 @@
         a {
         font-size: 10px !important;
     }
+    .all-product-containt{
+        padding: 2px 0px 0px 0px !important;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -1883,7 +1920,12 @@
     .single-pdct .pdct-info .generic-name {
         font-size: 8px !important;
     }
-
+    .single-pdct .pdct-info .all-product-containt p a{
+        font-size: 9px !important;
+    }
+    .single-pdct .pdct-info h3 {
+        font-size: 11px !important;
+    }
     .single-item p,
     .single-item p a {
         font-size: 8px !important;
@@ -1924,6 +1966,10 @@
 
     .breadcrumb_wrap .favorite {
         right: -7px !important;
+    }
+
+    .checkout-section .boxed label{
+        margin-bottom: 10px !important;
     }
 }
 

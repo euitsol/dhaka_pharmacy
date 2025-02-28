@@ -108,19 +108,22 @@
                                                                         {{ __('Qty: ') }}<span>{{ $product->pivot->quantity }}</span>
                                                                     </p>
                                                                 </div>
-                                                                <div
-                                                                    class="d-flex justify-content-between flex-column flex-xl-row">
-                                                                    <p class="qt mb-0 pe-3 pe-md-0">
-                                                                        {{ __('Unit: ') }}<span>{{ $product->pivot->unit_name }}</span>
-                                                                    </p>
-                                                                    <p class="qt mb-0 mt-1 mt-xl-0">
-                                                                        @if ($product->pivot->unit_discount > 0)
-                                                                            <del class="offer">{!! get_taka_icon() !!}
-                                                                                {{ number_format($product->pivot->unit_price * $product->pivot->quantity, 2) }}</del>
-                                                                        @endif
-                                                                        <span>{!! get_taka_icon() !!}
-                                                                            {{ number_format($product->pivot->total_price, 2) }}</span>
-                                                                    </p>
+                                                                <div class="d-flex d-sm-block justify-content-between align-items-center">
+                                                                    <div>
+                                                                        <p class="qt mb-0 pe-3 pe-md-0">
+                                                                            {{ __('Unit: ') }}<span>{{ $product->pivot->unit_name }}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <p class="qt mb-0 mt-1 mt-xl-0">
+                                                                            @if ($product->pivot->unit_discount > 0)
+                                                                                <del class="offer">{!! get_taka_icon() !!}
+                                                                                    {{ number_format($product->pivot->unit_price * $product->pivot->quantity, 2) }}</del>
+                                                                            @endif
+                                                                            <span>{!! get_taka_icon() !!}
+                                                                                {{ number_format($product->pivot->total_price, 2) }}</span>
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>

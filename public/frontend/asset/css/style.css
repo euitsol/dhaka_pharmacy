@@ -245,7 +245,7 @@ h2.title {
     color: var(--price-color);
     display: block;
     padding: 0px;
-    margin: 0.3rem 0rem 0.8rem 0rem;
+    /* margin: 0.3rem 0rem 0.8rem 0rem; */
 }
 
 .single-pdct .pdct-info h4 .regular_price {
@@ -259,14 +259,16 @@ h2.title {
     display: flex;
     align-items: center;
 }
-
+.all-product-containt{
+    padding: 8px 0px;
+}
 .single-pdct .pdct-info h3 {
     font-family: "Rubik", sans-serif;
     font-size: 14px;
     color: var(--text-color-black);
     transition: 0.4s;
-    margin-top: 0.3rem;
-    line-height: 20px;
+    /* margin-top: 0.3rem;
+    line-height: 20px; */
 }
 
 .single-pdct .pdct-info h3:hover {
