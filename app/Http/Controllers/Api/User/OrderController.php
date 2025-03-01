@@ -132,7 +132,11 @@ class OrderController extends BaseController
         ->where('customer_type', get_class($request->user()));
 
         if($request->has('status')) {
-            $query->where('status', $request->status);
+            $statuses = is_array($request->status) 
+                ? $request->status 
+                : explode(',', $request->status);
+            
+            $query->whereIn('status', $statuses);
         }
 
 
