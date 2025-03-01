@@ -256,33 +256,37 @@
                                                                             alt="{{ __($product->name) }}">
                                                                     </a>
                                                                 </div>
-                                                                <div
-                                                                    class="col-12 col-xxl-8 content px-2 px-lg-3 px-xxl-2">
+                                                                <div class="col-12 col-xxl-8 content px-2 px-lg-3 px-xxl-2">
 
                                                                     <h3 class="pdct-title mb-0"
                                                                         title="{{ $product->attr_title }}"><a
                                                                             href="{{ route('product.single_product', $product->slug) }}">{{ $product->formatted_name }}
                                                                         </a>
                                                                     </h3>
-                                                                    <p 
-                                                                        title="{{ optional($product->strength)->name }}">
-                                                                        <a href="javascript:void(0)"
-                                                                            class="text-muted">{{ $product->strength_info }}
-                                                                        </a>
-                                                                    </p>
+                                                                    
+                                                                    <div class="all-product-containt">
+                                                                        <p 
+                                                                            title="{{ optional($product->strength)->name }}">
+                                                                            <a href="">{{ $product->strength_info }}
+                                                                            </a>
+                                                                        </p>
 
-                                                                    <p class="d-block"><a href=""
-                                                                            title="{{ optional($product->pro_sub_cat)->name }}">
-                                                                            {{ $product->formatted_sub_cat }}
-                                                                        </a></p>
-                                                                    <p><a href=""
-                                                                            title="{{ optional($product->generic)->name }}">
-                                                                            {{ $product->generic_info }}
-                                                                        </a></p>
-                                                                    <p><a href=""
-                                                                            title="{{ optional($product->company)->name }}">
-                                                                            {{ $product->company_info }}
-                                                                        </a></p>
+                                                                        <p class="d-block"><a href=""
+                                                                                title="{{ optional($product->pro_sub_cat)->name }}">
+                                                                                {{ $product->formatted_sub_cat }}
+                                                                            </a></p>
+                                                                        <p><a href=""
+                                                                                title="{{ optional($product->generic)->name }}">
+                                                                                {{ $product->generic_info }}
+                                                                            </a></p>
+                                                                        <p><a href=""
+                                                                                title="{{ optional($product->company)->name }}">
+                                                                                {{ $product->company_info }}
+                                                                            </a>
+                                                                        </p>
+                                                                    </div>
+
+
                                                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
                                                                             @if ($product->is_tba)
                                                                                 <span>{{ __('TBA') }}</span>

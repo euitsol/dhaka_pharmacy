@@ -56,23 +56,28 @@
                                                                     <a
                                                                         href="{{ route('product.single_product', $item->slug) }}">{{ $item->formatted_name }}</a>
                                                                 </h3>
-                                                                <p 
-                                                                    title="{{ optional($item->strength)->name }}"><a
-                                                                        href="javascript:void(0)"
-                                                                        class="text-muted">{{ $item->strength_info }}</a>
-                                                                </p>
-                                                                <p class="d-block d-xl-none"><a href=""
-                                                                        title="{{ optional($item->pro_sub_cat)->name }}">
-                                                                        {{ $item->formatted_sub_cat }}
-                                                                    </a></p>
-                                                                <p><a href=""
-                                                                        title="{{ optional($item->generic)->name }}">
-                                                                        {{ $item->generic_info }}
-                                                                    </a></p>
-                                                                <p><a href=""
-                                                                        title="{{ optional($item->company)->name }}">
-                                                                        {{ $item->company_info }}
-                                                                    </a></p>
+
+
+                                                                <div class="all-product-containt">
+                                                                    <p 
+                                                                        title="{{ optional($item->strength)->name }}"><a
+                                                                            href="">{{ $item->strength_info }}</a>
+                                                                    </p>
+                                                                    <p class="d-block d-xl-none"><a href=""
+                                                                            title="{{ optional($item->pro_sub_cat)->name }}">
+                                                                            {{ $item->formatted_sub_cat }}
+                                                                        </a></p>
+                                                                    <p><a href=""
+                                                                            title="{{ optional($item->generic)->name }}">
+                                                                            {{ $item->generic_info }}
+                                                                        </a></p>
+                                                                    <p><a href=""
+                                                                            title="{{ optional($item->company)->name }}">
+                                                                            {{ $item->company_info }}
+                                                                        </a>
+                                                                    </p>
+                                                                </div>
+
                                                                 @if ($item->is_tba)
                                                                     <h4><span>{{ __('TBA') }}</span></h4>
                                                                     <div class="add_to_card d-block d-xl-none mt-2">

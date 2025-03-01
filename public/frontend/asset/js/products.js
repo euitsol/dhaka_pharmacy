@@ -7,10 +7,7 @@ $(document).ready(function () {
 
                 let discount_percentage = "";
                 let discount_amount = "";
-                let product_price = `<span>${taka_icon} ${numberFormat(
-                    product.discounted_price,
-                    2
-                )}</span>  ${discount_amount}`;
+                
                 let product_btn = `<a class="cart-btn" href="javascript:void(0)" data-product_slug="${product.slug}">
                                     <i class="fa-solid fa-cart-plus"></i>
                                     <span class="d-block d-xl-none">Add To Cart</span>
@@ -27,6 +24,10 @@ $(document).ready(function () {
                         2
                     )}</del></span>`;
                 }
+                let product_price = `<span>${taka_icon} ${numberFormat(
+                    product.discounted_price,
+                    2
+                )}</span>  ${discount_amount}`;
 
                 if (product.is_tba) {
                     product_price = `TBA`;
@@ -82,6 +83,7 @@ $(document).ready(function () {
                             
 
                             <h4>${product_price}</h4>
+                            
                             <div class="add_to_card">
                                 ${product_btn}
                             </div>

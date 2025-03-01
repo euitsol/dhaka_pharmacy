@@ -390,7 +390,7 @@ a {
     color: var(--price-color);
     display: block;
     padding: 0px;
-    margin: 0.3rem 0 0 0;
+    margin: 0rem 0 0 0;
 }
 
 .single-item .pdct-price .regular_price {
@@ -1713,13 +1713,12 @@ a {
 .single_product_section .similar_products .single-item .pdct-title {
     font-family: "Open Sans", sans-serif;
     font-size: 15px;
-    line-height: 23px;
     font-weight: 500;
     display: block;
     text-decoration: none;
     color: var(--text-color-black);
     transition: 0.4s;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0rem;
 }
 
 .single_product_section .similar_products .single-item .pdct-title:hover {
@@ -1732,7 +1731,7 @@ a {
     line-height: 25px;
     font-weight: 500;
     color: var(--price-color);
-    margin: 0.3rem 0 0 0;
+    margin: 0rem 0 0 0;
 }
 
 .similar_products_card {
