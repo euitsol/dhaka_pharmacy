@@ -716,11 +716,13 @@
     .single-item p,
     .single-item p a {
         font-size: 9px !important;
+        line-height: 10px;
     }
 
     .single-pdct .pdct-info .company-name,
     .single-pdct .pdct-info .generic-name {
         font-size: 9px !important;
+        line-height: 10px;
     }
 
     .product_title h3 {
@@ -1480,6 +1482,9 @@
     .single-pdct .pdct-info h4 {
         margin: 10px 0px !important;
     }
+    .product-section .sub_categories .sub_cat_item .card .category_name h3, .product-section .sub_categories .sub_cat_item .card .sub_category_name h3 {
+        font-size: 16px;
+    }
 }
 
 @media screen and (max-width: 640px) {
@@ -1633,15 +1638,15 @@
         margin: inherit !important;
     }
 
-    .single-item p,
+    /* .single-item p,
     .single-item p a {
         line-height: 12px;
-    }
+    } */
 
-    .single-pdct .pdct-info .company-name,
+    /* .single-pdct .pdct-info .company-name,
     .single-pdct .pdct-info .generic-name {
         line-height: 12px;
-    }
+    } */
 
     /*===========================================
         slider-section responsive code here
@@ -1922,8 +1927,8 @@
     }
     .slider-sction .carousel-caption .slider-left .btns a {
         font-size: 10px !important;
-        width: 83px;
-        height: 35px;
+        width: 75px;
+        height: 32px;
     }
    
     .slider-sction .carousel-caption .slider-left .btns .reg{
@@ -1939,6 +1944,9 @@
         border: 1px solid var(--border-2);
         background: var(--border-2);
         color: var(--text-color-white);
+    }
+    .product-section .sub_categories .sub_cat_item .card .category_name h3, .product-section .sub_categories .sub_cat_item .card .sub_category_name h3 {
+        font-size: 10px;
     }
 }
 
@@ -1968,6 +1976,7 @@
     }
     .single-pdct .pdct-info .all-product-containt p a{
         font-size: 9px !important;
+        line-height: 10px;
     }
     .single-pdct .pdct-info h3 {
         font-size: 11px !important;
@@ -1975,6 +1984,7 @@
     .single-item p,
     .single-item p a {
         font-size: 9px !important;
+        line-height: 10px;
     }
 
     .single-item .pdct-title a {
@@ -2029,6 +2039,12 @@
     .delivery-slider-section .uk-slideshow .uk-dotnav {
         bottom: 20px;
     }
+    .slider-sction .carousel-caption .slider-left .btns a {
+        font-size: 9px !important;
+        width: 70px;
+        height: 29px;
+    }
+   
 }
 
 /*========================================

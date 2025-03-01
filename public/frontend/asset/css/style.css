@@ -350,6 +350,7 @@ a {
     border-bottom: 1px solid var(--border-1);
     padding-bottom: 10px;
     margin-bottom: 10px;
+    overflow: hidden;
 }
 
 .single-item .pdct-title {
@@ -1981,9 +1982,9 @@ a {
 }
 
 .product-section .sub_categories svg {
-    background: var(--secondary-bg);
+    background: var(--border-1);
     color: var(--text-color-white);
-    border: 1px solid var(--text-color-white);
+    border: 1px solid var(--border-1);
     height: 40px;
     width: 40px;
     border-radius: 50%;
@@ -2015,7 +2016,7 @@ a {
     height: 0;
     width: 100%;
     z-index: 9;
-    background: var(--secundary-color);
+    background: var(--border-1);
     opacity: 0.7;
     transition: 0.4s;
 }
@@ -2030,7 +2031,7 @@ a {
     height: 0;
     width: 100%;
     z-index: 9;
-    background: var(--secundary-color);
+    background: var(--border-1);
     opacity: 0.7;
     transition: 0.4s;
 }
@@ -2097,7 +2098,7 @@ a {
     h3 {
     opacity: 1;
     visibility: visible;
-    color: var(--primary-color);
+    color: var(--text-color-white);
 }
 
 .product-section .sub_categories .sub_cat_item:hover .card::before {
