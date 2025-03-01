@@ -83,7 +83,7 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 Route::controller(ApiInfoShareController::class)->prefix('api-info')->name('api.')->group(function () {
     Route::get('/secure', 'secureApiInfo')->middleware('auth:api-user')->name('secure.i');
     Route::get('/social', 'socialApiInfo')->name('social.i');
-    Route::get('/info', 'generalApiInfo')->name('general.i');
+    Route::get('/general', 'generalApiInfo')->name('general.i');
 });
 
 Route::group(['as' => 'f.', 'prefix' => ''], function () {
