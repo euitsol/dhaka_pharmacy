@@ -45,4 +45,20 @@ class ApiInfoShareController extends BaseController
 
         return sendResponse(true, 'Social login api Info retrived successfully', $infos);
     }
+
+    public function generalApiInfo(): JsonResponse
+    {
+
+        $data = [
+            'mobile_app_environment' => SiteSetting::getValue('mobile_app_environment'),
+            'maintenance_mode' => SiteSetting::getValue('maintenance_mode'),
+            'maintenance_message' => SiteSetting::getValue('maintenance_message'),
+            'play_store_url' => SiteSetting::getValue('mobile_app_play_store_url'),
+            'ios_store_url' => SiteSetting::getValue('mobile_app_ios_store_url'),
+            'latest_android_version' => SiteSetting::getValue('android_app_version'),
+            'latest_ios_version' => SiteSetting::getValue('ios_app_version'),
+            'force_update' => SiteSetting::getValue('mobile_app_force_update')
+        ];
+        return sendResponse(true, 'General API Info retrived successfully', $data);
+    }
 }

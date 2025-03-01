@@ -30,6 +30,8 @@
                 onclick="openTab(event, 'tab9')">{{ __('Social Login Setting') }}</button>
             <button id="tab10Btn" class="tablinks p-3"
                 onclick="openTab(event, 'tab10')">{{ __('Contact Setting') }}</button>
+            <button id="tab11Btn" class="tablinks p-3"
+                onclick="openTab(event, 'tab11')">{{ __('App Informations') }}</button>
         </div>
         <div class="col-md-10 p-0">
             {{-- Tab-1 --}}
@@ -92,6 +94,12 @@
                     $document = $documents->where('module_key', 'contact_settings')->first();
                 @endphp
                 @include('admin.site_settings.contact_settings', ['document' => $document])
+            </div>
+            <div id="tab11" class="tabcontent py-3" style="display: none">
+                @php
+                    $document = $documents->where('module_key', 'mobile_app_settings')->first();
+                @endphp
+                @include('admin.site_settings.mobile_app_settings', ['document' => $document])
             </div>
 
 
