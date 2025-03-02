@@ -119,16 +119,19 @@
                                                     </h3>
                                                 </a>
                                             </div>
-                                            <div class="product_title">
+                                            <!-- <div class="product_title">
                                                 <a href="javascript:void(0)">
                                                     <h3 class="fw-bold text-muted mt-0"
                                                         title="{{ optional($product->strength)->name }}">
                                                         {{ $product->strength_info }}
                                                     </h3>
                                                 </a>
-                                            </div>
+                                            </div> -->
 
                                             <div class="all-product-containt">
+                                                <p>
+                                                    <a href="" title="{{ optional($product->strength)->name }}">{{ $product->strength_info }}</a>
+                                                </p>
                                                 <p>
                                                     <a href=""
                                                         title="{{ optional($product->pro_sub_cat)->name }}">{{ $product->formatted_sub_cat }}</a>

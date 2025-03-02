@@ -400,3 +400,35 @@ function formatPercentageNumber(number) {
 //     typeSubcategory(subCategories[currentIndex].textContent);
 // });
 
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let cartbtnElement = document.getElementById("cartbtn"); // Correctly target cartbtn
+    let wishlistElement = document.getElementById("wishlist"); // Correctly target wishlist
+
+    document.addEventListener("click", function (event) {
+        // Check if the clicked area is outside the cartbtn offcanvas and if it's shown
+        if (cartbtnElement && !cartbtnElement.contains(event.target) && cartbtnElement.classList.contains("show")) {
+            let cartbtnInstance = bootstrap.Offcanvas.getInstance(cartbtnElement);
+            if (cartbtnInstance) {
+                cartbtnInstance.hide();
+            }
+        }
+        
+        // Check if the clicked area is outside the wishlist offcanvas and if it's shown
+        if (wishlistElement && !wishlistElement.contains(event.target) && wishlistElement.classList.contains("show")) {
+            let wishlistInstance = bootstrap.Offcanvas.getInstance(wishlistElement);
+            if (wishlistInstance) {
+                wishlistInstance.hide();
+            }
+        }
+    });
+});
+
+  
+
+
+
+
+  
