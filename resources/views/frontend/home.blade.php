@@ -56,23 +56,28 @@
                                                                     <a
                                                                         href="{{ route('product.single_product', $item->slug) }}">{{ $item->formatted_name }}</a>
                                                                 </h3>
-                                                                <h3 class="pdct-title"
-                                                                    title="{{ optional($item->strength)->name }}"><a
-                                                                        href="javascript:void(0)"
-                                                                        class="text-muted">{{ $item->strength_info }}</a>
-                                                                </h3>
-                                                                <p class="d-block d-xl-none"><a href=""
-                                                                        title="{{ optional($item->pro_sub_cat)->name }}">
-                                                                        {{ $item->formatted_sub_cat }}
-                                                                    </a></p>
-                                                                <p><a href=""
-                                                                        title="{{ optional($item->generic)->name }}">
-                                                                        {{ $item->generic_info }}
-                                                                    </a></p>
-                                                                <p><a href=""
-                                                                        title="{{ optional($item->company)->name }}">
-                                                                        {{ $item->company_info }}
-                                                                    </a></p>
+
+
+                                                                <div class="all-product-containt">
+                                                                    <p 
+                                                                        title="{{ optional($item->strength)->name }}"><a
+                                                                            href="">{{ $item->strength_info }}</a>
+                                                                    </p>
+                                                                    <p class="d-block d-xl-none"><a href=""
+                                                                            title="{{ optional($item->pro_sub_cat)->name }}">
+                                                                            {{ $item->formatted_sub_cat }}
+                                                                        </a></p>
+                                                                    <p><a href=""
+                                                                            title="{{ optional($item->generic)->name }}">
+                                                                            {{ $item->generic_info }}
+                                                                        </a></p>
+                                                                    <p><a href=""
+                                                                            title="{{ optional($item->company)->name }}">
+                                                                            {{ $item->company_info }}
+                                                                        </a>
+                                                                    </p>
+                                                                </div>
+
                                                                 @if ($item->is_tba)
                                                                     <h4><span>{{ __('TBA') }}</span></h4>
                                                                     <div class="add_to_card d-block d-xl-none mt-2">
@@ -185,16 +190,21 @@
                                                         </h3>
                                                     </a>
                                                 </div>
-                                                <div class="product_title">
+                                                
+                                                <!-- <div class="product_title">
                                                     <a href="javascript:void(0)">
                                                         <h3 class="fw-bold text-muted mt-0"
                                                             title="{{ optional($product->strength)->name }}">
                                                             {{ $product->strength_info }}
                                                         </h3>
                                                     </a>
-                                                </div>
+                                                </div> -->
 
                                                 <div class="all-product-containt">
+
+                                                    <p>
+                                                        <a href="" title="{{ optional($product->strength)->name }}">{{ $product->strength_info }}</a>
+                                                    </p>
                                                     <p>
                                                         <a href=""
                                                             title="{{ optional($product->pro_sub_cat)->name }}">

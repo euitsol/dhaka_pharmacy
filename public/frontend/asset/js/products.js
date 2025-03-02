@@ -7,10 +7,7 @@ $(document).ready(function () {
 
                 let discount_percentage = "";
                 let discount_amount = "";
-                let product_price = `<span>${taka_icon} ${numberFormat(
-                    product.discounted_price,
-                    2
-                )}</span>  ${discount_amount}`;
+                
                 let product_btn = `<a class="cart-btn" href="javascript:void(0)" data-product_slug="${product.slug}">
                                     <i class="fa-solid fa-cart-plus"></i>
                                     <span class="d-block d-xl-none">Add To Cart</span>
@@ -27,6 +24,10 @@ $(document).ready(function () {
                         2
                     )}</del></span>`;
                 }
+                let product_price = `<span>${taka_icon} ${numberFormat(
+                    product.discounted_price,
+                    2
+                )}</span>  ${discount_amount}`;
 
                 if (product.is_tba) {
                     product_price = `TBA`;
@@ -58,31 +59,31 @@ $(document).ready(function () {
                                     </h3>
                                 </a>
                             </div>
-                            <div class="product_title">
-                                <a href="javascript:void(0)">
-                                    <h3 class="fw-bold mt-0 text-muted" title="${
+                            
+                            <div class="all-product-containt">
+                                    <p> <a href="" title="${
                                         product.strength
                                             ? product.strength.name
                                             : ""
-                                    }">
-                                        ${product.strength_info}
-                                    </h3>
-                                </a>
-                            </div>
+                                    }">${product.strength_info}</a></p>
 
-                            <p><a href="" class="d-none" title='${
+                                    <p><a href="" class="d-none" title='${
                                 product.pro_sub_cat
                                     ? product.pro_sub_cat.name
                                     : ""
-                            }'>${product.formatted_sub_cat}</a></p>
-                            <p><a href="#" class="generic-name" tittle="${
-                                product.generic ? product.generic.name : ""
-                            }">${product.generic_info}</a></p>
-                            <p><a href="#" class="company-name" title='${
-                                product.company ? product.company.name : ""
-                            }'>${product.company_info}</a></p>
+                                }'>${product.formatted_sub_cat}</a></p>
+                                <p><a href="#" class="generic-name" tittle="${
+                                    product.generic ? product.generic.name : ""
+                                }">${product.generic_info}</a></p>
+                                <p><a href="#" class="company-name" title='${
+                                    product.company ? product.company.name : ""
+                                }'>${product.company_info}</a></p>
+                            </div>
+
+                            
 
                             <h4>${product_price}</h4>
+                            
                             <div class="add_to_card">
                                 ${product_btn}
                             </div>

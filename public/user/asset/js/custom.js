@@ -172,4 +172,9 @@ $(document).ready(function () {
         }
         $(".header-section .nav-menu").toggleClass("active");
     });
+
 });
+
+
+
+// cart remove js code

@@ -43,7 +43,6 @@
         }
 
         /* Vertical Line (Mobile) */
-        '
 
 
         .order-timeline .content-wrapper {
