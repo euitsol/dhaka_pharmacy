@@ -17,7 +17,8 @@ class ProcessedImage extends BaseModel
 
     protected $fillable = [
         'medicine_id',
-        'image_path',
+        'backup_path',
+        'new_path',
         'metadata',
         'processed_at',
         'is_processed',
