@@ -202,6 +202,14 @@ function product_image($url)
     return $url ? asset('storage/' . $url) : asset('frontend/default/product.png');
 }
 
+function banner_image($url)
+{
+    if (Str::contains($url, ['http://', 'https://'])) {
+        return $url;
+    }
+    return $url ? asset('storage/' . $url) : asset('frontend/default/product.png');
+}
+
 function unit_image($url)
 {
     return $url ? asset('storage/' . $url) : asset('frontend/default/default.png');
