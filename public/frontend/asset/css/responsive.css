@@ -1135,12 +1135,14 @@
     .checkout-section .order-info-row .right {
         padding: 12px !important;
     }
-
-
     .checkout-section .common-scroll {
         max-height: 530px !important; 
         overflow: none !important; 
     }
+    .product-section .align-items-baseline .best-selling-products .all-product .single-item {
+        overflow: hidden;
+    }
+
 }
 
 @media screen and (max-width: 800px) {
