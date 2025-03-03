@@ -1235,7 +1235,7 @@
     }
 
     .slider-sction .carousel-caption .slider-right img {
-        max-width: 140px;
+        max-width: 170px;
     }
 
     .slider-sction .carousel-caption .slider-left .btns {
@@ -1675,7 +1675,9 @@
     .delivery-slider-section .uk-slideshow-items {
         height: 200px;
     }
-
+    .slider-sction .carousel-caption .slider-right img {
+        max-width: 220px;
+    }
     .delivery-slider-section .uk-slideshow-items .carousel-caption h2 {
         font-size: 16px;
         line-height: 30px;
@@ -1923,14 +1925,14 @@
         margin: 0px;
     }
     .slider-sction .carousel-caption .slider-left h2 {
-        font-size: 20px;
-        line-height: 20px;
+        font-size: 23px;
+        line-height: 22px;
         margin: 0px;
     }
     .slider-sction .carousel-caption .slider-left .btns a {
-        font-size: 10px !important;
-        width: 75px;
-        height: 32px;
+        font-size: 12px !important;
+        width: 100px;
+        height: 40px;
     }
    
     .slider-sction .carousel-caption .slider-left .btns .reg{
@@ -2042,9 +2044,10 @@
         bottom: 20px;
     }
     .slider-sction .carousel-caption .slider-left .btns a {
-        font-size: 9px !important;
-        width: 70px;
-        height: 29px;
+        width: 95px;
+    }
+    .slider-sction .carousel-caption .slider-right img {
+        max-width: 200px;
     }
    
 }
