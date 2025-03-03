@@ -59,7 +59,7 @@
 
 
                                                                 <div class="all-product-containt">
-                                                                    <p 
+                                                                    <p
                                                                         title="{{ optional($item->strength)->name }}"><a
                                                                             href="">{{ $item->strength_info }}</a>
                                                                     </p>
@@ -127,7 +127,7 @@
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>
 
-                                <div class="col-12 col-md-7 col-xxl-8 col-lg-6">
+                                <div class="col-12 col-md-7 col-xxl-8 col-lg-6 d-none">
                                     <div class="slider-col" uk-slider="finite: true">
                                         <div class="uk-position-relative">
                                             <div class="uk-slider-container uk-light">
@@ -190,7 +190,7 @@
                                                         </h3>
                                                     </a>
                                                 </div>
-                                                
+
                                                 <!-- <div class="product_title">
                                                     <a href="javascript:void(0)">
                                                         <h3 class="fw-bold text-muted mt-0"
