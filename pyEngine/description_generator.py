@@ -2,9 +2,11 @@ import json
 import sys
 import os
 import logging
+import re
 from datetime import datetime
 from google import genai
 from google.genai import types
+from description_prompt import system_prompt
 
 # Configure logging
 def setup_logger():
@@ -36,82 +38,125 @@ def setup_logger():
 # Initialize logger
 logger = setup_logger()
 
+def extract_json_from_text(text):
+    """
+    Extract JSON from text that may be wrapped in code blocks.
+    This handles responses where JSON is wrapped in ```json and ``` markers.
+    """
+    # Check if the text contains JSON code blocks
+    json_pattern = r'```json\s*(.*?)\s*```'
+    match = re.search(json_pattern, text, re.DOTALL)
+    
+    if match:
+        # Extract the JSON content from within the code blocks
+        json_text = match.group(1)
+        try:
+            return json.loads(json_text)
+        except json.JSONDecodeError as e:
+            logger.error(f"Failed to parse JSON from code block: {e}")
+            return {"error": "Failed to parse JSON from code block"}
+    
+    # If no code blocks, try to parse the entire text as JSON
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse text as JSON: {e}")
+        return {"error": "Failed to parse text as JSON"}
+
 def generate_description(data):
     logger.info(f"Starting description generation for: {data.get('name', 'Unknown')}")
-    data_str = json.dumps(data)
+    # Add debug logging for input data
+    logger.debug(f"Input data: {json.dumps(data, indent=2)}")
+
+    # data_str = json.dumps(data)
     try:
         client = genai.Client(api_key="AIzaSyAzAEt6GcxKUjn3CJiSbOVypx7UBvLpOnc")
         logger.info("Successfully initialized Gemini client")
 
-        model = "gemini-1.5-pro-latest"
-        system_instruction = """You are a medical information system. Generate structured JSON responses with these exact keys:
-        {
-            "introduction": "",
-            "indication": "",
-            "how_to_use": "",
-            "pharmacology": "",
-            "administration_dosage": {
-                "adult_dose": "",
-                "child_dose": "",
-                "others_dose": ""
-            },
-            "mode_of_action": "",
-            "interaction": "",
-            "contraindication": "",
-            "precaution_warnings": "",
-            "pregnancy_lactation": "",
-            "side_effects": "",
-            "storage": ""
-        }
-        Use the following parameters:
-        {data_str}
-        """
+        model = "gemini-2.0-flash"
 
-        prompt = f"""Generate comprehensive medical description for {data['name']} following this structure.
-        Additional instructions: {data.get('additional_instructions', '')}"""
+        prompt = f"""
+        generate descripton based on these Information:
+
+        Product Name: {data.get('product_name', 'Not Provided')}
+        Generic Name: {data.get('generic_name', 'Not Provided')}
+        Strength: {data.get('strength', 'Not Provided')}
+        Dosage Form: {data.get('dosage_form', 'Not Provided')}
+        Manufacturer: {data.get('manufacturer', 'Not Provided')}
+        """.strip()
+
+        logger.debug(f"User prompt: {prompt}")
+
+        contents = [
+            types.Content(
+                role="user",
+                parts=[
+                    types.Part.from_text(
+                        text=prompt
+                    ),
+                ],
+            ),
+        ]
+        # Debug the system instruction
+        logger.debug(f"System instruction: {system_prompt}")
 
         logger.info(f"Sending request to Gemini API for: {data.get('name', 'Unknown')}")
-        response = client.generate_content(
+
+        # Debug the request parameters
+        logger.debug(f"Request parameters: model={model}, temperature=0.2, top_p=0.95, top_k=40, max_output_tokens=8192")
+
+        # Updated API call to match the 0.3.1 version format
+        response = client.models.generate_content(
             model=model,
-            contents=[types.Content(parts=[types.Part.from_text(prompt)])],
-            generation_config=types.GenerationConfig(
-                temperature=0.2,
+            contents=contents,
+            config= types.GenerateContentConfig(
+                temperature=.1,
                 top_p=0.95,
                 top_k=40,
                 max_output_tokens=8192,
-                response_mime_type="application/json",
-            ),
-            safety_settings={
-                    "HARASSMENT": "block_none",
-                    "HATE_SPEECH": "block_none",
-                    "SEXUALLY_EXPLICIT": "block_none",
-                    "DANGEROUS_CONTENT": "block_none",
-            },
-            system_instruction=types.Content(parts=[types.Part.from_text(system_instruction.format(**data))])
+                response_mime_type="text/plain",
+                system_instruction=system_prompt
+            )
         )
-        logger.info(f"Received response from Gemini API for: {data.get('name', 'Unknown')}")
 
         try:
+            # More detailed debug of the raw response
             logger.debug(f"Raw response: {response.text}")
-            result = json.loads(response.text)
             logger.info(f"Successfully parsed JSON response for: {data.get('name', 'Unknown')}")
-            return result
+
+            return extract_json_from_text(response.text)
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse Gemini response: {e}")
             logger.debug(f"Raw response that failed parsing: {response.text}")
             return {"error": "Failed to parse Gemini response"}
     except Exception as e:
         logger.error(f"Error during description generation: {str(e)}")
+        # Add stack trace for better debugging
+        import traceback
+        logger.debug(f"Exception traceback: {traceback.format_exc()}")
         return {"error": str(e)}
 
 if __name__ == "__main__":
     try:
         logger.info("Script started via command line")
+        # Debug command line arguments
+        logger.debug(f"Command line arguments: {sys.argv}")
+
         input_json = json.loads(sys.argv[1])
         logger.info(f"Processing input for: {input_json.get('name', 'Unknown')}")
+        # Debug the parsed input JSON
+        logger.debug(f"Parsed input JSON: {json.dumps(input_json, indent=2)}")
+
         result = generate_description(input_json)
+        # Debug the final result
+        logger.debug(f"Final result: {json.dumps(result)}")
+        
+        # Print the result for the calling process
         print(json.dumps(result))
-        logger.info("Script completed successfully")
+
     except Exception as e:
         logger.error(f"Script failed with error: {str(e)}")
+        # Add stack trace for better debugging
+        import traceback
+        logger.debug(f"Exception traceback: {traceback.format_exc()}")
         print(json.dumps({"error": str(e)}))
