@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Scout\Searchable;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Medicine extends BaseModel
 {
@@ -17,6 +18,9 @@ class Medicine extends BaseModel
 
     // protected $appends = ['final_discount'];
 
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_PENDING = 2;
+    public const STATUS_INACTIVE = 0;
     protected $fillable = [
         'name',
         'slug',
@@ -37,7 +41,8 @@ class Medicine extends BaseModel
         'created_by',
         'updated_by',
         'use_for',
-        'dar'
+        'dar',
+        'is_processed'
 
     ];
     protected $appends = [
@@ -358,5 +363,10 @@ class Medicine extends BaseModel
             default:
                 return 'N/A';
         }
+    }
+
+    public function processedImage(): HasOne
+    {
+        return $this->hasOne(ProcessedImage::class);
     }
 }
