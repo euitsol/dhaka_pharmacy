@@ -70,7 +70,7 @@ def generate_description(data):
 
     # data_str = json.dumps(data)
     try:
-        client = genai.Client(api_key="AIzaSyAzAEt6GcxKUjn3CJiSbOVypx7UBvLpOnc")
+        client = genai.Client(api_key="AIzaSyBPVZL8lCoS00q62UxzAajs5Ne3r4LFH0A")
         logger.info("Successfully initialized Gemini client")
 
         model = "gemini-2.0-flash"
@@ -81,8 +81,9 @@ def generate_description(data):
         Product Name: {data.get('name', 'Not Provided')}
         Generic Name: {data.get('generic_name', 'Not Provided')}
         Strength: {data.get('strength', 'Not Provided')}
-        Dosage Form: {data.get('dosage_form', 'Not Provided')}
-        Manufacturer: {data.get('manufacturer', 'Not Provided')}
+        Category: {data.get('category', 'Not Provided')}
+        Sub Category: {data.get('sub_category', 'Not Provided')}
+        Manufacturer: {data.get('company_name', 'Not Provided')}
         """.strip()
 
         logger.debug(f"User prompt: {prompt}")
