@@ -23,7 +23,7 @@ class HomePageController extends Controller
         $products = Medicine::with(['pro_cat', 'pro_sub_cat', 'generic', 'company', 'strength', 'discounts', 'units' => function ($q) {
             $q->orderBy('quantity', 'asc');
         }])->activated();
-        $data['products'] = (clone $products)->featured()->latest()->get()->shuffle()->take(8)->each(function (&$product) {
+        $data['products'] = (clone $products)->featured()->latest()->get()->take(8)->each(function (&$product) {
             $product = $this->transformProduct($product);
         });
         $data['bsItems'] = (clone $products)->bestSelling()->latest()->get()->shuffle()->take(8)->each(function (&$product) {

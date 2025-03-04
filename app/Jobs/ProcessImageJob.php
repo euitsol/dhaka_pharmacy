@@ -55,11 +55,11 @@ class ProcessImageJob implements ShouldQueue
 
             $backupPath = $this->createBackup($originalPath);
 
-            $this->processImage($imageProcessor, $originalPath);
-            $metadata = $this->generateMetadata($originalPath, $backupPath);
+            $processedImagePath = $this->processImage($imageProcessor, $originalPath);
+            $metadata = $this->generateMetadata($originalPath, $backupPath, $processedImagePath);
 
             $this->markAsProcessed($metadata);
-            $this->updateMedicineRecord($originalPath);
+            $this->updateMedicineRecord($processedImagePath);
 
             Log::info("Successfully processed image for medicine ID: {$this->medicine->id}", [
                 'original_path' => $originalPath,
@@ -154,7 +154,7 @@ class ProcessImageJob implements ShouldQueue
     //         ->save();
     // }
 
-    private function processImage(ImageProcessorService $processor, string $imagePath): void
+    private function processImage(ImageProcessorService $processor, string $imagePath): string
     {
         if (!Storage::disk(self::DISK_NAME)->exists($imagePath)) {
             Log::error("Image not found for processing", [
@@ -168,6 +168,10 @@ class ProcessImageJob implements ShouldQueue
         $originalFullPath = storage_path('app/public/' . $imagePath);
         $tempDir = storage_path('app/temp');
         $tempBgRemovedPath = $tempDir.'/'.uniqid('bg_removed_'.rand()).'.png';
+        $processedImageDirPrefix = storage_path('app/public/');
+        $processedImageDirPostfix = dirname($imagePath);
+        $processedImageFilename = Str::slug($this->medicine->name).'.png';
+        $watermarkPath = storage_path('app/public/watermark.png');
 
         // Ensure temp directory exists
         if (!file_exists($tempDir)) {
@@ -189,44 +193,49 @@ class ProcessImageJob implements ShouldQueue
 
         // Process with Spatie Image
         try {
-            $watermarkPath = storage_path('app/public/watermark.png');
 
             Log::info("Processing image", [
                 'medicine_id' => $this->medicine->id,
                 'original_path' => $imagePath,
-                'temp_path' => $tempBgRemovedPath
+                'temp_path' => $tempBgRemovedPath,
+                'processed_image' => $processedImageDirPrefix.$processedImageDirPostfix.'/'.$processedImageFilename
             ]);
+
 
             $processor
                 ->useImageDriver(ImageDriver::Gd)
                 ->load($tempBgRemovedPath)
                 // ->fit(Fit::FillMax, 800, 700, '#e5e8e8')
-                ->resize(800, 700)
+                // ->resize(800, 700)
                 // ->background('#e5e8e8')
-                ->watermark($watermarkPath, alpha: 50)
+                // ->watermark($watermarkPath, alpha: 50)
                 ->optimize()
-                ->save($imagePath); // Save back to original path
+                ->save(); // Save back to original path
+
+
+
 
         }catch (ProcessFailedException $e) {
             Log::error("Image processing failed: ".$e->getMessage(), [
                 'medicine_id' => $this->medicine->id,
-                'image_path' => $imagePath
             ]);
             throw new \RuntimeException("Image processing failed: ".$e->getMessage());
         }
         finally {
             if (file_exists($tempBgRemovedPath)) {
-                unlink($tempBgRemovedPath);
+                // unlink($tempBgRemovedPath);
             }
         }
 
         Log::info("Image processed successfully", [
             'medicine_id' => $this->medicine->id,
-            'processed_path' => $imagePath
+            'processed_path' => $processedImageDirPrefix.$processedImageDirPostfix.'/'.$processedImageFilename
         ]);
+
+        return $processedImageDirPostfix.'/'.$processedImageFilename;
     }
 
-    private function generateMetadata(string $originalPath, string $backupPath): array
+    private function generateMetadata(string $originalPath, string $backupPath, string $processedImagePath): array
     {
         if (!Storage::disk(self::DISK_NAME)->exists($originalPath)) {
             Log::error("Original image not found during metadata generation", [
@@ -237,31 +246,37 @@ class ProcessImageJob implements ShouldQueue
         }
 
         $originalFullPath = storage_path('app/public/' . $originalPath);
+        $processedImageFullPath = storage_path('app/public/' . $processedImagePath);
 
-        if (!file_exists($originalFullPath)) {
+        if (!file_exists($originalFullPath) || !file_exists($processedImageFullPath)) {
             Log::error("Processed image file not found", [
                 'medicine_id' => $this->medicine->id,
-                'absolute_path' => $originalFullPath
+                'absolute_path' => $originalFullPath,
+                'processed_absolute_path' => $processedImageFullPath
             ]);
             throw new \RuntimeException("Original image file not found at: {$originalFullPath}");
         }
 
         $imageSize = getimagesize($originalFullPath);
-        if ($imageSize === false) {
+        $processedImageFullPath = storage_path('app/public/' . $processedImagePath);
+        if ($imageSize === false || $processedImageFullPath === false) {
             Log::error("Failed to get image dimensions", [
                 'medicine_id' => $this->medicine->id,
-                'absolute_path' => $originalFullPath
+                'absolute_path' => $originalFullPath,
+                'processed_absolute_path' => $processedImageFullPath
             ]);
             throw new \RuntimeException("Failed to get image dimensions for: {$originalFullPath}");
         }
 
         [$originalWidth, $originalHeight] = $imageSize;
+        [$processedWidth, $processedHeight] = getimagesize($processedImageFullPath);
 
         $finfo = new \finfo(FILEINFO_MIME_TYPE);
         $mime = $finfo->file($originalFullPath);
+        $processedMime = $finfo->file($processedImageFullPath);
 
         $originalSize = Storage::disk(self::DISK_NAME)->size($originalPath);
-        $processedSize = Storage::disk(self::DISK_NAME)->size($originalPath);
+        $processedSize = Storage::disk(self::DISK_NAME)->size($processedImagePath);
 
         Log::info("Metadata generated", [
             'medicine_id' => $this->medicine->id,
@@ -281,10 +296,10 @@ class ProcessImageJob implements ShouldQueue
             ],
             'processed' => [
                 'size' => $processedSize,
-                'width' => $originalWidth,
-                'height' => $originalHeight,
-                'mime' => $mime,
-                'path' => $originalPath
+                'width' => $processedWidth,
+                'height' => $processedHeight,
+                'mime' => $processedMime,
+                'path' => $processedImagePath
             ],
             'ai_tags' => $this->generateAIMetadata()
         ];
@@ -307,7 +322,8 @@ class ProcessImageJob implements ShouldQueue
     private function updateMedicineRecord(string $newImagePath): void
     {
         $this->medicine->update([
-            'is_processed' => true
+            'is_processed' => true,
+            'image' => $newImagePath
         ]);
     }
 
