@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -9,6 +10,7 @@ class DescriptionGenerateService
 {
     public function generateProductDescription($data)
     {
+        Log::info($data);
         $jsonInput = escapeshellarg(json_encode($data));
 
         $pythonScript = base_path('pyEngine/description_generator.py');

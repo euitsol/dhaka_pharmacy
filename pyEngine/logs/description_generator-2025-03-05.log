@@ -1,0 +1,82 @@
+2025-03-05 01:55:45,401 - description_generator - INFO - Script started via command line
+2025-03-05 01:55:45,401 - description_generator - DEBUG - Command line arguments: ['C:\\Users\\alkaf\\OneDrive\\Documents\\GitHub\\dhaka_pharmacy\\pyEngine/description_generator.py', '{"name":"Fleco","generic_name":"Aceclofenac","company_name":"Ad-din Pharmaceuticals Ltd.","strength":"100 mg","category":"Medicine (Allopathic)","sub_category":"Null"}']
+2025-03-05 01:55:45,401 - description_generator - INFO - Processing input for: Fleco
+2025-03-05 01:55:45,401 - description_generator - DEBUG - Parsed input JSON: {
+  "name": "Fleco",
+  "generic_name": "Aceclofenac",
+  "company_name": "Ad-din Pharmaceuticals Ltd.",
+  "strength": "100 mg",
+  "category": "Medicine (Allopathic)",
+  "sub_category": "Null"
+}
+2025-03-05 01:55:45,401 - description_generator - INFO - Starting description generation for: Fleco
+2025-03-05 01:55:45,402 - description_generator - DEBUG - Input data: {
+  "name": "Fleco",
+  "generic_name": "Aceclofenac",
+  "company_name": "Ad-din Pharmaceuticals Ltd.",
+  "strength": "100 mg",
+  "category": "Medicine (Allopathic)",
+  "sub_category": "Null"
+}
+2025-03-05 01:55:45,402 - description_generator - INFO - Successfully initialized Gemini client
+2025-03-05 01:55:45,402 - description_generator - DEBUG - User prompt: generate descripton based on these Information:
+
+        Product Name: Not Provided
+        Generic Name: Aceclofenac
+        Strength: 100 mg
+        Dosage Form: Not Provided
+        Manufacturer: Not Provided
+2025-03-05 01:55:45,402 - description_generator - DEBUG - System instruction: You are an expert pharmaceutical product description writer with a deep understanding of medical terminology, pharmacology, and healthcare marketing. Your task is to generate clear, engaging, and medically accurate product descriptions based on the provided information.
+
+    ## Task:
+    Write a professional, informative, and SEO-friendly description of a pharmaceutical product using structured HTML formatting for seamless web integration.
+
+    ## Guidelines:
+    1. Professional Yet Accessible Tone: Ensure content is suitable for both healthcare professionals and patients.
+    2. Comprehensive Product Information:
+       - Indications: Describe the conditions the medication treats.
+       - Benefits: Highlight key advantages and unique selling points.
+       - Dosage Form & Strength: Specify the available forms and strengths.
+       - Administration: Explain how the product should be used.
+    3. Content Structure:
+       - Introduction: Overview of the product starting with product name and primary use.
+       - Indication: List the medical conditions it treats.
+       - How to Use: Clear and concise administration instructions.
+       - Pharmacology: Explain the mechanism of action.
+       - Administration & Dosage:
+         - Adult Dose:
+         - Pediatric Dose:
+         - Special Populations (if applicable):
+       - Mode of Action: Describe how the drug works in the body.
+       - Drug Interactions: List major interactions.
+       - Contraindications: Situations where use is not recommended.
+       - Precautions & Warnings: Important safety considerations.
+       - Pregnancy & Lactation: Suitability during pregnancy/breastfeeding.
+       - Side Effects: Common and serious adverse reactions.
+       - Storage Instructions: Proper storage conditions.
+       - Additional Information (if applicable).
+       - Disclaimer: "This is AI-generated content. Please consult a healthcare professional before using any medication."
+    4. Fact-Based & Ethical:
+       - No exaggerated claims or unsupported promises about efficacy.
+       - Do not provide medical advice beyond the provided input.
+    5. SEO Optimization:
+       - Incorporate relevant keywords naturally.
+       - Ensure readability and clarity.
+    6. Output Format:
+       - Wrap the description in HTML `<p>`,`<h6>`,`<ul>`,`<li>` tags for structured readability use <br> for break.
+       - Dont use /n.
+       - Return the entire formatted description as a JSON object.
+
+    ## Expected JSON Output:
+    {
+      "product_description": HTML
+    }
+2025-03-05 01:55:45,402 - description_generator - INFO - Sending request to Gemini API for: Fleco
+2025-03-05 01:55:45,402 - description_generator - DEBUG - Request parameters: model=gemini-2.0-flash, temperature=0.2, top_p=0.95, top_k=40, max_output_tokens=8192
+2025-03-05 01:55:53,595 - description_generator - DEBUG - Raw response: ```json
+{
+  "product_description": "<p>Aceclofenac 100mg is a non-steroidal anti-inflammatory drug (NSAID) used to relieve pain and inflammation in various conditions.</p>\r\n\r\n<h6>Indications:</h6>\r\n<ul>\r\n <li>Relief of pain and inflammation in osteoarthritis.</li>\r\n <li>Management of rheumatoid arthritis symptoms.</li>\r\n <li>Alleviation of ankylosing spondylitis.</li>\r\n <li>Other painful conditions such as dental pain, post-operative pain, and musculoskeletal pain.</li>\r\n</ul>\r\n\r\n<h6>How to Use:</h6>\r\n<p>Take Aceclofenac 100mg tablets orally with a glass of water, preferably after food to minimize gastric irritation. Follow your doctor's instructions regarding dosage and duration of treatment.</p>\r\n\r\n<h6>Pharmacology:</h6>\r\n<p>Aceclofenac works by inhibiting the production of prostaglandins, substances in the body that contribute to pain and inflammation.</p>\r\n\r\n<h6>Administration & Dosage:</h6>\r\n<ul>\r\n <li><b>Adult Dose:</b> The usual dose is 100 mg twice daily.</li>\r\n <li><b>Pediatric Dose:</b> Aceclofenac is generally not recommended for use in children due to limited data on safety and efficacy. Consult a pediatrician for alternative treatments.</li>\r\n </ul>\r\n\r\n<h6>Mode of Action:</h6>\r\n<p>Aceclofenac inhibits cyclooxygenase (COX) enzymes, reducing the synthesis of prostaglandins, thereby alleviating pain, inflammation, and fever.</p>\r\n\r\n<h6>Drug Interactions:</h6>\r\n<p>Aceclofenac may interact with the following medications:<br>\r\n - Other NSAIDs or aspirin<br>\r\n - Anticoagulants (e.g., warfarin)<br>\r\n - Antiplatelet drugs (e.g., clopidogrel)<br>\r\n - Selective serotonin reuptake inhibitors (SSRIs)<br>\r\n - Corticosteroids<br>\r\n - Certain antihypertensive medications<br>\r\n - Lithium<br>\r\n - Methotrexate<br>\r\n - Digoxin<br>\r\n Always inform your doctor about all medications you are taking.</p>\r\n\r\n<h6>Contraindications:</h6>\r\n<ul>\r\n <li>Hypersensitivity to aceclofenac or any of the excipients.</li>\r\n <li>Active or history of peptic ulcer, gastrointestinal bleeding, or perforation.</li>\r\n <li>Severe heart failure.</li>\r\n <li>Severe hepatic or renal impairment.</li>\r\n <li>Third trimester of pregnancy.</li>\r\n</ul>\r\n\r\n<h6>Precautions & Warnings:</h6>\r\n<ul>\r\n <li>Use with caution in patients with a history of gastrointestinal disorders.</li>\r\n <li>Monitor for signs of gastrointestinal bleeding or ulceration.</li>\r\n <li>Use with caution in patients with cardiovascular disease, hypertension, or edema.</li>\r\n <li>Use with caution in patients with impaired renal or hepatic function.</li>\r\n <li>Long-term use may increase the risk of cardiovascular events.</li>\r\n</ul>\r\n\r\n<h6>Pregnancy & Lactation:</h6>\r\n<p>Aceclofenac is not recommended during pregnancy, especially in the third trimester. It is also not recommended during breastfeeding as it may pass into breast milk. Consult your doctor for safer alternatives.</p>\r\n\r\n<h6>Side Effects:</h6>\r\n<ul>\r\n <li>Common side effects include: gastrointestinal disturbances (e.g., nausea, diarrhea, abdominal pain), headache, dizziness, and skin rash.</li>\r\n <li>Serious side effects include: gastrointestinal bleeding or ulceration, liver damage, kidney problems, and allergic reactions. Seek immediate medical attention if you experience any serious side effects.</li>\r\n</ul>\r\n\r\n<h6>Storage Instructions:</h6>\r\n<p>Store Aceclofenac 100mg tablets in a cool, dry place, away from direct sunlight and moisture. Keep out of reach of children.</p>\r\n\r\n<p>This is AI-generated content. Please consult a healthcare professional before using any medication.</p>"
+}
+```
+2025-03-05 01:55:53,595 - description_generator - INFO - Successfully parsed JSON response for: Fleco
+2025-03-05 01:55:53,596 - description_generator - DEBUG - Final result: {"product_description": "<p>Aceclofenac 100mg is a non-steroidal anti-inflammatory drug (NSAID) used to relieve pain and inflammation in various conditions.</p>\r\n\r\n<h6>Indications:</h6>\r\n<ul>\r\n <li>Relief of pain and inflammation in osteoarthritis.</li>\r\n <li>Management of rheumatoid arthritis symptoms.</li>\r\n <li>Alleviation of ankylosing spondylitis.</li>\r\n <li>Other painful conditions such as dental pain, post-operative pain, and musculoskeletal pain.</li>\r\n</ul>\r\n\r\n<h6>How to Use:</h6>\r\n<p>Take Aceclofenac 100mg tablets orally with a glass of water, preferably after food to minimize gastric irritation. Follow your doctor's instructions regarding dosage and duration of treatment.</p>\r\n\r\n<h6>Pharmacology:</h6>\r\n<p>Aceclofenac works by inhibiting the production of prostaglandins, substances in the body that contribute to pain and inflammation.</p>\r\n\r\n<h6>Administration & Dosage:</h6>\r\n<ul>\r\n <li><b>Adult Dose:</b> The usual dose is 100 mg twice daily.</li>\r\n <li><b>Pediatric Dose:</b> Aceclofenac is generally not recommended for use in children due to limited data on safety and efficacy. Consult a pediatrician for alternative treatments.</li>\r\n </ul>\r\n\r\n<h6>Mode of Action:</h6>\r\n<p>Aceclofenac inhibits cyclooxygenase (COX) enzymes, reducing the synthesis of prostaglandins, thereby alleviating pain, inflammation, and fever.</p>\r\n\r\n<h6>Drug Interactions:</h6>\r\n<p>Aceclofenac may interact with the following medications:<br>\r\n - Other NSAIDs or aspirin<br>\r\n - Anticoagulants (e.g., warfarin)<br>\r\n - Antiplatelet drugs (e.g., clopidogrel)<br>\r\n - Selective serotonin reuptake inhibitors (SSRIs)<br>\r\n - Corticosteroids<br>\r\n - Certain antihypertensive medications<br>\r\n - Lithium<br>\r\n - Methotrexate<br>\r\n - Digoxin<br>\r\n Always inform your doctor about all medications you are taking.</p>\r\n\r\n<h6>Contraindications:</h6>\r\n<ul>\r\n <li>Hypersensitivity to aceclofenac or any of the excipients.</li>\r\n <li>Active or history of peptic ulcer, gastrointestinal bleeding, or perforation.</li>\r\n <li>Severe heart failure.</li>\r\n <li>Severe hepatic or renal impairment.</li>\r\n <li>Third trimester of pregnancy.</li>\r\n</ul>\r\n\r\n<h6>Precautions & Warnings:</h6>\r\n<ul>\r\n <li>Use with caution in patients with a history of gastrointestinal disorders.</li>\r\n <li>Monitor for signs of gastrointestinal bleeding or ulceration.</li>\r\n <li>Use with caution in patients with cardiovascular disease, hypertension, or edema.</li>\r\n <li>Use with caution in patients with impaired renal or hepatic function.</li>\r\n <li>Long-term use may increase the risk of cardiovascular events.</li>\r\n</ul>\r\n\r\n<h6>Pregnancy & Lactation:</h6>\r\n<p>Aceclofenac is not recommended during pregnancy, especially in the third trimester. It is also not recommended during breastfeeding as it may pass into breast milk. Consult your doctor for safer alternatives.</p>\r\n\r\n<h6>Side Effects:</h6>\r\n<ul>\r\n <li>Common side effects include: gastrointestinal disturbances (e.g., nausea, diarrhea, abdominal pain), headache, dizziness, and skin rash.</li>\r\n <li>Serious side effects include: gastrointestinal bleeding or ulceration, liver damage, kidney problems, and allergic reactions. Seek immediate medical attention if you experience any serious side effects.</li>\r\n</ul>\r\n\r\n<h6>Storage Instructions:</h6>\r\n<p>Store Aceclofenac 100mg tablets in a cool, dry place, away from direct sunlight and moisture. Keep out of reach of children.</p>\r\n\r\n<p>This is AI-generated content. Please consult a healthcare professional before using any medication.</p>"}

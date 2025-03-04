@@ -12,7 +12,7 @@ system_prompt = """
        - Dosage Form & Strength: Specify the available forms and strengths.
        - Administration: Explain how the product should be used.
     3. Content Structure:
-       - Introduction: Overview of the product and primary use.
+       - Introduction: Overview of the product starting with product name and primary use.
        - Indication: List the medical conditions it treats.
        - How to Use: Clear and concise administration instructions.
        - Pharmacology: Explain the mechanism of action.

@@ -106,7 +106,7 @@ class GenerateDescriptionJob implements ShouldQueue
         Log::info("Extracted Description",[
             'medicine_id' => $this->medicine->id,
             'medicine_name' => $this->medicine->name,
-            'medicine-description' => $this->medicine->description,
+            // 'medicine-description' => $this->medicine->description,
         ]);
 
         // Update the medicine record
@@ -117,7 +117,7 @@ class GenerateDescriptionJob implements ShouldQueue
         Log::info("Medicine description updated successfully", [
             'medicine_id' => $this->medicine->id,
             'medicine_name' => $this->medicine->name,
-            'medicine-description' => $this->medicine->description,
+            // 'medicine-description' => $this->medicine->description,
         ]);
     }
 

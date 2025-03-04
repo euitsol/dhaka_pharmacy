@@ -46,7 +46,7 @@ def extract_json_from_text(text):
     # Check if the text contains JSON code blocks
     json_pattern = r'```json\s*(.*?)\s*```'
     match = re.search(json_pattern, text, re.DOTALL)
-    
+
     if match:
         # Extract the JSON content from within the code blocks
         json_text = match.group(1)
@@ -55,7 +55,7 @@ def extract_json_from_text(text):
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse JSON from code block: {e}")
             return {"error": "Failed to parse JSON from code block"}
-    
+
     # If no code blocks, try to parse the entire text as JSON
     try:
         return json.loads(text)
@@ -78,7 +78,7 @@ def generate_description(data):
         prompt = f"""
         generate descripton based on these Information:
 
-        Product Name: {data.get('product_name', 'Not Provided')}
+        Product Name: {data.get('name', 'Not Provided')}
         Generic Name: {data.get('generic_name', 'Not Provided')}
         Strength: {data.get('strength', 'Not Provided')}
         Dosage Form: {data.get('dosage_form', 'Not Provided')}
@@ -150,7 +150,7 @@ if __name__ == "__main__":
         result = generate_description(input_json)
         # Debug the final result
         logger.debug(f"Final result: {json.dumps(result)}")
-        
+
         # Print the result for the calling process
         print(json.dumps(result))
 
