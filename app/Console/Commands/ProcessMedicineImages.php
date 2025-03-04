@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Jobs\ProcessImageJob;
 use App\Models\Medicine;
 use Illuminate\Console\Command;
+use App\Services\BgRemoveService;
 
 class ProcessMedicineImages extends Command
 {
