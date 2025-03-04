@@ -19,7 +19,7 @@ class ProcessMedicineImages extends Command
         $force = $this->option('force');
 
         // $query = Medicine::where('status', Medicine::STATUS_ACTIVE)
-        $query = Medicine::with(relations: 'processedImage')->whereNotNull('image')->where('is_featured', 1)
+        $query = Medicine::with(relations: 'processedImage')->whereNotNull('image')->featured()->activated()
             ->when($medicineId, fn($q) => $q->where('id', $medicineId))
             ->when(!$force, function($q) {
                 $q->where(function($query) {

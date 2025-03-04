@@ -57,11 +57,11 @@ class ProcessImageJob implements ShouldQueue
             $metadata = $this->generateMetadata($originalPath, $backupPath);
 
             $this->markAsProcessed($metadata);
-            $this->updateMedicineRecord($metadata['processed']['path']);
+            $this->updateMedicineRecord($originalPath);
 
             Log::info("Successfully processed image for medicine ID: {$this->medicine->id}", [
                 'original_path' => $originalPath,
-                'new_path' => $metadata['processed']['path'],
+                'new_path' => $originalPath,
                 'backup_path' => $backupPath,
                 'original_size' => $metadata['original']['size'],
                 'processed_size' => $metadata['processed']['size']
@@ -133,28 +133,23 @@ class ProcessImageJob implements ShouldQueue
         }
 
         $fullPath = storage_path('app/public/' . $imagePath);
-
-        $pathInfo = pathinfo($imagePath);
-        $newFilename = $pathInfo['filename'] . '.jpg';
-        $newPath = $pathInfo['dirname'] . '/' . $newFilename;
-        $newFullPath = storage_path('app/public/' . $newPath);
+        $watermarkPath = 'public/watermark.png';
 
         Log::info("Processing image", [
             'medicine_id' => $this->medicine->id,
-            'original_path' => $imagePath,
-            'new_path' => $newPath
+            'original_path' => $imagePath
         ]);
 
         $processor
             ->useImageDriver(ImageDriver::Gd)
             ->load($fullPath)
-            ->fit(Fit::FillMax, self::TARGET_SIZE, self::TARGET_SIZE)
+            ->fit(Fit::FillMax, 800, 700, '#e5e8e8')
+            // ->width(800)
+            // ->height(700)
+            ->background('#e5e8e8')
+            ->watermark($watermarkPath,alpha: 50)
             ->optimize()
-            ->save($newFullPath);
-
-        if ($newPath !== $imagePath) {
-            $this->medicine->image = $newPath;
-        }
+            ->save();
     }
 
     private function generateMetadata(string $originalPath, string $backupPath): array
@@ -167,11 +162,7 @@ class ProcessImageJob implements ShouldQueue
             throw new \RuntimeException("Original image not found at path: {$originalPath}");
         }
 
-        $pathInfo = pathinfo($originalPath);
-        $newFilename = $pathInfo['filename'] . '.jpg';
-        $newPath = $pathInfo['dirname'] . '/' . $newFilename;
-
-        $originalFullPath = storage_path('app/public/' . $newPath);
+        $originalFullPath = storage_path('app/public/' . $originalPath);
 
         if (!file_exists($originalFullPath)) {
             Log::error("Processed image file not found", [
@@ -196,7 +187,7 @@ class ProcessImageJob implements ShouldQueue
         $mime = $finfo->file($originalFullPath);
 
         $originalSize = Storage::disk(self::DISK_NAME)->size($originalPath);
-        $processedSize = Storage::disk(self::DISK_NAME)->size($newPath);
+        $processedSize = Storage::disk(self::DISK_NAME)->size($originalPath);
 
         Log::info("Metadata generated", [
             'medicine_id' => $this->medicine->id,
@@ -218,8 +209,8 @@ class ProcessImageJob implements ShouldQueue
                 'size' => $processedSize,
                 'width' => $originalWidth,
                 'height' => $originalHeight,
-                'mime' => 'image/jpeg',
-                'path' => $newPath
+                'mime' => $mime,
+                'path' => $originalPath
             ],
             'ai_tags' => $this->generateAIMetadata()
         ];
@@ -242,8 +233,7 @@ class ProcessImageJob implements ShouldQueue
     private function updateMedicineRecord(string $newImagePath): void
     {
         $this->medicine->update([
-            'is_processed' => true,
-            'image' => $newImagePath
+            'is_processed' => true
         ]);
     }
 
