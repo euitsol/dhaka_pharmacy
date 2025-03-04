@@ -13,9 +13,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Image\Enums\Fit;
-use Spatie\Image\Enums\ImageDriver;
-use App\Services\ImageProcessorService;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -32,7 +29,7 @@ class ProcessImageJob implements ShouldQueue
     ) {
     }
 
-    public function handle(ImageProcessorService $imageProcessor): void
+    public function handle(): void
     {
         try {
             Log::info("Starting image processing for medicine ID: {$this->medicine->id}", [
@@ -55,7 +52,7 @@ class ProcessImageJob implements ShouldQueue
 
             $backupPath = $this->createBackup($originalPath);
 
-            $processedImagePath = $this->processImage($imageProcessor, $originalPath);
+            $processedImagePath = $this->processImage($originalPath);
             $metadata = $this->generateMetadata($originalPath, $backupPath, $processedImagePath);
 
             $this->markAsProcessed($metadata);
@@ -124,37 +121,7 @@ class ProcessImageJob implements ShouldQueue
         return $backupPath;
     }
 
-    // private function processImage(ImageProcessorService $processor, string $imagePath): void
-    // {
-    //     if (!Storage::disk(self::DISK_NAME)->exists($imagePath)) {
-    //         Log::error("Image not found for processing", [
-    //             'medicine_id' => $this->medicine->id,
-    //             'image_path' => $imagePath
-    //         ]);
-    //         throw new \RuntimeException("Image not found at path: {$imagePath}");
-    //     }
-
-    //     $fullPath = storage_path('app/public/' . $imagePath);
-    //     $watermarkPath = 'public/watermark.png';
-
-    //     Log::info("Processing image", [
-    //         'medicine_id' => $this->medicine->id,
-    //         'original_path' => $imagePath
-    //     ]);
-
-    //     $processor
-    //         ->useImageDriver(ImageDriver::Gd)
-    //         ->load($fullPath)
-    //         ->fit(Fit::FillMax, 800, 700, '#e5e8e8')
-    //         // ->width(800)
-    //         // ->height(700)
-    //         ->background('#e5e8e8')
-    //         ->watermark($watermarkPath,alpha: 50)
-    //         ->optimize()
-    //         ->save();
-    // }
-
-    private function processImage(ImageProcessorService $processor, string $imagePath): string
+    private function processImage(string $imagePath): string
     {
         if (!Storage::disk(self::DISK_NAME)->exists($imagePath)) {
             Log::error("Image not found for processing", [
@@ -171,17 +138,23 @@ class ProcessImageJob implements ShouldQueue
         $processedImageDirPrefix = storage_path('app/public/');
         $processedImageDirPostfix = dirname($imagePath);
         $processedImageFilename = Str::slug($this->medicine->name).'.png';
-        $watermarkPath = storage_path('app/public/watermark.png');
+        $processedImageFullPath = $processedImageDirPrefix.$processedImageDirPostfix.'/'.$processedImageFilename;
 
         // Ensure temp directory exists
         if (!file_exists($tempDir)) {
             Storage::disk('local')->makeDirectory('temp');
         }
 
-        // Remove background first
+        // Remove background using the BgRemoveService
         try {
             $bgRemover = new BgRemoveService();
-            $bgRemover->removeBackground($originalFullPath, $tempBgRemovedPath);
+            $bgRemover->removeBackground($originalFullPath, $processedImageFullPath);
+            
+            Log::info("Image processed successfully with background removal", [
+                'medicine_id' => $this->medicine->id,
+                'original_path' => $imagePath,
+                'processed_path' => $processedImageDirPostfix.'/'.$processedImageFilename
+            ]);
         }
         catch (ProcessFailedException $e) {
             Log::error("Background removal failed: ".$e->getMessage(), [
@@ -191,45 +164,14 @@ class ProcessImageJob implements ShouldQueue
             throw new \RuntimeException("Background removal failed: ".$e->getMessage());
         }
 
-        // Process with Spatie Image
-        try {
-
-            Log::info("Processing image", [
-                'medicine_id' => $this->medicine->id,
-                'original_path' => $imagePath,
-                'temp_path' => $tempBgRemovedPath,
-                'processed_image' => $processedImageDirPrefix.$processedImageDirPostfix.'/'.$processedImageFilename
-            ]);
-
-
-            $processor
-                ->useImageDriver(ImageDriver::Gd)
-                ->load($tempBgRemovedPath)
-                // ->fit(Fit::FillMax, 800, 700, '#e5e8e8')
-                // ->resize(800, 700)
-                // ->background('#e5e8e8')
-                // ->watermark($watermarkPath, alpha: 50)
-                ->optimize()
-                ->save(); // Save back to original path
-
-
-
-
-        }catch (ProcessFailedException $e) {
-            Log::error("Image processing failed: ".$e->getMessage(), [
-                'medicine_id' => $this->medicine->id,
-            ]);
-            throw new \RuntimeException("Image processing failed: ".$e->getMessage());
-        }
-        finally {
-            if (file_exists($tempBgRemovedPath)) {
-                // unlink($tempBgRemovedPath);
-            }
+        // Cleanup temp files if needed
+        if (file_exists($tempBgRemovedPath)) {
+            @unlink($tempBgRemovedPath);
         }
 
         Log::info("Image processed successfully", [
             'medicine_id' => $this->medicine->id,
-            'processed_path' => $processedImageDirPrefix.$processedImageDirPostfix.'/'.$processedImageFilename
+            'processed_path' => $processedImageDirPostfix.'/'.$processedImageFilename
         ]);
 
         return $processedImageDirPostfix.'/'.$processedImageFilename;

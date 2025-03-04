@@ -154,7 +154,7 @@ h2.title {
 }
 
 .single-pdct .pdct-img {
-    background: #e9e9e9;
+    background: #fbfcfc;
     border-radius: 15px 15px 0 0;
     padding: 0;
     position: relative;
@@ -893,7 +893,7 @@ a {
 .product-section .all-products .single-pdct .pdct-img img {
     /* border-bottom: unset; */
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .product-section .show-more .all-pdct-btn {
