@@ -493,7 +493,7 @@ a {
 
 .sidebar-cat-section .row .single-cat .icon {
     max-width: 60px;
-    min-height: 60px;
+    min-height: 70px;
     transition: 0.4s;
     display: flex;
     align-items: center;
