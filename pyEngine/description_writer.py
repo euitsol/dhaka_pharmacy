@@ -1,7 +1,7 @@
 import sys
 import os
 from google import genai
-from google.generai import types
+from google.genai import types
 from prompt.description_prompt import prompt
 
 client = genai.GenerativeModel(model_name="gemini-pro", api_key=os.environ.get("GEMINI_API_KEY"))
