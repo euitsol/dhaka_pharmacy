@@ -108,7 +108,7 @@
                                     @foreach ($strengths as $strength)
                                         <option value="{{ $strength->id }}"
                                             {{ $strength->id == old('strength_id') ? 'selected' : '' }}>
-                                            <small>{{ $strength->quantity }} </small> {{ $strength->unit }}
+                                            {{ $strength->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -418,7 +418,7 @@
 
                         var input = $(`
                                     <input type="hidden" class="d-none" id="unit-${unitId}" name="units[${unitId}][id]" value="${unitId}">
-                                    <input type="number" class="form-control" id="price-unit-${unitId}" name="units[${unitId}][price]" placeholder="Enter price for ${unitName}">
+                                    <input type="number" class="form-control" id="price-unit-${unitId}" name="units[${unitId}][price]" placeholder="Enter price for ${unitName}" step="0.01">
                         `);
                         priceDiv.append(input);
 

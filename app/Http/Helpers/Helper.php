@@ -19,24 +19,33 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 function get_permission_routes()
 {
     return [
-        // 'am.',
-        // 'um.',
-        // 'pm.',
-        // 'pm.',
-        // 'rm.',
-        // 'opa.',
-        // 'do.',
-        // 'pym.',
-        // 'push.',
-        // 'settings.',
-        // 'dm_management.',
-        // 'lam_management.',
-        // 'product.',
-        // 'payment_gateway.',
-        // 'obp.',
-        // 'om.',
-        // 'withdraw_method.',
-        // 'withdraw.'
+        'am.',
+        'um.',
+        'pm.',
+        'pm.',
+        'rm.',
+        'opa.',
+        'do.',
+        'pym.',
+        'push.',
+        'settings.',
+        'dm_management.',
+        'lam_management.',
+        'product.',
+        'payment_gateway.',
+        'obp.',
+        'om.',
+        'withdraw_method.',
+        'withdraw.',
+        'hm.',
+        'latest_offer.',
+        'user_tips.',
+        'feedback.',
+        'review.',
+        'st.',
+        'pc.',
+        'doc.'
+
     ];
 }
 
@@ -187,6 +196,14 @@ function product_image($url)
     //     return $url;
     // }
     // For Fake Image
+    if (Str::contains($url, ['http://', 'https://'])) {
+        return $url;
+    }
+    return $url ? asset('storage/' . $url) : asset('frontend/default/product.png');
+}
+
+function banner_image($url)
+{
     if (Str::contains($url, ['http://', 'https://'])) {
         return $url;
     }

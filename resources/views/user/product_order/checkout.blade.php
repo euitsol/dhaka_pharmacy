@@ -31,12 +31,12 @@
                 @csrf
                 <input type="hidden" name="order_id" value="{{ encrypt($order->order_id) }}">
                 <div class="row row-gap-4">
-                    <div class="col-12 col-lg-7 px-0 px-lg-3">
+                    <div class="col-12 col-lg-7 px-0 px-lg-3 h-100">
                         <div class="order-info-row">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-xxl-6 mb-3 mb-xxl-0">
+                                        <div class="col-12 col-sm-6 col-xxl-6 mb-3 mb-xxl-0">
                                             <div class="add-new-box border rounded hover-shadow">
                                                 <a href="javascript:void(0)"
                                                     class="address_btn text-decoration-none d-flex align-items-center justify-content-center gap-2 py-3"
@@ -56,7 +56,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-xxl-6">
+                                        <div class="col-12 col-sm-6 col-xxl-6">
                                             <div class="add-new-box border rounded hover-shadow">
                                                 <a href="javascript:void(0)"
                                                     class="address_btn text-decoration-none d-flex align-items-center justify-content-center gap-2 py-3"
@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     <h4 class="my-3 title">{{ __('Your Products') }} </h4>
-                                    <div class="left">
+                                    <div class="left common-scroll">
                                         @foreach ($order->products as $key => $product)
                                             <div class="row align-items-center py-2">
                                                 <div class="col-4 col-sm-3 col-md-2">
@@ -95,10 +95,10 @@
                                                         <div class="col-12 col-sm-7 col-md-8 pe-0 pe-md-4">
                                                             <h5 class="mb-1" title="{{ $product->attr_title }}">
                                                                 {{ $product->name }}</h5>
-                                                            <p class="mb-0" title="{{ $product->generic->name }}">
-                                                                {{ $product->generic->name }}</p>
-                                                            <p class="mb-0" title="{{ $product->company->name }}">
-                                                                {{ $product->company->name }}</p>
+                                                            <p class="mb-0" title="{{ optional($product->generic)->name }}">
+                                                                {{ optional($product->generic)->name }}</p>
+                                                            <p class="mb-0" title="{{ optional($product->company)->name }}">
+                                                                {{ optional($product->company)->name }}</p>
                                                         </div>
                                                         <div class="col-12 col-sm-5 col-md-4 mt-1 mt-md-0">
                                                             <div
@@ -108,19 +108,22 @@
                                                                         {{ __('Qty: ') }}<span>{{ $product->pivot->quantity }}</span>
                                                                     </p>
                                                                 </div>
-                                                                <div
-                                                                    class="d-flex justify-content-between flex-column flex-xl-row">
-                                                                    <p class="qt mb-0 pe-3 pe-md-0">
-                                                                        {{ __('Unit: ') }}<span>{{ $product->pivot->unit_name }}</span>
-                                                                    </p>
-                                                                    <p class="qt mb-0 mt-1 mt-xl-0">
-                                                                        @if ($product->pivot->unit_discount > 0)
-                                                                            <del class="offer">{!! get_taka_icon() !!}
-                                                                                {{ number_format($product->pivot->unit_price * $product->pivot->quantity, 2) }}</del>
-                                                                        @endif
-                                                                        <span>{!! get_taka_icon() !!}
-                                                                            {{ number_format($product->pivot->total_price, 2) }}</span>
-                                                                    </p>
+                                                                <div class="d-flex d-sm-block justify-content-between align-items-center">
+                                                                    <div>
+                                                                        <p class="qt mb-0 pe-3 pe-md-0">
+                                                                            {{ __('Unit: ') }}<span>{{ $product->pivot->unit_name }}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <p class="qt mb-0 mt-1 mt-xl-0">
+                                                                            @if ($product->pivot->unit_discount > 0)
+                                                                                <del class="offer">{!! get_taka_icon() !!}
+                                                                                    {{ number_format($product->pivot->unit_price * $product->pivot->quantity, 2) }}</del>
+                                                                            @endif
+                                                                            <span>{!! get_taka_icon() !!}
+                                                                                {{ number_format($product->pivot->total_price, 2) }}</span>
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -133,7 +136,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-5 px-0 px-lg-3">
+                    <div class="col-12 col-lg-5 px-0 px-lg-3 h-100">
                         <div class="order-info-row">
                             <div class="right d-flex flex-column justify-content-center">
                                 <h4 class="mb-3 title">{{ __('Delivery Address') }}</h4>
@@ -218,6 +221,12 @@
                                                 name="payment_method" value="ssl">
                                             <label for="android-4">
                                                 <img src="{{ asset('frontend/asset/img/ssl.png') }}"
+                                                    style="object-fit: contain">
+                                            </label>
+                                            <input type="radio" class="payment-method" id="android-5"
+                                                name="payment_method" value="cod">
+                                            <label for="android-5">
+                                                <img src="{{ asset('frontend/asset/img/cod.png') }}"
                                                     style="object-fit: contain">
                                             </label>
                                         </div>

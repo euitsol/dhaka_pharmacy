@@ -43,10 +43,10 @@
                                     </div>
 
                                     <div class="row gx-4">
-                                        <div class="col-5 col-xxl-5 col-12 col-md-5 mb-3 mb-sm-0">
-                                            <div class="card h-100">
-                                                <div class="card-body h-100">
-                                                    <div class="product_image xzoom-container">
+                                        <div class="col-xxl-5 col-12 col-md-5 mb-3 mb-sm-0">
+                                            <div class="">
+                                                <div class="">
+                                                    <!-- <div class="product_image xzoom-container">
                                                         @if ($single_product->discount_percentage > 0)
                                                             <span
                                                                 class="discount_tag">{{ formatPercentageNumber($single_product->discount_percentage) . '% 0ff' }}</span>
@@ -55,7 +55,7 @@
                                                             src="{{ $single_product->image }}"
                                                             xoriginal="{{ $single_product->image }}">
 
-                                                        <!-- Thumbnails -->
+                                                
                                                         <div class="xzoom-thumbs">
                                                             <a href="{{ $single_product->image }}">
                                                                 <img class="xzoom-gallery xactive" width="80"
@@ -63,16 +63,34 @@
                                                                     xpreview="{{ $single_product->image }}">
                                                             </a>
                                                         </div>
+                                                    </div> -->
+
+                                                    <div class="product_image">
+                                                        @if ($single_product->discount_percentage > 0)
+                                                            <span
+                                                                class="discount_tag">{{ formatPercentageNumber($single_product->discount_percentage) . '% 0ff' }}</span>
+                                                        @endif
+                                                        <img class="w-100" id=""
+                                                            src="{{ $single_product->image }}"
+                                                            xoriginal="{{ $single_product->image }}">
+
+                                                        <!-- Thumbnails -->
+                                                        
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-7 col-xxl-6 col-12 col-md-7">
+                                        <div class="col-xxl-7 col-12 col-md-7">
                                             <form action="{{ route('u.ck.single') }}" id="single_order_form"
                                                 method="POST">
                                                 @csrf
                                                 <div class="product_content">
-                                                    <h1>{{ __($single_product->name) }} </h1>
+                                                    <h1 class="mb-0">{{ $single_product->name }}
+                                                    </h1>
+                                                    <h1 class="text-muted fs-5">
+                                                        {{ optional($single_product->strength)->name }}
+                                                    </h1>
                                                     <input type="hidden" name="slug"
                                                         value="{{ $single_product->slug }}">
 
@@ -154,7 +172,7 @@
                                                                     <td>{{ __(
                                                                         optional($single_product->strength)->quantity .
                                                                             '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ' .
                                                                             optional($single_product->strength)->unit,
                                                                     ) }}
                                                                     </td>
@@ -163,7 +181,8 @@
                                                         </table>
                                                     </div>
                                                     <div class="tab-pane fade ck ck-reset ck-editor ck-rounded-corners"
-                                                        id="description" role="tabpanel" aria-labelledby="description-tab">
+                                                        id="description" role="tabpanel"
+                                                        aria-labelledby="description-tab">
                                                         {!! $single_product->description !!}
                                                     </div>
 
@@ -237,26 +256,37 @@
                                                                             alt="{{ __($product->name) }}">
                                                                     </a>
                                                                 </div>
-                                                                <div
-                                                                    class="col-12 col-xxl-8 content px-2 px-lg-3 px-xxl-2">
+                                                                <div class="col-12 col-xxl-8 content px-2 px-lg-3 px-xxl-2">
 
-                                                                    <h3 class="pdct-title"
+                                                                    <h3 class="pdct-title mb-0"
                                                                         title="{{ $product->attr_title }}"><a
                                                                             href="{{ route('product.single_product', $product->slug) }}">{{ $product->formatted_name }}
-                                                                        </a></h3>
+                                                                        </a>
+                                                                    </h3>
+                                                                    
+                                                                    <div class="all-product-containt">
+                                                                        <p 
+                                                                            title="{{ optional($product->strength)->name }}">
+                                                                            <a href="">{{ $product->strength_info }}
+                                                                            </a>
+                                                                        </p>
 
-                                                                    <p class="d-block"><a href=""
-                                                                            title="{{ optional($product->pro_sub_cat)->name }}">
-                                                                            {{ $product->formatted_sub_cat }}
-                                                                        </a></p>
-                                                                    <p><a href=""
-                                                                            title="{{ optional($product->generic)->name }}">
-                                                                            {{ $product->generic_info }}
-                                                                        </a></p>
-                                                                    <p><a href=""
-                                                                            title="{{ optional($product->company)->name }}">
-                                                                            {{ $product->company_info }}
-                                                                        </a></p>
+                                                                        <p class="d-block"><a href=""
+                                                                                title="{{ optional($product->pro_sub_cat)->name }}">
+                                                                                {{ $product->formatted_sub_cat }}
+                                                                            </a></p>
+                                                                        <p><a href=""
+                                                                                title="{{ optional($product->generic)->name }}">
+                                                                                {{ $product->generic_info }}
+                                                                            </a></p>
+                                                                        <p><a href=""
+                                                                                title="{{ optional($product->company)->name }}">
+                                                                                {{ $product->company_info }}
+                                                                            </a>
+                                                                        </p>
+                                                                    </div>
+
+
                                                                     <h4 class="pdct-price"> <span> {!! get_taka_icon() !!}
                                                                             @if ($product->is_tba)
                                                                                 <span>{{ __('TBA') }}</span>
@@ -332,12 +362,23 @@
                                                 <div class="pdct-info">
                                                     <div class="product_title">
                                                         <a href="{{ route('product.single_product', $product->slug) }}">
-                                                            <h3 class="fw-bold" title="{{ $product->attr_title }}">
+                                                            <h3 class="fw-bold mb-0" title="{{ $product->attr_title }}">
                                                                 {{ $product->formatted_name }}
                                                             </h3>
                                                         </a>
                                                     </div>
+                                                    <!-- <div class="product_title">
+                                                        <a href="javascript:void(0)">
+                                                            <h3 class="fw-bold text-muted mt-0"
+                                                                title="{{ optional($product->strength)->name }}">
+                                                                {{ $product->strength_info }}
+                                                            </h3>
+                                                        </a>
+                                                    </div> -->
                                                     <div class="all-product-containt">
+                                                        <p>
+                                                            <a href="" title="{{ optional($product->strength)->name }}">{{ $product->strength_info }}</a>
+                                                        </p>
                                                         <p>
                                                             <a href=""
                                                                 title="{{ optional($product->pro_sub_cat)->name }}">
@@ -429,12 +470,23 @@
                                                 <div class="pdct-info">
                                                     <div class="product_title">
                                                         <a href="{{ route('product.single_product', $product->slug) }}">
-                                                            <h3 class="fw-bold" title="{{ $product->attr_title }}">
+                                                            <h3 class="fw-bold mb-0" title="{{ $product->attr_title }}">
                                                                 {{ $product->formatted_name }}
                                                             </h3>
                                                         </a>
                                                     </div>
+                                                    <!-- <div class="product_title">
+                                                        <a href="javascript:void(0)">
+                                                            <h3 class="fw-bold text-muted mt-0"
+                                                                title="{{ optional($product->strength)->name }}">
+                                                                {{ $product->strength_info }}
+                                                            </h3>
+                                                        </a>
+                                                    </div> -->
                                                     <div class="all-product-containt">
+                                                        <p>
+                                                            <a href="" title="{{ optional($product->strength)->name }}">{{ $product->strength_info }}</a>
+                                                        </p>
                                                         <p>
                                                             <a href=""
                                                                 title="{{ optional($product->pro_sub_cat)->name }}">
@@ -461,7 +513,8 @@
                                                             <a class="cart-btn no-cart"
                                                                 href="{{ route('product.single_product', $product->slug) }}">
                                                                 <i class="fa-solid fa-info"></i>
-                                                                <span class="d-block d-xl-none">{{ __('Details') }}</span>
+                                                                <span
+                                                                    class="d-block d-xl-none">{{ __('Details') }}</span>
                                                             </a>
                                                         </div>
                                                     @else

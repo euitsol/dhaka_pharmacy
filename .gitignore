@@ -24,3 +24,6 @@ config/broadcasting.php
 
 */google_tag.blade.php
 resources/views/frontend/includes/google_tag.blade.php
+pyEngine/venv/Lib/site-packages/attr/__init__.py
+/pyEngine/venv
+/pyEngine/__pycache__

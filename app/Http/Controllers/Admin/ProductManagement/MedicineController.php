@@ -159,7 +159,7 @@ class MedicineController extends Controller
         $data['companies'] = CompanyName::activated()->orderBy('name')->latest()->get();
         $data['medicine_cats'] = MedicineCategory::activated()->orderBy('name')->latest()->get();
         $data['medicine_doses'] = MedicineDose::activated()->orderBy('name')->latest()->get();
-        $data['strengths'] = MedicineStrength::activated()->latest()->get();
+        $data['strengths'] = MedicineStrength::activated()->orderBy('name')->latest()->get();
         $data['units'] = MedicineUnit::activated()->orderBy('name')->latest()->get();
         $data['document'] = Documentation::where([['module_key', 'product'], ['type', 'create']])->first();
         return view('admin.product_management.medicine.create', $data);
@@ -191,6 +191,9 @@ class MedicineController extends Controller
         $medicine->kyc_required = $req->kyc_required;
         $medicine->max_quantity = $req->max_quantity;
         $medicine->created_by = admin()->id;
+
+        $medicine->status = 2;
+
         $medicine->save();
 
         //medicine unit bkdn
@@ -280,7 +283,12 @@ class MedicineController extends Controller
         $medicine->kyc_required = $req->kyc_required;
         $medicine->max_quantity = $req->max_quantity;
         $medicine->updated_by = admin()->id;
+
+        $medicine->status = 2;
+
         $medicine->save();
+
+
 
         //medicine unit bkdn
         MedicineUnitBkdn::where('medicine_id', $medicine->id)->forceDelete();

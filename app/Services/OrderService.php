@@ -149,7 +149,8 @@ class OrderService
                 'product_discount' => 0, //will be added in order product
                 'delivery_fee' => $deliveryFee,
                 'delivery_type' => $deliveryType,
-                'status' => Order::INITIATED
+                'status' => Order::INITIATED,
+                'payment_status' => Order::PAYMENT_UNPAID,
             ]);
 
             // Create order items and clear carts
@@ -219,7 +220,10 @@ class OrderService
         $this->paymentService->setOrder($this->order)->setUser($this->user)->setPaymentMethod($data['payment_method']);
         $payment = $this->paymentService->createPayment();
         $this->orderTimelineService->updateTimelineStatus($this->order, ORDER::SUBMITTED);
-        $this->order->update(['status' => Order::SUBMITTED]);
+        $this->order->update([
+            'status' => Order::SUBMITTED,
+            'payment_status' => $data['payment_method'] =='cod' ? Order::PAYMENT_COD : Order::PAYMENT_UNPAID
+        ]);
 
         Log::info($this->order->order_id."Confirmed");
 

@@ -28,9 +28,9 @@ class FrontendDataShareServiceProvider extends ServiceProvider
         view()->composer(['frontend.*'], function ($view) {
 
             $data = [];
-            $data['default_delivery_fee'] = 60;
+            // $data['default_delivery_fee'] = 60;
 
-            $categories = Cache::remember('categories', 360, function () {
+            $categories = Cache::remember('categories', 0, function () {
                 return ProductCategory::where('status', 1)->orderBy('name')->get();
             });
             // $categories = ProductCategory::where('status', 1)->orderBy('name')->get();

@@ -11,4 +11,9 @@ class SiteSetting extends BaseModel
     use HasFactory, SoftDeletes;
     protected $fillable = ['key', 'value', 'env_key'];
     public $guarded = [];
+
+    public static function getValue($key)
+    {
+        return self::where('key', $key)->value('value');
+    }
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\WishlistController;
 use App\Http\Controllers\Api\User\VoucherController;
 use App\Http\Controllers\Api\User\PrescriptionController;
+use App\Http\Controllers\Api\Frontend\BannerController;
 
 Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 
@@ -83,6 +84,7 @@ Route::group(['as' => 'u.', 'prefix' => 'user'], function () {
 Route::controller(ApiInfoShareController::class)->prefix('api-info')->name('api.')->group(function () {
     Route::get('/secure', 'secureApiInfo')->middleware('auth:api-user')->name('secure.i');
     Route::get('/social', 'socialApiInfo')->name('social.i');
+    Route::get('/general', 'generalApiInfo')->name('general.i');
 });
 
 Route::group(['as' => 'f.', 'prefix' => ''], function () {
@@ -93,5 +95,9 @@ Route::group(['as' => 'f.', 'prefix' => ''], function () {
         Route::get('products', 'products')->name('multiple');
         Route::get('product', 'product')->name('details');
         Route::get('product/search', 'search')->name('search');
+    });
+
+    Route::controller(BannerController::class)->prefix('banners')->name('banners.')->group(function () {
+        Route::get('list', 'list')->name('list');
     });
 });

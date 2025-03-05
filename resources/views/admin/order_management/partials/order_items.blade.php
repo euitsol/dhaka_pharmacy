@@ -2,6 +2,7 @@
     $submitted = \App\Models\Order::SUBMITTED == $order->status;
     $assigend = \App\Models\Order::HUB_ASSIGNED == $order->status;
     $collected = \App\Models\Order::ITEMS_COLLECTED == $order->status;
+    $prepared = \App\Models\Order::PACHAGE_PREPARED == $order->status;
 @endphp
 
 <form action="{{ route('om.order.hub_assign') }}" method="POST" class="px-0">
@@ -14,11 +15,22 @@
             </div>
             <div class="col-auto"> </div>
         </div>
+
+        @if ($errors->any())
+            <div class="alert alert-danger mx-3 mt-3">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="card-body order_items">
             <div class="row">
                 @foreach ($products as $key => $product)
                     <div class="col-12">
-                        <input type="hidden" name="data[{{ $key }}][p_id]" value="{{ $product->id }}">
+                        <input type="hidden" name="data[{{ $key }}][p_id]" value="{{ $product->product_id }}">
                         <div class="card card-2 mb-3">
                             <div class="card-body">
                                 <div class="row align-items-center">
@@ -99,7 +111,7 @@
                                                     @endif
                                                 </div>
                                             @endif
-                                            @if ($collected)
+                                            @if ($collected || $prepared)
                                                 <label>{{ __('Collected from Pharmacy') }}</label>
                                                 <div class="hub-display">
                                                     @if(isset($product->pivot->pharmacy_id) && !empty($product->pivot->pharmacy_id))
@@ -125,7 +137,7 @@
                 @if ($submitted)
                 <div class="col-12">
                     <div class="row mt-3">
-                        <div class="form-group col-md-12">
+                        {{-- <div class="form-group col-md-12">
                             <label>{{ __('Note') }}</label>
                             <textarea name="note" @if (isset($order->od) && $order->od->status == 0) disabled @endif
                                 class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}"
@@ -133,9 +145,9 @@
                             @include('alerts.feedback', [
                                 'field' => 'note',
                             ])
-                        </div>
+                        </div> --}}
                         <div class="form-group col-md-12 text-end">
-                            <input type="submit" value="Distribute"
+                            <input type="submit" value="Assign" onclick="return confirm('Are you sure to assign this order to the selected hubs?')"
                                 class="btn btn-primary">
                         </div>
                     </div>

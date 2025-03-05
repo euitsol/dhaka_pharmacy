@@ -97,5 +97,6 @@ class Kernel extends HttpKernel
         'user_phone_verify' => \App\Http\Middleware\UserPhoneVerify::class,
         'check_kyc' => \App\Http\Middleware\CheckKycMiddleware::class,
         'staff' => \App\Http\Middleware\StaffMiddleware::class,
+        'webhook.auth' => \App\Http\Middleware\VerifyWebhookToken::class,
     ];
 }

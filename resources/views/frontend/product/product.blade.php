@@ -19,24 +19,24 @@
                             <div class="col-12 d-flex align-items-center">
                                 <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
                                 <!-- <div class="sub-title">
-                                                                                                    <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
-                                                                                                </div>
+                                                                                                            <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
+                                                                                                        </div>
 
-                                                                                                <div class="sub-categories">
-                                                                                                    <span class="animated-subcategories"></span>
-                                                                                                </div> -->
+                                                                                                        <div class="sub-categories">
+                                                                                                            <span class="animated-subcategories"></span>
+                                                                                                        </div> -->
 
                             </div>
 
                             <!-- @if (isset($sub_categories) && $sub_categories->isNotEmpty())
-                                                                                                    <ul class="sub-categories-list d-none">
-                                                                                                        @foreach ($sub_categories as $sub_cats)
+                                                                                                            <ul class="sub-categories-list d-none">
+                                                                                                                @foreach ($sub_categories as $sub_cats)
     @foreach ($sub_cats as $sub_cat)
     <li>{{ $sub_cat->name }}</li>
     @endforeach
     @endforeach
-                                                                                                    </ul>
-                                                                                                @endif -->
+                                                                                                            </ul>
+                                                                                                        @endif -->
 
 
                             @if (isset($sub_categories) && $sub_categories->isNotEmpty())
@@ -114,13 +114,24 @@
                                         <div class="pdct-info">
                                             <div class="product_title">
                                                 <a href="{{ route('product.single_product', $product->slug) }}">
-                                                    <h3 class="fw-bold" title="{{ $product->attr_title }}">
+                                                    <h3 class="fw-bold mb-0" title="{{ $product->attr_title }}">
                                                         {{ $product->formatted_name }}
                                                     </h3>
                                                 </a>
                                             </div>
+                                            <!-- <div class="product_title">
+                                                <a href="javascript:void(0)">
+                                                    <h3 class="fw-bold text-muted mt-0"
+                                                        title="{{ optional($product->strength)->name }}">
+                                                        {{ $product->strength_info }}
+                                                    </h3>
+                                                </a>
+                                            </div> -->
 
                                             <div class="all-product-containt">
+                                                <p>
+                                                    <a href="" title="{{ optional($product->strength)->name }}">{{ $product->strength_info }}</a>
+                                                </p>
                                                 <p>
                                                     <a href=""
                                                         title="{{ optional($product->pro_sub_cat)->name }}">{{ $product->formatted_sub_cat }}</a>

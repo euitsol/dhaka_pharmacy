@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Scout\Searchable;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Medicine extends BaseModel
 {
@@ -17,6 +18,9 @@ class Medicine extends BaseModel
 
     // protected $appends = ['final_discount'];
 
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_PENDING = 2;
+    public const STATUS_INACTIVE = 0;
     protected $fillable = [
         'name',
         'slug',
@@ -37,7 +41,8 @@ class Medicine extends BaseModel
         'created_by',
         'updated_by',
         'use_for',
-        'dar'
+        'dar',
+        'is_processed'
 
     ];
     protected $appends = [
@@ -304,7 +309,8 @@ class Medicine extends BaseModel
 
     public function getFormattedNameAttribute(): string
     {
-        return Str::limit(Str::ucfirst(Str::lower($this->name . ($this->strength_info))), 24, '..');
+        // return Str::limit(Str::ucfirst(Str::lower($this->name . ' ' . ($this->strength_info))), 24, '..');
+        return Str::limit(Str::ucfirst(Str::lower($this->name)), 24, '..');
     }
 
     public function getFormattedSubCatAttribute(): string
@@ -329,5 +335,38 @@ class Medicine extends BaseModel
             return false;
         }
         return true;
+    }
+
+    public function getStatusBadgeClass(): string
+    {
+        switch ($this->status) {
+            case 0:
+                return 'badge bg-danger';
+            case 1:
+                return 'badge bg-success';
+            case 2:
+                return 'badge bg-warning';
+            default:
+                return 'badge bg-secondary';
+        }
+    }
+
+    public function getStatus()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'Inactive';
+            case 1:
+                return 'Active';
+            case 2:
+                return 'Pending';
+            default:
+                return 'N/A';
+        }
+    }
+
+    public function processedImage(): HasOne
+    {
+        return $this->hasOne(ProcessedImage::class);
     }
 }

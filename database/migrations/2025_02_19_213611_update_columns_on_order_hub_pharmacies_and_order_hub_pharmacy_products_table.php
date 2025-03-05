@@ -17,7 +17,7 @@ return new class extends Migration
 
         Schema::table('order_hub_pharmacy_products', function (Blueprint $table) {
             $table->decimal('unit_payable_price', 8, 2)->default(0)->after('order_product_id');
-            $table->integer('quantity_collected')->default(0)->after('unit_collecting_price');
+            $table->integer('quantity_collected')->default(0)->after('unit_payable_price');
         });
     }
 

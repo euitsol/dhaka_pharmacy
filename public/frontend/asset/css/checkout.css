@@ -79,7 +79,20 @@
     padding: 16px 0;
     border-radius: 5px;
     margin-top: 10px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
+
+.checkout-section .order-info-row .place-order:hover {
+    background-color: var(--border-2);
+}
+
+.checkout-section .order-info-row .place-order:active {
+    background-color:  var(--border-2); 
+}
+
+
+
+
 
 .checkout-section .order-info-row .place-order img {
 	margin-top: -5px;
@@ -322,11 +335,11 @@
 }
 
 .delivery-section .delivery-time {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: var(--text-black);
     display: block;
     margin-top: 0.4rem;
-    line-height: .7rem;
+    line-height: .8rem;
 }
 
 /* Optional: Add box shadow on hover */
@@ -409,4 +422,69 @@
 
 .add-new-box:hover::after {
     opacity: 1;
+}
+.fw-medium {
+	font-size: 20px;
+}
+
+.checkout-section .common-scroll {
+    max-height: 615px; 
+    overflow: auto; 
+}
+
+
+
+
+/* Firefox e customize scrollbar */
+
+@-moz-document url-prefix() {
+    .checkout-section .common-scroll {
+        scrollbar-width: thin;
+        scrollbar-color: var(--secondary-color) var(--border-1);
+    }
+
+    .checkout-section .common-scroll::-moz-scrollbar {
+        width: 8px;
+        border-radius: 10px !important;
+    }
+
+    .checkout-section .common-scroll::-moz-scrollbar-track {
+        background: var(--border-1);
+        border-radius: 10px !important;
+    }
+
+    .checkout-section .common-scroll::-moz-scrollbar-thumb {
+        background: var(--secondary-color);
+        border-radius: 10px !important;
+        background-image: linear-gradient(
+            90deg,
+            transparent,
+            var(--secondary-color) 50%,
+            transparent,
+            transparent
+        );
+    }
+}
+
+/* For Webkit Browsers (Chrome, Safari, Edge) */
+
+.checkout-section .common-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.checkout-section .common-scroll::-webkit-scrollbar-track {
+    background: var(--border-1);
+    border-radius: 10px;
+}
+
+.checkout-section .common-scroll::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 10px;
+    background-image: linear-gradient(
+        90deg,
+        transparent,
+        var(--secondary-color) 50%,
+        transparent,
+        transparent
+    );
 }

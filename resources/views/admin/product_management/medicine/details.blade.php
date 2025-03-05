@@ -23,6 +23,13 @@
                                 'className' => 'btn-info text-white',
                                 'label' => 'Edit',
                             ])
+
+                            @include('admin.partials.button',[
+                                'routeName' => 'product.medicine.status.medicine_edit',
+                                'params' => $medicine->id,
+                                'className' => $medicine->getStatusClass(). "btn text-white",
+                                'label' => $medicine->getBtnStatus()
+                            ])
                         </div>
                     </div>
                 </div>

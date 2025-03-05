@@ -42,11 +42,11 @@
         window.AppConfig = {
             'urls': {
                 'product': {
-                    'generics': @json(route('product.generic_name.search')),
-                    'categories': @json(route('product.product_category.search')),
-                    'sub_categories': @json(route('product.product_sub_category.search')),
-                    'companies': @json(route('product.company_name.search')),
-                    'units': @json(route('product.medicine_unit.search')),
+                    'generics': @json(route('product.generic_name.search.generic_name_list')),
+                    'categories': @json(route('product.product_category.search.product_category_list')),
+                    'sub_categories': @json(route('product.product_sub_category.search.product_sub_category_list')),
+                    'companies': @json(route('product.company_name.search.company_name_list')),
+                    'units': @json(route('product.medicine_unit.search.medicine_unit_list')),
                     'bulk_create': @json(route('product.medicine.store.bulk_entry')),
                 },
                 'file': {

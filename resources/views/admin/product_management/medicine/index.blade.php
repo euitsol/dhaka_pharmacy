@@ -51,6 +51,7 @@
                             <select id="statusFilter" class="select2">
                                 <option disabled selected>Status</option>
                                 <option value="1">Active</option>
+                                <option value="2">Pending</option>
                                 <option value="0">Deactive</option>
                             </select>
                         </div>
@@ -119,7 +120,7 @@
                 placeholder: 'Select Category',
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('product.product_category.search') }}',
+                    url: '{{ route('product.product_category.search.product_category_list') }}',
                     dataType: 'json',
                     delay: 250,
                     data: function(params) {
@@ -145,7 +146,7 @@
                 placeholder: 'Select Company',
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('product.company_name.search') }}',
+                    url: '{{ route('product.company_name.search.company_name_list') }}',
                     dataType: 'json',
                     delay: 250,
                     data: function(params) {
@@ -173,7 +174,7 @@
                 placeholder: 'Select Generic Name',
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('product.generic_name.search') }}',
+                    url: '{{ route('product.generic_name.search.generic_name_list') }}',
                     dataType: 'json',
                     delay: 250,
                     data: function(params) {
@@ -223,10 +224,10 @@
                     }
                 },
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
+                        data: 'id',
+                        name: 'id',
+                        orderable: true,
+                        searchable: true
                     },
                     {
                         data: 'name',
@@ -276,9 +277,9 @@
                     },
                 ],
                 order: [
-                    [1, 'asc'],
-                    [3, 'desc'],
-                    [9, 'desc']
+                    [0, 'asc'],
+                    // [3, 'desc'],
+                    // [9, 'desc']
                 ],
                 buttons: [{
                         extend: 'pdfHtml5',
