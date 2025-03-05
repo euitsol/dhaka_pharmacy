@@ -36,7 +36,7 @@ system_prompt = """
        - Incorporate relevant keywords naturally.
        - Ensure readability and clarity.
     6. Output Format:
-       - Wrap the description in HTML `<p>`,`<h6>`,`<ul>`,`<li>` tags for structured readability use <br> for break.
+       - Wrap the description in HTML `<p>`,`<h6>`,`<ul>`,`<li>` tags for structured readability.
        - Dont use /n.
        - Return the entire formatted description as a JSON object.
 

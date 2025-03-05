@@ -85,7 +85,7 @@ class GenerateDescriptionJob implements ShouldQueue
             Log::info("Description generated successfully", [
                 'medicine_id' => $this->medicine->id,
                 'medicine_name' => $this->medicine->name,
-                'result' => $result
+                // 'result' => $result
             ]);
 
             return $result;

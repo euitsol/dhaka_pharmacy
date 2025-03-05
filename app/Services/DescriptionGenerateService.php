@@ -10,7 +10,7 @@ class DescriptionGenerateService
 {
     public function generateProductDescription($data)
     {
-        Log::info($data);
+        // Log::info($data);
         $jsonInput = escapeshellarg(json_encode($data));
 
         $pythonScript = base_path('pyEngine/description_generator.py');

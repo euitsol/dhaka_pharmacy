@@ -70,7 +70,7 @@ def generate_description(data):
 
     # data_str = json.dumps(data)
     try:
-        client = genai.Client(api_key="AIzaSyBPVZL8lCoS00q62UxzAajs5Ne3r4LFH0A")
+        client = genai.Client(api_key="AIzaSyDdoiiotmeT8IzukoCPmtFpinBsBGr-xCs")
         logger.info("Successfully initialized Gemini client")
 
         model = "gemini-2.0-flash"
@@ -99,7 +99,7 @@ def generate_description(data):
             ),
         ]
         # Debug the system instruction
-        logger.debug(f"System instruction: {system_prompt}")
+        # logger.debug(f"System instruction: {system_prompt}")
 
         logger.info(f"Sending request to Gemini API for: {data.get('name', 'Unknown')}")
 
@@ -116,7 +116,12 @@ def generate_description(data):
                 top_k=40,
                 max_output_tokens=8192,
                 response_mime_type="text/plain",
-                system_instruction=system_prompt
+                system_instruction=system_prompt,
+                tools=[
+                    types.Tool(
+                        google_search=types.GoogleSearch()
+                    )
+                ]
             )
         )
 

@@ -52,7 +52,7 @@ class GenerateDescription extends Command
                       ->orWhereNull('description');
             })
             ->orderBy('id')
-            ->take(100)
+            ->take(300)
             ->get();
         // Log::info("Found $medicines");
         foreach($medicines as $index => $medicine){
