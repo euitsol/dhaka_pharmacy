@@ -1284,6 +1284,12 @@ a {
     display: none;
 }
 
+.mobile-footer .col .icon{
+    height: 1.5rem;
+    width: 1.5rem;
+    object-fit: contain;
+}
+
 .footer-section .main-footer-row h2.title {
     position: relative;
     padding-bottom: 8px;
