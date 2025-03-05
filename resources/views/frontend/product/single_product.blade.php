@@ -44,8 +44,8 @@
 
                                     <div class="row gx-4">
                                         <div class="col-xxl-5 col-12 col-md-5 mb-3 mb-sm-0">
-                                            <div class="">
-                                                <div class="">
+                                            <div class="h-100">
+                                                <div class="h-100">
                                                     <!-- <div class="product_image xzoom-container">
                                                         @if ($single_product->discount_percentage > 0)
                                                             <span
@@ -65,12 +65,12 @@
                                                         </div>
                                                     </div> -->
 
-                                                    <div class="product_image">
+                                                    <div class="product_image h-100">
                                                         @if ($single_product->discount_percentage > 0)
                                                             <span
                                                                 class="discount_tag">{{ formatPercentageNumber($single_product->discount_percentage) . '% 0ff' }}</span>
                                                         @endif
-                                                        <img class="w-100" id=""
+                                                        <img class="w-100 h-100" id=""
                                                             src="{{ $single_product->image }}"
                                                             xoriginal="{{ $single_product->image }}">
 
