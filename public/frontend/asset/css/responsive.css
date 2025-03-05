@@ -18,6 +18,11 @@
 
     .single-pdct .pdct-info a {
         font-size: 9px !important;
+        line-height: 11px;
+    }
+    .single-pdct .add_to_card .cart-btn {
+        padding: 0.6rem 0.7rem;
+        font-size: 16px !important;
     }
 
     .single-pdct .pdct-info h3 {
@@ -41,6 +46,7 @@
     .single-item p,
     .single-item p a {
         font-size: 9px !important;
+        line-height: 11px;
     }
 
     .single-item .pdct-title a {
@@ -632,9 +638,9 @@
         width: 35%;
     }
 
-    .single-pdct .pdct-img > img {
+    /* .single-pdct .pdct-img > img {
         height: 100% !important;
-    }
+    } */
 
     /*==================================================
         footer newslter section responsive code here
@@ -1071,7 +1077,7 @@
         display: block;
         height: 100% !important;
         width: 100% !important;
-        padding: 25px 0px;
+        padding: 15px 0px;
         color: var(--text-color-white) !important;
     }
 
@@ -1172,6 +1178,20 @@
 
     .container-fluid {
         padding: 0 20px !important;
+    }
+    .best-selling-products .single-item img {
+        height: 10.575rem !important;
+        padding: 0px !important;
+    }
+    .single-pdct .pdct-img > img {
+        height: 10.575rem !important;
+    }
+
+    .single_product_section .similar_products_card .similar_products .single-item img {
+        height: 10.575rem !important;
+    }
+    .product-section .all-products .single-pdct .pdct-img img {
+        height: 10.575rem !important;
     }
 }
 
@@ -1846,7 +1866,7 @@
     }
 
     .mobile-footer .row .col a {
-        padding: 5px 0px;
+        padding: 10px 0px;
     }
 
     /* Login Page CSS  */
@@ -1978,6 +1998,11 @@
 
     .product-section .sub_categories .sub_cat_item .card .category_name h3, .product-section .sub_categories .sub_cat_item .card .sub_category_name h3 {
         font-size: 10px;
+    }
+    .mobile-footer .col .icon{
+        height: 2rem;
+        width: 2rem;
+        object-fit: contain;
     }
 }
 
