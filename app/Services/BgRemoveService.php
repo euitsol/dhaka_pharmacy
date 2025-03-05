@@ -15,7 +15,8 @@ class BgRemoveService
 
         $pythonScript = base_path('pyEngine/bg_remover.py');
         $command = [
-            base_path('pyEngine/venv/Scripts/python'), // Use full path to python executable
+            // base_path('pyEngine/venv/Scripts/python'),
+            base_path('pyEngine/venv/bin/python'),
             $pythonScript,
             $inputPath,
             $outputPath
