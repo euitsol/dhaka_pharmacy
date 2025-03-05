@@ -111,7 +111,8 @@ class GenerateDescriptionJob implements ShouldQueue
 
         // Update the medicine record
         $this->medicine->update([
-            'description' => $description
+            'description' => $description,
+            'status' => Medicine::STATUS_ACTIVE
         ]);
 
         Log::info("Medicine description updated successfully", [
