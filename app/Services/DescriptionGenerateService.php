@@ -16,7 +16,8 @@ class DescriptionGenerateService
         $pythonScript = base_path('pyEngine/description_generator.py');
 
         $command = [
-            base_path('pyEngine/venv/Scripts/python'), // Use full path to python executable
+            // base_path('pyEngine/venv/Scripts/python'),
+            base_path('pyEngine/venv/bin/python'),
             $pythonScript,
             json_encode($data),
         ];
