@@ -224,10 +224,10 @@
                     }
                 },
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
+                        data: 'id',
+                        name: 'id',
+                        orderable: true,
+                        searchable: true
                     },
                     {
                         data: 'name',
@@ -277,9 +277,9 @@
                     },
                 ],
                 order: [
-                    [1, 'asc'],
-                    [3, 'desc'],
-                    [9, 'desc']
+                    [0, 'desc'],
+                    // [3, 'desc'],
+                    // [9, 'desc']
                 ],
                 buttons: [{
                         extend: 'pdfHtml5',

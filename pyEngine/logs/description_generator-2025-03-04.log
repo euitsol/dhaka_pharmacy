@@ -1,0 +1,246 @@
+2025-03-04 16:59:38,854 - description_generator - INFO - Script started via command line
+2025-03-04 16:59:38,854 - description_generator - DEBUG - Command line arguments: ['C:\\Users\\alkaf\\OneDrive\\Documents\\GitHub\\dhaka_pharmacy\\pyEngine/description_generator.py', '{"name":"B Plex","generic_name":"Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1","company_name":"Ad-din Pharmaceuticals Ltd.","strength":"20 mg + 2 mg + 2 mg + 5 mg","category":"OTC Medicine","sub_category":"Null"}']
+2025-03-04 16:59:38,854 - description_generator - INFO - Processing input for: B Plex
+2025-03-04 16:59:38,854 - description_generator - DEBUG - Parsed input JSON: {
+  "name": "B Plex",
+  "generic_name": "Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1",
+  "company_name": "Ad-din Pharmaceuticals Ltd.",
+  "strength": "20 mg + 2 mg + 2 mg + 5 mg",
+  "category": "OTC Medicine",
+  "sub_category": "Null"
+}
+2025-03-04 16:59:38,854 - description_generator - INFO - Starting description generation for: B Plex
+2025-03-04 16:59:38,854 - description_generator - DEBUG - Input data: {
+  "name": "B Plex",
+  "generic_name": "Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1",
+  "company_name": "Ad-din Pharmaceuticals Ltd.",
+  "strength": "20 mg + 2 mg + 2 mg + 5 mg",
+  "category": "OTC Medicine",
+  "sub_category": "Null"
+}
+2025-03-04 16:59:38,855 - description_generator - INFO - Successfully initialized Gemini client
+2025-03-04 16:59:38,855 - description_generator - DEBUG - User prompt: generate descripton based on these Information:
+
+        Product Name: Not Provided
+        Generic Name: Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1
+        Strength: 20 mg + 2 mg + 2 mg + 5 mg
+        Dosage Form: Not Provided
+        Manufacturer: Not Provided
+2025-03-04 16:59:38,856 - description_generator - DEBUG - System instruction: You are an expert pharmaceutical product description writer with a deep understanding of medical terminology, pharmacology, and healthcare marketing. Your task is to generate clear, engaging, and medically accurate product descriptions based on the provided information.
+
+    ## Task:
+    Write a professional, informative, and SEO-friendly description of a pharmaceutical product using structured HTML formatting for seamless web integration.
+
+    ## Guidelines:
+    1. Professional Yet Accessible Tone: Ensure content is suitable for both healthcare professionals and patients.
+    2. Comprehensive Product Information:
+       - Indications: Describe the conditions the medication treats.
+       - Benefits: Highlight key advantages and unique selling points.
+       - Dosage Form & Strength: Specify the available forms and strengths.
+       - Administration: Explain how the product should be used.
+    3. Content Structure:
+       - Introduction: Overview of the product and primary use.
+       - Indication: List the medical conditions it treats.
+       - How to Use: Clear and concise administration instructions.
+       - Pharmacology: Explain the mechanism of action.
+       - Administration & Dosage:
+         - Adult Dose:
+         - Pediatric Dose:
+         - Special Populations (if applicable):
+       - Mode of Action: Describe how the drug works in the body.
+       - Drug Interactions: List major interactions.
+       - Contraindications: Situations where use is not recommended.
+       - Precautions & Warnings: Important safety considerations.
+       - Pregnancy & Lactation: Suitability during pregnancy/breastfeeding.
+       - Side Effects: Common and serious adverse reactions.
+       - Storage Instructions: Proper storage conditions.
+       - Additional Information (if applicable).
+       - Disclaimer: "This is AI-generated content. Please consult a healthcare professional before using any medication."
+    4. Fact-Based & Ethical:
+       - No exaggerated claims or unsupported promises about efficacy.
+       - Do not provide medical advice beyond the provided input.
+    5. SEO Optimization:
+       - Incorporate relevant keywords naturally.
+       - Ensure readability and clarity.
+    6. Output Format:
+       - Wrap the description in HTML `<p>`,`<h6>`,`<ul>`,`<li>` tags for structured readability use <br> for break.
+       - Dont use /n.
+       - Return the entire formatted description as a JSON object.
+
+    ## Expected JSON Output:
+    {
+      "product_description": HTML
+    }
+2025-03-04 16:59:38,856 - description_generator - INFO - Sending request to Gemini API for: B Plex
+2025-03-04 16:59:38,856 - description_generator - DEBUG - Request parameters: model=gemini-2.0-flash, temperature=0.2, top_p=0.95, top_k=40, max_output_tokens=8192
+2025-03-04 16:59:45,713 - description_generator - DEBUG - Raw response: ```json
+{
+  "product_description": "<p>This medication is a combination of B vitamins, specifically Nicotinamide, Pyridoxine Hydrochloride (Vitamin B6), Riboflavin (Vitamin B2), and Vitamin B1 (Thiamine). It is designed to address vitamin B deficiencies and support overall health.</p>\n\n<h6>Indication:</h6>\n<ul>\n <li>Treatment of Vitamin B deficiencies.</li>\n <li>Supportive therapy for conditions requiring increased B vitamin intake.</li>\n</ul>\n\n<h6>How to Use:</h6>\n<p>Take this medication orally as directed by your healthcare provider. Follow the prescribed dosage carefully.</p>\n\n<h6>Pharmacology:</h6>\n<p>This combination provides essential B vitamins that play crucial roles in various metabolic processes, including energy production, nerve function, and red blood cell formation.</p>\n\n<h6>Administration & Dosage:</h6>\n<ul>\n <li><b>Adult Dose:</b> Typically, one tablet taken orally per day, or as directed by a healthcare professional.<br>\n  The dosage can be adjusted based on individual needs and the severity of the deficiency.</li>\n <li><b>Pediatric Dose:</b> The appropriate dosage for children should be determined by a pediatrician based on age, weight, and specific needs.</li>\n</ul>\n\n<h6>Mode of Action:</h6>\n<ul>\n <li><b>Nicotinamide:</b> A form of Vitamin B3, essential for energy metabolism and DNA repair.</li>\n <li><b>Pyridoxine Hydrochloride (Vitamin B6):</b> Involved in amino acid metabolism, neurotransmitter synthesis, and red blood cell formation.</li>\n <li><b>Riboflavin (Vitamin B2):</b> Crucial for energy production and cellular function.</li>\n <li><b>Vitamin B1 (Thiamine):</b> Essential for carbohydrate metabolism and nerve function.</li>\n</ul>\n\n<h6>Drug Interactions:</h6>\n<p>Inform your doctor about all medications, supplements, and herbal products you are taking, especially:</p>\n<ul>\n <li>Certain antibiotics</li>\n <li>Medications for Parkinson's disease (e.g., Levodopa)</li>\n <li>Diuretics</li>\n</ul>\n\n<h6>Contraindications:</h6>\n<p>This medication is contraindicated in individuals with known hypersensitivity to any of the B vitamins or any other components of the formulation.</p>\n\n<h6>Precautions & Warnings:</h6>\n<ul>\n <li>Use with caution in individuals with liver or kidney disease.</li>\n <li>High doses of certain B vitamins may cause neurological symptoms.</li>\n</ul>\n\n<h6>Pregnancy & Lactation:</h6>\n<p>Consult your healthcare provider before using this medication if you are pregnant, planning to become pregnant, or breastfeeding. B vitamins are generally considered safe during pregnancy and lactation when taken as directed.</p>\n\n<h6>Side Effects:</h6>\n<ul>\n <li><b>Common:</b> Mild gastrointestinal upset.</li>\n <li><b>Rare:</b> Allergic reactions, skin rash.</li>\n</ul>\n<p>If you experience any severe or persistent side effects, discontinue use and consult your doctor.</p>\n\n<h6>Storage Instructions:</h6>\n<p>Store in a cool, dry place, away from direct sunlight and moisture. Keep out of reach of children.</p>\n\n<p><b>Disclaimer:</b> This is AI-generated content. Please consult a healthcare professional before using any medication.</p>"
+}
+```
+2025-03-04 16:59:45,714 - description_generator - INFO - Successfully parsed JSON response for: B Plex
+2025-03-04 16:59:45,714 - description_generator - DEBUG - Final result: {"product_description": "<p>This medication is a combination of B vitamins, specifically Nicotinamide, Pyridoxine Hydrochloride (Vitamin B6), Riboflavin (Vitamin B2), and Vitamin B1 (Thiamine). It is designed to address vitamin B deficiencies and support overall health.</p>\n\n<h6>Indication:</h6>\n<ul>\n <li>Treatment of Vitamin B deficiencies.</li>\n <li>Supportive therapy for conditions requiring increased B vitamin intake.</li>\n</ul>\n\n<h6>How to Use:</h6>\n<p>Take this medication orally as directed by your healthcare provider. Follow the prescribed dosage carefully.</p>\n\n<h6>Pharmacology:</h6>\n<p>This combination provides essential B vitamins that play crucial roles in various metabolic processes, including energy production, nerve function, and red blood cell formation.</p>\n\n<h6>Administration & Dosage:</h6>\n<ul>\n <li><b>Adult Dose:</b> Typically, one tablet taken orally per day, or as directed by a healthcare professional.<br>\n  The dosage can be adjusted based on individual needs and the severity of the deficiency.</li>\n <li><b>Pediatric Dose:</b> The appropriate dosage for children should be determined by a pediatrician based on age, weight, and specific needs.</li>\n</ul>\n\n<h6>Mode of Action:</h6>\n<ul>\n <li><b>Nicotinamide:</b> A form of Vitamin B3, essential for energy metabolism and DNA repair.</li>\n <li><b>Pyridoxine Hydrochloride (Vitamin B6):</b> Involved in amino acid metabolism, neurotransmitter synthesis, and red blood cell formation.</li>\n <li><b>Riboflavin (Vitamin B2):</b> Crucial for energy production and cellular function.</li>\n <li><b>Vitamin B1 (Thiamine):</b> Essential for carbohydrate metabolism and nerve function.</li>\n</ul>\n\n<h6>Drug Interactions:</h6>\n<p>Inform your doctor about all medications, supplements, and herbal products you are taking, especially:</p>\n<ul>\n <li>Certain antibiotics</li>\n <li>Medications for Parkinson's disease (e.g., Levodopa)</li>\n <li>Diuretics</li>\n</ul>\n\n<h6>Contraindications:</h6>\n<p>This medication is contraindicated in individuals with known hypersensitivity to any of the B vitamins or any other components of the formulation.</p>\n\n<h6>Precautions & Warnings:</h6>\n<ul>\n <li>Use with caution in individuals with liver or kidney disease.</li>\n <li>High doses of certain B vitamins may cause neurological symptoms.</li>\n</ul>\n\n<h6>Pregnancy & Lactation:</h6>\n<p>Consult your healthcare provider before using this medication if you are pregnant, planning to become pregnant, or breastfeeding. B vitamins are generally considered safe during pregnancy and lactation when taken as directed.</p>\n\n<h6>Side Effects:</h6>\n<ul>\n <li><b>Common:</b> Mild gastrointestinal upset.</li>\n <li><b>Rare:</b> Allergic reactions, skin rash.</li>\n</ul>\n<p>If you experience any severe or persistent side effects, discontinue use and consult your doctor.</p>\n\n<h6>Storage Instructions:</h6>\n<p>Store in a cool, dry place, away from direct sunlight and moisture. Keep out of reach of children.</p>\n\n<p><b>Disclaimer:</b> This is AI-generated content. Please consult a healthcare professional before using any medication.</p>"}
+2025-03-04 17:00:26,015 - description_generator - INFO - Script started via command line
+2025-03-04 17:00:26,015 - description_generator - DEBUG - Command line arguments: ['C:\\Users\\alkaf\\OneDrive\\Documents\\GitHub\\dhaka_pharmacy\\pyEngine/description_generator.py', '{"name":"B Plex","generic_name":"Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1","company_name":"Ad-din Pharmaceuticals Ltd.","strength":"20 mg + 2 mg + 2 mg + 5 mg","category":"OTC Medicine","sub_category":"Null"}']
+2025-03-04 17:00:26,016 - description_generator - INFO - Processing input for: B Plex
+2025-03-04 17:00:26,016 - description_generator - DEBUG - Parsed input JSON: {
+  "name": "B Plex",
+  "generic_name": "Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1",
+  "company_name": "Ad-din Pharmaceuticals Ltd.",
+  "strength": "20 mg + 2 mg + 2 mg + 5 mg",
+  "category": "OTC Medicine",
+  "sub_category": "Null"
+}
+2025-03-04 17:00:26,016 - description_generator - INFO - Starting description generation for: B Plex
+2025-03-04 17:00:26,016 - description_generator - DEBUG - Input data: {
+  "name": "B Plex",
+  "generic_name": "Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1",
+  "company_name": "Ad-din Pharmaceuticals Ltd.",
+  "strength": "20 mg + 2 mg + 2 mg + 5 mg",
+  "category": "OTC Medicine",
+  "sub_category": "Null"
+}
+2025-03-04 17:00:26,016 - description_generator - INFO - Successfully initialized Gemini client
+2025-03-04 17:00:26,016 - description_generator - DEBUG - User prompt: generate descripton based on these Information:
+
+        Product Name: Not Provided
+        Generic Name: Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1
+        Strength: 20 mg + 2 mg + 2 mg + 5 mg
+        Dosage Form: Not Provided
+        Manufacturer: Not Provided
+2025-03-04 17:00:26,016 - description_generator - DEBUG - System instruction: You are an expert pharmaceutical product description writer with a deep understanding of medical terminology, pharmacology, and healthcare marketing. Your task is to generate clear, engaging, and medically accurate product descriptions based on the provided information.
+
+    ## Task:
+    Write a professional, informative, and SEO-friendly description of a pharmaceutical product using structured HTML formatting for seamless web integration.
+
+    ## Guidelines:
+    1. Professional Yet Accessible Tone: Ensure content is suitable for both healthcare professionals and patients.
+    2. Comprehensive Product Information:
+       - Indications: Describe the conditions the medication treats.
+       - Benefits: Highlight key advantages and unique selling points.
+       - Dosage Form & Strength: Specify the available forms and strengths.
+       - Administration: Explain how the product should be used.
+    3. Content Structure:
+       - Introduction: Overview of the product and primary use.
+       - Indication: List the medical conditions it treats.
+       - How to Use: Clear and concise administration instructions.
+       - Pharmacology: Explain the mechanism of action.
+       - Administration & Dosage:
+         - Adult Dose:
+         - Pediatric Dose:
+         - Special Populations (if applicable):
+       - Mode of Action: Describe how the drug works in the body.
+       - Drug Interactions: List major interactions.
+       - Contraindications: Situations where use is not recommended.
+       - Precautions & Warnings: Important safety considerations.
+       - Pregnancy & Lactation: Suitability during pregnancy/breastfeeding.
+       - Side Effects: Common and serious adverse reactions.
+       - Storage Instructions: Proper storage conditions.
+       - Additional Information (if applicable).
+       - Disclaimer: "This is AI-generated content. Please consult a healthcare professional before using any medication."
+    4. Fact-Based & Ethical:
+       - No exaggerated claims or unsupported promises about efficacy.
+       - Do not provide medical advice beyond the provided input.
+    5. SEO Optimization:
+       - Incorporate relevant keywords naturally.
+       - Ensure readability and clarity.
+    6. Output Format:
+       - Wrap the description in HTML `<p>`,`<h6>`,`<ul>`,`<li>` tags for structured readability use <br> for break.
+       - Dont use /n.
+       - Return the entire formatted description as a JSON object.
+
+    ## Expected JSON Output:
+    {
+      "product_description": HTML
+    }
+2025-03-04 17:00:26,016 - description_generator - INFO - Sending request to Gemini API for: B Plex
+2025-03-04 17:00:26,016 - description_generator - DEBUG - Request parameters: model=gemini-2.0-flash, temperature=0.2, top_p=0.95, top_k=40, max_output_tokens=8192
+2025-03-04 17:00:32,436 - description_generator - DEBUG - Raw response: ```json
+{
+  "product_description": "<p>This medication is a combination of B vitamins, specifically Nicotinamide, Pyridoxine Hydrochloride (Vitamin B6), Riboflavin (Vitamin B2), and Vitamin B1 (Thiamine). It is designed to address vitamin B deficiencies and support overall health and well-being.</p>\n\n<h6>Indication:</h6>\n<ul>\n  <li>Treatment of Vitamin B deficiencies.</li>\n  <li>Supportive therapy for conditions requiring increased B vitamin intake.</li>\n</ul>\n\n<h6>How to Use:</h6>\n<p>Take this medication orally as directed by your healthcare provider. Follow the prescribed dosage carefully.</p>\n\n<h6>Pharmacology:</h6>\n<p>This combination provides essential B vitamins that play crucial roles in various metabolic processes, including energy production, nerve function, and red blood cell formation.</p>\n\n<h6>Administration & Dosage:</h6>\n<ul>\n  <li><b>Adult Dose:</b> As prescribed by a healthcare professional, typically one tablet daily.</li>\n  <li><b>Pediatric Dose:</b> Consult a pediatrician for appropriate dosage.</li>\n</ul>\n\n<h6>Mode of Action:</h6>\n<ul>\n  <li><b>Nicotinamide:</b> A form of vitamin B3, essential for energy metabolism and DNA repair.</li>\n  <li><b>Pyridoxine Hydrochloride (Vitamin B6):</b> Involved in amino acid metabolism, neurotransmitter synthesis, and red blood cell formation.</li>\n  <li><b>Riboflavin (Vitamin B2):</b> Crucial for energy production and cellular function.</li>\n  <li><b>Vitamin B1 (Thiamine):</b> Essential for carbohydrate metabolism and nerve function.</li>\n</ul>\n\n<h6>Drug Interactions:</h6>\n<p>Inform your doctor about all medications, supplements, and herbal products you are taking, especially:</p>\n<ul>\n  <li>Certain antibiotics</li>\n  <li>Diuretics</li>\n  <li>Other vitamin supplements</li>\n</ul>\n\n<h6>Contraindications:</h6>\n<p>This medication is contraindicated in individuals with known hypersensitivity to any of its components.</p>\n\n<h6>Precautions & Warnings:</h6>\n<ul>\n  <li>Use with caution in individuals with liver or kidney disease.</li>\n  <li>Consult your doctor before taking this medication if you have any underlying medical conditions.</li>\n</ul>\n\n<h6>Pregnancy & Lactation:</h6>\n<p>Consult your doctor before using this medication if you are pregnant or breastfeeding.</p>\n\n<h6>Side Effects:</h6>\n<ul>\n  <li>Common: Nausea, stomach upset.</li>\n  <li>Rare: Allergic reactions (rash, itching, swelling).</li>\n</ul>\n\n<h6>Storage Instructions:</h6>\n<p>Store in a cool, dry place, away from direct sunlight and moisture. Keep out of reach of children.</p>\n\n<p><b>Additional Information:</b> Each tablet contains Nicotinamide 20 mg, Pyridoxine Hydrochloride 2 mg, Riboflavin 2 mg, and Vitamin B1 5 mg.</p>\n\n<p><b>Disclaimer:</b> This is AI-generated content. Please consult a healthcare professional before using any medication.</p>"
+}
+```
+2025-03-04 17:00:32,436 - description_generator - INFO - Successfully parsed JSON response for: B Plex
+2025-03-04 17:00:32,437 - description_generator - DEBUG - Final result: {"product_description": "<p>This medication is a combination of B vitamins, specifically Nicotinamide, Pyridoxine Hydrochloride (Vitamin B6), Riboflavin (Vitamin B2), and Vitamin B1 (Thiamine). It is designed to address vitamin B deficiencies and support overall health and well-being.</p>\n\n<h6>Indication:</h6>\n<ul>\n  <li>Treatment of Vitamin B deficiencies.</li>\n  <li>Supportive therapy for conditions requiring increased B vitamin intake.</li>\n</ul>\n\n<h6>How to Use:</h6>\n<p>Take this medication orally as directed by your healthcare provider. Follow the prescribed dosage carefully.</p>\n\n<h6>Pharmacology:</h6>\n<p>This combination provides essential B vitamins that play crucial roles in various metabolic processes, including energy production, nerve function, and red blood cell formation.</p>\n\n<h6>Administration & Dosage:</h6>\n<ul>\n  <li><b>Adult Dose:</b> As prescribed by a healthcare professional, typically one tablet daily.</li>\n  <li><b>Pediatric Dose:</b> Consult a pediatrician for appropriate dosage.</li>\n</ul>\n\n<h6>Mode of Action:</h6>\n<ul>\n  <li><b>Nicotinamide:</b> A form of vitamin B3, essential for energy metabolism and DNA repair.</li>\n  <li><b>Pyridoxine Hydrochloride (Vitamin B6):</b> Involved in amino acid metabolism, neurotransmitter synthesis, and red blood cell formation.</li>\n  <li><b>Riboflavin (Vitamin B2):</b> Crucial for energy production and cellular function.</li>\n  <li><b>Vitamin B1 (Thiamine):</b> Essential for carbohydrate metabolism and nerve function.</li>\n</ul>\n\n<h6>Drug Interactions:</h6>\n<p>Inform your doctor about all medications, supplements, and herbal products you are taking, especially:</p>\n<ul>\n  <li>Certain antibiotics</li>\n  <li>Diuretics</li>\n  <li>Other vitamin supplements</li>\n</ul>\n\n<h6>Contraindications:</h6>\n<p>This medication is contraindicated in individuals with known hypersensitivity to any of its components.</p>\n\n<h6>Precautions & Warnings:</h6>\n<ul>\n  <li>Use with caution in individuals with liver or kidney disease.</li>\n  <li>Consult your doctor before taking this medication if you have any underlying medical conditions.</li>\n</ul>\n\n<h6>Pregnancy & Lactation:</h6>\n<p>Consult your doctor before using this medication if you are pregnant or breastfeeding.</p>\n\n<h6>Side Effects:</h6>\n<ul>\n  <li>Common: Nausea, stomach upset.</li>\n  <li>Rare: Allergic reactions (rash, itching, swelling).</li>\n</ul>\n\n<h6>Storage Instructions:</h6>\n<p>Store in a cool, dry place, away from direct sunlight and moisture. Keep out of reach of children.</p>\n\n<p><b>Additional Information:</b> Each tablet contains Nicotinamide 20 mg, Pyridoxine Hydrochloride 2 mg, Riboflavin 2 mg, and Vitamin B1 5 mg.</p>\n\n<p><b>Disclaimer:</b> This is AI-generated content. Please consult a healthcare professional before using any medication.</p>"}
+2025-03-04 17:23:37,236 - description_generator - INFO - Script started via command line
+2025-03-04 17:23:37,237 - description_generator - DEBUG - Command line arguments: ['C:\\Users\\alkaf\\OneDrive\\Documents\\GitHub\\dhaka_pharmacy\\pyEngine/description_generator.py', '{"name":"B Plex","generic_name":"Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1","company_name":"Ad-din Pharmaceuticals Ltd.","strength":"20 mg + 2 mg + 2 mg + 5 mg","category":"OTC Medicine","sub_category":"Null"}']
+2025-03-04 17:23:37,237 - description_generator - INFO - Processing input for: B Plex
+2025-03-04 17:23:37,237 - description_generator - DEBUG - Parsed input JSON: {
+  "name": "B Plex",
+  "generic_name": "Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1",
+  "company_name": "Ad-din Pharmaceuticals Ltd.",
+  "strength": "20 mg + 2 mg + 2 mg + 5 mg",
+  "category": "OTC Medicine",
+  "sub_category": "Null"
+}
+2025-03-04 17:23:37,237 - description_generator - INFO - Starting description generation for: B Plex
+2025-03-04 17:23:37,237 - description_generator - DEBUG - Input data: {
+  "name": "B Plex",
+  "generic_name": "Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1",
+  "company_name": "Ad-din Pharmaceuticals Ltd.",
+  "strength": "20 mg + 2 mg + 2 mg + 5 mg",
+  "category": "OTC Medicine",
+  "sub_category": "Null"
+}
+2025-03-04 17:23:37,237 - description_generator - INFO - Successfully initialized Gemini client
+2025-03-04 17:23:37,237 - description_generator - DEBUG - User prompt: generate descripton based on these Information:
+
+        Product Name: Not Provided
+        Generic Name: Nicotinamide + Pyridoxine Hydrochloride + Riboflavin + Vitamin B1
+        Strength: 20 mg + 2 mg + 2 mg + 5 mg
+        Dosage Form: Not Provided
+        Manufacturer: Not Provided
+2025-03-04 17:23:37,237 - description_generator - DEBUG - System instruction: You are an expert pharmaceutical product description writer with a deep understanding of medical terminology, pharmacology, and healthcare marketing. Your task is to generate clear, engaging, and medically accurate product descriptions based on the provided information.
+
+    ## Task:
+    Write a professional, informative, and SEO-friendly description of a pharmaceutical product using structured HTML formatting for seamless web integration.
+
+    ## Guidelines:
+    1. Professional Yet Accessible Tone: Ensure content is suitable for both healthcare professionals and patients.
+    2. Comprehensive Product Information:
+       - Indications: Describe the conditions the medication treats.
+       - Benefits: Highlight key advantages and unique selling points.
+       - Dosage Form & Strength: Specify the available forms and strengths.
+       - Administration: Explain how the product should be used.
+    3. Content Structure:
+       - Introduction: Overview of the product and primary use.
+       - Indication: List the medical conditions it treats.
+       - How to Use: Clear and concise administration instructions.
+       - Pharmacology: Explain the mechanism of action.
+       - Administration & Dosage:
+         - Adult Dose:
+         - Pediatric Dose:
+         - Special Populations (if applicable):
+       - Mode of Action: Describe how the drug works in the body.
+       - Drug Interactions: List major interactions.
+       - Contraindications: Situations where use is not recommended.
+       - Precautions & Warnings: Important safety considerations.
+       - Pregnancy & Lactation: Suitability during pregnancy/breastfeeding.
+       - Side Effects: Common and serious adverse reactions.
+       - Storage Instructions: Proper storage conditions.
+       - Additional Information (if applicable).
+       - Disclaimer: "This is AI-generated content. Please consult a healthcare professional before using any medication."
+    4. Fact-Based & Ethical:
+       - No exaggerated claims or unsupported promises about efficacy.
+       - Do not provide medical advice beyond the provided input.
+    5. SEO Optimization:
+       - Incorporate relevant keywords naturally.
+       - Ensure readability and clarity.
+    6. Output Format:
+       - Wrap the description in HTML `<p>`,`<h6>`,`<ul>`,`<li>` tags for structured readability use <br> for break.
+       - Dont use /n.
+       - Return the entire formatted description as a JSON object.
+
+    ## Expected JSON Output:
+    {
+      "product_description": HTML
+    }
+2025-03-04 17:23:37,237 - description_generator - INFO - Sending request to Gemini API for: B Plex
+2025-03-04 17:23:37,237 - description_generator - DEBUG - Request parameters: model=gemini-2.0-flash, temperature=0.2, top_p=0.95, top_k=40, max_output_tokens=8192
+2025-03-04 17:23:43,367 - description_generator - DEBUG - Raw response: ```json
+{
+  "product_description": "<p>This medication is a combination of B vitamins, specifically Nicotinamide, Pyridoxine Hydrochloride (Vitamin B6), Riboflavin (Vitamin B2), and Vitamin B1 (Thiamine). It is designed to address vitamin B deficiencies and support overall health.</p><br><h6>Indication:</h6><ul><li>Treatment of Vitamin B deficiencies.</li><li>Supportive therapy for conditions requiring increased B vitamin intake.</li></ul><br><h6>How to Use:</h6><p>Take this medication orally as directed by your healthcare provider. Follow the prescribed dosage carefully.</p><br><h6>Pharmacology:</h6><p>This combination provides essential B vitamins that play crucial roles in various metabolic processes, including energy production, nerve function, and red blood cell formation.</p><br><h6>Administration & Dosage:</h6><ul><li>Adult Dose: Typically, one tablet taken orally once or twice daily, or as directed by a healthcare professional.</li><li>Pediatric Dose: Dosage should be determined by a healthcare professional based on the child's age, weight, and specific needs.</li></ul><br><h6>Mode of Action:</h6><ul><li>Nicotinamide: A form of Vitamin B3, essential for energy metabolism and cellular repair.</li><li>Pyridoxine Hydrochloride (Vitamin B6): Involved in amino acid metabolism, neurotransmitter synthesis, and red blood cell formation.</li><li>Riboflavin (Vitamin B2): Crucial for energy production and cellular function.</li><li>Vitamin B1 (Thiamine): Essential for carbohydrate metabolism and nerve function.</li></ul><br><h6>Drug Interactions:</h6><p>Consult your healthcare provider or pharmacist about potential interactions with other medications you are taking, including other vitamin supplements.</p><br><h6>Contraindications:</h6><p>This medication is contraindicated in individuals with known hypersensitivity to any of the ingredients.</p><br><h6>Precautions & Warnings:</h6><ul><li>Inform your healthcare provider of any pre-existing medical conditions, especially liver or kidney problems.</li><li>High doses of certain B vitamins may cause side effects. Adhere to the recommended dosage.</li></ul><br><h6>Pregnancy & Lactation:</h6><p>Consult your healthcare provider before using this medication if you are pregnant or breastfeeding. B vitamins are generally considered safe during pregnancy and lactation when taken as directed.</p><br><h6>Side Effects:</h6><ul><li>Common: Mild gastrointestinal upset.</li><li>Rare: Allergic reactions. Discontinue use and seek medical attention if you experience signs of an allergic reaction.</li></ul><br><h6>Storage Instructions:</h6><p>Store in a cool, dry place, away from direct sunlight and moisture. Keep out of reach of children.</p><br><h6>Additional Information:</h6><p>This product contains Nicotinamide 20 mg, Pyridoxine Hydrochloride 2 mg, Riboflavin 2 mg, and Vitamin B1 5 mg per tablet.</p><br><p>Disclaimer: This is AI-generated content. Please consult a healthcare professional before using any medication.</p>"
+}
+```
+2025-03-04 17:23:43,367 - description_generator - INFO - Successfully parsed JSON response for: B Plex
+2025-03-04 17:23:43,367 - description_generator - DEBUG - Final result: {"product_description": "<p>This medication is a combination of B vitamins, specifically Nicotinamide, Pyridoxine Hydrochloride (Vitamin B6), Riboflavin (Vitamin B2), and Vitamin B1 (Thiamine). It is designed to address vitamin B deficiencies and support overall health.</p><br><h6>Indication:</h6><ul><li>Treatment of Vitamin B deficiencies.</li><li>Supportive therapy for conditions requiring increased B vitamin intake.</li></ul><br><h6>How to Use:</h6><p>Take this medication orally as directed by your healthcare provider. Follow the prescribed dosage carefully.</p><br><h6>Pharmacology:</h6><p>This combination provides essential B vitamins that play crucial roles in various metabolic processes, including energy production, nerve function, and red blood cell formation.</p><br><h6>Administration & Dosage:</h6><ul><li>Adult Dose: Typically, one tablet taken orally once or twice daily, or as directed by a healthcare professional.</li><li>Pediatric Dose: Dosage should be determined by a healthcare professional based on the child's age, weight, and specific needs.</li></ul><br><h6>Mode of Action:</h6><ul><li>Nicotinamide: A form of Vitamin B3, essential for energy metabolism and cellular repair.</li><li>Pyridoxine Hydrochloride (Vitamin B6): Involved in amino acid metabolism, neurotransmitter synthesis, and red blood cell formation.</li><li>Riboflavin (Vitamin B2): Crucial for energy production and cellular function.</li><li>Vitamin B1 (Thiamine): Essential for carbohydrate metabolism and nerve function.</li></ul><br><h6>Drug Interactions:</h6><p>Consult your healthcare provider or pharmacist about potential interactions with other medications you are taking, including other vitamin supplements.</p><br><h6>Contraindications:</h6><p>This medication is contraindicated in individuals with known hypersensitivity to any of the ingredients.</p><br><h6>Precautions & Warnings:</h6><ul><li>Inform your healthcare provider of any pre-existing medical conditions, especially liver or kidney problems.</li><li>High doses of certain B vitamins may cause side effects. Adhere to the recommended dosage.</li></ul><br><h6>Pregnancy & Lactation:</h6><p>Consult your healthcare provider before using this medication if you are pregnant or breastfeeding. B vitamins are generally considered safe during pregnancy and lactation when taken as directed.</p><br><h6>Side Effects:</h6><ul><li>Common: Mild gastrointestinal upset.</li><li>Rare: Allergic reactions. Discontinue use and seek medical attention if you experience signs of an allergic reaction.</li></ul><br><h6>Storage Instructions:</h6><p>Store in a cool, dry place, away from direct sunlight and moisture. Keep out of reach of children.</p><br><h6>Additional Information:</h6><p>This product contains Nicotinamide 20 mg, Pyridoxine Hydrochloride 2 mg, Riboflavin 2 mg, and Vitamin B1 5 mg per tablet.</p><br><p>Disclaimer: This is AI-generated content. Please consult a healthcare professional before using any medication.</p>"}
