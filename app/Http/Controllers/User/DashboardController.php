@@ -27,7 +27,7 @@ class DashboardController extends Controller
     {
         $data['user'] = User::with(['address' => function ($query) {
             $query->where('is_default', 1);
-        }])->findOrFail(user()->id);
+        }, 'address.zone'])->findOrFail(user()->id);
         $data['total_payments'] = Payment::where('customer_id', user()->id)->count();
         $query = Order::where([['status', '!=', 0], ['customer_id', user()->id], ['customer_type', get_class(user())]])->latest();
         $data['total_orders'] = (clone $query)->count();

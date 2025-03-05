@@ -1,4 +1,7 @@
 @media screen and (max-width: 575px) {
+    .dashboard-main-section .col-right .google-map{
+        height: 435px !important;
+    }
     .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
@@ -10,7 +13,7 @@
         padding: 7px 7px;
     }
     .dashboard-main-section .col-right .google-map .address-btn {
-        padding: 16px 15px;
+        padding: 10px 15px;
     }
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 12px;
@@ -393,6 +396,7 @@
     }
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
+
     .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
     }
@@ -644,6 +648,9 @@
     }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
+    /* .dashboard-main-section .col-right .google-map{
+        height: 340px !important;
+    } */
     .dashboard-main-section .col-left .single-box .title h2 {
         font-size: 20px;
     }
@@ -993,7 +1000,7 @@
         box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
         padding: 10px !important;
         border-radius: 10px;
-        /* background: #d7e3ca; */
+        height: 170px;
     }
 }
 @media screen and (min-width: 1200px) and (max-width: 1439px) {
