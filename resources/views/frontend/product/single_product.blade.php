@@ -83,7 +83,7 @@
                                             <form action="{{ route('u.ck.single') }}" id="single_order_form"
                                                 method="POST">
                                                 @csrf
-                                                <div class="product_content mt-md-0 mt-2">
+                                                <div class="product_content mt-md-0 mt-sm-3 mt-2">
                                                     <h1 class="mb-0">{{ $single_product->name }}
                                                     </h1>
                                                     <h1 class="text-muted fs-5">

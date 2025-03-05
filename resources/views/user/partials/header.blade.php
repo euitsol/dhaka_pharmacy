@@ -32,6 +32,15 @@
                                 <li class="nav-item"><a
                                         class="nav-link @if (isset($pageSlug) && $pageSlug == 'review') active @endif"
                                         href="{{ route('u.review.list') }}">{{ __('Reviews') }}</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-danger" href="javascript:void(0)" 
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </div>
