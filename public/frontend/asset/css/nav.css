@@ -140,7 +140,7 @@ header {
 }
 
 .header-section .right-col .offcanvas .offcanvas-header .cart_clear_btn {
-    color: var(--nav-secondary-color);
+    color: var(--text-color-red);
 }
 
 .header-section .right-col .offcanvas .add_to_carts .cart_empty_alert {
@@ -170,7 +170,7 @@ header {
     .product_details
     .image
     img {
-    /* height: 60px; */
+    height: 5rem;
     object-fit: contain;
     width: 100%;
 }

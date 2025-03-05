@@ -113,6 +113,8 @@
 } */
 .checkout-section .order-info-row .left .img img{
     width: 100%;
+    height: 6rem;
+    object-fit: contain;
 }
 
 .checkout-section .order-info-row .left h5{
@@ -259,10 +261,10 @@
     color: var(--text-black);
 }
 
-.modal-header .close {
+/* .modal-header .close {
 	padding: 0px 15px !important;
 	font-size: 24px;
-}
+} */
 
 /* Delivery Type */
 .delivery-option {

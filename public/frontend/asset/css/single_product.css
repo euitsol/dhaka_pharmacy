@@ -80,3 +80,7 @@
     border-radius: 5px;
     padding: 5px 10px;
 }
+.single_product_section .single_product_card .single_product .product_image img{
+    height: 25rem ;
+    object-fit: contain;
+}

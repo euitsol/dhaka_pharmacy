@@ -22,8 +22,12 @@
         <div class="container">
             @if ($errors->any())
                 @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger">
-                        {{ $error }}
+                    <div class="row">
+                        <div class="col px-lg-3 px-0">
+                            <div class="alert alert-danger">
+                                {{ $error }}
+                            </div>
+                        </div>
                     </div>
                 @endforeach
             @endif

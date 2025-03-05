@@ -44,9 +44,9 @@
 
                                     <div class="row gx-4">
                                         <div class="col-xxl-5 col-12 col-md-5 mb-3 mb-sm-0">
-                                            <div class="h-100">
+                                            <!-- <div class="h-100">
                                                 <div class="h-100">
-                                                    <!-- <div class="product_image xzoom-container">
+                                                    <div class="product_image xzoom-container">
                                                         @if ($single_product->discount_percentage > 0)
                                                             <span
                                                                 class="discount_tag">{{ formatPercentageNumber($single_product->discount_percentage) . '% 0ff' }}</span>
@@ -63,29 +63,27 @@
                                                                     xpreview="{{ $single_product->image }}">
                                                             </a>
                                                         </div>
-                                                    </div> -->
-
-                                                    <div class="product_image h-100">
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="product_image">
                                                         @if ($single_product->discount_percentage > 0)
                                                             <span
                                                                 class="discount_tag">{{ formatPercentageNumber($single_product->discount_percentage) . '% 0ff' }}</span>
                                                         @endif
-                                                        <img class="w-100 h-100" id=""
+                                                        <img class="w-100" id=""
                                                             src="{{ $single_product->image }}"
                                                             xoriginal="{{ $single_product->image }}">
 
                                                         <!-- Thumbnails -->
                                                         
-                                                    </div>
-
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-xxl-7 col-12 col-md-7">
                                             <form action="{{ route('u.ck.single') }}" id="single_order_form"
                                                 method="POST">
                                                 @csrf
-                                                <div class="product_content">
+                                                <div class="product_content mt-md-0 mt-2">
                                                     <h1 class="mb-0">{{ $single_product->name }}
                                                     </h1>
                                                     <h1 class="text-muted fs-5">
