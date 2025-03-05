@@ -95,10 +95,10 @@
                                                         <div class="col-12 col-sm-7 col-md-8 pe-0 pe-md-4">
                                                             <h5 class="mb-1" title="{{ $product->attr_title }}">
                                                                 {{ $product->name }}</h5>
-                                                            <p class="mb-0" title="{{ $product->generic->name }}">
-                                                                {{ $product->generic->name }}</p>
-                                                            <p class="mb-0" title="{{ $product->company->name }}">
-                                                                {{ $product->company->name }}</p>
+                                                            <p class="mb-0" title="{{ optional($product->generic)->name }}">
+                                                                {{ optional($product->generic)->name }}</p>
+                                                            <p class="mb-0" title="{{ optional($product->company)->name }}">
+                                                                {{ optional($product->company)->name }}</p>
                                                         </div>
                                                         <div class="col-12 col-sm-5 col-md-4 mt-1 mt-md-0">
                                                             <div
@@ -224,7 +224,7 @@
                                                     style="object-fit: contain">
                                             </label>
                                             <input type="radio" class="payment-method" id="android-5"
-                                                name="payment_method" value="ssl">
+                                                name="payment_method" value="cod">
                                             <label for="android-5">
                                                 <img src="{{ asset('frontend/asset/img/cod.png') }}"
                                                     style="object-fit: contain">

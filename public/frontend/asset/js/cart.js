@@ -127,18 +127,18 @@ function updateCartDisplay(data) {
                                     product.attr_title
                                 }">
                                     <a href="${product.slug}">${
-            product.name
-        }</a>
+                                    product.name
+                                }</a>
                                 </h4>
                                 <p class="m-0" title="${
-                                    product.pro_cat.name
-                                }" ><a href="#">${product.pro_cat.name}</a></p>
+                                    product.pro_cat?product.pro_cat.name:''
+                                }" ><a href="#">${product.pro_cat?product.pro_cat.name:''}</a></p>
                                 <p class="m-0" title="${
-                                    product.generic.name
-                                }" ><a href="#">${product.generic.name}</a></p>
+                                    product.generic?product.generic.name:''
+                                }" ><a href="#">${product.generic?product.generic.name:''}</a></p>
                                 <p class="m-0" title="${
-                                    product.company.name
-                                }" ><a href="#">${product.company.name}</a></p>
+                                    product.company?product.company.name:''
+                                }" ><a href="#">${product.company?product.company.name:''}</a></p>
                             </div>
                             <div class="item_price col-sm-4 mt-2 mt-sm-5 col-12 ps-0">
                                 ${
@@ -151,6 +151,7 @@ function updateCartDisplay(data) {
                                     </h4>`
                                         : ""
                                 }
+
                                 <h4 class="text-start text-sm-end">
                                     <span>৳</span> <span class="item_count_price" data-total="${selectedUnitTotalDiscountedPrice}">${Number(
             selectedUnitTotalDiscountedPrice

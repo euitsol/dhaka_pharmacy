@@ -231,6 +231,7 @@
     .header-section .search-filter {
         width: 100%;
     }
+
     .checkout-section .fw-medium {
         font-size: 15px !important;
     }
@@ -378,6 +379,7 @@
     .header-section .right-col .offcanvas .wishes .details .order_btn {
         color: var(--secundary-color);
     }
+
     .checkout-section .common-scroll {
         max-height: 652px !important;
     }
@@ -430,6 +432,7 @@
     .upload_prescription {
         width: 25% !important;
     }
+
     .single_product_card .upload_prescription {
         width: 100% !important;
     }
@@ -503,7 +506,7 @@
     }
 
     .sidebar-cat-section .row .single-cat .icon {
-        max-width: 80%;
+        max-width: 100%;
     }
 
     .single-pdct .pdct-info {
@@ -746,7 +749,6 @@
     /* .single-pdct .pdct-info h4 {
         margin: 0rem 0rem .6rem 0rem !important;
     } */
-
 
     /*==============================================
        about ua page responsive code here
@@ -1136,8 +1138,8 @@
         padding: 12px !important;
     }
     .checkout-section .common-scroll {
-        max-height: 530px !important; 
-        overflow: none !important; 
+        max-height: 530px !important;
+        overflow: none !important;
     }
     .product-section .align-items-baseline .best-selling-products .all-product .single-item {
         overflow: hidden;
@@ -1176,6 +1178,7 @@
     .single_product_section .single_product .product_image .xzoom{
         height: 23rem !important;
     }
+
     /*=============================================
         product-section responsive code here
     ===============================================*/
@@ -1385,11 +1388,13 @@
         line-height: 0px;
         margin-top: 10px;
     }
+
     .best-selling-products .single-item .pdct-price{
         font-size: 12px !important;
         line-height: 0px !important;
         margin: 10px 0px !important;
     }
+
     .single_product_section .similar_products .single-item .pdct-price {
         font-size: 12px !important;
         line-height: 0px !important;
@@ -1428,12 +1433,15 @@
         height: 10.575rem !important;
         padding: 0px !important;
     }
+
     .product-section .all-products .single-pdct .pdct-img {
         height: 10.575rem;
     }
+
     .single-pdct .pdct-img > img {
         height: 10.575rem !important;
     }
+
     .single_product_section .similar_products_card .similar_products .single-item img {
         height: 10.575rem !important;
     }
@@ -1473,17 +1481,21 @@
     .header-section .main-header .logo a {
         height: 3rem;
     }
+
     .faq-section .nav-pills .nav-item button.active{
         color: var(--text-color-white) !important;
         padding: 0px 10px !important;
         background-color: var(--btn-bg-color) !important;
     }
+
     .all-product-containt{
         padding: 4px 0px !important;
     }
+
     .single-pdct .pdct-info h4 {
         margin: 10px 0px !important;
     }
+
     .product-section .sub_categories .sub_cat_item .card .category_name h3, .product-section .sub_categories .sub_cat_item .card .sub_category_name h3 {
         font-size: 16px;
     }
@@ -1533,9 +1545,11 @@
     .header-section .right-col .offcanvas {
         width: 95% !important;
     }
+
     .single-item .pdct-title {
-        margin-bottom: 0rem !important; 
+        margin-bottom: 0rem !important;
     }
+
     .single_product_section .similar_products .single-item .pdct-title {
         line-height: 5px;
         margin-bottom: 0rem;
@@ -1543,10 +1557,10 @@
 }
 
 @media screen and (max-width: 575px) {
-
     .single_product_section .single_product .product_image .xzoom{
         height: 14rem !important;
     }
+
     /*============================================
         uk future tap text slider responsive code
     ===============================================*/
@@ -1620,7 +1634,6 @@
 
     .header-section .right-col .wish-btn span{
         display: none;
-
     }
 
     /* ===============================================
@@ -1768,9 +1781,11 @@
     .pdct-info .add_to_card .cart-btn {
         padding: 3px 5px !important;
     }
+
     .best-selling-products .add_to_card .cart-btn{
         padding: 3px 5px !important;
     }
+
     .single_product_section .similar_products_card .similar_products .add_to_card .cart-btn {
         padding: 3px 5px !important;
     }
@@ -1904,6 +1919,7 @@
         a {
         font-size: 10px !important;
     }
+
     .all-product-containt{
         padding: 2px 0px 0px 0px !important;
     }
@@ -1911,44 +1927,52 @@
     .slider-sction .uk-slideshow-items {
         height: 200px;
     }
+
     .slider-sction .carousel-caption .slider-right {
         position: absolute;
         z-index: -1;
         bottom: 0;
     }
+
     .slider-sction .uk-slideshow .uk-dotnav {
         bottom: 15px;
     }
+
     .slider-sction .carousel-caption .slider-left h3 {
         font-size: 16px;
         line-height: 30px;
         margin: 0px;
     }
+
     .slider-sction .carousel-caption .slider-left h2 {
         font-size: 23px;
         line-height: 22px;
         margin: 0px;
     }
+
     .slider-sction .carousel-caption .slider-left .btns a {
         font-size: 12px !important;
         width: 100px;
         height: 40px;
     }
-   
+
     .slider-sction .carousel-caption .slider-left .btns .reg{
         border: 1px solid var(--border-2);
         background: var(--border-2);
         color: var(--text-color-white);
     }
+
     .slider-sction .carousel-caption .slider-left .btns .reg:hover {
         border: 1px solid var(--border-1);
         background: var(--border-1);
     }
+
     .slider-sction .carousel-caption .slider-left .btns .order:hover {
         border: 1px solid var(--border-2);
         background: var(--border-2);
         color: var(--text-color-white);
     }
+
     .product-section .sub_categories .sub_cat_item .card .category_name h3, .product-section .sub_categories .sub_cat_item .card .sub_category_name h3 {
         font-size: 10px;
     }
@@ -1978,13 +2002,16 @@
     .single-pdct .pdct-info .generic-name {
         font-size: 8px !important;
     }
+
     .single-pdct .pdct-info .all-product-containt p a{
         font-size: 9px !important;
         line-height: 10px;
     }
+
     .single-pdct .pdct-info h3 {
         font-size: 11px !important;
     }
+
     .single-item p,
     .single-item p a {
         font-size: 9px !important;
@@ -2031,25 +2058,30 @@
     .checkout-section .boxed label{
         margin-bottom: 10px !important;
     }
+
     .slider-sction .uk-slideshow-items {
         height: 160px;
     }
+
     .delivery-slider-section .uk-slideshow-items {
         height: 170px;
     }
+
     .delivery-slider-section .uk-slideshow-items .carousel-caption {
         transform: translateY(-90%);
     }
+
     .delivery-slider-section .uk-slideshow .uk-dotnav {
         bottom: 20px;
     }
+
     .slider-sction .carousel-caption .slider-left .btns a {
         width: 95px;
     }
     .slider-sction .carousel-caption .slider-right img {
         max-width: 200px;
     }
-   
+
 }
 
 /*========================================
