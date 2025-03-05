@@ -1,10 +1,10 @@
 @extends('user.layouts.master', ['pageSlug' => 'dashboard'])
 @section('title', 'User Dashboard')
 @push('css_link')
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
-    <link rel="stylesheet"
+    {{-- <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet"> --}}
+    {{-- <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
-        type="text/css" />
+        type="text/css" /> --}}
     <link rel="stylesheet" href="{{ asset('user/asset/css/address.css') }}">
 @endpush
 @push('css')
@@ -78,7 +78,7 @@
                                                     style="text-decoration: none; color:#212529;">
                                                     <div class="single-box cancel-order">
                                                         <div class="count">
-                                                            <span>30</span>
+                                                            <span></span>
                                                         </div>
                                                         <div class="title">
                                                             <h2>{{ __('My Cart') }}</h2>
@@ -94,7 +94,7 @@
                                                             <span>{{ $total_current_orders }}</span>
                                                         </div>
                                                         <div class="title">
-                                                            <h2>{{ __('Current Orders') }}</h2>
+                                                            <h2>{{ __('Running Orders') }}</h2>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -140,7 +140,7 @@
                                                                     <h3><span>{{ $product->name }}</span>({{ $product->strength->quantity . ' ' . $product->strength->unit }})
                                                                     </h3>
                                                                     <p><span>{{ __('Efficacy: ') }}</span>
-                                                                        {{ str_limit($product->precaution->description, 110) }}
+                                                                        {!! $product->precaution->description !!}
                                                                     </p>
                                                                 </div>
                                                             @endforeach
