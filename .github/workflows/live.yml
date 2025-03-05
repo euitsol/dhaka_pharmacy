@@ -19,9 +19,7 @@ jobs:
           username: ${{ secrets.LIVE_USERNAME }}
           password: ${{ secrets.LIVE_PASSWORD }}
           script: |
-            cd home
-            cd dhakapharmacy.com.bd
-            cd public_html
+            cd /home/dhakapharmacy.com.bd/public_html
             git fetch --all
             git reset --hard origin/live
             php artisan optimize:clear
