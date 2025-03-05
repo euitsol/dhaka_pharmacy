@@ -137,7 +137,7 @@
                                                             @foreach ($order_products as $key => $product)
                                                                 <div
                                                                     class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                                                                    <h3><span>{{ $product->name }}</span>({{ $product->strength->quantity . ' ' . $product->strength->unit }})
+                                                                    <h3><span>{{ $product->name }}</span>({{ optional($product->strength)->name }})
                                                                     </h3>
                                                                     <p><span>{{ __('Efficacy: ') }}</span>
                                                                         {!! $product->precaution->description !!}
@@ -239,10 +239,10 @@
                                                             <ul class="m-0 list-unstyled">
                                                                 <li>
                                                                     <strong>{{ __('Street Addrees: ') }}</strong>
-                                                                    {{ $user->address[0]->street_address }}
+                                                                    {{ str_limit($user->address[0]->street_address) }}
                                                                 </li>
                                                                 <li><strong>{{ __('Address: ') }}</strong>
-                                                                    {{ $user->address[0]->address }}
+                                                                    {{ str_limit($user->address[0]->address) }}
                                                                 </li>
                                                                 <li>
                                                                     <div class="row">
@@ -291,9 +291,6 @@
                                                                             {{ optional($user->address[0]->zone)->allows_express ? optional($user->address[0]->zone)->express_charge . __(' BDT') : 'N/A' }}
                                                                         </div>
                                                                     </div>
-                                                                </li>
-                                                                <li><strong>{{ __('Est. Express Delivery TIme: ') }}</strong>
-                                                                    {{ optional($user->address[0]->zone)->express_delivery_time_hours ? optional($user->address[0]->zone)->express_delivery_time_hours . __(' Houres') : 'N/A' }}
                                                                 </li>
                                                             </ul>
                                                         </div>

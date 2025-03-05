@@ -12,7 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Payment;
-
+use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
@@ -23,22 +23,76 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function dashboard(): View
+    public function dashboard(): View|RedirectResponse
     {
-        $data['user'] = User::with(['address' => function ($query) {
-            $query->where('is_default', 1);
-        }, 'address.zone'])->findOrFail(user()->id);
-        $data['total_payments'] = Payment::where('customer_id', user()->id)->count();
-        $query = Order::where([['status', '!=', 0], ['customer_id', user()->id], ['customer_type', get_class(user())]])->latest();
-        $data['total_orders'] = (clone $query)->count();
-        $data['total_current_orders'] = (clone $query)->whereIn('status', [1,2,3,4,5,6,7])->count();
-        // $data['last_current_orders'] = (clone $query)->whereBetween('status', [1, 5])->first();
-        $data['total_previous_orders'] = (clone $query)->where('status', 8)->count();
-        $data['total_cancel_orders'] = (clone $query)->whereIn('status', [-1,-2])->count();
-        $data['order_products'] = (clone $query)->with('products.precaution', 'products.strength')->get()->pluck('products')->flatten()->where('precaution', '!=', null)->shuffle();
-        $data['latest_offers'] = LatestOffer::activated()->latest()->get();
-        $data['user_tips'] = UserTips::activated()->latest()->get()->shuffle()->take(1);
-        dd($data['order_products']);
-        return view('user.dashboard.dashboard', $data);
+        try {
+            // Get user with default address and zone
+            $data['user'] = User::with([
+                'address' => function ($query) {
+                    $query->where('is_default', 1);
+                },
+                'address.zone'
+            ])->findOrFail(user()->id);
+
+            // Count payments
+            $data['total_payments'] = Payment::where('customer_id', user()->id)->count();
+
+            // Base query for orders
+            $userId = user()->id;
+            $userType = get_class(user());
+            $query = Order::where([
+                ['status', '!=', Order::INITIATED],  // Using constant instead of 0
+                ['customer_id', $userId],
+                ['customer_type', $userType]
+            ])->latest();
+
+            // Get counts for different order types
+            $data['total_orders'] = (clone $query)->count();
+            $data['total_current_orders'] = (clone $query)->whereIn('status', [
+                Order::SUBMITTED,
+                Order::HUB_ASSIGNED,
+                Order::ITEMS_COLLECTING,
+                Order::HUB_REASSIGNED,
+                Order::ITEMS_COLLECTED,
+                Order::PACHAGE_PREPARED,
+                Order::DISPATCHED
+            ])->count();
+            $data['total_previous_orders'] = (clone $query)->where('status', Order::DELIVERED)->count();
+            $data['total_cancel_orders'] = (clone $query)->whereIn('status', [
+                Order::CANCELLED,
+                Order::RETURNED
+            ])->count();
+
+            // Get products with precaution info - limit to 10 items to improve performance
+            $orderProducts = (clone $query)
+                ->with([
+                    'products' => function($query) {
+                        $query->whereHas('precaution')
+                             ->with(['precaution', 'strength']);
+                    }
+                ])
+                ->limit(10)  // Limit to recent orders for better performance
+                ->get()
+                ->pluck('products')
+                ->flatten()
+                ->filter(function($product) {
+                    return $product->precaution !== null;
+                })
+                ->shuffle();
+
+            $data['order_products'] = $orderProducts->take(10);  // Limit items shown in carousel
+
+            // Get latest offers and tips
+            $data['latest_offers'] = LatestOffer::activated()->latest()->get();
+            $data['user_tips'] = UserTips::activated()->latest()->take(1)->get();
+
+            return view('user.dashboard.dashboard', $data);
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Dashboard error: ' . $e->getMessage());
+
+            // Return with a flash message
+            return redirect()->back()->with('error', 'Unable to load dashboard data. Please try again.');
+        }
     }
 }
