@@ -152,24 +152,31 @@
         <div class="container">
             <div class="row header-section p-0 justify-content-center gap-2">
                 <div class="col text-center">
-                    <a href="{{ route('home') }}"><i class="fas fa-home"></i></a>
+                    <a href="{{ route('home') }}"><img class="icon" src="{{ asset('frontend/asset/icons/nav/home-icon.svg') }}" alt="Home"></a>
                 </div>
                 <div class="col text-center">
-                    <a href="{{ route('category.products', ['category' => 'all']) }}"><i
-                            class="fas fa-th-large"></i></a>
+                    <a href="{{ route('category.products', ['category' => 'all']) }}">
+                        <img class="icon" src="{{ asset('frontend/asset/icons/nav/products-icon.svg') }}" alt="Products">
+                    </a>
                 </div>
                 <div class="col">
                     <div class="right-col">
                         <a href="javascript:void(0)" class="cart-btn text-center d-block" type="button"
                             data-bs-toggle="offcanvas" data-bs-target="#cartbtn" aria-controls="offcanvasRight" >
-                            <span><i class="fa-solid fa-cart-plus"></i></span><sup><strong
-                                    id="cart_btn_quantity"></strong></sup>
+                            <span>
+                                <img class="icon" src="{{ asset('frontend/asset/icons/nav/cart-icon.svg') }}" alt="Cart">
+                            </span>
+                            <sup>
+                                <strong id="cart_btn_quantity"></strong>
+                            </sup>
                         </a>
                     </div>
                 </div>
                 <div class="col text-center">
                     <div class="upload_prescription w-100">
-                        <a href="javascript:void(0)" class="cat-title  text-center" data-bs-toggle="modal" data-bs-target="#prescriptionModal"><i class="fas fa-upload"></i></a>
+                        <a href="javascript:void(0)" class="cat-title  text-center" data-bs-toggle="modal" data-bs-target="#prescriptionModal">
+                            <img class="icon" src="{{ asset('frontend/asset/icons/nav/upload-prescription.svg') }}" alt="Upload upload-prescription">
+                        </a>
                     </div>
                 </div>
             </div>
