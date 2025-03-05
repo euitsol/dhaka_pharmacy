@@ -57,7 +57,7 @@
 
 .single_product_section .similar_products_card .similar_products .single-item {
     padding-bottom: 10px;
-    border-bottom: 1px solid rgba(112, 112, 112, 0.34);
+    border-bottom: 1px solid var(--border-1);
     margin-bottom: 10px;
 }
 
