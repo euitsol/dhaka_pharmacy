@@ -200,6 +200,84 @@
     border-style: solid;
 }
 
+/* Multi-step form styles */
+.prescriptionModal .prescription-steps {
+    position: relative;
+}
+
+.prescriptionModal .step {
+    display: none;
+}
+
+.prescriptionModal .step.active {
+    display: block;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.prescriptionModal .step-header {
+    margin-bottom: 1.5rem;
+}
+
+.prescriptionModal .step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.prescriptionModal .step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--p-modal-primary-bg);
+    color: var(--p-modal-text-white);
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+.prescriptionModal .step-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--p-modal-text-primary);
+}
+
+/* OTP Input styles */
+.prescriptionModal .otp-input-container {
+    margin: 1.5rem 0;
+}
+
+.prescriptionModal .otp-input {
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.prescriptionModal .resend-container {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+}
+
+.prescriptionModal .timer-text {
+    color: var(--p-modal-text-primary);
+}
+
+.prescriptionModal .resend-otp {
+    color: var(--p-modal-secondary-bg);
+    text-decoration: none;
+}
+
+.prescriptionModal .resend-otp:hover {
+    text-decoration: underline;
+}
+
+.prescriptionModal .upload-text {
+    color: var(--p-modal-text-primary);
+    font-size: 1rem;
+}
+
 /* Animations */
 @keyframes fadeInUp {
     from {
@@ -207,6 +285,17 @@
         transform: translateY(10px);
     }
 
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
     to {
         opacity: 1;
         transform: translateY(0);

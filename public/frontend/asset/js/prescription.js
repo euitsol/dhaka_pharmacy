@@ -6,6 +6,15 @@ $(document).ready(function() {
     const $openCamera = $('#openCamera');
     const $uploadFile = $('#uploadFile');
     const $fileInput = $('#fileInput');
+    const $nextStepBtn = $('.next-step');
+    const $prevStepBtn = $('.prev-step');
+    const $requestOtpBtn = $('.request-otp');
+    const $resendOtpBtn = $('.resend-otp');
+    const $otpInputs = $('.otp-input');
+    const $submitBtn = $('#submitPrescription');
+    const $phoneInput = $('#phone');
+    const $phoneDisplay = $('.phone-display');
+    let countdownInterval;
 
     // File input change event
     $fileInput.on('change', handleFiles);
@@ -35,6 +44,70 @@ $(document).ready(function() {
     // When the user clicks the upload button, open the file upload input
     $uploadFile.on('click', function() {
         $fileInput.trigger('click');
+    });
+
+    // Step navigation
+    $nextStepBtn.on('click', function() {
+        const currentStep = parseInt($(this).data('step'));
+        goToStep(currentStep + 1);
+    });
+
+    $prevStepBtn.on('click', function() {
+        const currentStep = parseInt($(this).data('step'));
+        goToStep(currentStep - 1);
+    });
+
+    // Request OTP
+    $requestOtpBtn.on('click', function() {
+        const phone = $phoneInput.val().trim();
+
+        if (!phone) {
+            toastr.error('Please enter a valid phone number');
+            return;
+        }
+
+        if (phone.length != 10 || phone[0] == '0') {
+            toastr.error('Phone number should be 10 digit');
+            return;
+        }
+
+        // Display the phone number in the OTP step
+        $phoneDisplay.text('+880' + phone);
+
+        // In a real implementation, you would send an API request here
+        // For now, we'll just simulate it
+        toastr.success('OTP sent to your phone number');
+        goToStep(3);
+        startCountdown();
+    });
+
+    // OTP input handling
+    $otpInputs.on('input', function(e) {
+        const index = parseInt($(this).data('index'));
+        const value = $(this).val();
+
+        if (value.length === 1 && index < 4) {
+            $otpInputs.eq(index).focus();
+        }
+
+        validateOtp();
+    });
+
+    $otpInputs.on('keydown', function(e) {
+        const index = parseInt($(this).data('index'));
+
+        if (e.key === 'Backspace' && !$(this).val() && index > 1) {
+            e.preventDefault();
+            $otpInputs.eq(index - 2).focus().val('');
+        }
+    });
+
+    // Resend OTP
+    $resendOtpBtn.on('click', function() {
+        // In a real implementation, you would send an API request here
+        toastr.success('OTP resent to your phone number');
+        startCountdown();
+        $resendOtpBtn.addClass('d-none');
     });
 
     function checkLimit(count=0) {
@@ -105,6 +178,7 @@ $(document).ready(function() {
                     $preview.addClass('loaded');
 
                     toastr.success('File uploaded successfully.');
+                    checkUploadedImages();
                 } else {
                     $preview.remove();
                     toastr.error('There was a problem with the file upload.');
@@ -150,6 +224,52 @@ $(document).ready(function() {
 
         $removeBtn.on('click', function() {
             $preview.remove();
+            checkUploadedImages();
         });
+    }
+
+    // Check if any images have been uploaded
+    function checkUploadedImages() {
+        const hasImages = $('.img-id').length > 0;
+        $nextStepBtn.prop('disabled', !hasImages);
+    }
+
+    // Go to a specific step
+    function goToStep(step) {
+        $('.step').removeClass('active');
+        $(`.step-${step}`).addClass('active');
+    }
+
+    // Start the OTP countdown
+    function startCountdown() {
+        let seconds = 60;
+        $('.countdown').text(seconds);
+        $resendOtpBtn.addClass('d-none');
+        $('.timer-text').removeClass('d-none');
+
+        clearInterval(countdownInterval);
+        countdownInterval = setInterval(function() {
+            seconds--;
+            $('.countdown').text(seconds);
+
+            if (seconds <= 0) {
+                clearInterval(countdownInterval);
+                $resendOtpBtn.removeClass('d-none');
+                $('.timer-text').addClass('d-none');
+            }
+        }, 1000);
+    }
+
+    // Validate OTP
+    function validateOtp() {
+        let isComplete = true;
+        $otpInputs.each(function() {
+            if (!$(this).val()) {
+                isComplete = false;
+                return false;
+            }
+        });
+
+        $submitBtn.prop('disabled', !isComplete);
     }
 });
