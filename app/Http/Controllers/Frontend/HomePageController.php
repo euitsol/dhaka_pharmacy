@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Medicine;
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\URL;
 use App\Http\Traits\TransformProductTrait;
@@ -14,9 +15,8 @@ use App\Models\Order;
 
 class HomePageController extends Controller
 {
-
-
     use TransformProductTrait;
+
     public function home(): View
     {
         // ticketClosed();
@@ -56,5 +56,18 @@ class HomePageController extends Controller
             return $product;
         });
         return response()->json($data);
+    }
+
+    public function switchLanguage(Request $request)
+    {
+        $validLocales = ['en', 'bn'];
+        $locale = $request->input('locale');
+        
+        if (in_array($locale, $validLocales)) {
+            session()->put('locale', $locale);
+            app()->setLocale($locale);
+        }
+        
+        return redirect()->back();
     }
 }
