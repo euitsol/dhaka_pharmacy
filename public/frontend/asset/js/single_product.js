@@ -21,6 +21,7 @@ $(document).ready(function () {
         navigation: false,
         slideSpeed: 1000,
         autoPlay: 2000,
+        stopOnHover: true,
     });
 });
 //related product
@@ -35,6 +36,7 @@ $(document).ready(function () {
         navigation: false,
         slideSpeed: 1000,
         autoPlay: 2000,
+        stopOnHover: true,
     });
 });
 $(document).ready(function () {
@@ -49,6 +51,7 @@ $(document).ready(function () {
         navigation: false,
         slideSpeed: 1000,
         autoPlay: 2000,
+        stopOnHover: true,
     });
 });
 

@@ -1,10 +1,10 @@
 @extends('user.layouts.master', ['pageSlug' => 'dashboard'])
 @section('title', 'User Dashboard')
 @push('css_link')
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
-    <link rel="stylesheet"
+    {{-- <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet"> --}}
+    {{-- <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
-        type="text/css" />
+        type="text/css" /> --}}
     <link rel="stylesheet" href="{{ asset('user/asset/css/address.css') }}">
 @endpush
 @push('css')
@@ -14,24 +14,24 @@
             height: 75px;
             width: 100%;
             border: 2px solid var(--btn_bg) !important;
-            padding: 5px;
+            padding: 0px;
             object-fit: contain;
-            border-radius: 20px;
+            border-radius: 10px;
         }
 
         .tips_image img {
             height: 120px;
             width: 100%;
             border: 2px solid var(--btn_bg) !important;
-            padding: 5px;
+            padding: 0px;
             object-fit: contain;
-            border-radius: 20px;
+            border-radius: 10px;
         }
 
-        .tips_details {
+        /* .tips_details {
             height: 55px;
             overflow-y: hidden;
-        }
+        } */
     </style>
 @endpush
 
@@ -78,7 +78,7 @@
                                                     style="text-decoration: none; color:#212529;">
                                                     <div class="single-box cancel-order">
                                                         <div class="count">
-                                                            <span>30</span>
+                                                            <span></span>
                                                         </div>
                                                         <div class="title">
                                                             <h2>{{ __('My Cart') }}</h2>
@@ -94,7 +94,7 @@
                                                             <span>{{ $total_current_orders }}</span>
                                                         </div>
                                                         <div class="title">
-                                                            <h2>{{ __('Current Orders') }}</h2>
+                                                            <h2>{{ __('Running Orders') }}</h2>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -137,10 +137,10 @@
                                                             @foreach ($order_products as $key => $product)
                                                                 <div
                                                                     class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                                                                    <h3><span>{{ $product->name }}</span>({{ $product->strength->quantity . ' ' . $product->strength->unit }})
+                                                                    <h3><span>{{ $product->name }}</span>({{ optional($product->strength)->name }})
                                                                     </h3>
                                                                     <p><span>{{ __('Efficacy: ') }}</span>
-                                                                        {{ str_limit($product->precaution->description, 110) }}
+                                                                        {!! $product->precaution->description !!}
                                                                     </p>
                                                                 </div>
                                                             @endforeach
@@ -239,10 +239,10 @@
                                                             <ul class="m-0 list-unstyled">
                                                                 <li>
                                                                     <strong>{{ __('Street Addrees: ') }}</strong>
-                                                                    {{ $user->address[0]->street_address }}
+                                                                    {{ str_limit($user->address[0]->street_address) }}
                                                                 </li>
                                                                 <li><strong>{{ __('Address: ') }}</strong>
-                                                                    {{ $user->address[0]->address }}
+                                                                    {{ str_limit($user->address[0]->address) }}
                                                                 </li>
                                                                 <li>
                                                                     <div class="row">
@@ -291,9 +291,6 @@
                                                                             {{ optional($user->address[0]->zone)->allows_express ? optional($user->address[0]->zone)->express_charge . __(' BDT') : 'N/A' }}
                                                                         </div>
                                                                     </div>
-                                                                </li>
-                                                                <li><strong>{{ __('Est. Express Delivery TIme: ') }}</strong>
-                                                                    {{ optional($user->address[0]->zone)->express_delivery_time_hours ? optional($user->address[0]->zone)->express_delivery_time_hours . __(' Houres') : 'N/A' }}
                                                                 </li>
                                                             </ul>
                                                         </div>

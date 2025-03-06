@@ -1204,10 +1204,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     });
 
 
-    //Order By Prescription
-
-
-
+    //Order By Prescriptios
 
     //Address
     Route::controller(UserAddressController::class)->prefix('address')->name('u.as.')->group(function () {

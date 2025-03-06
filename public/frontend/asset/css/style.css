@@ -194,7 +194,7 @@ h2.title {
 .related_product #bs-product-slider .single-pdct .pdct-img > img {
     border-radius: 15px 15px 0 0;
     height: 12.575rem;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .single-pdct .pdct-info {
@@ -827,6 +827,9 @@ a {
         transparent
     );
 }
+
+
+
 
 .product-section .best-selling-col .all-product {
     padding: 0px 5px;
