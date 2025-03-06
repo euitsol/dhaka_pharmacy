@@ -515,7 +515,7 @@
 
     .sidebar-cat-section .row .single-cat .icon {
         max-width: 100%;
-        min-height: 100%;
+        /* min-height: 100%; */
     }
 
     .single-pdct .pdct-info {
@@ -2032,6 +2032,10 @@
     .checkout-section .order-info-row .left .img img {
         height: 7rem;
     }
+    .checkout-section .order-info-row .left h5 {
+        font-size: 14px !important;
+        line-height: 16px !important;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -2137,6 +2141,14 @@
 
     .slider-sction .carousel-caption .slider-right img {
         max-width: 200px;
+    }
+    .sidebar-cat-section .row .single-cat .icon {
+        min-height: 55px;
+        padding: 2px;
+    }
+    .checkout-section .order-info-row .left h5 {
+        font-size: 14px !important;
+        line-height: 16px !important;
     }
 }
 
