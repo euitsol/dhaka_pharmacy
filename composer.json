@@ -24,6 +24,7 @@
         "meilisearch/meilisearch-php": "^1.12",
         "php-flasher/flasher-laravel": "^1.15",
         "php-flasher/flasher-sweetalert-laravel": "^1.15",
+        "predis/predis": "*",
         "pusher/pusher-php-server": "^7.2",
         "spatie/image": "*",
         "spatie/laravel-analytics": "^5.5",
