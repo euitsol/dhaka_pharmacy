@@ -1288,7 +1288,7 @@ Route::controller(SslCommerzController::class)->prefix('payment')->name('u.payme
     // Route::get('/example1', 'exampleEasyCheckout')->name('checkout1');
     // Route::get('/example2', 'exampleHostedCheckout')->name('checkout2');
     Route::get('/ssl/{order_id}', 'index')->name('index');
-    // Route::post('/pay-via-ajax', 'payViaAjax'])->name('index_ajax');
+    // Route::post('/pay-via-ajax', 'payViaAjax')->name('index_ajax');
     Route::post('/success', 'success')->name('success');
     Route::post('/fail', 'fail')->name('failed');
     Route::post('/cancel', 'cancel')->name('cancel');
@@ -1324,13 +1324,7 @@ Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-pr
     Route::put('prescription/update/{id}', 'update')->name('update');
     Route::get('prescription/delete/{id}', 'delete')->name('delete');
     Route::post('prescription/verify', 'verify')->name('verify');
+    Route::post('prescription/send-otp', 'sendOtp')->name('send_otp');
+    Route::post('prescription/resend-otp', 'resendOtp')->name('resend_otp');
+    Route::post('prescription/verify-otp', 'verifyOtp')->name('verify_otp');
 });
-
-
-
-//Developer Routes
-Route::get('/export-permissions', function () {
-    $filename = 'permissions.csv';
-    $filePath = createCSV($filename);
-    return Response::download($filePath, $filename);
-})->name('export.permissions');

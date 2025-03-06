@@ -99,6 +99,9 @@
                     'create': @json(route('u.obp.create')),
                     'upload': @json(route('u.obp.upload')),
                     'delete': @json(route('u.obp.delete', 'id')),
+                    'send_otp': @json(route('u.obp.send_otp')),
+                    'resend_otp': @json(route('u.obp.resend_otp')),
+                    'verify_otp': @json(route('u.obp.verify_otp')),
                 }
             }
         }
