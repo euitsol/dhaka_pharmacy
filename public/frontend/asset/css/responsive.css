@@ -515,6 +515,7 @@
 
     .sidebar-cat-section .row .single-cat .icon {
         max-width: 100%;
+        min-height: 100%;
     }
 
     .single-pdct .pdct-info {
@@ -1069,19 +1070,36 @@
     }
 
     .mobile-footer .row .col {
-        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-        background: var(--btn-bg-color);
-        border-radius: 5px;
+        /* box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); */
+        /* background: var(--btn-bg-color); */
+       
         padding: 0px !important;
     }
-
     .mobile-footer .row .col a {
         display: block;
         height: 100% !important;
         width: 100% !important;
         padding: 15px 0px;
         color: var(--text-color-white) !important;
+        background: var(--btn-bg-color);
+        transition: 0.4s ease;
+        border-radius: 5px;
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /* .mobile-footer a i {
         color: var(--text-color-white);

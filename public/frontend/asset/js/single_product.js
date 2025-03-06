@@ -27,7 +27,6 @@ $(document).ready(function () {
 //related product
 $(document).ready(function () {
     $("#related-product-slider").owlCarousel({
-        loop: true,
         items: 5,
         itemsDesktop: [1399, 3],
         itemsDesktopSmall: [991, 3],
@@ -36,6 +35,7 @@ $(document).ready(function () {
         pagination: true,
         navigation: false,
         slideSpeed: 1000,
+        autoPlay: 2000,
         stopOnHover: true,
     });
 });
