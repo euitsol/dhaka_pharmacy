@@ -74,11 +74,34 @@ $(document).ready(function() {
         // Display the phone number in the OTP step
         $phoneDisplay.text('+880' + phone);
 
-        // In a real implementation, you would send an API request here
-        // For now, we'll just simulate it
-        toastr.success('OTP sent to your phone number');
-        goToStep(3);
-        startCountdown();
+        // Send OTP API request
+        $.ajax({
+            url: window.AppConfig.urls.prescription.send_otp || '/order-by-prescrition/prescription/send-otp',
+            type: 'POST',
+            data: {
+                phone: phone,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            beforeSend: function() {
+                $requestOtpBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Sending...');
+            },
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('OTP sent to your phone number');
+                    goToStep(3);
+                    startCountdown();
+                } else {
+                    toastr.error(response.message || 'Failed to send OTP');
+                }
+            },
+            error: function(xhr) {
+                const response = xhr.responseJSON;
+                toastr.error(response?.message || 'Failed to send OTP. Please try again.');
+            },
+            complete: function() {
+                $requestOtpBtn.prop('disabled', false).html('Request OTP <i class="fas fa-arrow-right ms-1"></i>');
+            }
+        });
     });
 
     // OTP input handling
@@ -86,7 +109,7 @@ $(document).ready(function() {
         const index = parseInt($(this).data('index'));
         const value = $(this).val();
 
-        if (value.length === 1 && index < 4) {
+        if (value.length === 1 && index < 6) {
             $otpInputs.eq(index).focus();
         }
 
@@ -104,11 +127,127 @@ $(document).ready(function() {
 
     // Resend OTP
     $resendOtpBtn.on('click', function() {
-        // In a real implementation, you would send an API request here
-        toastr.success('OTP resent to your phone number');
-        startCountdown();
-        $resendOtpBtn.addClass('d-none');
+        const phone = $phoneInput.val().trim();
+
+        if (!phone) {
+            toastr.error('Please enter a valid phone number');
+            return;
+        }
+
+        $.ajax({
+            url: window.AppConfig.urls.prescription.resend_otp || '/order-by-prescrition/prescription/resend-otp',
+            type: 'POST',
+            data: {
+                phone: phone,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            beforeSend: function() {
+                $resendOtpBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Resending...');
+            },
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('OTP resent to your phone number');
+                    startCountdown();
+                    $resendOtpBtn.addClass('d-none');
+                } else {
+                    toastr.error(response.message || 'Failed to resend OTP');
+                }
+            },
+            error: function(xhr) {
+                const response = xhr.responseJSON;
+                toastr.error(response?.message || 'Failed to resend OTP. Please try again.');
+            },
+            complete: function() {
+                $resendOtpBtn.prop('disabled', false).html('Resend OTP');
+            }
+        });
     });
+
+    // Form submission
+    $('#prescriptionForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const phone = $phoneInput.val().trim();
+        let otp = '';
+        
+        // Collect OTP from inputs
+        $otpInputs.each(function() {
+            otp += $(this).val();
+        });
+        
+        if (otp.length !== 6) {
+            toastr.error('Please enter the complete 6-digit OTP');
+            return;
+        }
+        
+        // First verify OTP
+        $.ajax({
+            url: window.AppConfig.urls.prescription.verify_otp || '/order-by-prescrition/prescription/verify-otp',
+            type: 'POST',
+            data: {
+                phone: phone,
+                otp: otp,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            beforeSend: function() {
+                $submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Verifying...');
+            },
+            success: function(response) {
+                if (response.success) {
+                    // OTP verified, now submit the form
+                    submitPrescriptionForm();
+                } else {
+                    toastr.error(response.message || 'Invalid OTP');
+                    $submitBtn.prop('disabled', false).html('Submit Prescription');
+                }
+            },
+            error: function(xhr) {
+                const response = xhr.responseJSON;
+                toastr.error(response?.message || 'OTP verification failed. Please try again.');
+                $submitBtn.prop('disabled', false).html('Submit Prescription');
+            }
+        });
+    });
+
+    function submitPrescriptionForm() {
+        const formData = new FormData($('#prescriptionForm')[0]);
+        
+        $.ajax({
+            url: $('#prescriptionForm').attr('action'),
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                $submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Submitting...');
+            },
+            success: function(response) {
+                toastr.success('Prescription submitted successfully');
+                
+                // Close modal and reset form after successful submission
+                setTimeout(function() {
+                    $('#prescriptionModal').modal('hide');
+                    resetForm();
+                }, 1500);
+            },
+            error: function(xhr) {
+                const response = xhr.responseJSON;
+                toastr.error(response?.message || 'Failed to submit prescription. Please try again.');
+                $submitBtn.prop('disabled', false).html('Submit Prescription');
+            }
+        });
+    }
+
+    function resetForm() {
+        $('#prescriptionForm')[0].reset();
+        $previewContainer.empty().hide();
+        $uploadArea.show();
+        $nextStepBtn.prop('disabled', true);
+        goToStep(1);
+        
+        // Clear OTP inputs
+        $otpInputs.val('');
+    }
 
     function checkLimit(count=0) {
         if(parseInt($('.img-id').length) + parseInt(count) > maxLimit) {
