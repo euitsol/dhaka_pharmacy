@@ -16,7 +16,7 @@
                     <a href="{{ route('category.products', ['category' => $item->slug]) }}"
                         class="col-6 text-center single-cat text-decoration-none {{ isset($category) && $category->id == $item->id ? 'active' : '' }}" title="{{ __($item->name) }}">
                         <div class="icon m-auto">
-                            <img class="w-100" src="{{ storage_url($item->image) }}" alt="category icon">
+                            <img class="w-100 h-100"  src="{{ storage_url($item->image) }}" alt="category icon">
                         </div>
                         <h2 class="mt-2">{{ __($item->name) }}</h2>
                     </a>

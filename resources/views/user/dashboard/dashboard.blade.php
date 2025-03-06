@@ -14,24 +14,24 @@
             height: 75px;
             width: 100%;
             border: 2px solid var(--btn_bg) !important;
-            padding: 5px;
+            padding: 0px;
             object-fit: contain;
-            border-radius: 20px;
+            border-radius: 10px;
         }
 
         .tips_image img {
             height: 120px;
             width: 100%;
             border: 2px solid var(--btn_bg) !important;
-            padding: 5px;
+            padding: 0px;
             object-fit: contain;
-            border-radius: 20px;
+            border-radius: 10px;
         }
 
-        .tips_details {
+        /* .tips_details {
             height: 55px;
             overflow-y: hidden;
-        }
+        } */
     </style>
 @endpush
 
