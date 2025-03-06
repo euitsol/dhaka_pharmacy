@@ -12,6 +12,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\URL;
 use App\Http\Traits\TransformProductTrait;
 use App\Models\Order;
+use Illuminate\Support\Facades\App;
 
 class HomePageController extends Controller
 {
@@ -62,12 +63,12 @@ class HomePageController extends Controller
     {
         $validLocales = ['en', 'bn'];
         $locale = $request->input('locale');
-        
+
         if (in_array($locale, $validLocales)) {
             session()->put('locale', $locale);
-            app()->setLocale($locale);
+            App::setLocale($locale);
         }
-        
+
         return redirect()->back();
     }
 }

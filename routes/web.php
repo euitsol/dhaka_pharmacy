@@ -1249,8 +1249,6 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
     // });
 });
 
-Route::post('/switch-language', 'switchLanguage')->name('language.switch');
-
 Route::group(['middleware' => ['auth:staff', 'permission'], 'prefix' => 'hub'], function () {
     Route::get('/dashboard', [HubDashboardController::class, 'dashboard'])->name('hub.dashboard');
 

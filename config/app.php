@@ -83,7 +83,7 @@ return [
     |
     */
 
-    'locale' => 'bn',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -172,6 +172,7 @@ return [
         App\Providers\FrontendDataShareServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Davcpas1234\LaravelPdfViewer\LaravelPdfViewerServiceProvider::class,
+        App\Providers\LocaleServiceProvider::class,
     ])->toArray(),
 
     /*
