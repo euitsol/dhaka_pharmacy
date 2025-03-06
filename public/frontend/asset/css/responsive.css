@@ -184,7 +184,7 @@
         border: none !important;
         border-radius: 15px 15px 0 0;
         height: 12.575rem !important;
-        object-fit: cover;
+        object-fit: contain;
     }
 
     .single_product_section .similar_products_card {
@@ -431,7 +431,9 @@
     main {
         overflow: hidden !important;
     }
-
+    .delivery-slider-section .delivery-bike img{
+        object-fit: contain !important;
+    }
     /*=======================================================
         product section responsive code here
     =========================================================*/
@@ -1711,7 +1713,7 @@
     }
 
     .slider-sction .carousel-caption .slider-right img {
-        max-width: 220px;
+        max-width: 230px;
     }
 
     .delivery-slider-section .uk-slideshow-items .carousel-caption h2 {
@@ -1930,6 +1932,7 @@
         .product_title
         a {
         font-size: 11px !important;
+        line-height: 0px;
     }
 
     .header-section
@@ -1941,6 +1944,7 @@
         p
         a {
         font-size: 10px !important;
+        line-height: 11px;
     }
 
     .all-product-containt{
@@ -2003,6 +2007,12 @@
         height: 2rem;
         width: 2rem;
         object-fit: contain;
+    }
+    .single_product_section .single_product_card .single_product .product_image img {
+        height: 16rem !important;
+    }
+    .checkout-section .order-info-row .left .img img {
+        height: 7rem;
     }
 }
 
@@ -2088,7 +2098,7 @@
     }
 
     .slider-sction .uk-slideshow-items {
-        height: 160px;
+        height: 170px;
     }
 
     .delivery-slider-section .uk-slideshow-items {

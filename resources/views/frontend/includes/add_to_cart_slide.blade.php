@@ -8,7 +8,7 @@
             {{ __('Clear All') }}</a>
         <button type="button" class="btn-close m-0" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body cart_items">
+    <div class="offcanvas-body cart_items pt-0">
 
     </div>
     <div class="offcanvas-footer cart_sub_total px-4 py-3">

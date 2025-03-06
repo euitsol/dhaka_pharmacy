@@ -208,7 +208,7 @@
                         </div>
                         <div class="col-8 col-sm-10">
                             <div class="row">
-                                <div class="col-sm-8 col-12 info px-0 px-sm-3">
+                                <div class="col-sm-8 col-9 info px-0 px-sm-3">
                                     <h4 class="product_title" title="${product.attr_title}">
                                         <a href="${product.slug}">${product.name}</a>
                                     </h4>

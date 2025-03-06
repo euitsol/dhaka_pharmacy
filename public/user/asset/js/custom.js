@@ -175,6 +175,3 @@ $(document).ready(function () {
 
 });
 
-
-
-// cart remove js code
