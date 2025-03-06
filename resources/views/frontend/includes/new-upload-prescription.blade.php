@@ -66,7 +66,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text">+880</span>
                                     <input type="tel" class="form-control" name="phone" id="phone"
-                                        placeholder="1XXXXXXXXX" value="{{ user() ? user()->phone : old('phone') }}">
+                                        placeholder="1XXXXXXXXX" value="{{ user() ? ltrim(user()->phone, '0') : old('phone') }}">
                                 </div>
                                 <div class="form-text">{{ __('We\'ll send an OTP to this number') }}</div>
                             </div>
@@ -104,6 +104,8 @@
                                     <input type="text" class="form-control otp-input" maxlength="1" data-index="2">
                                     <input type="text" class="form-control otp-input" maxlength="1" data-index="3">
                                     <input type="text" class="form-control otp-input" maxlength="1" data-index="4">
+                                    <input type="text" class="form-control otp-input" maxlength="1" data-index="5">
+                                    <input type="text" class="form-control otp-input" maxlength="1" data-index="6">
                                 </div>
 
                                 <div class="resend-container">
