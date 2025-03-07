@@ -1,4 +1,3 @@
-
 // header-searchbar autocomplite
 // $(document).ready(function() {
 //     const $searchInput = $('#searchInput');
@@ -404,6 +403,8 @@ function formatPercentageNumber(number) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Initialize locale from session
+    document.documentElement.lang = "{{ app()->getLocale() }}";
     let cartbtnElement = document.getElementById("cartbtn"); // Correctly target cartbtn
     let wishlistElement = document.getElementById("wishlist"); // Correctly target wishlist
 
@@ -427,7 +428,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
   
-
 
 
 

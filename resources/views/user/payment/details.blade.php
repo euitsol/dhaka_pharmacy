@@ -73,7 +73,7 @@
                                     <p>{!! get_taka_icon() . number_format($payment->order->delivery_fee, 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <h5>{{ slugToTitle($payment->statusTitle()) }}{{ __(' Amount') }}</h5>
+                                    <h5>{{ slugToTitle($payment->statusTitle()) }}{{ __('Amount') }}</h5>
                                     <p>{!! get_taka_icon() .
                                         number_format(ceil($payment->order->totalDiscountPrice + $payment->order->delivery_fee), 2) !!}</p>
                                 </div>

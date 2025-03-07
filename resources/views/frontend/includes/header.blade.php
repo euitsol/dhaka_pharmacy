@@ -81,10 +81,13 @@
                             @endif
 
                             <div class="item">
-                                <select name="" id="">
-                                    <option value="english">{{ __('English') }}</option>
-                                    <option value="bangla">{{ __('Bangla') }}</option>
-                                </select>
+                                <form id="languageForm" action="{{ route('language.switch') }}" method="POST">
+                                    @csrf
+                                    <select name="locale" onchange="document.getElementById('languageForm').submit()">
+                                        <option value="en" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>{{ __('English') }}</option>
+                                        <option value="bn" {{ app()->getLocale() === 'bn' ? 'selected' : '' }}>{{ __('Bangla') }}</option>
+                                    </select>
+                                </form>
                             </div>
                             @if (Auth::guard('web')->check())
                             <div class="item">
