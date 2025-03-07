@@ -25,6 +25,14 @@ class OrderByPrescriptionController extends Controller
 
     public function create(PrescriptionRequest $request)
     {
+        if($request->ajax()){
+            try{
+                $prescription = $this->prescriptionService->processPrescription($request->all(), true);
+                return response()->json(['success'=>true, 'message'=>'Prescription submitted successfully. Our team will contact you soon']);
+            }catch(Exception $e){
+               return response()->json(['success'=>false, 'message'=>$e->getMessage()]);
+            }
+        }
         try{
             $prescription = $this->prescriptionService->processPrescription($request->all(), true);
             // flash()->addSuccess('Prescription submitted successfully. Our team will contact you soon.');

@@ -222,18 +222,23 @@ $(document).ready(function() {
                 $submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Submitting...');
             },
             success: function(response) {
-                toastr.success('Prescription submitted successfully');
-
-                // Close modal and reset form after successful submission
-                setTimeout(function() {
-                    $('#prescriptionModal').modal('hide');
-                    resetForm();
-                }, 1500);
+                console.log(response);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Prescription submitted successfully',
+                }).then(() => location.reload());
             },
+
             error: function(xhr) {
                 const response = xhr.responseJSON;
-                toastr.error(response?.message || 'Failed to submit prescription. Please try again.');
                 $submitBtn.prop('disabled', false).html('Submit Prescription');
+                $('#prescriptionModal').modal('hide');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Submission Failed',
+                    text: response?.error || 'Failed to submit prescription. Please try again.',
+                }).then(() => location.reload());
             }
         });
     }

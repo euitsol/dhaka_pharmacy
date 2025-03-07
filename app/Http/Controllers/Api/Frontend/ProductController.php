@@ -63,6 +63,7 @@ class ProductController extends BaseController
             ])->activated()->where('generic_id', $sp->generic_id)
                 ->where('id', '!=', $sp->id)
                 ->orderBy('price', 'asc')
+                ->take(15)
                 ->get()
                 ->each(function (&$product) {
                     $product = $this->transformProduct($product, 26);
