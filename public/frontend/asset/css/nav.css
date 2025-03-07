@@ -128,6 +128,7 @@ header {
     font-size: 14px;
     line-height: 19px;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .header-section .right-col select option {

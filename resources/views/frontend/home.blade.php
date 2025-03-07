@@ -36,7 +36,7 @@
                             <h2 class="title mb-0 mb-lg-2 mb-xl-3">{{ __('Medical Devices') }}</h2>
                             <div class="best-selling-products">
                                 <div class="all-product">
-                                    <div class="row m-0">
+                                    <div class="row medical-devices">
                                         @foreach ($bsItems as $item)
                                             <div
                                                 class="col-xxl-12 col-xl-12 col-lg-4 col-md-3 col-sm-4 col-6 px-2 px-xl-3 py-2 py-xl-0">
@@ -123,7 +123,7 @@
                     @if ($featuredCategories->isNotEmpty())
                         <div class="col-12 col-xl-9 feature-product">
                             <div class="row cat-filter-row gx-4 align-items-center justify-content-between">
-                                <div class="col-12 col-md-4 col-xxl-3 col-lg-5">
+                                <div class="col-12 ">
                                     <h2 class="title">{{ __('Featured Products') }}</h2>
                                 </div>
 
@@ -281,21 +281,21 @@
                                 <li>
                                     <img src="{{ asset('frontend/asset/img/slider-bg-02.jpg') }}" alt=""
                                         uk-cover>
-                                    <div class="carousel-caption">
-                                        <h2>Shop Online or In store Get</h2>
-                                        <a href="#">Free</a>
-                                        <h3>Delivery</h3>
-                                        <h4>at Your Door</h4>
+                                    <div class="carousel-caption ">
+                                        <h2>{{ __('Shop Online or In store Get') }}</h2>
+                                        <a href="#">{{ __('Free') }}</a>
+                                        <h3>{{ __('Delivery') }}</h3>
+                                        <h4>{{ __('at Your Door') }}</h4>
                                     </div>
                                 </li>
                                 <li>
                                     <img src="{{ asset('frontend/asset/img/slider-bg-01.jpg') }}" alt=""
                                         uk-cover>
-                                    <div class="carousel-caption">
-                                        <h2>Shop Online or In store Get</h2>
-                                        <a href="#">Free</a>
-                                        <h3>Delivery</h3>
-                                        <h4>at Your Door</h4>
+                                    <div class="carousel-caption ">
+                                        <h2>{{ __('Shop Online or In store Get') }}</h2>
+                                        <!-- <a href="#">{{ __('Free') }}</a> -->
+                                        <h3>{{ __('Delivery') }}</h3>
+                                        <h4>{{ __('at Your Door') }}</h4>
                                     </div>
                                 </li>
                                 <li>
@@ -303,10 +303,10 @@
                                     <img src="{{ asset('frontend/asset/img/slider-bg-01.jpg') }}" alt=""
                                         uk-cover>
                                     <div class="carousel-caption">
-                                        <h2>Shop Online or In store Get</h2>
-                                        <a href="#">Free</a>
-                                        <h3>Delivery</h3>
-                                        <h4>at Your Door</h4>
+                                        <h2>{{ __('Shop Online or In store Get') }}</h2>
+                                        <!-- <a href="#">{{ __('Free') }}</a> -->
+                                        <h3>{{ __('Delivery') }}</h3>
+                                        <h4>{{ __('at Your Door') }}</h4>
                                     </div>
                                 </li>
                             </ul>
