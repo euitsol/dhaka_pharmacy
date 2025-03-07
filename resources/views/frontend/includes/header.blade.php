@@ -35,7 +35,7 @@
                             <div class="search-filter col-12 col-xl-10  m-auto">
                                 <form class="d-flex search-box" action="">
                                     <input class="col-6 col-md-7 col-4 col-sm-6" type="text" id="searchInput"
-                                        placeholder="Search...">
+                                        placeholder="{{ __('Search...') }}">
                                     <select class="col-5 col-md-4 col-5 col-sm-5" name="pro_cat_id" id="categorySelect">
                                         <option value="all" selected>{{ __('All Category') }}</option>
                                         @foreach ($categories as $category)
