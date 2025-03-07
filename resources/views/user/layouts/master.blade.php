@@ -32,6 +32,13 @@
     @stack('css_link')
     <link rel="stylesheet" href="{{ asset('user/asset/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('user/asset/css/responsive.css') }}">
+
+    {{-- Local CSS --}}
+    @if (app()->getLocale() == 'en')
+        <link rel="stylesheet" href="{{ asset('user/asset/css/locale-en.css') }}">
+    @elseif (app()->getLocale() == 'bn')
+        <link rel="stylesheet" href="{{ asset('user/asset/css/locale-bn.css') }}">
+    @endif
     @stack('css')
 
 
