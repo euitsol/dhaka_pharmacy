@@ -131,16 +131,16 @@ class OrderController extends BaseController
         ->where('customer_id', $request->user()->id)
         ->where('customer_type', get_class($request->user()));
 
-        if($request->has('status')) {
-            $statuses = is_array($request->status) 
-                ? $request->status 
-                : explode(',', $request->status);
-            
+        if ($request->has('status')) {
+            $statusString = trim($request->status, '[]'); // Remove [ and ]
+            $statuses = explode(',', $statusString);
+
+            $statuses = array_map('intval', $statuses);
             $query->whereIn('status', $statuses);
         }
 
 
-        $orders = $query->paginate($request->get('per_page', 10))->withQueryString();
+        $orders = $query->latest()->paginate($request->get('per_page', 10))->withQueryString();
 
 
 

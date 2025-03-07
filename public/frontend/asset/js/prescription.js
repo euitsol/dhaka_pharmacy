@@ -166,20 +166,20 @@ $(document).ready(function() {
     // Form submission
     $('#prescriptionForm').on('submit', function(e) {
         e.preventDefault();
-        
+
         const phone = $phoneInput.val().trim();
         let otp = '';
-        
+
         // Collect OTP from inputs
         $otpInputs.each(function() {
             otp += $(this).val();
         });
-        
+
         if (otp.length !== 6) {
             toastr.error('Please enter the complete 6-digit OTP');
             return;
         }
-        
+
         // First verify OTP
         $.ajax({
             url: window.AppConfig.urls.prescription.verify_otp || '/order-by-prescrition/prescription/verify-otp',
@@ -211,7 +211,7 @@ $(document).ready(function() {
 
     function submitPrescriptionForm() {
         const formData = new FormData($('#prescriptionForm')[0]);
-        
+
         $.ajax({
             url: $('#prescriptionForm').attr('action'),
             type: 'POST',
@@ -223,7 +223,7 @@ $(document).ready(function() {
             },
             success: function(response) {
                 toastr.success('Prescription submitted successfully');
-                
+
                 // Close modal and reset form after successful submission
                 setTimeout(function() {
                     $('#prescriptionModal').modal('hide');
@@ -244,7 +244,7 @@ $(document).ready(function() {
         $uploadArea.show();
         $nextStepBtn.prop('disabled', true);
         goToStep(1);
-        
+
         // Clear OTP inputs
         $otpInputs.val('');
     }
