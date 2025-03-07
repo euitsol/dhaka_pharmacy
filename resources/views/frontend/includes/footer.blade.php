@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row row-gap-4">
                 <div class="col-6 col-md-3">
-                    <div class="row row-gap-2">
+                    <div class="row row-gap-2 align-items-center">
                         <div class="col-12 col-xxl-2 text-xxl-start text-center">
                             <img class="w-auto" src="{{ asset('frontend/asset/img/delivery.png') }}" alt="">
                         </div>
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="row row-gap-2">
+                    <div class="row row-gap-2 align-items-center">
                         <div class="col-12 col-xxl-2 text-xxl-start text-center">
                             <img src="{{ asset('frontend/asset/img/clock.png') }}" alt="">
                         </div>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="row row-gap-2">
+                    <div class="row row-gap-2 align-items-center">
                         <div class="col-12 col-xxl-2 text-xxl-start text-center">
                             <img src="{{ asset('frontend/asset/img/setisfide.png') }}" alt="">
                         </div>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="row row-gap-2">
+                    <div class="row row-gap-2 align-items-center">
                         <div class="col-12 col-xxl-2 text-xxl-start text-center">
                             <img src="{{ asset('frontend/asset/img/card.png') }}" alt="">
                         </div>
@@ -63,8 +63,8 @@
                         </div>
                         <div class="newsletter-content">
                             <form action="" class="d-flex align-items-center">
-                                <input type="text" placeholder="Enter Your Email">
-                                <input type="submit" value="Subscribe">
+                                <input type="text" placeholder="{{ __('Enter your email address') }}">
+                                <input type="submit" value="{{ __('Subscribe') }}">
                             </form>
                         </div>
                     </div>

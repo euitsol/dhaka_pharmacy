@@ -358,6 +358,12 @@ a {
     margin-bottom: 10px;
     /* overflow: hidden; */
 }
+.product-section
+    .align-items-baseline
+    .best-selling-products
+    .all-product .medical-devices{
+    margin: 0px !important;
+}
 
 .single-item .pdct-title {
     line-height: 0;
@@ -1035,7 +1041,7 @@ a {
 }
 
 .delivery-slider-section .uk-slideshow-items .carousel-caption h2 {
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     font-size: 25px;
     line-height: 36px;
     font-weight: 600;
@@ -1044,7 +1050,7 @@ a {
 }
 
 .delivery-slider-section .uk-slideshow-items .carousel-caption a {
-    font-family: "Poppins", sans-serif;
+    /* font-family: "Poppins", sans-serif; */
     font-size: 15px;
     line-height: 20px;
     font-weight: 400;
@@ -1064,7 +1070,7 @@ a {
 }
 
 .delivery-slider-section .uk-slideshow-items .carousel-caption h3 {
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     font-size: 45px;
     line-height: 67px;
     font-weight: 600;
@@ -1073,7 +1079,7 @@ a {
 }
 
 .delivery-slider-section .uk-slideshow-items .carousel-caption h4 {
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     font-size: 25px;
     line-height: 31px;
     font-weight: 600;
