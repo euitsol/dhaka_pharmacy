@@ -8,12 +8,12 @@
                     <div class="carousel-caption">
                         <div class="row">
                             <div class="col-6 col-xxl-5 col-12 col-sm-7 col-md-6 slider-left">
-                                <h3>Your health. Our priority.</h3>
-                                <h2>100% pure <br>
-                                    Pharmacy.</h2>
+                                <h3>{{ __('Your health. Our priority.') }}</h3>
+                                <h2>{{ __('100% pure') }} <br>
+                                    {{ __('Pharmacy.') }}</h2>
                                 <div class="btns">
-                                    <a href="#" class="order">Order Online</a>
-                                    <a href="#" class="reg">Register</a>
+                                    <a href="#" class="order">{{ __('Order Online') }}</a>
+                                    <a href="#" class="reg">{{  __('Register') }}</a>
                                 </div>
                             </div>
                             <div class="col-6 col-xxl-7 col-12 col-sm-5 col-md-6 slider-right">
