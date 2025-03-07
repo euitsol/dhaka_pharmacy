@@ -27,7 +27,8 @@ class OrderByPrescriptionController extends Controller
     {
         try{
             $prescription = $this->prescriptionService->processPrescription($request->all(), true);
-            flash()->addSuccess('Prescription submitted successfully. Our team will contact you soon.');
+            // flash()->addSuccess('Prescription submitted successfully. Our team will contact you soon.');
+            sweetalert()->success('Prescription submitted successfully. Our team will contact you soon.');
             return redirect()->route('home');
         }catch(Exception $e){
             flash()->addWarning($e->getMessage());
