@@ -18,26 +18,7 @@
                         <div class="row cat-filter-row gx-4">
                             <div class="col-12 d-flex align-items-center">
                                 <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
-                                <!-- <div class="sub-title">
-                                                                                                            <h2 class="title">{{ __(isset($category) ? $category->name : 'All Products') }}</h2>
-                                                                                                        </div>
-
-                                                                                                        <div class="sub-categories">
-                                                                                                            <span class="animated-subcategories"></span>
-                                                                                                        </div> -->
-
                             </div>
-
-                            <!-- @if (isset($sub_categories) && $sub_categories->isNotEmpty())
-                                                                                                            <ul class="sub-categories-list d-none">
-                                                                                                                @foreach ($sub_categories as $sub_cats)
-    @foreach ($sub_cats as $sub_cat)
-    <li>{{ $sub_cat->name }}</li>
-    @endforeach
-    @endforeach
-                                                                                                            </ul>
-                                                                                                        @endif -->
-
 
                             @if (isset($sub_categories) && $sub_categories->isNotEmpty())
                                 <div class="col-12">
@@ -119,14 +100,6 @@
                                                     </h3>
                                                 </a>
                                             </div>
-                                            <!-- <div class="product_title">
-                                                <a href="javascript:void(0)">
-                                                    <h3 class="fw-bold text-muted mt-0"
-                                                        title="{{ optional($product->strength)->name }}">
-                                                        {{ $product->strength_info }}
-                                                    </h3>
-                                                </a>
-                                            </div> -->
 
                                             <div class="all-product-containt">
                                                 <p>
@@ -150,57 +123,55 @@
                                             </div>
 
                                             <h4>
-                                                <span> {!! get_taka_icon() !!}
-
-                                                    @if ($product->price > 0)
+                                                @if ($product->price > 0)
+                                                    <span> {!! get_taka_icon() !!}
                                                         {{ number_format($product->discounted_price, 2) }}
-                                                </span>
-
-                                                @if ($product->discount_percentage > 0)
-                                                    <span class="regular_price"> <del>{!! get_taka_icon() !!}
-                                                            {{ number_format($product->price, 2) }}</del></span>
+                                                    </span>
+                                                    @if ($product->discount_percentage > 0)
+                                                        <span class="regular_price">
+                                                            <del>
+                                                                {!! get_taka_icon() !!}
+                                                                {{ number_format($product->price, 2) }}
+                                                            </del>
+                                                        </span>
+                                                    @endif
+                                                    @else
+                                                    <span>{{ __('TBA') }}</span>
                                                 @endif
+                                            </h4>
+                                            <!-- add to cart button -->
+                                            @if ($product->price > 0)
+                                                <div class="add_to_card">
+                                                    <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id=""
+                                                        href="javascript:void(0)">
+                                                        <i class="fa-solid fa-cart-plus"></i>
+                                                        <span class="d-block d-xl-none">{{ __('Add To Cart') }}</span>
+                                                    </a>
+                                                </div>
                                             @else
-                                                <span>{{ __('TBA') }}</span>
-                            @endif
-                            </h4>
-                            <!-- add to cart button -->
-                            @if ($product->price > 0)
-                                <div class="add_to_card">
-                                    <a class="cart-btn" data-product_slug="{{ $product->slug }}" data-unit_id=""
-                                        href="javascript:void(0)">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span class="d-block d-xl-none">{{ __('Add To Cart') }}</span>
-                                    </a>
+                                                <div class="add_to_card">
+                                                    <a class="cart-btn" href="{{ route('product.single_product', $product->slug) }}">
+                                                        <i class="fa-solid fa-info"></i>
+                                                        <span class="d-block d-xl-none">{{ __('Details') }}</span>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
-                            @else
-                                <div class="add_to_card">
-                                    <a class="cart-btn" href="{{ route('product.single_product', $product->slug) }}">
-                                        <i class="fa-solid fa-info"></i>
-                                        <span class="d-block d-xl-none">{{ __('Details') }}</span>
-                                    </a>
-                                </div>
-                            @endif
-
+                            @endforeach
                         </div>
-
+                        @if (count($products) > 5)
+                            <div class="row show-more mt-2 mt-lg-5">
+                                <a class="all-pdct-btn text-center more" data-total="{{ $products->total() }}"
+                                    data-pages="{{ $products->lastPage() }}" data-next-page-url="{{ $products->nextPageUrl() }}"
+                                    href="javascript:void(0)">{{ __('SEE MORE') }}</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
-                @endforeach
+            </section>
         </div>
-        @if (count($products) > 5)
-            <div class="row show-more mt-2 mt-lg-5">
-                <a class="all-pdct-btn text-center more" data-total="{{ $products->total() }}"
-                    data-pages="{{ $products->lastPage() }}" data-next-page-url="{{ $products->nextPageUrl() }}"
-                    href="javascript:void(0)">{{ __('SEE MORE') }}</a>
-            </div>
-        @endif
-    </div>
-    </div>
-    </section>
-
-    </div>
-    <!--=========== Main Content Section End ==============-->
     </div>
 @endsection
 @push('js')
