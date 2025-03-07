@@ -45,6 +45,13 @@
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/prescription.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/asset/css/errors.css') }}">
 
+    {{-- Local CSS --}}
+    @if (app()->getLocale() == 'en')
+        <link rel="stylesheet" href="{{ asset('frontend/asset/css/locale-en.css') }}">
+    @elseif (app()->getLocale() == 'bn')
+        <link rel="stylesheet" href="{{ asset('frontend/asset/css/locale-bn.css') }}">
+    @endif
+
     <!--======== FontAwesome cdn ==========-->
     <script src="https://kit.fontawesome.com/db6820c2b5.js" crossorigin="anonymous"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])

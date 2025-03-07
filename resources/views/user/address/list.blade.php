@@ -18,8 +18,7 @@
                     </div>
                     <div>
                         <a href="javascript:void(0)" class="btn btn-success" data-bs-toggle="modal"
-                            data-bs-target="#address_add_modal">Add
-                            Address</a>
+                            data-bs-target="#address_add_modal">{{ __('Add Address') }}</a>
                     </div>
                 </div>
 
