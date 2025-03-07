@@ -1,0 +1,73 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --font-bangla: 'Noto Sans Bengali';
+}
+
+body {
+    font-family: var( --font-bangla);
+}
+
+h1,h2,h3,h4,h5,h6,p,span,a,li{
+    font-family: var( --font-bangla) !important;
+}
+.sidebar-cat-section .cat-title {
+	font-family: var( --font-bangla) !important;
+}
+.single_product_section .similar_products h2{
+    font-family: var( --font-bangla) !important;
+}
+.slider-sction .carousel-caption .slider-left .btns a {
+    font-size: 16px;
+    line-height: 18px;
+}
+/* product price for bangla text */
+.single_product_section .similar_products .single-item .pdct-price {
+	font-size: 14px;
+	line-height: 20px;
+}
+
+
+
+
+
+/* bangla responsive css code here */
+
+@media screen and (min-width: 1200px) and (max-width: 1300px) {
+    .product-section h2.title {
+      font-size: 17px;
+    }
+}
+@media screen and (max-width: 575px) {
+    .delivery-slider-section .uk-slideshow-items .carousel-caption h2 {
+        font-size: 14px;
+        line-height: 18px;
+        margin-bottom: 10px;
+    }
+    .delivery-slider-section .uk-slideshow-items .carousel-caption h3 {
+      font-size: 18px;
+      line-height: 20px;
+      margin-top: 15px;
+      margin: 17px 0px 0px 0px;
+    }
+    .delivery-slider-section .uk-slideshow-items .carousel-caption h4 {
+        font-size: 13px;
+        line-height: normal;
+    }
+    .delivery-slider-section .uk-slideshow-items .carousel-caption {
+        bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        top: 45%;
+        width: 100%;
+        transform: translate(-50%, -50%);
+        left: 50%;
+    }
+  }
+@media screen and (min-width: 320px) and (max-width: 480px) {
+    .slider-sction .carousel-caption .slider-left .btns a {
+        font-size: 11px !important;
+        line-height: 14px;
+    }
+}

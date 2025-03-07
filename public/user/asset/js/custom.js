@@ -175,3 +175,28 @@ $(document).ready(function () {
 
 });
 
+
+
+// languate js code here
+function toggleLanguage() {
+    const localeInput = document.getElementById("localeInput");
+    const switchBtn = document.getElementById("switch-btn");
+    const englishText = document.getElementById("english-text");
+    const banglaText = document.getElementById("bangla-text");
+
+    if (localeInput.value === "en") {
+        localeInput.value = "bn";
+        switchBtn.classList.remove("active-left");
+        switchBtn.classList.add("active-right");
+        englishText.classList.remove("active-text");
+        banglaText.classList.add("active-text");
+    } else {
+        localeInput.value = "en";
+        switchBtn.classList.remove("active-right");
+        switchBtn.classList.add("active-left");
+        banglaText.classList.remove("active-text");
+        englishText.classList.add("active-text");
+    }
+
+    document.getElementById("languageForm").submit();
+}

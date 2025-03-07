@@ -321,6 +321,7 @@
     .dashboard-main-section .log-out {
         height: 125px !important;
     }
+    
     .dashboard-main-section .col-mid .medicine-slider .carousel-control-next {
         left: 56%;
     }
@@ -431,6 +432,9 @@
     .google-map .address_details .list-unstyled li{
         font-size: 14px;
     }
+    .dashboard-main-section .language-switch {
+        width: 250px !important;
+    }
 }
 @media screen and (min-width: 350px) and (max-width: 575px) {
     .dashboard-main-section .col-right .google-map{
@@ -453,7 +457,9 @@
     .dashboard-main-section .col-right .google-map .address-btn a span {
         font-size: 12px;
     }
-
+    .dashboard-main-section .language-switch {
+        width: 250px !important;
+    }
     .dashboard-main-section .col-left .single-box.cancel-order h2,
     .dashboard-main-section .col-left .single-box.previous-order h2 {
         margin-top: 0px;
@@ -756,6 +762,9 @@
     .dashboard-main-section .log-out {
         height: 125px !important;
     }
+    .dashboard-main-section .language{
+        height: 125px !important;
+    }
     .dashboard-main-section .col-mid .medicine-slider .carousel-control-next {
         left: 56%;
     }
@@ -912,9 +921,9 @@
         font-size: 20px;
         line-height: 20px;
     }
-    .dashboard-main-section .log-out {
+    /* .dashboard-main-section .log-out {
         height: 125px !important;
-    }
+    } */
     .dashboard-main-section .col-mid .medicine-slider .carousel-control-next {
         left: 56%;
     }
@@ -1166,9 +1175,9 @@
     .dashboard-main-section .col-left .current-order .progress-box .progress {
         margin-top: 15px;
     }
-    .dashboard-main-section .log-out {
+    /* .dashboard-main-section .log-out {
         height: 125px !important;
-    }
+    } */
     /* Header CSS  */
 
     .header-section .profile img {

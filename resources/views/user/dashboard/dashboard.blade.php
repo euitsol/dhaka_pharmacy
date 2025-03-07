@@ -391,7 +391,23 @@
                             </div>
                             <div class="col-xl-3 col-12 order-1 order-xl-2">
                                 <div class="row row-gap-3 row-gap-sm-4">
-                                    <div class="col-12 m-lg-0 m-auto d-xl-block d-none">
+
+                                    <div class="col-12 col-sm-6 col-xl-12 m-lg-0 m-auto">
+                                        <div class="language">
+                                            <form id="languageForm" action="{{ route('language.switch') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="locale" id="localeInput" value="{{ app()->getLocale() }}">
+                                                
+                                                <div class="language-switch" onclick="toggleLanguage()">
+                                                    <span id="english-text" class="{{ app()->getLocale() === 'en' ? 'active-text' : '' }}">English</span>
+                                                    <span id="bangla-text" class="{{ app()->getLocale() === 'bn' ? 'active-text' : '' }}">বাংলা</span>
+                                                    <div class="switch-btn {{ app()->getLocale() === 'bn' ? 'active-right' : 'active-left' }}" id="switch-btn"></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-xl-12 m-lg-0 m-auto ">
                                         <div class="log-out text-left">
                                             <a href="javascript:void(0)"
                                                 onclick="event.preventDefault();
@@ -400,6 +416,7 @@
                                             </a>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
