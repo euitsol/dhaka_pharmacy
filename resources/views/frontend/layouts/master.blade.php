@@ -148,6 +148,8 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!--========= uikit-js ===========-->
     <script src="{{ asset('frontend/vendor/uikit/js/uikit.min.js') }}"></script>
     <script src="{{ asset('frontend/asset/js/cart.js') }}"></script>
