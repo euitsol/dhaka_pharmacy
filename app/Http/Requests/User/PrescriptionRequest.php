@@ -20,14 +20,14 @@ class PrescriptionRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        // $phone = $this->input('phone');
-        // $phone = trim($phone);
-        // if (strlen($phone) === 10) {
-        //     $phone = '0' . $phone;
-        // }
-        // $this->merge([
-        //     'phone' => $phone,
-        // ]);
+        $phone = $this->input('phone');
+        $phone = trim($phone);
+        if (strlen($phone) === 10) {
+            $phone = '0' . $phone;
+        }
+        $this->merge([
+            'phone' => $phone,
+        ]);
     }
 
     public function rules(): array

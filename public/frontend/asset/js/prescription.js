@@ -233,6 +233,7 @@ $(document).ready(function() {
             error: function(xhr) {
                 const response = xhr.responseJSON;
                 $submitBtn.prop('disabled', false).html('Submit Prescription');
+                $('#prescriptionModal').modal('hide');
                 Swal.fire({
                     icon: 'error',
                     title: 'Submission Failed',
