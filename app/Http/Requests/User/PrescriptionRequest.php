@@ -4,8 +4,8 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Session;
 
 class PrescriptionRequest extends FormRequest
@@ -18,11 +18,18 @@ class PrescriptionRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+    protected function prepareForValidation(): void
+    {
+        $phone = $this->input('phone');
+        $phone = trim($phone);
+        if (strlen($phone) === 10) {
+            $phone = '0' . $phone;
+        }
+        $this->merge([
+            'phone' => $phone,
+        ]);
+    }
+
     public function rules(): array
     {
         return [
@@ -48,6 +55,12 @@ class PrescriptionRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
+        if ($this->ajax()) {
+            throw new HttpResponseException(
+                new JsonResponse(['error' => $validator->errors()->first()], 422)
+            );
+        }
+
         Session::flash('error', $validator->errors()->first());
         throw new HttpResponseException(redirect()->back()->withInput());
     }
