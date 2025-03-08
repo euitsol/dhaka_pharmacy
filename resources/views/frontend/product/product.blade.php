@@ -161,7 +161,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        @if (count($products) > 5)
+                        @if ($products->nextPageUrl())
                             <div class="row show-more mt-2 mt-lg-5">
                                 <a class="all-pdct-btn text-center more" data-total="{{ $products->total() }}"
                                     data-pages="{{ $products->lastPage() }}" data-next-page-url="{{ $products->nextPageUrl() }}"

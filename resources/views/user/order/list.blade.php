@@ -55,7 +55,7 @@
                                                     href="javascript:void(0)">{{ __('Pay Now') }}</a>
                                             @endif
                                             @if(($order->status == App\Models\Order::SUBMITTED) || ($order->status == App\Models\Order::INITIATED))
-                                                <a class="btn btn-danger"
+                                                <a class="btn btn-danger cancel-btn"
                                                     href="{{ route('u.order.cancel', encrypt($order->order_id)) }}">{{ __('Cancel') }}</a>
                                             @endif
                                             <a class="btn btn-primary">{{ __('Re-order') }}</a>
@@ -122,4 +122,31 @@
     </section>
 @endsection
 @push('js')
+<script>
+    $(document).ready(function(){
+        $('.cancel-btn').on('click', function(e) {
+            e.preventDefault();
+            const url = $(this).attr('href');
+            const button = $(this);
+            button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> {{ __("Processing...") }}');
+            
+            Swal.fire({
+                title: '{{ __("Are you sure?") }}',
+                text: '{{ __("You won\'t be able to revert this!") }}',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '{{ __("Yes, cancel it!") }}',
+                cancelButtonText: '{{ __("No, go back") }}'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                } else {
+                    button.prop('disabled', false).html('{{ __("Cancel") }}');
+                }
+            });
+        });
+    })
+</script>
 @endpush

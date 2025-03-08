@@ -195,6 +195,8 @@ class Order extends BaseModel
             self::PACHAGE_PREPARED => 'Package Prepared',
             self::DISPATCHED => 'Dispatched',
             self::DELIVERED => 'Delivered',
+            self::CANCELLED => 'Cancelled',
+            self::RETURNED => 'Returned',
             default => 'Unknown Status',
         };
     }
@@ -211,6 +213,8 @@ class Order extends BaseModel
             self::PACHAGE_PREPARED => 'bg-info',
             self::DISPATCHED => 'bg-info',
             self::DELIVERED => 'bg-info',
+            self::CANCELLED => 'bg-danger',
+            self::RETURNED => 'bg-danger',
             default => 'bg-secondary',
         };
     }
