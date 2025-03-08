@@ -77,11 +77,17 @@ class OrderController extends Controller
 
     public function cancel($id): RedirectResponse
     {
-        $order = Order::findOrFail(decrypt($id));
-        if ($order->status < 2 && $order->status != -1) {
-            $order->update(['status' => -1]);
-        } else {
-            flash()->addWarning('You can not cancel order which is in progress. Please contact with our customer care team.');
+        // dd(decrypt($id));
+        try {
+            $this->orderService->setUser(user());
+            $this->orderService->setOrder(decrypt($id));
+            $this->orderService->cancelOrder();
+
+            flash()->success('Order cancelled successfully');
+        }catch (ModelNotFoundException $e) {
+            flash()->error('Something went wrong');
+        } catch (Exception $e) {
+            flash()->error('Something went wrong');
         }
         return redirect()->back();
     }
