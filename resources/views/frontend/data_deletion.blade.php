@@ -39,7 +39,7 @@
                                     placeholder="Enter your e-mail">
                             </div>
                             <div class="mb-3 mb-md-3">
-                                <label for="reason" class="form-label">{{ __('Reason for Deletion') }}/label>
+                                <label for="reason" class="form-label">{{ __('Reason for Deletion') }}</label>
                                 <textarea class="form-control" id="reason" name="reason" rows="4" placeholder="Please explain why you want your data deleted">{{ old('reason') }}</textarea>
                             </div>
                             <div class="btn w-100 p-0">
