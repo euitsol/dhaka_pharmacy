@@ -9,6 +9,17 @@ $.ajaxSetup({
     complete: function () {
         $("#loading-animation").fadeOut();
     },
+    error: function(xhr, status, error) {
+        $("#loading-animation").fadeOut();
+        console.error("AJAX Error:", status, error);
+        if (xhr.status === 401) {
+            handleLoginRequirement();
+        } else if (xhr.status === 422 && xhr.responseJSON) {
+            handleErrors(xhr.responseJSON);
+        } else {
+            toastr.error("An unexpected error occurred. Please try again.");
+        }
+    }
 });
 
 // Cart Module
@@ -99,7 +110,6 @@ function updateCartDisplay(data) {
         selectedUnitTotalDiscountedPrice = cart.selected_unit
             ? cart.selected_unit.discounted_price * cart.quantity
             : 0;
-        console.log(product);
         append = `
         <div class="card add_to_cart_item mb-2">
             <div class="card-body py-2">
@@ -255,9 +265,11 @@ function displayCartCount() {
     if (getCartCount() > 0) {
         $("#cart_btn_quantity").show();
         $("#cart_btn_quantity").html(getCartCount());
+        $("#db_cart_btn_quantity").html(getCartCount());
     } else {
         $("#cart_btn_quantity").hide();
         $("#cart_btn_quantity").html();
+        $("#db_cart_btn_quantity").html(0);
     }
 
     $(".total_check_item").text(getCartCount());
@@ -295,7 +307,7 @@ $(document).ready(() => {
     displayCartCount();
 
     //Cart button on header
-    $("#cart_icon_btn").on("click", () => {
+    $("#cart_icon_btn, #db_cart_icon_btn").on("click", () => {
         refreshCart();
     });
     // Add to Cart

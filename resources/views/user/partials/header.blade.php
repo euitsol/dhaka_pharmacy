@@ -33,7 +33,7 @@
                                         class="nav-link @if (isset($pageSlug) && $pageSlug == 'review') active @endif"
                                         href="{{ route('u.review.list') }}">{{ __('Reviews') }}</a></li>
                                 <li class="nav-item d-lg-none d-block">
-                                    <a class="nav-link text-danger" href="javascript:void(0)" 
+                                    <a class="nav-link text-danger" href="javascript:void(0)"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
@@ -51,8 +51,8 @@
             </div> -->
             <div class="col-lg-4 col-9 d-flex flex-row align-items-center justify-content-end">
                 <div class="right-col me-4">
-                    <a href="javascript:void(0)" class="cart-icon d-flex" data-bs-toggle="offcanvas"
-                        data-bs-target="#cartbtn" aria-controls="offcanvasRight">
+                    <a href="javascript:void(0)" id="cart_icon_btn"  class="cart-icon cart-btn d-flex" data-bs-toggle="offcanvas"
+                        data-bs-target="#cartbtn" aria-controls="offcanvasRight" type="button">
                         <img src="{{ asset('user/asset/img/my-cart1.png') }}" alt="">
                         <sup><strong id="cart_btn_quantity"></strong></sup>
                     </a>

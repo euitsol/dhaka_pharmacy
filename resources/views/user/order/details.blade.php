@@ -111,7 +111,7 @@
             <div class="order-info-cont">
                 <!-- Order-status-row-start -->
                 <div class="row  align-items-center">
-                    <div class="col-md-8 col-sm-9 col-12">
+                    <div class="col-md-7 col-sm-9 col-12">
                         <div class="d-block d-md-flex align-items-center ">
                             <div
                                 class="order-status-row d-flex align-items-center justify-content-md-start justify-content-between py-2 py-sm-4">
@@ -124,20 +124,24 @@
                         </div>
                     </div>
 
-                    {{-- <div class="col-md-4 col-sm-3 col-12 fs-1 pb-3">
-                        @if ($order->status != -1)
-                            @if ($order->otp)
-                                <div class="order-status-row py-5 otp d-flex justify-content-center align-items-center">
-                                    <p class="mb-0 fw-bold">{{ __('OTP: ') }}{{ $order->otp }}</p>
-                                </div>
-                            @elseif($order->status < 2)
-                                <div class="order-status m-0 text-start text-sm-end">
-                                    <a class="cancle text-center text-danger"
-                                        href="{{ route('u.order.cancel', encrypt($order->id)) }}">{{ __('Cancel') }}</a>
-                                </div>
-                            @endif
+                    <div class="col-md-5 col-sm-3 col-12 fs-1 pb-3">
+
+
+                        <div class="order-status m-0 text-start text-sm-end">
+
+                        @if ($order->status == App\Models\Order::INITIATED)
+                                <a class="cancel text-center bg-success"
+                                    href="">{{ __('Pay Now') }}</a>
                         @endif
-                    </div> --}}
+                        @if(($order->status == App\Models\Order::SUBMITTED) || ($order->status == App\Models\Order::INITIATED))
+                                <a class="cancel text-center bg-danger }}"
+                                    href="{{ route('u.order.cancel', encrypt($order->order_id)) }}">{{ __('Cancel') }}</a>
+                        @endif
+                            <a class="cancel text-center bg-info"
+                                href="">{{ __('Reorder') }}</a>
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -151,9 +155,6 @@
                             <!-- Progress Bar -->
                             <div class="progress-bar-wrapper d-none d-md-block">
                                 <div class="progress-line"></div>
-                                {{-- <div class="progress-line-active"
-                                    style="width: {{ 100 / (count($order->timelines)) }}%">
-                                </div> --}}
                             </div>
 
                             <!-- Timeline Steps -->
@@ -214,9 +215,9 @@
                     <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-2">
                         <div class="order-details">
                             <span>{{ __('Receiver Name') }} </span>
-                            <p class="mb-0">{{ $order->customer->name }}</p>
+                            <p class="mb-0">{{ optional($order->customer)->name }}</p>
                             <p>{{ __('Mobile : ') }}
-                                {{ formatPhoneNumber($order->customer->phone) }}
+                                {{ formatPhoneNumber(optional($order->customer)->phone) }}
                             </p>
                         </div>
                     </div>
@@ -253,35 +254,24 @@
                                             </div>
                                         </div>
 
-                                        <!-- <div class="col-sm-6 col-8">
-                                                                                                                                                                        <h5 class="mb-1" title="{{ $product->attr_title }}">{{ $product->name }}
-                                                                                                                                                                        </h5>
-                                                                                                                                                                        <p class="mb-0">{{ $product->generic->name }}</p>
-                                                                                                                                                                        <p class="mb-0">{{ $product->company->name }}</p>
-                                                                                                                                                                    </div>
-                                                                                                                                                                    <div class="col-sm-3 col-8 ms-auto d-flex d-sm-block gap-sm-0 gap-3">
-                                                                                                                                                                        <p class="qt mb-1">
-                                                                                                                                                                            {{ __('Qty: ') }}<span>{{ $product->pivot->quantity }}</span></p>
-                                                                                                                                                                        <p class="qt mb-0">
-                                                                                                                                                                            {{ __('Pack: ') }}<span>{{ $product->pivot->unit->name }}</span>
-                                                                                                                                                                        </p>
-                                                                                                                                                                    </div> -->
-
-                                        <div class="col-sm-9 col-8">
+                                        <div class="col-sm-9 col-8 px-0 px-sm-3">
                                             <div class="row align-items-center row-gap-2">
                                                 <div class="col-sm-8 col-12">
                                                     <h5 class="mb-1" title="{{ $product->attr_title }}">
                                                         {{ $product->name }}
                                                     </h5>
-                                                    <p class="mb-0">{{ $product->generic->name }}</p>
-                                                    <p class="mb-0">{{ $product->company->name }}</p>
+                                                    <p class="mb-0">{{ optional($product->generic)->name }}</p>
+                                                    <p class="mb-0">{{ optional($product->company)->name }}</p>
                                                 </div>
                                                 <div class="col-sm-4 col-12 ms-auto d-flex d-sm-block gap-sm-0 gap-3">
                                                     <p class="qt mb-1">
-                                                        {{ __('Qty: ') }}<span>{{ $product->pivot->quantity }}</span>
+                                                        {{ __('Qty') }}:<span>{{ $product->pivot->quantity }}</span>
                                                     </p>
                                                     <p class="qt mb-0">
-                                                        {{ __('Pack: ') }}<span>{{ $product->pivot->unit->name }}</span>
+                                                        {{ __('Unit') }}:<span>{{ $product->pivot->unit_name }}</span>
+                                                    </p>
+                                                    <p class="qt mb-0">
+                                                        {{ __('Total Price') }}:<span>{{ $product->pivot->total_price }}</span> @if($product->pivot->unit_discount > 0) <del>{{ $product->pivot->quantity * $product->pivot->unit_price }}</del>@endif
                                                     </p>
                                                 </div>
                                             </div>
@@ -297,19 +287,23 @@
                             <div class="right d-flex flex-column justify-content-center">
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Total Price') }}</h5>
-                                    <p class="text-right">{!! get_taka_icon() . number_format($order->total_amount - $order->delivery_fee, 2) !!}</p>
+                                    <p class="text-align-right">{!! get_taka_icon() .'(+)'. number_format(ceil($order->sub_total), 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <h5>{{ __('Discount') }}</h5>
-                                    <p class="text-right">{!! get_taka_icon() . number_format($order->product_discount - $order->voucher_discount, 2) !!}</p>
+                                    <h5>{{ __('Product Discount') }}</h5>
+                                    <p class="text-right">{!! get_taka_icon() .'(-)'.number_format($order->product_discount, 2) !!}</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <h5>{{ __('Voucher Discount') }}</h5>
+                                    <p class="text-right">{!! get_taka_icon() .'(-)'. number_format($order->voucher_discount, 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Sub Total') }}</h5>
-                                    <p class="text-align-right">{!! get_taka_icon() . number_format(ceil($order->sub_total), 2) !!}</p>
+                                    <p class="text-right">{!! get_taka_icon() . number_format($order->total_amount - $order->delivery_fee, 2) !!}</p>
                                 </div>
                                 <div class="total-border d-flex justify-content-between mb-3">
                                     <h5>{{ __('Delivery Charge') }}</h5>
-                                    <p class="text-align-right">{!! get_taka_icon() . number_format($order->delivery_fee, 2) !!}</p>
+                                    <p class="text-align-right">{!! get_taka_icon() .'(+)'. number_format($order->delivery_fee, 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Payable Amount') }}</h5>

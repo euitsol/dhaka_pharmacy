@@ -102,6 +102,25 @@ body {
     font-family: "Inter", sans-serif;
 }
 
+#loading-animation {
+    position: absolute;
+    top: 0;
+    right: 0 !important;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, #d8e5ec81, #dae3eb8c, #def0e791);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999999999999999;
+}
+
+/* Logo with Breathing Animation */
+#loading-animation img {
+    width: 100%; /* Adjust the size as needed */
+    animation: breathing 2s ease-in-out infinite;
+}
+
 .container {
     max-width: 1440px;
     padding: 0 30px;
@@ -1245,7 +1264,8 @@ margin: 0;
     justify-content: center;
     align-items: center;
 }
-/* 
+
+/*
 .dashboard-main-section .log-out a img {
     width: 80%;
 } */
@@ -2462,9 +2482,6 @@ margin: 0;
     box-shadow: 2px 2px 6px 6px rgb(180, 214, 236);
 }
 
-
-
-
 /* Firefox e customize scrollbar */
 
 @-moz-document url-prefix() {
@@ -2529,6 +2546,7 @@ margin: 0;
     padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
 }
+
 /* user language style css code here */
 .language-switch {
 	display: flex;
@@ -2544,6 +2562,7 @@ margin: 0;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	overflow: hidden;
 }
+
 .language-switch span {
     flex: 1;
     text-align: center;
@@ -2554,6 +2573,7 @@ margin: 0;
     position: relative;
     z-index: 2;
 }
+
 .switch-btn {
 	position: absolute;
 	width: 50%;
@@ -2563,12 +2583,15 @@ margin: 0;
 	transition: all 0.3s ease-in-out;
 	z-index: 1;
 }
+
 .active-left {
     left: 0;
 }
+
 .active-right {
     left: 50%;
 }
+
 .active-text {
     color: var(--text-color-white)!important;
 }

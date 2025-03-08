@@ -73,12 +73,12 @@
                                                 </a>
                                             </div>
                                             <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
-                                                <a href="javascript:void(0)" data-bs-toggle="offcanvas"
+                                                <a href="javascript:void(0)" id="db_cart_icon_btn" data-bs-toggle="offcanvas"
                                                     data-bs-target="#cartbtn" aria-controls="offcanvasRight"
                                                     style="text-decoration: none; color:#212529;">
-                                                    <div class="single-box cancel-order">
+                                                    <div class="single-box">
                                                         <div class="count">
-                                                            <span></span>
+                                                            <span id="db_cart_btn_quantity"></span>
                                                         </div>
                                                         <div class="title">
                                                             <h2>{{ __('My Cart') }}</h2>
@@ -397,7 +397,7 @@
                                             <form id="languageForm" action="{{ route('language.switch') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="locale" id="localeInput" value="{{ app()->getLocale() }}">
-                                                
+
                                                 <div class="language-switch" onclick="toggleLanguage()">
                                                     <span id="english-text" class="{{ app()->getLocale() === 'en' ? 'active-text' : '' }}">English</span>
                                                     <span id="bangla-text" class="{{ app()->getLocale() === 'bn' ? 'active-text' : '' }}">বাংলা</span>
@@ -416,7 +416,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
