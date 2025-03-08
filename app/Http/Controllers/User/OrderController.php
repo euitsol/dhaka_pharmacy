@@ -92,6 +92,11 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
+    public function pay_now(Request $request)
+    {
+
+    }
+
 
     private function buildOrderQuery($status)
     {
