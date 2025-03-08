@@ -279,35 +279,16 @@
                         <div uk-slideshow>
                             <ul class="uk-slideshow-items">
                                 <li>
-                                    <img src="{{ asset('frontend/asset/img/slider-bg-02.jpg') }}" alt=""
-                                        uk-cover>
-                                    <div class="carousel-caption ">
-                                        <h2>{{ __('Shop Online or In store Get') }}</h2>
-                                        <a href="#">{{ __('Free') }}</a>
-                                        <h3>{{ __('Delivery') }}</h3>
-                                        <h4>{{ __('at Your Door') }}</h4>
-                                    </div>
+                                    <a href="#"><img src="{{ asset('frontend/asset/img/bottom-slider/slider-bg-03.jpg') }}" alt="slider image 1"
+                                    uk-cover></a>
                                 </li>
                                 <li>
-                                    <img src="{{ asset('frontend/asset/img/slider-bg-01.jpg') }}" alt=""
-                                        uk-cover>
-                                    <div class="carousel-caption ">
-                                        <h2>{{ __('Shop Online or In store Get') }}</h2>
-                                        <a href="#">{{ __('Free') }}</a>
-                                        <h3>{{ __('Delivery') }}</h3>
-                                        <h4>{{ __('at Your Door') }}</h4>
-                                    </div>
+                                    <a href="#"><img src="{{ asset('frontend/asset/img/bottom-slider/slider-bg-03.jpg') }}" alt="slider image 1"
+                                    uk-cover></a>
                                 </li>
                                 <li>
-                                    uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
-                                    <img src="{{ asset('frontend/asset/img/slider-bg-01.jpg') }}" alt=""
-                                        uk-cover>
-                                    <div class="carousel-caption">
-                                        <h2>{{ __('Shop Online or In store Get') }}</h2>
-                                        <a href="#">{{ __('Free') }}</a>
-                                        <h3>{{ __('Delivery') }}</h3>
-                                        <h4>{{ __('at Your Door') }}</h4>
-                                    </div>
+                                    <a href="#"><img src="{{ asset('frontend/asset/img/bottom-slider/slider-bg-03.jpg') }}" alt="slider image 1"
+                                    uk-cover></a>
                                 </li>
                             </ul>
                             <ul class="uk-slideshow-nav uk-dotnav uk-flex-center "></ul>

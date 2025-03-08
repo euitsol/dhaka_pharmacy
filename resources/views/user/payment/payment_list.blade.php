@@ -69,8 +69,8 @@
                                     <span
                                         class="{{ $payment->statusBg() }}">{{ __(ucwords(strtolower(str_replace('-', ' ', $payment->statusTitle())))) }}</span>
                                 </div>
-                                <div class="col-md-4 mt-2 mt-md-0 col-12 text-start text-md-end">
-                                    <div class="order-status">
+                                <div class="col-md-4 mt-2 mt-md-0 col-12 text-start text-md-end d-flex justify-content-md-end justify-content-start">
+                                    <div class="order-status payment-btn-main">
                                         <div class="btn p-0">
                                             <a
                                                 href="{{ route('u.payment.details', $payment->encrypted_id) }}">{{ __('Details') }}</a>
