@@ -101,6 +101,9 @@
         line-height: 30px !important;
         font-weight: 500 !important;
     }
+    .single-pdct .pdct-info {
+        min-height: 100px;
+    }
 }
 
 @media screen and (max-width: 1399px) {
@@ -1097,20 +1100,6 @@
         box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /* .mobile-footer a i {
         color: var(--text-color-white);
         cursor: pointer;
@@ -1552,6 +1541,9 @@
 
     .product-section .sub_categories .sub_cat_item .card .category_name h3, .product-section .sub_categories .sub_cat_item .card .sub_category_name h3 {
         font-size: 16px;
+    }
+    .header-section .right-col .offcanvas .wishes .product_details .image img {
+	    height: 100px;
     }
 }
 
@@ -2162,6 +2154,9 @@
     .checkout-section .order-info-row .left h5 {
         font-size: 14px !important;
         line-height: 16px !important;
+    }
+    .add_to_card .cart-btn span {
+        font-size: 10px !important;
     }
 }
 

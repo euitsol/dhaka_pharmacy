@@ -1897,8 +1897,12 @@ margin: 0;
 
 .my-order-section .order-row .img {
     width: 90px;
+    
 }
-
+.my-order-section .order-row .img img{
+    min-height: 80px;
+    object-fit: contain;
+}
 .my-order-section .order-row .product-info .name {
     font-family: "Inter", sans-serif;
     font-size: 15px;
@@ -1931,7 +1935,7 @@ margin: 0;
 .my-order-section .order-row .order-status .btn a,
 .order-info-section .order-status a {
     width: 130px;
-    border: 2px solid #000;
+    /* border: 2px solid #000; */
     border-radius: 10px;
     color: var(--text);
     text-decoration: none;
@@ -1940,6 +1944,26 @@ margin: 0;
     line-height: 35px;
     display: inline-block;
     transition: 0.4s;
+}
+.payment_wrap .order-status .btn a{
+    width: 145px;
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 35px;
+    display: inline-block;
+    transition: 0.4s;
+    text-align: center;
+    background: var(--primary);
+    border-color: var(--primary);
+    padding: 5px 0px;
+}
+.payment_wrap .order-status .btn a:hover{
+    background: transparent !important;
+    border-color: var(--primary) !important;
 }
 
 .my-order-section .order-row .order-status .btn a.cancle,
@@ -2110,7 +2134,7 @@ margin: 0;
 .order-info-section .order-info-row .left p {
     font-family: var(--secondry-font);
     font-size: 10px;
-    line-height: 15px;
+    line-height: 13px;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.5);
 }

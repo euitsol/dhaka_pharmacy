@@ -15,8 +15,8 @@
                     <div class="order-row">
                         <div class="order-id-row">
                             <div class="row align-content-center">
-                                <div class="col-xl-9 col-md-7">
-                                    <div class="d-flex flex-sm-row flex-column" style="position: relative">
+                                <div class="col-xl-8 col-lg-7 col-md-6 col-12">
+                                    <div class="d-flex flex-lg-row flex-column" style="position: relative">
                                         <div class="text">
                                             <h3 class="order-num">
                                                 {{ __('Order: ') }}<span>{{ $order->order_id }}</span>
@@ -25,7 +25,7 @@
                                                 {{ __('Placed on ') }}<span>{{ timeFormate($order->created_at) }}</span>
                                             </p>
                                         </div>
-                                        <div class="status ms-0 ms-sm-4 mt-1 mt-sm-0 ms-md-2 ms-lg-3 order-info-section">
+                                        <div class="status mt-1 mt-sm-0 ms-0 ms-lg-3 order-info-section">
                                             <div class="order-status-row d-flex gap-3 align-items-center">
                                                 <span class="{{ $order->statusBg }}">{{ __($order->statusTitle) }}</span>
                                                 @if (isset($order->otp))
@@ -44,10 +44,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 col-md-5 text-md-end text-start pb-3">
+                                <div class="col-xl-4 col-lg-5 col-md-6 col-12 text-md-end text-start pb-3">
                                     <div class="order-status">
                                         <div
-                                            class="p-0 d-flex gap-1 justify-content-md-end justify-content-end mt-2 mt-md-0">
+                                            class="p-0 d-flex gap-1 justify-content-md-end justify-content-start mt-2 mt-md-0">
                                             <a class="btn btn-info"
                                                 href="{{ route('u.order.details', encrypt($order->order_id)) }}">{{ __('Details') }}</a>
                                             @if ($order->status = App\Models\Order::INITIATED)

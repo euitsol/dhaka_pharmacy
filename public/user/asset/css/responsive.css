@@ -213,7 +213,7 @@
         font-size: 14px !important;
         width: 50% !important;
         display: revert !important;
-        border: 1px solid #000 !important;
+        /* border: 1px solid #000 !important; */
     }
     .my-order-section .order-row .order-status .btns .add_to_card {
         font-size: 14px !important;
@@ -435,7 +435,20 @@
     .dashboard-main-section .language-switch {
         width: 250px !important;
     }
+    .my-order-section .order-row .img{
+        width: 100% !important;
+    }
+    .my-order-section .order-row .product-info .cat {
+        font-size: 10px !important;
+        line-height: 12px !important;
+    }
+    .my-order-section .order-row .order-status .btns .button{
+        padding: 0px 0px !important;
+    }
 }
+
+
+
 @media screen and (min-width: 350px) and (max-width: 575px) {
     .dashboard-main-section .col-right .google-map{
         height: 100% !important;
@@ -584,7 +597,9 @@
         display: block;
         left: 8px;
     }
-
+    .my-order-section .order-row .img{
+        width: 100% !important;
+    }
     /* =============================================
         add to cart responsive code
     ================================================*/
@@ -654,7 +669,8 @@
         font-size: 14px !important;
         width: 50% !important;
         display: revert !important;
-        border: 1px solid #000 !important;
+        /* border: 1px solid #000 !important; */
+        padding: 0px 0px !important;
     }
     .my-order-section .order-row .order-status .btns .add_to_card {
         font-size: 14px !important;
@@ -666,7 +682,9 @@
     }
     .my-order-section .order-row .product-info .cat {
         font-size: 10px !important;
+        line-height: 12px !important;
     }
+
     .my-order-section .page-title h3 {
         font-size: 20px;
     }
@@ -861,6 +879,8 @@
         font-size: 14px;
     }
 }
+
+
 @media screen and (min-width: 576px) and (max-width: 767px) {
 
     .dashboard-main-section .col-mid .my-payment-feedback {
@@ -1010,7 +1030,7 @@
     }
     .my-order-section .order-row .order-status .btns .button {
         width: 110px;
-        border: 1px solid #000 !important;
+        /* border: 1px solid #000 !important; */
         font-size: 15px !important;
     }
     .my-order-section .order-status {

@@ -267,7 +267,7 @@
                                                                                                                                                                         </p>
                                                                                                                                                                     </div> -->
 
-                                        <div class="col-sm-9 col-8 px-0 px-sm-3">
+                                        <div class="col-sm-9 col-8">
                                             <div class="row align-items-center row-gap-2">
                                                 <div class="col-sm-8 col-12">
                                                     <h5 class="mb-1" title="{{ $product->attr_title }}">

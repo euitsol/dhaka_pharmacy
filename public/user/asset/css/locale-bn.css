@@ -23,3 +23,41 @@ h1,h2,h3,h4,h5,h6,p,span,a,li{
 	line-height: 25px;
 	padding: 18px 15px;
 }
+
+
+
+
+
+/* responsive code here user dashboard bn */
+
+@media screen and (min-width: 1024px) and (max-width: 1399px) {
+    .header-section .nav-menu ul li a {
+        font-size: 14px;
+        padding: 18px 13px;
+    }
+    .header-section .nav-menu .nav-item {
+        margin: 0rem 0rem 0rem 0rem;
+    }
+}
+
+
+
+
+@media screen and (min-width: 480px) and (max-width: 575px){
+	.header-section .right-col .cart-btn, .header-section .right-col .wish-btn {
+		font-size: 10px !important;
+	}
+}
+@media screen  and (max-width: 480px){
+	.header-section .right-col .cart-btn, .header-section .right-col .wish-btn {
+		font-size: 10px !important;
+	}
+	.dashboard-main-section .order-status .btn{
+		font-size: 12px;
+		line-height: 13px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 10px
+	}
+}
