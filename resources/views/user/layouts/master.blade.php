@@ -59,6 +59,18 @@
             'city_search': `{{ route('u.as.cities') }}`
         };
     </script>
+    <script>
+        window.AppConfig = {
+            'urls': {
+                'cart': {
+                    'products': @json(route('cart.products')),
+                    'add': @json(route('cart.add')),
+                    'update': @json(route('cart.update')),
+                    'delete': @json(route('cart.delete')),
+                },
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -92,7 +104,7 @@
     <script src="{{ asset('user/asset/js/custom.js') }}"></script>
     <script src="{{ asset('user/asset/js/notificaiton.js') }}"></script>
     <script src="{{ asset('user/asset/js/address.js') }}"></script>
-    @include('frontend.includes.add_to_cart_js')
+    <script src="{{ asset('frontend/asset/js/cart.js') }}"></script>
     @stack('js')
 </body>
 

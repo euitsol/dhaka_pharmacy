@@ -11,19 +11,6 @@
                     <div class="page-title mb-3">
                         <h3>{{ __('My Wishlist') }}</h3>
                     </div>
-                    <div class="show-order d-flex align-items-center">
-                        <h4 class="me-2">{{ __('Show:') }}</h4>
-                        <select class="form-select order_filter" aria-label="Default select example">
-                            <option value="all" {{ $filterValue == 'all' ? 'selected' : '' }}>{{ __('All wishes') }}
-                            </option>
-                            <option value="7" {{ $filterValue == '7' ? 'selected' : '' }}>{{ __('Last 7 days') }}
-                            </option>
-                            <option value="15" {{ $filterValue == '15' ? 'selected' : '' }}>{{ __('Last 15 days') }}
-                            </option>
-                            <option value="30" {{ $filterValue == '30' ? 'selected' : '' }}>{{ __('Last 30 days') }}
-                            </option>
-                        </select>
-                    </div>
                 </div>
             </div>
             <div class="order_wrap" id="wish_wrap">
@@ -34,16 +21,16 @@
                                 <div class="row py-0 py-sm-3">
                                     <div class="col-xl-2 col-lg-4 col-md-5 col-sm-2 col-4 px-md-3 px-0">
                                         <div class="img">
-                                            <img class="w-100" src="{{ $wish->product->image }}" alt="">
+                                            <img class="w-100" src="{{ optional($wish->product)->image }}" alt="">
                                         </div>
                                     </div>
                                     <div class="col-xl-10 col-lg-8 col-md-7 col-sm-10 col-8">
                                         <div class="product-info">
-                                            <h2 class="name" title="{{ $wish->product->attr_title }}">
-                                                {{ $wish->product->name }}</h2>
-                                            <h3 class="cat" title="{{ $wish->product->pro_sub_cat->name }}">{{ $wish->product->pro_sub_cat->name }}</h3>
-                                            <h3 class="cat" title="{{ $wish->product->generic->name }}">{{ $wish->product->generic->name }}</h3>
-                                            <h3 class="cat" title="{{ $wish->product->company->name }}">{{ $wish->product->company->name }}</h3>
+                                            <h2 class="name" title="{{ optional($wish->product)->attr_title }}">
+                                                {{ optional($wish->product)->name }}</h2>
+                                            <h3 class="cat" title="{{ optional($wish->product->pro_sub_cat)->name }}">{{ optional($wish->product->pro_sub_cat)->name }}</h3>
+                                            <h3 class="cat" title="{{ optional($wish->product->generic)->name }}">{{ optional($wish->product->generic)->name }}</h3>
+                                            <h3 class="cat" title="{{ optional($wish->product->company)->name }}">{{ optional($wish->product->company)->name }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -70,8 +57,7 @@
                                             href="{{ route('product.single_product', $wish->product->slug) }}">{{ __('Details') }}</a>
                                         <div class="add_to_card">
                                             <a class="cart-btn button" href="javascript:void(0)"
-                                                data-product_slug="{{ $wish->product->slug }}"
-                                                data-unit_id="{{ $wish->product->units[0]['id'] }}">
+                                                data-product_slug="{{ $wish->product->slug }}">
                                                 {{ __('Add To Cart') }}</a>
                                         </div>
                                     </div>
@@ -85,21 +71,12 @@
                 @endforelse
             </div>
             <div class="paginate mt-3">
-                {!! $pagination !!}
+                <span class="float-end">
+                    {{ $wishes->firstItem() }} - {{ $wishes->lastItem() }} {{ __('of') }} {{ $wishes->total() }}
+                    {{ __('items') }}
+                </span>
+                {{ $wishes->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </section>
 @endsection
-
-@push('js')
-    @include('frontend.includes.wishlist_js')
-    <script>
-        const myDatas = {
-            'filter': `{{ $filterValue }}`,
-            'url': `{{ route('u.wishlist.list', ['filter' => 'filter_value', 'page' => '1']) }}`,
-            'single_product_route': `{{ route('product.single_product', 'param') }}`,
-            'csrf': '@csrf',
-        };
-    </script>
-    <script src="{{ asset('user/asset/js/wishlist.js') }}"></script>
-@endpush
