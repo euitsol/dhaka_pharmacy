@@ -19,7 +19,7 @@
 
                     <div class="col-8 col-md-10 info">
                         <div class="row justify-content-between">
-                            <div class="col-12 col-md-6 info px-0 px-md-3">
+                            <div class="col-8 col-sm-12 col-md-6 info px-0 px-md-3">
                                 <h4 class="product_title" title="{{ $wish->product->attr_title }}"> <a
                                         href="{{ route('product.single_product', $wish->product->slug) }}">{{
                                         $wish->product->name }}</a>
@@ -31,7 +31,7 @@
                                 <p class="m-0"><a href="" title="{{ optional($wish->product->company)->name }}">{{
                                         optional($wish->product->company)->name }}</a></p>
                             </div>
-                            <div class="col-12 col-md-6 ps-0 ps-md-0">
+                            <div class="col-sm-12 col-md-6 ps-0 ps-md-0">
                                 <div class="details">
                                     <div class="row align-items-center">
                                         <div class="col-8">
@@ -52,11 +52,11 @@
                                             <i class="fa-solid fa-trash-can text-danger wish_remove_btn wish_update"
                                                 data-pid="{{ encrypt($wish->product->id) }}"></i>
                                         </div>
-                                        <div class="col-6 pe-1 mt-2">
+                                        <div class="col-6 pe-1 mt-0 mt-sm-2">
                                             <a href="{{ route('product.single_product', $wish->product->slug) }}"
                                                 class="details_btn">{{ __('Details') }}</a>
                                         </div>
-                                        <div class="col-6 ps-1 mt-2">
+                                        <div class="col-6 ps-1 mt-0 mt-sm-2">
                                             <div class="add_to_card">
                                                 <a class="cart-btn order_btn" href="javascript:void(0)"
                                                     data-product_slug="{{ $wish->product->slug }}" data-unit_id="">

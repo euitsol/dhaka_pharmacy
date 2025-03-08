@@ -155,9 +155,6 @@
                             <!-- Progress Bar -->
                             <div class="progress-bar-wrapper d-none d-md-block">
                                 <div class="progress-line"></div>
-                                {{-- <div class="progress-line-active"
-                                    style="width: {{ 100 / (count($order->timelines)) }}%">
-                                </div> --}}
                             </div>
 
                             <!-- Timeline Steps -->

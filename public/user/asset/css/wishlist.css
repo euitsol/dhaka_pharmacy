@@ -1,5 +1,5 @@
 .my-order-section .order-row .order-status .btns .button {
-    width: 130px;
+    width: 145px;
     border: 2px solid #000;
     border-radius: 10px;
     color: var(--text);
@@ -10,24 +10,35 @@
     display: inline-block;
     transition: 0.4s;
     text-align: center;
+    background: var(--primary);
+    border-color: var(--primary);
+    padding: 5px 0px;
 }
 
 .my-order-section .order-row .order-status .btns .button:hover {
-    background: var(--primary);
+    background: transparent;
     border-color: var(--primary);
-    ;
+   
 }
-
+.my-order-section .add_to_card .cart-btn{
+    background: transparent !important;
+    border-color: var(--primary) !important;
+}
 .my-order-section .order-row .order-status .btns {
     display: flex;
     gap: 15px;
     transition: .4s;
 }
-
+/* 
 .my-order-section .order-row .order-status .btns:hover a {
     color: var(--bs-btn-hover-color);
     background-color: var(--bs-btn-hover-bg);
     border-color: var(--bs-btn-hover-border-color);
+} */
+
+.my-order-section .add_to_card .cart-btn:hover{
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
 }
 
 .my-order-section .order-row .order-status .total {
