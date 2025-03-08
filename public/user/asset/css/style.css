@@ -48,6 +48,16 @@
     --border-2: #28a349;
 
     --secondry-font: "Poppins", sans-serif;
+
+
+    --btn-bg-color: #1869aa;
+    --btn-bg-2: #1869aa;
+    --border-1: #1869aa;
+    --border-2:  #46b7e3;
+    --secondary-color:#46b7e3;
+    --price-color:  #1869aa;
+
+
 }
 
 /* Global Paddings */

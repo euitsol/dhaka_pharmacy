@@ -178,6 +178,8 @@ $(document).ready(function () {
 
 
 // languate js code here
+
+
 function toggleLanguage() {
     const localeInput = document.getElementById("localeInput");
     const switchBtn = document.getElementById("switch-btn");
