@@ -264,14 +264,12 @@ function getCartCount() {
 function displayCartCount() {
     if (getCartCount() > 0) {
         $("#cart_btn_quantity").show();
-        $("#db_cart_btn_quantity").show();
         $("#cart_btn_quantity").html(getCartCount());
         $("#db_cart_btn_quantity").html(getCartCount());
     } else {
         $("#cart_btn_quantity").hide();
-        $("#db_cart_btn_quantity").hide();
         $("#cart_btn_quantity").html();
-        $("#db_cart_btn_quantity").html();
+        $("#db_cart_btn_quantity").html(0);
     }
 
     $(".total_check_item").text(getCartCount());
