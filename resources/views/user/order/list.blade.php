@@ -15,7 +15,7 @@
                     <div class="order-row">
                         <div class="order-id-row">
                             <div class="row align-content-center">
-                                <div class="col-xl-9 col-md-7">
+                                <div class="col-xl-7 col-md-7">
                                     <div class="d-flex flex-sm-row flex-column" style="position: relative">
                                         <div class="text">
                                             <h3 class="order-num">
@@ -27,7 +27,7 @@
                                         </div>
                                         <div class="status ms-0 ms-sm-4 mt-1 mt-sm-0 ms-md-2 ms-lg-3 order-info-section">
                                             <div class="order-status-row d-flex gap-3 align-items-center">
-                                                <span class="{{ $order->statusBg }}">{{ __($order->statusTitle) }}</span>
+                                                <span class="badge {{ $order->getStatusBg() }}">{{ __($order->status_string) }}</span>
                                                 @if (isset($order->otp))
                                                     <p class="fw-bold">{{ __('OTP: ') }}{{ $order->otp }}
                                                     </p>
@@ -44,16 +44,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 col-md-5 text-md-end text-start pb-3">
+                                <div class="col-xl-5 col-md-5 text-md-end text-start pb-3">
                                     <div class="order-status">
                                         <div
                                             class="p-0 d-flex gap-1 justify-content-md-end justify-content-end mt-2 mt-md-0">
                                             <a class="btn btn-info"
                                                 href="{{ route('u.order.details', encrypt($order->order_id)) }}">{{ __('Details') }}</a>
-                                            @if ($order->status = App\Models\Order::INITIATED)
+                                            @if ($order->status == App\Models\Order::INITIATED)
                                                 <a class="btn btn-success text-white"
                                                     href="javascript:void(0)">{{ __('Pay Now') }}</a>
-                                            @elseif($order->status != App\Models\Order::SUBMITTED)
+                                            @endif
+                                            @if(($order->status == App\Models\Order::SUBMITTED) || ($order->status == App\Models\Order::INITIATED))
                                                 <a class="btn btn-danger"
                                                     href="{{ route('u.order.cancel', encrypt($order->order_id)) }}">{{ __('Cancel') }}</a>
                                             @endif
@@ -121,14 +122,4 @@
     </section>
 @endsection
 @push('js')
-    {{-- <script>
-        const myDatas = {
-            'status': `{{ $status }}`,
-            'filter': `{{ $filterValue }}`,
-            'url': `{{ route('u.order.list', ['status' => '_status', 'filter' => 'filter_value', 'page' => '1']) }}`,
-            'details_route': `{{ route('u.order.details', ['order_id']) }}`,
-            'cancel_route': `{{ route('u.order.cancel', ['order_id']) }}`,
-        };
-    </script> --}}
-    {{-- <script src="{{ asset('user/asset/js/order_list.js') }}"></script> --}}
 @endpush
