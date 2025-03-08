@@ -90,11 +90,16 @@ use App\Http\Controllers\User\WishlistController as UserWishlistController;
 use App\Http\Controllers\User\ReviewController as UserReviewController;
 use App\Http\Controllers\User\OrderByPrescriptionController as UserOrderByPrescriptionController;
 
+use App\Http\Controllers\Frontend\AboutPageController;
+use App\Http\Controllers\Frontend\ContactPageController;
+use App\Http\Controllers\Frontend\DataDeletionController;
+use App\Http\Controllers\Frontend\FaqPageController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\Product\SingleProductController;
 use App\Http\Controllers\Frontend\Product\ProductPageController;
 use App\Http\Controllers\Frontend\ProductSearchController;
-
+use App\Http\Controllers\Frontend\PrivacyPolicyPageController;
+use App\Http\Controllers\Frontend\TermsAndConditionsPageController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\Pharmacy\FeedbackController as PharmacyFeedbackController;
 use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
@@ -113,11 +118,6 @@ use App\Http\Controllers\Admin\WithdrawMethodController as AdminWithdrawMethodCo
 use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
 use App\Http\Controllers\DM\EarningController as DmEarningController;
 use App\Http\Controllers\DM\WithdrawMethodController as DmWithdrawMethodController;
-use App\Http\Controllers\Frontend\AboutPageController;
-use App\Http\Controllers\Frontend\ContactPageController;
-use App\Http\Controllers\Frontend\FaqPageController;
-use App\Http\Controllers\Frontend\PrivacyPolicyPageController;
-use App\Http\Controllers\Frontend\TermsAndConditionsPageController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\LAM\EarningContorller as LamEarningContorller;
 use App\Http\Controllers\LAM\WithdrawMethodController as LamWithdrawMethodController;
@@ -1315,8 +1315,10 @@ Route::controller(ContactPageController::class)->group(function () {
     Route::post('/contact-us/submit', 'contact_submit')->name('contact_us.submit');
 });
 
-
-
+Route::controller(DataDeletionController::class)->group(function () {
+    Route::get('/data-deletion', 'index')->name('data_deletion');
+    Route::post('/data-deletion/submit', 'submit')->name('data_deletion.submit');
+});
 
 Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-prescrition')->name('u.obp.')->group(function () {
     Route::post('upload-prescription', 'prescription_upload')->name('up');

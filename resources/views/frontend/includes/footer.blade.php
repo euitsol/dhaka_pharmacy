@@ -121,6 +121,7 @@
                             <li><a href="{{ route('terms_and_conditions') }}">{{ __('Terms and Conditions') }}</a>
                             </li>
                             <li><a href="{{ route('privacy_policy') }}">{{ __('Privacy Policy') }}</a></li>
+                            <li><a href="{{ route('data_deletion') }}">{{ __('Request Data Deletion') }}</a></li>
                             @if (!Auth::guard('web')->check())
                                 {{-- <li><a href="{{ route('use.register') }}">{{ __('Register') }}</a></li> --}}
                                 <li><a href="{{ route('login') }}">{{ __('Sign In') }}</a></li>
@@ -139,7 +140,7 @@
                             <li><a class="phn" href="tel:01714 432 534">{{ __('01714 432 534') }}</a></li>
                             <li>
                                 <a class="mail"
-                                    href="mailto:admin@dhakapharmacy.com.bd">{{ __('admin@dhakapharmacy.com.bd') }}</a>
+                                    href="mailto:contact@dhakapharmacy.com.bd">{{ __('contact@dhakapharmacy.com.bd') }}</a>
                             </li>
                         </ul>
                     </div>
