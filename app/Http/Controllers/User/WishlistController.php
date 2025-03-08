@@ -16,7 +16,7 @@ class WishlistController extends Controller
 
     public function __construct()
     {
-        return $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     public function update($pid): JsonResponse
@@ -48,37 +48,25 @@ class WishlistController extends Controller
     }
     public function list(Request $request)
     {
-        $filter_val = $request->get('filter') ?? request('filter');
-        $filter_val = $filter_val ?? 7;
-        $query = WishList::activated()->where('user_id', user()->id)->with([
-            'product.pro_sub_cat',
-            'product.generic',
-            'product.company',
-            'product.strength',
-            'product.discounts',
-            'product.units' => function ($q) {
-                $q->orderBy('quantity', 'asc');
-            }
-        ])->orderBy('updated_at', 'asc');
-        $perPage = 10;
-        if ($filter_val && $filter_val != 'all') {
-            $query->where('updated_at', '>=', Carbon::now()->subDays($filter_val));
-        }
-        $wishes =  $query->paginate($perPage)->withQueryString();
+        try {
+            $perPage = 10;
+            $query = WishList::activated()->where('user_id', user()->id)->with([
+                'product.pro_sub_cat',
+                'product.generic',
+                'product.company',
+                'product.strength',
+                'product.discounts',
+                'product.units' => function ($q) {
+                    $q->orderBy('quantity', 'asc');
+                }
+            ])->orderBy('updated_at', 'desc');
 
-        $wishes->getCollection()->each(function (&$wish) {
-            $wish->product = $this->transformProduct($wish->product, 60);
-            $wish->product->pid = encrypt($wish->product->id);
-        });
-        $data = [
-            'wishes'=>$wishes,
-            'filterValue' => $filter_val,
-            'pagination'=>$wishes->links('vendor.pagination.bootstrap-5')->render(),
-        ];
-        if (request()->ajax()) {
-            return response()->json($data);
-        } else {
-            return view('user.wishlist.list', $data);
+            $wishes = $query->paginate($perPage);
+
+            return view('user.wishlist.list', compact('wishes'));
+        } catch (\Exception $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
         }
     }
     public function refresh(): JsonResponse
@@ -93,10 +81,7 @@ class WishlistController extends Controller
             'product.units' => function ($q) {
                 $q->orderBy('quantity', 'asc');
             }
-        ])->orderBy('updated_at', 'asc')->get()->each(function (&$wish) {
-            $wish->product = $this->transformProduct($wish->product, 60);
-            $wish->product->pid = encrypt($wish->product->id);
-        });
+        ])->orderBy('updated_at', 'asc')->get();
         return response()->json($data);
     }
 }

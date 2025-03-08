@@ -91,15 +91,18 @@ function getHtml(wishes) {
 }
 
 $(document).ready(function () {
-    updateUrlParameter("filter", myDatas["filter"]);
-
-    $(".order_filter").on("change", function () {
-        var filter_value = $(this).val();
-        let url = myDatas["url"];
-        let _url = url.replace("filter_value", filter_value);
-        __url = _url.replace(/&amp;/g, "&");
+    // Handle pagination clicks
+    $(document).on('click', '.paginate a', function(e) {
+        e.preventDefault();
+        let page = $(this).attr('href').split('page=')[1];
+        fetchWishlist(page);
+    });
+    
+    function fetchWishlist(page) {
+        let url = myDatas["url"].replace('1', page);
         let wish_wrap = $("#wish_wrap");
         let paginate = $(".paginate");
+        
         paginate.hide();
         wish_wrap.html(
             `
@@ -109,8 +112,9 @@ $(document).ready(function () {
             </div>
             `
         );
+        
         $.ajax({
-            url: __url,
+            url: url,
             method: "GET",
             dataType: "json",
             success: function (data) {
@@ -125,14 +129,11 @@ $(document).ready(function () {
                 wish_wrap.html(result);
                 paginate.show();
                 paginate.html(data.pagination);
-                if (data.filterValue) {
-                    updateUrlParameter("filter", data.filterValue);
-                }
-                updateUrlParameter("page", 1);
+                updateUrlParameter("page", page);
             },
             error: function (xhr, status, error) {
-                console.error("Error fetching admin data:", error);
+                console.error("Error fetching wishlist data:", error);
             },
         });
-    });
+    }
 });

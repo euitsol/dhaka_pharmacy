@@ -25,23 +25,23 @@
                                                         <h4 class="product_title" title="${product.attr_title}"> <a
                                                                 href="${product_details}">${product.name}</a>
                                                         </h4>
-                                                        <p><a href="">${product.pro_sub_cat.name}</a></p>
-                                                        <p><a href="">${product.generic.name}</a></p>
-                                                        <p><a href="">${product.company.name}</a></p>
+                                                        <p><a href="">${product.pro_sub_cat ? product.pro_sub_cat.name : ''}</a></p>
+                                                        <p><a href="">${product.generic ? product.generic.name : ''}</a></p>
+                                                        <p><a href="">${product.company ? product.company.name : ''}</a></p>
                                                     </div>
                                                     <div class="col-4 ps-0">
                                                         <div class="details">
                                                             <div class="row align-items-center">
                                                                 <div class="col-8">
                                                                     <div class="item_price_wrap">`;
-                        if (product.discounted_price != product.price) {
-                            result += `
-                                                        <h4 class="text-start item_regular_price price"> <del
-                                                                class="text-danger">{!! get_taka_icon() !!}${ numberFormat(product.price, 2)}</del>
-                                                        </h4>
-                                                        `;
-                        };
-                        result += `
+                                                                    if (product.discounted_price != product.price) {
+                                                                        result += `
+                                                                        <h4 class="text-start item_regular_price price"> <del
+                                                                                class="text-danger">{!! get_taka_icon() !!}${ numberFormat(product.price, 2)}</del>
+                                                                        </h4>
+                                                                        `;
+                                                                    };
+                                                                    result += `
                                                         <h4 class="text-start item_price price"> <span>
                                                                 {!! get_taka_icon() !!}${numberFormat(product.discounted_price, 2)}</span>
                                                         </h4>
