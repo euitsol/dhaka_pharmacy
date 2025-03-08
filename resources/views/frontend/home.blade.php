@@ -293,7 +293,7 @@
                                         uk-cover>
                                     <div class="carousel-caption ">
                                         <h2>{{ __('Shop Online or In store Get') }}</h2>
-                                        <!-- <a href="#">{{ __('Free') }}</a> -->
+                                        <a href="#">{{ __('Free') }}</a>
                                         <h3>{{ __('Delivery') }}</h3>
                                         <h4>{{ __('at Your Door') }}</h4>
                                     </div>
@@ -304,7 +304,7 @@
                                         uk-cover>
                                     <div class="carousel-caption">
                                         <h2>{{ __('Shop Online or In store Get') }}</h2>
-                                        <!-- <a href="#">{{ __('Free') }}</a> -->
+                                        <a href="#">{{ __('Free') }}</a>
                                         <h3>{{ __('Delivery') }}</h3>
                                         <h4>{{ __('at Your Door') }}</h4>
                                     </div>

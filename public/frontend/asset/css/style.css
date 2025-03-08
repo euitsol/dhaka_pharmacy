@@ -206,6 +206,7 @@ h2.title {
     background: unset;
     position: relative;
     overflow: hidden;
+    min-height: 115px;
 }
 
 .single-pdct .add_to_card {
@@ -493,7 +494,7 @@ a {
 }
 
 .sidebar-cat-section .row .single-cat h2 {
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     font-size: 14px;
     line-height: 20px;
     font-weight: 500;
@@ -511,7 +512,7 @@ a {
 }
 
 .sidebar-cat-section .cat-title {
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     font-size: 18px;
     line-height: 27px;
     font-weight: 500;
@@ -1122,14 +1123,15 @@ a {
 }
 
 .footer-section .delivery-row h3 {
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     font-size: 16px;
     line-height: 21px;
     font-weight: 600;
+    margin: 0px;
 }
 
 .footer-section .delivery-row h4 {
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     font-size: 14px;
     line-height: 19px;
     font-weight: 600;
@@ -1143,7 +1145,7 @@ a {
 }
 
 .footer-section .newsletter-row .title {
-    font-family: "Poppins", sans-serif;
+    /* font-family: "Poppins", sans-serif; */
     font-size: 16px;
     line-height: 21px;
     font-weight: 400;
@@ -1327,7 +1329,7 @@ a {
 
 .footer-section .main-footer-row .footer-nav li a {
     text-decoration: none;
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     font-size: 17px;
     line-height: 30px;
     margin-bottom: 10px;
@@ -1726,7 +1728,7 @@ a {
 }
 
 .single_product_section .similar_products .single-item .pdct-title {
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     font-size: 15px;
     font-weight: 500;
     display: block;
@@ -1741,7 +1743,7 @@ a {
 }
 
 .single_product_section .similar_products .single-item .pdct-price {
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     font-size: 17px;
     line-height: 25px;
     font-weight: 500;

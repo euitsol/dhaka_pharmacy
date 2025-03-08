@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="page-title mb-3">
+                    <div class="page-title mb-0 mb-sm-3">
                         <h3>{{ __('My Wishlist') }}</h3>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                         <div class="row px-4 py-3 py-sm-0 row-gap-sm-0 row-gap-3" style="position: relative;">
                             <div class="col-lg-8 col-md-6 col-12">
                                 <div class="row py-0 py-sm-3">
-                                    <div class="col-xl-2 col-lg-4 col-md-5 col-sm-2 col-4 px-md-3 px-0">
+                                    <div class="col-xl-2 col-lg-4 col-md-5 col-sm-2 col-3 px-md-3 px-0">
                                         <div class="img">
                                             <img class="w-100" src="{{ optional($wish->product)->image }}" alt="">
                                         </div>
