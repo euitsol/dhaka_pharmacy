@@ -236,6 +236,7 @@ class OrderService
         $this->paymentService->setOrder($this->order)->setUser($this->user)->cancelPayments();
         $this->order->update(['status' => Order::CANCELLED]);
         $this->orderTimelineService->updateTimelineStatus($this->order, currentStatus: ORDER::CANCELLED);
+        dd($this->order);
     }
 
     public function addAddress(string|null $addressId, string|null $deliveryType='standard'):void
