@@ -203,7 +203,7 @@
                                                 <a class="btn btn-danger cancel-btn"
                                                     href="{{ route('u.order.cancel', encrypt($order->order_id)) }}">{{ __('Cancel') }}</a>
                                             @endif
-                                            <a class="btn btn-primary">{{ __('Re-order') }}</a>
+                                            <a href="{{ route('u.order.reorder', encrypt($order->id)) }}" class="btn btn-primary">{{ __('Re-order') }}</a>
                                         </div>
 
                                     </div>

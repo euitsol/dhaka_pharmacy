@@ -8,20 +8,24 @@ use App\Http\Traits\TransformProductTrait;
 use App\Models\Order;
 use App\Models\Payment;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Services\OrderService;
 
 
 class PaymentController extends Controller
 {
     use TransformOrderItemTrait, TransformProductTrait;
+    protected OrderService $orderService;
 
 
-    public function __construct()
+    public function __construct(OrderService $orderService)
     {
         $this->middleware('auth');
+        $this->orderService = $orderService;
     }
 
     public function list(Request $request)
@@ -70,15 +74,28 @@ class PaymentController extends Controller
     public function int_payment($payment_id)
     {
         $payment_id = decrypt($payment_id);
-
-        $payment = Payment::with('order')->findOrFail($payment_id);
-        if ($payment->payment_method == 'ssl') {
-            return redirect()->route('u.payment.index', encrypt($payment_id));
-        } else {
-            flash()->addWarning('Please select SSL Commerz payment gateway to proceed.');
-            Order::findOrFail($payment->order->id)->update(['status' => 0]);
-            return redirect()->route('u.ck.index', encrypt($payment->order->id));
+        try{
+            $payment = Payment::with('order')->findOrFail($payment_id);
+            if ($payment->payment_method == 'ssl') {
+                return redirect()->route('u.payment.index', encrypt($payment_id));
+            } elseif($payment->payment_method == 'cod'){
+                $data['order_id'] = $payment->order->order_id;
+                $data['payment_method'] = $payment->payment_method;
+                $this->orderService->setUser(user())->confirmOrder($data);
+                sweetalert()->success('Order submitted successfully');
+                return redirect()->route('u.order.details', encrypt($payment->order->order_id));
+            }
+            else {
+                flash()->addWarning('Please select SSL Commerz payment gateway to proceed.');
+                Order::findOrFail($payment->order->id)->update(['status' => 0]);
+                return redirect()->route('u.ck.index', encrypt($payment->order->id));
+            }
+        }catch(Exception $e){
+            sweetalert()->addWarning($e->getMessage());
+            return redirect()->back();
         }
+
+
     }
 
     public function success($payment_id)

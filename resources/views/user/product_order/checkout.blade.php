@@ -203,24 +203,24 @@
                                 <div class="atc_functionality">
                                     <div class="item_units payment">
                                         <div class="form-group my-1 boxed">
-                                            <input type="radio" class="payment-method" id="android-1"
+                                            {{-- <input type="radio" class="payment-method" id="android-1"
                                                 name="payment_method" value="bkash">
                                             <label for="android-1">
                                                 <img style="object-fit: contain"
                                                     src="{{ asset('frontend/asset/img/bkash.png') }}">
-                                            </label>
-                                            <input type="radio" class="payment-method" id="android-2"
+                                            </label> --}}
+                                            {{-- <input type="radio" class="payment-method" id="android-2"
                                                 name="payment_method" value="nogod">
                                             <label for="android-2">
                                                 <img style="object-fit: contain"
                                                     src="{{ asset('frontend/asset/img/nogot.png') }}">
-                                            </label>
-                                            <input type="radio" class="payment-method" id="android-3"
+                                            </label> --}}
+                                            {{-- <input type="radio" class="payment-method" id="android-3"
                                                 name="payment_method" value="roket">
                                             <label for="android-3">
                                                 <img style="object-fit: contain"
                                                     src="{{ asset('frontend/asset/img/rocket.png') }}">
-                                            </label>
+                                            </label> --}}
                                             <input type="radio" class="payment-method" id="android-4"
                                                 name="payment_method" value="ssl">
                                             <label for="android-4">
