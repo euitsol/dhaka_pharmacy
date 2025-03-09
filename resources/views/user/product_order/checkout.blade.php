@@ -224,13 +224,13 @@
                                             <input type="radio" class="payment-method" id="android-4"
                                                 name="payment_method" value="ssl">
                                             <label for="android-4">
-                                                <img src="{{ asset('frontend/asset/img/ssl.png') }}"
+                                                <img src="{{ asset('frontend/asset/img/ssl-commerz-01.png') }}"
                                                     style="object-fit: contain">
                                             </label>
                                             <input type="radio" class="payment-method" id="android-5"
                                                 name="payment_method" value="cod">
                                             <label for="android-5">
-                                                <img src="{{ asset('frontend/asset/img/cod.png') }}"
+                                                <img src="{{ asset('frontend/asset/img/cash on delivery desing-01.png') }}"
                                                     style="object-fit: contain">
                                             </label>
                                         </div>

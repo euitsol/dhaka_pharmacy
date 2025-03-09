@@ -1021,7 +1021,9 @@ a {
 }
 
 .delivery-slider-section .uk-slideshow-items {
-    height: 320px;
+    height: 350px;
+    border-radius: 15px;
+    box-shadow: rgb(248, 250, 252) 0px 2px 4px 0px, rgb(248, 250, 252) 0px 2px 16px 0px;
 }
 
 .delivery-slider-section .uk-slideshow-items:hover {
@@ -1029,8 +1031,8 @@ a {
 }
 
 .delivery-slider-section .uk-slideshow-items img {
-    filter: brightness(0.5);
     width: 100% !important;
+    object-fit: fill;
 }
 
 .delivery-slider-section .uk-slideshow-items .carousel-caption {

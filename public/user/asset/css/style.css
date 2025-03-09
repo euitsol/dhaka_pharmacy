@@ -48,6 +48,16 @@
     --border-2: #28a349;
 
     --secondry-font: "Poppins", sans-serif;
+
+
+    --btn-bg-color: #1869aa;
+    --btn-bg-2: #1869aa;
+    --border-1: #1869aa;
+    --border-2:  #46b7e3;
+    --secondary-color:#46b7e3;
+    --price-color:  #1869aa;
+
+
 }
 
 /* Global Paddings */
@@ -1952,8 +1962,7 @@ margin: 0;
     color: #000;
 }
 
-.my-order-section .order-row .order-status .btn a,
-.order-info-section .order-status a {
+.my-order-section .order-row .order-status .btn a{
     width: 130px;
     /* border: 2px solid #000; */
     border-radius: 10px;
@@ -1965,6 +1974,8 @@ margin: 0;
     display: inline-block;
     transition: 0.4s;
 }
+
+
 .payment_wrap .order-status .btn a{
     width: 145px;
     border: 2px solid var(--primary);
@@ -1991,8 +2002,7 @@ margin: 0;
     border: 2px solid red;
 }
 
-.my-order-section .order-row .order-status .btn a:hover,
-.order-info-section .order-status a:hover {
+.my-order-section .order-row .order-status .btn a:hover{
     background: var(--primary);
     border-color: var(--primary);
 }
@@ -2594,4 +2604,56 @@ margin: 0;
 
 .active-text {
     color: var(--text-color-white)!important;
+}
+
+.order-info-section .order-status a {
+    width: 140px;
+    /* border: 2px solid #000; */
+    border-radius: 10px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    display: inline-block;
+    transition: 0.4s;
+    padding: 6px 5px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.my-order-section .order-status .btn{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 16px;
+
+}
+
+.order-info-section .order-status .pay-now{
+    background: #10b981;
+    color: var(--text-color-white);
+}
+.order-info-section .order-status .cancel{
+    background: red;
+    color: var(--text-color-white);
+}
+
+.order-info-section .order-status .record {
+	background: #bfe6fa;
+	color: #000;
+}
+
+.order-info-section .order-status .pay-now,
+.order-info-section .order-status .cancel,
+.order-info-section .order-status .record {
+    transition: opacity 0.3s ease, transform 0.2s ease !important;
+}
+
+.order-info-section .order-status .pay-now:hover,
+.order-info-section .order-status .cancel:hover,
+.order-info-section .order-status .record:hover {
+    opacity: 0.7 !important;
 }

@@ -184,16 +184,16 @@
         a {
         font-size: 10px !important;
     }
-    .my-order-section .order-row .order-status .btn a,
+    /* .my-order-section .order-row .order-status .btn a,
     .order-info-section .order-status a {
         width: 100px;
         border: 1px solid #000;
         font-size: 14px;
-    }
-    .my-order-section .order-row .order-status .btn a.cancle,
+    } */
+    /* .my-order-section .order-row .order-status .btn a.cancle,
     .order-info-section .order-status a.cancle {
         border: 1px solid red;
-    }
+    } */
     .my-order-section .order-row .product-info .name {
         font-size: 12px;
         line-height: 16px;
@@ -445,6 +445,12 @@
     .my-order-section .order-row .order-status .btns .button{
         padding: 0px 0px !important;
     }
+    .order-info-section .order-tracking-main a{
+        width: 140px !important;
+        font-size: 13px;
+        line-height: 14px;
+        border: none !important;
+    }
 }
 
 
@@ -640,16 +646,16 @@
         a {
         font-size: 10px !important;
     }
-    .my-order-section .order-row .order-status .btn a,
+    /* .my-order-section .order-row .order-status .btn a,
     .order-info-section .order-status a {
         width: 100px;
         border: 1px solid #000;
         font-size: 14px;
-    }
-    .my-order-section .order-row .order-status .btn a.cancle,
+    } */
+    /* .my-order-section .order-row .order-status .btn a.cancle,
     .order-info-section .order-status a.cancle {
         border: 1px solid red;
-    }
+    } */
     .my-order-section .order-row .product-info .name {
         font-size: 12px;
         line-height: 16px;
@@ -878,6 +884,11 @@
     .google-map .address_details .list-unstyled li{
         font-size: 14px;
     }
+    .order-info-section .order-tracking-main a{
+        width: 140px !important;
+        font-size: 16px;
+        border: none !important;
+    }
 }
 
 
@@ -1018,16 +1029,24 @@
     .order-info-section .order-traking-row .step {
         min-height: 60px;
     }
-    .my-order-section .order-row .order-status .btn a,
+    /* .my-order-section .order-row .order-status .btn a,
     .order-info-section .order-status a {
         width: 100px;
         border: 1px solid #000;
         font-size: 14px;
+    } */
+    .order-info-section .order-tracking-main a{
+        width: 140px !important;
+        font-size: 16px;
+        border: none !important;
     }
-    .my-order-section .order-row .order-status .btn a.cancle,
+
+
+
+    /* .my-order-section .order-row .order-status .btn a.cancle,
     .order-info-section .order-status a.cancle {
         border: 1px solid red;
-    }
+    } */
     .my-order-section .order-row .order-status .btns .button {
         width: 110px;
         /* border: 1px solid #000 !important; */

@@ -32,7 +32,7 @@
     @stack('css_link')
     <link rel="stylesheet" href="{{ asset('user/asset/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('user/asset/css/responsive.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('user/asset/css/slide-cart.css') }}">
     {{-- Local CSS --}}
     @if (app()->getLocale() == 'en')
         <link rel="stylesheet" href="{{ asset('user/asset/css/locale-en.css') }}">

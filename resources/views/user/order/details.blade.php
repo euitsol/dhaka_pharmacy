@@ -111,7 +111,7 @@
             <div class="order-info-cont">
                 <!-- Order-status-row-start -->
                 <div class="row  align-items-center">
-                    <div class="col-md-7 col-sm-9 col-12">
+                    <div class="col-lg-6  col-12">
                         <div class="d-block d-md-flex align-items-center ">
                             <div
                                 class="order-status-row d-flex align-items-center justify-content-md-start justify-content-between py-2 py-sm-4">
@@ -124,27 +124,24 @@
                         </div>
                     </div>
 
-                    <div class="col-md-5 col-sm-3 col-12 fs-1 pb-3">
+                    <div class="col-lg-6 col-12 fs-1 pb-3 ">
+                        <div class="order-status order-tracking-main m-0 text-start text-sm-end d-flex justify-content-lg-end justify-content-center align-items-center gap-2">
+                            @if ($order->status == App\Models\Order::INITIATED)
+                                    <a class=" text-center pay-now"
+                                        href="">{{ __('Pay Now') }}</a>
+                            @endif
 
-
-                        <div class="order-status m-0 text-start text-sm-end">
-
-                        @if ($order->status == App\Models\Order::INITIATED)
-                                <a class="cancel text-center bg-success"
-                                    href="">{{ __('Pay Now') }}</a>
-                        @endif
-                        @if(($order->status == App\Models\Order::SUBMITTED) || ($order->status == App\Models\Order::INITIATED))
-                                <a class="cancel text-center bg-danger cancel-btn"
-                                    href="{{ route('u.order.cancel', encrypt($order->order_id)) }}">{{ __('Cancel') }}</a>
-                        @endif
-                            <a class="cancel text-center bg-info"
-                                href="">{{ __('Reorder') }}</a>
+                            @if(($order->status == App\Models\Order::SUBMITTED) || ($order->status == App\Models\Order::INITIATED))
+                                    <a class="text-center cancel"
+                                        href="{{ route('u.order.cancel', encrypt($order->order_id)) }}">{{ __('Cancel') }}</a>
+                            @endif
+                                <a class="text-center record"
+                                    href="">{{ __('Reorder') }}</a>
                         </div>
 
                     </div>
 
                 </div>
-
                 <!-- Order-status-row-end -->
 
                 <!-- Order Tracking row start-->
@@ -253,7 +250,6 @@
                                                 <img src="{{ $product->image }}" alt="">
                                             </div>
                                         </div>
-
                                         <div class="col-sm-9 col-8 px-0 px-sm-3">
                                             <div class="row align-items-center row-gap-2">
                                                 <div class="col-sm-8 col-12">
