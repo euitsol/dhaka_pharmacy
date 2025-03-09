@@ -68,6 +68,10 @@
                     'update': @json(route('cart.update')),
                     'delete': @json(route('cart.delete')),
                 },
+                'address': {
+                    'cities': @json(route('u.as.cities')),
+                    'details': @json(route('u.as.details', 'id')),
+                },
             }
         }
     </script>

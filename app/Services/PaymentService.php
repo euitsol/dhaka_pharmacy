@@ -39,7 +39,7 @@ class PaymentService
             'customer_type' => get_class($this->user),
             'payment_method' => $this->paymentMethod,
             'amount' => $this->order->total_amount,
-            'status' => Payment::STATUS_PAID,
+            'status' => Payment::STATUS_INITIATED,
             'creater_id' => $this->user->id,
             'creater_type' => get_class($this->user)
         ]);

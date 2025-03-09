@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\OrderConfirmRequest;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class OrderController extends Controller
     public function list(Request $request):View|RedirectResponse
     {
         try {
-            $this->orderService->setUser(auth()->user());
+            $this->orderService->setUser(user());
             $data = $request->all();
             $data['per_page'] = 5;
             $orders = $this->orderService->list($data);
@@ -92,11 +93,45 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
-    public function pay_now(Request $request)
+    public function pay_now(OrderConfirmRequest $request)
     {
+        try {
+            $data = $request->validated();
+            $this->orderService->setUser(user());
+            $this->orderService->setOrder($data['order_id']);
+            $this->orderService->addAddress($data['address'], $data['delivery_type']);
+            $payment = $this->orderService->confirmOrder($data);
 
+            if ($request->payment_method == 'ssl') {
+
+                return redirect()->route('u.payment.int', encrypt($payment->id));
+            } else {
+                flash()->addSuccess('Order confirmed successfully!');
+                return redirect()->route('u.order.details', encrypt($payment->order->order_id));
+            }
+        } catch (ModelNotFoundException $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        } catch (Exception $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }
     }
 
+    public function getOrderSummary(Request $request)
+    {
+        try {
+            $this->orderService->setUser(user());
+            $orderId = decrypt($request->input('order_id'));
+            $order = $this->orderService->getOrderDetails($orderId, 'user');
+
+            return view('user.order.order_summary', compact('order'));
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
     private function buildOrderQuery($status)
     {

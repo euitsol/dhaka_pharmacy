@@ -214,6 +214,8 @@ class OrderService
             $this->setOrder($data['order_id']);
         }
 
+        $this->order->refresh();
+
         Log::info($this->order->order_id."Payload".$data['payment_method']);
 
         $this->checkConfirmAbility($this->order);
@@ -269,7 +271,7 @@ class OrderService
 
     public function list(array|null $data): LengthAwarePaginator|Collection
     {
-        $query = Order::select(['id','order_id', 'customer_id', 'customer_type', 'address_id', 'voucher_id', 'sub_total', 'voucher_discount', 'product_discount','total_amount', 'delivery_fee','delivery_type', 'status', 'created_at'])
+        $query = Order::select(['id','order_id', 'customer_id', 'customer_type', 'address_id', 'voucher_id', 'sub_total', 'voucher_discount', 'product_discount','total_amount', 'delivery_fee','delivery_type', 'status', 'payment_status', 'created_at'])
             ->with([
                 'customer:id,name,phone',
                 'products:id,name,slug,status,pro_cat_id,pro_sub_cat_id,company_id,generic_id,strength_id,dose_id,price,image',
@@ -378,7 +380,8 @@ class OrderService
 
     private function checkConfirmAbility(Order $order):void
     {
-        if ($order->status != Order::INITIATED) {
+        $order->refresh();
+        if ($order->status != Order::INITIATED && $order->status != Order::SUBMITTED) {
             throw new ModelNotFoundException('Order is not in a valid state to confirm');
         }
         if($order->customer_id !== $this->user->id || $order->customer_type !== get_class($this->user)){
