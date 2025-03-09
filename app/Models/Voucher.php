@@ -74,9 +74,6 @@ class Voucher extends BaseModel
 
     public function isActivePeriod(): bool
     {
-        Log::info("Starts At: {$this->starts_at}");
-        Log::info("Expires At: {$this->expires_at}");
-        Log::info("Now: " . now());
         return now()->between($this->starts_at, $this->expires_at);
     }
 

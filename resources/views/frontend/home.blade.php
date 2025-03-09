@@ -243,18 +243,11 @@
                                                         </a>
                                                     </div>
                                                 @endif
-
-
-
                                             </div>
-
                                         </div>
                                     </div>
                                 @endforeach
-
                             </div>
-
-
                             <div class="row show-more mt-3 mt-lg-4"
                                 @if (count($products) < 8) style="display:none;" @endif>
                                 <a class="all-pdct-btn text-center"

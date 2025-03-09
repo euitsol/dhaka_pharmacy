@@ -32,21 +32,11 @@ class GenerateDescriptionJob implements ShouldQueue
     public function handle(): void
     {
         try {
-            Log::info("Starting description generation for medicine ID: {$this->medicine->id}", [
-                'medicine_name' => $this->medicine->name,
-                'force_generation' => $this->force
-            ]);
-
             $this->validateGenerationNeeded();
 
             $data = $this->prepareData();
             $generatedDescription = $this->generateDescription($data);
             $this->updateMedicineDescription($generatedDescription);
-
-            Log::info("Successfully generated description for medicine ID: {$this->medicine->id}", [
-                'medicine_name' => $this->medicine->name,
-            ]);
-
         } catch (Throwable $e) {
             $this->handleGenerationError($e);
             throw $e;
@@ -56,7 +46,6 @@ class GenerateDescriptionJob implements ShouldQueue
     private function validateGenerationNeeded(): void
     {
         if (!$this->force && !empty($this->medicine->description)) {
-            Log::info("Skipping description generation for medicine with existing description: {$this->medicine->id}");
             throw new \RuntimeException('Medicine already has a description');
         }
     }
@@ -81,13 +70,6 @@ class GenerateDescriptionJob implements ShouldQueue
         try {
             $descriptionService = new DescriptionGenerateService();
             $result = $descriptionService->generateProductDescription($data);
-
-            Log::info("Description generated successfully", [
-                'medicine_id' => $this->medicine->id,
-                'medicine_name' => $this->medicine->name,
-                // 'result' => $result
-            ]);
-
             return $result;
         } catch (\Exception $e) {
             Log::error("Description generation failed: " . $e->getMessage(), [
@@ -102,23 +84,10 @@ class GenerateDescriptionJob implements ShouldQueue
     {
         // Extract the product_description from the array
         $description = $generatedDescription['product_description'] ?? '';
-
-        Log::info("Extracted Description",[
-            'medicine_id' => $this->medicine->id,
-            'medicine_name' => $this->medicine->name,
-            // 'medicine-description' => $this->medicine->description,
-        ]);
-
         // Update the medicine record
         $this->medicine->update([
             'description' => $description,
             'status' => Medicine::STATUS_ACTIVE
-        ]);
-
-        Log::info("Medicine description updated successfully", [
-            'medicine_id' => $this->medicine->id,
-            'medicine_name' => $this->medicine->name,
-            // 'medicine-description' => $this->medicine->description,
         ]);
     }
 
@@ -130,6 +99,7 @@ class GenerateDescriptionJob implements ShouldQueue
     {
         Log::error("Description generation error occurred", [
             'medicine_id' => $this->medicine->id,
+            'medicine_name' => $this->medicine->name,
             'error_message' => $e->getMessage(),
             'error_code' => $e->getCode(),
             'error_file' => $e->getFile(),
