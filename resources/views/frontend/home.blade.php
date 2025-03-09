@@ -156,14 +156,6 @@
                                                 <a class="uk-position-center-right uk-position-small" href uk-slidenav-next
                                                     uk-slider-item="next"></a>
                                             </div>
-
-                                            <!-- <div class="uk-visible@sbtn-arrow">
-                                                                                                                                                                                                                                                                                                                <a class="uk-position-center-left-out uk-position-small" href
-                                                                                                                                                                                                                                                                                                                    uk-slidenav-previous uk-slider-item="previous"></a>
-                                                                                                                                                                                                                                                                                                                <a class="uk-position-center-right-out uk-position-small" href uk-slidenav-next
-                                                                                                                                                                                                                                                                                                                    uk-slider-item="next"></a>
-                                                                                                                                                                                                                                                                                                            </div> -->
-
                                         </div>
                                     </div>
                                 </div>
@@ -279,15 +271,11 @@
                         <div uk-slideshow>
                             <ul class="uk-slideshow-items">
                                 <li>
-                                    <a href="#"><img src="{{ asset('frontend/asset/img/bottom-slider/slider-bg-03.jpg') }}" alt="slider image 1"
+                                    <a href="#"><img src="{{ asset('frontend/asset/img/bottom-slider/slider-1.jpg') }}" alt="slider image 1"
                                     uk-cover></a>
                                 </li>
                                 <li>
-                                    <a href="#"><img src="{{ asset('frontend/asset/img/bottom-slider/slider-bg-03.jpg') }}" alt="slider image 1"
-                                    uk-cover></a>
-                                </li>
-                                <li>
-                                    <a href="#"><img src="{{ asset('frontend/asset/img/bottom-slider/slider-bg-03.jpg') }}" alt="slider image 1"
+                                    <a href="#"><img src="{{ asset('frontend/asset/img/bottom-slider/slider-2.jpg') }}" alt="slider image 2"
                                     uk-cover></a>
                                 </li>
                             </ul>
