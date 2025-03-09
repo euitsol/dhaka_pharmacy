@@ -15,7 +15,7 @@
                     <div class="order-row">
                         <div class="order-id-row">
                             <div class="row align-content-center">
-                                <div class="col-xl-8 col-lg-7 col-md-6 col-12">
+                                <div class="col-lg-7 col-12">
                                     <div class="d-flex flex-lg-row flex-column" style="position: relative">
                                         <div class="text">
                                             <h3 class="order-num">
@@ -44,15 +44,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-4 col-lg-5 col-md-6 col-12 text-md-end text-start pb-3">
+                                <div class="col-lg-5 col-12 text-md-end text-start pb-3">
                                     <div class="order-status">
+                                        {{ $order->status .''.$order->payment_status }}
                                         <div
                                             class="p-0 d-flex gap-1 justify-content-md-end justify-content-start mt-2 mt-md-0">
                                             <a class="btn btn-info"
                                                 href="{{ route('u.order.details', encrypt($order->order_id)) }}">{{ __('Details') }}</a>
-                                            @if ($order->status == App\Models\Order::INITIATED)
-                                                <a class="btn btn-success text-white"
-                                                    href="javascript:void(0)">{{ __('Pay Now') }}</a>
+                                            @if (($order->status == App\Models\Order::INITIATED || $order->status == App\Models\Order::SUBMITTED) && ($order->payment_status == 'unpaid'))
+                                                <a class="btn btn-success text-white" data-order-id="{{ encrypt($order->order_id) }}">{{ __('Pay Now') }}</a>
                                             @endif
                                             @if(($order->status == App\Models\Order::SUBMITTED) || ($order->status == App\Models\Order::INITIATED))
                                                 <a class="btn btn-danger cancel-btn"
@@ -120,8 +120,10 @@
 
         </div>
     </section>
+    @include('user.order.payment_modal')
 @endsection
 @push('js')
+<script src="{{ asset('user/asset/js/payment-modal.js') }}"></script>
 <script>
     $(document).ready(function(){
         $('.cancel-btn').on('click', function(e) {
@@ -129,7 +131,7 @@
             const url = $(this).attr('href');
             const button = $(this);
             button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> {{ __("Processing...") }}');
-            
+
             Swal.fire({
                 title: '{{ __("Are you sure?") }}',
                 text: '{{ __("You won\'t be able to revert this!") }}',
@@ -144,6 +146,30 @@
                     window.location.href = url;
                 } else {
                     button.prop('disabled', false).html('{{ __("Cancel") }}');
+                }
+            });
+        });
+
+        // Pay Now Button Click Handler
+        $('.btn-success').on('click', function() {
+            const orderId = $(this).data('order-id');
+            $('#order_id').val(orderId);
+
+            // Load order summary via AJAX
+            $.ajax({
+                url: "{{ route('u.order.summary') }}",
+                method: 'GET',
+                data: { order_id: orderId },
+                success: function(response) {
+                    $('#order-summary-content').html(response);
+                    $('#paymentModal').modal('show');
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '{{ __("Error") }}',
+                        text: '{{ __("Failed to load order details. Please try again.") }}'
+                    });
                 }
             });
         });
