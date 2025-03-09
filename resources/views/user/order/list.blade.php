@@ -1,10 +1,156 @@
 @extends('user.layouts.master', ['pageSlug' => 'order'])
 @section('title', 'Order List')
+@push('css')
+    <style>
+    .payment-modal {
+      max-width: 500px;
+      width: 100%;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      animation: fadeInZoom 0.3s ease-out;
+    }
+
+    @keyframes fadeInZoom {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-header {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 1.5rem 1.5rem 0.75rem;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      border-top: none;
+      padding: 0.75rem 1.5rem 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #111827;
+      margin-bottom: 0.75rem;
+    }
+
+    .address-box {
+      border-radius: 0.5rem;
+      background-color: #f9fafb;
+      color: #4b5563;
+    }
+
+    .form-select {
+      border-radius: 0.5rem;
+      padding: 0.625rem 1rem;
+    }
+
+    .form-select.disabled {
+      background-color: #f9fafb;
+      color: #6b7280;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .summary-label {
+      color: #4b5563;
+    }
+
+    .summary-value {
+      font-weight: 500;
+    }
+
+    .summary-value .operator {
+      color: #6b7280;
+    }
+
+    .discount-value {
+      color: #059669;
+    }
+
+    .total-row {
+      font-weight: 600;
+      padding-top: 0.5rem;
+      margin-top: 0.5rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .total-value {
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+
+    .btn-cancel {
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .btn-proceed {
+      background-color: #2563eb;
+      border-color: #2563eb;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .btn-proceed:hover {
+      background-color: #1d4ed8;
+      border-color: #1d4ed8;
+    }
+
+    .close-button {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      background: transparent;
+      border: none;
+      transition: color 0.2s, background-color 0.2s;
+    }
+
+    .close-button:hover {
+      color: #111827;
+      background-color: #f3f4f6;
+    }
+
+    .section-container {
+      margin-bottom: 1.5rem;
+    }
+    </style>
+@endpush
 @section('content')
     <section class="my-order-section">
         <div class="container">
             <div class="row">
-                <div class="col">
+                <div class="col-12">
+                    <div id="payment-validation-errors" class="alert alert-danger {{ $errors->any() ? '' : 'd-none' }}">
+                        <strong>{{ __('Error!') }}</strong>
+                        <ul id="payment-error-list">
+                            @if($errors->any())
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            @endif
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12">
                     <div class="show-order d-flex align-items-center">
                         <h3>{{ __('My Orders') }}</h3>
                     </div>
@@ -46,13 +192,12 @@
                                 </div>
                                 <div class="col-lg-5 col-12 text-md-end text-start pb-3">
                                     <div class="order-status">
-                                        {{ $order->status .''.$order->payment_status }}
                                         <div
                                             class="p-0 d-flex gap-1 justify-content-md-end justify-content-start mt-2 mt-md-0">
                                             <a class="btn btn-info"
                                                 href="{{ route('u.order.details', encrypt($order->order_id)) }}">{{ __('Details') }}</a>
                                             @if (($order->status == App\Models\Order::INITIATED || $order->status == App\Models\Order::SUBMITTED) && ($order->payment_status == 'unpaid'))
-                                                <a class="btn btn-success text-white" data-order-id="{{ encrypt($order->order_id) }}">{{ __('Pay Now') }}</a>
+                                                <a class="btn btn-success text-white pay-btn" data-order-id="{{ encrypt($order->order_id) }}">{{ __('Pay Now') }}</a>
                                             @endif
                                             @if(($order->status == App\Models\Order::SUBMITTED) || ($order->status == App\Models\Order::INITIATED))
                                                 <a class="btn btn-danger cancel-btn"
@@ -151,7 +296,7 @@
         });
 
         // Pay Now Button Click Handler
-        $('.btn-success').on('click', function() {
+        $('.pay-btn').on('click', function() {
             const orderId = $(this).data('order-id');
             $('#order_id').val(orderId);
 
@@ -161,7 +306,21 @@
                 method: 'GET',
                 data: { order_id: orderId },
                 success: function(response) {
-                    $('#order-summary-content').html(response);
+                    console.log("summary")
+                    console.log(response)
+                    // Update order summary fields
+                    if (response.success && response.order) {
+                        const order = response.order;
+                        // Update sub total
+                        $('.sub-total').text(parseFloat(order.sub_total || 0).toFixed(2));
+                        $('.product-discount').text(parseFloat(order.product_discount || 0).toFixed(2));
+                        $('.voucher-discount').text(parseFloat(order.voucher_discount || 0).toFixed(2));
+                        $('.delivery-charge').text(parseFloat(order.delivery_fee || 0).toFixed(2));
+                        const initialTotal = parseFloat(order.total_amount)
+                        $('.total-payable').text(initialTotal.toFixed(2));
+                    } else {
+                        console.error('Error in order summary response:', response.error || 'Unknown error');
+                    }
                     $('#paymentModal').modal('show');
                 },
                 error: function() {

@@ -1,17 +1,40 @@
 /**
  * Payment Modal JS
  * Handles dynamic loading of delivery options based on selected address
+ * and updates order summary calculations
  */
 document.addEventListener('DOMContentLoaded', function() {
     const paymentModal = {
+        // Store order details
+        selectedDeliveryCharge: 0,
+
         init: function() {
             this.bindEvents();
         },
 
         bindEvents: function() {
+            // Address select change event
             const addressSelect = document.querySelector('#paymentModal #address');
             if (addressSelect) {
                 addressSelect.addEventListener('change', this.handleAddressChange.bind(this));
+
+                // Trigger change event if a default address is already selected
+                if (addressSelect.value) {
+                    const event = new Event('change');
+                    addressSelect.dispatchEvent(event);
+                }
+            }
+
+            // Delivery type change event
+            const deliveryTypeSelect = document.querySelector('#paymentModal #delivery_type');
+            if (deliveryTypeSelect) {
+                deliveryTypeSelect.addEventListener('change', this.handleDeliveryTypeChange.bind(this));
+            }
+
+            // Payment method change event
+            const paymentMethodSelect = document.querySelector('#paymentModal #payment_method');
+            if (paymentMethodSelect) {
+                paymentMethodSelect.addEventListener('change', this.handlePaymentMethodChange.bind(this));
             }
         },
 
@@ -46,66 +69,103 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         updateDeliveryTypeSection: function(data) {
-            const deliveryTypeContainer = document.getElementById('delivery_type_container');
+            const deliveryTypeSelect = document.getElementById('delivery_type');
 
-            if (!data || data.length === 0) {
-                deliveryTypeContainer.innerHTML = `
-                    <select name="delivery_type" class="form-select" id="delivery_type">
-                        <option value="">No delivery options available</option>
-                    </select>
-                `;
+            if (!deliveryTypeSelect) {
+                console.error('Delivery type select element not found');
                 return;
             }
 
-            let options = '<select name="delivery_type" class="form-select" id="delivery_type" required>';
-            options += '<option value="">Select delivery type</option>';
+            // Clear existing options
+            deliveryTypeSelect.innerHTML = '';
 
+            if (!data || data.length === 0) {
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'No delivery options available';
+                deliveryTypeSelect.appendChild(defaultOption);
+                return;
+            }
+
+            // Add default option
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'Select delivery type';
+            deliveryTypeSelect.appendChild(defaultOption);
+
+            // Add delivery options
             data.forEach(item => {
-                console.log(item);
-
-                const { type, charge, expected_delivery_date } = item;
-                const typeCapitalized = type.charAt(0).toUpperCase() + type.slice(1);
-                options += `<option value="${type}" data-charge="${charge}" data-expected-delivery-date="${expected_delivery_date}">
-                    ${typeCapitalized} Delivery - ${charge} tk (${expected_delivery_date})
-                </option>`;
+                const { name, type, charge, delivery_time_hours, expected_delivery_date } = item;
+                const option = document.createElement('option');
+                option.value = type;
+                option.setAttribute('data-charge', charge);
+                option.setAttribute('data-expected-delivery-date', expected_delivery_date);
+                option.textContent = `${name} - ${charge} tk (${expected_delivery_date})`;
+                deliveryTypeSelect.appendChild(option);
             });
 
-            options += '</select>';
-            deliveryTypeContainer.innerHTML = options;
-
-            // Update delivery charge and total amount if needed
-            const deliveryType = document.getElementById('delivery_type');
-            if (deliveryType) {
-                deliveryType.addEventListener('change', this.updateOrderSummary.bind(this));
-            }
+            // Enable the select
+            deliveryTypeSelect.classList.remove('disabled');
         },
 
-        updateOrderSummary: function(event) {
+        handleDeliveryTypeChange: function(event) {
             const selectedOption = event.target.options[event.target.selectedIndex];
-            const charge = selectedOption.getAttribute('data-charge');
-
-            // Update delivery charge in the summary if needed
-            const deliveryChargeElement = document.getElementById('delivery_charge');
-            if (deliveryChargeElement && charge) {
-                deliveryChargeElement.textContent = parseFloat(charge).toFixed(2);
-
-                // Recalculate total amount if needed
-                this.recalculateTotalAmount();
+            if (selectedOption && selectedOption.value) {
+                const charge = selectedOption.getAttribute('data-charge');
+                if (charge) {
+                    this.selectedDeliveryCharge = parseFloat(charge);
+                    this.updateOrderSummary();
+                }
             }
         },
 
-        recalculateTotalAmount: function() {
-            // This function would recalculate the total amount based on subtotal, discounts, and delivery charge
-            // Implementation depends on your specific requirements
+        handlePaymentMethodChange: function(event) {
+            // Handle payment method change if needed
+            const paymentMethod = event.target.value;
+            console.log('Payment method changed to:', paymentMethod);
+        },
+
+        updateOrderSummary: function() {
+            // Update delivery charge based on selected delivery type
+            const deliveryChargeElement = document.querySelector('#paymentModal .delivery-charge');
+            if (deliveryChargeElement) {
+                deliveryChargeElement.textContent = this.selectedDeliveryCharge.toFixed(2);
+            }
+
+            // Calculate and update total payable
+            // Get current values from the DOM
+            const totalPayableElement = document.querySelector('#paymentModal .total-payable');
+            const subTotalElement = document.querySelector('#paymentModal .sub-total');
+            const productDiscountElement = document.querySelector('#paymentModal .product-discount');
+            const voucherDiscountElement = document.querySelector('#paymentModal .voucher-discount');
+
+            if (totalPayableElement && subTotalElement && productDiscountElement && voucherDiscountElement) {
+                const subTotal = parseFloat(subTotalElement.textContent || 0);
+                const productDiscount = parseFloat(productDiscountElement.textContent || 0);
+                const voucherDiscount = parseFloat(voucherDiscountElement.textContent || 0);
+                const deliveryCharge = this.selectedDeliveryCharge;
+
+                const totalPayable = subTotal - productDiscount - voucherDiscount + deliveryCharge;
+                totalPayableElement.textContent = totalPayable.toFixed(2);
+            }
         },
 
         resetDeliveryTypeSection: function() {
-            const deliveryTypeContainer = document.getElementById('delivery_type_container');
-            deliveryTypeContainer.innerHTML = `
-                <select name="delivery_type" class="form-select" id="delivery_type">
-                    <option value="">Please select an address first</option>
-                </select>
-            `;
+            const deliveryTypeSelect = document.getElementById('delivery_type');
+            if (deliveryTypeSelect) {
+                deliveryTypeSelect.innerHTML = '';
+
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Please select an address first';
+                deliveryTypeSelect.appendChild(defaultOption);
+
+                deliveryTypeSelect.classList.add('disabled');
+
+                // Reset delivery charge
+                this.selectedDeliveryCharge = 0;
+                this.updateOrderSummary();
+            }
         }
     };
 

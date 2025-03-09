@@ -183,15 +183,6 @@
                                                     </a>
                                                 </div>
 
-                                                <!-- <div class="product_title">
-                                                    <a href="javascript:void(0)">
-                                                        <h3 class="fw-bold text-muted mt-0"
-                                                            title="{{ optional($product->strength)->name }}">
-                                                            {{ $product->strength_info }}
-                                                        </h3>
-                                                    </a>
-                                                </div> -->
-
                                                 <div class="all-product-containt">
 
                                                     <p>

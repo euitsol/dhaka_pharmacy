@@ -70,6 +70,7 @@ class PaymentController extends Controller
     public function int_payment($payment_id)
     {
         $payment_id = decrypt($payment_id);
+
         $payment = Payment::with('order')->findOrFail($payment_id);
         if ($payment->payment_method == 'ssl') {
             return redirect()->route('u.payment.index', encrypt($payment_id));

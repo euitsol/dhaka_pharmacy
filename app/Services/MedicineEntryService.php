@@ -24,8 +24,6 @@ class MedicineEntryService
     public function storeMedicine(array $data)
     {
         try {
-            Log::info('Storing medicine', ['data' => $data]);
-
             $data = $this->prepareData($data);
 
             $validator = Validator::make($data, (new MedicineRequest())->rules());
@@ -46,7 +44,6 @@ class MedicineEntryService
                 $this->handleDiscount($medicine, $data);
 
                 DB::commit();
-                Log::info('Medicine stored successfully', ['medicine_id' => $medicine->id]);
 
                 return [
                     'success' => true,
@@ -96,7 +93,6 @@ class MedicineEntryService
             'price' => $data['price'],
         ]);
 
-        Log::info('Medicine created', ['medicine_id' => $medicine->id]);
         return $medicine;
     }
 
@@ -109,7 +105,6 @@ class MedicineEntryService
                 'price' => $unit['price']
             ]);
         }
-        Log::info('Units stored for medicine', ['medicine_id' => $medicine->id]);
     }
 
     protected function handleMedicineImage(Medicine $medicine, ?int $tempFileId): void
@@ -149,7 +144,5 @@ class MedicineEntryService
             'discount_amount' => $data['discount_amount'] ?? null,
             'discount_percentage' => $data['discount_percentage'] ?? null,
         ]);
-
-        Log::info('Discount created', ['discount_id' => $discount->id]);
     }
 }

@@ -8,10 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentObserver
 {
-    /**
-     * Handle the Payment "created" event.
-     */
-    public function created(Payment $payment): void
+    public function saving(Payment $payment): void
     {
         $payment->load('order');
         Log::info("Payment: $payment->status");
@@ -31,7 +28,7 @@ class PaymentObserver
     /**
      * Handle the Payment "updated" event.
      */
-    public function updated(Payment $payment): void
+    public function updating(Payment $payment): void
     {
         $payment->load('order');
         Log::info("Payment: $payment->status");

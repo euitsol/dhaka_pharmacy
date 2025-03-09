@@ -103,7 +103,6 @@ class OrderController extends Controller
             $payment = $this->orderService->confirmOrder($data);
 
             if ($request->payment_method == 'ssl') {
-
                 return redirect()->route('u.payment.int', encrypt($payment->id));
             } else {
                 flash()->addSuccess('Order confirmed successfully!');
@@ -124,8 +123,7 @@ class OrderController extends Controller
             $this->orderService->setUser(user());
             $orderId = decrypt($request->input('order_id'));
             $order = $this->orderService->getOrderDetails($orderId, 'user');
-
-            return view('user.order.order_summary', compact('order'));
+            return response()->json(['success' => true, 'order' => $order]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => $e->getMessage()], 404);
         } catch (Exception $e) {
