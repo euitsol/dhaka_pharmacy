@@ -133,7 +133,7 @@
                                     {{ __('4th Floor, Noor Mansion, Plot-4, Main Road, Mirpur-10, Dhaka-1216') }}
                                 </a>
                             </li>
-                            <li><a class="phn" href="tel:01714 432 534">{{ __('01714 432 534') }}</a></li>
+                            <li><a class="phn" href="tel:+8801901636068">{{ __('+880 190 163 6068') }}</a></li>
                             <li>
                                 <a class="mail"
                                     href="mailto:contact@dhakapharmacy.com.bd">{{ __('contact@dhakapharmacy.com.bd') }}</a>
