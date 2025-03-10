@@ -104,6 +104,10 @@
     /* .single-pdct .pdct-info {
         min-height: 100px;
     } */
+
+    /* .slider-sction .home-main-banner .uk-panel img{
+        height: 450px !important;
+    } */
 }
 
 @media screen and (max-width: 1399px) {
@@ -114,7 +118,9 @@
         font-size: 0.7rem;
         line-height: 0.25rem;
     }
-
+    /* .slider-sction .home-main-banner .uk-panel img{
+        height: 300px !important;
+    } */
     /*==================================================
         ul home page slider responsive code here *
     ====================================================*/
@@ -413,9 +419,9 @@
     .product-section .best-selling-col .best-selling-products .medical-devices {
         margin: -6px !important;
     }
-    .delivery-slider-section .uk-slideshow-items {
-        height: 290px;
-    }
+    /* .slider-sction .home-main-banner .uk-panel img {
+        height: 250px !important;
+    } */
 }
 
 @media screen and (max-width: 1100px) {
@@ -1040,9 +1046,9 @@
         font-size: 22px !important;
     }
 
-    .slider-sction .uk-slideshow-items {
-        height: 320px;
-    }
+    /* .slider-sction .home-main-banner .uk-panel img {
+        height: 250px !important;
+    } */
 
     .slider-sction .carousel-caption .slider-right img {
         max-width: 300px;
@@ -1314,9 +1320,9 @@
         line-height: 32px;
     }
 
-    .slider-sction .uk-slideshow-items {
-        height: 250px;
-    }
+    /* .slider-sction .home-main-banner .uk-panel img {
+        height: 250px !important;
+    } */
 
     /* delivery slider responsive code */
 
@@ -1560,6 +1566,34 @@
     }
     .header-section .right-col .offcanvas .wishes .product_details .image img {
 	    height: 100px;
+    }
+
+
+    /* delavery slider css code here */
+    .delivery-slider-section .delivery-main-slide .uk-slider-arrow {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        margin: 6px;
+    }
+    .delivery-slider-section .delivery-main-slide .uk-dotnav {
+        bottom: 6px;
+    }
+    .delivery-slider-section .delivery-main-slide .uk-slider-arrow svg {
+        width: 16px !important;
+        height: 29px !important;
+    }
+    /* home page banner slider arrow button css code here */
+    .slider-sction .home-main-banner .uk-slider-arrow {
+        width: 35px !important;
+        height: 35px !important;
+    }
+    .slider-sction .home-main-banner .uk-slider-arrow  svg{
+        width: 15px !important;
+        height: 29px !important;
+    }
+    .slider-sction .home-main-banner .uk-dotnav{
+        bottom: 10px !important;
     }
 }
 
@@ -1993,9 +2027,9 @@
         padding: 2px 0px 0px 0px !important;
     }
 
-    .slider-sction .uk-slideshow-items {
-        height: 200px;
-    }
+    /* .slider-sction .home-main-banner .uk-panel img {
+        height: 200px !important;
+    } */
 
     .slider-sction .carousel-caption .slider-right {
         position: absolute;
@@ -2059,6 +2093,21 @@
     .checkout-section .order-info-row .left h5 {
         font-size: 14px !important;
         line-height: 16px !important;
+    }
+
+
+    .delivery-slider-section .bottom-slide-items img {
+        object-fit: unset;
+        height: 150px;
+    }
+    .delivery-slider-section .delivery-main-slide .uk-slider-arrow {
+        width: 30px;
+        height: 30px;
+        margin: 5px;
+    }
+    .delivery-slider-section .delivery-main-slide .uk-slider-arrow svg {
+        width: 14px !important;
+        height: 26px !important;
     }
 }
 
@@ -2143,9 +2192,9 @@
         margin-bottom: 10px !important;
     }
 
-    .slider-sction .uk-slideshow-items {
-        height: 170px;
-    }
+    /* .slider-sction .home-main-banner .uk-panel img {
+        height: 170px !important;
+    } */
 
     .delivery-slider-section .uk-slideshow-items {
         height: 140px;
