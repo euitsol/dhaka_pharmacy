@@ -38,7 +38,7 @@ class FileUploadService
         }
 
         $fullSourcePath = rtrim($tempFile->path, '/') . '/' . $tempFile->filename;
-        
+
         if (!Storage::disk($this->disk)->exists($fullSourcePath)) {
             Log::error('Temp file does not exist in storage', [
                 'temp_file_id' => $tempFileId,
@@ -57,11 +57,6 @@ class FileUploadService
             Storage::disk($this->disk)->put($fullPath, $file);
             Storage::disk($this->disk)->delete($fullSourcePath);
             $tempFile->delete();
-
-            Log::info('File moved to permanent storage', [
-                'from' => $fullSourcePath,
-                'to' => $fullPath
-            ]);
 
             return $fullPath;
         } catch (\Exception $e) {

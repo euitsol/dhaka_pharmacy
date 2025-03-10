@@ -45,7 +45,6 @@ class OrderService
         }
         $this->order = $order;
 
-        Log::info($this->order->order_id."Set successfully");
         return $this;
     }
 
@@ -57,8 +56,6 @@ class OrderService
 
         return DB::transaction(function () use ($data, $isDirectOrder, $type) {
             $carts = collect(); // Initialize an empty collection
-            Log::info($data);
-
             if ($type === 'prescription') {
                 // Handle prescription order
                 foreach ($data['products'] as $item) {

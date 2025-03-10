@@ -108,8 +108,6 @@ class CheckoutController extends Controller
             $this->orderService->setUser(user());
             $this->orderService->setOrder(order_id: $req->validated()['order_id']);
 
-            Log::info($req->order_id."Requesting Confirm");
-
             $this->orderService->addAddress($req->validated()['address'], $req->validated()['delivery_type']);
             $payment = $this->orderService->confirmOrder(['payment_method' => $req->validated()['payment_method']]);
             return redirect()->route('u.payment.int', encrypt($payment->id));

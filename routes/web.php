@@ -1226,6 +1226,7 @@ Route::group(['middleware' => ['auth', 'user_phone_verify'], 'prefix' => 'custom
         Route::get('cancel/{id}', 'cancel')->name('cancel');
         Route::post('pay-now', 'pay_now')->name('pay');
         Route::get('summary', 'getOrderSummary')->name('summary');
+        Route::get('re-order/{order_id}', 're_order')->name('reorder');
     });
 
     Route::controller(UserWishlistController::class)->prefix('wishlist')->name('u.wishlist.')->group(function () {
