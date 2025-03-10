@@ -1,6 +1,6 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="cartbtn" aria-labelledby="offcanvasRightLabel">
     <div id="loading-animation">
-        <img src="{{ asset('frontend/asset/img/dp.png') }}" alt="Loading..." />
+        <img src="{{ asset('frontend/asset/img/cartloading-image/gif-loader-new.gif') }}" alt="Loading..." />
     </div>
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('Cart') }}</h5>

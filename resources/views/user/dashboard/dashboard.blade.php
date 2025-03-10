@@ -216,8 +216,7 @@
                             <div class="col-xl-9 col-12">
                                 <div class="col-right row row-gap-3 row-gap-sm-4 ">
                                     <div class="col-lg-6 col-12 order-2 order-lg-1">
-                                        <div class="google-map"
-                                            @if ($latest_offers->isEmpty()) style="margin-top:20px" @endif>
+                                        <div class="google-map">
                                             <div class="address d-flex  align-items-center justify-content-between">
                                                 <div class="title">
                                                     <h3>{{ __('Address') }}</h3>

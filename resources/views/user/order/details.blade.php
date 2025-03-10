@@ -259,7 +259,7 @@
                                                     <p class="mb-0">{{ optional($product->generic)->name }}</p>
                                                     <p class="mb-0">{{ optional($product->company)->name }}</p>
                                                 </div>
-                                                <div class="col-sm-4 col-12 ms-auto d-flex d-sm-block gap-sm-0 gap-3">
+                                                <div class="col-sm-4 col-12 ms-auto d-block d-sm-block gap-sm-0 gap-3">
                                                     <p class="qt mb-1">
                                                         {{ __('Qty') }}:<span>{{ $product->pivot->quantity }}</span>
                                                     </p>

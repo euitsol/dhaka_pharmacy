@@ -203,4 +203,3 @@ function toggleLanguage() {
     document.getElementById("languageForm").submit();
 }
 
-

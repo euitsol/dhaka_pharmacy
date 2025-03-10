@@ -101,9 +101,9 @@
         line-height: 30px !important;
         font-weight: 500 !important;
     }
-    .single-pdct .pdct-info {
+    /* .single-pdct .pdct-info {
         min-height: 100px;
-    }
+    } */
 }
 
 @media screen and (max-width: 1399px) {
@@ -276,6 +276,7 @@
         -webkit-backdrop-filter: blur(23px) saturate(169%);
         background-color: rgba(255, 255, 255, 0.1);
         transition: 0.4s;
+        height: 100% !important;
     }
 
     .best-selling-products .single-item img {
@@ -300,12 +301,24 @@
 
     .best-selling-products .bst-product-content {
         padding: 10px;
+        margin-top: 0px !important;
+        /* min-height: 115px !important; */
+        display: flex;
+        justify-content: space-between !important;
+        flex-direction: column !important;
     }
 
     .product-section .align-items-baseline .feature-product .slider-col .uk-position-small {
         margin: 0px -12px 0px 0px;
         top: 16px;
         margin-left: 0px;
+    }
+
+    /* product info new style */
+    .pdct-info {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
     }
 
     /*===================================================
@@ -1609,7 +1622,10 @@
     .single_product_section .single_product .product_image .xzoom{
         height: 14rem !important;
     }
-
+    /* .single-pdct .pdct-info {
+        min-height: 102px;
+    } */
+    
     /*============================================
         uk future tap text slider responsive code
     ===============================================*/

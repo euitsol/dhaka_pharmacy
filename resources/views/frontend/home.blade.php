@@ -274,7 +274,7 @@
             </section>
             <!--====== Delivery Slider Section ======-->
             <section class="delivery-slider-section">
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col">
                         <div uk-slideshow>
                             <ul class="uk-slideshow-items">
@@ -294,13 +294,46 @@
                             <ul class="uk-slideshow-nav uk-dotnav uk-flex-center "></ul>
                         </div>
                     </div>
+                </div> -->
+                <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
+                    <div class="uk-slider-items uk-child-width-1-1 uk-grid-remove">
+                        <!-- Slide 1 -->
+                        <div class="bottom-slide-items">
+                            <div class="uk-panel">
+                                <img src="{{ asset('frontend/asset/img/bottom-slider/slider-bg-03.jpg') }}" alt="slider image" >
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="bottom-slide-items">
+                            <div class="uk-panel">
+                                <img src="{{ asset('frontend/asset/img/bottom-slider/slider-bg-03.jpg') }}" alt="slider image">
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="bottom-slide-items">
+                            <div class="uk-panel">
+                                <img src="{{ asset('frontend/asset/img/bottom-slider/slider-bg-03.jpg') }}" alt="slider image">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation arrows -->
+                    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href uk-slidenav-previous uk-slider-item="previous"></a>
+                    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href uk-slidenav-next uk-slider-item="next"></a>
                 </div>
+
+
+
                 <div class="row delivery-bike">
                     <img src="{{ asset('frontend/asset/img/inner-jbanner.png') }}" alt="">
                 </div>
             </section>
         </div>
         <!--=========== Main Content Section End ==============-->
+
+
+
+
     </div>
 @endsection
 @push('js')

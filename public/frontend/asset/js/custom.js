@@ -429,6 +429,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   
 
+// Simulating network delay (5 seconds)
+setTimeout(function() {
+    document.body.classList.add('loaded');
+}, 5000); // Simulate slow network
+
+window.addEventListener('load', function() {
+    // Once the page is fully loaded, hide the loading screen and change background to white
+    document.body.classList.add('loaded');
+});
 
 
   

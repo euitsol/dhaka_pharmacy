@@ -91,7 +91,7 @@
                                                     </div>
                                                 </div>
                                                 <div
-                                                    class="col-md-3 mt-2 mt-sm-0 col-sm-4 col-12 d-flex d-sm-block gap-4 gap-sm-0">
+                                                    class="col-md-3 mt-2 mt-sm-0 col-sm-4 col-12 d-block d-xl-flex  gap-2 gap-sm-2">
                                                     <p class="qty">
                                                         {{ __('Qty: ') }}<span>{{ optional($product->pivot)->quantity < 10 ? '0' . $product->pivot->quantity : $product->pivot->quantity }}</span>
                                                     </p>

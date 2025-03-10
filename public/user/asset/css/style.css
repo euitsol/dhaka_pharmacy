@@ -127,8 +127,9 @@ body {
 
 /* Logo with Breathing Animation */
 #loading-animation img {
-    width: 100%; /* Adjust the size as needed */
-    animation: breathing 2s ease-in-out infinite;
+    width: 150px; 
+    height: 150px;
+    animation: breathing 4s ease-in-out infinite;
 }
 
 .container {
