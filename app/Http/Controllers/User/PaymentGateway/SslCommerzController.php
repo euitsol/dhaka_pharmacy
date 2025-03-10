@@ -9,13 +9,14 @@ use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Http\Traits\TransformOrderItemTrait;
+use Illuminate\Support\Facades\Log;
 
 class SslCommerzController extends Controller
 {
     use TransformOrderItemTrait;
     public function __construct()
     {
-        return $this->middleware('auth');
+        $this->middleware('auth');
     }
     public function index($payment_id)
     {
@@ -92,7 +93,7 @@ class SslCommerzController extends Controller
         $order_details = Payment::where('transaction_id', $tran_id)
             ->select('transaction_id', 'status', 'currency', 'amount')->first();
 
-        if ($order_details->status == 0) {
+        if ($order_details->status == Payment::STATUS_INITIATED) {
             $validation = $sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
 
             if ($validation) {
@@ -101,20 +102,18 @@ class SslCommerzController extends Controller
                 in order table as Processing or Complete.
                 Here you can also sent sms or email for successfull transaction to customer
                 */
-                $update_product = Payment::where('transaction_id', $tran_id)
-                    ->update(['status' => 1]); //Status 1 , Success
+                $payment->update(['status' => Payment::STATUS_PAID]);
                 // Order::where('id', decrypt($request->value_a))
                 //     ->update(['status' => 1]);
+
+                Log::info("Updated payment $payment");
                 flash()->addSuccess('Transaction is successfully Completed');
             }
-        } else if ($order_details->status == 2 || $order_details->status == 1) { //Status 1 , Complete
-            /*
-             That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
-             */
+            Log::info("Validation".$validation);
+        } else if ($order_details->status == Payment::STATUS_PAID) {
             flash()->addSuccess('Transaction is successfully Completed');
         } else {
-            #That means something wrong happened. You can redirect customer to your product page.
-            flash()->addSuccess('Transaction is successfully Completed');
+            flash()->addSuccess('Transaction failed');
         }
         if ($request->value_a) {
             return redirect()->route('u.payment.payment_success', encrypt($payment->id));

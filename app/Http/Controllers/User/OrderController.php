@@ -12,6 +12,8 @@ use App\Http\Traits\TransformProductTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Services\OrderService;
+use App\Services\AddressService;
+use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -19,12 +21,14 @@ class OrderController extends Controller
 {
     use TransformOrderItemTrait, TransformProductTrait;
     private OrderService $orderService;
+    private AddressService $addressService;
 
 
-    public function __construct(OrderService $orderservice)
+    public function __construct(OrderService $orderservice, AddressService $addressService)
     {
         $this->middleware('auth');
         $this->orderService = $orderservice;
+        $this->addressService = $addressService;
     }
 
     public function list(Request $request):View|RedirectResponse
@@ -103,7 +107,6 @@ class OrderController extends Controller
             $payment = $this->orderService->confirmOrder($data);
 
             if ($request->payment_method == 'ssl') {
-
                 return redirect()->route('u.payment.int', encrypt($payment->id));
             } else {
                 flash()->addSuccess('Order confirmed successfully!');
@@ -124,8 +127,7 @@ class OrderController extends Controller
             $this->orderService->setUser(user());
             $orderId = decrypt($request->input('order_id'));
             $order = $this->orderService->getOrderDetails($orderId, 'user');
-
-            return view('user.order.order_summary', compact('order'));
+            return response()->json(['success' => true, 'order' => $order]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => $e->getMessage()], 404);
         } catch (Exception $e) {
@@ -168,5 +170,56 @@ class OrderController extends Controller
                 $order->otp = $order->od->delivery_active_otps->first()?->otp;
             }
         });
+    }
+
+    public function re_order($order_id): RedirectResponse
+    {
+        try {
+            $order_id = decrypt($order_id);
+            $order = Order::with(['products' => function($query) {
+                $query->select('medicines.id', 'medicines.slug', 'order_products.unit_id', 'order_products.quantity');
+            }])->findOrFail($order_id);
+
+            // Check if this order belongs to the current user
+            if ($order->customer_id != user()->id || $order->customer_type != get_class(user())) {
+                flash()->addWarning('Unauthorized access to this order.');
+                return redirect()->back();
+            }
+
+            // Get products from the order
+            $products = [];
+            foreach ($order->products as $product) {
+                $products[] = [
+                    'product_id' => $product->id,
+                    'unit_id' => $product->pivot->unit_id,
+                    'quantity' => $product->pivot->quantity
+                ];
+            }
+
+            // Process the new order
+            $user = User::findOrFail(user()->id);
+            $this->orderService->setUser($user);
+
+            // Get default address if available
+
+            $address = $this->addressService->setUser($user)->defaultAddress();
+
+            // Create a new order with the same products
+            $newOrder = $this->orderService->processOrder([
+                'products' => $products,
+                'address_id' => $address ? $address->id : null,
+                'delivery_type' => 'standard'
+            ], false, 'prescription');
+
+            // Redirect to checkout page
+            return redirect()->route('u.ck.index', encrypt($newOrder->order_id));
+
+        } catch (ModelNotFoundException $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        } catch (Exception $e) {
+            flash()->addWarning($e->getMessage());
+            return redirect()->back();
+        }
     }
 }

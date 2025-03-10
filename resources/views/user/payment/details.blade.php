@@ -56,26 +56,29 @@
                         <div class="col-lg-6 col-12">
                             <h4 class="mb-3 title">{{ __('Payment Information') }}</h4>
                             <div class="right d-flex flex-column justify-content-center">
-                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-between">
                                     <h5>{{ __('Total Price') }}</h5>
-                                    <p>{!! get_taka_icon() . number_format($payment->order->totalPrice, 2) !!}</p>
+                                    <p class="text-align-right">{!! get_taka_icon() .'(+)'. number_format(ceil(optional($payment->order)->sub_total), 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <h5>{{ __('Discount') }}</h5>
-                                    <p>{!! get_taka_icon() . number_format($payment->order->totalPrice - $payment->order->totalDiscountPrice, 2) !!}</p>
+                                    <h5>{{ __('Product Discount') }}</h5>
+                                    <p class="text-right">{!! get_taka_icon() .'(-)'.number_format(optional($payment->order)->product_discount, 2) !!}</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <h5>{{ __('Voucher Discount') }}</h5>
+                                    <p class="text-right">{!! get_taka_icon() .'(-)'. number_format(optional($payment->order)->voucher_discount, 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ __('Sub Total') }}</h5>
-                                    <p>{!! get_taka_icon() . number_format(ceil($payment->order->totalDiscountPrice), 2) !!}</p>
+                                    <p class="text-right">{!! get_taka_icon() . number_format(optional($payment->order)->total_amount - optional($payment->order)->delivery_fee, 2) !!}</p>
                                 </div>
                                 <div class="total-border d-flex justify-content-between mb-3">
                                     <h5>{{ __('Delivery Charge') }}</h5>
-                                    <p>{!! get_taka_icon() . number_format($payment->order->delivery_fee, 2) !!}</p>
+                                    <p class="text-align-right">{!! get_taka_icon() .'(+)'. number_format(optional($payment->order)->delivery_fee, 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <h5>{{ slugToTitle($payment->statusTitle()) }}{{ __('Amount') }}</h5>
-                                    <p>{!! get_taka_icon() .
-                                        number_format(ceil($payment->order->totalDiscountPrice + $payment->order->delivery_fee), 2) !!}</p>
+                                    <h5>{{ __('Payable Amount') }}</h5>
+                                    <p class="text-align-right">{!! get_taka_icon() . number_format(ceil(optional($payment->order)->total_amount), 2) !!}</p>
                                 </div>
                             </div>
                         </div>

@@ -282,7 +282,7 @@
                             <h4 class="mb-3 title">{{ __('Order Summary') }}</h4>
                             <div class="right d-flex flex-column justify-content-center">
                                 <div class="d-flex justify-content-between">
-                                    <h5>{{ __('Total Price') }}</h5>
+                                    <h5>{{ __('Sub Total Price') }}</h5>
                                     <p class="text-align-right">{!! get_taka_icon() .'(+)'. number_format(ceil($order->sub_total), 2) !!}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
