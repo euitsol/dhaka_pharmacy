@@ -32,6 +32,14 @@
     <!--========== bootstrap css ==========-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+
+
+
+
+
+
+
 
 
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
@@ -125,6 +133,11 @@
         @include('frontend.includes.header')
     </header>
     <main>
+        <!-- Loading Screen -->
+        <div id="loading">
+            <img src="{{ asset('frontend/asset/img/loading/gif-loader-new.gif') }}" alt="Loading..." />
+        </div>
+
         <div class="container-fluid">
             @yield('content')
         </div>
@@ -154,6 +167,7 @@
     <!--========= uikit-js ===========-->
     <script src="{{ asset('frontend/vendor/uikit/js/uikit.min.js') }}"></script>
     <script src="{{ asset('frontend/asset/js/cart.js') }}"></script>
+
     @stack('js_link')
     <!--========== custom-js ===========-->
     <script src="{{ asset('frontend/asset/js/custom.js') }}"></script>

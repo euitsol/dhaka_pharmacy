@@ -405,8 +405,8 @@ function formatPercentageNumber(number) {
 document.addEventListener("DOMContentLoaded", function () {
     // Initialize locale from session
     document.documentElement.lang = "{{ app()->getLocale() }}";
-    let cartbtnElement = document.getElementById("cartbtn"); // Correctly target cartbtn
-    let wishlistElement = document.getElementById("wishlist"); // Correctly target wishlist
+    let cartbtnElement = document.getElementById("cartbtn"); 
+    let wishlistElement = document.getElementById("wishlist"); 
 
     document.addEventListener("click", function (event) {
         // Check if the clicked area is outside the cartbtn offcanvas and if it's shown
@@ -429,6 +429,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   
 
+// Simulating network delay (5 seconds)
+setTimeout(function() {
+    document.body.classList.add('loaded');
+}, 5000); 
+
+window.addEventListener('load', function() {
+    // Once the page is fully loaded, hide the loading screen and change background to white
+    document.body.classList.add('loaded');
+});
 
 
   
