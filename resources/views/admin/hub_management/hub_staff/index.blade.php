@@ -63,11 +63,11 @@
                                                     'label' => 'Login As',
                                                     'target' => '_blank',
                                                 ],
-                                                [
-                                                    'routeName' => 'hm.hub_staff.hub_staff_profile',
-                                                    'params' => [encrypt($hub_staff->id)],
-                                                    'label' => 'Profile',
-                                                ],
+                                                // [
+                                                //     'routeName' => 'hm.hub_staff.hub_staff_profile',
+                                                //     'params' => [encrypt($hub_staff->id)],
+                                                //     'label' => 'Profile',
+                                                // ],
                                                 [
                                                     'routeName' => 'javascript:void(0)',
                                                     'params' => [$hub_staff->id],

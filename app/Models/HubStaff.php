@@ -55,6 +55,11 @@ class HubStaff extends AuthenticateBaseModel
         return $this->belongsTo(Hub::class);
     }
 
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'creater');
+    }
+
 
     public function setGenderAttribute($value)
     {
