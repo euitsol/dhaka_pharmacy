@@ -41,7 +41,8 @@ class HubStaff extends AuthenticateBaseModel
     ];
 
     protected $appends = [
-        'gender_label'
+        'gender_label',
+        'modified_image'
     ];
 
     protected $hidden = [
@@ -53,6 +54,11 @@ class HubStaff extends AuthenticateBaseModel
     public function hub()
     {
         return $this->belongsTo(Hub::class);
+    }
+
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'creater');
     }
 
 
@@ -77,5 +83,10 @@ class HubStaff extends AuthenticateBaseModel
     {
         $genderOptions = self::getGenderOptions();
         return $genderOptions[$this->gender] ?? 'Unknown';
+    }
+
+    public function getModifiedImageAttribute()
+    {
+        return auth_storage_url($this->image, $this->gender);
     }
 }

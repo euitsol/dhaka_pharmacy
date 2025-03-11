@@ -63,11 +63,11 @@
                                                     'label' => 'Login As',
                                                     'target' => '_blank',
                                                 ],
-                                                [
-                                                    'routeName' => 'hm.hub_staff.hub_staff_profile',
-                                                    'params' => [encrypt($hub_staff->id)],
-                                                    'label' => 'Profile',
-                                                ],
+                                                // [
+                                                //     'routeName' => 'hm.hub_staff.hub_staff_profile',
+                                                //     'params' => [encrypt($hub_staff->id)],
+                                                //     'label' => 'Profile',
+                                                // ],
                                                 [
                                                     'routeName' => 'javascript:void(0)',
                                                     'params' => [$hub_staff->id],
@@ -159,7 +159,7 @@
                                         <th>:</th>
                                         <td><div id="lightbox" class="lightbox">
                                                 <div class="lightbox-content">
-                                                    <img src="${data.image}"
+                                                    <img src="${data.modified_image}"
                                                         class="lightbox_image">
                                                 </div>
                                                 <div class="close_button fa-beat">X</div>

@@ -10,133 +10,160 @@ role_delete,admin,Role
 permission_list,admin,Permission
 permission_create,admin,Permission
 permission_edit,admin,Permission
-permission_delete,admin,Permission
+bulk_entry,admin,Medicine
 user_list,admin,User
 user_create,admin,User
 user_edit,admin,User
 user_delete,admin,User
-user_kyc_settings,admin,User KYC Settings
-user_kyc_list,admin,User KYC
-user_kyc_create,admin,User KYC
-user_kyc_edit,admin,User KYC
-user_kyc_delete,admin,User KYC
+u_kyc_create,admin,"User KYC Settings"
+us_kyc_list,admin,"User KYC"
+us_kyc_details,admin,"User KYC"
+us_kyc_status,admin,"User KYC"
+us_kyc_delete,admin,"User KYC"
 pharmacy_list,admin,Pharmacy
 pharmacy_create,admin,Pharmacy
 pharmacy_edit,admin,Pharmacy
 pharmacy_delete,admin,Pharmacy
-p_kyc_create,admin,Pharmacy KYC Settings
-p_kyc_details,admin,Pharmacy KYC Settings
-ps_kyc_list,admin,Pharmacy KYC
-ps_kyc_details,admin,Pharmacy Submitted KYC
-ps_kyc_status,admin,Pharmacy Submitted KYC
-ps_kyc_delete,admin,Pharmacy Submitted KYC
-site_settings,admin,Site Settings
-district_manager_list,admin,District Manager
-district_manager_create,admin,District Manager
-district_manager_edit,admin,District Manager
-district_manager_delete,admin,District Manager
-local_area_manager_list,admin,Local Area Manager
-local_area_manager_create,admin,Local Area Manager
-local_area_manager_edit,admin,Local Area Manager
-local_area_manager_delete,admin,Local Area Manager
+p_kyc_create,admin,"Pharmacy KYC Settings"
+p_kyc_details,admin,"Pharmacy KYC Settings"
+ps_kyc_list,admin,"Pharmacy KYC"
+ps_kyc_details,admin,"Pharmacy Submitted KYC"
+ps_kyc_status,admin,"Pharmacy Submitted KYC"
+ps_kyc_delete,admin,"Pharmacy Submitted KYC"
+site_settings,admin,"Site Settings"
+district_manager_list,admin,"District Manager"
+district_manager_create,admin,"District Manager"
+district_manager_edit,admin,"District Manager"
+district_manager_delete,admin,"District Manager"
+local_area_manager_list,admin,"Local Area Manager"
+local_area_manager_create,admin,"Local Area Manager"
+local_area_manager_edit,admin,"Local Area Manager"
+local_area_manager_delete,admin,"Local Area Manager"
 user_profile,admin,User
 admin_profile,admin,Admin
 pharmacy_profile,admin,Pharmacy
-district_manager_profile,admin,District Manager
-local_area_manager_profile,admin,Local Area Manager
-generic_name_list,admin,Generic Name
-generic_name_create,admin,Generic Name
-generic_name_edit,admin,Generic Name
-generic_name_delete,admin,Generic Name
-company_name_list,admin,Company Name
-company_name_create,admin,Company Name
-company_name_edit,admin,Company Name
-company_name_delete,admin,Company Name
-medicine_category_list,admin,Medicine Category
-medicine_category_create,admin,Medicine Category
-medicine_category_edit,admin,Medicine Category
-medicine_category_delete,admin,Medicine Category
-medicine_unit_list,admin,Medicine Unit
-medicine_unit_create,admin,Medicine Unit
-medicine_unit_edit,admin,Medicine Unit
-medicine_unit_delete,admin,Medicine Unit
-medicine_strength_list,admin,Medicine Strength
-medicine_strength_create,admin,Medicine Strength
-medicine_strength_edit,admin,Medicine Strength
-medicine_strength_delete,admin,Medicine Strength
-product_category_list,admin,Product Category
-product_category_create,admin,Product Category
-product_category_edit,admin,Product Category
-product_category_delete,admin,Product Category
+district_manager_profile,admin,"District Manager"
+local_area_manager_profile,admin,"Local Area Manager"
+generic_name_list,admin,"Generic Name"
+generic_name_create,admin,"Generic Name"
+generic_name_edit,admin,"Generic Name"
+generic_name_delete,admin,"Generic Name"
+company_name_list,admin,"Company Name"
+company_name_create,admin,"Company Name"
+company_name_edit,admin,"Company Name"
+company_name_delete,admin,"Company Name"
+lf_create,admin,"Latest Offer"
+lf_edit,admin,"Latest Offer"
+lf_delete,admin,"Latest Offer"
+lf_list,admin,"Latest Offer"
+medicine_unit_list,admin,"Medicine Unit"
+medicine_unit_create,admin,"Medicine Unit"
+medicine_unit_edit,admin,"Medicine Unit"
+medicine_unit_delete,admin,"Medicine Unit"
+medicine_strength_list,admin,"Medicine Strength"
+medicine_strength_create,admin,"Medicine Strength"
+medicine_strength_edit,admin,"Medicine Strength"
+medicine_strength_delete,admin,"Medicine Strength"
+product_category_list,admin,"Product Category"
+product_category_create,admin,"Product Category"
+product_category_edit,admin,"Product Category"
+product_category_delete,admin,"Product Category"
 medicine_list,admin,Medicine
 medicine_create,admin,Medicine
 medicine_edit,admin,Medicine
 medicine_delete,admin,Medicine
-district_manager_kyc_settings,admin,DM KYC Settings
-local_area_manager_kyc_settings,admin,LAM KYC Settings
-local_area_manager_kyc_list,admin,LAM KYC
-local_area_manager_kyc_details,admin,LAM KYC
-local_area_manager_kyc_status,admin,LAM KYC
-local_area_manager_kyc_delete,admin,LAM KYC
-district_manager_kyc_list,admin,DM KYC
-district_manager_kyc_details,admin,DM KYC
-district_manager_kyc_status,admin,DM KYC
-district_manager_kyc_delete,admin,DM KYC
-product_sub_category_list,admin,Product Sub Category
-product_sub_category_edit,admin,Product Sub Category
-product_sub_category_create,admin,Product Sub Category
-product_sub_category_delete,admin,Product Sub Category
-operation_area_list,admin,Operation Area
-operation_area_create,admin,Operation Area
-operation_area_edit,admin,Operation Area
-operation_area_delete,admin,Operation Area
-operation_sub_area_list,admin,Operation Sub Area
-operation_sub_area_create,admin,Operation Sub Area
-operation_sub_area_edit,admin,Operation Sub Area
-operation_sub_area_delete,admin,Operation Sub Area
+dm_kyc_create,admin,"DM KYC Settings"
+lam_kyc_create,admin,"LAM KYC Settings"
+lams_kyc_list,admin,"LAM KYC"
+lams_kyc_details,admin,"LAM KYC"
+lams_kyc_status,admin,"LAM KYC"
+lams_kyc_delete,admin,"LAM KYC"
+dms_kyc_list,admin,"DM KYC"
+dms_kyc_details,admin,"DM KYC"
+dms_kyc_status,admin,"DM KYC"
+dms_kyc_delete,admin,"DM KYC"
+product_sub_category_list,admin,"Product Sub Category"
+product_sub_category_edit,admin,"Product Sub Category"
+product_sub_category_create,admin,"Product Sub Category"
+product_sub_category_delete,admin,"Product Sub Category"
+operation_area_list,admin,"Operation Area"
+operation_area_create,admin,"Operation Area"
+operation_area_edit,admin,"Operation Area"
+operation_area_delete,admin,"Operation Area"
+operation_sub_area_list,admin,"Operation Sub Area"
+operation_sub_area_create,admin,"Operation Sub Area"
+operation_sub_area_edit,admin,"Operation Sub Area"
+operation_sub_area_delete,admin,"Operation Sub Area"
 order_list,admin,Order
 order_details,admin,Order
 order_distribution,admin,Order
-do_list,admin,Distributed Orders
-do_edit,admin,Distributed Orders
-do_details,admin,Distributed Orders
-do_update,admin,Distributed Orders
+tips_create,admin,"User Tips"
+tips_edit,admin,"User Tips"
+tips_delete,admin,"User Tips"
+delivery_zones_list,admin,Delivery
 pharmacy_discount,admin,Pharmacy
 rider_list,admin,Rider
 rider_profile,admin,Rider
 rider_create,admin,Rider
 rider_edit,admin,Rider
 rider_delete,admin,Rider
-pg_ssl_commerz,admin,Payment Gateway
-pg_settings,admin,Payment Gateway
-payment_list,admin,Payment Management
-payment_details,admin,Payment Management
-ns,admin,Push Notification
-rider_kyc_list,admin,Rider KYC
-rider_kyc_details,admin,Rider KYC
-rider_kyc_status,admin,Rider KYC
-rider_kyc_delete,admin,Rider KYC
-rider_kyc_settings,admin,Rider KYC Settings
-do_rider,admin,Distributed Orders
-obp_list,admin,Order By Prescription
-obp_details,admin,Order By Prescription
-obp_order_create,admin,Order By Prescription
-status_update,admin,Order By Prescription
-ps_update,admin,Site Settings
-wm_list,admin,Withdraw Method
-wm_details,admin,Withdraw Method
-wm_accept,admin,Withdraw Method
-wm_declined,admin,Withdraw Method
-w_list,admin,Withdraw
-w_details,admin,Withdraw
-w_accept,admin,Withdraw
-w_declined,admin,Withdraw
-pc_list,admin,Payment Clearance
-pc_details,admin,Payment Clearance
-pc_accept,admin,Payment Clearance
-pc_declined,admin,Payment Clearance
-assign_order,admin,Distributed Orders
-medicine_dose_list,admin,Medicine Dose
-medicine_dose_create,admin,Medicine Dose
-medicine_dose_edit,admin,Medicine Dose
-medicine_dose_delete,admin,Medicine Dose
+pg_ssl_commerz,admin,"Payment Gateway"
+pg_settings,admin,"Payment Gateway"
+payment_list,admin,"Payment Management"
+payment_details,admin,"Payment Management"
+ns,admin,"Push Notification"
+rs_kyc_list,admin,"Rider KYC"
+rs_kyc_details,admin,"Rider KYC"
+rs_kyc_status,admin,"Rider KYC"
+rs_kyc_delete,admin,"Rider KYC"
+r_kyc_create,admin,"Rider KYC Settings"
+tips_list,admin,"User Tips"
+obp_list,admin,"Order By Prescription"
+obp_details,admin,"Order By Prescription"
+obp_cancel,admin,"Order By Prescription"
+status_update,admin,"Order By Prescription"
+ps_update,admin,"Site Settings"
+wm_list,admin,"Withdraw Method"
+wm_details,admin,"Withdraw Method"
+wm_accept,admin,"Withdraw Method"
+wm_declined,admin,"Withdraw Method"
+w_list,admin,"Withdraw Request"
+w_details,admin,"Withdraw Request"
+w_accept,admin,"Withdraw Request"
+w_declined,admin,"Withdraw Request"
+pc_list,admin,"Payment Clearance"
+pc_details,admin,"Payment Clearance"
+pc_accept,admin,"Payment Clearance"
+pc_declined,admin,"Payment Clearance"
+assign_order,admin,Order
+medicine_dose_list,admin,"Medicine Dose"
+medicine_dose_create,admin,"Medicine Dose"
+medicine_dose_edit,admin,"Medicine Dose"
+medicine_dose_delete,admin,"Medicine Dose"
+u_kyc_details,admin,"User KYC Settings"
+hub_list,admin,Hub
+hub_create,admin,Hub
+hub_edit,admin,Hub
+hub_delete,admin,Hub
+hub_staff_list,admin,"Hub Staff"
+hub_staff_create,admin,"Hub Staff"
+hub_staff_edit,admin,"Hub Staff"
+hub_staff_delete,admin,"Hub Staff"
+hub_staff_profile,admin,"Hub Staff"
+dm_kyc_details,admin,"DM KYC Settings"
+lam_kyc_details,admin,"LAM KYC Settings"
+r_kyc_details,admin,"Rider KYC Settings"
+hub_assing,admin,Order
+dispute_update,admin,Order
+fdk_list,admin,Feedback
+fdk_details,admin,Feedback
+review_products,admin,Review
+review_list,admin,Review
+review_edit,admin,Review
+review_delete,admin,Review
+ticket_list,admin,"Support Ticket"
+ticket_chat,admin,"Support Ticket"
+doc_list,admin,Documentation
+doc_create,admin,Documentation
+doc_edit,admin,Documentation
+doc_delete,admin,Documentation
