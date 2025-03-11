@@ -26,21 +26,21 @@
                             <div class="mb-3 mb-md-3">
                                 <label for="name" class="form-label">{{ __('Name') }}<span class="required">*</span></label>
                                 <input type="text" class="form-control" value="{{ old('name') }}" id="name" name="name"
-                                    placeholder="Enter your name" required>
+                                    placeholder="{{__('Enter your name')}}" required>
                             </div>
                             <div class="mb-3 mb-md-3">
                                 <label for="phone" class="form-label">{{ __('Phone') }}<span class="required">*</span></label>
                                 <input type="tel" class="form-control" value="{{ old('phone') }}" id="phone" name="phone"
-                                    placeholder="Enter your phone number" required>
+                                    placeholder="{{__('Enter your phone number')}}" required>
                             </div>
                             <div class="mb-3 mb-md-3">
                                 <label for="email" class="form-label">{{ __('E-Mail') }}</label>
                                 <input type="email" class="form-control" value="{{ old('email') }}" id="email" name="email"
-                                    placeholder="Enter your e-mail">
+                                    placeholder="{{__('Enter your e-mail')}}">
                             </div>
                             <div class="mb-3 mb-md-3">
                                 <label for="reason" class="form-label">{{ __('Reason for Deletion') }}</label>
-                                <textarea class="form-control" id="reason" name="reason" rows="4" placeholder="Please explain why you want your data deleted">{{ old('reason') }}</textarea>
+                                <textarea class="form-control" id="reason" name="reason" rows="4" placeholder="{{__('Please explain why you want your data deleted')}}">{{ old('reason') }}</textarea>
                             </div>
                             <div class="btn w-100 p-0">
                                 <button type="submit" class="btn btn-send send-button">{{ __('SUBMIT REQUEST') }}</button>

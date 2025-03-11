@@ -21,7 +21,7 @@
         line-height: 11px;
     }
     .single-pdct .add_to_card .cart-btn {
-        padding: 0.6rem 0.7rem;
+        padding: 0.3rem 0.7rem;
         font-size: 16px !important;
     }
 
@@ -31,7 +31,7 @@
     }
 
     .single-pdct .pdct-info {
-        padding: 10px 10px 0px 10px;
+        padding: 10px 10px 10px 10px;
     }
 
     .single-pdct .pdct-info .cart-button-lg .cart-btn {
@@ -101,13 +101,10 @@
         line-height: 30px !important;
         font-weight: 500 !important;
     }
-    /* .single-pdct .pdct-info {
+    .single-pdct .pdct-info {
         min-height: 100px;
-    } */
+    }
 
-    /* .slider-sction .home-main-banner .uk-panel img{
-        height: 450px !important;
-    } */
 }
 
 @media screen and (max-width: 1399px) {
@@ -118,9 +115,6 @@
         font-size: 0.7rem;
         line-height: 0.25rem;
     }
-    /* .slider-sction .home-main-banner .uk-panel img{
-        height: 300px !important;
-    } */
     /*==================================================
         ul home page slider responsive code here *
     ====================================================*/
@@ -172,6 +166,7 @@
         background-color: rgba(255, 255, 255, 0.1);
         margin-bottom: 0px !important;
         overflow: hidden;
+        height: 100% !important;
     }
 
     .single_product_section
@@ -204,6 +199,10 @@
     .single_product_section .similar_products .single-item .content {
         padding: 10px 25px !important;
         margin-top: 5px !important;
+        min-height: 150px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
     }
 
     .log-with-pass .left-col .form-title h1 {
@@ -308,10 +307,13 @@
     .best-selling-products .bst-product-content {
         padding: 10px;
         margin-top: 0px !important;
-        /* min-height: 115px !important; */
+        min-height: 151px !important;
         display: flex;
         justify-content: space-between !important;
         flex-direction: column !important;
+    }
+    .single-pdct .pdct-info{
+        min-height: 151px !important;
     }
 
     .product-section .align-items-baseline .feature-product .slider-col .uk-position-small {
@@ -356,6 +358,7 @@
         background: transparent !important;
         align-items: center !important;
         color: var(--border-1) !important;
+        padding: .3rem 0.7rem;
     }
 
     .add_to_card .cart-btn span {
@@ -419,9 +422,7 @@
     .product-section .best-selling-col .best-selling-products .medical-devices {
         margin: -6px !important;
     }
-    /* .slider-sction .home-main-banner .uk-panel img {
-        height: 250px !important;
-    } */
+  
 }
 
 @media screen and (max-width: 1100px) {
@@ -567,10 +568,6 @@
        container-fluid section responsive code here
     =========================================================*/
 
-    /* .container-fluid .sidebar-cat-section {
-        display: block;
-        width: 100%;
-    } */
     .container-fluid .content-col {
         display: block;
         width: 100%;
@@ -615,18 +612,6 @@
     /*=====================================================
        product section responsive code here
     =======================================================*/
-
-    /* .single_product_section .similar_products_card .similar_products .single-item img {
-        height: 100% !important;
-    } */
-
-    /* .single_product_section .single_product .product_image .xzoom-thumbs .xzoom-gallery {
-        height: 100% !important;
-    }
-
-    .single_product_section .single_product .product_image .xzoom {
-        height: 100% !important;
-    } */
 
     .product-section .best-selling-col .best-selling-products {
         height: auto !important;
@@ -676,9 +661,6 @@
         width: 35%;
     }
 
-    /* .single-pdct .pdct-img > img {
-        height: 100% !important;
-    } */
 
     /*==================================================
         footer newslter section responsive code here
@@ -790,9 +772,6 @@
         width: 129px !important;
     }
 
-    /* .single-pdct .pdct-info h4 {
-        margin: 0rem 0rem .6rem 0rem !important;
-    } */
 
     /*==============================================
        about ua page responsive code here
@@ -898,10 +877,6 @@
         font-weight: 500 !important;
     }
 
-    /* .about-section .contact-section .main-contact-section .contact-info-content h3 {
-        font-size: 16px !important;
-        line-height: 30px !important;
-    } */
 
     /*================================================
        categories responsive code here
@@ -981,14 +956,12 @@
     .tream-condition ul li,
     .tream-condition p {
         line-height: 29px !important;
-        /* text-align: justify; */
         font-size: 14px !important;
     }
 
     .tream-condition h2 {
         font-size: 22px !important;
         line-height: 32px !important;
-        /* margin-bottom: 10px !important; */
         font-weight: 500 !important;
     }
 
@@ -1046,10 +1019,6 @@
         font-size: 22px !important;
     }
 
-    /* .slider-sction .home-main-banner .uk-panel img {
-        height: 250px !important;
-    } */
-
     .slider-sction .carousel-caption .slider-right img {
         max-width: 300px;
     }
@@ -1058,8 +1027,6 @@
         top: 0px !important;
     }
 
-    /* .log-with-pass .verification_wrap .field-set input{
-    } */
 
     /* ==============================================
         footer section responsive code here
@@ -1107,7 +1074,6 @@
     .mobile-footer .row .col {
         /* box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); */
         /* background: var(--btn-bg-color); */
-       
         padding: 0px !important;
     }
     .mobile-footer .row .col a {
@@ -1121,12 +1087,6 @@
         border-radius: 5px;
         box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
     }
-
-    /* .mobile-footer a i {
-        color: var(--text-color-white);
-        cursor: pointer;
-        font-size: 20px;
-    } */
 
     .mobile-footer .container {
         max-width: 100%;
@@ -1193,30 +1153,24 @@
     .product-section .align-items-baseline .best-selling-products .all-product .single-item {
         overflow: hidden;
     }
+    .best-selling-products .bst-product-content {
+        min-height: 135px !important;
+    }
+    .single-pdct .pdct-info{
+        min-height: 135px !important;
+    }
+    .slider-sction .home-main-banner .uk-dotnav{
+        bottom: 6px !important;
+    }
+    .about-section .about-container img {
+        height: 100% !important;
+    }
 }
 
 @media screen and (max-width: 800px) {
     /*=============================================
         container-fluid responsive code here
     ===============================================*/
-    /* .container-fluid {
-        padding: 0 20px !important;
-    }
-
-    .container-fluid .col-md-3.col-lg-2.sidebar-cat-section {
-        display: block;
-        width: 100%;
-    }
-
-    .container-fluid .col-md-9.col-lg-10.content-col {
-        display: block;
-        width: 100%;
-    }
-
-    .product-section h2.title {
-        font-size: 22px;
-    } */
-
     .container-fluid {
         padding: 0 20px !important;
     }
@@ -1320,10 +1274,6 @@
         line-height: 32px;
     }
 
-    /* .slider-sction .home-main-banner .uk-panel img {
-        height: 250px !important;
-    } */
-
     /* delivery slider responsive code */
 
     .delivery-slider-section .uk-slideshow-items {
@@ -1348,7 +1298,6 @@
 
     .container-fluid .log-with-pass .container {
         padding: 0px 30px;
-        /* max-width: 100%; */
     }
 
     /* best selling products responsive code */
@@ -1384,10 +1333,6 @@
         line-height: 23px;
     }
 
-    /* .contact-section .btn{
-        text-align: center !important;
-    } */
-
     .uk-child-width-1-5\@m > * {
         width: 30% !important;
     }
@@ -1420,12 +1365,10 @@
 
     .single-pdct .pdct-info a {
         font-size: 10px !important;
-        /* line-height: 15px !important; */
     }
 
     .single-item .pdct-title a {
         font-size: 11px !important;
-        /* line-height: 15px; */
         font-weight: 500 !important;
     }
 
@@ -1514,6 +1457,7 @@
     .single_product_section .similar_products .single-item .content {
         padding: 5px 20px 5px 20px !important;
         margin-top: 0px !important;
+        min-height: 135px;
     }
 
     /* =============================================
@@ -1568,7 +1512,6 @@
 	    height: 100px;
     }
 
-
     /* delavery slider css code here */
     .delivery-slider-section .delivery-main-slide .uk-slider-arrow {
         width: 35px;
@@ -1577,7 +1520,7 @@
         margin: 6px;
     }
     .delivery-slider-section .delivery-main-slide .uk-dotnav {
-        bottom: 6px;
+        bottom: -6px;
     }
     .delivery-slider-section .delivery-main-slide .uk-slider-arrow svg {
         width: 16px !important;
@@ -1593,7 +1536,7 @@
         height: 29px !important;
     }
     .slider-sction .home-main-banner .uk-dotnav{
-        bottom: 10px !important;
+        bottom: -6px !important;
     }
 }
 
@@ -1650,16 +1593,21 @@
         line-height: 5px;
         margin-bottom: 0rem;
     }
+    .about-section .about-container img {
+        height: 100% !important;
+    }
 }
 
 @media screen and (max-width: 575px) {
     .single_product_section .single_product .product_image .xzoom{
         height: 14rem !important;
     }
-    /* .single-pdct .pdct-info {
-        min-height: 102px;
-    } */
-    
+    .best-selling-products .bst-product-content {
+        min-height: 115px !important;
+    }
+    .single-pdct .pdct-info {
+        min-height: 115px !important;
+    }
     /*============================================
         uk future tap text slider responsive code
     ===============================================*/
@@ -1752,38 +1700,6 @@
         margin: inherit !important;
     }
 
-    /* .single-item p,
-    .single-item p a {
-        line-height: 12px;
-    } */
-
-    /* .single-pdct .pdct-info .company-name,
-    .single-pdct .pdct-info .generic-name {
-        line-height: 12px;
-    } */
-
-    /*===========================================
-        slider-section responsive code here
-    ===============================================*/
-
-    /* .slider-sction .carousel-caption .slider-left .btns a {
-        font-size: 12px;
-        width: 100px;
-    }
-
-    .slider-sction .carousel-caption .slider-right img {
-        max-width: 140px;
-    }
-
-    .slider-sction .carousel-caption .slider-left h2 {
-        font-size: 29px;
-        line-height: 30px;
-    }
-
-    .slider-sction .carousel-caption .slider-left .btns {
-        margin-top: 7px;
-    } */
-
     .delivery-slider-section .uk-slideshow-items {
         height: 200px;
     }
@@ -1819,21 +1735,6 @@
         single product section responsive code
     =========================================================*/
 
-    /* .single_product_section .single_product .product_details .nav-tabs li {
-        margin: 0px !important;
-        display: block;
-        width: 100% !important;
-        text-align: inherit;
-    } */
-    /* .product_details .nav-tabs{
-        display: flex;
-        text-align: left;
-    }
-
-    .single_product_section .single_product .product_details .tab-pane {
-        padding: 0px !important;
-    } */
-
     .single_product_section .single_product .product_details .nav-tabs li a {
         padding: 10px 5px !important;
     }
@@ -1841,11 +1742,6 @@
     .header-section .search-filter .sub-btn i {
         font-size: 14px !important;
     }
-
-    /* .single_product_section .single_product .product_details #description{
-        padding: 10px;
-        background: var( --commoninner_bg);
-    } */
 
     /* =============================================
         support_wrap responsive code
@@ -1874,10 +1770,6 @@
     /* =========================================
         add to card responsive code
     ============================================ */
-
-    /* .add_to_card .cart-btn {
-        padding: 3px 5px !important;
-    } */
 
     .pdct-info .add_to_card .cart-btn {
         padding: 3px 5px !important;
@@ -2026,11 +1918,6 @@
     .all-product-containt{
         padding: 2px 0px 0px 0px !important;
     }
-
-    /* .slider-sction .home-main-banner .uk-panel img {
-        height: 200px !important;
-    } */
-
     .slider-sction .carousel-caption .slider-right {
         position: absolute;
         z-index: -1;
@@ -2094,12 +1981,6 @@
         font-size: 14px !important;
         line-height: 16px !important;
     }
-
-
-    .delivery-slider-section .bottom-slide-items img {
-        object-fit: unset;
-        height: 150px;
-    }
     .delivery-slider-section .delivery-main-slide .uk-slider-arrow {
         width: 30px;
         height: 30px;
@@ -2108,6 +1989,9 @@
     .delivery-slider-section .delivery-main-slide .uk-slider-arrow svg {
         width: 14px !important;
         height: 26px !important;
+    }
+    .single_product_section .similar_products .single-item .content {
+        min-height: 115px !important;
     }
 }
 
@@ -2192,17 +2076,9 @@
         margin-bottom: 10px !important;
     }
 
-    /* .slider-sction .home-main-banner .uk-panel img {
-        height: 170px !important;
-    } */
-
     .delivery-slider-section .uk-slideshow-items {
         height: 140px;
     }
-
-    /* .delivery-slider-section .uk-slideshow-items .carousel-caption {
-        transform: translateY(-90%);
-    } */
 
     .delivery-slider-section .uk-slideshow .uk-dotnav {
         bottom: 20px;
