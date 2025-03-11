@@ -159,7 +159,7 @@
                                         <th>:</th>
                                         <td><div id="lightbox" class="lightbox">
                                                 <div class="lightbox-content">
-                                                    <img src="${data.image}"
+                                                    <img src="${data.modified_image}"
                                                         class="lightbox_image">
                                                 </div>
                                                 <div class="close_button fa-beat">X</div>
