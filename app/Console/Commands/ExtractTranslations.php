@@ -17,10 +17,10 @@ class ExtractTranslations extends Command
         // Define directories to search (adjust as needed)
         $directories = [
             app_path('Http/Controllers/Frontend'),
-            app_path('Http/Controllers/User'),
+            // app_path('Http/Controllers/User'),
             app_path('Http/Controllers/Auth'),
             resource_path('views/frontend'),
-            resource_path('views/user'),
+            // resource_path('views/user'),
             resource_path('views/auth'),
         ];
 

@@ -83,7 +83,7 @@
                 <!-- Slide 1 -->
                 <li>
                     <div class="uk-panel">
-                        <img src="{{ asset('frontend/asset/img/banner/banner-1.jpg') }}" alt="" uk-cover>
+                        <img src="{{ asset('frontend/asset/img/banner/banner-3.jpg') }}" alt="" uk-cover>
                         <div class="carousel-caption">
                             <div class="row">
                                 <!-- Content Hidden -->
@@ -93,7 +93,7 @@
                 </li>
                 <li>
                     <div class="uk-panel">
-                        <img src="{{ asset('frontend/asset/img/banner/banner-1.jpg') }}" alt="" uk-cover>
+                        <img src="{{ asset('frontend/asset/img/banner/banner-3.jpg') }}" alt="" uk-cover>
                         <div class="carousel-caption">
                             <div class="row">
                                 <!-- Content Hidden -->
@@ -103,7 +103,7 @@
                 </li>
                 <li>
                     <div class="uk-panel">
-                        <img src="{{ asset('frontend/asset/img/banner/banner-1.jpg') }}" alt="" uk-cover>
+                        <img src="{{ asset('frontend/asset/img/banner/banner-3.jpg') }}" alt="" uk-cover>
                         <div class="carousel-caption">
                             <div class="row">
                                 <!-- Content Hidden -->
