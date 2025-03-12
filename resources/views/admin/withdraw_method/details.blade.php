@@ -92,7 +92,13 @@
                         ])
                     @endif
                     @if ($wm->status !== 2)
-                        <a href="javascript:void(0)" class="btn btn-sm btn-danger declined_btn">{{ __('Decline') }}</a>
+                        @include('admin.partials.button', [
+                            'routeName' => 'withdraw_method.wm_declined',
+                            'className' => 'btn-danger declined_btn',
+                            'params' => ['id' => encrypt($wm->id)],
+                            'label' => 'Decline',
+                        ])
+                        {{-- <a href="javascript:void(0)" class="btn btn-sm btn-danger declined_btn">{{ __('Decline') }}</a> --}}
                     @endif
 
 
@@ -134,7 +140,8 @@
             $('#declineModal').on('hidden.bs.modal', function(event) {
                 destroyAllEditors();
             });
-            $('.declined_btn').on('click', function() {
+            $('.declined_btn').on('click', function(e) {
+                e.preventDefault();
                 let textAreas = $(".declinedForm").find('textarea');
                 initializeCKEditor(textAreas);
                 $('.view_modal').modal('show');

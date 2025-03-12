@@ -25,11 +25,15 @@
                         @include('alerts.feedback', ['field' => 'equivalent_amount'])
                     </div>
                 </div>
-                @if (admin()->hasPermissionTo('ps_update'))
-                    <div class="card-footer text-end">
-                        <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
-                    </div>
-                @endif
+                {{-- @if (admin()->hasPermissionTo('ps_update')) --}}
+                <div class="card-footer text-end">
+                    {{-- <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button> --}}
+                    @include('admin.partials.button', [
+                        'routeName' => 'settings.ps_update',
+                        'type' => 'submit',
+                    ])
+                </div>
+                {{-- @endif --}}
             </form>
         </div>
     </div>
