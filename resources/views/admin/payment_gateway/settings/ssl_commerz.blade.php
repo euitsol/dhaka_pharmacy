@@ -45,9 +45,11 @@
 
 
                     </div>
-                    <div class="card-footer text-end">
-                        <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
-                    </div>
+                    @if (admin()->hasPermissionTo('pg_settings'))
+                        <div class="card-footer text-end">
+                            <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
+                        </div>
+                    @endif
                 </form>
             </div>
         </div>
