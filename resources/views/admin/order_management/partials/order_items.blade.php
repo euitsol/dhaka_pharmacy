@@ -38,11 +38,9 @@
                                         <div class="media">
                                             <div class="sq align-self-center "> <img
                                                     class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
-                                                    src="{{ $product->image }}"
-                                                    width="50" height="50" /> </div>
+                                                    src="{{ $product->image }}" width="50" height="50" /> </div>
                                             <div class="media-body my-auto text-center">
-                                                <div
-                                                    class="row  my-auto flex-column flex-md-row px-3">
+                                                <div class="row  my-auto flex-column flex-md-row px-3">
                                                     <div class="col my-auto">
                                                         <h6 class="mb-0 text-start">
                                                             {{ $product->name }}</h6>
@@ -82,15 +80,16 @@
                                     {{-- Hub Assignment Column --}}
                                     <div class="col-3">
                                         <div class="form-group">
-                                            @if($submitted)
+                                            @if ($submitted)
                                                 {{-- Editable Hub Selection --}}
                                                 <label>{{ __('Assign Hub') }}</label>
-                                                <select class="form-control no-select" name="data[{{ $key }}][hub_id]">
+                                                <select class="form-control no-select"
+                                                    name="data[{{ $key }}][hub_id]">
                                                     <option value="">Select Hub</option>
                                                     @foreach ($hubs as $hub)
                                                         <option value="{{ $hub->id }}"
                                                             {{ $product->hub?->id === $hub->id ? 'selected' : '' }}>
-                                                            {{ $hub->name.' | '.$hub->address->address }}
+                                                            {{ $hub->name . ' | ' . $hub->address->address }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -98,7 +97,7 @@
                                                 {{-- Read-only Hub Display --}}
                                                 <label>{{ __('Assigned Hub') }}</label>
                                                 <div class="hub-display">
-                                                    @if(isset($product->pivot->hub_id) && !empty($product->pivot->hub_id))
+                                                    @if (isset($product->pivot->hub_id) && !empty($product->pivot->hub_id))
                                                         <div class="text-success">
                                                             <i class="fas fa-warehouse"></i>
                                                             {{ $product->pivot->hub_name }}
@@ -114,7 +113,7 @@
                                             @if ($collected || $prepared)
                                                 <label>{{ __('Collected from Pharmacy') }}</label>
                                                 <div class="hub-display">
-                                                    @if(isset($product->pivot->pharmacy_id) && !empty($product->pivot->pharmacy_id))
+                                                    @if (isset($product->pivot->pharmacy_id) && !empty($product->pivot->pharmacy_id))
                                                         <div class="text-success">
                                                             <i class="fa-solid fa-shop"></i>
                                                             {{ $product->pivot->pharmacy_name }}
@@ -134,10 +133,10 @@
                         </div>
                     </div>
                 @endforeach
-                @if ($submitted)
-                <div class="col-12">
-                    <div class="row mt-3">
-                        {{-- <div class="form-group col-md-12">
+                @if ($submitted && admin()->hasPermissionTo('hub_assign'))
+                    <div class="col-12">
+                        <div class="row mt-3">
+                            {{-- <div class="form-group col-md-12">
                             <label>{{ __('Note') }}</label>
                             <textarea name="note" @if (isset($order->od) && $order->od->status == 0) disabled @endif
                                 class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}"
@@ -146,12 +145,13 @@
                                 'field' => 'note',
                             ])
                         </div> --}}
-                        <div class="form-group col-md-12 text-end">
-                            <input type="submit" value="Assign" onclick="return confirm('Are you sure to assign this order to the selected hubs?')"
-                                class="btn btn-primary">
+                            <div class="form-group col-md-12 text-end">
+                                <input type="submit" value="Assign"
+                                    onclick="return confirm('Are you sure to assign this order to the selected hubs?')"
+                                    class="btn btn-primary">
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
             </div>
         </div>
