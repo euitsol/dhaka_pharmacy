@@ -49,7 +49,8 @@ class GenerateDescription extends Command
         $medicines = Medicine::where('status', 2)
             ->where(function($query) {
                 $query->where('description', '')
-                      ->orWhereNull('description');
+                      ->orWhereNull('description')
+                      ->orWhere('description', '<p>&nbsp;</p>');
             })
             ->orderBy('id')
             ->take(300)
