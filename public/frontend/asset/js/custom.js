@@ -440,4 +440,17 @@ window.addEventListener('load', function() {
 });
 
 
+// Select the button
+const addToCartBtn = document.querySelector('.cart-btn');
+
+// Add an event listener to the button to toggle the active class on click
+addToCartBtn.addEventListener('click', function() {
+  addToCartBtn.classList.add('active');
   
+  // After 2 seconds (2000ms), remove the 'active' class
+  setTimeout(function() {
+    addToCartBtn.classList.remove('active');
+  }, 3000);
+});
+
+

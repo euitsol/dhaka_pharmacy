@@ -1,3 +1,4 @@
+
 <p class="or-login">{{ __('Or login With') }}</p>
 <div class="other-login">
     <a href="{{ route('google.redirect') }}" class="google">

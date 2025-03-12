@@ -32,9 +32,6 @@
         </div>
     </div>
 </div>
-
-
-
 <form action="{{ route('u.ck.init') }}" method="POST" id="checkoutForm">
     @csrf
 </form>

@@ -359,9 +359,10 @@
     "Bangladesh\\'s Largest Online Pharmacy": "",
     "Welcome to Dhaka Pharmacy, Bangladesh\\'s leading online pharmacy!": "",
     "medications": "",
-    "Reason for Deletion": "",
-    "Please explain why you want your data deleted": "",
-    "SUBMIT REQUEST": "",
+    "Reason for Deletion": "মুছে ফেলার কারণ",
+    "Please explain why you want your data deleted": "আপনি কেন আপনার ডেটা মুছে ফেলতে চান তা ব্যাখ্যা করুন।",
+    "SUBMIT REQUEST": "অনুরোধ জমা দিন",
+    "We respect your privacy rights. If you wish to have your personal data removed from our system, please fill out this form. Our team will process your request in accordance with applicable data protection laws.": "আমরা আপনার গোপনীয়তার অধিকারকে সর্বোচ্চ গুরুত্ব দিই। যদি আপনি আমাদের সিস্টেম থেকে আপনার ব্যক্তিগত তথ্য সরিয়ে ফেলতে চান, অনুগ্রহ করে নিচের ফর্মটি পূরণ করুন। আপনার অনুরোধ প্রযোজ্য তথ্য সুরক্ষা আইন অনুসারে যথাযথভাবে পর্যালোচনা ও প্রক্রিয়াকরণ করা হবে।",
     "What is your company about?": "",
     " Dhaka Pharmacy: Were Bangladeshs leading online pharmacy, delivering genuine medications and healthcare essentials directly to your doorstep.": "",
     " What is your company about?": "",
@@ -397,5 +398,6 @@
     "Our platform may contain links to external websites. We are not responsible for their privacy practices, so we encourage you to review their policies separately.": "",
     "8. Changes to This Policy": "",
     "We may update this Privacy Policy periodically. Any significant changes will be communicated via email or app notifications.": "",
-    "Cancel Order:": ""                                                                                                                                                                                                        
+    "Cancel Order:": "",
+    "&copy all rights reserved by Dhaka Pharmacy": ""                                                                                                                                                                                                        
 }

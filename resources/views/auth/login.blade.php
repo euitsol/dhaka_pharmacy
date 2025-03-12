@@ -21,12 +21,11 @@
                         </div>
 
 
-                        {{-- Sent OTP --}}
                         <form class="otp_form" autocomplete="off" method="POST" action="{{ route('use.send_otp') }}">
                             @csrf
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="Phone"
+                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="{{__('Phone')}}"
                                     class="phone" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
@@ -36,26 +35,21 @@
                             <p class="get-otp"><a class="login_switch"
                                     href="javascript:void(0)">{{ __('Login with password?') }}</a>
                             </p>
-                            {{-- <p class="get-otp">{{ __('Not yet registered? ') }}<a
-                                    href="{{ route('use.register') }}">{{ __('Create an account') }}</a>
-                            </p> --}}
 
                         </form>
 
-
-                        {{-- login With Password --}}
                         <form action="{{ route('login') }}" method="POST" class="login_form" style="display: none;"
                             autocomplete="off">
                             @csrf
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="Phone"
+                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="{{__('Phone')}}"
                                     class="phone" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
                             <div class="pass input-box password_input">
                                 <span class="icon"><i class="fa-solid fa-lock"></i></span>
-                                <input type="password" name="password" placeholder="Password" class="password"
+                                <input type="password" name="password" placeholder="{{__('Password')}}" class="password"
                                     autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                                 <span class="icon eye"><i id="eye-icon" class="fa-solid fa-eye"></i></i></span>
                             </div>
@@ -65,14 +59,10 @@
                                     href="{{ route('user.forgot.password') }}">{{ __('Lost your password?') }}</a></p>
 
 
-                            <input class="login_button submit_button" type="submit" value="LOGIN">
+                            <input class="login_button submit_button" type="submit" value="{{__('Login')}}">
                             <p class="get-otp"> <a class="otp_switch"
                                     href="javascript:void(0)">{{ __('Login with OTP?') }}</a></p>
-                            {{-- <p class="get-otp">{{ __('Not yet registered? ') }}<a
-                                    href="{{ route('use.register') }}">{{ __('Create an account') }}</a>
-                            </p> --}}
                         </form>
-                        {{-- login With Password --}}
                         @include('auth.login_with')
                     </div>
                 </div>

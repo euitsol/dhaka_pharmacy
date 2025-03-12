@@ -1226,7 +1226,12 @@
     .single-pdct .pdct-info {
         padding: 5px 5px 5px 5px !important;
     }
-
+    .best-selling-products .bst-product-content {
+        min-height: 123px !important;
+    }
+    .single-pdct .pdct-info {
+        min-height: 120px !important;
+    }
     /*===============================================
         uk future tap text slider responsive code
     ================================================*/
@@ -1342,7 +1347,7 @@
     =================================================*/
 
     .about-section .highlight-section {
-        padding: 40px 20px !important;
+        padding: 40px 35px !important;
     }
 
     .about-section .contact-section .main-contact-section .contact-info {
@@ -1538,6 +1543,10 @@
     .slider-sction .home-main-banner .uk-dotnav{
         bottom: -6px !important;
     }
+    .delivery-slider-section .bottom-slide-items img{
+        height: 200px;
+        object-fit: cover;
+    }
 }
 
 @media screen and (max-width: 640px) {
@@ -1603,10 +1612,10 @@
         height: 14rem !important;
     }
     .best-selling-products .bst-product-content {
-        min-height: 115px !important;
+        min-height: 114px !important;
     }
     .single-pdct .pdct-info {
-        min-height: 115px !important;
+        min-height: 114px !important;
     }
     /*============================================
         uk future tap text slider responsive code
@@ -1993,6 +2002,9 @@
     .single_product_section .similar_products .single-item .content {
         min-height: 115px !important;
     }
+    .delivery-slider-section .bottom-slide-items img {
+        height: 155px;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -2101,6 +2113,13 @@
     }
     .add_to_card .cart-btn span {
         font-size: 10px !important;
+    }
+    .slider-sction .home-main-banner .uk-panel img {
+        height: 140px;
+        object-fit: cover;
+    }
+    .delivery-slider-section .bottom-slide-items img {
+        height: 145px;
     }
 }
 

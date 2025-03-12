@@ -336,7 +336,7 @@ header {
     .boxed
     input[type="radio"]:checked
     + label {
-    border: solid 2px green;
+    border: solid 2px var(--btn-bg-color);
 }
 
 .header-section .right-col .offcanvas .add_to_cart_item .boxed img {

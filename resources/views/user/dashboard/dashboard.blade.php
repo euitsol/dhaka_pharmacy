@@ -193,7 +193,7 @@
                                                         alt=""> --}}
                                                                 </div>
                                                                 <div class="tips_details mt-0 mt-xl-3">
-                                                                    <p>{{ str_limit(html_entity_decode($tips->description), 270) }}
+                                                                    <p>{!! str_limit(html_entity_decode($tips->description), 270) !!}
                                                                     </p>
                                                                 </div>
                                                             </div>

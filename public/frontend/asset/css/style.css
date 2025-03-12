@@ -241,7 +241,10 @@ h2.title {
     display: unset;
     background-color: var(--white-bg);
 }
-
+.add_to_card .cart-btn:active{
+    background-color: #1869aa !important;
+    color: #fff !important;
+}
 .single-pdct .pdct-info h4 {
     font-family: "Rubik", sans-serif;
     font-size: 15px;
@@ -2403,6 +2406,10 @@ a {
     position: absolute;
     width: 100%;
     background: var(--secondary-color);
+    transition: .4s;
+}
+.support_wrap #chat .background:hover{
+    background: var(--btn-bg-color) !important;
 }
 
 .support_wrap #chat .chat-bubble {
@@ -2670,6 +2677,7 @@ a {
     .field
     .start_btn:hover {
     transform: scale(0.97);
+    background: var(--secondary-color);
 }
 
 .support_wrap .message_box .chat-box .message .conversation {
