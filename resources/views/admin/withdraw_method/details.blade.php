@@ -91,7 +91,7 @@
                             'label' => 'Accept',
                         ])
                     @endif
-                    @if ($wm->status !== 2)
+                    @if ($wm->status !== 2 && admin()->hasPermissionTo('wm_declined'))
                         <a href="javascript:void(0)" class="btn btn-sm btn-danger declined_btn">{{ __('Decline') }}</a>
                     @endif
 
