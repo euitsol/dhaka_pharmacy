@@ -25,9 +25,11 @@
                         @include('alerts.feedback', ['field' => 'equivalent_amount'])
                     </div>
                 </div>
-                <div class="card-footer text-end">
-                    <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
-                </div>
+                @if (admin()->hasPermissionTo('ps_update'))
+                    <div class="card-footer text-end">
+                        <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
+                    </div>
+                @endif
             </form>
         </div>
     </div>
