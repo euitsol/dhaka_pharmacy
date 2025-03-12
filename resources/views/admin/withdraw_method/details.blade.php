@@ -91,7 +91,7 @@
                             'label' => 'Accept',
                         ])
                     @endif
-                    @if ($wm->status !== 2 && admin()->hasPermissionTo('wm_declined'))
+                    @if ($wm->status !== 2)
                         <a href="javascript:void(0)" class="btn btn-sm btn-danger declined_btn">{{ __('Decline') }}</a>
                     @endif
 
@@ -101,12 +101,12 @@
         </div>
     </div>
     {{-- Delained Modal  --}}
-    <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal view_modal fade" id="declineModal" tabindex="-1" role="dialog" aria-labelledby="declineModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Declaine') }}</h5>
+                    <h5 class="modal-title" id="declineModalLabel">{{ __('Declaine') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -116,7 +116,8 @@
                         @csrf
                         <div class="form-group">
                             <label>{{ __('Reason') }}</label>
-                            <textarea name="declined_reason" placeholder="Enter declined reason" class="form-control">{{ old('declined_reason') }}</textarea>
+                            <textarea name="declined_reason" id="declined_reason" placeholder="Enter declined reason"
+                                class="form-control no-ckeditor5">{{ old('declined_reason') }}</textarea>
                             @include('alerts.feedback', ['field' => 'declined_reason'])
                         </div>
                         <a href="javascript:void(0)" data-id="{{ encrypt($wm->id) }}"
@@ -130,13 +131,19 @@
 @push('js')
     <script>
         $(document).ready(function() {
+            $('#declineModal').on('hidden.bs.modal', function(event) {
+                destroyAllEditors();
+            });
             $('.declined_btn').on('click', function() {
+                let textAreas = $(".declinedForm").find('textarea');
+                initializeCKEditor(textAreas);
                 $('.view_modal').modal('show');
             });
         });
 
         $(document).ready(function() {
             $('.declined_submit').click(function() {
+                let reason = editors[$('#declined_reason').attr('data-index')].getData();
                 var form = $('.declinedForm');
                 let id = $(this).data('id');
                 let _url = ("{{ route('withdraw_method.wm_declined', ['id']) }}");
@@ -144,7 +151,8 @@
                 $.ajax({
                     type: 'POST',
                     url: __url,
-                    data: form.serialize(),
+                    data: form.serialize() +
+                        `&declined_reason=${encodeURIComponent(reason)}`,
                     success: function(response) {
                         $('.invalid-feedback').remove();
                         $('.view_modal').modal('hide');

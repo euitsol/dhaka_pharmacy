@@ -227,11 +227,11 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="declineModal" tabindex="-1" aria-labelledby="declineModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Add Declined Reason') }}</h5>
+                    <h5 class="modal-title" id="declineModalLabel">{{ __('Add Declined Reason') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -242,7 +242,7 @@
                                 <div class="form-group">
                                     <label>{{ __('Note') }} <span
                                             class="text-danger">{{ __('*') }}</span></label>
-                                    <textarea name="note" id="note" class="form-control"></textarea>
+                                    <textarea name="note" id="note" class="form-control no-ckeditor5"></textarea>
                                     @include('alerts.feedback', ['field' => 'note'])
                                 </div>
                                 <span type="submit" id="updateDeclinedNote"
@@ -271,16 +271,22 @@
     <script>
         // Declined On Click
         $(document).ready(function() {
+            $('#declineModal').on('hidden.bs.modal', function(event) {
+                destroyAllEditors();
+            });
             $('.declined').on('click', function() {
                 let id = $(this).data('id');
                 $('#updateDeclinedNote').attr('data-id', id)
-                $('#exampleModal').modal('show');
+                let textAreas = $("#declined_form").find('textarea');
+                initializeCKEditor(textAreas);
+                $('#declineModal').modal('show');
             });
         });
 
         // Declined Update
         $(document).ready(function() {
             $('#updateDeclinedNote').click(function() {
+                let note = editors[$('#note').attr('data-index')].getData();
                 var form = $('#declined_form');
                 let id = $(this).data('id');
                 let _url = (
@@ -289,9 +295,10 @@
                 $.ajax({
                     type: 'PUT',
                     url: __url,
-                    data: form.serialize(),
+                    data: form.serialize() +
+                        `&note=${encodeURIComponent(note)}`,
                     success: function(response) {
-                        $('#exampleModal').modal('hide');
+                        $('#declineModal').modal('hide');
                         console.log(response.message);
                         window.location.reload();
                     },
