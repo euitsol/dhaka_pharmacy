@@ -83,6 +83,11 @@
                         {{ number_format($order->total_amount) }}</span>
                 </td>
             </tr>
+            <tr>
+                <td class="fw-bolder">{{ __('Payment Status') }}</td>
+                <td>:</td>
+                <td>{{ ucfirst($order->payment_status ?? '--') }}</td>
+            </tr>
         </table>
     </div>
 </div>
