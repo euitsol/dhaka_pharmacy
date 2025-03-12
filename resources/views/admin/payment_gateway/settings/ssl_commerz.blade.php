@@ -45,11 +45,15 @@
 
 
                     </div>
-                    @if (admin()->hasPermissionTo('pg_settings'))
-                        <div class="card-footer text-end">
-                            <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
-                        </div>
-                    @endif
+                    {{-- @if (admin()->hasPermissionTo('pg_settings')) --}}
+                    <div class="card-footer text-end">
+                        @include('admin.partials.button', [
+                            'routeName' => 'payment_gateway.update.pg_settings',
+                            'type' => 'submit',
+                        ])
+                        {{-- <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button> --}}
+                    </div>
+                    {{-- @endif --}}
                 </form>
             </div>
         </div>

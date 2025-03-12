@@ -9,7 +9,10 @@
     //Parameters
     $parameterArray = isset($params) ? $params : [];
 @endphp
-@if ($check)
+
+@if (isset($type) && $type == 'submit' && $check)
+    <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
+@elseif($check)
     <a href="{{ is_valid_route($routeName) ? route($routeName, $parameterArray) : $routeName }}"
         class="btn btn-sm {{ $className }}">{{ _($label) }}</a>
 @endif

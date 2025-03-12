@@ -900,6 +900,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
     Route::controller(PharmacyProfileController::class)->prefix('profile')->name('profile.')->group(function () {
         Route::get('/', 'profile')->name('index');
         Route::put('/update', 'update')->name('update');
+        Route::post('/address/store', 'address')->name('address');
         Route::put('/update/password', 'updatePassword')->name('update.password');
         Route::post('/update/image', 'updateImage')->name('update.image');
         Route::get('file/download/{url}', 'view_or_download')->name('file.download');
