@@ -11,7 +11,7 @@
 @endphp
 
 @if (isset($type) && $type == 'submit' && $check)
-    <button type="submit" @if (isset($confirm) && !empty($confirm)) onclick="return confirm({{ $confirm }})" @endif
+    <button type="submit" @if (isset($confirm) && !empty($confirm)) onclick="return confirm('{{ $confirm }}')" @endif
         class="btn btn-fill {{ $className }}">{{ __($label) }}</button>
 @elseif($check)
     <a href="{{ is_valid_route($routeName) ? route($routeName, $parameterArray) : $routeName }}"
