@@ -4,6 +4,9 @@
         <i class="fas fa-ellipsis-v"></i>
     </a>
     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+        @php
+            $no_action = true;
+        @endphp
         @foreach ($menuItems as $menuItem)
             @php
                 $parameterArray = isset($menuItem['params']) ? $menuItem['params'] : [];
@@ -22,14 +25,18 @@
 
             @endphp
             @if ($check)
+                @php
+                    $no_action = false;
+                @endphp
                 <a target="@if (isset($menuItem['target'])) {{ $menuItem['target'] }} @endif"
                     class="dropdown-item @if (isset($menuItem['className'])) {{ $menuItem['className'] }} @endif @if (isset($menuItem['delete']) && $menuItem['delete'] == true) action-delete @endif"
                     @if (isset($menuItem['delete']) && $menuItem['delete'] == true) onclick="return confirm('Are you sure?')" @endif
                     href="{{ $route }}"
                     @if (isset($menuItem['data-id'])) data-id="{{ $menuItem['data-id'] }}" @endif>{{ _($menuItem['label']) }}</a>
-            @else
-                <a class="dropdown-item disabled" href="javascript:void(0)">{{ __('No Action') }}</a>
             @endif
         @endforeach
+        @if ($no_action)
+            <a class="dropdown-item disabled" href="javascript:void(0)">{{ __('No Action') }}</a>
+        @endif
     </div>
 </div>
