@@ -150,13 +150,15 @@
                                     onclick="return confirm('Are you sure to assign this order to the selected hubs?')"
                                     class="btn btn-primary">
                             </div> --}}
-                            @include('admin.partials.button', [
-                                'routeName' => 'om.order.hub_assign',
-                                'type' => 'submit',
-                                'className' => 'btn-primary',
-                                'label' => 'Assign',
-                                'confirm' => 'Are you sure to assign this order to the selected hubs?',
-                            ])
+                            <div class="form-group col-md-12 text-end">
+                                @include('admin.partials.button', [
+                                    'routeName' => 'om.order.hub_assign',
+                                    'type' => 'submit',
+                                    'className' => 'btn-primary',
+                                    'label' => 'Assign',
+                                    'confirm' => 'Are you sure to assign this order to the selected hubs?',
+                                ])
+                            </div>
                         </div>
                     </div>
                 @endif
