@@ -31,6 +31,8 @@
                     @include('admin.partials.button', [
                         'routeName' => 'settings.ps_update',
                         'type' => 'submit',
+                        'className' => 'btn-primary',
+                        'label' => 'Save',
                     ])
                 </div>
                 {{-- @endif --}}

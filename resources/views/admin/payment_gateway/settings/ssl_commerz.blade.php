@@ -50,6 +50,8 @@
                         @include('admin.partials.button', [
                             'routeName' => 'payment_gateway.update.pg_settings',
                             'type' => 'submit',
+                            'className' => 'btn-primary',
+                            'label' => 'Save',
                         ])
                         {{-- <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button> --}}
                     </div>

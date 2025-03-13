@@ -145,11 +145,18 @@
                                 'field' => 'note',
                             ])
                         </div> --}}
-                            <div class="form-group col-md-12 text-end">
+                            {{-- <div class="form-group col-md-12 text-end">
                                 <input type="submit" value="Assign"
                                     onclick="return confirm('Are you sure to assign this order to the selected hubs?')"
                                     class="btn btn-primary">
-                            </div>
+                            </div> --}}
+                            @include('admin.partials.button', [
+                                'routeName' => 'om.order.hub_assign',
+                                'type' => 'submit',
+                                'className' => 'btn-primary',
+                                'label' => 'Assign',
+                                'confirm' => 'Are you sure to assign this order to the selected hubs?',
+                            ])
                         </div>
                     </div>
                 @endif
