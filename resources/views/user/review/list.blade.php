@@ -51,9 +51,11 @@
                                     <h5 class="mb-0" title="{{ $product->attr_title }}">
                                         {{ $product->name }}
                                     </h5>
-                                    <p class="mb-0" title="{{ $product->pro_sub_cat?->name }}">{{ $product->pro_sub_cat?->name }}
+                                    <p class="mb-0" title="{{ $product->pro_sub_cat?->name }}">
+                                        {{ $product->pro_sub_cat?->name }}
                                     </p>
-                                    <p class="mb-0" title="{{ $product->pro_cat?->name }}">{{ $product->pro_cat?->name }}</p>
+                                    <p class="mb-0" title="{{ $product->pro_cat?->name }}">{{ $product->pro_cat?->name }}
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-lg col-md-5 col-12">
@@ -69,7 +71,7 @@
                             <div class="col-lg-2 col-md-5 ms-auto col-xl col-sm-12 col-12">
                                 <div class="product-info">
                                     <p class="mb-0 text-md-start text-lg-center">
-                                        <strong>{{ __('Strength: ') }}</strong>{{ $product->strength?->name  }}
+                                        <strong>{{ __('Strength: ') }}</strong>{{ $product->strength?->name }}
                                     </p>
                                 </div>
                             </div>
@@ -95,8 +97,7 @@
                                     <form action="{{ route('u.review.store') }}" method="POST" class="px-3">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <textarea name="description" class="w-100 p-2"
-                                            placeholder="Tell us about your experience..."></textarea>
+                                        <textarea name="description" class="w-100 p-2" rows="10" placeholder="Tell us about your experience..."></textarea>
                                         @include('alerts.feedback', ['field' => 'description'])
                                         <input type="submit" class="btn review_submit float-end mt-2" value="Submit">
                                     </form>
