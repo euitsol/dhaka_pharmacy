@@ -114,7 +114,8 @@
                         @csrf
                         <div class="form-group">
                             <label>{{ __('Reason') }}</label>
-                            <textarea name="declined_reason" id="declined_reason" placeholder="Enter declined reason" class="form-control">{{ old('declined_reason') }}</textarea>
+                            <textarea name="declined_reason" id="declined_reason" placeholder="Enter declined reason"
+                                class="form-control  no-ckeditor5">{{ old('declined_reason') }}</textarea>
                             @include('alerts.feedback', ['field' => 'declined_reason'])
                         </div>
                         <a href="javascript:void(0)" data-id="{{ encrypt($payment->id) }}"
