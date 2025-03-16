@@ -1338,3 +1338,10 @@ Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-pr
     Route::post('prescription/resend-otp', 'resendOtp')->name('resend_otp');
     Route::post('prescription/verify-otp', 'verifyOtp')->name('verify_otp');
 });
+
+//Developer Routes
+Route::get('/export-permissions', function () {
+    $filename = 'permissions.csv';
+    $filePath = createCSV($filename);
+    return Response::download($filePath, $filename);
+})->name('export.permissions');
