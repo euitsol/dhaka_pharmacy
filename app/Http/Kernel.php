@@ -96,6 +96,8 @@ class Kernel extends HttpKernel
         'lam' => \App\Http\Middleware\LocalAreaManagerMiddleware::class,
         'rider' => \App\Http\Middleware\RiderMiddleware::class,
         'user_phone_verify' => \App\Http\Middleware\UserPhoneVerify::class,
+        'lam_phone_verify' => \App\Http\Middleware\LamPhoneVerify::class,
+        'dm_phone_verify' => \App\Http\Middleware\DmPhoneVerify::class,
         'check_kyc' => \App\Http\Middleware\CheckKycMiddleware::class,
         'staff' => \App\Http\Middleware\StaffMiddleware::class,
         'webhook.auth' => \App\Http\Middleware\VerifyWebhookToken::class,

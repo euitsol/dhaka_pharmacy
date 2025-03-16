@@ -222,12 +222,15 @@ Route::controller(DmLoginController::class)->prefix('district-manager')->name('d
     Route::post('/login', 'dmLoginCheck')->name('login');
     Route::post('/logout', 'logout')->name('logout');
 
+    Route::get('/phone-verify-notice', 'phoneVerifyNotice')->name('phone.verify.notice');
+    Route::get('/phone-verify/{id}', 'phoneVerify')->name('phone.verify');
+
     Route::get('/forgot', 'forgot')->name('forgot');
     Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
-    Route::get('/forgot/verify-otp/{admin_id}', 'otp')->name('otp.verify');
-    Route::post('/forgot/verify-otp/{admin_id}', 'verify')->name('otp.verify');
-    Route::get('/password/reset/{admin_id}', 'resetPassword')->name('reset.password');
-    Route::post('/password/reset/{admin_id}', 'resetPasswordStore')->name('reset.password');
+    Route::get('/forgot/verify-otp/{id}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{id}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{id}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{id}', 'resetPasswordStore')->name('reset.password');
 });
 
 // LAM Login Routes
@@ -238,12 +241,15 @@ Route::controller(LamLoginController::class)->prefix('local-area-manager')->name
     Route::post('/register', 'lamRegister')->name('register');
     Route::get('/reference/{id}', 'reference')->name('reference');
 
+    Route::get('/phone-verify-notice', 'phoneVerifyNotice')->name('phone.verify.notice');
+    Route::get('/phone-verify/{id}', 'phoneVerify')->name('phone.verify');
+
     Route::get('/forgot', 'forgot')->name('forgot');
     Route::post('/forgot/sent-otp', 'send_otp')->name('forgot.send_otp');
-    Route::get('/forgot/verify-otp/{admin_id}', 'otp')->name('otp.verify');
-    Route::post('/forgot/verify-otp/{admin_id}', 'verify')->name('otp.verify');
-    Route::get('/password/reset/{admin_id}', 'resetPassword')->name('reset.password');
-    Route::post('/password/reset/{admin_id}', 'resetPasswordStore')->name('reset.password');
+    Route::get('/forgot/verify-otp/{id}', 'otp')->name('otp.verify');
+    Route::post('/forgot/verify-otp/{id}', 'verify')->name('otp.verify');
+    Route::get('/password/reset/{id}', 'resetPassword')->name('reset.password');
+    Route::post('/password/reset/{id}', 'resetPasswordStore')->name('reset.password');
 });
 
 
@@ -948,7 +954,7 @@ Route::group(['middleware' => 'pharmacy', 'as' => 'pharmacy.', 'prefix' => 'phar
 
 
 // DM Auth Routes
-Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager'], function () {
+Route::group(['middleware' => ['auth:dm', 'dm_phone_verify'], 'as' => 'dm.', 'prefix' => 'district-manager'], function () {
 
     Route::get('/dashboard', [DmDashboardController::class, 'dashboard'])->name('dashboard');
 
@@ -1035,7 +1041,7 @@ Route::group(['middleware' => 'dm', 'as' => 'dm.', 'prefix' => 'district-manager
 
 
 // LAM Auth Routes
-Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-manager'], function () {
+Route::group(['middleware' => ['auth:lam', 'lam_phone_verify'], 'as' => 'lam.', 'prefix' => 'local-area-manager'], function () {
     Route::get('/dashboard', [LamDashboardController::class, 'dashboard'])->name('dashboard');
 
     // KYC Notice
