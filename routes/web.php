@@ -1040,7 +1040,7 @@ Route::group(['middleware' => 'lam', 'as' => 'lam.', 'prefix' => 'local-area-man
 
     // KYC Notice
     Route::get('/kyc-notice', function () {
-        return view('local-area-manager.kyc_notice');
+        return view('local_area_manager.kyc_notice');
     })->name('kyc.notice');
 
     Route::controller(LamKycVerificationController::class)->prefix('kyc')->name('kyc.')->group(function () {
