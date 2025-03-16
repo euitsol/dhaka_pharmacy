@@ -30,8 +30,6 @@ class VoucherRequest extends FormRequest
             ]),
             'discount_amount' => 'required|numeric',
             'min_order_amount' => 'required|numeric',
-            'starts_at' => 'required|date|after_or_equal:today',
-            'expires_at' => 'required|date|after_or_equal:today',
             'usage_limit' => 'required|integer',
             'user_usage_limit' => 'required|integer',
 
@@ -44,6 +42,8 @@ class VoucherRequest extends FormRequest
     {
         return [
             'code' => 'required|min:4|max:30|unique:vouchers,code',
+            'starts_at' => 'required|date|after_or_equal:today',
+            'expires_at' => 'required|date|after_or_equal:starts_at',
         ];
     }
 
@@ -51,6 +51,8 @@ class VoucherRequest extends FormRequest
     {
         return [
             'code' => 'required|min:4|max:30|unique:vouchers,code,' . $this->route('id'),
+            'starts_at' => 'required|date',
+            'expires_at' => 'required|date|after_or_equal:starts_at',
         ];
     }
 }

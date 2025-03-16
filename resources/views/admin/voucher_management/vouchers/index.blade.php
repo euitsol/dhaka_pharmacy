@@ -67,16 +67,14 @@
                                         </span>
                                     </td>
                                     <td>{{ timeFormate($voucher->created_at) }}</td>
-                                    <td>{{ $voucher->created_by ? $voucher->created_user->name : 'System' }}</td>
+                                    <td>{{ c_user_name($voucher->created_user) }}</td>
                                     <td>
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'javascript:void(0)',
+                                                    'routeName' => 'vm.vouchers.details.voucher_list',
                                                     'params' => [$voucher->id],
                                                     'label' => 'View Details',
-                                                    'className' => 'view',
-                                                    'data-id' => $voucher->id,
                                                 ],
                                                 [
                                                     'routeName' => 'vm.vouchers.voucher_edit',
@@ -105,99 +103,6 @@
             </div>
         </div>
     </div>
-
-    {{-- Voucher Details Modal --}}
-    <div class="modal view_modal fade" id="voucherModal" tabindex="-1" role="dialog" aria-labelledby="voucherModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="voucherModalLabel">{{ __('Voucher Details') }}</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body modal_data">
-                    <!-- AJAX content will be loaded here -->
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6, 7, 8]])
-
-@push('js')
-    <script>
-        $(document).ready(function() {
-            $('.view').on('click', function() {
-                let id = $(this).data('id');
-                let url = "{{ route('vm.vouchers.details.voucher_list', ':id') }}".replace(':id', id);
-
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log(data);
-
-                        let result = `
-                        <table class="table table-striped">
-                            <tr>
-                                <th class="text-nowrap">Code</th>
-                                <td>${data.code}</td>
-                            </tr>
-                            <tr>
-                                <th>Type</th>
-                                <td><span class="badge ${data.type_badge_class}">${data.type_string}</span></td>
-                            </tr>
-                            <tr>
-                                <th>Discount</th>
-                                <td>${data.discount_amount}</td>
-                            </tr>
-                            <tr>
-                                <th>Minimum Order</th>
-                                <td>৳${data.min_order_amount}</td>
-                            </tr>
-                            <tr>
-                                <th>Validity</th>
-                                <td>${data.starts_at} to ${data.expires_at}</td>
-                            </tr>
-                            <tr>
-                                <th>Usage Limits</th>
-                                <td>${data.usage_limit}/${data.user_usage_limit} per user</td>
-                            </tr>
-                            <tr>
-                                <th>Status</th>
-                                <td><span class="badge ${data.status_badge_class}">${data.status_string}</span></td>
-                            </tr>
-                            <tr>
-                                <th>Created At</th>
-                                <td>${data.creating_time}</td>
-                            </tr>
-                            <tr>
-                                <th>Created By</th>
-                                <td>${data.created_by}</td>
-                            </tr>
-                            <tr>
-                                <th>Last Updated</th>
-                                <td>${data.updating_time}</td>
-                            </tr>
-                            <tr>
-                                <th>Last Updated  By</th>
-                                <td>${data.updated_by}</td>
-                            </tr>
-                        </table>
-                    `;
-
-                        $('.modal_data').html(result);
-                        $('#voucherModal').modal('show');
-                    },
-                    error: function(xhr) {
-                        console.error('Error:', xhr.responseText);
-                    }
-                });
-            });
-        });
-    </script>
-@endpush

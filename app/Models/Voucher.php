@@ -29,7 +29,11 @@ class Voucher extends BaseModel
         'expires_at',
         'usage_limit',
         'user_usage_limit',
-        'status'
+        'status',
+
+        'creater_by',
+        'updater_by',
+        'deleter_by',
     ];
 
     protected $casts = [

@@ -91,7 +91,7 @@ class VoucherService
 
     public function updateVoucherUsage(Voucher $voucher, User|Authenticatable $user, Order $order): void
     {
-        $voucher->redemptions()->forceDelete();
+        // $voucher->redemptions()->forceDelete();
         $voucher->redemptions()->create([
             'voucher_id' => $voucher->id,
             'user_id' => $user->id,
@@ -108,13 +108,14 @@ class VoucherService
     public function statusChange(Voucher $voucher): bool
     {
         $voucher->status = $voucher->status == Voucher::STATUS_ACTIVE ? Voucher::STATUS_INACTIVE : Voucher::STATUS_ACTIVE;
+        $voucher->updated_by = admin()->id;
         return $voucher->save();
     }
 
 
     public function getDetails(Voucher $voucher): Voucher
     {
-        $voucher->load(['created_user', 'updated_user']);
+        $voucher->load(['created_user', 'updated_user', 'redemptions.user', 'redemptions.order']);
         $voucher->loadCount('redemptions');
         $this->simpleColumnData($voucher);
 
@@ -126,7 +127,6 @@ class VoucherService
      */
     public function createVoucher(array $data): Voucher
     {
-        $data['created_by'] = admin()->id;
         return Voucher::create($data);
     }
 
@@ -135,7 +135,6 @@ class VoucherService
      */
     public function updateVoucher(Voucher $voucher, array $data): bool
     {
-        $data['updated_by'] = admin()->id;
         return $voucher->update($data);
     }
 
