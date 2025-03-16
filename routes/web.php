@@ -45,7 +45,7 @@ use App\Http\Controllers\Admin\RiderManagement\RiderManagementController;
 use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\Admin\OrderByPrescription\OrderByPrescriptionController as AdminOrderByPrescriptionController;
 use App\Http\Controllers\Admin\User\ReviewController as AdminReviewController;
-use App\Http\Controllers\Admin\ProductManagement\VoucherController as AdminVoucherController;
+use App\Http\Controllers\Admin\VoucherManagement\VoucherController as AdminVoucherController;
 use App\Http\Controllers\Admin\Delivery\ZonesController as AdminDeliveryZonesController;
 
 use App\Http\Controllers\DM\Auth\LoginController as DmLoginController;
@@ -696,7 +696,11 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
             Route::post('bulk-import', 'bulkImport')->name('store.bulk_entry');
             Route::get('sub-cat/{id}', 'get_sub_cat')->name('sub_cat.medicine_list');
         });
+    });
 
+    // Voucher Management
+
+    Route::group(['as' => 'vm.', 'prefix' => 'voucher-management'], function () {
         Route::controller(AdminVoucherController::class)->prefix('vouchers')->name('vouchers.')->group(function () {
             Route::get('index', 'index')->name('voucher_list');
             Route::get('create', 'create')->name('voucher_create');
@@ -1334,3 +1338,10 @@ Route::controller(UserOrderByPrescriptionController::class)->prefix('order-by-pr
     Route::post('prescription/resend-otp', 'resendOtp')->name('resend_otp');
     Route::post('prescription/verify-otp', 'verifyOtp')->name('verify_otp');
 });
+
+//Developer Routes
+Route::get('/export-permissions', function () {
+    $filename = 'permissions.csv';
+    $filePath = createCSV($filename);
+    return Response::download($filePath, $filename);
+})->name('export.permissions');

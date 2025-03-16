@@ -44,7 +44,8 @@ function get_permission_routes()
         'review.',
         'st.',
         'pc.',
-        'doc.'
+        'doc.',
+        'vm.'
 
     ];
 }
@@ -60,10 +61,10 @@ function check_access_by_route_name($routeName = null): bool
     $shouldCheckPermission = false;
     foreach ($allowedPrefixes as $prefix) {
         if (str_starts_with($routeName, $prefix)) {
-            if(str_ends_with($routeName, 'search')){
+            if (str_ends_with($routeName, 'search')) {
                 $shouldCheckPermission = false;
                 break;
-            }else{
+            } else {
                 $shouldCheckPermission = true;
                 break;
             }
