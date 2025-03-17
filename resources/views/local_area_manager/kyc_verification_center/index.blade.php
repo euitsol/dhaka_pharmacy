@@ -98,7 +98,7 @@
 
                                     @if ($fd->type == 'text')
                                         <div class="form-group">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -110,7 +110,7 @@
                                         </div>
                                     @elseif($fd->type == 'number')
                                         <div class="form-group">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -122,7 +122,7 @@
                                         </div>
                                     @elseif($fd->type == 'url')
                                         <div class="form-group">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -134,7 +134,7 @@
                                         </div>
                                     @elseif($fd->type == 'date')
                                         <div class="form-group">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -146,7 +146,7 @@
                                         </div>
                                     @elseif($fd->type == 'textarea')
                                         <div class="form-group">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -156,7 +156,7 @@
                                         </div>
                                     @elseif($fd->type == 'image')
                                         <div class="form-group">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -194,7 +194,7 @@
                                             @endphp
                                         @endif
                                         <div class="form-group">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -216,7 +216,7 @@
                                         <div class="form-group">
                                             <input {{ $disabled ? 'disabled' : '' }} type="hidden"
                                                 name="{{ $fd->field_key }}[url]" class="file_url">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -276,7 +276,7 @@
                                         </div>
                                     @elseif($fd->type == 'file_multiple')
                                         <div class="form-group">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -361,7 +361,7 @@
                                         </div>
                                     @elseif($fd->type == 'email')
                                         <div class="form-group">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -373,7 +373,7 @@
                                         </div>
                                     @elseif($fd->type == 'option')
                                         <div class="form-group">
-                                            <label for="{{ $fd->field_key }}">{{ $fd->field_name }}</label>
+                                            <label for="{{ $fd->field_key }}">{{ __($fd->field_name) }}</label>
                                             @if (isset($fd->required) && $fd->required == 'required')
                                                 <span class="text-danger">*</span>
                                             @endif
@@ -381,7 +381,7 @@
                                                 id="{{ $fd->field_key }}"
                                                 class="form-control  {{ $errors->has($fd->field_key) ? 'is-invalid' : '' }}">
                                                 <option value=" " selected hidden>
-                                                    {{ __('Select ' . $fd->field_name) }}</option>
+                                                    {{ __('Select ' . __($fd->field_name)) }}</option>
                                                 @foreach ($fd->option_data as $value => $label)
                                                     <option value="{{ $value }}"
                                                         @if (isset($submitted_kyc->submitted_data) &&
