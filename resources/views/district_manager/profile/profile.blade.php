@@ -29,7 +29,7 @@
                                             @include('alerts.feedback', ['field' => 'father_name'])
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Nother Name') }}</label>
+                                            <label>{{ __('Mother Name') }}</label>
                                             <input type="text" name="mother_name" class="form-control"
                                                 placeholder="Enter Mother Name" value="{{ $dm->mother_name }}">
                                             @include('alerts.feedback', ['field' => 'mother_name'])
