@@ -11,5 +11,5 @@
 @endphp
 @if ($check)
     <a href="{{ is_valid_route($routeName) ? route($routeName, $parameterArray) : $routeName }}"
-        class="btn btn-sm {{ $className }}">{{ _($label) }}</a>
+        class="btn btn-sm {{ $className }}">{{ __($label) }}</a>
 @endif

@@ -55,10 +55,10 @@
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ _('Slug') }}</label>
+                                <label>{{ __('Slug') }}</label>
                                 <input type="text" value="{{ $hub->slug }}"
                                     class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug"
-                                    name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                                    name="slug" placeholder="{{ __('Enter Slug (must be use - on white speace)') }}">
                                 @include('alerts.feedback', ['field' => 'slug'])
                             </div>
                             <div class="form-group col-md-12">

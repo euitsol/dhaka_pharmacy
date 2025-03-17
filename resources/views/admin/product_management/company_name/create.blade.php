@@ -22,31 +22,33 @@
                     <form method="POST" action="{{ route('product.company_name.company_name_create') }}">
                         @csrf
                         <div class="form-group">
-                            <label>{{__('Name')}}</label>
-                            <input type="text" id="title" name="name" class="form-control" placeholder="Enter name"
-                                value="{{ old('name') }}">
+                            <label>{{ __('Name') }}</label>
+                            <input type="text" id="title" name="name" class="form-control"
+                                placeholder="Enter name" value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>{{ _('Slug') }}</label>
-                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug" name="slug" value="{{old('slug')}}" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                            <label>{{ __('Slug') }}</label>
+                            <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}"
+                                id="slug" name="slug" value="{{ old('slug') }}"
+                                placeholder="{{ __('Enter Slug (must be use - on white speace)') }}">
                             @include('alerts.feedback', ['field' => 'slug'])
                         </div>
                         <div class="form-group">
-                            <label>{{__('Address')}}</label>
-                            <textarea name="address" class="form-control">{{old('address')}}</textarea>
+                            <label>{{ __('Address') }}</label>
+                            <textarea name="address" class="form-control">{{ old('address') }}</textarea>
                             @include('alerts.feedback', ['field' => 'address'])
                         </div>
                         <div class="form-group">
-                            <label>{{__('Note')}}</label>
-                            <textarea name="note" class="form-control">{{old('note')}}</textarea>
+                            <label>{{ __('Note') }}</label>
+                            <textarea name="note" class="form-control">{{ old('note') }}</textarea>
                             @include('alerts.feedback', ['field' => 'note'])
                         </div>
-                        <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
                     </form>
                 </div>
             </div>
         </div>
-        @include('admin.partials.documentation',['document'=>$document])
+        @include('admin.partials.documentation', ['document' => $document])
     </div>
 @endsection

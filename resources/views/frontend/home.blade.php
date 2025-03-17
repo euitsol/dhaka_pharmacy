@@ -59,8 +59,7 @@
 
 
                                                                 <div class="all-product-containt">
-                                                                    <p
-                                                                        title="{{ optional($item->strength)->name }}"><a
+                                                                    <p title="{{ optional($item->strength)->name }}"><a
                                                                             href="">{{ $item->strength_info }}</a>
                                                                     </p>
                                                                     <p class="d-block d-xl-none"><a href=""
@@ -132,11 +131,12 @@
                                         <div class="uk-position-relative">
                                             <div class="uk-slider-container uk-light">
                                                 <ul
-                                                    class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m cat-list">
+                                                    class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s
+uk-child-width-1-5@m cat-list">
                                                     <li
                                                         class=" active d-flex align-content-center justify-content-center m-auto ">
                                                         <a href="javascript:void(0)" class="featured_category"
-                                                            data-slug="all">{{ _('All') }}</a>
+                                                            data-slug="all">{{ __('All') }}</a>
                                                     </li>
                                                     @foreach ($featuredCategories as $category)
                                                         <li
@@ -186,7 +186,8 @@
                                                 <div class="all-product-containt">
 
                                                     <p>
-                                                        <a href="" title="{{ optional($product->strength)->name }}">{{ $product->strength_info }}</a>
+                                                        <a href=""
+                                                            title="{{ optional($product->strength)->name }}">{{ $product->strength_info }}</a>
                                                     </p>
                                                     <p>
                                                         <a href=""
@@ -250,26 +251,29 @@
             </section>
             <!--====== Delivery Slider Section ======-->
             <section class="delivery-slider-section">
-                <div class="uk-position-relative uk-visible-toggle uk-light delivery-main-slide" tabindex="-1" 
-        uk-slider="">
-                    
+                <div class="uk-position-relative uk-visible-toggle uk-light delivery-main-slide" tabindex="-1"
+                    uk-slider="">
+
                     <div class="uk-slider-items uk-child-width-1-1 uk-grid-remove">
                         <!-- Slide 1 -->
                         <div class="bottom-slide-items">
                             <div class="uk-panel">
-                                <img src="{{ asset('frontend/asset/img/bottom-slider/slider-1.jpg') }}" alt="slider image">
+                                <img src="{{ asset('frontend/asset/img/bottom-slider/slider-1.jpg') }}"
+                                    alt="slider image">
                             </div>
                         </div>
                         <!-- Slide 2 -->
                         <div class="bottom-slide-items">
                             <div class="uk-panel">
-                                <img src="{{ asset('frontend/asset/img/bottom-slider/slider-2.jpg') }}" alt="slider image">
+                                <img src="{{ asset('frontend/asset/img/bottom-slider/slider-2.jpg') }}"
+                                    alt="slider image">
                             </div>
                         </div>
                     </div>
 
                     <!-- Navigation arrows -->
-                    <a class="uk-position-center-left uk-slider-arrow" href uk-slidenav-previous uk-slider-item="previous"></a>
+                    <a class="uk-position-center-left uk-slider-arrow" href uk-slidenav-previous
+                        uk-slider-item="previous"></a>
                     <a class="uk-position-center-right uk-slider-arrow" href uk-slidenav-next uk-slider-item="next"></a>
 
                     <!-- Slider dots navigation -->

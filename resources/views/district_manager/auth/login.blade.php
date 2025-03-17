@@ -23,8 +23,9 @@
                                     <div class="mb-4">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-                                            <input type="text" id="number" value="{{ old('phone') }}" name="phone" class="form-control"
-                                                placeholder="Enter your phone number" required>
+                                            <input type="text" id="number" value="{{ old('phone') }}" name="phone"
+                                                class="form-control" placeholder="{{ __('Enter your phone number') }}"
+                                                required>
                                         </div>
                                         @include('alerts.feedback', ['field' => 'phone'])
                                     </div>
@@ -32,7 +33,7 @@
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                             <input type="password" id="password" name="password" class="form-control"
-                                                placeholder="Enter your password" required>
+                                                placeholder="{{ __('Enter your password') }}" required>
                                         </div>
                                     </div>
                                     @include('alerts.feedback', ['field' => 'password'])

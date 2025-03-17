@@ -44,10 +44,10 @@
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ _('Slug') }}</label>
+                                <label>{{ __('Slug') }}</label>
                                 <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}"
                                     id="slug" name="slug"
-                                    placeholder="{{ _('Enter Slug (must be use - on white speace)') }}"
+                                    placeholder="{{ __('Enter Slug (must be use - on white speace)') }}"
                                     value="{{ $medicine->slug }}">
                                 @include('alerts.feedback', ['field' => 'slug'])
                             </div>
@@ -135,7 +135,8 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __('Medicine Unit') }}</label>
-                                <select name="unit[]" class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }} unit"
+                                <select name="unit[]"
+                                    class="form-control {{ $errors->has('unit') ? ' is-invalid' : '' }} unit"
                                     multiple="multiple">
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}"
@@ -277,8 +278,11 @@
                                 @foreach ($medicine->units as $unit)
                                     <div class="form-group col-md-6 unit-price-item">
                                         <label for="price-unit-14">Price for Unit: {{ $unit->name }}</label>
-                                        <input type="hidden" class="d-none" id="unit-14" name="units[{{ $unit->id }}][id]" value="{{ $unit->id }}">
-                                        <input type="number" value="{{ $unit->pivot->price }}" class="form-control" id="price-unit-{{ $unit->id }}" name="units[{{ $unit->id }}][price]" placeholder="Enter price for {{ $unit->name }}">
+                                        <input type="hidden" class="d-none" id="unit-14"
+                                            name="units[{{ $unit->id }}][id]" value="{{ $unit->id }}">
+                                        <input type="number" value="{{ $unit->pivot->price }}" class="form-control"
+                                            id="price-unit-{{ $unit->id }}" name="units[{{ $unit->id }}][price]"
+                                            placeholder="Enter price for {{ $unit->name }}">
                                     </div>
                                 @endforeach
                             </div>
@@ -530,7 +534,8 @@
                         var unitId = $(this).val();
                         var unitName = $(this).text().trim();
                         var priceDiv = $('<div class="form-group col-md-6 unit-price-item">');
-                        var label = $('<label for="price-unit-' + unitId + '">Price for Unit: ' + unitName + ' (ID: ' + unitId + ')</label>');
+                        var label = $('<label for="price-unit-' + unitId + '">Price for Unit: ' +
+                            unitName + ' (ID: ' + unitId + ')</label>');
                         priceDiv.append(label);
 
                         var input = $(`

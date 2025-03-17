@@ -32,7 +32,7 @@
                     class="dropdown-item @if (isset($menuItem['className'])) {{ $menuItem['className'] }} @endif @if (isset($menuItem['delete']) && $menuItem['delete'] == true) action-delete @endif"
                     @if (isset($menuItem['delete']) && $menuItem['delete'] == true) onclick="return confirm('Are you sure?')" @endif
                     href="{{ $route }}"
-                    @if (isset($menuItem['data-id'])) data-id="{{ $menuItem['data-id'] }}" @endif>{{ _($menuItem['label']) }}</a>
+                    @if (isset($menuItem['data-id'])) data-id="{{ $menuItem['data-id'] }}" @endif>{{ __($menuItem['label']) }}</a>
             @endif
         @endforeach
         @if ($no_action)

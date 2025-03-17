@@ -32,14 +32,14 @@
                         <div class="form-group">
                             <label>{{ __('Operation Sub Area') }}</label>
                             <input type="text" id="title" name="name" class="form-control"
-                                placeholder="Enter name" value="{{ $lam_area->name }}">
+                                placeholder="{{ __('Enter name') }}" value="{{ $lam_area->name }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>{{ _('Slug') }}</label>
+                            <label>{{ __('Slug') }}</label>
                             <input type="text" value="{{ $lam_area->slug }}"
                                 class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug"
-                                name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                                name="slug" placeholder="{{ __('Enter Slug (must be use - on white speace)') }}">
                             @include('alerts.feedback', ['field' => 'slug'])
                         </div>
                         <button type="submit" class="btn btn-primary float-end">{{ __('Update') }}</button>

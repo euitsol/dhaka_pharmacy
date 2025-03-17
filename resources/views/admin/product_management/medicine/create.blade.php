@@ -33,10 +33,10 @@
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ _('Slug') }}<span class="text-danger">*</span></label>
+                                <label>{{ __('Slug') }}<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}"
                                     id="slug" name="slug" value="{{ old('slug') }}"
-                                    placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                                    placeholder="{{ __('Enter Slug (must be use - on white speace)') }}">
                                 @include('alerts.feedback', ['field' => 'slug'])
                             </div>
                             <div class="form-group col-md-6">
@@ -196,7 +196,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label>{{ __('Maximum Retail Price') }} <small>{{ __('(MRP)') }}</small><span class="text-danger">*</span></label>
+                                <label>{{ __('Maximum Retail Price') }} <small>{{ __('(MRP)') }}</small><span
+                                        class="text-danger">*</span></label>
                                 <div class="input-group" role="group">
                                     <input type="text" name="price"
                                         class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"
@@ -413,7 +414,8 @@
                         var unitId = $(this).val();
                         var unitName = $(this).text().trim();
                         var priceDiv = $('<div class="form-group col-md-6 unit-price-item">');
-                        var label = $('<label for="price-unit-' + unitId + '">Price for Unit: ' + unitName + ' (ID: ' + unitId + ')</label>');
+                        var label = $('<label for="price-unit-' + unitId + '">Price for Unit: ' +
+                            unitName + ' (ID: ' + unitId + ')</label>');
                         priceDiv.append(label);
 
                         var input = $(`
