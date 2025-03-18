@@ -180,13 +180,13 @@
                                         <th>:</th>
                                         <td>${data.dm.name}</td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <th class="text-nowrap">District Manager Area</th>
                                         <th>:</th>
                                         <td>${data.dm.operation_area.name}</td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <th class="text-nowrap">Local Area Manager Area</th>
                                         <th>:</th>

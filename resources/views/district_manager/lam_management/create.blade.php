@@ -25,14 +25,14 @@
                             <label>{{ __('Name') }}</label>
                             <input type="text" name="name"
                                 class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                placeholder="Enter name" value="{{ old('name') }}">
+                                placeholder="{{ __('Enter name') }}" value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
                             <label>{{ __('Phone') }}</label>
                             <input type="text" name="phone"
                                 class="form-control {{ $errors->has('phone') ? ' is-invalid' : '' }}"
-                                placeholder="Enter phone" value="{{ old('phone') }}">
+                                placeholder="{{ __('Enter phone') }}" value="{{ old('phone') }}">
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
                         <div class="form-group">
@@ -62,14 +62,14 @@
                             <label>{{ __('Password') }}</label>
                             <input type="password" name="password"
                                 class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                placeholder="Enter new password">
+                                placeholder="{{ __('Enter new password') }}">
                             @include('alerts.feedback', ['field' => 'password'])
                         </div>
                         <div class="form-group">
                             <label>{{ __('Confirm Password') }}</label>
                             <input type="password" name="password_confirmation"
                                 class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                placeholder="Confirm password">
+                                placeholder="{{ __('Confirm password') }}">
                             @include('alerts.feedback', ['field' => 'password'])
                         </div>
                         <button type="submit" class="btn btn-primary float-end">{{ __('Create') }}</button>

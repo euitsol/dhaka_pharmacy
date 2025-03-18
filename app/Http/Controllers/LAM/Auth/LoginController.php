@@ -109,6 +109,38 @@ class LoginController extends Controller
         return view('local_area_manager.auth.forgot');
     }
 
+    public function phoneVerifyNotice()
+    {
+        return view('local_area_manager.phone_verify_notice');
+    }
+
+    public function phoneVerify($id)
+    {
+        $lam = LocalAreaManager::findOrfail(decrypt($id));
+        if ($lam) {
+            if ($this->check_throttle($lam)) {
+                flash()->addError($this->check_throttle($lam));
+                return redirect()->back()->withInput();
+            }
+
+            $lam->otp = otp();
+            $lam->phone_verified_at = Carbon::now();
+            $lam->save();
+            $verification_sms = "Your verification code is $lam->otp. Please enter this code to verify your phone.";
+            $result = $this->sms_send($lam->phone, $verification_sms);
+            if ($result === true) {
+                flash()->addSuccess('The verification code has been sent successfully.');
+                session_start();
+                $_SESSION['phone_verify'] = true;
+                return redirect()->route('local_area_manager.otp.verify', encrypt($lam->id));
+            } else {
+                flash()->addError($result);
+            }
+        } else {
+            flash()->addWarning('Phone number not found in our record');
+        }
+        return redirect()->back()->withInput();
+    }
     public function send_otp(LoginRequest $request)
     {
         $lam = LocalAreaManager::where('phone', $request->phone)->first();
@@ -149,7 +181,7 @@ class LoginController extends Controller
 
     public function otp($lam_id)
     {
-        if (Auth::guard('lam')->check() && lam()->status == 1) {
+        if (Auth::guard('lam')->check() && lam()->status == 1 && lam()->is_verify == 1) {
             return redirect()->route('lam.dashboard');
         }
         return view('local_area_manager.auth.verify', compact('lam_id'));
@@ -163,8 +195,15 @@ class LoginController extends Controller
             if ($lam->otp == $otp) {
                 $lam->is_verify = 1;
                 $lam->update();
-                flash()->addSuccess('OTP verified successfully');
-                return redirect()->route('local_area_manager.reset.password', encrypt($lam->id));
+                session_start();
+                if (isset($_SESSION['phone_verify']) && $_SESSION['phone_verify'] == true) {
+                    unset($_SESSION['phone_verify']);
+                    flash()->addSuccess('Welcome to Dhaka Pharmacy');
+                    return redirect()->route('lam.dashboard');
+                } else {
+                    flash()->addSuccess('OTP verified successfully');
+                    return redirect()->route('local_area_manager.reset.password', encrypt($lam->id));
+                }
             } else {
                 flash()->addWarning('OTP didn\'t match. Please try again');
                 return redirect()->back()->withInput();

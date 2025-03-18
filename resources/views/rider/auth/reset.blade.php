@@ -40,7 +40,7 @@
                                             </div>
                                         </div>
                                         <button type="submit"
-                                            class="btn btn-primary w-100 login-button">{{ _('SUBMIT') }}</button>
+                                            class="btn btn-primary w-100 login-button">{{ __('SUBMIT') }}</button>
                                     </form>
                                 </div>
                             </div>

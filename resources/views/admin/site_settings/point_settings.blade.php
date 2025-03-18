@@ -2,7 +2,7 @@
     <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
         <div class="card">
             <div class="card-header">
-                <h5 class="title">{{ _('Point Settings') }}</h5>
+                <h5 class="title">{{ __('Point Settings') }}</h5>
             </div>
             <form method="POST" action="{{ route('settings.ps_update') }}" autocomplete="off"
                 enctype="multipart/form-data">
@@ -13,11 +13,11 @@
                             <input type="text" name="point_name"
                                 style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
                                 class="form-control{{ $errors->has('point_name') ? ' is-invalid' : '' }}"
-                                placeholder="{{ _('Enter point name') }}"
+                                placeholder="{{ __('Enter point name') }}"
                                 value="{{ $point_settings['point_name'] ?? '' }}">
                             <input type="text" name="equivalent_amount"
                                 class="form-control{{ $errors->has('equivalent_amount') ? ' is-invalid' : '' }}"
-                                placeholder="{{ _('Enter equivalent amount (BDT)') }}"
+                                placeholder="{{ __('Enter equivalent amount (BDT)') }}"
                                 value="{{ $point_settings['equivalent_amount'] ?? '' }}">
                             <input type="button" class="btn btn-secondary disabled m-0" value="BDT">
                         </div>
@@ -27,10 +27,12 @@
                 </div>
                 {{-- @if (admin()->hasPermissionTo('ps_update')) --}}
                 <div class="card-footer text-end">
-                    {{-- <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button> --}}
+                    {{-- <button type="submit" class="btn btn-fill btn-primary">{{ __('Save') }}</button> --}}
                     @include('admin.partials.button', [
                         'routeName' => 'settings.ps_update',
                         'type' => 'submit',
+                        'className' => 'btn-primary',
+                        'label' => 'Save',
                     ])
                 </div>
                 {{-- @endif --}}

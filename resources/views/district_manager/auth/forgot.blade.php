@@ -28,7 +28,7 @@
                                                 <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
                                                 <input type="text" name="phone" value="{{ old('phone') }}"
                                                     id="number" class="form-control"
-                                                    placeholder="Enter your phone number" required>
+                                                    placeholder="{{ __('Enter your phone number') }}" required>
                                             </div>
                                             @include('alerts.feedback', ['field' => 'phone'])
                                         </div>

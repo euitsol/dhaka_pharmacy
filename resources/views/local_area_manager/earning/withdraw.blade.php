@@ -57,7 +57,8 @@
                                 @csrf
                                 <div class="form-group">
                                     <label>{{ __('Amount') }}</label>
-                                    <input type="text" class="form-control" name="amount" placeholder="Enter amount">
+                                    <input type="text" class="form-control" name="amount"
+                                        placeholder="{{ __('Enter amount') }}">
                                     @include('alerts.feedback', ['field' => 'amount'])
                                 </div>
                                 <div class="form-group">
@@ -74,7 +75,7 @@
                                     @include('alerts.feedback', ['field' => 'withdraw_method'])
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary w-100" value="Confirm">
+                                    <input type="submit" class="btn btn-primary w-100" value="{{ __('Confirm') }}">
                                 </div>
                             </form>
                         </div>

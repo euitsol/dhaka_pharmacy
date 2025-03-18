@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-header">
-                    <b>{{ $document->title ? ucfirst($document->title) : '' }}</b>
+                    <b>{{ __($document->title ? ucfirst($document->title) : '') }}</b>
                 </div>
                 <div class="card-body">
                     @if (isset($document->documentation))

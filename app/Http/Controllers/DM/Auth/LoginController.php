@@ -76,6 +76,39 @@ class LoginController extends Controller
         return view('district_manager.auth.forgot');
     }
 
+    public function phoneVerifyNotice()
+    {
+        return view('district_manager.phone_verify_notice');
+    }
+
+    public function phoneVerify($id)
+    {
+        $dm = DistrictManager::findOrfail(decrypt($id));
+        if ($dm) {
+            if ($this->check_throttle($dm)) {
+                flash()->addError($this->check_throttle($dm));
+                return redirect()->back()->withInput();
+            }
+
+            $dm->otp = otp();
+            $dm->phone_verified_at = Carbon::now();
+            $dm->save();
+            $verification_sms = "Your verification code is $dm->otp. Please enter this code to verify your phone.";
+            $result = $this->sms_send($dm->phone, $verification_sms);
+            if ($result === true) {
+                flash()->addSuccess('The verification code has been sent successfully.');
+                session_start();
+                $_SESSION['phone_verify'] = true;
+                return redirect()->route('district_manager.otp.verify', encrypt($dm->id));
+            } else {
+                flash()->addError($result);
+            }
+        } else {
+            flash()->addWarning('Phone number not found in our record');
+        }
+        return redirect()->back()->withInput();
+    }
+
     public function send_otp(LoginRequest $request)
     {
         $dm = DistrictManager::where('phone', $request->phone)->first();
@@ -116,7 +149,7 @@ class LoginController extends Controller
 
     public function otp($dm_id)
     {
-        if (Auth::guard('dm')->check() && dm()->status == 1) {
+        if (Auth::guard('dm')->check() && dm()->status == 1 && dm()->is_verify == 1) {
             return redirect()->route('dm.dashboard');
         }
         return view('district_manager.auth.verify', compact('dm_id'));
@@ -130,8 +163,15 @@ class LoginController extends Controller
             if ($dm->otp == $otp) {
                 $dm->is_verify = 1;
                 $dm->update();
-                flash()->addSuccess('OTP verified successfully');
-                return redirect()->route('district_manager.reset.password', encrypt($dm->id));
+                session_start();
+                if (isset($_SESSION['phone_verify']) && $_SESSION['phone_verify'] == true) {
+                    unset($_SESSION['phone_verify']);
+                    flash()->addSuccess('Welcome to Dhaka Pharmacy');
+                    return redirect()->route('dm.dashboard');
+                } else {
+                    flash()->addSuccess('OTP verified successfully');
+                    return redirect()->route('district_manager.reset.password', encrypt($dm->id));
+                }
             } else {
                 flash()->addWarning('OTP didn\'t match. Please try again');
                 return redirect()->back()->withInput();

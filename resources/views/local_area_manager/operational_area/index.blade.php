@@ -32,7 +32,7 @@
                                         <td>{{ $sub_area->name }}</td>
                                         <td>
                                             <span class="{{ $sub_area->getMultiStatusClass() }}">
-                                                {{ $sub_area->status == 1 ? 'Operational' : ($sub_area->status == 0 ? 'Pending' : 'Not Operational') }}
+                                                {{ $sub_area->status == 1 ? __('Operational') : ($sub_area->status == 0 ? __('Pending') : __('Not Operational')) }}
                                             </span>
                                         </td>
                                     </tr>
@@ -40,8 +40,8 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $area->name }}</td>
-                                        <td>{{ 'empty' }}</td>
-                                        <td>{{ 'empty' }}</td>
+                                        <td>{{ __('empty') }}</td>
+                                        <td>{{ __('empty') }}</td>
                                     </tr>
                                 @endforelse
                             @endforeach

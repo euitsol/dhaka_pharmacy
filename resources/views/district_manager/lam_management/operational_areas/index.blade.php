@@ -65,9 +65,9 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $area->name }}</td>
-                                        <td>{{ 'empty' }}</td>
-                                        <td>{{ 'empty' }}</td>
-                                        <td>{{ 'empty' }}</td>
+                                        <td>{{ __('empty') }}</td>
+                                        <td>{{ __('empty') }}</td>
+                                        <td>{{ __('empty') }}</td>
                                     </tr>
                                 @endforelse
                             @endforeach
@@ -127,7 +127,7 @@
                                         <th class="text-nowrap">District Manager Area</th>
                                         <th>:</th>
                                         <td>${data.operation_area.name}</td>
-                                    </tr>                                
+                                    </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>

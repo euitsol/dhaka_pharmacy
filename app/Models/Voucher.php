@@ -21,9 +21,19 @@ class Voucher extends BaseModel
     public const STATUS_INACTIVE = 0;
 
     protected $fillable = [
-        'code', 'type', 'discount_amount',
-        'min_order_amount', 'starts_at', 'expires_at',
-        'usage_limit', 'user_usage_limit', 'status'
+        'code',
+        'type',
+        'discount_amount',
+        'min_order_amount',
+        'starts_at',
+        'expires_at',
+        'usage_limit',
+        'user_usage_limit',
+        'status',
+
+        'creater_by',
+        'updater_by',
+        'deleter_by',
     ];
 
     protected $casts = [
@@ -35,6 +45,7 @@ class Voucher extends BaseModel
         'redemptions_count',
         'type_string',
         'type_badge_class',
+        'types',
         'status_string',
         'status_badge_class',
     ];
@@ -82,6 +93,7 @@ class Voucher extends BaseModel
         return $this->redemptions_count >= $this->usage_limit;
     }
 
+
     public function hasUserReachedLimit(int $userId): bool
     {
         return $this->redemptions()
@@ -98,7 +110,7 @@ class Voucher extends BaseModel
 
     public function calculateDiscount(float $subTotal): float
     {
-        return match($this->type) {
+        return match ($this->type) {
             self::TYPE_PERCENTAGE => round($subTotal * ($this->discount_amount / 100), 2),
             self::TYPE_FIXED => min($this->discount_amount, $subTotal),
             self::TYPE_FREE_SHIPPING => 0,
@@ -108,7 +120,7 @@ class Voucher extends BaseModel
 
     public function getTypeStringAttribute(): string
     {
-        return match($this->type) {
+        return match ($this->type) {
             self::TYPE_PERCENTAGE => 'Percentage',
             self::TYPE_FIXED => 'Fixed Amount',
             self::TYPE_FREE_SHIPPING => 'Free Shipping',
@@ -118,12 +130,21 @@ class Voucher extends BaseModel
 
     public function getTypeBadgeClassAttribute(): string
     {
-        return match($this->type) {
+        return match ($this->type) {
             self::TYPE_PERCENTAGE => 'badge-info',
             self::TYPE_FIXED => 'badge-primary',
             self::TYPE_FREE_SHIPPING => 'badge-success',
             default => 'badge-secondary',
         };
+    }
+
+    public function getTypesAttribute(): array
+    {
+        return [
+            self::TYPE_PERCENTAGE => 'Percentage',
+            self::TYPE_FIXED => 'Fixed Amount',
+            // self::TYPE_FREE_SHIPPING => 'Free Shipping',
+        ];
     }
 
     public function getStatusStringAttribute(): string
@@ -138,7 +159,7 @@ class Voucher extends BaseModel
 
     public function isMinOrderAmountReached(Order $order): bool
     {
-       if ($this->min_order_amount > 0) {
+        if ($this->min_order_amount > 0) {
             return $order->total_amount >= $this->min_order_amount;
         }
         return true;

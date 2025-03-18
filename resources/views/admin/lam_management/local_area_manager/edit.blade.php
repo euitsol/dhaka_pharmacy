@@ -36,7 +36,7 @@
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
                         <div class="form-group {{ $errors->has('dm_id') ? ' has-danger' : '' }}">
-                            <label>{{ _('District Manager') }}</label>
+                            <label>{{ __('District Manager') }}</label>
                             <select name="dm_id" class="form-control dm {{ $errors->has('dm_id') ? ' is-invalid' : '' }}">
                                 @foreach ($dms as $dm)
                                     <option {{ $lam->dm->id == $dm->id ? 'selected' : '' }} value="{{ $dm->id }}">
@@ -56,8 +56,8 @@
                             <select name="osa_id"
                                 class="form-control lam_area {{ $errors->has('osa_id') ? ' is-invalid' : '' }}">
                                 @foreach ($lam->dm->operation_area->operation_sub_areas as $area)
-                                    <option {{ $lam->osa_id == $area->id ? 'selected' : '' }}
-                                        value="{{ $area->id }}">{{ $area->name }}</option>
+                                    <option {{ $lam->osa_id == $area->id ? 'selected' : '' }} value="{{ $area->id }}">
+                                        {{ $area->name }}</option>
                                 @endforeach
                             </select>
                             @include('alerts.feedback', ['field' => 'osa_id'])
@@ -95,7 +95,7 @@
 
             let url = (
                 "{{ route('lam_management.local_area_manager.operation_area.local_area_manager_list', ['dm_id']) }}"
-                );
+            );
             let _url = url.replace('dm_id', dm_id);
 
             $.ajax({
@@ -108,7 +108,7 @@
                     var result = '';
                     data.operation_sub_areas.forEach(function(area) {
                         result +=
-                        `<option value="${area.id}">${area.name}</option>`;
+                            `<option value="${area.id}">${area.name}</option>`;
                     });
                     lam_area.html(result);
                 },

@@ -24,7 +24,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                                 <input type="password" id="password" name="password" class="form-control"
-                                                    placeholder="Enter your new password" required>
+                                                    placeholder="{{ __('Enter your new password') }}" required>
                                                 <span class="input-group-text eye_btn"><i
                                                         class="fa-solid fa-eye-slash"></i></span>
                                             </div>
@@ -34,7 +34,8 @@
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                                 <input type="password" id="confirmPassword" name="password_confirmation"
-                                                    class="form-control" placeholder="Confirm your password" required>
+                                                    class="form-control" placeholder="{{ __('Confirm your password') }}"
+                                                    required>
                                                 <span class="input-group-text eye_btn"><i
                                                         class="fa-solid fa-eye-slash"></i></span>
                                             </div>
