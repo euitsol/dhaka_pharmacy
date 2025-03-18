@@ -62,6 +62,10 @@ class OrderManagementController extends Controller
             case 'items_collected':
                 $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
+
+            case 'package_prepared':
+                $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
+                return view('admin.order_management.index', $data);
             // case 'waiting-for-rider':
             //     $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'odps', 'creater'])
             //         ->withCount(['odps' => function ($query) {

@@ -39,6 +39,7 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+            'expire' => 21600,
         ],
         'admin' => [
             'driver' => 'session',

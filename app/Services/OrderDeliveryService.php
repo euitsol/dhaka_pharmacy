@@ -14,6 +14,8 @@ class OrderDeliveryService
 {
     protected SteadFastService $steadFastService;
     protected OrderHub $orderHub;
+    protected Order $order;
+    protected Delivery $delivery;
     protected String $type;
 
     public function __construct(SteadFastService $steadFastService)
@@ -24,6 +26,18 @@ class OrderDeliveryService
     public function setOrderHub(OrderHub $orderHub):self
     {
         $this->orderHub = $orderHub;
+        return $this;
+    }
+
+    public function setOrder(Order $order):self
+    {
+        $this->order = $order;
+        return $this;
+    }
+
+    public function setDelivery(Delivery $delivery):self
+    {
+        $this->delivery = $delivery;
         return $this;
     }
 
@@ -55,6 +69,7 @@ class OrderDeliveryService
             return Delivery::create([
                 'type' => $this->type,
                 'order_id' => $orderHub->order_id,
+                'hub_id' => $orderHub->hub_id,
                 'invoice' => $invoice,
                 'payload' => json_encode([
                     'invoice' => $invoice,
@@ -64,10 +79,10 @@ class OrderDeliveryService
                     'cod_amount' => $orderHub->order->payment_status == Order::PAYMENT_COD ? $orderHub->order->total_amount : 0,
                     'note' => $recipientCredentials['note'],
                 ]),
-
+                'tracking_id' => null,
                 'receiver_id' => $orderHub->order->customer->id,
                 'receiver_type' => get_class($orderHub->order->customer),
-
+                'status' => Delivery::STATUS_ACTIVE,
                 'address_id' => $orderHub->order->address->id,
                 'created_at' => now(),
                 'creater_id' => $orderHub->hub_id,
@@ -128,6 +143,15 @@ class OrderDeliveryService
         return "{$prefix}{$datePart}{$nextNumber}";
     }
 
+    public function refreshDelivery()
+    {
+        $this->validateSetDelivery();
+
+        if($this->delivery->type === 'steadfast'){
+            $this->steadFastService->setDelivery($this->delivery)->refreshShipment();
+        }
+    }
+
     public function validateDelivery()
     {
         if(!$this->orderHub){
@@ -159,5 +183,19 @@ class OrderDeliveryService
             throw new \InvalidArgumentException("Order address not found");
         }
 
+    }
+
+    protected function validateOrder()
+    {
+        if(!$this->order){
+            throw new \InvalidArgumentException("Order not found");
+        }
+    }
+
+    protected function validateSetDelivery()
+    {
+        if(!$this->delivery){
+            throw new \InvalidArgumentException("Delivery not found");
+        }
     }
 }

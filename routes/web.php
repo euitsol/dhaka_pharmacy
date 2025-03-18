@@ -1263,6 +1263,7 @@ Route::group(['middleware' => ['auth:staff', 'permission'], 'prefix' => 'hub'], 
         Route::post('collected', 'collected')->name('collected');
         Route::post('prepared', 'prepared')->name('prepared');
         Route::get('print/{order}', 'print')->name('print');
+        Route::get('delivery-refresh/{delivery_id}', 'delivery_refresh')->name('delivery_refresh');
     });
 });
 

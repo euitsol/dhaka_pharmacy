@@ -43,11 +43,11 @@
                                     {{ optional($oh->order)->products->count() }}
                                 </td>
                                 <td>
-                                    {{ optional($oh->order)->delivery_type ?? '--'}}
+                                    {{ ucfirst(optional($oh->order)->delivery_type ?? '--')}}
                                 </td>
                                 <td>
                                     <span class=" badge {{ $oh->status_bg }}">
-                                        {{ $oh->status_string }}
+                                        {{ ucfirst($oh->status_string) }}
                                     </span>
                                 </td>
                                 <td>

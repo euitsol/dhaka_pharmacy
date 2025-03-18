@@ -35,7 +35,7 @@
                                         @if ($address->is_default == 1) aria-expanded="true" @else  aria-expanded="false" @endif
                                         aria-controls="collapse{{ $key }}">
                                         {{ $address->address }} <span
-                                            class="ml-2 badge {{ $address->getFeaturedBadgeClass() }}">{{ $address->getFeaturedStatus() }}</span>
+                                            class="ml-2 badge {{ $address->getFeaturedBadgeClass() }}">{{ __($address->getFeaturedStatus()) }}</span>
                                     </button>
                                     <div class="action-btns d-flex align-items-center justify-content-between gap-3 px-3">
                                         <a href="javascript:void(0)" data-id="{{ $address->id }}" class="edit-btn"><i
@@ -52,19 +52,19 @@
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <span class="strong">City: </span>{{ $address->city }}
+                                                <span class="strong">{{ __('City') }}: </span>{{ $address->city }}
                                             </div>
                                             <div class="col-md-3">
-                                                <span class="strong">Street: </span>{{ $address->address }}
+                                                <span class="strong">{{ __('Street') }}: </span>{{ $address->address }}
                                             </div>
                                             <div class="col-md-3">
-                                                <span class="strong">Appartment: </span>{{ $address->apartment }}
+                                                <span class="strong">{{ __('Apartment') }}: </span>{{ $address->apartment }}
                                             </div>
                                             <div class="col-md-3">
-                                                <span class="strong">Floor: </span>{{ $address->floor }}
+                                                <span class="strong">{{ __('Floor') }}: </span>{{ $address->floor }}
                                             </div>
                                             <div class="col-md-12 mt-sm-3">
-                                                <span class="strong">Instruction: </span> {!! $address->delivery_instruction !!}
+                                                <span class="strong">{{ __('Instruction') }}: </span> {!! $address->delivery_instruction !!}
                                             </div>
                                             {{-- <div class="col-md-12 mt-sm-3 mt-4">
                                                 @if (!empty($address->latitude) && !empty($address->longitude))
@@ -79,7 +79,7 @@
                             </div>
                         @empty
                             <div class="d-flex align-items-center justify-content-center">
-                                <h6 class="text-warning mt-2 mb-2">No address found</h6>
+                                <h6 class="text-warning mt-2 mb-2">{{ __('No address found') }}</h6>
                             </div>
                         @endforelse
                     </div>

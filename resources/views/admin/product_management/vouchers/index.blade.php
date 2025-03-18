@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-4 text-right">
                         @include('admin.partials.button', [
-                        'routeName' => 'product.voucher.voucher_create',
+                        'routeName' => 'product.vouchers.voucher_create',
                         'className' => 'btn-primary',
                         'label' => 'Add New Voucher',
                         ])

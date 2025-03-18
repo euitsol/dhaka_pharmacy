@@ -241,7 +241,7 @@
                                                                     <strong>{{ __('Street Addrees: ') }}</strong>
                                                                     {{ str_limit($user->address[0]->street_address) }}
                                                                 </li>
-                                                                <li><strong>{{ __('Address: ') }}</strong>
+                                                                <li><strong>{{ __('Address:') }}</strong>
                                                                     {{ str_limit($user->address[0]->address) }}
                                                                 </li>
                                                                 <li>
@@ -251,7 +251,7 @@
                                                                             {{ $user->address[0]->apartment }}
                                                                         </div>
                                                                         <div class="col-sm-6 col-12">
-                                                                            <strong>{{ __('Floor: ') }}</strong>
+                                                                            <strong>{{ __('Floor:') }}</strong>
                                                                             {{ $user->address[0]->floor }}
                                                                         </div>
                                                                     </div>
@@ -259,11 +259,11 @@
                                                                 <li>
                                                                     <div class="row">
                                                                         <div class="col-sm-6 col-12">
-                                                                            <strong>{{ __('City: ') }}</strong>
+                                                                            <strong>{{ __('City:') }}</strong>
                                                                             {{ $user->address[0]->city }}
                                                                         </div>
                                                                         <div class="col-sm-6 col-12">
-                                                                            <strong>{{ __('Zone: ') }}</strong>
+                                                                            <strong>{{ __('Zone:') }}</strong>
                                                                             {{ optional($user->address[0]->zone)->name }}
                                                                         </div>
                                                                     </div>
@@ -271,11 +271,11 @@
                                                                 <li>
                                                                     <div class="row">
                                                                         <div class="col-sm-6 col-12 col-lg-12 col-xxl-6">
-                                                                            <strong>{{ __('Delivery Charge: ') }}</strong>
+                                                                            <strong>{{ __('Delivery Charge:') }}</strong>
                                                                             {{ optional($user->address[0]->zone)->charge ? optional($user->address[0]->zone)->charge . __('BDT') : '' }}
                                                                         </div>
                                                                         <div class="col-sm-6 col-12 col-lg-12 col-xxl-6">
-                                                                            <strong>{{ __('Est. Delivery Time: ') }}</strong>
+                                                                            <strong>{{ __('Est. Delivery Time:') }}</strong>
                                                                             {{ optional($user->address[0]->zone)->delivery_time_hours ? optional($user->address[0]->zone)->delivery_time_hours . __('Hours') : '' }}
                                                                         </div>
                                                                     </div>
@@ -283,11 +283,11 @@
                                                                 <li>
                                                                     <div class="row">
                                                                         <div class="col-sm-6 col-12 col-lg-12 col-xxl-6">
-                                                                            <strong>{{ __('Express Delivery: ') }}</strong>
+                                                                            <strong>{{ __('Express Delivery:') }}</strong>
                                                                             {{ optional($user->address[0]->zone)->allows_express ? __('Yes') : 'No' }}
                                                                         </div>
                                                                         <div class="col-sm-6 col-12 col-lg-12 col-xxl-6">
-                                                                            <strong>{{ __('Express Charge: ') }}</strong>
+                                                                            <strong>{{ __('Express Charge:') }}</strong>
                                                                             {{ optional($user->address[0]->zone)->allows_express ? optional($user->address[0]->zone)->express_charge . __('BDT') : 'N/A' }}
                                                                         </div>
                                                                     </div>
