@@ -70,7 +70,7 @@ def generate_description(data):
 
     # data_str = json.dumps(data)
     try:
-        client = genai.Client(api_key="AIzaSyDdoiiotmeT8IzukoCPmtFpinBsBGr-xCs")
+        client = genai.Client(api_key="AIzaSyDgAmwDxhNmY8taKr_O9ZcSFBT6fxAYFYU")
         logger.info("Successfully initialized Gemini client")
 
         model = "gemini-2.0-flash"
