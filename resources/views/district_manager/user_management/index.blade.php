@@ -16,7 +16,7 @@
                             @include('admin.partials.button', [
                                 'routeName' => 'dm.user.create',
                                 'className' => 'btn-primary',
-                                'label' => {{ __('Add User') }},
+                                'label' => 'Add User',
                             ])
                         </div>
                     </div>
