@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Hub\Order;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Hub\DispatchOrderRequest;
 use App\Http\Requests\Hub\ItemCollectRequest;
 use App\Http\Requests\Hub\ItemPreparedRequest;
 use App\Models\{Delivery, Hub, Order, OrderHub, Pharmacy};
@@ -43,6 +44,9 @@ class OrderManagementController extends Controller
                 $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
                 return view('hub.order.list', $data);
             case 'prepared':
+                $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
+                return view('hub.order.list', $data);
+            case 'dispached':
                 $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
                 return view('hub.order.list', $data);
             default:
@@ -103,6 +107,23 @@ class OrderManagementController extends Controller
             $this->orderHubManagementService->setOrder($order);
             $orderHub = $this->orderHubManagementService->prepareOrder($data);
             sweetalert()->addSuccess('Order has been successfully prepared. Please proceed with dispatch once the steadfast arrives.');
+            return redirect()->route('hub.order.details', encrypt($orderHub->id));
+        } catch (Exception $e) {
+            sweetalert()->addError($e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function dispatched(DispatchOrderRequest $request)
+    {
+        try {
+            $data = $request->validated();
+            $data['hub_id'] = staff()->id;
+            $order = Order::findOrFail($request->order_id);
+            $this->orderHubManagementService->setOrder($order);
+            $orderHub = $this->orderHubManagementService->dispatchOrder($data);
+
+            sweetalert()->addSuccess('Order has been successfully dispatched. Thanks for your service.');
             return redirect()->route('hub.order.details', encrypt($orderHub->id));
         } catch (Exception $e) {
             sweetalert()->addError($e->getMessage());

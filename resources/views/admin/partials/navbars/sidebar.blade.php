@@ -624,7 +624,8 @@
                             $pageSlug == 'order_hub_assigned' ||
                             $pageSlug == 'order_items_collecting' ||
                             $pageSlug == 'order_items_collected' ||
-                            $pageSlug == 'order_package_prepared') @else collapsed @endif" data-toggle="collapse"
+                            $pageSlug == 'order_package_prepared' ||
+                            $pageSlug == 'order_dispatched') @else collapsed @endif" data-toggle="collapse"
                         href="#order_management"
                         @if (
                             $pageSlug == 'order_initiated' ||
@@ -632,7 +633,8 @@
                                 $pageSlug == 'order_hub_assigned' ||
                                 $pageSlug == 'order_items_collecting' ||
                                 $pageSlug == 'order_items_collected' ||
-                                $pageSlug == 'order_package_prepared') aria-expanded="true" @else aria-expanded="false" @endif>
+                                $pageSlug == 'order_package_prepared' ||
+                                $pageSlug == 'order_dispatched') aria-expanded="true" @else aria-expanded="false" @endif>
                         <i class="fa-solid fa-truck-fast"></i>
                         <span class="nav-link-text">{{ __('Order Management') }}</span>
                         <b class="caret mt-1"></b>
@@ -644,7 +646,8 @@
                             $pageSlug == 'order_hub_assigned' ||
                             $pageSlug == 'order_items_collecting' ||
                             $pageSlug == 'order_items_collected' ||
-                            $pageSlug == 'order_package_prepared') show @endif" id="order_management">
+                            $pageSlug == 'order_package_prepared' ||
+                            $pageSlug == 'order_dispatched') show @endif" id="order_management">
                         <ul class="nav pl-2">
                             @include('admin.partials.menu_buttons', [
                                 'menuItems' => [
@@ -689,6 +692,13 @@
                                         'iconClass' => 'fa-solid fa-minus',
                                         'params' => 'package_prepared',
                                         'label' => 'Package Prepared Orders',
+                                    ],
+                                    [
+                                        'pageSlug' => 'order_dispatched',
+                                        'routeName' => 'om.order.order_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'params' => 'dispatched',
+                                        'label' => 'Dispatched Orders',
                                     ],
                                     // [
                                     //     'pageSlug' => 'order_Delivered',
