@@ -48,7 +48,7 @@
         @if ($showSub)
             <li @if (isset($menuItem['pageSlug']) && collect($menuItem['pageSlug'])->contains($pageSlug)) class="active" @endif>
                 <a class="@if (isset($menuItem['pageSlug']) && collect($menuItem['pageSlug'])->contains($pageSlug)) @else collapsed @endif" data-toggle="collapse"
-                    href="#@if (isset($menuItem['id'])) {{ $menuItem['id'] }} @endif"
+                    href="#{{ isset($menuItem['id']) ? $menuItem['id'] : '' }}"
                     @if (isset($menuItem['subMenu']) && collect($menuItem['pageSlug'])->contains($pageSlug)) aria-expanded="true" @else aria-expanded="false" @endif>
                     <i class='{{ $menuItem['iconClass'] ?? 'fa-solid fa-minus' }}'></i>
                     <span class="nav-link-text">{{ $menuItem['label'] }}</span>
@@ -57,7 +57,7 @@
 
 
                 <div class="collapse @if (isset($menuItem['subMenu']) && collect($menuItem['pageSlug'])->contains($pageSlug)) show @endif"
-                    id="@if (isset($menuItem['id'])) {{ $menuItem['id'] }} @endif">
+                    id="{{ isset($menuItem['id']) ? $menuItem['id'] : '' }}">
                     <ul class="nav pl-2">
                         @foreach ($menuItem['subMenu'] as $subMenu)
                             @php
