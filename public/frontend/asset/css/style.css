@@ -657,7 +657,7 @@ a {
 
 .slider-sction .home-main-banner .uk-dotnav{
     position: absolute;
-    z-index: 9999;
+    z-index: 99;
     bottom: 5px;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -755,7 +755,7 @@ a {
     display: inline-block;
     height: 50px;
     transition: 0.4s;
-    z-index: 9999;
+    z-index: 99;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1170,7 +1170,7 @@ a {
 .footer-section .delivery-row {
     background: var(--text-color-white);
     position: relative;
-    z-index: 99;
+    /* z-index: 99; */
 }
 
 .footer-section .delivery-row h3 {
@@ -1190,7 +1190,7 @@ a {
 
 .footer-section .newsletter-row {
     background: var(--price-color);
-    z-index: 99;
+    /* z-index: 99; */
     position: relative;
     padding: 35px 0;
 }
@@ -1249,7 +1249,7 @@ a {
 
 .footer-section .main-footer-row {
     background: var(--footer-bg);
-    z-index: 99;
+    /* z-index: 99; */
     position: relative;
 }
 
@@ -2389,7 +2389,7 @@ a {
     position: fixed;
     bottom: 40px;
     right: 30px;
-    z-index: 9999;
+    z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2684,6 +2684,66 @@ a {
     height: 85%;
     /* border-bottom: 1px solid gainsboro; */
 }
+
+
+
+
+
+
+/* Firefox e customize scrollbar */
+
+@-moz-document url-prefix() {
+    .support_wrap .message_box .chat-box .message .conversation {
+        scrollbar-width: thin;
+        scrollbar-color: var(--secondary-color) var(--border-1);
+    }
+
+    .support_wrap .message_box .chat-box .message .conversation::-moz-scrollbar {
+        width: 8px;
+        border-radius: 10px !important;
+    }
+
+    .support_wrap .message_box .chat-box .message .conversation::-moz-scrollbar-track {
+        background: var(--border-1);
+        border-radius: 10px !important;
+    }
+
+    .support_wrap .message_box .chat-box .message .conversation::-moz-scrollbar-thumb {
+        background: var(--secondary-color);
+        border-radius: 10px !important;
+        background-image: linear-gradient(
+            90deg,
+            transparent,
+            var(--secondary-color) 50%,
+            transparent,
+            transparent
+        );
+    }
+}
+
+/* For Webkit Browsers (Chrome, Safari, Edge) */
+
+.support_wrap .message_box .chat-box .message .conversation::-webkit-scrollbar {
+    width: 8px;
+}
+
+.support_wrap .message_box .chat-box .message .conversation::-webkit-scrollbar-track {
+    background: var(--border-1);
+    border-radius: 10px;
+}
+
+.support_wrap .message_box .chat-box .message .conversation::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 10px;
+    background-image: linear-gradient(
+        90deg,
+        transparent,
+        var(--secondary-color) 50%,
+        transparent,
+        transparent
+    );
+}
+
 
 .support_wrap .message_box .chat-box .message .send_box {
     height: 15%;

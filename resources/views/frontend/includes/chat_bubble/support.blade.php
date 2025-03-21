@@ -1,4 +1,4 @@
-<div class="support_wrap">
+<div class="support_wrap d-none">
     <div class="chat" id="chat">
         <div class="background"></div>
         <svg class="chat-bubble" width="100" height="100" viewBox="0 0 100 100">
