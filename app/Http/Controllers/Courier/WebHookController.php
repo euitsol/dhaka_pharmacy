@@ -16,6 +16,6 @@ class WebHookController extends Controller
     public function handler(Request $request)
     {
         Log::info('Response from Steadfast WebHook: ' . json_encode($request->all(), JSON_PRETTY_PRINT));
-        return response()->json(null, 200);
+        return response()->json(['message' => 'Webhook received successfully'], 200);
     }
 }

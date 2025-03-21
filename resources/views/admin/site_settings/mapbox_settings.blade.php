@@ -17,7 +17,7 @@
     <div class="{{ $document ? 'col-md-8' : 'col-md-12' }}">
         <div class="card">
             <div class="card-header">
-                <h5 class="title">{{ _('Mapbox Settings') }}</h5>
+                <h5 class="title">{{ __('Mapbox Settings') }}</h5>
             </div>
             <form method="POST" action="{{ route('mbx_settings.update.site_settings') }}" autocomplete="off"
                 enctype="multipart/form-data">
@@ -27,7 +27,7 @@
                         <label>{{ __('Mapbox Access Token') }}</label>
                         <input type="text" name="mapbox_token" style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
                             class="form-control{{ $errors->has('mapbox_token') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Enter mapbox access token') }}"
+                            placeholder="{{ __('Enter mapbox access token') }}"
                             value="{{ $mapbox_settings['mapbox_token'] ?? old('mapbox_token') }}">
                         @include('alerts.feedback', ['field' => 'mapbox_token'])
                     </div>
@@ -36,7 +36,7 @@
                         <input type="text" name="mapbox_style_id"
                             style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
                             class="form-control{{ $errors->has('mapbox_style_id') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Enter mapbox style id') }}"
+                            placeholder="{{ __('Enter mapbox style id') }}"
                             value="{{ $mapbox_settings['mapbox_style_id'] ?? old('mapbox_style_id') }}">
                         @include('alerts.feedback', ['field' => 'mapbox_style_id'])
                     </div>
@@ -45,7 +45,7 @@
                         <input type="text" name="per_km_delivery_charge"
                             style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
                             class="form-control{{ $errors->has('per_km_delivery_charge') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Enter per km delivery charge') }}"
+                            placeholder="{{ __('Enter per km delivery charge') }}"
                             value="{{ $mapbox_settings['per_km_delivery_charge'] ?? old('per_km_delivery_charge') }}">
                         @include('alerts.feedback', ['field' => 'per_km_delivery_charge'])
                     </div>
@@ -54,7 +54,7 @@
                         <input type="text" name="min_delivery_charge"
                             style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
                             class="form-control{{ $errors->has('min_delivery_charge') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Enter min delivery charge') }}"
+                            placeholder="{{ __('Enter min delivery charge') }}"
                             value="{{ $mapbox_settings['min_delivery_charge'] ?? old('min_delivery_charge') }}">
                         @include('alerts.feedback', ['field' => 'min_delivery_charge'])
                     </div>
@@ -63,7 +63,7 @@
                         <input type="text" name="miscellaneous_charge"
                             style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
                             class="form-control{{ $errors->has('miscellaneous_charge') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Enter miscellaneous charge') }}"
+                            placeholder="{{ __('Enter miscellaneous charge') }}"
                             value="{{ $mapbox_settings['miscellaneous_charge'] ?? old('miscellaneous_charge') }}">
                         @include('alerts.feedback', ['field' => 'miscellaneous_charge'])
                     </div>
@@ -72,7 +72,7 @@
                         <input type="text" name="pharmacy_radious"
                             style="border-right: 2px solid rgba(29, 37, 59, 0.5)"
                             class="form-control{{ $errors->has('pharmacy_radious') ? ' is-invalid' : '' }}"
-                            placeholder="{{ _('Enter pharmacy radious') }}"
+                            placeholder="{{ __('Enter pharmacy radious') }}"
                             value="{{ $mapbox_settings['pharmacy_radious'] ?? old('pharmacy_radious') }}">
                         @include('alerts.feedback', ['field' => 'pharmacy_radious'])
                     </div>
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-end">
-                    <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
+                    <button type="submit" class="btn btn-fill btn-primary">{{ __('Save') }}</button>
                 </div>
             </form>
         </div>

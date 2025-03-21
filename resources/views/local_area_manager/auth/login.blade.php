@@ -24,7 +24,8 @@
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
                                             <input type="text" id="number" name="phone" value="{{ old('phone') }}"
-                                                class="form-control" placeholder="Enter your Phone Number" required>
+                                                class="form-control" placeholder="{{ __('Enter your Phone Number') }}"
+                                                required>
                                         </div>
                                         @include('alerts.feedback', ['field' => 'phone'])
                                     </div>
@@ -32,7 +33,7 @@
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                             <input type="password" id="password" name="password" class="form-control"
-                                                placeholder="Enter your password" required>
+                                                placeholder="{{ __('Enter your password') }}" required>
                                         </div>
                                         @include('alerts.feedback', ['field' => 'password'])
                                     </div>

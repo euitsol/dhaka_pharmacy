@@ -19,32 +19,33 @@
                                         <div class="form-group col-md-12">
                                             <label>{{ __('Name') }}</label>
                                             <input type="text" name="name" class="form-control"
-                                                placeholder="Enter Name" value="{{ $dm->name }}">
+                                                placeholder="{{ __('Enter Name') }}" value="{{ $dm->name }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Father Name') }}</label>
                                             <input type="text" name="father_name" class="form-control"
-                                                placeholder="Enter Father Name" value="{{ $dm->father_name }}">
+                                                placeholder="{{ __('Enter Father Name') }}" value="{{ $dm->father_name }}">
                                             @include('alerts.feedback', ['field' => 'father_name'])
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Nother Name') }}</label>
+                                            <label>{{ __('Mother Name') }}</label>
                                             <input type="text" name="mother_name" class="form-control"
-                                                placeholder="Enter Mother Name" value="{{ $dm->mother_name }}">
+                                                placeholder="{{ __('Enter Mother Name') }}"
+                                                value="{{ $dm->mother_name }}">
                                             @include('alerts.feedback', ['field' => 'mother_name'])
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Phone') }}</label>
                                             <input type="text" name="phone" class="form-control"
-                                                placeholder="Enter Phone" value="{{ $dm->phone }}">
+                                                placeholder="{{ __('Enter Phone') }}" value="{{ $dm->phone }}">
                                             @include('alerts.feedback', ['field' => 'phone'])
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>{{ __('Emergency Contact') }}</label>
                                             <input type="text" name="parent_phone" class="form-control"
-                                                placeholder="Enter Emergency Contact Number"
+                                                placeholder="{{ __('Enter Emergency Contact Number') }}"
                                                 value="{{ $dm->parent_phone }}">
                                             @include('alerts.feedback', ['field' => 'parent_phone'])
                                         </div>
@@ -97,7 +98,7 @@
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Age') }}</label>
                                     <input type="text" name="age" value="{{ $dm->age ? $dm->age : old('age') }}"
-                                        class="form-control" placeholder="Enter age">
+                                        class="form-control" placeholder="{{ __('Enter age') }}">
                                     @include('alerts.feedback', ['field' => 'age'])
                                 </div>
 
@@ -129,7 +130,7 @@
                                     <label>{{ __('Identification NO') }}</label>
                                     <input type="text" name="identification_no" id="identification_no"
                                         value="{{ $dm->identification_no ? $dm->identification_no : old('identification_no') }}"
-                                        class="form-control" placeholder="Enter identification number">
+                                        class="form-control" placeholder="{{ __('Enter identification number') }}">
                                     @include('alerts.feedback', ['field' => 'identification_no'])
                                 </div>
                                 <div class="col-md-12">
@@ -148,12 +149,12 @@
 
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Present Address') }}</label>
-                                    <textarea name="present_address" class="form-control" placeholder="Enter present address">{{ $dm->present_address ? $dm->present_address : old('present_address') }}</textarea>
+                                    <textarea name="present_address" class="form-control" placeholder="{{ __('Enter present address') }}">{{ $dm->present_address ? $dm->present_address : old('present_address') }}</textarea>
                                     @include('alerts.feedback', ['field' => 'present_address'])
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>{{ __('Permanent Address') }}</label>
-                                    <textarea name="permanent_address" class="form-control" placeholder="Enter permanent address">{{ $dm->permanent_address ? $dm->permanent_address : old('permanent_address') }}</textarea>
+                                    <textarea name="permanent_address" class="form-control" placeholder="{{ __('Enter permanent address') }}">{{ $dm->permanent_address ? $dm->permanent_address : old('permanent_address') }}</textarea>
                                     @include('alerts.feedback', ['field' => 'permanent_address'])
                                 </div>
                                 <div class="col-md-12 text-end">
@@ -175,19 +176,21 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>{{ __('Current Password') }}</label>
-                        <input type="password" name="old_password" class="form-control" placeholder="Current Password">
+                        <input type="password" name="old_password" class="form-control"
+                            placeholder="{{ __('Current Password') }}">
                         @include('alerts.feedback', ['field' => 'old_password'])
                     </div>
                     <div class="form-group">
                         <label>{{ __('New Password') }}</label>
-                        <input type="password" name="password" class="form-control" placeholder="New Password">
+                        <input type="password" name="password" class="form-control"
+                            placeholder="{{ __('New Password') }}">
                         @include('alerts.feedback', ['field' => 'password'])
 
                     </div>
                     <div class="form-group">
                         <label>{{ __('Confirm New Password') }}</label>
                         <input type="password" name="password_confirmation" class="form-control"
-                            placeholder="Confirm New Password">
+                            placeholder="{{ __('Confirm New Password') }}">
                     </div>
                 </div>
                 <div class="card-footer text-end">

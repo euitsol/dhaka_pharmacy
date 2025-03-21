@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="title">{{ _('Email Templates') }}</h5>
+                <h5 class="title">{{ __('Email Templates') }}</h5>
             </div>
             <div class="card-body">
                 <table class="table table-striped datatable">

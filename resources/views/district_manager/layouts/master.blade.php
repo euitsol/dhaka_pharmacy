@@ -39,16 +39,14 @@
 
 <body class="white-content dark {{ $class ?? '' }}">
     <div class="wrapper">
-        @auth()
-            @include('district_manager.partials.navbars.sidebar')
-            <div class="main-panel">
-                @include('district_manager.partials.navbars.navbar')
-                <div class="content">
-                    @yield('content')
-                </div>
-                @include('district_manager.partials.footer')
+        @include('district_manager.partials.navbars.sidebar')
+        <div class="main-panel">
+            @include('district_manager.partials.navbars.navbar')
+            <div class="content">
+                @yield('content')
             </div>
-        @endauth
+            @include('district_manager.partials.footer')
+        </div>
     </div>
     <form id="logout-form" action="{{ route('district_manager.logout') }}" method="POST" style="display: none;">
         @csrf

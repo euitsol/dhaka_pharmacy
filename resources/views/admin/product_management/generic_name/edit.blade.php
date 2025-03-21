@@ -29,10 +29,10 @@
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
-                            <label>{{ _('Slug') }}<span class="text-danger">*</span></label>
+                            <label>{{ __('Slug') }}<span class="text-danger">*</span></label>
                             <input type="text" value="{{ $generic_name->slug }}"
                                 class="form-control {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug"
-                                name="slug" placeholder="{{ _('Enter Slug (must be use - on white speace)') }}">
+                                name="slug" placeholder="{{ __('Enter Slug (must be use - on white speace)') }}">
                             @include('alerts.feedback', ['field' => 'slug'])
                         </div>
                         <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>

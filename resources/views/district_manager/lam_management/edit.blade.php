@@ -10,7 +10,7 @@
                             <h4 class="card-title">{{ __('Edit Local Area Manager') }}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            <a href="{{ route('dm.lam.list') }}" class="btn btn-sm btn-primary">{{ _("Back") }}</a>
+                            <a href="{{ route('dm.lam.list') }}" class="btn btn-sm btn-primary">{{ __('Back') }}</a>
                         </div>
                     </div>
                 </div>
@@ -20,45 +20,52 @@
                         @method('PUT')
                         <div class="form-group">
                             <label>{{ __('Name') }}</label>
-                            <input type="text" name="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Enter name"
-                                value="{{ $lam->name }}">
+                            <input type="text" name="name"
+                                class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                placeholder="{{ __('Enter name') }}" value="{{ $lam->name }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
                             <label>{{ __('Phone') }}</label>
-                            <input type="text" name="phone" class="form-control {{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="Enter phone"
-                                value="{{ $lam->phone }}">
+                            <input type="text" name="phone"
+                                class="form-control {{ $errors->has('phone') ? ' is-invalid' : '' }}"
+                                placeholder="{{ __('Enter phone') }}" value="{{ $lam->phone }}">
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
                         <div class="form-group">
-                            <label>{{__('District Manager')}}</label>
-                            <input type="text" class="form-control {{ $errors->has('dm_id') ? ' is-invalid' : '' }}" value="{{ dm()->name }}" disabled>
+                            <label>{{ __('District Manager') }}</label>
+                            <input type="text" class="form-control {{ $errors->has('dm_id') ? ' is-invalid' : '' }}"
+                                value="{{ dm()->name }}" disabled>
                             <input type="hidden" name="dm_id" class="form-control" value="{{ dm()->id }}">
                             @include('alerts.feedback', ['field' => 'dm_id'])
                         </div>
                         <div class="form-group">
-                            <label>{{__('District Manager Area')}}</label>
-                            <input type="text" class="form-control" value="{{dm()->operation_area->name}}" disabled>
+                            <label>{{ __('District Manager Area') }}</label>
+                            <input type="text" class="form-control" value="{{ dm()->operation_area->name }}" disabled>
                         </div>
                         <div class="form-group">
                             <label>{{ __('Local Area Manager Area') }}</label>
                             <select name="osa_id" class="form-control {{ $errors->has('osa_id') ? ' is-invalid' : '' }}">
                                 <option selected hidden value=" ">{{ __('Select Local Area Manager Area') }}</option>
                                 @foreach (dm()->operation_area->operation_sub_areas as $area)
-                                    <option value="{{$area->id}}" {{($area->id==$lam->osa_id)? 'selected' : ''}}>{{ $area->name }}</option>
+                                    <option value="{{ $area->id }}" {{ $area->id == $lam->osa_id ? 'selected' : '' }}>
+                                        {{ $area->name }}</option>
                                 @endforeach
                             </select>
                             @include('alerts.feedback', ['field' => 'osa_id'])
                         </div>
                         <div class="form-group">
                             <label>{{ __('Password') }}</label>
-                            <input type="password" name="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Enter new password">
+                            <input type="password" name="password"
+                                class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                placeholder="{{ __('Enter new password') }}">
                             @include('alerts.feedback', ['field' => 'password'])
                         </div>
                         <div class="form-group">
                             <label>{{ __('Confirm Password') }}</label>
-                            <input type="password" name="password_confirmation" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                placeholder="Confirm password">
+                            <input type="password" name="password_confirmation"
+                                class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                placeholder="{{ __('Confirm password') }}">
                             @include('alerts.feedback', ['field' => 'password'])
                         </div>
                         <button type="submit" class="btn btn-primary float-end">{{ __('Update') }}</button>

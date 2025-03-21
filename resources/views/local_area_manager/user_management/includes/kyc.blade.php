@@ -15,7 +15,7 @@
             @foreach ($form_datas as $key => $form_data)
                 @if ($form_data['type'] == 'text' || $form_data['type'] == 'number')
                     <tr>
-                        <th>{{ $form_data['field_name'] }}</th>
+                        <th>{{ __($form_data['field_name']) }}</th>
                         <th>:</th>
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
@@ -26,7 +26,7 @@
                 @endif
                 @if ($form_data['type'] == 'url')
                     <tr>
-                        <th>{{ $form_data['field_name'] }}</th>
+                        <th>{{ __($form_data['field_name']) }}</th>
                         <th>:</th>
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
@@ -38,7 +38,7 @@
                 @endif
                 @if ($form_data['type'] == 'email')
                     <tr>
-                        <th>{{ $form_data['field_name'] }}</th>
+                        <th>{{ __($form_data['field_name']) }}</th>
                         <th>:</th>
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
@@ -50,7 +50,7 @@
                 @endif
                 @if ($form_data['type'] == 'date')
                     <tr>
-                        <th>{{ $form_data['field_name'] }}</th>
+                        <th>{{ __($form_data['field_name']) }}</th>
                         <th>:</th>
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
@@ -61,7 +61,7 @@
                 @endif
                 @if ($form_data['type'] == 'option')
                     <tr>
-                        <th>{{ $form_data['field_name'] }}</th>
+                        <th>{{ __($form_data['field_name']) }}</th>
                         <th>:</th>
                         <td>
 
@@ -73,7 +73,7 @@
                 @endif
                 @if ($form_data['type'] == 'textarea')
                     <tr>
-                        <th class="main_th1">{{ $form_data['field_name'] }}</th>
+                        <th class="main_th1">{{ __($form_data['field_name']) }}</th>
                         <th class="main_th2">:</th>
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
@@ -84,7 +84,7 @@
                 @endif
                 @if ($form_data['type'] == 'file_single')
                     <tr>
-                        <th>{{ $form_data['field_name'] }}</th>
+                        <th>{{ __($form_data['field_name']) }}</th>
                         <th>:</th>
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
@@ -109,7 +109,7 @@
                 @endif
                 @if ($form_data['type'] == 'file_multiple')
                     <tr>
-                        <th>{{ $form_data['field_name'] }}</th>
+                        <th>{{ __($form_data['field_name']) }}</th>
                         <th>:</th>
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
@@ -135,7 +135,7 @@
                 @endif
                 @if ($form_data['type'] == 'image')
                     <tr>
-                        <th>{{ $form_data['field_name'] }}</th>
+                        <th>{{ __($form_data['field_name']) }}</th>
                         <th>:</th>
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))
@@ -154,7 +154,7 @@
                 @endif
                 @if ($form_data['type'] == 'image_multiple')
                     <tr>
-                        <th>{{ $form_data['field_name'] }}</th>
+                        <th>{{ __($form_data['field_name']) }}</th>
                         <th>:</th>
                         <td>
                             @if (isset($save_datas[$form_data['field_key']]))

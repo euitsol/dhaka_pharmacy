@@ -110,37 +110,37 @@
 
             {{-- Hub Management --}}
             @if (mainMenuCheck([
-                'prefixes' => ['hm.'],
-                'routes' => ['hub_list', 'hub_staff_list'],
-            ]))
-            <li>
-                <a class="@if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') @else collapsed @endif" data-toggle="collapse"
-                    href="#hub"
-                    @if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') aria-expanded="true" @else aria-expanded="false" @endif>
-                    <i class="fa-solid fa-warehouse"></i>
-                    <span class="nav-link-text">{{ __('Hub Management') }}</span>
-                    <b class="caret mt-1"></b>
-                </a>
+                    'prefixes' => ['hm.'],
+                    'routes' => ['hub_list', 'hub_staff_list'],
+                ]))
+                <li>
+                    <a class="@if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') @else collapsed @endif" data-toggle="collapse"
+                        href="#hub"
+                        @if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-warehouse"></i>
+                        <span class="nav-link-text">{{ __('Hub Management') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
 
-                <div class="collapse @if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') show @endif" id="hub">
-                    <ul class="nav pl-2">
-                        @include('admin.partials.menu_buttons', [
-                            'menuItems' => [
-                                [
-                                    'pageSlug' => 'hub',
-                                    'routeName' => 'hm.hub.hub_list',
-                                    'label' => 'Hubs',
+                    <div class="collapse @if ($pageSlug == 'hub' || $pageSlug == 'hub_staff') show @endif" id="hub">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'hub',
+                                        'routeName' => 'hm.hub.hub_list',
+                                        'label' => 'Hubs',
+                                    ],
+                                    [
+                                        'pageSlug' => 'hub_staff',
+                                        'routeName' => 'hm.hub_staff.hub_staff_list',
+                                        'label' => 'Hub Staffs',
+                                    ],
                                 ],
-                                [
-                                    'pageSlug' => 'hub_staff',
-                                    'routeName' => 'hm.hub_staff.hub_staff_list',
-                                    'label' => 'Hub Staffs',
-                                ],
-                            ],
-                        ])
-                    </ul>
-                </div>
-            </li>
+                            ])
+                        </ul>
+                    </div>
+                </li>
             @endif
 
             {{-- Pharmacy Management --}}
@@ -501,7 +501,36 @@
                                         'pageSlug' => 'bulk_entry',
                                         'routeName' => 'product.medicine.index.bulk_entry',
                                         'label' => 'Bulk Product Entry',
-                                    ]
+                                    ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            @endif
+            {{-- Voucher Management --}}
+            @if (mainMenuCheck([
+                    'prefixes' => ['vm.'],
+                    'routes' => ['voucher_list'],
+                ]))
+                <li>
+                    <a class="@if ($pageSlug == 'vouchers') @else collapsed @endif" data-toggle="collapse"
+                        href="#voucher_management"
+                        @if ($pageSlug == 'vouchers') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-ticket"></i>
+                        <span class="nav-link-text">{{ __('Voucher Management') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'vouchers') show @endif" id="voucher_management">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'vouchers',
+                                        'routeName' => 'vm.vouchers.voucher_list',
+                                        'label' => 'Vouchers',
+                                    ],
                                 ],
                             ])
                         </ul>

@@ -249,7 +249,7 @@
                                                             <input {{ $disabled ? 'disabled' : '' }} type="text"
                                                                 name="{{ $fd->field_key }}[title]"
                                                                 class="form-control file_title {{ $errors->has($fd->field_key . '.title') ? 'is-invalid' : '' }}"
-                                                                placeholder="{{ _('Enter file name') }}">
+                                                                placeholder="{{ __('Enter file name') }}">
                                                             <input {{ $disabled ? 'disabled' : '' }} type="file"
                                                                 accept="" name="{{ $fd->field_key }}[file]"
                                                                 id="{{ $fd->field_key }}"
@@ -268,7 +268,7 @@
                                                                     isset(json_decode($submitted_kyc->submitted_data)->$a) &&
                                                                     !empty(json_decode($submitted_kyc->submitted_data)))
                                                                 <div class="form-group mb-3">
-                                                                    <label>{{ _('Uploded file') }}</label>
+                                                                    <label>{{ __('Uploded file') }}</label>
                                                                     <div class="input-group mb-3">
                                                                         <input {{ $disabled ? 'disabled' : '' }}
                                                                             type="text" class="form-control"
@@ -318,7 +318,7 @@
                                                         <div class="input-group mb-3">
                                                             <input {{ $disabled ? 'disabled' : '' }} type="text"
                                                                 name="" class="form-control file_title"
-                                                                placeholder="{{ _('Enter file name') }}"
+                                                                placeholder="{{ __('Enter file name') }}"
                                                                 {{ $errors->has($fd->field_key . '.*.title') ? 'is-invalid' : '' }}>
                                                             <input {{ $disabled ? 'disabled' : '' }} type="file"
                                                                 name="" id="{{ $fd->field_key }}"
@@ -347,7 +347,7 @@
                                                                         $count += 1;
                                                                     @endphp
                                                                     <div class="form-group mb-3">
-                                                                        <label>{{ _('Uploded file - ' . $count) }}</label>
+                                                                        <label>{{ __('Uploded file - ' . $count) }}</label>
                                                                         <div class="input-group mb-3">
                                                                             <input {{ $disabled ? 'disabled' : '' }}
                                                                                 type="text" class="form-control"
@@ -525,7 +525,7 @@
                                     .url);
                                 if (isMultiple) {
                                     var file = `<div class="form-group mb-3">
-                                                <label>{{ _('Uploded file - ${count}') }}</label>
+                                                <label>{{ __('Uploded file - ${count}') }}</label>
                                                 <div class="input-group mb-3">
                                                     <input {{ $disabled ? 'disabled' : '' }} type="text" class="form-control"   value="${set_title(fileTitle.val(),'',response.title)}" disabled>
                                                     <input {{ $disabled ? 'disabled' : '' }} type="text" class="form-control"  value="${set_title(fileTitle.val(), response.extension, response.title)}" disabled>
@@ -541,7 +541,7 @@
                                 } else {
                                     fileUrl.val(response.file_path);
                                     var file = `<div class="form-group mb-3">
-                                                <label>{{ _('Uploded file') }}</label>
+                                                <label>{{ __('Uploded file') }}</label>
                                                 <div class="input-group mb-3">
                                                     <input {{ $disabled ? 'disabled' : '' }} type="text" class="form-control" value="${set_title(fileTitle.val(),'',response.title)}" disabled>
                                                     <input {{ $disabled ? 'disabled' : '' }} type="text" class="form-control" value="${set_title(fileTitle.val(), response.extension,response.title)}" disabled>

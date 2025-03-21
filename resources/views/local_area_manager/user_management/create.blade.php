@@ -24,13 +24,13 @@
                         <div class="form-group">
 
                             <label>{{ __('Name') }}</label>
-                            <input type="text" name="name" class="form-control" placeholder="Enter name"
+                            <input type="text" name="name" class="form-control" placeholder="{{ __('Enter name') }}"
                                 value="{{ old('name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
                         </div>
                         <div class="form-group">
                             <label>{{ __('Phone') }}</label>
-                            <input type="text" name="phone" class="form-control" placeholder="Enter phone"
+                            <input type="text" name="phone" class="form-control" placeholder="{{ __('Enter phone') }}"
                                 value="{{ old('phone') }}">
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
