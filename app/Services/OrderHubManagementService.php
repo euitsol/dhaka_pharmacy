@@ -106,9 +106,10 @@ class OrderHubManagementService
             'collecting' => OrderHub::COLLECTING,
             'collected' => OrderHub::COLLECTED,
             'prepared' => OrderHub::PREPARED,
-            'shipped' => OrderHub::DISPATCHED,
+            'dispatched' => OrderHub::DISPATCHED,
             'delivered' => OrderHub::DELIVERED,
             'returned' => OrderHub::RETURNED,
+            'all' => null,
             default => throw new \InvalidArgumentException("Invalid status: $status"),
         };
     }
@@ -120,9 +121,10 @@ class OrderHubManagementService
             'collecting' => 'bg-info',
             'collected' => 'bg-info',
             'prepared' => 'bg-success',
-            'shipped' => 'bg-success',
+            'dispatched' => 'bg-success',
             'delivered' => 'bg-success',
             'returned' => 'bg-danger',
+            'all' => 'bg-secondary',
             default => throw new \InvalidArgumentException("Invalid status: $status"),
         };
     }

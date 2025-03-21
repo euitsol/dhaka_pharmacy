@@ -17,15 +17,15 @@
             ])
 
             <li>
-                <a class="@if ($pageSlug == 'order_assigned' || $pageSlug == 'order_collecting' || $pageSlug == 'order_collected' || $pageSlug == 'order_prepared' || $pageSlug == 'order_dispatched') @else collapsed @endif" data-toggle="collapse"
+                <a class="@if ($pageSlug == 'order_assigned' || $pageSlug == 'order_collecting' || $pageSlug == 'order_collected' || $pageSlug == 'order_prepared' || $pageSlug == 'order_dispatched' || $pageSlug == 'order_all') @else collapsed @endif" data-toggle="collapse"
                     href="#om"
-                    @if ($pageSlug == 'order_assigned' || $pageSlug == 'order_collecting' || $pageSlug == 'order_collected' || $pageSlug == 'order_prepared' || $pageSlug == 'order_dispatched') aria-expanded="true" @else aria-expanded="false" @endif>
+                    @if ($pageSlug == 'order_assigned' || $pageSlug == 'order_collecting' || $pageSlug == 'order_collected' || $pageSlug == 'order_prepared' || $pageSlug == 'order_dispatched' || $pageSlug == 'order_all') aria-expanded="true" @else aria-expanded="false" @endif>
                     <i class="fa-solid fa-truck"></i>
                     <span class="nav-link-text">{{ __('Order Management') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'order_assigned' || $pageSlug == 'order_collecting' || $pageSlug == 'order_collected' || $pageSlug == 'order_prepared' || $pageSlug == 'order_dispatched') show @endif" id="om">
+                <div class="collapse @if ($pageSlug == 'order_assigned' || $pageSlug == 'order_collecting' || $pageSlug == 'order_collected' || $pageSlug == 'order_prepared' || $pageSlug == 'order_dispatched' || $pageSlug == 'order_all') show @endif" id="om">
                     <ul class="nav pl-2">
                         @include('hub.partials.menu_buttons', [
                             'menuItems' => [
@@ -63,6 +63,13 @@
                                     'iconClass' => 'fa-solid fa-minus',
                                     'params' => 'dispatched',
                                     'label' => 'Dispatched Orders',
+                                ],
+                                [
+                                    'pageSlug' => 'order_all',
+                                    'routeName' => 'hub.order.list',
+                                    'iconClass' => 'fa-solid fa-minus',
+                                    'params' => 'all',
+                                    'label' => 'All Orders',
                                 ],
                             ],
                         ])

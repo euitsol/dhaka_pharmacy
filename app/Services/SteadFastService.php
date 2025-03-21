@@ -91,15 +91,33 @@ class SteadFastService
 
     protected function handleRefreshResponse($response)
     {
-        $status = '';
+        $validStatuses = [
+            'pending',
+            'delivered_approval_pending',
+            'partial_delivered_approval_pending',
+            'cancelled_approval_pending',
+            'unknown_approval_pending',
+            'delivered',
+            'partial_delivered',
+            'cancelled',
+            'hold',
+            'in_review',
+        ];
 
-        if (isset($response['status']) && $response['status'] === 200 &&
+        $status = null;
+
+        if (isset($response['status']) &&
+            $response['status'] === 200 &&
             isset($response['consignment']['status'])) {
             $status = $response['consignment']['status'];
         }
 
-        $this->delivery->update([
-            'status_code' => $status,
-        ]);
+        log::info("Status: ".$status);
+
+        if (in_array($status, $validStatuses)) {
+            $this->delivery->update([
+                'status_code' => $status,
+            ]);
+        }
     }
 }

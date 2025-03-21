@@ -48,9 +48,11 @@ class OrderManagementController extends Controller
             case 'initiated':
                 $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
+
             case 'submitted':
                 $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
+
             case 'hub_assigned':
                 $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
@@ -66,9 +68,19 @@ class OrderManagementController extends Controller
             case 'package_prepared':
                 $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
+
             case 'dispatched':
                 $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
                 return view('admin.order_management.index', $data);
+
+            case 'delivered':
+                $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
+                return view('admin.order_management.index', $data);
+
+            case 'cancelled':
+                $data['orders'] = Order::with(['products'])->status($this->orderManagementService->resolveStatus($status))->latest()->get();
+                return view('admin.order_management.index', $data);
+
             // case 'waiting-for-rider':
             //     $data['dos'] = OrderDistribution::with(['order', 'order.products', 'order.products.units', 'order.products.discounts', 'order.products.pivot.unit', 'odps', 'creater'])
             //         ->withCount(['odps' => function ($query) {

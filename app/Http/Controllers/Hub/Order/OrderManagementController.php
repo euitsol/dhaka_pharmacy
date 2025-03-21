@@ -30,28 +30,36 @@ class OrderManagementController extends Controller
 
     public function list($status)
     {
-        $data['status'] = (string)$status;
-        $data['status_bg'] = $this->orderHubManagementService->resolveStatusBg($status);
+        try{
+            $data['status'] = (string)$status;
+            $data['status_bg'] = $this->orderHubManagementService->resolveStatusBg($status);
 
-        switch ($status) {
-            case 'assigned':
-                $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
-                return view('hub.order.list', $data);
-            case 'collecting':
-                $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
-                return view('hub.order.list', $data);
-            case 'collected':
-                $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
-                return view('hub.order.list', $data);
-            case 'prepared':
-                $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
-                return view('hub.order.list', $data);
-            case 'dispached':
-                $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
-                return view('hub.order.list', $data);
-            default:
-                flash()->addWarning('Invalid status');
-                return redirect()->back();
+            switch ($status) {
+                case 'assigned':
+                    $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
+                    return view('hub.order.list', $data);
+                case 'collecting':
+                    $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
+                    return view('hub.order.list', $data);
+                case 'collected':
+                    $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
+                    return view('hub.order.list', $data);
+                case 'prepared':
+                    $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
+                    return view('hub.order.list', $data);
+                case 'dispatched':
+                    $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->where('status', $this->orderHubManagementService->resolveStatus($status))->get();
+                    return view('hub.order.list', $data);
+                case 'all':
+                    $data['ohs'] = OrderHub::with(['order', 'hub', 'order.products'])->ownedByHub()->get();
+                    return view('hub.order.list', $data);
+                default:
+                    flash()->addWarning('Invalid status');
+                    return redirect()->back();
+            }
+        }catch(Exception $e){
+            sweetalert()->addError($e->getMessage());
+            return redirect()->back();
         }
     }
 
