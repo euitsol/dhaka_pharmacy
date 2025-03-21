@@ -34,7 +34,7 @@ function get_permission_routes()
         'product.',
         'payment_gateway.',
         'obp.',
-        'om.',
+        // 'om.',
         'withdraw_method.',
         'withdraw.',
         'hm.',

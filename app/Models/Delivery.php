@@ -10,10 +10,13 @@ class Delivery extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_CANCELED = -1;
     protected $fillable = [
         'type',
         'invoice',
         'order_id',
+        'hub_id',
         'payload',
         'response',
         'status_code',
@@ -22,6 +25,8 @@ class Delivery extends BaseModel
         'address_id',
         'sent_at',
         'received_at',
+        'tracking_id',
+        'status',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -32,4 +37,35 @@ class Delivery extends BaseModel
         'deleter_id',
         'deleter_type'
     ];
+
+    protected $appends = [
+        'status_string',
+        'status_color',
+    ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
+    }
+
+    public function getStatusStringAttribute()
+    {
+        if ($this->status === self::STATUS_ACTIVE) {
+            return 'Active';
+        } elseif ($this->status === self::STATUS_CANCELED) {
+            return 'Canceled';
+        }
+        return 'Unknown';
+    }
+
+    public function getStatusColorAttribute()
+    {
+        if ($this->status === self::STATUS_ACTIVE) {
+            return 'success';
+        } elseif ($this->status === self::STATUS_CANCELED) {
+            return 'danger';
+        }
+        return 'warning';
+    }
+
 }

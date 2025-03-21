@@ -77,6 +77,22 @@ class OrderHubManagementService
         return $orderHub;
     }
 
+    public function dispatchOrder(array $formData)
+    {
+        DB::beginTransaction();
+        $orderHub = OrderHub::where('order_id', $this->order->id)->ownedByHub()->get()->first();
+        $this->setOrderHub($orderHub);
+
+        $this->orderHub->update(['status' => OrderHub::DISPATCHED]);
+        $this->updateOrderStatus($this->order, Order::DISPATCHED);
+        $this->orderTimelineService->updateTimelineStatus(
+            $this->order,
+            Order::DISPATCHED
+        );
+        DB::commit();
+        return $orderHub;
+    }
+
     protected function createDeliveryRequest(string $type='steadfast')
     {
         $this->orderDeliveryService->setOrderHub($this->orderHub)->setType($type)->processDelivery();
@@ -90,9 +106,10 @@ class OrderHubManagementService
             'collecting' => OrderHub::COLLECTING,
             'collected' => OrderHub::COLLECTED,
             'prepared' => OrderHub::PREPARED,
-            'shipped' => OrderHub::DISPATCHED,
+            'dispatched' => OrderHub::DISPATCHED,
             'delivered' => OrderHub::DELIVERED,
             'returned' => OrderHub::RETURNED,
+            'all' => null,
             default => throw new \InvalidArgumentException("Invalid status: $status"),
         };
     }
@@ -104,9 +121,10 @@ class OrderHubManagementService
             'collecting' => 'bg-info',
             'collected' => 'bg-info',
             'prepared' => 'bg-success',
-            'shipped' => 'bg-success',
+            'dispatched' => 'bg-success',
             'delivered' => 'bg-success',
             'returned' => 'bg-danger',
+            'all' => 'bg-secondary',
             default => throw new \InvalidArgumentException("Invalid status: $status"),
         };
     }
