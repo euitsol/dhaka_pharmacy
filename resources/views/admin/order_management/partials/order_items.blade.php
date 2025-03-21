@@ -133,7 +133,7 @@
                         </div>
                     </div>
                 @endforeach
-                @if ($submitted && admin()->hasPermissionTo('hub_assign'))
+                @if ($submitted)
                     <div class="col-12">
                         <div class="row mt-3">
                             {{-- <div class="form-group col-md-12">

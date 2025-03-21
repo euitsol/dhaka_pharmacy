@@ -94,7 +94,7 @@
                             </div>
                             <p class="get-otp">{{ __("Didn't receive a code? ") }}<a class="send_otp_again"
                                     href="{{ route('use.send_otp.again', $user_id) }}">{{ __('Send Again') }}</a></p>
-                            <input type="submit" class="verify-btn submit_button" value="VERIFY">
+                            <input type="submit" class="verify-btn submit_button" value="{{ __('VERIFY') }}">
                         </form>
                     </div>
                 </div>
