@@ -657,7 +657,7 @@ a {
 
 .slider-sction .home-main-banner .uk-dotnav{
     position: absolute;
-    z-index: 99999999999;
+    z-index: 9999;
     bottom: 5px;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -1043,7 +1043,7 @@ a {
 
 .delivery-slider-section .delivery-main-slide .uk-dotnav{
     position: absolute;
-    z-index: 99999999999;
+    z-index: 9999;
     bottom: 5px;
     left: 50%;
     transform: translate(-50%, -50%);

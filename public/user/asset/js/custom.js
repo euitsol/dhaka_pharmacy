@@ -178,8 +178,6 @@ $(document).ready(function () {
 
 
 // languate js code here
-
-
 function toggleLanguage() {
     const localeInput = document.getElementById("localeInput");
     const switchBtn = document.getElementById("switch-btn");
@@ -202,4 +200,33 @@ function toggleLanguage() {
 
     document.getElementById("languageForm").submit();
 }
+
+
+
+// address add model js code here
+var myModal = new bootstrap.Modal(document.getElementById('address_add_modal'), {
+    keyboard: false
+});
+
+document.getElementById('openAddressModal').addEventListener('click', function () {
+   var myModal = new bootstrap.Modal(document.getElementById('address_add_modal'));
+   myModal.show();
+});
+
+
+
+// cart slider js code here
+document.addEventListener("DOMContentLoaded", function () {
+    // Initialize locale from session
+    document.documentElement.lang = "{{ app()->getLocale() }}";
+    let cartbtnElement = document.getElementById("cartbtn"); 
+    document.addEventListener("click", function (event) {
+        if (cartbtnElement && !cartbtnElement.contains(event.target) && cartbtnElement.classList.contains("show")) {
+            let cartbtnInstance = bootstrap.Offcanvas.getInstance(cartbtnElement);
+            if (cartbtnInstance) {
+                cartbtnInstance.hide();
+            }
+        }
+    });
+});
 

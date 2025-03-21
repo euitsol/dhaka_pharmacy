@@ -82,8 +82,10 @@
     transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.checkout-section .order-info-row .place-order:hover {
-    background-color: var(--border-2);
+.checkout-section .order-info-row .place-order.active,
+.checkout-section .order-info-row .place-order:hover,
+.checkout-section .order-info-row .place-order:active {
+  background-color: var(--border-2);
 }
 
 .checkout-section .order-info-row .place-order:active {

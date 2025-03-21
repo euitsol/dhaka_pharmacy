@@ -453,4 +453,7 @@ addToCartBtn.addEventListener('click', function() {
   }, 3000);
 });
 
-
+// place order button active color js code
+document.querySelector('.place-order').addEventListener('click', function() {
+    this.classList.toggle('active');
+});
