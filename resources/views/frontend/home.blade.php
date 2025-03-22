@@ -265,7 +265,7 @@ uk-child-width-1-5@m cat-list">
                         <!-- Slide 2 -->
                         <div class="bottom-slide-items">
                             <div class="uk-panel">
-                                <img src="{{ asset('frontend/asset/img/bottom-slider/slider-2.jpg') }}"
+                                <img src="{{ asset('frontend/asset/img/bottom-slider/newslider-1.jpg') }}"
                                     alt="slider image">
                             </div>
                         </div>

@@ -19,12 +19,12 @@
                             @csrf
                             <div class="phn input-box">
                                 <span class="icon"><i class="fa-solid fa-phone-volume"></i></span>
-                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="Phone"
+                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="{{__('Phone')}}"
                                     class="phone" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                             @include('alerts.feedback', ['field' => 'phone'])
 
-                            <input class="forgot_button submit_button" type="submit" value="SEND OTP">
+                            <input class="forgot_button submit_button" type="submit" value="{{__('SEND OTP')}}">
                             <p class="get-otp">{{ __('Already have an account? ') }}<a class="otp_switch"
                                     href="{{ route('login') }}">{{ __('LOG IN') }}</a></p>
                         </form>

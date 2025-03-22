@@ -10,11 +10,9 @@
                 <div class="row row-gap-3">
                     <!-- Left Section (Image + Text) -->
                     <div class="col-lg-6 col-12 mb-2 mb-lg-0 px-2 px-md-4">
-                        <h2 class="mb-2">Request Data Deletion</h2>
+                        <h2 class="mb-2">{{__('Request Data Deletion')}}</h2>
                         <p class="mb-2 mb-lg-3">
-                            We respect your privacy rights. If you wish to have your personal data removed from our system,
-                            please fill out this form. Our team will process your request in accordance with applicable
-                            data protection laws.
+                            {{__('We respect your privacy rights. If you wish to have your personal data removed from our system, please fill out this form. Our team will process your request in accordance with applicable data protection laws.')}}
                         </p>
                         <img class="mt-2" src="{{ asset('frontend/asset/img/contact.png') }}" alt="Data Privacy"
                             class="img-fluid">

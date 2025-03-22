@@ -26,6 +26,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('hub/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('hub/css/responsive.css') }}" rel="stylesheet">
 
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])

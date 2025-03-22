@@ -75,6 +75,24 @@ input,label{
     .header-section .right-col .cart-btn, .header-section .right-col .wish-btn {
 		font-size: 10px !important;
 	}
+    .about-section .contact-section .main-contact-section .contact-info-content h3 {
+        font-size: 17px !important;
+        line-height: 22px !important;
+    }
+    .about-section .contact-section .main-contact-section .information {
+        margin: 0px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info {
+        padding: 15px 0px !important;
+    }
+    .footer-section .main-footer-row .footer-nav li a {
+        font-size: 12px !important;
+        line-height: 25px !important; 
+    }
+    .footer-section .main-footer-row h2.title {
+        padding-bottom: 0px !important;
+        margin-bottom: 8px !important;
+    }
   }
 @media screen and (min-width: 320px) and (max-width: 480px) {
     .slider-sction .carousel-caption .slider-left .btns a {
@@ -84,4 +102,19 @@ input,label{
     .header-section .right-col .cart-btn, .header-section .right-col .wish-btn {
 		font-size: 10px !important;
 	}
+    .about-section .contact-section .main-contact-section .contact-info-content h3 {
+        font-size: 16px !important;
+        line-height: 22px !important;
+    }
+    .about-section .contact-section .main-contact-section .contact-info {
+        padding: 15px 0px !important;
+    }
+    .footer-section .main-footer-row .footer-nav li a {
+        font-size: 12px !important;
+        line-height: 25px !important; 
+    }
+    .footer-section .main-footer-row h2.title {
+        padding-bottom: 0px !important;
+        margin-bottom: 8px !important;
+    }
 }

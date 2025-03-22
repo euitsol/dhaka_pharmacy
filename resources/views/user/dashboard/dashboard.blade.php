@@ -194,7 +194,7 @@
                                                         alt=""> --}}
                                                                 </div>
                                                                 <div class="tips_details mt-0 mt-xl-3">
-                                                                    <p>{!! str_limit(strip_tags($tips->description), 270) !!}
+                                                                    <p>{!! str_limit(html_entity_decode($tips->description), 270) !!}
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -223,8 +223,7 @@
                                                     <h3>{{ __('Address') }}</h3>
                                                 </div>
                                                 <div class="btn">
-                                                    <a href="javascript:void(0)" data-toggle="modal"
-                                                        data-target="#address_add_modal">{{ __('Add Address') }}</a>
+                                                    <a href="javascript:void(0)" id="openAddressModal" data-bs-toggle="modal" data-bs-target="#address_add_modal">{{ __('Add Address') }}</a>
                                                 </div>
                                             </div>
                                             @if (isset($user->address) && !empty($user->address->first()))

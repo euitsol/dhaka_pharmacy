@@ -5,6 +5,7 @@ $.ajaxSetup({
     beforeSend: function () {},
     complete: function () {},
 });
+
 const checkoutModule = (() => {
     const operations = {
         getAddressDetails: (url) =>

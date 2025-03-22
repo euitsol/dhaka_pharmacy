@@ -4,12 +4,11 @@
     </div>
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('Cart') }}</h5>
-        <a href="javascript:void(0)" class="cart_clear_btn"><i class="fa-solid fa-trash-can"></i>
-            {{ __('Clear All') }}</a>
+        <a href="javascript:void(0)" class="cart_clear_btn"><i class="fa-solid fa-trash-can"></i>{{ __('Clear All') }}</a>
         <button type="button" class="btn-close m-0" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body cart_items pt-0">
-
+        <!-- Cart Items Go Here -->
     </div>
     <div class="offcanvas-footer cart_sub_total px-4 py-3">
         <div class="row">
@@ -33,8 +32,7 @@
     </div>
 </div>
 
-
-
 <form action="{{ route('u.ck.init') }}" method="POST" id="checkoutForm">
     @csrf
 </form>
+
