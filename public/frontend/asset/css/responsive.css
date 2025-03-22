@@ -1543,10 +1543,10 @@
     .slider-sction .home-main-banner .uk-dotnav{
         bottom: -6px !important;
     }
-    .delivery-slider-section .bottom-slide-items img{
+    /* .delivery-slider-section .bottom-slide-items img{
         height: 200px;
         object-fit: cover;
-    }
+    } */
 }
 
 @media screen and (max-width: 640px) {
@@ -2119,8 +2119,10 @@
         object-fit: cover;
     }
     .delivery-slider-section .bottom-slide-items img {
-        height: 145px;
+        height: 135px;
+        object-fit: fill;
     }
+    
 }
 
 /*========================================
