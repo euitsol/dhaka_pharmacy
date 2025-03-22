@@ -49,7 +49,7 @@
                                                 </div>
                                                 <div class="col-4 text-center ps-0 wishlist_item">
                                                     <i class="fa-solid fa-trash-can text-danger wish_remove_btn wish_update"
-                                                        data-pid="${product.pid}"></i>
+                                                        data-pid="${wish.pid}"></i>
                                                 </div>
                                                 <div class="col-6 pe-1 mt-2">
                                                     <a href="${product_details}"
@@ -112,7 +112,6 @@
                     refreshWishlist();
                 },
                 error: function(xhr, status, error) {
-                    window.location.href = login_url;
                     console.error("Error fetching search data:", error);
                 },
             });

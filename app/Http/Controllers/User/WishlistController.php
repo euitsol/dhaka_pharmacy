@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use App\Http\Traits\TransformProductTrait;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class WishlistController extends Controller
@@ -19,7 +20,7 @@ class WishlistController extends Controller
         $this->middleware('auth');
     }
 
-    public function update($pid): JsonResponse
+    public function update($pid, Request $request ): JsonResponse|RedirectResponse
     {
         $pid = decrypt($pid);
         $wishlist = WishList::where('user_id', user()->id)->where('product_id', $pid)->first();
@@ -44,7 +45,13 @@ class WishlistController extends Controller
         } else {
             $data['message'] = 'The item has been successfully removed from your wishlist.';
         }
-        return response()->json($data);
+
+        if($request->ajax()) {
+            return response()->json($data);
+        }else{
+            flash()->addSuccess($data['message']);
+            return redirect()->back();
+        }
     }
     public function list(Request $request)
     {
@@ -81,7 +88,10 @@ class WishlistController extends Controller
             'product.units' => function ($q) {
                 $q->orderBy('quantity', 'asc');
             }
-        ])->orderBy('updated_at', 'asc')->get();
+        ])->orderBy('updated_at', 'asc')->get()->each(function ($item) {
+            $item->pid = encrypt($item->product->id);
+        });
+
         return response()->json($data);
     }
 }

@@ -57,22 +57,33 @@ $(document).ready(function() {
         goToStep(currentStep - 1);
     });
 
+    // $phoneInput.on('input', function() {
+    //     let phone = $(this).val().trim();
+
+    //     if(phone[0] == '0'){
+    //         phone = phone.slice(1);
+    //     }
+
+    //     $phoneInput.val(phone);
+    // });
     // Request OTP
     $requestOtpBtn.on('click', function() {
-        const phone = $phoneInput.val().trim();
+        var phone = $phoneInput.val().trim();
 
         if (!phone) {
             toastr.error('Please enter a valid phone number');
             return;
         }
 
-        if (phone.length != 10 || phone[0] == '0') {
-            toastr.error('Phone number should be 10 digit');
+        if (phone.length != 11) {
+            toastr.error('Phone number should be 11 digit');
             return;
         }
 
         // Display the phone number in the OTP step
-        $phoneDisplay.text('+880' + phone);
+        $phoneDisplay.text(phone);
+
+        console.log(phone);
 
         // Send OTP API request
         $.ajax({
