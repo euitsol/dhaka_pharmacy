@@ -64,9 +64,9 @@
                                 <label for="phone" class="form-label">{{ __('Contact Number') }} <span
                                         class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <span class="input-group-text">+880</span>
+                                    {{-- <span class="input-group-text">+880</span> --}}
                                     <input type="tel" class="form-control" name="phone" id="phone"
-                                        placeholder="1XXXXXXXXX" value="{{ user() ? ltrim(user()->phone, '0') : old('phone') }}">
+                                        placeholder="01XXXXXXXXX" value="{{ user() ? user()->phone : old('phone') }}">
                                 </div>
                                 <div class="form-text">{{ __('We\'ll send an OTP to this number') }}</div>
                             </div>
@@ -122,7 +122,6 @@
                                     {{ __('Our pharmacy team will review your prescription and call you shortly to confirm your order.') }}
                                 </p>
                             </div>
-
                             <div class="d-flex gap-2">
                                 <button type="button" class="btn btn-outline-secondary prev-step flex-grow-1" data-step="3">
                                     <i class="fas fa-arrow-left me-1"></i> {{ __('Back') }}
