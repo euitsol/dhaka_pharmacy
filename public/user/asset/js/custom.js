@@ -162,18 +162,50 @@ function updateUrlParameter(param, value) {
 
 // Header Toggle JS 
 
+// $(document).ready(function () {
+//     $(".toggle_bar .toggle_icon").on("click", function () {
+//         if($(this).hasClass("fa-bars")){
+//             $(this).removeClass("fa-bars").addClass("fa-bars-staggered");
+//         }else{
+//             $(this).removeClass("fa-bars-staggered").addClass("fa-bars");
+//         }
+//         $(".header-section .nav-menu").toggleClass("active");
+//     });
+
+// });
+
 
 $(document).ready(function () {
-    $(".toggle_bar .toggle_icon").on("click", function () {
-        if($(this).hasClass("fa-bars")){
+    $(".toggle_bar .toggle_icon").on("click", function (event) {
+        event.stopPropagation(); // Prevent event bubbling
+        if ($(this).hasClass("fa-bars")) {
             $(this).removeClass("fa-bars").addClass("fa-bars-staggered");
-        }else{
+        } else {
             $(this).removeClass("fa-bars-staggered").addClass("fa-bars");
         }
         $(".header-section .nav-menu").toggleClass("active");
     });
 
+    // Close nav-menu only when clicking outside, but not on buttons inside .nav-menu
+    $(document).on("click", function (event) {
+        if (!$(event.target).closest(".nav-menu, .toggle_bar .toggle_icon").length) {
+            $(".header-section .nav-menu").removeClass("active");
+            $(".toggle_bar .toggle_icon").removeClass("fa-bars-staggered").addClass("fa-bars"); // Reset icon
+        }
+    });
+
+    // Prevent clicks inside the nav-menu from closing it
+    $(".header-section .nav-menu").on("click", function (event) {
+        event.stopPropagation();
+    });
 });
+
+
+
+
+
+
+
 
 
 

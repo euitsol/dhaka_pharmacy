@@ -454,11 +454,27 @@
     .order-info-section .order-info-row .left .img{
         width: 100% !important;
     }
+    .order-info-section .order-info-row .left, .order-info-section .order-info-row .right{
+        padding: 20px 15px !important;
+    }
+    .address .accordion .accordion-header .accordion-button {
+        line-height: 20px;
+        font-size: 12px;
+        overflow: auto !important;
+    }
+    .address .accordion .accordion-header .action-btns{
+        gap: 0px !important;
+        padding-left: 0px !important;
+        font-size: 18px !important;
+    }
 }
 
 
 
 @media screen and (min-width: 350px) and (max-width: 575px) {
+    .order-info-section .order-info-row .left, .order-info-section .order-info-row .right{
+        padding: 20px 15px !important;
+    }
     .dashboard-main-section .col-right .google-map{
         height: 100% !important;
     }
@@ -572,6 +588,7 @@
     .address .accordion .accordion-header .accordion-button {
         line-height: 20px;
         font-size: 12px;
+        overflow: auto !important;
     }
     .address .accordion .edit-btn,
     .address .accordion .dlt-btn {
