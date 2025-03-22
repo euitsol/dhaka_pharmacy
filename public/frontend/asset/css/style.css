@@ -1441,7 +1441,7 @@ a {
 
 .footer-section .main-footer-row .footer-contact .footer-nav li a.mail::before {
     content: "\f0e0";
-    top: 58%;
+    top: 50%;
 }
 
 .socket-row {
