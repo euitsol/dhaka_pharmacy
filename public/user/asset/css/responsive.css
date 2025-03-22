@@ -467,6 +467,10 @@
         padding-left: 0px !important;
         font-size: 18px !important;
     }
+    .my-order-section .order-status .btn {
+        line-height: 15px !important;
+        font-size: 12px !important;
+    }
 }
 
 

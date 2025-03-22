@@ -1611,9 +1611,9 @@
     .single_product_section .single_product .product_image .xzoom{
         height: 14rem !important;
     }
-    .best-selling-products .bst-product-content {
+    /* .best-selling-products .bst-product-content {
         min-height: 114px !important;
-    }
+    } */
     .single-pdct .pdct-info {
         min-height: 114px !important;
     }
