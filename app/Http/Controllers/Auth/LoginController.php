@@ -185,7 +185,7 @@ class LoginController extends Controller
         $check = User::where('phone', $request->phone)->first();
         if ($check && !empty($check->password)) {
             if ($check->status == 1) {
-                if (Auth::guard('web')->attempt($credentials)) {
+                if (Auth::guard('web')->attempt($credentials, true)) {
                     $url = session()->get('previous_url', route('user.dashboard'));
                     session()->forget('previous_url');
                     ticketClosed();
@@ -296,7 +296,7 @@ class LoginController extends Controller
                 if (session()->get('forgot')) {
                     return redirect()->route('user.reset.password', encrypt($user->id));
                 } else {
-                    Auth::guard('web')->login($user);
+                    Auth::guard('web')->login($user, true);
                     $url = session()->get('previous_url', route('user.dashboard'));
                     session()->forget('previous_url');
                     ticketClosed();

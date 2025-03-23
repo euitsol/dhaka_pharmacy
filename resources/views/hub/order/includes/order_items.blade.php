@@ -3,6 +3,7 @@
     $assigend = \App\Models\Order::HUB_ASSIGNED == $order->status;
     $collected = \App\Models\Order::ITEMS_COLLECTED == $order->status;
     $prepared = \App\Models\Order::PACHAGE_PREPARED == $order->status;
+    $dispatched = \App\Models\Order::DISPATCHED == $order->status;
 @endphp
 
 
@@ -99,7 +100,7 @@
                                         </div>
                                     </div>
                                     @endif
-                                    @if ($collected || $prepared)
+                                    @if ($collected || $prepared || $dispatched)
                                     <div class="col-5">
                                         <div class="form-group">
                                             <label>{{ __('Collected from Pharmacy') }}</label>
@@ -137,15 +138,6 @@
                 @if ($collecting)
                 <div class="col-12">
                     <div class="row mt-3">
-                        {{-- <div class="col-md-9">
-                            <label>{{ __('Note') }}</label>
-                            <textarea name="note" class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}">
-                                {{ old('note') }}
-                            </textarea>
-                            @include('alerts.feedback', [
-                                'field' => 'note',
-                            ])
-                        </div> --}}
                         <div class="col-md-3 mt-2">
                             <table class="table table-striped">
                                 <tr>
@@ -172,7 +164,7 @@
     </div>
 </div>
 
-@if ($prepared)
+@if ($collected)
 <div class="card-body">
     <form action="{{ route('hub.order.prepared') }}" id="order_prepared_form" method="POST">
         @csrf
@@ -180,15 +172,6 @@
         <div class="col-12">
             <div class="row mt-3">
                 <div class="col-md-8"></div>
-                {{-- <div class="form-group col-md-8">
-                    <label>{{ __('Note') }}</label>
-                    <textarea name="note" class="form-control {{ $errors->has('note') ? ' is-invalid' : '' }}">
-                        {{ old('note') }}
-                    </textarea>
-                    @include('alerts.feedback', [
-                        'field' => 'note',
-                    ])
-                </div> --}}
                 <div class="form-group col-md-4 text-end">
                     <button type="submit"
                         class="btn btn-primary">{{ __('Mark as Prepared') }}</button>
@@ -197,4 +180,20 @@
         </div>
     </form>
 </div>
+@endif
+
+@if ($prepared)
+<form action="{{ route('hub.order.dispatched') }}" id="order_dispatched_form" method="POST">
+    @csrf
+    <input type="hidden" name="order_id" value="{{ encrypt($order->id) }}" class="d-none">
+    <div class="col-12">
+        <div class="row mt-3">
+            <div class="col-md-8"></div>
+            <div class="form-group col-md-4 text-end">
+                <button type="submit"
+                    class="btn btn-primary">{{ __('Dispatch Order') }}</button>
+            </div>
+        </div>
+    </div>
+</form>
 @endif

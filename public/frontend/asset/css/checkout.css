@@ -12,7 +12,7 @@
 }
 
 .checkout-section .boxed input[type="radio"]:checked+label {
-    border: solid 2px green;
+    border: solid 2px #1869aa;
 }
 
 .checkout-section .boxed img {
@@ -82,8 +82,10 @@
     transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.checkout-section .order-info-row .place-order:hover {
-    background-color: var(--border-2);
+.checkout-section .order-info-row .place-order.active,
+.checkout-section .order-info-row .place-order:hover,
+.checkout-section .order-info-row .place-order:active {
+  background-color: var(--border-2);
 }
 
 .checkout-section .order-info-row .place-order:active {
@@ -169,7 +171,7 @@
 
 .checkout-section .order-info-row .right div.total-border{
     border-bottom: 2px solid;
-    border-color: rgba(0, 0, 0, 0.54);
+    border-color: rgb(24, 105, 170);
 }
 
 .checkout-section .order-info-row .title{

@@ -48,8 +48,9 @@
                                             @endif
                                         </p>
                                         <div class="favorite wishlist_item me-0 text-danger">
+                                            <a href="{{ route('u.wishlist.update', encrypt($wish->product->id)) }}">
                                             <i class="fa-solid fa-trash-can wish_update wish_remove_btn"
-                                                data-pid="{{ $wish->product->pid }}"></i>
+                                                data-pid="{{ $wish->product->pid }}"></i></a>
                                         </div>
                                     </div>
                                     <div class="btns w-100 mx-auto">

@@ -399,14 +399,12 @@ function formatPercentageNumber(number) {
 //     typeSubcategory(subCategories[currentIndex].textContent);
 // });
 
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     // Initialize locale from session
     document.documentElement.lang = "{{ app()->getLocale() }}";
-    let cartbtnElement = document.getElementById("cartbtn"); 
-    let wishlistElement = document.getElementById("wishlist"); 
+
+    let cartbtnElement = document.getElementById("cartbtn");
+    let wishlistElement = document.getElementById("wishlist");
 
     document.addEventListener("click", function (event) {
         // Check if the clicked area is outside the cartbtn offcanvas and if it's shown
@@ -416,7 +414,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 cartbtnInstance.hide();
             }
         }
-        
+
+
         // Check if the clicked area is outside the wishlist offcanvas and if it's shown
         if (wishlistElement && !wishlistElement.contains(event.target) && wishlistElement.classList.contains("show")) {
             let wishlistInstance = bootstrap.Offcanvas.getInstance(wishlistElement);
@@ -427,17 +426,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-  
-
 // Simulating network delay (5 seconds)
-setTimeout(function() {
-    document.body.classList.add('loaded');
-}, 5000); 
+// setTimeout(function() {
+//     document.body.classList.add('loaded');
+// }, 5000);
 
 window.addEventListener('load', function() {
     // Once the page is fully loaded, hide the loading screen and change background to white
     document.body.classList.add('loaded');
 });
-
-
-  

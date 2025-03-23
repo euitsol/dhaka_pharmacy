@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\View\View;
 use App\Http\Traits\SmsTrait;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class ForgotPasswordController extends Controller
@@ -38,7 +39,7 @@ class ForgotPasswordController extends Controller
         return false;
     }
 
-    public function forgotPassword(): View
+    public function forgotPassword(): View|RedirectResponse
     {
         if (Auth::guard('web')->check()) {
             return redirect()->route('user.dashboard');

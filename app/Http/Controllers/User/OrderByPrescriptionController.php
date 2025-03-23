@@ -67,7 +67,7 @@ class OrderByPrescriptionController extends Controller
     {
         try {
             $request->validate([
-                'phone' => 'required|digits:10'
+                'phone' => 'required|digits:11'
             ]);
 
             $phone = $this->purifyPhoneNumber($request->phone);
@@ -114,7 +114,7 @@ class OrderByPrescriptionController extends Controller
     {
         try {
             $request->validate([
-                'phone' => 'required|digits:10'
+                'phone' => 'required|digits:11'
             ]);
 
             $phone = $this->purifyPhoneNumber($request->phone);
@@ -160,7 +160,7 @@ class OrderByPrescriptionController extends Controller
     {
         try {
             $request->validate([
-                'phone' => 'required|digits:10',
+                'phone' => 'required|digits:11',
                 'otp' => 'required|digits:6'
             ]);
 
@@ -201,7 +201,7 @@ class OrderByPrescriptionController extends Controller
 
     protected function purifyPhoneNumber($phone)
     {
-        return '0' . $phone;
+        return $phone;
     }
 
 }

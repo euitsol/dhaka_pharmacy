@@ -162,24 +162,54 @@ function updateUrlParameter(param, value) {
 
 // Header Toggle JS 
 
+// $(document).ready(function () {
+//     $(".toggle_bar .toggle_icon").on("click", function () {
+//         if($(this).hasClass("fa-bars")){
+//             $(this).removeClass("fa-bars").addClass("fa-bars-staggered");
+//         }else{
+//             $(this).removeClass("fa-bars-staggered").addClass("fa-bars");
+//         }
+//         $(".header-section .nav-menu").toggleClass("active");
+//     });
+
+// });
+
 
 $(document).ready(function () {
-    $(".toggle_bar .toggle_icon").on("click", function () {
-        if($(this).hasClass("fa-bars")){
+    $(".toggle_bar .toggle_icon").on("click", function (event) {
+        event.stopPropagation(); // Prevent event bubbling
+        if ($(this).hasClass("fa-bars")) {
             $(this).removeClass("fa-bars").addClass("fa-bars-staggered");
-        }else{
+        } else {
             $(this).removeClass("fa-bars-staggered").addClass("fa-bars");
         }
         $(".header-section .nav-menu").toggleClass("active");
     });
 
+    // Close nav-menu only when clicking outside, but not on buttons inside .nav-menu
+    $(document).on("click", function (event) {
+        if (!$(event.target).closest(".nav-menu, .toggle_bar .toggle_icon").length) {
+            $(".header-section .nav-menu").removeClass("active");
+            $(".toggle_bar .toggle_icon").removeClass("fa-bars-staggered").addClass("fa-bars"); // Reset icon
+        }
+    });
+
+    // Prevent clicks inside the nav-menu from closing it
+    $(".header-section .nav-menu").on("click", function (event) {
+        event.stopPropagation();
+    });
 });
 
 
 
+
+
+
+
+
+
+
 // languate js code here
-
-
 function toggleLanguage() {
     const localeInput = document.getElementById("localeInput");
     const switchBtn = document.getElementById("switch-btn");
@@ -202,4 +232,33 @@ function toggleLanguage() {
 
     document.getElementById("languageForm").submit();
 }
+
+
+
+// address add model js code here
+var myModal = new bootstrap.Modal(document.getElementById('address_add_modal'), {
+    keyboard: false
+});
+
+document.getElementById('openAddressModal').addEventListener('click', function () {
+   var myModal = new bootstrap.Modal(document.getElementById('address_add_modal'));
+   myModal.show();
+});
+
+
+
+// cart slider js code here
+document.addEventListener("DOMContentLoaded", function () {
+    // Initialize locale from session
+    document.documentElement.lang = "{{ app()->getLocale() }}";
+    let cartbtnElement = document.getElementById("cartbtn"); 
+    document.addEventListener("click", function (event) {
+        if (cartbtnElement && !cartbtnElement.contains(event.target) && cartbtnElement.classList.contains("show")) {
+            let cartbtnInstance = bootstrap.Offcanvas.getInstance(cartbtnElement);
+            if (cartbtnInstance) {
+                cartbtnInstance.hide();
+            }
+        }
+    });
+});
 

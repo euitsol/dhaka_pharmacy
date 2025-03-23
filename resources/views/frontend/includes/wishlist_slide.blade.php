@@ -77,5 +77,6 @@
         <h5 class="text-center wish_empty_alert">{{ __('Wished Item Not Found') }}</h5>
         @endforelse
     </div>
-
 </div>
+
+

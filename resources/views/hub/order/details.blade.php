@@ -28,9 +28,6 @@
                         <h4 class="card-title">{{ __('Order Details') }}</h4>
                     </div>
                     <div class="col-4 text-end">
-                        <a href="{{ route('hub.order.print', $oh->order_id) }}" target="_blank" class="btn btn-sm btn-primary me-2">
-                            <i class="fas fa-print"></i> Print Invoice
-                        </a>
                         <span class="badge {{ $oh->status_bg }}">{{ slugToTitle($oh->status_string) }}</span>
                         {{ 'order_'.titleToSlug($oh->status_string) }}
                     </div>
@@ -55,7 +52,7 @@
                             'order' => $oh->order
                         ])
                     </div>
-                    @if ($oh->status == \App\Models\OrderHub::PREPARED && !empty($delivery_info))
+                    @if (($oh->status == \App\Models\OrderHub::PREPARED || $oh->status == \App\Models\OrderHub::DISPATCHED) && !empty($delivery_info))
                         <div class="col-md-12 mt-3">
                             @include('hub.order.includes.delivery_info', [
                                 'delivery_info' => $delivery_info
@@ -166,6 +163,39 @@ $(document).ready(function() {
         }
     };
     OrderCollector.init();
+
+    $('#refreshBtn').on('click', function(e) {
+        e.preventDefault();
+
+        let icon = $(this).find("i");
+        let button = $(this);
+        icon.addClass("fa-spin");
+        let originalText = button.html();
+        button.html('<i class="fas fa-sync-alt fa-spin"></i> Refreshing...');
+
+        const url = $(this).attr('href');
+        console.log(url);
+
+        $.get(url, function(response) {
+            console.log(response);
+
+            if (response.status == 'success') {
+                icon.removeClass("fa-spin");
+                button.html(originalText);
+                toastr.success(response.message);
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            } else {
+                toastr.error(response.message);
+                icon.removeClass("fa-spin");
+                button.html(originalText);
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        });
+    });
 });
 </script>
 @endpush

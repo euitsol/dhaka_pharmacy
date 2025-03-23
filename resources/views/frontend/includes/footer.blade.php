@@ -81,10 +81,10 @@
                         <div class="social-info mb-4">
                             <h3 class="title">{{ __('Follow Us') }}</h3>
                             <div class="icons d-flex">
-                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                                <a href="#"><i class="fa-brands fa-instagram"></i></i></a>
-                                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                                <a href="https://www.facebook.com/dhakapharmacybangladesh" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="https://x.com/DhakaPharmacy24" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="https://www.instagram.com/dakapharmacy/" target="_blank" class="d-none"><i class="fa-brands fa-instagram"></i></i></a>
+                                <a href="https://www.linkedin.com/in/nazmul-hasan-b527079b/" class="d-none"><i class="fa-brands fa-linkedin"></i></a>
                             </div>
                         </div>
                         <div class="pay-info">
