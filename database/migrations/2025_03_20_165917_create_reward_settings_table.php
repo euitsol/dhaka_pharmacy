@@ -18,10 +18,10 @@ return new class extends Migration
     {
         Schema::create('reward_settings', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('reward_type')->comment(RewardSetting::REWARD_TYPE_LOGIN . ' = Login, ' . RewardSetting::REWARD_TYPE_ORDER . ' = Order');
+            $table->tinyInteger('type')->comment(RewardSetting::TYPE_LOGIN . ' = Login, ' . RewardSetting::TYPE_ORDER . ' = Order');
             $table->tinyInteger('receiver_type')->comment(RewardSetting::RECEIVER_TYPE_LAM . ' = LAM, ' . RewardSetting::RECEIVER_TYPE_DM . ' = DM');
-            $table->double('comission', 8, 2);
-            $table->tinyInteger('comission_type')->comment(RewardSetting::COMMISSION_TYPE_AMOUNT . ' = Amount, ' . RewardSetting::COMMISSION_TYPE_PERCENTAGE . ' = Percentage');
+            $table->double('reward', 8, 2)->nullable();
+            $table->tinyInteger('reward_type')->comment(RewardSetting::REWARD_TYPE_AMOUNT . ' = Amount, ' . RewardSetting::REWARD_TYPE_PERCENTAGE . ' = Percentage')->nullable();
             $table->tinyInteger('status')->default(RewardSetting::STATUS_DEACTIVE)->comment(RewardSetting::STATUS_ACTIVE . ' = Active, ' . RewardSetting::STATUS_DEACTIVE . ' = Deactive');
             $table->timestamps();
             $table->softDeletes();

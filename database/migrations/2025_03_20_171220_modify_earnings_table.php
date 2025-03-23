@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('earnings', function (Blueprint $table) {
-            $table->unsignedBigInteger('referance_id')->nullable();
-            $table->string('referance_type')->nullable();
+            $table->unsignedBigInteger('source_id')->nullable();
+            $table->string('source_type')->nullable();
         });
     }
 
@@ -23,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('earnings', function (Blueprint $table) {
-            $table->dropColumn('referance_id');
-            $table->dropColumn('referance_type');
+            $table->dropColumn('source_id');
+            $table->dropColumn('source_type');
         });
     }
 };
