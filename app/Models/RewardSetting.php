@@ -158,4 +158,14 @@ class RewardSetting extends BaseModel
             default => 'bg-secondary',
         };
     }
+
+    public function scopeActive()
+    {
+        return $this->where('status', self::STATUS_ACTIVE);
+    }
+
+    public function scopeType($type)
+    {
+        return $this->where('type', $type);
+    }
 }

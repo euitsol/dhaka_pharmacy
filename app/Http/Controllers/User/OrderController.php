@@ -31,7 +31,7 @@ class OrderController extends Controller
         $this->addressService = $addressService;
     }
 
-    public function list(Request $request):View|RedirectResponse
+    public function list(Request $request): View|RedirectResponse
     {
         try {
             $this->orderService->setUser(user());
@@ -39,10 +39,10 @@ class OrderController extends Controller
             $data['per_page'] = 5;
             $orders = $this->orderService->list($data);
             return view('user.order.list', compact('orders'));
-        }catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             flash()->addWarning($e->getMessage());
             return redirect()->back();
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             flash()->addWarning($e->getMessage());
             return redirect()->back();
         }
@@ -56,10 +56,10 @@ class OrderController extends Controller
             $data['order'] = $this->orderService->getOrderDetails(decrypt($id), 'user');
             // dd($data['order']);
             return view('user.order.details', $data);
-        }catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             flash()->addWarning($e->getMessage());
             return redirect()->back();
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             flash()->addWarning($e->getMessage());
             return redirect()->back();
         }
@@ -89,7 +89,7 @@ class OrderController extends Controller
             $this->orderService->cancelOrder();
 
             flash()->success('Order cancelled successfully');
-        }catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             flash()->error('Something went wrong');
         } catch (Exception $e) {
             flash()->error('Something went wrong');
@@ -105,7 +105,6 @@ class OrderController extends Controller
             $this->orderService->setOrder($data['order_id']);
             $this->orderService->addAddress($data['address'], $data['delivery_type']);
             $payment = $this->orderService->confirmOrder($data);
-
             if ($request->payment_method == 'ssl') {
                 return redirect()->route('u.payment.int', encrypt($payment->id));
             } else {
@@ -176,7 +175,7 @@ class OrderController extends Controller
     {
         try {
             $order_id = decrypt($order_id);
-            $order = Order::with(['products' => function($query) {
+            $order = Order::with(['products' => function ($query) {
                 $query->select('medicines.id', 'medicines.slug', 'order_products.unit_id', 'order_products.quantity');
             }])->findOrFail($order_id);
 
@@ -213,7 +212,6 @@ class OrderController extends Controller
 
             // Redirect to checkout page
             return redirect()->route('u.ck.index', encrypt($newOrder->order_id));
-
         } catch (ModelNotFoundException $e) {
             flash()->addWarning($e->getMessage());
             return redirect()->back();
