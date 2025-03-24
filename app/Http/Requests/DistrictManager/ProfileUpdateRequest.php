@@ -37,6 +37,7 @@ class ProfileUpdateRequest extends FormRequest
             'mother_name' => 'nullable|min:6',
             'permanent_address' => 'nullable',
             'parent_phone' => 'nullable|numeric|digits:11',
+            'email' => 'nullable|email|unique:district_managers,email,' . dm()->id
         ];
     }
 }

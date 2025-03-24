@@ -51,6 +51,7 @@ class DmProfileController extends Controller
         $dm->name = $request->name;
         $dm->phone = $request->phone;
         $dm->age = $request->age;
+        $dm->email = $request->email;
         $dm->area = $request->area;
         $dm->identification_type = $request->identification_type;
         $dm->identification_no = $request->identification_no;
