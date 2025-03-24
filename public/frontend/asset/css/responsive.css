@@ -360,7 +360,9 @@
         color: var(--border-1) !important;
         padding: .3rem 0.7rem;
     }
-
+    .order_button .order-btn {
+        padding: .3rem 0.7rem !important;
+    }
     .add_to_card .cart-btn span {
         font-size: 14px !important;
     }
@@ -557,7 +559,9 @@
     .single-pdct .pdct-info {
         padding: 10px 5px 5px 5px !important;
     }
-
+    .best-selling-products .bst-product-content {
+        padding: 10px 5px 5px 5px !important;
+    }
     .slider-sction .carousel-caption .slider-left .btns a {
         font-size: 14px;
         width: 120px;
@@ -1154,10 +1158,10 @@
         overflow: hidden;
     }
     .best-selling-products .bst-product-content {
-        min-height: 135px !important;
+        min-height: 142px !important;
     }
     .single-pdct .pdct-info{
-        min-height: 135px !important;
+        min-height: 142px !important;
     }
     .slider-sction .home-main-banner .uk-dotnav{
         bottom: 6px !important;
@@ -1611,11 +1615,11 @@
     .single_product_section .single_product .product_image .xzoom{
         height: 14rem !important;
     }
-    /* .best-selling-products .bst-product-content {
-        min-height: 114px !important;
-    } */
+    .best-selling-products .bst-product-content {
+        min-height: 115px !important;
+    }
     .single-pdct .pdct-info {
-        min-height: 114px !important;
+        min-height: 115px !important;
     }
     /*============================================
         uk future tap text slider responsive code
@@ -2115,12 +2119,15 @@
         font-size: 10px !important;
     }
     .slider-sction .home-main-banner .uk-panel img {
-        height: 140px;
+        height: 125px;
         object-fit: cover;
     }
     .delivery-slider-section .bottom-slide-items img {
-        height: 135px;
+        height: 125px;
         object-fit: fill;
+    }
+    .footer-section .delivery-row h3 {
+        font-size: 12px !important;
     }
     
 }
