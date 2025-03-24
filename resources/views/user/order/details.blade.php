@@ -136,7 +136,7 @@
                                         href="{{ route('u.order.cancel', encrypt($order->order_id)) }}">{{ __('Cancel') }}</a>
                             @endif
                                 <a class="text-center record"
-                                    href="">{{ __('Reorder') }}</a>
+                                    href="{{ route('u.order.reorder', encrypt($order->id)) }}">{{ __('Reorder') }}</a>
                         </div>
 
                     </div>
