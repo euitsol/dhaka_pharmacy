@@ -8,6 +8,7 @@ use App\Mail\DataDeletionMail;
 use App\Models\DataDeletionRequest as DataDeletionModel;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
@@ -36,6 +37,7 @@ class DataDeletionController extends Controller
             Mail::to(config('mail.contact_reciever_email'))->send(new DataDeletionMail($mail_data));
             session()->put('df_submitted_at', Carbon::now());
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             flash()->addError('Something went wrong! please try again.');
             return redirect()->route('data_deletion')->withInput();
         }

@@ -142,16 +142,16 @@ $(document).ready(function() {
         const pastedValue = (
             event.originalEvent.clipboardData || window.clipboardData
         ).getData("text");
-        const otpLength = inputs.length;
+        const otpLength = $otpInputs.length;
 
         for (let i = 0; i < otpLength; i++) {
             if (i < pastedValue.length) {
-                inputs.eq(i).val(pastedValue[i]);
-                inputs.eq(i).removeAttr("disabled");
-                inputs.eq(i).focus();
+                $otpInputs.eq(i).val(pastedValue[i]);
+                $otpInputs.eq(i).removeAttr("disabled");
+                $otpInputs.eq(i).focus();
             } else {
-                inputs.eq(i).val(""); // Clear any remaining inputs
-                inputs.eq(i).focus();
+                $otpInputs.eq(i).val(""); // Clear any remaining inputs
+                $otpInputs.eq(i).focus();
             }
         }
     })
