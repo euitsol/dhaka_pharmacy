@@ -221,12 +221,12 @@
                                                 <img style="object-fit: contain"
                                                     src="{{ asset('frontend/asset/img/rocket.png') }}">
                                             </label> --}}
-                                            <input type="radio" class="payment-method" id="android-4"
+                                            {{-- <input type="radio" class="payment-method" id="android-4"
                                                 name="payment_method" value="ssl">
                                             <label for="android-4">
                                                 <img src="{{ asset('frontend/asset/img/ssl-commerz-01.png') }}"
                                                     style="object-fit: contain">
-                                            </label>
+                                            </label> --}}
                                             <input type="radio" class="payment-method" id="android-5"
                                                 name="payment_method" value="cod">
                                             <label for="android-5">
