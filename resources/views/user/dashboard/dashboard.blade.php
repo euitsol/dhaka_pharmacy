@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
     <style>
         .offer_image img {
-            height: 75px;
+            height: 100%;
             width: 100%;
             border: 2px solid var(--btn_bg) !important;
             padding: 0px;
