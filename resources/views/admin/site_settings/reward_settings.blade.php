@@ -44,7 +44,7 @@
                                         <div class="form-group col-md-4">
                                             <label>{{ __('Status') }}</label><br>
                                             <div class="form-check form-check-radio">
-                                                @foreach (App\Models\RewardSetting::getStatusStrings() as $status => $status_string)
+                                                @foreach (collect(App\Models\RewardSetting::getStatusStrings())->except(App\Models\RewardSetting::STATUS_PREVIOUS) as $status => $status_string)
                                                     <label class="form-check-label me-3">
                                                         <input class="form-check-input" type="radio"
                                                             name="rewards[{{ $reward->id }}][status]"

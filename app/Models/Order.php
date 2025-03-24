@@ -235,4 +235,9 @@ class Order extends BaseModel
             $this->hubs()->updateExistingPivot($hub->id, ['status' => $status]);
         }
     }
+
+    public function earnings()
+    {
+        return $this->hasMany(Earning::class, 'order_id', 'id');
+    }
 }

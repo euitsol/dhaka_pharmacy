@@ -31,7 +31,7 @@ class SiteSettingsController extends Controller
         $data['email_templates'] = EmailTemplate::where('deleted_at', null)->latest()->get();
         $data['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
         $data['point_settings'] = PointSetting::pluck('value', 'key')->all();
-        $data['reward_settings'] = RewardSetting::latest()->get()->groupBy('type');
+        $data['reward_settings'] = RewardSetting::where('status', '!=', RewardSetting::STATUS_PREVIOUS)->latest()->get()->groupBy('type');
         $data['point_histories'] = PointHistory::latest()->get();
         $data['mapbox_settings'] = MapboxSetting::pluck('value', 'key')->all();
         $data['documents'] = Documentation::where('module_key', 'general_settings')
@@ -193,7 +193,16 @@ class SiteSettingsController extends Controller
         try {
             foreach ($rewards as $reward) {
                 foreach ($reward as $id => $rd) {
-                    RewardSetting::findOrFail($id)->update($rd);
+                    $exist = RewardSetting::findOrFail($id);
+                    if ($exist && ($exist->reward == $rd['reward'] && $exist->reward_type == $rd['reward_type'])) {
+                        $exist->update($rd);
+                    } elseif ($exist && ($exist->reward != $rd['reward'] || $exist->reward_type != $rd['reward_type'])) {
+                        $exist->update(['status' => RewardSetting::STATUS_PREVIOUS, 'updated_by' => admin()->id]);
+                        $rd['type'] = $exist['type'];
+                        $rd['receiver_type'] = $exist['receiver_type'];
+                        $rd['updated_by'] = admin()->id;
+                        RewardSetting::create($rd);
+                    }
                 }
             }
             flash()->addSuccess('Reward settings added successfully.');

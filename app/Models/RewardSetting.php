@@ -14,8 +14,9 @@ class RewardSetting extends BaseModel
     public const REWARD_TYPE_AMOUNT = 1;
     public const REWARD_TYPE_PERCENTAGE = 2;
 
-    public const STATUS_ACTIVE = 0;
-    public const STATUS_DEACTIVE = 1;
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_DEACTIVE = 2;
+    public const STATUS_PREVIOUS = 3;
 
     public const TYPE_LOGIN = 1;
     public const TYPE_ORDER = 2;
@@ -50,15 +51,12 @@ class RewardSetting extends BaseModel
         return [
             self::STATUS_ACTIVE => 'Active',
             self::STATUS_DEACTIVE => 'Deactive',
+            self::STATUS_PREVIOUS => 'Previous',
         ];
     }
     public function getStatusStringAttribute()
     {
-        return match ($this->status) {
-            self::STATUS_ACTIVE => 'Active',
-            self::STATUS_DEACTIVE => 'Deactive',
-            default => 'Unknown Status',
-        };
+        return $this->getStatusStrings()[$this->status] ?? 'Unknown Status';
     }
 
     public function getStatusStringsAttribute()
@@ -83,11 +81,7 @@ class RewardSetting extends BaseModel
     }
     public function getTypeStringAttribute()
     {
-        return match ($this->type) {
-            self::TYPE_LOGIN => 'Login',
-            self::TYPE_ORDER => 'Order',
-            default => 'Unknown Type',
-        };
+        return $this->getTypes()[$this->type] ?? 'Unknown Type';
     }
     public function getTypeStringsAttribute()
     {
@@ -113,11 +107,7 @@ class RewardSetting extends BaseModel
     }
     public function getReceiverTypeStringAttribute()
     {
-        return match ($this->receiver_type) {
-            self::RECEIVER_TYPE_LAM => 'Local Area Manager',
-            self::RECEIVER_TYPE_DM => 'District Manager',
-            default => 'Unknown Receiver Type',
-        };
+        return $this->getReceiverTypes()[$this->receiver_type] ?? 'Unknown Receiver Type';
     }
     public function getReceiverTypeStringsAttribute()
     {
@@ -140,11 +130,7 @@ class RewardSetting extends BaseModel
     }
     public function getRewardTypeStringAttribute()
     {
-        return match ($this->reward_type) {
-            self::REWARD_TYPE_AMOUNT => 'Flat Amount',
-            self::REWARD_TYPE_PERCENTAGE => 'Percent Amount',
-            default => 'Unknown Reward Type',
-        };
+        return $this->getRewardTypes()[$this->reward_type] ?? 'Unknown Reward Type';
     }
     public function getRewardTypeStringsAttribute()
     {
@@ -162,10 +148,5 @@ class RewardSetting extends BaseModel
     public function scopeActive()
     {
         return $this->where('status', self::STATUS_ACTIVE);
-    }
-
-    public function scopeType($type)
-    {
-        return $this->where('type', $type);
     }
 }

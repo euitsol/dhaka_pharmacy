@@ -67,7 +67,12 @@ class RewardService
                     $earning->source()->associate($reward);
                     $earning->order_id = $this->order->id;
                     $earning->ph_id = $ph->id;
-                    $earning->description = 'Order reward bonus';
+                    if ($type == RewardSetting::TYPE_ORDER) {
+                        $earning->description = 'Order reward bonus income is pending clearance';
+                    } else {
+                        $earning->description = 'Login reward bonus income is pending clearance';
+                    }
+
                     $earning->save();
                     Log::info('LAM Earning ' . $earning);
 
@@ -88,10 +93,14 @@ class RewardService
                     $earning->source()->associate($reward);
                     $earning->order_id = $this->order->id;
                     $earning->ph_id = $ph->id;
-                    $earning->description = 'Order reward bonus';
+                    if ($type == RewardSetting::TYPE_ORDER) {
+                        $earning->description = 'Order reward bonus income is pending clearance';
+                    } else {
+                        $earning->description = 'Login reward bonus income is pending clearance';
+                    }
                     $earning->save();
                     Log::info('DM Earning ' . $earning);
-                } else {
+                } elseif (get_class($receiver) == DistrictManager::class) {
                     $reward = $this->rewards->where('receiver_type', RewardSetting::RECEIVER_TYPE_DM)->first();
                     Log::info('DM Reward ' . $reward);
                     $reward_amount = $this->getRewardAmount($reward);
@@ -106,11 +115,22 @@ class RewardService
                     $earning->source()->associate($reward);
                     $earning->order_id = $this->order->id;
                     $earning->ph_id = $ph->id;
-                    $earning->description = 'Order reward bonus';
+                    if ($type == RewardSetting::TYPE_ORDER) {
+                        $earning->description = 'Order reward bonus income is pending clearance';
+                    } else {
+                        $earning->description = 'Login reward bonus income is pending clearance';
+                    }
                     $earning->save();
                     Log::info('DM Earning ' . $earning);
                 }
             }
         }, 5); // The "5" is the number of times to attempt the transaction in case of deadlock
+    }
+
+    public function completeRewardEarning()
+    {
+        DB::transaction(function () {
+            $this->order->earnings()->where('receiver_type', DistrictManager::class)->orWhere('receiver_type', LocalAreaManager::class)->where('activity', 0)->update(['activity' => 1, 'description' => 'Reward bonus income has been successfully cleared.']);
+        }, 5);
     }
 }

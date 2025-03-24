@@ -22,7 +22,7 @@ return new class extends Migration
             $table->tinyInteger('receiver_type')->comment(RewardSetting::RECEIVER_TYPE_LAM . ' = LAM, ' . RewardSetting::RECEIVER_TYPE_DM . ' = DM');
             $table->double('reward', 8, 2)->nullable();
             $table->tinyInteger('reward_type')->comment(RewardSetting::REWARD_TYPE_AMOUNT . ' = Amount, ' . RewardSetting::REWARD_TYPE_PERCENTAGE . ' = Percentage')->nullable();
-            $table->tinyInteger('status')->default(RewardSetting::STATUS_DEACTIVE)->comment(RewardSetting::STATUS_ACTIVE . ' = Active, ' . RewardSetting::STATUS_DEACTIVE . ' = Deactive');
+            $table->tinyInteger('status')->default(RewardSetting::STATUS_DEACTIVE)->comment(RewardSetting::STATUS_ACTIVE . ' = Active, ' . RewardSetting::STATUS_DEACTIVE . ' = Deactive', RewardSetting::STATUS_PREVIOUS . ' = Previous');
             $table->timestamps();
             $table->softDeletes();
             $this->addAuditColumns($table);
