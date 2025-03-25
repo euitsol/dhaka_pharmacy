@@ -130,13 +130,10 @@
                                     <a class=" text-center pay-now"
                                         href="">{{ __('Pay Now') }}</a>
                             @endif
-
-                            @if(($order->status == App\Models\Order::SUBMITTED) || ($order->status == App\Models\Order::INITIATED))
-                                    <a class="text-center cancel"
-                                        href="{{ route('u.order.cancel', encrypt($order->order_id)) }}">{{ __('Cancel') }}</a>
-                            @endif
                                 <a class="text-center record"
-                                    href="">{{ __('Reorder') }}</a>
+                                    href="{{ route('u.order.reorder', encrypt($order->id)) }}">{{ __('Reorder') }}</a>
+                                <a class="text-center bg-primary text-white"
+                                    href="{{ route('u.order.list') }}">{{ __('Back') }}</a>
                         </div>
 
                     </div>
@@ -341,6 +338,13 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12 m-auto">
+                        @if(($order->status == App\Models\Order::SUBMITTED) || ($order->status == App\Models\Order::INITIATED))
+                            <a class="text-center btn btn-danger w-100" href="{{ route('u.order.cancel', encrypt($order->order_id)) }}" type="button">{{ __('Cancel') }}</a>
+                        @endif
                     </div>
                 </div>
                 <!-- Order-information-row-end -->

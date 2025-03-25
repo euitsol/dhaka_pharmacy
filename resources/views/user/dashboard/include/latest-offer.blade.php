@@ -13,10 +13,10 @@
             </div>
 
             <div class="carousel-inner">
-                @foreach ($latest_offers->chunk(2) as $key => $lfs)
+                @foreach ($latest_offers as $key => $lf)
                     <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                         <div class="items d-flex">
-                            @foreach ($lfs as $lf)
+                            
                                 <div class="img-col w-100">
                                     <a href="#">
                                         <div id="lightbox" class="lightbox offer_image">
@@ -27,7 +27,7 @@
                                         </div>
                                     </a>
                                 </div>
-                            @endforeach
+                            
                         </div>
                     </div>
                 @endforeach
