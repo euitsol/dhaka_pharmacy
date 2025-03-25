@@ -169,7 +169,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-3 col-12 order-1 order-xl-2">
-                                <div class="letest-offer-shadow">
+                                <div class="letest-offer-shadow d-flex align-items-center justify-content-center">
                                     <div class="col-right row row-gap-3 row-gap-xl-0">
                                         <div class="col-xl-12 col-md-6 col-12 mt-0">
                                             <div class="latest-col">
