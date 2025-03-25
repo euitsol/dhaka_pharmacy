@@ -38,16 +38,14 @@
 
 <body class="white-content dark {{ $class ?? '' }}">
     <div class="wrapper">
-        @auth()
-            @include('local_area_manager.partials.navbars.sidebar')
-            <div class="main-panel">
-                @include('local_area_manager.partials.navbars.navbar')
-                <div class="content">
-                    @yield('content')
-                </div>
-                @include('local_area_manager.partials.footer')
+        @include('local_area_manager.partials.navbars.sidebar')
+        <div class="main-panel">
+            @include('local_area_manager.partials.navbars.navbar')
+            <div class="content">
+                @yield('content')
             </div>
-        @endauth
+            @include('local_area_manager.partials.footer')
+        </div>
     </div>
     <form id="logout-form" action="{{ route('local_area_manager.logout') }}" method="POST" style="display: none;">
         @csrf

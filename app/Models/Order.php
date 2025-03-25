@@ -18,21 +18,21 @@ class Order extends BaseModel
 {
     use HasFactory, SoftDeletes, EagerLoadPivotTrait;
 
-    public CONST INITIATED = 0;
-    public CONST SUBMITTED = 1;
-    public CONST HUB_ASSIGNED = 2;
-    public CONST ITEMS_COLLECTING = 3;
-    public CONST HUB_REASSIGNED = 4;
-    public CONST ITEMS_COLLECTED = 5;
-    public CONST PACHAGE_PREPARED = 6;
-    public CONST DISPATCHED = 7;
-    public CONST DELIVERED = 8;
+    public const INITIATED = 0;
+    public const SUBMITTED = 1;
+    public const HUB_ASSIGNED = 2;
+    public const ITEMS_COLLECTING = 3;
+    public const HUB_REASSIGNED = 4;
+    public const ITEMS_COLLECTED = 5;
+    public const PACHAGE_PREPARED = 6;
+    public const DISPATCHED = 7;
+    public const DELIVERED = 8;
     public const CANCELLED = -1;
     public const RETURNED = -2;
 
-    public CONST PAYMENT_PAID = 'paid';
-    public CONST PAYMENT_UNPAID = 'unpaid';
-    public CONST PAYMENT_COD = 'cod';
+    public const PAYMENT_PAID = 'paid';
+    public const PAYMENT_UNPAID = 'unpaid';
+    public const PAYMENT_COD = 'cod';
 
     protected $fillable = [
         'order_id',
@@ -104,20 +104,20 @@ class Order extends BaseModel
 
 
         return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
-        ->using(OrderProduct::class)
-        ->withPivot('id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status', 'medicine_units.name as pivot_unit_name', 'medicine_units.image as pivot_unit_image', 'medicine_units.status as pivot_unit_status')
-        ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id');
+            ->using(OrderProduct::class)
+            ->withPivot('id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status', 'medicine_units.name as pivot_unit_name', 'medicine_units.image as pivot_unit_image', 'medicine_units.status as pivot_unit_status')
+            ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id');
     }
 
     public function productsWithHub()
     {
         return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
-        ->using(OrderProduct::class)
-        ->withPivot('id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status', 'medicine_units.name as pivot_unit_name', 'medicine_units.image as pivot_unit_image', 'medicine_units.status as pivot_unit_status', 'hubs.name as pivot_hub_name', 'hubs.id as pivot_hub_id')
-        ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id')
-        ->leftJoin('order_hub_products', 'order_hub_products.order_product_id', '=', 'order_products.id')
-        ->leftJoin('order_hubs', 'order_hubs.id', '=', 'order_hub_products.order_hub_id')
-        ->leftJoin('hubs', 'hubs.id', '=', 'order_hubs.hub_id');
+            ->using(OrderProduct::class)
+            ->withPivot('id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status', 'medicine_units.name as pivot_unit_name', 'medicine_units.image as pivot_unit_image', 'medicine_units.status as pivot_unit_status', 'hubs.name as pivot_hub_name', 'hubs.id as pivot_hub_id')
+            ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id')
+            ->leftJoin('order_hub_products', 'order_hub_products.order_product_id', '=', 'order_products.id')
+            ->leftJoin('order_hubs', 'order_hubs.id', '=', 'order_hub_products.order_hub_id')
+            ->leftJoin('hubs', 'hubs.id', '=', 'order_hubs.hub_id');
     }
 
     public function productsWithHubPharmacy()
@@ -126,17 +126,17 @@ class Order extends BaseModel
             ->using(OrderProduct::class)
             ->withPivot(['id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status'])
             ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id')
-            ->leftJoin('order_hub_products', function($joinB){
+            ->leftJoin('order_hub_products', function ($joinB) {
                 $joinB->on('order_hub_products.order_product_id', '=', 'order_products.id');
             })
-            ->leftJoin('order_hubs', function($joinA){
+            ->leftJoin('order_hubs', function ($joinA) {
                 $joinA->on('order_hub_products.order_hub_id', '=', 'order_hubs.id');
             })
             ->leftJoin('hubs', 'order_hubs.hub_id', '=', 'hubs.id')
-            ->leftJoin('order_hub_pharmacy_products', function($joinB){
+            ->leftJoin('order_hub_pharmacy_products', function ($joinB) {
                 $joinB->on('order_hub_pharmacy_products.order_product_id', '=', 'order_products.id');
             })
-            ->leftJoin('order_hub_pharmacies', function($joinA){
+            ->leftJoin('order_hub_pharmacies', function ($joinA) {
                 $joinA->on('order_hub_pharmacies.id', '=', 'order_hub_pharmacy_products.order_hub_pharmacy_id');
             })
             ->leftJoin('pharmacies', 'order_hub_pharmacies.pharmacy_id', '=', 'pharmacies.id')
@@ -144,9 +144,12 @@ class Order extends BaseModel
                 'medicines.*',
                 'order_products.*',
                 'medicine_units.name as pivot_unit_name',
-                'hubs.name as pivot_hub_name', 'hubs.id as pivot_hub_id',
-                'pharmacies.name as pivot_pharmacy_name', 'pharmacies.id as pivot_pharmacy_id',
-                'order_hub_pharmacies.id as pivot_order_hub_pharmacy_id', 'order_hub_pharmacies.total_payable_amount as pivot_order_hub_pharmacy_total_payable_amount',
+                'hubs.name as pivot_hub_name',
+                'hubs.id as pivot_hub_id',
+                'pharmacies.name as pivot_pharmacy_name',
+                'pharmacies.id as pivot_pharmacy_id',
+                'order_hub_pharmacies.id as pivot_order_hub_pharmacy_id',
+                'order_hub_pharmacies.total_payable_amount as pivot_order_hub_pharmacy_total_payable_amount',
             ]);
     }
 
@@ -173,19 +176,19 @@ class Order extends BaseModel
         return $query->where('status', $status);
     }
 
-    public function voucher():BelongsTo
+    public function voucher(): BelongsTo
     {
         return $this->belongsTo(Voucher::class);
     }
 
-    public function timelines():HasMany
+    public function timelines(): HasMany
     {
         return $this->hasMany(OrderTimeline::class, 'order_id', 'id');
     }
 
-    public function getStatusStringAttribute():string
+    public function getStatusStringAttribute(): string
     {
-        return match($this->status) {
+        return match ($this->status) {
             self::INITIATED => 'Initiated',
             self::SUBMITTED => 'Submitted',
             self::HUB_ASSIGNED => 'Hub Assigned',
@@ -201,9 +204,9 @@ class Order extends BaseModel
         };
     }
 
-    public function getStatusBg():string
+    public function getStatusBg(): string
     {
-        return match($this->status) {
+        return match ($this->status) {
             self::INITIATED => 'bg-warning',
             self::SUBMITTED => 'bg-success',
             self::HUB_ASSIGNED => 'bg-info',
@@ -219,7 +222,7 @@ class Order extends BaseModel
         };
     }
 
-    public function hubs():BelongsToMany
+    public function hubs(): BelongsToMany
     {
         return $this->belongsToMany(Hub::class, 'order_hubs', 'order_id', 'hub_id')
             ->using(OrderHub::class)
@@ -231,5 +234,10 @@ class Order extends BaseModel
         foreach ($this->hubs as $hub) {
             $this->hubs()->updateExistingPivot($hub->id, ['status' => $status]);
         }
+    }
+
+    public function earnings()
+    {
+        return $this->hasMany(Earning::class, 'order_id', 'id');
     }
 }

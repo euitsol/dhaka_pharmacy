@@ -811,6 +811,7 @@ Route::group(['middleware' => ['auth:admin', 'permission'], 'prefix' => 'admin']
         Route::get('email-template/edit/{id}', 'et_edit')->name('email_templates.site_settings');
         Route::put('email-template/edit/{id}', 'et_update')->name('email_templates.site_settings');
         Route::post('point-setting/update', 'ps_update')->name('ps_update');
+        Route::post('reward-setting/update', 'rs_update')->name('rs_update');
     });
     Route::controller(MapboxSettingsController::class)->prefix('mapbox-settings')->name('mbx_settings.')->group(function () {
         Route::post('update', 'store')->name('update.site_settings');

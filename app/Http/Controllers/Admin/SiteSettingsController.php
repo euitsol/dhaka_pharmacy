@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\RewardSettingRequest;
 use App\Http\Requests\EmailTemplateRequest;
 use App\Http\Requests\PointSettingRequest;
 use App\Http\Requests\SmsSettingUpdateRequest;
@@ -11,9 +12,11 @@ use App\Models\EmailTemplate;
 use App\Models\MapboxSetting;
 use App\Models\PointHistory;
 use App\Models\PointSetting;
+use App\Models\RewardSetting;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class SiteSettingsController extends Controller
@@ -28,6 +31,7 @@ class SiteSettingsController extends Controller
         $data['email_templates'] = EmailTemplate::where('deleted_at', null)->latest()->get();
         $data['SiteSettings'] = SiteSetting::pluck('value', 'key')->all();
         $data['point_settings'] = PointSetting::pluck('value', 'key')->all();
+        $data['reward_settings'] = RewardSetting::where('status', '!=', RewardSetting::STATUS_PREVIOUS)->latest()->get()->groupBy('type');
         $data['point_histories'] = PointHistory::latest()->get();
         $data['mapbox_settings'] = MapboxSetting::pluck('value', 'key')->all();
         $data['documents'] = Documentation::where('module_key', 'general_settings')
@@ -37,6 +41,7 @@ class SiteSettingsController extends Controller
             ->orWhere('module_key', 'notification_settings')
             ->orWhere('module_key', 'email_templates')
             ->orWhere('module_key', 'point_settings')
+            ->orWhere('module_key', 'reward_settings')
             ->orWhere('module_key', 'mapbox_settings')
             ->orWhere('module_key', 'social_login_settings')
             ->orWhere('module_key', 'contact_settings')
@@ -181,5 +186,30 @@ class SiteSettingsController extends Controller
             flash()->addError('Something went wrong.');
             return redirect()->route('settings.site_settings');
         }
+    }
+    public function rs_update(RewardSettingRequest $request)
+    {
+        $rewards = $request->validated();
+        try {
+            foreach ($rewards as $reward) {
+                foreach ($reward as $id => $rd) {
+                    $exist = RewardSetting::findOrFail($id);
+                    if ($exist && ($exist->reward == $rd['reward'] && $exist->reward_type == $rd['reward_type'])) {
+                        $exist->update($rd);
+                    } elseif ($exist && ($exist->reward != $rd['reward'] || $exist->reward_type != $rd['reward_type'])) {
+                        $exist->update(['status' => RewardSetting::STATUS_PREVIOUS, 'updated_by' => admin()->id]);
+                        $rd['type'] = $exist['type'];
+                        $rd['receiver_type'] = $exist['receiver_type'];
+                        $rd['updated_by'] = admin()->id;
+                        RewardSetting::create($rd);
+                    }
+                }
+            }
+            flash()->addSuccess('Reward settings added successfully.');
+        } catch (\Exception $e) {
+
+            flash()->addError('Something went wrong.');
+        }
+        return redirect()->back();
     }
 }
