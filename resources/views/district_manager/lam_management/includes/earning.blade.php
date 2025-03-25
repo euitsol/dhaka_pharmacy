@@ -79,7 +79,7 @@
             <tr>
                 <th>{{ __('Date') }}</th>
                 <th>{{ __('Activity') }}</th>
-                <th>{{ __('Total Point') }}</th>
+                <th>{{ __('Total Point ( Per Point Rate )') }}</th>
                 <th>{{ __('Description') }}</th>
                 <th>{{ __('Amount') }}</th>
             </tr>
