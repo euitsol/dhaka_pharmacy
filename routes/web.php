@@ -969,6 +969,7 @@ Route::group(['middleware' => ['auth:dm', 'dm_phone_verify'], 'as' => 'dm.', 'pr
         Route::get('/verification', 'kyc_verification')->name('verification');
         Route::post('/kyc/file/upload', 'file_upload')->name('file.upload');
         Route::get('/kyc/file/delete', 'delete')->name('file.delete');
+        Route::get('/file/download/{url}', 'view_or_download')->name('download.file');
     });
 
 
