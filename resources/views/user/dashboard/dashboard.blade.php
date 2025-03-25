@@ -433,13 +433,13 @@
 @endsection
 
 @push('js_link')
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    {{-- <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
-    </script>
+    </script> --}}
 @endpush
 
 @push('js')
-    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
+    {{-- <script src="{{ asset('user/asset/js/mapbox.js') }}"></script> --}}
     <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
 
 
