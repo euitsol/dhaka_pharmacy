@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
         return [
             'phone' => 'required|sometimes|numeric|digits:11|exists:local_area_managers,phone',
             'id' => 'required|sometimes',
-            'password' => 'required|sometimes',
+            'password' => 'required|min:6|sometimes',
         ];
     }
 }

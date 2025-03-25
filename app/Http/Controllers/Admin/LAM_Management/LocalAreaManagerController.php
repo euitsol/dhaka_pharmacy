@@ -17,6 +17,8 @@ use App\Models\Earning;
 use App\Models\KycSetting;
 use App\Models\SubmittedKyc;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class LocalAreaManagerController extends Controller
@@ -78,16 +80,50 @@ class LocalAreaManagerController extends Controller
     }
     public function store(LocalAreaManagerRequest $req): RedirectResponse
     {
-        $lam = new LocalAreaManager();
-        $lam->name = $req->name;
-        $lam->phone = $req->phone;
-        $lam->dm_id = $req->dm_id;
-        $lam->osa_id = $req->osa_id;
-        $lam->password = Hash::make($req->password);
-        $lam->creater()->associate(admin());
-        $lam->save();
-        flash()->addSuccess('Local Area Manager ' . $lam->name . ' created successfully.');
-        return redirect()->route('lam_management.local_area_manager.local_area_manager_list');
+        // $lam = new LocalAreaManager();
+        // $lam->name = $req->name;
+        // $lam->phone = $req->phone;
+        // $lam->dm_id = $req->dm_id;
+        // $lam->osa_id = $req->osa_id;
+        // $lam->password = Hash::make($req->password);
+        // $lam->creater()->associate(admin());
+        // $lam->save();
+        // flash()->addSuccess('Local Area Manager ' . $lam->name . ' created successfully.');
+        // return redirect()->route('lam_management.local_area_manager.local_area_manager_list');
+
+
+        DB::beginTransaction();
+        try {
+            // Create a new District Manager
+            $lam = new LocalAreaManager();
+            $lam->name = $req->name;
+            $lam->phone = $req->phone;
+            $lam->dm_id = $req->dm_id;
+            $lam->osa_id = $req->osa_id;
+            $lam->password = Hash::make($req->password);
+            $lam->creater()->associate(admin());
+            $lam->save();
+
+            // Send SMS notification
+            // $message = "Your Local Area Manager account has been created successfully. Your login credentials are: <br> Phone: " . $lam->phone . "<br> Password: " . $req->password;
+            // $smsSent = $this->send_single_sms($lam->phone, $message);
+            $smsSent = false;
+
+            if ($smsSent === true) {
+                session()->flash('success', 'Local Area Manager ' . $lam->name . ' created successfully.');
+            } else {
+                Log::error("Failed to send SMS to {$lam->phone}");
+                session()->flash('warning', 'Local Area Manager created, but SMS could not be sent.');
+            }
+
+            DB::commit();
+            return redirect()->route('lam_management.local_area_manager.local_area_manager_list');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Local Area Manager creation failed: " . $e->getMessage());
+            session()->flash('error', 'An error occurred while creating the Local Area Manager. Please try again.');
+            return redirect()->back();
+        }
     }
     public function edit($id): View
     {

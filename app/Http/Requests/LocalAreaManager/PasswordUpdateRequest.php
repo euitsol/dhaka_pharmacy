@@ -3,6 +3,7 @@
 namespace App\Http\Requests\LocalAreaManager;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class PasswordUpdateRequest extends FormRequest
@@ -34,12 +35,7 @@ class PasswordUpdateRequest extends FormRequest
             ],
             'password' => [
                 'required',
-                Password::min(8) // Minimum length of 8 characters
-                    ->mixedCase() // Requires at least one uppercase and one lowercase letter
-                    ->letters() // Requires at least one letter
-                    ->numbers() // Requires at least one digit
-                    ->symbols() // Requires at least one special character
-                    ->uncompromised(), // Ensures the password has not been compromised in data leaks
+                'min:6',
                 'confirmed',
             ],
         ];
@@ -53,6 +49,6 @@ class PasswordUpdateRequest extends FormRequest
      */
     private function checkOldPassword(string $password): bool
     {
-        return \Hash::check($password, lam()->password);
+        return Hash::check($password, lam()->password);
     }
 }

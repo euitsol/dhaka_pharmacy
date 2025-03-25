@@ -121,7 +121,7 @@
         </div>
     </div>
 @endsection
-@include('district_manager.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@include('district_manager.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6, 7, 8]])
 @push('js')
     <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
     <script>
