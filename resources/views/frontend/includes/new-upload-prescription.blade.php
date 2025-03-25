@@ -100,12 +100,12 @@
                                 <p>{{ __('Enter the verification code sent to') }} <strong class="phone-display"></strong></p>
 
                                 <div class="otp-input-container d-flex justify-content-center gap-2 my-4">
-                                    <input type="text" class="form-control otp-input" maxlength="1" data-index="1">
-                                    <input type="text" class="form-control otp-input" maxlength="1" data-index="2">
-                                    <input type="text" class="form-control otp-input" maxlength="1" data-index="3">
-                                    <input type="text" class="form-control otp-input" maxlength="1" data-index="4">
-                                    <input type="text" class="form-control otp-input" maxlength="1" data-index="5">
-                                    <input type="text" class="form-control otp-input" maxlength="1" data-index="6">
+                                    <input type="number" class="form-control otp-input" maxlength="1" data-index="1">
+                                    <input type="number" class="form-control otp-input" maxlength="1" data-index="2">
+                                    <input type="number" class="form-control otp-input" maxlength="1" data-index="3">
+                                    <input type="number" class="form-control otp-input" maxlength="1" data-index="4">
+                                    <input type="number" class="form-control otp-input" maxlength="1" data-index="5">
+                                    <input type="number" class="form-control otp-input" maxlength="1" data-index="6">
                                 </div>
 
                                 <div class="resend-container">

@@ -99,7 +99,7 @@ class ProductPageController extends Controller
 
         // Fetch category details
         if ($category_slug !== 'all') {
-            $data['category'] = ProductCategory::with(['pro_sub_cats', 'medicines'])
+            $data['category'] = ProductCategory::with(['pro_sub_cats'])
                 ->activated()
                 ->where('slug', $category_slug)
                 ->first();

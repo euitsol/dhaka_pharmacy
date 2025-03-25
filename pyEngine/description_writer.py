@@ -4,7 +4,7 @@ from google import genai
 from google.genai import types
 from prompt.description_prompt import prompt
 
-client = genai.GenerativeModel(model_name="gemini-pro", api_key=os.environ.get("GEMINI_API_KEY"))
+client = genai.GenerativeModel(model_name="gemini-pro", api_key="AIzaSyDgAmwDxhNmY8taKr_O9ZcSFBT6fxAYFYU"
 
 def generate_description(data, prompt=None):
     if(prompt == None):

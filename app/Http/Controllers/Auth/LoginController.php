@@ -20,7 +20,6 @@ use App\Http\Traits\SmsTrait;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-
 use function PHPUnit\Framework\isNull;
 
 class LoginController extends Controller
@@ -38,7 +37,7 @@ class LoginController extends Controller
 
     use AuthenticatesUsers, SmsTrait;
     protected $redirectTo = RouteServiceProvider::HOME;
-    private $otpResentTime = 1;
+    private $otpResentTime = 15; //in seconds
 
     public function __construct()
     {
@@ -155,13 +154,15 @@ class LoginController extends Controller
     private function check_throttle($user)
     {
         if ($user->phone_verified_at !== null) {
-            $timeSinceLastOtp = now()->diffInMinutes($user->phone_verified_at);
+            Log::info(now()->diffInSeconds($user->phone_verified_at)); // Log time difference in seconds
+            $timeSinceLastOtp = now()->diffInSeconds($user->phone_verified_at); // Get time difference in seconds
             if ($timeSinceLastOtp < $this->otpResentTime) {
-                return 'Please wait before requesting another verification otp as one has already been sent recently';
+                return 'Please wait before requesting another verification OTP as one has already been sent recently.';
             }
         }
         return false;
     }
+
 
 
     public function showLoginForm()

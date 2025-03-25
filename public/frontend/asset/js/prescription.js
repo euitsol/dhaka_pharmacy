@@ -136,6 +136,26 @@ $(document).ready(function() {
         }
     });
 
+    $otpInputs.eq(0).on("paste", function (event) {
+        event.preventDefault();
+
+        const pastedValue = (
+            event.originalEvent.clipboardData || window.clipboardData
+        ).getData("text");
+        const otpLength = $otpInputs.length;
+
+        for (let i = 0; i < otpLength; i++) {
+            if (i < pastedValue.length) {
+                $otpInputs.eq(i).val(pastedValue[i]);
+                $otpInputs.eq(i).removeAttr("disabled");
+                $otpInputs.eq(i).focus();
+            } else {
+                $otpInputs.eq(i).val(""); // Clear any remaining inputs
+                $otpInputs.eq(i).focus();
+            }
+        }
+    })
+
     // Resend OTP
     $resendOtpBtn.on('click', function() {
         const phone = $phoneInput.val().trim();

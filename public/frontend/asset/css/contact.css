@@ -48,13 +48,14 @@
     line-height: 26px;
     color: var(--text);
     margin: 0px;
+    margin-bottom: 10px;
 }
 .contact-section .required{
     color: red;
 }
 .contact-section input,textarea::placeholder {
     font-size: 14px;
-    line-height: 40px;
+    line-height: 20px;
     color: #000;
 }
 /* .contact-section #message{
