@@ -164,7 +164,7 @@
                         $('.invalid-feedback').remove();
                         $('.view_modal').modal('hide');
                         window.location.href =
-                            "{{ route('withdraw_method.wm_list', 'Declined') }}";
+                            "{{ route('withdraw_method.wm_list', 'declined') }}";
                     },
                     error: function(xhr) {
                         if (xhr.status === 422) {

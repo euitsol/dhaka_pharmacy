@@ -36,7 +36,7 @@ class WithdrawMethodController extends Controller
         $wm->updater()->associate(admin());
         $wm->update();
         flash()->addSuccess('Withdraw method accepted successfully.');
-        return redirect()->route('withdraw_method.wm_list', 'Verified');
+        return redirect()->route('withdraw_method.wm_list', 'verified');
     }
     public function declined(WmDeclinedRequest $request, $id): JsonResponse
     {
@@ -47,7 +47,7 @@ class WithdrawMethodController extends Controller
             $wm->updater()->associate(admin());
             $wm->update();
             flash()->addSuccess('Withdraw method declined successfully.');
-            return response()->json();
+            return response()->json(['message' => 'Withdraw method declined successfully.']);
         } catch (\Exception $e) {
             flash()->addError('Somethings is wrong.');
             return response()->json(['message' => 'An error occurred'], 500);
