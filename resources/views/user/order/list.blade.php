@@ -243,6 +243,12 @@
                                                     <p class="qty">
                                                         {{ __('Unit: ') }}<span>{{ optional($product->pivot)->unit->name }}</span>
                                                     </p>
+                                                    @if (isset($product->pivot->expiry_date) && $product->pivot->expiry_date)
+                                                        <p class="qty">
+                                                            {{ __('Expiry Date: ') }}<span>{{ $product->pivot->expiry_date }}</span>
+                                                        </p>
+
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

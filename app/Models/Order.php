@@ -105,7 +105,7 @@ class Order extends BaseModel
 
         return $this->belongsToMany(Medicine::class, 'order_products', 'order_id', 'product_id')
             ->using(OrderProduct::class)
-            ->withPivot('id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status', 'medicine_units.name as pivot_unit_name', 'medicine_units.image as pivot_unit_image', 'medicine_units.status as pivot_unit_status')
+            ->withPivot('id', 'unit_id', 'quantity', 'unit_price', 'unit_discount', 'total_price', 'status', 'expiry_date', 'medicine_units.name as pivot_unit_name', 'medicine_units.image as pivot_unit_image', 'medicine_units.status as pivot_unit_status')
             ->leftJoin('medicine_units', 'order_products.unit_id', '=', 'medicine_units.id');
     }
 

@@ -135,16 +135,20 @@
                                                     <div id="carouselExampleControlsNoTouching" class="carousel slide"
                                                         data-bs-touch="false">
                                                         <div class="carousel-inner">
-                                                            @foreach ($order_products as $key => $product)
+                                                            @forelse ($order_products as $key => $product)
                                                                 <div
                                                                     class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                                                                    <h3><span>{{ $product->name }}</span>({{ optional($product->strength)->name }})
+                                                                    <h3><span>{{ $product->name }}</span>
                                                                     </h3>
-                                                                    <p><span>{{ __('Efficacy: ') }}</span>
-                                                                        {!! $product->precaution->description !!}
+                                                                    <p><span>{{ __('Expiry: ') }}</span>
+                                                                        {{ $product->expiry_date ? dateFormate($product->expiry_date) : 'N/A' }}
                                                                     </p>
                                                                 </div>
-                                                            @endforeach
+                                                            @empty
+                                                                <div class="carousel-item active">
+                                                                    <h3>{{ __('Product expiry date will be shown here') }}</h3>
+                                                                </div>
+                                                            @endforelse
                                                         </div>
                                                         <button class="carousel-control-prev" type="button"
                                                             data-bs-target="#carouselExampleControlsNoTouching"
