@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 
@@ -31,5 +32,9 @@ class LocalAreaManager extends AuthenticateBaseModel
     public function operation_sub_area()
     {
         return $this->belongsTo(OperationSubArea::class, 'osa_id');
+    }
+    public function earnings()
+    {
+        return $this->morphMany(Earning::class, 'receiver');
     }
 }

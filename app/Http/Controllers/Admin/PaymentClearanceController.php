@@ -42,7 +42,7 @@ class PaymentClearanceController extends Controller
     {
         try {
             $pc = Earning::findOrFail(decrypt($id));
-            $pc->activity = -1;
+            $pc->activity = 5;
             $pc->description = $request->declined_reason;
             $pc->updater()->associate(admin());
             $pc->update();

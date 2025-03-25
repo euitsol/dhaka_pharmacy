@@ -238,6 +238,6 @@ class Order extends BaseModel
 
     public function earnings()
     {
-        return $this->hasMany(Earning::class, 'order_id', 'id');
+        return $this->morphMany(Earning::class, 'source');
     }
 }

@@ -18,11 +18,19 @@
                                             <label>{{ __('Reward Amount Type') }}</label><br>
                                             <div class="form-check form-check-radio">
                                                 @foreach (App\Models\RewardSetting::getRewardTypes() as $reward_type => $reward_type_string)
-                                                    <label class="form-check-label me-3">
+                                                    @php
+                                                        $isDisabled =
+                                                            $reward->type == App\Models\RewardSetting::TYPE_LOGIN &&
+                                                            $reward_type ==
+                                                                App\Models\RewardSetting::REWARD_TYPE_PERCENTAGE;
+                                                    @endphp
+                                                    <label class="form-check-label me-3"
+                                                        style="{{ $isDisabled ? 'cursor: not-allowed;' : '' }}">
                                                         <input class="form-check-input" type="radio"
                                                             name="rewards[{{ $reward->id }}][reward_type]"
                                                             value="{{ $reward_type }}"
-                                                            {{ $reward->reward_type == $reward_type ? 'checked' : '' }}>
+                                                            {{ $reward->reward_type == $reward_type ? 'checked' : '' }}
+                                                            @if ($isDisabled) disabled @endif>
                                                         {{ $reward_type_string }}
                                                         <span class="form-check-sign"></span>
                                                     </label>

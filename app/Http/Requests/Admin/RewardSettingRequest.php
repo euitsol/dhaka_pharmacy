@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\RewardSetting;
+use App\Rules\ValidRewardType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RewardSettingRequest extends FormRequest
@@ -17,22 +18,24 @@ class RewardSettingRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'rewards.*' => 'required|array',
+            'rewards' => 'required|array',
+
             'rewards.*.reward' => 'required|numeric|min:0',
 
-            'rewards.*' => 'required|array',
-            'rewards.*.reward_type' => 'required|integer|in:' . implode(',', [
-                RewardSetting::REWARD_TYPE_AMOUNT,
-                RewardSetting::REWARD_TYPE_PERCENTAGE,
-            ]),
+            'rewards.*.reward_type' => [
+                'required',
+                'integer',
+                'in:' . implode(',', [
+                    RewardSetting::REWARD_TYPE_AMOUNT,
+                    RewardSetting::REWARD_TYPE_PERCENTAGE,
+                ]),
+                new ValidRewardType() // Custom validation rule
+            ],
 
-            'rewards.*' => 'required|array',
             'rewards.*.status' => 'required|integer|in:' . implode(',', [
                 RewardSetting::STATUS_ACTIVE,
                 RewardSetting::STATUS_DEACTIVE,
@@ -40,6 +43,9 @@ class RewardSettingRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get custom validation messages.
+     */
     public function messages(): array
     {
         return [

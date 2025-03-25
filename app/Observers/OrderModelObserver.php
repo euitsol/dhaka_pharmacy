@@ -29,7 +29,7 @@ class OrderModelObserver implements ShouldHandleEventsAfterCommit
      */
     public function updated(Order $order): void
     {
-        $order = $order->load(['od', 'customer', 'earnings']);
+        $order = $order->load(['od', 'customer', 'earnings.reward']);
         if ($order->wasChanged('status') && $order->status > Order::INITIATED) {
             $this->order_notification($order, 'order');
         }
@@ -40,8 +40,7 @@ class OrderModelObserver implements ShouldHandleEventsAfterCommit
             };
         }
         if ($order->wasChanged('status') && $order->status == Order::DELIVERED) {
-            $this->rewardService->setOrder($order);
-            $this->rewardService->completeRewardEarning();
+            $this->rewardService->completeRewardEarning($order->earnings());
         }
         if ($order->wasChanged('status') && (isset($order->od) && !empty($order->od))) {
             event(new OrderStatusChangeEvent($order));

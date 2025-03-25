@@ -14,7 +14,7 @@ class Earning extends BaseModel
 
     protected $fillable = [
         'ph_id',
-        'order_id',
+        'reward_id',
         'point',
         'eq_amount',
         'activity',
@@ -37,9 +37,9 @@ class Earning extends BaseModel
     {
         return $this->morphTo();
     }
-    public function order()
+    public function reward()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(RewardSetting::class, 'reward_id');
     }
     public function point_history()
     {
@@ -60,13 +60,15 @@ class Earning extends BaseModel
                 return 'badge badge-info';
             case 4:
                 return 'badge badge-danger';
+            case 5:
+                return 'badge badge-danger';
         }
     }
     public function activityTitle()
     {
         switch ($this->activity) {
             case -1:
-                return 'Payment-declined';
+                return 'Initiated';
             case 0:
                 return 'Pending-clearance';
             case 1:
@@ -77,13 +79,15 @@ class Earning extends BaseModel
                 return 'Withdraw';
             case 4:
                 return 'Withdraw-declined';
+            case 5:
+                return 'Payment-declined';
         }
     }
 
     public function scopeActivity($query, $activity)
     {
         switch ($activity) {
-            case 'Payment-declined':
+            case 'Initiated':
                 $activity = -1;
                 break;
             case 'Pending-clearance':
@@ -100,6 +104,9 @@ class Earning extends BaseModel
                 break;
             case 'Withdraw-declined':
                 $activity = 4;
+                break;
+            case 'Payment-declined':
+                $activity = 5;
                 break;
         }
         return $query->where('activity', $activity);

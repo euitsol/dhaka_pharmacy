@@ -8,7 +8,8 @@ use App\Models\{
     RewardSetting,
     Earning,
     LocalAreaManager,
-    PointHistory
+    PointHistory,
+    User
 };
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -17,17 +18,26 @@ class RewardService
 {
     protected $rewards;
     protected Order $order;
+    protected User $user;
 
     public function setOrder(Order $order): self
     {
         $this->order = $order->load(['customer.creater']);
+        $this->setUser($this->order->customer);
         Log::info('Set Reward Order', ['order' => $this->order]);
+        return $this;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user->load(['creater']);
+        Log::info('User Set ', ['user' => $this->user]);
         return $this;
     }
 
     public function checkRewardAbility(): bool
     {
-        $createrType = $this->order->customer->creater_type;
+        $createrType = $this->user->creater_type;
         $isEligible = in_array($createrType, [LocalAreaManager::class, DistrictManager::class]);
         Log::info('Reward Ability', ['eligible' => $isEligible]);
         return $isEligible;
@@ -41,10 +51,15 @@ class RewardService
 
     protected function getRewardAmount(RewardSetting $reward): float
     {
-        $orderAmount = $this->order->total_amount;
-        return $reward->reward_type == RewardSetting::REWARD_TYPE_PERCENTAGE
-            ? ($orderAmount * $reward->reward / 100)
-            : $reward->reward;
+        if (isset($this->order)) {
+            return $reward->reward_type == RewardSetting::REWARD_TYPE_PERCENTAGE
+                ? ($this->order->total_amount * $reward->reward / 100)
+                : $reward->reward;
+        }
+        if ($reward->type == RewardSetting::TYPE_LOGIN && $reward->reward_type == RewardSetting::REWARD_TYPE_AMOUNT) {
+            return $reward->reward;
+        }
+        return 0;
     }
 
     protected function createEarning($receiver, RewardSetting $reward, PointHistory $ph, string $type): void
@@ -53,15 +68,15 @@ class RewardService
         $earning = new Earning([
             'point' => $rewardAmount / $ph->eq_amount,
             'eq_amount' => $rewardAmount,
-            'activity' => 0,
-            'order_id' => $this->order->id,
+            'activity' => -1,
             'ph_id' => $ph->id,
+            'reward_id' => $reward->id ?? null,
             'description' => $type == RewardSetting::TYPE_ORDER
-                ? 'Order reward bonus income is pending clearance'
-                : 'Login reward bonus income is pending clearance'
+                ? 'The order reward bonus income has been initiated.'
+                : 'The login reward bonus income has been initiated'
         ]);
         $earning->receiver()->associate($receiver);
-        $earning->source()->associate($reward);
+        $earning->source()->associate(isset($this->order) ? $this->order : $this->user);
         $earning->save();
         Log::info('Earning Created', ['earning' => $earning]);
     }
@@ -69,7 +84,8 @@ class RewardService
     public function addRewardEarning(string $type): void
     {
         DB::transaction(function () use ($type) {
-            $receiver = $this->order->customer->creater;
+            $this->setRewards($type);
+            $receiver = $this->user->creater;
             $ph = PointHistory::activated()->first();
             if (!$receiver || !$ph) {
                 Log::warning('Reward Earning Skipped', ['receiver' => $receiver, 'pointHistory' => $ph]);
@@ -81,7 +97,6 @@ class RewardService
                 if ($lamReward) {
                     $this->createEarning($receiver, $lamReward, $ph, $type);
                 }
-
                 $receiver->load('dm');
                 $dmReward = RewardSetting::active()->where(['type' => $type, 'receiver_type' => RewardSetting::RECEIVER_TYPE_DM])->first();
                 if ($dmReward && $receiver->dm) {
@@ -98,13 +113,11 @@ class RewardService
         });
     }
 
-    public function completeRewardEarning(): void
+    public function completeRewardEarning($earnings): void
     {
-        DB::transaction(function () {
-            $this->order->earnings()
-                ->whereIn('receiver_type', [DistrictManager::class, LocalAreaManager::class])
-                ->where('activity', 0)
-                ->update(['activity' => 1, 'description' => 'Reward bonus income has been successfully cleared.']);
+        DB::transaction(function () use ($earnings) {
+            $earnings->where('activity', -1)
+                ->update(['activity' => 0, 'description' => 'The income is pending clearance.']);
         });
     }
 }

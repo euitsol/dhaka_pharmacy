@@ -642,13 +642,22 @@ function getPendingWithdrawEqAmounts($earnings)
 {
     return $earnings->where('activity', 2)->sum('eq_amount');
 }
-function getPendingEarningPoints($earnings)
+function getPendingClearanceEarningPoints($earnings)
 {
     return $earnings->where('activity', 0)->sum('point');
 }
-function getPendingEarningEqAmounts($earnings)
+function getPendingClearanceEarningEqAmounts($earnings)
 {
     return $earnings->where('activity', 0)->sum('eq_amount');
+}
+
+function getPendingEarningPoints($earnings)
+{
+    return $earnings->where('activity', -1)->sum('point');
+}
+function getPendingEarningEqAmounts($earnings)
+{
+    return $earnings->where('activity', -1)->sum('eq_amount');
 }
 
 function getSubmitterType($className)

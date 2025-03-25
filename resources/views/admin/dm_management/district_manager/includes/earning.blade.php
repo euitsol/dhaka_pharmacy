@@ -30,14 +30,15 @@
         <div class="card box">
             <div class="card-body">
                 <div class="amount">
-                    <span class="text-muted fw-bold">{{ __('Pending clearance') }}</span>
-                    <h4 class="my_amount">{{ number_format(getPendingEarningPoints($earnings), 2) }}
-                        {{ $point_name }}</h4>
+                    <span class="text-muted fw-bold">{{ __('Pending income') }}</span>
+                    <h4 class="my_amount">{{ number_format(getPendingEarningEqAmounts($earnings), 2) }}
+                        {{ __('BDT') }}</h4>
                 </div>
                 <hr>
                 <div class="amount">
-                    <span class="text-muted fw-bold">{{ __('Equivalent amount') }}</span>
-                    <h4 class="my_amount">{{ number_format(getPendingEarningEqAmounts($earnings), 2) }}
+                    <span class="text-muted fw-bold">{{ __('Pending clearance') }}</span>
+                    <h4 class="my_amount">
+                        {{ number_format(getPendingClearanceEarningEqAmounts($earnings), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
             </div>
@@ -161,8 +162,8 @@
                 total_point = `{{ number_format(getWithdrawPoints($earning), 2) }}`;
             } else if (activity == 3) {
                 total_amount =
-                    `{!! get_taka_icon() !!}{{ number_format(getPendingEarningEqAmounts($earning), 2) }}`;
-                total_point = `{{ number_format(getPendingEarningPoints($earning), 2) }}`;
+                    `{!! get_taka_icon() !!}{{ number_format(getPendingClearanceEarningEqAmounts($earning), 2) }}`;
+                total_point = `{{ number_format(getPendingClearanceEarningPoints($earning), 2) }}`;
             } else if (activity == 4) {
                 total_amount =
                     `{!! get_taka_icon() !!}{{ number_format(getPendingWithdrawEqAmounts($earning), 2) }}`;

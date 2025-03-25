@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 
@@ -33,6 +34,8 @@ class DistrictManager extends AuthenticateBaseModel
         return $this->belongsTo(OperationArea::class, 'oa_id');
     }
 
-    
-
+    public function earnings()
+    {
+        return $this->morphMany(Earning::class, 'receiver');
+    }
 }

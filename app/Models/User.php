@@ -3,16 +3,20 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Spatie\Permission\Models\Role;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([UserObserver::class])]
 class User extends AuthenticateBaseModel
 {
     use HasRoles, HasApiTokens, Notifiable;
@@ -45,8 +49,13 @@ class User extends AuthenticateBaseModel
         return $this->morphMany(Message::class, 'sender');
     }
 
-    public function addToCart():MorphMany
+    public function addToCart(): MorphMany
     {
         return $this->morphMany(AddToCart::class, 'creater');
+    }
+
+    public function earnings()
+    {
+        return $this->morphMany(Earning::class, 'source');
     }
 }

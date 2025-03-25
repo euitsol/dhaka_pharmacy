@@ -30,15 +30,15 @@
         <div class="card box">
             <div class="card-body">
                 <div class="amount">
-                    <span class="text-muted fw-bold">{{ __('Pending clearance') }}</span>
-                    <h4 class="my_amount">{{ number_format(getPendingEarningPoints($totalEarnings), 2) }}
-                        {{ $point_name }}</h4>
+                    <span class="text-muted fw-bold">{{ __('Pending income') }}</span>
+                    <h4 class="my_amount">{{ number_format(getPendingEarningEqAmounts($totalEarnings), 2) }}
+                        {{ __('BDT') }}</h4>
                 </div>
                 <hr>
                 <div class="amount">
-                    <span class="text-muted fw-bold">{{ __('Equivalent amount') }}</span>
+                    <span class="text-muted fw-bold">{{ __('Pending clearance') }}</span>
                     <h4 class="my_amount">
-                        {{ number_format(getPendingEarningEqAmounts($totalEarnings), 2) }}
+                        {{ number_format(getPendingClearanceEarningEqAmounts($totalEarnings), 2) }}
                         {{ __('BDT') }}</h4>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                             <th>{{ __('Activity') }}</th>
                             <th>{{ __('Total Point') }}</th>
                             <th>{{ __('Description') }}</th>
-                            <th>{{ __('Order') }}</th>
+                            {{-- <th>{{ __('Order') }}</th> --}}
                             <th>{{ __('Amount') }}</th>
                         </tr>
                     </thead>
@@ -119,7 +119,7 @@
                                         {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}
                                     @endif
                                 </td>
-                                <td>{{ $earning->order->order_id ?? '--' }}</td>
+                                {{-- <td>{{ $earning->order->order_id ?? '--' }}</td> --}}
                                 <td>{!! get_taka_icon() !!}{{ number_format($earning->eq_amount, 2) }}</td>
                             </tr>
                         @endforeach
@@ -184,8 +184,8 @@
                 total_point = `{{ number_format(getWithdrawPoints($earnings), 2) }}`;
             } else if (activity == 3) {
                 total_amount =
-                    `{!! get_taka_icon() !!}{{ number_format(getPendingEarningEqAmounts($earnings), 2) }}`;
-                total_point = `{{ number_format(getPendingEarningPoints($earnings), 2) }}`;
+                    `{!! get_taka_icon() !!}{{ number_format(getPendingClearanceEarningEqAmounts($earnings), 2) }}`;
+                total_point = `{{ number_format(getPendingClearanceEarningPoints($earnings), 2) }}`;
             } else if (activity == 4) {
                 total_amount =
                     `{!! get_taka_icon() !!}{{ number_format(getPendingWithdrawEqAmounts($earnings), 2) }}`;

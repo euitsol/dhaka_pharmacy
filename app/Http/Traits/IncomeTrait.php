@@ -30,7 +30,7 @@ trait IncomeTrait
         }
         $earning->activity = 0;
         $earning->receiver()->associate($receiver);
-        $earning->order_id = $order_id;
+        // $earning->order_id = $order_id;
         $earning->ph_id = $ph->id;
         $earning->description = 'Income is pending clearance';
         $earning->save();
