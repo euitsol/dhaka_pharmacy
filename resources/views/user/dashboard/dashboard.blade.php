@@ -10,8 +10,8 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
     <style>
-        .offer_image img {
-            height: 100%;
+        .latest-offer img {
+            height: 17rem;
             width: 100%;
             border: 2px solid var(--btn_bg) !important;
             padding: 0px;
@@ -176,7 +176,7 @@
                                                 @include('user.dashboard.include.latest-offer')
                                             </div>
                                         </div>
-                                        <div class="col-xl-12 col-md-6 col-12">
+                                        <div class="col-xl-12 col-md-6 col-12 d-none">
                                             <div class="tips-col">
                                                 @if ($user_tips->isNotEmpty())
                                                     <div class="tips">
@@ -444,26 +444,28 @@
 
 
     <script>
-        $('#carouselExampleDark').carousel({
+        const myCarouselElement = document.querySelector('#carouselLatestOfferIndicators')
+        const carousel = new bootstrap.Carousel(myCarouselElement, {
             infinite: true,
-            slidesToShow: 2,
-            slidesToScroll: 2,
+            slidesToShow: 1,
+            slidesToScroll: 1,
             dots: true,
             autoplay: true,
+            infinite: true,
             autoplaySpeed: 2000,
             responsive: [{
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
                     infinite: true,
                     dots: true
                 }
             }, {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
+                    slidesToShow: 1,
+                    slidesToScroll: 1
                 }
             }, {
                 breakpoint: 480,
