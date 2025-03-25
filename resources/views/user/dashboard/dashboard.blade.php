@@ -133,7 +133,7 @@
                                             <div class="col-12 order-2 order-lg-1">
                                                 <div class="medicine-slider">
                                                     <div id="carouselExampleControlsNoTouching" class="carousel slide"
-                                                        data-bs-touch="false">
+                                                        data-bs-touch="false" data-bs-ride="carousel">
                                                         <div class="carousel-inner">
                                                             @forelse ($order_products as $key => $product)
                                                                 <div
