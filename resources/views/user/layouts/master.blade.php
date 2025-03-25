@@ -9,7 +9,7 @@
 
     <!------- Bootstrap-CSS-CDN-Link ------->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
+
 
     <!-- CSRF Token -->
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
@@ -93,19 +93,15 @@
 
     <!------ Dashboard main section ------->
     <!-- jQuery CDN -->
-    <script 
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" 
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
-        crossorigin="anonymous" 
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous"
         referrerpolicy="no-referrer">
     </script>
 
     <!-- Bootstrap 5 JS Bundle CDN -->
-    <script 
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-rbsA2g7zAoFoA6HMDw4pI5TnZI+ncH2k62+4pEGpV01xXvE3z9bApF5iwsmXK3dM" 
-        crossorigin="anonymous">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 

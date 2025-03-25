@@ -10,8 +10,8 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
     <style>
-        .offer_image img {
-            height: 100%;
+        .latest-offer img {
+            height: 17rem;
             width: 100%;
             border: 2px solid var(--btn_bg) !important;
             padding: 0px;
@@ -176,7 +176,7 @@
                                                 @include('user.dashboard.include.latest-offer')
                                             </div>
                                         </div>
-                                        <div class="col-xl-12 col-md-6 col-12">
+                                        <div class="col-xl-12 col-md-6 col-12 d-none">
                                             <div class="tips-col">
                                                 @if ($user_tips->isNotEmpty())
                                                     <div class="tips">
@@ -433,37 +433,39 @@
 @endsection
 
 @push('js_link')
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    {{-- <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
-    </script>
+    </script> --}}
 @endpush
 
 @push('js')
-    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
+    {{-- <script src="{{ asset('user/asset/js/mapbox.js') }}"></script> --}}
     <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
 
 
     <script>
-        $('#carouselExampleDark').carousel({
+        const myCarouselElement = document.querySelector('#carouselLatestOfferIndicators')
+        const carousel = new bootstrap.Carousel(myCarouselElement, {
             infinite: true,
-            slidesToShow: 2,
-            slidesToScroll: 2,
+            slidesToShow: 1,
+            slidesToScroll: 1,
             dots: true,
             autoplay: true,
+            infinite: true,
             autoplaySpeed: 2000,
             responsive: [{
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
                     infinite: true,
                     dots: true
                 }
             }, {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
+                    slidesToShow: 1,
+                    slidesToScroll: 1
                 }
             }, {
                 breakpoint: 480,
