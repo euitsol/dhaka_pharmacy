@@ -132,15 +132,14 @@
                                         <div class="row row-gap-3 row-gap-sm-4">
                                             <div class="col-12 order-2 order-lg-1">
                                                 <div class="medicine-slider">
-                                                    <div id="carouselExampleControlsNoTouching" class="carousel slide"
-                                                        data-bs-touch="false" data-bs-ride="carousel">
+                                                    <div id="carouselExpiryDate" class="carousel slide" data-bs-ride="carousel">
                                                         <div class="carousel-inner">
                                                             @forelse ($order_products as $key => $product)
                                                                 <div
                                                                     class="carousel-item {{ $loop->first ? 'active' : '' }}">
                                                                     <h3><span>{{ $product->name }}</span>
                                                                     </h3>
-                                                                    <p><span>{{ __('Expiry: ') }}</span>
+                                                                    <p><span>{{ __('Expiry') }}:</span>
                                                                         {{ $product->expiry_date ? dateFormate($product->expiry_date) : 'N/A' }}
                                                                     </p>
                                                                 </div>
@@ -151,7 +150,7 @@
                                                             @endforelse
                                                         </div>
                                                         <button class="carousel-control-prev" type="button"
-                                                            data-bs-target="#carouselExampleControlsNoTouching"
+                                                            data-bs-target="#carouselExpiryDate"
                                                             data-bs-slide="prev">
                                                             <span class="carousel-control-prev-icon"
                                                                 aria-hidden="true"></span>
@@ -159,7 +158,7 @@
                                                         </button>
                                                         <div class="circle"></div>
                                                         <button class="carousel-control-next" type="button"
-                                                            data-bs-target="#carouselExampleControlsNoTouching"
+                                                            data-bs-target="#carouselExpiryDate"
                                                             data-bs-slide="next">
                                                             <span class="carousel-control-next-icon"
                                                                 aria-hidden="true"></span>

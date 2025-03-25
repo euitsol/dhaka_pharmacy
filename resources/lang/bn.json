@@ -449,6 +449,8 @@
     "Can I use both phone number and social login methods?": "আমি কি ফোন নম্বর এবং সোশ্যাল লগইন উভয় পদ্ধতি ব্যবহার করতে পারব?",
     "Yes, you can choose either method based on your preference. For password login, you must first log in via phone number or social media and then update your profile with a password.": "হ্যাঁ, আপনি আপনার পছন্দ অনুযায়ী যে কোন একটি পদ্ধতি ব্যবহার করতে পারেন। পাসওয়ার্ড লগইনের জন্য প্রথমে ফোন নম্বর বা সোশ্যাল মিডিয়া দিয়ে লগইন করে প্রোফাইলে পাসওয়ার্ড আপডেট করতে হবে।",
     "Who do I contact if I face any issues with login or OTP verification?": "লগইন বা ওটিপি যাচাইয়ে কোনো সমস্যা হলে কার সাথে যোগাযোগ করব?",
-    "If you experience any issues, please contact our customer support team, available 24/7, for immediate assistance.": "কোনো সমস্যা হলে, অনুগ্রহ করে ২৪/৭ উপলব্ধ আমাদের কাস্টমার সাপোর্ট টিমের সাথে যোগাযোগ করুন, তারা দ্রুত সহায়তা প্রদান করবে।"
-
+    "If you experience any issues, please contact our customer support team, available 24/7, for immediate assistance.": "কোনো সমস্যা হলে, অনুগ্রহ করে ২৪/৭ উপলব্ধ আমাদের কাস্টমার সাপোর্ট টিমের সাথে যোগাযোগ করুন, তারা দ্রুত সহায়তা প্রদান করবে।",
+    "Product expiry date will be shown here": "পণ্যের মেয়াদ উত্তীর্ণের তারিখ এখানে দেখানো হবে",
+    "Expiry": "মেয়াদ উত্তীর্ণের তারিখ",
+    "Expiry Date": "মেয়াদ উত্তীর্ণের তারিখ"
 }
