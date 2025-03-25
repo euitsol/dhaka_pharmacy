@@ -117,4 +117,7 @@ input,label{
         padding-bottom: 0px !important;
         margin-bottom: 8px !important;
     }
+    .faq-section .accordion-item .accordion-button {
+        font-size: 14px !important;
+    }
 }
