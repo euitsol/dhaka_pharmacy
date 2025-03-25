@@ -234,19 +234,6 @@ function toggleLanguage() {
 }
 
 
-
-// address add model js code here
-var myModal = new bootstrap.Modal(document.getElementById('address_add_modal'), {
-    keyboard: false
-});
-
-document.getElementById('openAddressModal').addEventListener('click', function () {
-   var myModal = new bootstrap.Modal(document.getElementById('address_add_modal'));
-   myModal.show();
-});
-
-
-
 // cart slider js code here
 document.addEventListener("DOMContentLoaded", function () {
     // Initialize locale from session
@@ -262,3 +249,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     var dropdownElementList = document.querySelectorAll('.dropdown-toggle');
+//     dropdownElementList.forEach(function (dropdown) {
+//         new bootstrap.Dropdown(dropdown);
+//     });
+// });

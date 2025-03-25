@@ -102,10 +102,13 @@
 
     <!-- Bootstrap 5 JS Bundle CDN -->
     <script 
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-<CORRECT_INTEGRITY_HASH>" 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-rbsA2g7zAoFoA6HMDw4pI5TnZI+ncH2k62+4pEGpV01xXvE3z9bApF5iwsmXK3dM" 
         crossorigin="anonymous">
     </script>
+
+
+
 
 
     <!--======== toastr script ========-->
