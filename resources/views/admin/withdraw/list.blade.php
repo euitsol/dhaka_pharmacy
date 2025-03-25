@@ -29,7 +29,7 @@
                             @foreach ($withdrawals as $w)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $w->receiver->name }}{{ $w->receiver->designation ? ' ( ' . $w->receiver->designation . ' )' : '' }}
+                                    <td> {{ $w->receiver->name . ' ( ' . getSubmitterType($pc->receiver_type) . ' )' }}
                                     </td>
                                     <td> {!! get_taka_icon() !!}{{ number_format($w->amount, 2) }}</td>
                                     <td>

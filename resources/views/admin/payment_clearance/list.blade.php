@@ -30,7 +30,7 @@
                             @foreach ($payments as $pc)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $pc->receiver->name }}{{ $pc->receiver->designation ? ' ( ' . $pc->receiver->designation . ' )' : '' }}
+                                    <td> {{ $pc->receiver->name . ' ( ' . getSubmitterType($pc->receiver_type) . ' )' }}
                                     </td>
                                     <td> {{ number_format($pc->point, 2) }} ({!! get_taka_icon() . number_format($pc->point_history->eq_amount, 2) !!})</td>
                                     <td> {!! get_taka_icon() !!}{{ number_format($pc->eq_amount, 2) }}</td>
