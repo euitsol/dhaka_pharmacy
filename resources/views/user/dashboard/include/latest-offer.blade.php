@@ -56,7 +56,12 @@
             <div class="carousel-inner">
                 @foreach ($latest_offers as $key => $lf)
                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                    <img src="{{ storage_url($lf->image) }}" class="d-block w-100" alt="{{ $lf->title }}">
+                    <div id="lightbox" class="lightbox offer_image">
+                        <div class="lightbox-content">
+                            <img src="{{ storage_url($lf->image) }}" class="lightbox_image d-block w-100" alt="{{ $lf->title }}">
+                        </div>
+                        <div class="close_button fa-beat">X</div>
+                    </div>
                 </div>
                 @endforeach
             </div>
