@@ -35,7 +35,7 @@ class RegisterController extends Controller
 
         // SMS SEND
         $verification_sms = "Your verification code is $user->otp. Please enter this code to verify your phone.";
-        $result = $this->sms_send($user->phone, $verification_sms);
+        $result = $this->send_otp_sms($user->phone, $verification_sms);
 
 
         $s['uid'] = encrypt($user->id);

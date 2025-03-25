@@ -25,20 +25,20 @@ class OrderByPrescriptionController extends Controller
 
     public function create(PrescriptionRequest $request)
     {
-        if($request->ajax()){
-            try{
+        if ($request->ajax()) {
+            try {
                 $prescription = $this->prescriptionService->processPrescription($request->all(), true);
-                return response()->json(['success'=>true, 'message'=>'Prescription submitted successfully. Our team will contact you soon']);
-            }catch(Exception $e){
-               return response()->json(['success'=>false, 'message'=>$e->getMessage()]);
+                return response()->json(['success' => true, 'message' => 'Prescription submitted successfully. Our team will contact you soon']);
+            } catch (Exception $e) {
+                return response()->json(['success' => false, 'message' => $e->getMessage()]);
             }
         }
-        try{
+        try {
             $prescription = $this->prescriptionService->processPrescription($request->all(), true);
             // flash()->addSuccess('Prescription submitted successfully. Our team will contact you soon.');
             sweetalert()->success('Prescription submitted successfully. Our team will contact you soon.');
             return redirect()->route('home');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             flash()->addWarning($e->getMessage());
             return redirect()->back();
         }
@@ -89,7 +89,7 @@ class OrderByPrescriptionController extends Controller
 
             // Send OTP via SMS
             $verification_sms = "Your verification code is $otp. Please enter this code to verify your phone.";
-            $result = $this->sms_send($user->phone, $verification_sms);
+            $result = $this->send_otp_sms($user->phone, $verification_sms);
 
             if ($result === true) {
                 return response()->json([
@@ -135,7 +135,7 @@ class OrderByPrescriptionController extends Controller
 
             // Send OTP via SMS
             $verification_sms = "Your verification code is $otp. Please enter this code to verify your phone.";
-            $result = $this->sms_send($user->phone, $verification_sms);
+            $result = $this->send_otp_sms($user->phone, $verification_sms);
 
             if ($result === true) {
                 return response()->json([
@@ -203,5 +203,4 @@ class OrderByPrescriptionController extends Controller
     {
         return $phone;
     }
-
 }

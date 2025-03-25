@@ -94,7 +94,7 @@ class LoginController extends Controller
             $dm->phone_verified_at = Carbon::now();
             $dm->save();
             $verification_sms = "Your verification code is $dm->otp. Please enter this code to verify your phone.";
-            $result = $this->sms_send($dm->phone, $verification_sms);
+            $result = $this->send_otp_sms($dm->phone, $verification_sms);
             if ($result === true) {
                 flash()->addSuccess('The verification code has been sent successfully.');
                 session_start();
@@ -128,7 +128,7 @@ class LoginController extends Controller
             $dm->phone_verified_at = Carbon::now();
             $dm->save();
             $verification_sms = "Your verification code is $dm->otp. Please enter this code to verify your phone.";
-            $result = $this->sms_send($dm->phone, $verification_sms);
+            $result = $this->send_otp_sms($dm->phone, $verification_sms);
             if ($result === true) {
                 if ($request->ajax()) {
                     return response()->json(['status' => 'success', 'message' => 'The verification code has been sent successfully.']);

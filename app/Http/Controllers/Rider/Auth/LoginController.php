@@ -94,7 +94,7 @@ class LoginController extends Controller
             $rider->phone_verified_at = Carbon::now();
             $rider->save();
             $verification_sms = "Your verification code is $rider->otp. Please enter this code to verify your phone.";
-            $result = $this->sms_send($rider->phone, $verification_sms);
+            $result = $this->send_otp_sms($rider->phone, $verification_sms);
             if ($result === true) {
                 if ($request->ajax()) {
                     return response()->json(['status' => 'success', 'message' => 'The verification code has been sent successfully.']);

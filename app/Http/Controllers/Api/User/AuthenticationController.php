@@ -176,7 +176,7 @@ class AuthenticationController extends BaseController
         $user->save();
 
         $verification_sms = "Your verification code for " . config('app.name') . " is $user->otp. Please enter this code to verify your phone.";
-        $result = $this->sms_send($user->phone, $verification_sms);
+        $result = $this->send_otp_sms($user->phone, $verification_sms);
 
         return $result;
     }

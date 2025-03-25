@@ -227,11 +227,11 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="declineModal" tabindex="-1" aria-labelledby="declineModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Add Declined Reason') }}</h5>
+                    <h5 class="modal-title" id="declineModalLabel">{{ __('Add Declined Reason') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -242,7 +242,7 @@
                                 <div class="form-group">
                                     <label>{{ __('Note') }} <span
                                             class="text-danger">{{ __('*') }}</span></label>
-                                    <textarea name="note" id="note" class="form-control"></textarea>
+                                    <textarea name="note" id="note" class="form-control no-ckeditor5"></textarea>
                                     @include('alerts.feedback', ['field' => 'note'])
                                 </div>
                                 <span type="submit" id="updateDeclinedNote"
@@ -274,7 +274,7 @@
             $('.declined').on('click', function() {
                 let id = $(this).data('id');
                 $('#updateDeclinedNote').attr('data-id', id)
-                $('#exampleModal').modal('show');
+                $('#declineModal').modal('show');
             });
         });
 
@@ -285,14 +285,14 @@
                 let id = $(this).data('id');
                 let _url = (
                     "{{ route('dm_management.dm_kyc.submitted_kyc.declined.dms_kyc_status', ['_id']) }}"
-                    );
+                );
                 let __url = _url.replace('_id', id);
                 $.ajax({
                     type: 'PUT',
                     url: __url,
                     data: form.serialize(),
                     success: function(response) {
-                        $('#exampleModal').modal('hide');
+                        $('#declineModal').modal('hide');
                         console.log(response.message);
                         window.location.reload();
                     },

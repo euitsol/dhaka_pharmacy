@@ -18,10 +18,13 @@ use App\Models\KycSetting;
 use App\Models\SubmittedKyc;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Traits\SmsTrait;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DistrictManagerController extends Controller
 {
-    use DetailsCommonDataTrait;
+    use DetailsCommonDataTrait, SmsTrait;
     public function __construct()
     {
         return $this->middleware('admin');
@@ -80,15 +83,37 @@ class DistrictManagerController extends Controller
     }
     public function store(DistrictManagerRequest $req): RedirectResponse
     {
-        $dm = new DistrictManager();
-        $dm->name = $req->name;
-        $dm->phone = $req->phone;
-        $dm->oa_id = $req->oa_id;
-        $dm->password = Hash::make($req->password);
-        $dm->created_by = admin()->id;
-        $dm->save();
-        flash()->addSuccess('District Manager ' . $dm->name . ' created successfully.');
-        return redirect()->route('dm_management.district_manager.district_manager_list');
+        DB::beginTransaction();
+        try {
+            // Create a new District Manager
+            $dm = new DistrictManager();
+            $dm->name = $req->name;
+            $dm->phone = $req->phone;
+            $dm->oa_id = $req->oa_id;
+            $dm->password = Hash::make($req->password);
+            $dm->created_by = admin()->id;
+            $dm->save();
+
+            // Send SMS notification
+            // $message = "Your District Manager account has been created successfully. Your login credentials are: <br> Phone: " . $dm->phone . "<br> Password: " . $req->password;
+            // $smsSent = $this->send_single_sms($dm->phone, $message);
+            $smsSent = false;
+
+            if ($smsSent === true) {
+                session()->flash('success', 'District Manager ' . $dm->name . ' created successfully.');
+            } else {
+                Log::error("Failed to send SMS to {$dm->phone}");
+                session()->flash('warning', 'District Manager created, but SMS could not be sent.');
+            }
+
+            DB::commit();
+            return redirect()->route('dm_management.district_manager.district_manager_list');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("District Manager creation failed: " . $e->getMessage());
+            session()->flash('error', 'An error occurred while creating the District Manager. Please try again.');
+            return redirect()->back();
+        }
     }
     public function edit($id): View
     {
