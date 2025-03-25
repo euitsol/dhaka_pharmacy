@@ -135,7 +135,7 @@
         </div>
     </div>
 @endsection
-@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]])
 @push('js')
     <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
     <script>
@@ -151,15 +151,6 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status == 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status == 1 ? 'badge-success' :
-                            'badge-danger';
-                        let kycStatus = data.kyc_status == 1 ? 'Complete' : 'Pending';
-                        let kycStatusClass = data.kyc_status == 1 ? 'badge-info' :
-                            'badge-warning';
-                        let verifyStatus = data.is_verify == 1 ? 'Success' : 'Pending';
-                        let verifyStatusClass = data.is_verify == 1 ? 'badge-primary' :
-                            'badge-dark';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -207,17 +198,17 @@
                                      <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
-                                        <td><span class="badge ${statusClass}">${status}</span></td>
+                                        <td><span class="badge ${data.statusBg}">${data.statusTitle}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">KYC Status</th>
                                         <th>:</th>
-                                        <td><span class="badge ${kycStatusClass}">${kycStatus}</span></td>
+                                        <td><span class="badge ${data.kycVerifyBg}">${data.kycVerifyTitle}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Phone Verify</th>
                                         <th>:</th>
-                                        <td><span class="badge ${verifyStatusClass}">${verifyStatus}</span></td>
+                                        <td><span class="badge ${data.phoneVerifyBg}">${data.phoneVerifyTitle}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Identification Type</th>
@@ -233,7 +224,7 @@
                                         <th class="text-nowrap">CV</th>
                                         <th>:</th>
                                         <td>${data.cv ? `<a class='btn btn-primary' target='_blank' href='${data.cv}'><i
-                                                        class='fa-solid fa-download'></i></a>` : `null`}</td>
+                                                                        class='fa-solid fa-download'></i></a>` : `null`}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created Date</th>

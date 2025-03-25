@@ -138,9 +138,9 @@ class AuthenticateBaseModel extends Authenticatable
     public function getKycStatusClass()
     {
         if ($this->kyc_status == 1) {
-            return 'badge badge-info';
+            return 'badge badge-success';
         } else {
-            return 'badge badge-warning';
+            return 'badge badge-info';
         }
     }
     public function getPhoneVerifyStatus()
@@ -154,9 +154,9 @@ class AuthenticateBaseModel extends Authenticatable
     public function getPhoneVerifyClass()
     {
         if ($this->is_verify == 1) {
-            return 'badge badge-primary';
+            return 'badge badge-success';
         } else {
-            return 'badge badge-dark';
+            return 'badge badge-primary';
         }
     }
     public function getEmailVerifyStatus()
@@ -170,9 +170,9 @@ class AuthenticateBaseModel extends Authenticatable
     public function getEmailVerifyClass()
     {
         if ($this->is_verify == 1) {
-            return 'badge badge-primary';
+            return 'badge badge-success';
         } else {
-            return 'badge badge-dark';
+            return 'badge badge-primary';
         }
     }
 

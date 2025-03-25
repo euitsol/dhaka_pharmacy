@@ -12,28 +12,10 @@
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'district_manager_profile') class="active" @endif>
-                <a href="{{ route('dm.profile.index') }}">
-                    <i class="fa-solid fa-user @if ($pageSlug == 'district_manager_profile') fa-beat-fade @endif"></i>
-                    <p>{{ __('My Profile') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'kyc_verification') class="active" @endif>
-                <a href="{{ route('dm.kyc.verification') }}">
-                    <i class="fa-solid fa-shield-alt @if ($pageSlug == 'kyc_verification') fa-beat-fade @endif"></i>
-                    <p>{{ __('KYC Verification Center') }}</p>
-                </a>
-            </li>
             <li @if ($pageSlug == 'lam') class="active" @endif>
                 <a href="{{ route('dm.lam.list') }}">
                     <i class="fa-solid fa-map @if ($pageSlug == 'lam') fa-beat-fade @endif"></i>
                     <p>{{ __('Local Area Manager') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'lam_area') class="active" @endif>
-                <a href="{{ route('dm.lam_area.list') }}">
-                    <i class="fa-solid fa-earth-americas @if ($pageSlug == 'lam_area') fa-beat-fade @endif"></i>
-                    <p>{{ __('Operation Areas') }}</p>
                 </a>
             </li>
             <li @if ($pageSlug == 'user') class="active" @endif>
@@ -53,6 +35,24 @@
                     <i
                         class="fa-solid fa-hand-holding-dollar @if ($pageSlug == 'earning') fa-beat-fade @endif"></i>
                     <p>{{ __('My Earnings') }}</p>
+                </a>
+            </li>
+            <li @if ($pageSlug == 'kyc_verification') class="active" @endif>
+                <a href="{{ route('dm.kyc.verification') }}">
+                    <i class="fa-solid fa-shield-alt @if ($pageSlug == 'kyc_verification') fa-beat-fade @endif"></i>
+                    <p>{{ __('KYC Verification Center') }}</p>
+                </a>
+            </li>
+            <li @if ($pageSlug == 'district_manager_profile') class="active" @endif>
+                <a href="{{ route('dm.profile.index') }}">
+                    <i class="fa-solid fa-user @if ($pageSlug == 'district_manager_profile') fa-beat-fade @endif"></i>
+                    <p>{{ __('My Profile') }}</p>
+                </a>
+            </li>
+            <li @if ($pageSlug == 'lam_area') class="active" @endif>
+                <a href="{{ route('dm.lam_area.list') }}">
+                    <i class="fa-solid fa-earth-americas @if ($pageSlug == 'lam_area') fa-beat-fade @endif"></i>
+                    <p>{{ __('Operation Areas') }}</p>
                 </a>
             </li>
             <li @if ($pageSlug == 'feedback') class="active" @endif>

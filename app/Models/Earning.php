@@ -25,6 +25,8 @@ class Earning extends BaseModel
         'creater_type',
         'updater_id',
         'updater_type',
+        'source_id',
+        'source_type',
     ];
     public function withdraw_earning(): HasOne
     {
@@ -102,17 +104,10 @@ class Earning extends BaseModel
         }
         return $query->where('activity', $activity);
     }
-
-
-
-
-
-
-
-
-
-
-
+    public function source()
+    {
+        return $this->morphTo();
+    }
     public function scopePharmacy($query)
     {
         return $query->where('receiver_id', pharmacy()->id)->where('receiver_type', get_class(pharmacy()));

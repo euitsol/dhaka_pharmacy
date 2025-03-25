@@ -39,6 +39,12 @@ class DistrictManagerController extends Controller
         $data->getGender = $data->getGender() ?? null;
         $data->identificationType = $data->identificationType() ?? null;
         $data->cv = !empty($data->cv) ? route("dm_management.district_manager.download.district_manager_profile", base64_encode($data->cv)) : null;
+        $data->statusTitle = $data->getStatus();
+        $data->statusBg = $data->getStatusBadgeClass();
+        $data->kycVerifyTitle = $data->getKycStatus();
+        $data->kycVerifyBg = $data->getKycStatusClass();
+        $data->phoneVerifyTitle = $data->getPhoneVerifyStatus();
+        $data->phoneVerifyBg = $data->getPhoneVerifyClass();
         $this->simpleColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);

@@ -70,7 +70,12 @@
                                 </div>
                             </div>
                             <div class="row">
-
+                                <div class="form-group col-md-4">
+                                    <label>{{ __('Email') }}</label>
+                                    <input type="email" class="form-control" value="{{ $dm->email }}" name="email"
+                                        placeholder="Enter email">
+                                    @include('alerts.feedback', ['field' => 'email'])
+                                </div>
                                 <div class="form-group col-md-4">
                                     <label>{{ __('Operation Area') }}</label>
                                     <input type="text" class="form-control" value="{{ $dm->operation_area->name }}"
@@ -133,7 +138,7 @@
                                         class="form-control" placeholder="{{ __('Enter identification number') }}">
                                     @include('alerts.feedback', ['field' => 'identification_no'])
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-8">
                                     <div class="form-group">
                                         <label>{{ __('Upload CV') }}</label>
                                         <input type="file" accept=".pdf" class="form-control" name="cv">
@@ -145,6 +150,7 @@
                                                 class="fa-solid fa-download"></i></a>
                                     @endif
                                 </div>
+
 
 
                                 <div class="form-group col-md-12">
