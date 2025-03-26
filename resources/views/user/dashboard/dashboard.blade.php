@@ -318,7 +318,7 @@
                                                 <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#prescriptionModal"
                                                     style="text-decoration: none; color:#212529;">
                                                     <div class="single-box cancel-order" style="
-                                                    min-height: 7rem;
+                                                    min-height: 6.7rem;
                                                 ">
                                                         <div class="icon-imges">
                                                             {{-- <img src="{{ asset('user/asset/img/kyc.png') }}"
@@ -328,7 +328,7 @@
                                                             "></i>
                                                         </div>
                                                         <div class="title">
-                                                            <h2 style="line-height: 15px">{{ __('Upload Prescription') }}</h2>
+                                                            <h2 style="line-height: 15px; margin-top: 0.6rem !important;">{{ __('Upload Prescription') }}</h2>
                                                         </div>
                                                     </div>
                                                 </a>

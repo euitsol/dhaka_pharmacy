@@ -76,7 +76,7 @@ class LoginController extends Controller
             Auth::guard('web')->login($newUser);
         }
         ticketClosed();
-        return redirect()->route('user.dashboard');
+        return redirect()->route('home');
     }
 
 
@@ -110,7 +110,7 @@ class LoginController extends Controller
             Auth::guard('web')->login($newUser);
         }
         ticketClosed();
-        return redirect()->route('user.dashboard');
+        return redirect()->route('home');
     }
 
     public function fb_delete(Request $request)
@@ -173,7 +173,7 @@ class LoginController extends Controller
             session()->forget('previous_url');
         }
         if (Auth::guard('web')->check()) {
-            $url = session()->get('previous_url', route('user.dashboard'));
+            $url = session()->get('previous_url', route('home'));
             session()->forget('previous_url');
             return redirect($url);
         }
@@ -187,7 +187,7 @@ class LoginController extends Controller
         if ($check && !empty($check->password)) {
             if ($check->status == 1) {
                 if (Auth::guard('web')->attempt($credentials, true)) {
-                    $url = session()->get('previous_url', route('user.dashboard'));
+                    $url = session()->get('previous_url', route('home'));
                     session()->forget('previous_url');
                     ticketClosed();
                     return redirect($url);
@@ -250,7 +250,7 @@ class LoginController extends Controller
     public function otp($user_id)
     {
         if (Auth::guard('web')->check()) {
-            return redirect()->route('user.dashboard');
+            return redirect()->route('home');
         }
         return view('auth.otp_verify', compact('user_id'));
     }
@@ -298,7 +298,7 @@ class LoginController extends Controller
                     return redirect()->route('user.reset.password', encrypt($user->id));
                 } else {
                     Auth::guard('web')->login($user, true);
-                    $url = session()->get('previous_url', route('user.dashboard'));
+                    $url = session()->get('previous_url', route('home'));
                     session()->forget('previous_url');
                     ticketClosed();
                     return redirect($url);
