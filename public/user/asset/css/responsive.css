@@ -1,3 +1,4 @@
+
 @media screen and (max-width: 350px) {
     .dashboard-main-section .col-right .google-map{
         height: 100% !important;
@@ -471,6 +472,17 @@
         line-height: 15px !important;
         font-size: 12px !important;
     }
+    .dashboard-main-section .letest-offer-shadow{
+        display: block;
+        justify-content: normal;
+        align-items: start;
+    }
+    .dashboard-main-section .latest-offer{
+        width: 100% !important;
+    }
+    .dashboard-main-section .latest-offer .carousel-indicators {
+        bottom: -7px;
+    }
 }
 
 
@@ -484,6 +496,9 @@
     }
     .dashboard-main-section .col-mid .my-payment-feedback {
         margin-top: 20px !important;
+    }
+    .dashboard-main-section .latest-offer .carousel-indicators {
+        bottom: -7px;
     }
     .dashboard-main-section .col-right .google-map .address {
         padding: 12px 20px;
@@ -534,6 +549,16 @@
     .dashboard-main-section .col-right .log-out img {
         width: 100%;
     }
+
+    .dashboard-main-section .letest-offer-shadow{
+        display: block;
+        justify-content: normal;
+        align-items: start;
+    }
+    .dashboard-main-section .latest-offer{
+        width: 100% !important;
+    }
+
     .socket p {
         font-size: 15px;
     }
@@ -916,6 +941,15 @@
     .order-info-section .order-info-row .left .img{
         width: 100% !important;
     }
+    .dashboard-main-section .letest-offer-shadow{
+        display: block;
+        justify-content: normal;
+        align-items: start;
+    }
+    .dashboard-main-section .latest-offer{
+        width: 100% !important;
+    }
+    
 }
 
 
@@ -1195,11 +1229,29 @@
     .google-map .address_details .list-unstyled li{
         font-size: 14px;
     }
+    .dashboard-main-section .letest-offer-shadow{
+        display: block;
+        justify-content: normal;
+        align-items: start;
+    }
+    .dashboard-main-section .latest-offer{
+        width: 100% !important;
+    }
+    
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
     /* .dashboard-main-section .col-right .google-map{
         height: 340px !important;
     } */
+
+    .dashboard-main-section #carouselLatestOfferIndicators .carousel-inner {
+        display: flex;
+    }
+    /* .dashboard-main-section #carouselLatestOfferIndicators .carousel-inner .carousel-item{
+        width: 45% !important;
+    } */
+
+
     .dashboard-main-section .col-left .single-box .title h2 {
         font-size: 20px;
     }
@@ -1355,6 +1407,15 @@
     .google-map .address_details .list-unstyled li{
         font-size: 12px;
     }
+    .dashboard-main-section .letest-offer-shadow{
+        display: block;
+        justify-content: normal;
+        align-items: start;
+    }
+    .dashboard-main-section .latest-offer{
+        width: 100% !important;
+    }
+    
 }
 @media screen and (min-width: 992px) and (max-width: 1023px) {
     .dashboard-main-section .col-right .google-map .address {
@@ -1476,11 +1537,28 @@
     .google-map .address_details .list-unstyled li{
         font-size: 12px;
     }
+    .dashboard-main-section .letest-offer-shadow{
+        display: block;
+        justify-content: normal;
+        align-items: start;
+    }
+    .dashboard-main-section .latest-offer{
+        width: 100% !important;
+    }
+    
 }
 @media screen and (min-width: 1024px) and (max-width: 1199px) {
     /* Header CSS  */
     .header-section .nav-menu ul li a {
         font-size: 15px;
+    }
+    .dashboard-main-section .letest-offer-shadow{
+        display: block;
+        justify-content: normal;
+        align-items: start;
+    }
+    .dashboard-main-section .latest-offer{
+        width: 100% !important;
     }
 
     .header-section .name a {
@@ -1566,7 +1644,9 @@
     .google-map .address_details .list-unstyled li{
         font-size: 12px;
     }
+
 }
+
 @media screen and (min-width: 1200px) and (max-width: 1439px) {
     .dashboard-main-section .col-mid .order-cart-wish .single {
         height: 130px;
@@ -1606,6 +1686,11 @@
     .google-map .address_details .list-unstyled li{
         font-size: 12px;
     }
+    .dashboard-main-section .latest-offer{
+        width: 100% !important;
+    }
+
 }
+
 @media screen and (min-width: 1440px) {
 }

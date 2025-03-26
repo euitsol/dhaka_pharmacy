@@ -38,7 +38,7 @@ function get_permission_routes()
         'withdraw_method.',
         'withdraw.',
         'hm.',
-        'latest_offer.',
+        // 'latest_offer.',
         'user_tips.',
         'feedback.',
         'review.',

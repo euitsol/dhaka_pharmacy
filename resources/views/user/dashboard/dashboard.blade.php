@@ -172,14 +172,14 @@
                                 </div>
                             </div>
                             <div class="col-xl-3 col-12 order-1 order-xl-2">
-                                <div class="letest-offer-shadow d-flex align-items-center justify-content-center">
+                                <div class="letest-offer-shadow">
                                     <div class="col-right row row-gap-3 row-gap-xl-0">
-                                        <div class="col-xl-12 col-md-6 col-12 mt-0">
+                                        <div class="col-12 mt-0">
                                             <div class="latest-col">
                                                 @include('user.dashboard.include.latest-offer')
                                             </div>
                                         </div>
-                                        <div class="col-xl-12 col-md-6 col-12 d-none">
+                                        <!-- <div class="col-xl-12 col-md-6 col-12 d-none">
                                             <div class="tips-col">
                                                 @if ($user_tips->isNotEmpty())
                                                     <div class="tips">
@@ -205,7 +205,7 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -446,38 +446,62 @@
     <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
 
 
-    <script>
+    <!-- <script>
         const myCarouselElement = document.querySelector('#carouselLatestOfferIndicators')
-        const carousel = new bootstrap.Carousel(myCarouselElement, {
-            infinite: true,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            dots: true,
-            autoplay: true,
-            infinite: true,
-            autoplaySpeed: 2000,
-            responsive: [{
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: true
-                }
-            }, {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }, {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }]
+    //     const carousel = new bootstrap.Carousel(myCarouselElement, {
+    //         infinite: true,
+    //         slidesToShow: 2,
+    //         slidesToScroll: 2,
+    //         dots: true,
+    //         autoplay: false,
+    //         infinite: true,
+    //         autoplaySpeed: 2000,
+    //         responsive: [{
+    //             breakpoint: 1024,
+    //             settings: {
+    //                 slidesToShow: 2,
+    //                 slidesToScroll: 2,
+    //                 infinite: true,
+    //                 dots: true
+    //             }
+    //         }, {
+    //             breakpoint: 600,
+    //             settings: {
+    //                 slidesToShow: 2,
+    //                 slidesToScroll: 2
+    //             }
+    //         }, {
+    //             breakpoint: 480,
+    //             settings: {
+    //                 slidesToShow: 2,
+    //                 slidesToScroll: 2
+    //             }
+    //         }]
 
-        })
+    //     })
+    // </script> -->
+
+    <script>
+       $(document).ready(function() {
+            function adjustCarousel() {
+                var screenWidth = $(window).width();
+
+                // Mobile view (less than 768px): Show one item
+                if (screenWidth < 768) {
+                    $('#carouselLatestOfferIndicators').addClass('carousel-mobile');
+                } else {
+                    $('#carouselLatestOfferIndicators').removeClass('carousel-mobile');
+                }
+            }
+
+            // Call adjustCarousel on load and resize
+            adjustCarousel();
+            $(window).resize(function() {
+                adjustCarousel();
+            });
+        });
+
+
     </script>
+
 @endpush
