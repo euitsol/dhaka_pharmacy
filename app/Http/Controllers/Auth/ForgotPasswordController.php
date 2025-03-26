@@ -42,7 +42,7 @@ class ForgotPasswordController extends Controller
     public function forgotPassword(): View|RedirectResponse
     {
         if (Auth::guard('web')->check()) {
-            return redirect()->route('user.dashboard');
+            return redirect()->route('home');
         }
         return view('auth.forgot');
     }

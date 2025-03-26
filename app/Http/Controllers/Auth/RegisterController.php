@@ -19,7 +19,7 @@ class RegisterController extends Controller
     {
         Session::forget('data');
         if (Auth::guard('web')->check()) {
-            return redirect(route('user.dashboard'));
+            return redirect(route('home'));
         }
         return view('auth.register');
     }
