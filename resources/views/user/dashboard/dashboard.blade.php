@@ -10,8 +10,8 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('custom_litebox/litebox.css') }}">
     <style>
-        .offer_image img {
-            height: 75px;
+        .latest-offer img {
+            height: 17rem;
             width: 100%;
             border: 2px solid var(--btn_bg) !important;
             padding: 0px;
@@ -132,22 +132,25 @@
                                         <div class="row row-gap-3 row-gap-sm-4">
                                             <div class="col-12 order-2 order-lg-1">
                                                 <div class="medicine-slider">
-                                                    <div id="carouselExampleControlsNoTouching" class="carousel slide"
-                                                        data-bs-touch="false">
+                                                    <div id="carouselExpiryDate" class="carousel slide" data-bs-ride="carousel">
                                                         <div class="carousel-inner">
-                                                            @foreach ($order_products as $key => $product)
+                                                            @forelse ($order_products as $key => $product)
                                                                 <div
                                                                     class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                                                                    <h3><span>{{ $product->name }}</span>({{ optional($product->strength)->name }})
+                                                                    <h3><span>{{ $product->name }}</span>
                                                                     </h3>
-                                                                    <p><span>{{ __('Efficacy: ') }}</span>
-                                                                        {!! $product->precaution->description !!}
+                                                                    <p><span>{{ __('Expiry') }}:</span>
+                                                                        {{ $product->expiry_date ? dateFormate($product->expiry_date) : 'N/A' }}
                                                                     </p>
                                                                 </div>
-                                                            @endforeach
+                                                            @empty
+                                                                <div class="carousel-item active">
+                                                                    <h3>{{ __('Product expiry date will be shown here') }}</h3>
+                                                                </div>
+                                                            @endforelse
                                                         </div>
                                                         <button class="carousel-control-prev" type="button"
-                                                            data-bs-target="#carouselExampleControlsNoTouching"
+                                                            data-bs-target="#carouselExpiryDate"
                                                             data-bs-slide="prev">
                                                             <span class="carousel-control-prev-icon"
                                                                 aria-hidden="true"></span>
@@ -155,7 +158,7 @@
                                                         </button>
                                                         <div class="circle"></div>
                                                         <button class="carousel-control-next" type="button"
-                                                            data-bs-target="#carouselExampleControlsNoTouching"
+                                                            data-bs-target="#carouselExpiryDate"
                                                             data-bs-slide="next">
                                                             <span class="carousel-control-next-icon"
                                                                 aria-hidden="true"></span>
@@ -169,14 +172,14 @@
                                 </div>
                             </div>
                             <div class="col-xl-3 col-12 order-1 order-xl-2">
-                                <div class="letest-offer-shadow">
+                                <div class="letest-offer-shadow d-flex align-items-center justify-content-center">
                                     <div class="col-right row row-gap-3 row-gap-xl-0">
                                         <div class="col-xl-12 col-md-6 col-12 mt-0">
                                             <div class="latest-col">
                                                 @include('user.dashboard.include.latest-offer')
                                             </div>
                                         </div>
-                                        <div class="col-xl-12 col-md-6 col-12">
+                                        <div class="col-xl-12 col-md-6 col-12 d-none">
                                             <div class="tips-col">
                                                 @if ($user_tips->isNotEmpty())
                                                     <div class="tips">
@@ -433,37 +436,39 @@
 @endsection
 
 @push('js_link')
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    {{-- <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js">
-    </script>
+    </script> --}}
 @endpush
 
 @push('js')
-    <script src="{{ asset('user/asset/js/mapbox.js') }}"></script>
+    {{-- <script src="{{ asset('user/asset/js/mapbox.js') }}"></script> --}}
     <script src="{{ asset('custom_litebox/litebox.js') }}"></script>
 
 
     <script>
-        $('#carouselExampleDark').carousel({
+        const myCarouselElement = document.querySelector('#carouselLatestOfferIndicators')
+        const carousel = new bootstrap.Carousel(myCarouselElement, {
             infinite: true,
-            slidesToShow: 2,
-            slidesToScroll: 2,
+            slidesToShow: 1,
+            slidesToScroll: 1,
             dots: true,
             autoplay: true,
+            infinite: true,
             autoplaySpeed: 2000,
             responsive: [{
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
                     infinite: true,
                     dots: true
                 }
             }, {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
+                    slidesToShow: 1,
+                    slidesToScroll: 1
                 }
             }, {
                 breakpoint: 480,

@@ -402,7 +402,6 @@ function formatPercentageNumber(number) {
 document.addEventListener("DOMContentLoaded", function () {
     // Initialize locale from session
     document.documentElement.lang = "{{ app()->getLocale() }}";
-
     let cartbtnElement = document.getElementById("cartbtn");
     let wishlistElement = document.getElementById("wishlist");
 
@@ -414,7 +413,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 cartbtnInstance.hide();
             }
         }
-
 
         // Check if the clicked area is outside the wishlist offcanvas and if it's shown
         if (wishlistElement && !wishlistElement.contains(event.target) && wishlistElement.classList.contains("show")) {
@@ -435,3 +433,4 @@ window.addEventListener('load', function() {
     // Once the page is fully loaded, hide the loading screen and change background to white
     document.body.classList.add('loaded');
 });
+

@@ -82,7 +82,7 @@ class PaymentController extends Controller
                 $data['order_id'] = $payment->order->order_id;
                 $data['payment_method'] = $payment->payment_method;
                 $this->orderService->setUser(user())->confirmOrder($data);
-                sweetalert()->success('Order submitted successfully');
+                flash()->addSuccess('Order submitted successfully');
                 return redirect()->route('u.order.details', encrypt($payment->order->order_id));
             }
             else {
@@ -91,7 +91,7 @@ class PaymentController extends Controller
                 return redirect()->route('u.ck.index', encrypt($payment->order->id));
             }
         }catch(Exception $e){
-            sweetalert()->addWarning($e->getMessage());
+            flash()->addWarning($e->getMessage());
             return redirect()->back();
         }
 

@@ -222,6 +222,12 @@ function timeFormate($time)
     return date($dateFormat . " " . $timeFormat, strtotime($time));
 }
 
+function dateFormate($time)
+{
+    $dateFormat = config('datetime.date_format');
+    return date($dateFormat, strtotime($time));
+}
+
 function orderTimeFormat($time)
 {
     return date('M d,Y h:i A', strtotime($time));

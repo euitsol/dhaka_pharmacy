@@ -175,7 +175,7 @@
                                             <div class="order-status-row d-flex gap-3 align-items-center">
                                                 <span class="badge {{ $order->getStatusBg() }}">{{ __($order->status_string) }}</span>
                                                 @if (isset($order->otp))
-                                                    <p class="fw-bold">{{ __('OTP: ') }}{{ $order->otp }}
+                                                    <p class="fw-bold">{{ __('OTP') }}: {{ $order->otp }}
                                                     </p>
                                                 @endif
                                             </div>
@@ -238,11 +238,17 @@
                                                 <div
                                                     class="col-md-3 mt-2 mt-sm-0 col-sm-4 col-12 d-block d-xl-flex  gap-2 gap-sm-2">
                                                     <p class="qty">
-                                                        {{ __('Qty: ') }}<span>{{ optional($product->pivot)->quantity < 10 ? '0' . $product->pivot->quantity : $product->pivot->quantity }}</span>
+                                                        {{ __('Qty') }}: <span>{{ optional($product->pivot)->quantity < 10 ? '0' . $product->pivot->quantity : $product->pivot->quantity }}</span>
                                                     </p>
                                                     <p class="qty">
-                                                        {{ __('Unit: ') }}<span>{{ optional($product->pivot)->unit->name }}</span>
+                                                        {{ __('Unit') }}: <span>{{ optional($product->pivot)->unit->name }}</span>
                                                     </p>
+                                                    @if (isset($product->pivot->expiry_date) && $product->pivot->expiry_date)
+                                                        <p class="qty">
+                                                            {{ __('Expiry Date') }}: <span>{{ $product->pivot->expiry_date }}</span>
+                                                        </p>
+
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

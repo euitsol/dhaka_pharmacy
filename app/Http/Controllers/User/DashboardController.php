@@ -64,23 +64,42 @@ class DashboardController extends Controller
             ])->count();
 
             // Get products with precaution info - limit to 10 items to improve performance
-            $orderProducts = (clone $query)
-                ->with([
-                    'products' => function($query) {
-                        $query->whereHas('precaution')
-                             ->with(['precaution', 'strength']);
-                    }
-                ])
-                ->limit(10)  // Limit to recent orders for better performance
-                ->get()
-                ->pluck('products')
-                ->flatten()
-                ->filter(function($product) {
-                    return $product->precaution !== null;
-                })
-                ->shuffle();
+            // $orderProducts = (clone $query)
+            //     ->with([
+            //         'products' => function($query) {
+            //             $query->whereHas('precaution')
+            //                  ->with(['precaution', 'strength']);
+            //         }
+            //     ])
+            //     ->limit(10)  // Limit to recent orders for better performance
+            //     ->get()
+            //     ->pluck('products')
+            //     ->flatten()
+            //     ->filter(function($product) {
+            //         return $product->precaution !== null;
+            //     })
+            //     ->shuffle();
 
-            $data['order_products'] = $orderProducts->take(10);  // Limit items shown in carousel
+            $orderProducts = (clone $query)
+            ->with(['products'])
+            ->limit(10)  // Limit to recent orders for better performance
+            ->get()
+            ->pluck('products')
+            ->flatten()
+            ->filter(function ($product) {
+                return isset($product->pivot->expiry_date);
+            })
+            ->map(function ($product) {
+                $expiryDate = $product->pivot->expiry_date;
+                $daysLeft = now()->diffInDays(\Carbon\Carbon::parse($expiryDate), false);
+                $product->expiry_date = $expiryDate;
+                $product->expiry_status = $daysLeft > 180 ? 'safe' : ($daysLeft > 0 ? 'near_expiry' : 'expired');
+                return $product;
+            })
+            ->shuffle();
+
+            $data['order_products'] = $orderProducts->take(50);  // Limit items shown in carousel
+            // dd($data['order_products']);
 
             // Get latest offers and tips
             $data['latest_offers'] = LatestOffer::activated()->latest()->get();

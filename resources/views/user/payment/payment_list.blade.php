@@ -51,7 +51,7 @@
                                     <div class="order-status pe-0">
                                         <div class="total">
                                             <p class="total text-start">
-                                                {{ __('Payment Type: ') }}<span>{{ __('Bkash') }}</span>
+                                                {{ __('Payment Type: ') }}<span>{{ $payment->payment_method }}</span>
                                             </p>
                                         </div>
                                     </div>
