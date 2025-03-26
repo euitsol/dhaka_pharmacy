@@ -42,6 +42,12 @@ class LocalAreaManagerController extends Controller
         $data->getGender = $data->getGender() ?? null;
         $data->identificationType = $data->identificationType();
         $data->cv = !empty($data->cv) ? route("lam_management.local_area_manager.download.local_area_manager_profile", base64_encode($data->cv)) : null;
+        $data->statusTitle = $data->getStatus();
+        $data->statusBg = $data->getStatusBadgeClass();
+        $data->kycVerifyTitle = $data->getKycStatus();
+        $data->kycVerifyBg = $data->getKycStatusClass();
+        $data->phoneVerifyTitle = $data->getPhoneVerifyStatus();
+        $data->phoneVerifyBg = $data->getPhoneVerifyClass();
         $this->morphColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
@@ -80,18 +86,6 @@ class LocalAreaManagerController extends Controller
     }
     public function store(LocalAreaManagerRequest $req): RedirectResponse
     {
-        // $lam = new LocalAreaManager();
-        // $lam->name = $req->name;
-        // $lam->phone = $req->phone;
-        // $lam->dm_id = $req->dm_id;
-        // $lam->osa_id = $req->osa_id;
-        // $lam->password = Hash::make($req->password);
-        // $lam->creater()->associate(admin());
-        // $lam->save();
-        // flash()->addSuccess('Local Area Manager ' . $lam->name . ' created successfully.');
-        // return redirect()->route('lam_management.local_area_manager.local_area_manager_list');
-
-
         DB::beginTransaction();
         try {
             // Create a new District Manager

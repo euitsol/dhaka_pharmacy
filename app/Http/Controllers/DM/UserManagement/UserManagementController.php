@@ -39,6 +39,12 @@ class UserManagementController extends Controller
     public function details($id): JsonResponse
     {
         $data = User::with(['creater', 'updater'])->findOrFail($id);
+        $data->statusTitle = $data->getStatus();
+        $data->statusBg = $data->getStatusBadgeClass();
+        $data->kycVerifyTitle = $data->getKycStatus();
+        $data->kycVerifyBg = $data->getKycStatusClass();
+        $data->phoneVerifyTitle = $data->getPhoneVerifyStatus();
+        $data->phoneVerifyBg = $data->getPhoneVerifyClass();
         $this->morphColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);

@@ -29,6 +29,8 @@ class OperationSubAreaController extends Controller
     public function details($id): JsonResponse
     {
         $data = OperationSubArea::with('operation_area')->findOrFail($id);
+        $data->statusTitle = $data->getStatus();
+        $data->statusBg = $data->getStatusBadgeClass();
         $this->morphColumnData($data);
         return response()->json($data);
     }

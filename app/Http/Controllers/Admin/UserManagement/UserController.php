@@ -41,6 +41,12 @@ class UserController extends Controller
         $data->identificationType = $data->identificationType();
         $data->getGender = $data->getGender() ?? null;
         $data->identification_file_url = !empty($data->identification_file) ? route("um.user.download.user_profile", base64_encode($data->identification_file)) : null;
+        $data->statusTitle = $data->getStatus();
+        $data->statusBg = $data->getStatusBadgeClass();
+        $data->kycVerifyTitle = $data->getKycStatus();
+        $data->kycVerifyBg = $data->getKycStatusClass();
+        $data->phoneVerifyTitle = $data->getPhoneVerifyStatus();
+        $data->phoneVerifyBg = $data->getPhoneVerifyClass();
         $this->morphColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);

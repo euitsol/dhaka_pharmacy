@@ -38,6 +38,8 @@ class ReviewController extends Controller
     {
         $data = Review::with(['product', 'customer'])->findOrFail($id);
         $data->description = html_entity_decode($data->description);
+        $data->statusTitle = $data->getStatus();
+        $data->statusBg = $data->getStatusBadgeClass();
         $this->morphColumnData($data);
         return response()->json($data);
     }

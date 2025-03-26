@@ -94,9 +94,6 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status === 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status === 1 ? 'badge-success' :
-                            'badge-warning';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -108,11 +105,11 @@
                                         <th class="text-nowrap">Category Name</th>
                                         <th>:</th>
                                         <td>${data.operation_area.name}</td>
-                                    </tr>                                
+                                    </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
                                         <th>:</th>
-                                        <td><span class="badge ${statusClass}">${status}</span></td>
+                                        <td><span class="badge ${data.statusBg}">${data.statusTitle}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created Date</th>

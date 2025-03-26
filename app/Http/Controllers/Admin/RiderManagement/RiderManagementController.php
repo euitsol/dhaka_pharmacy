@@ -38,6 +38,12 @@ class RiderManagementController extends Controller
         $data->getGender = $data->getGender() ?? null;
         $data->identificationType = $data->identificationType();
         $data->cv = !empty($data->cv) ? route("rm.rider.download.rider_profile", base64_encode($data->cv)) : null;
+        $data->statusTitle = $data->getStatus();
+        $data->statusBg = $data->getStatusBadgeClass();
+        $data->kycVerifyTitle = $data->getKycStatus();
+        $data->kycVerifyBg = $data->getKycStatusClass();
+        $data->phoneVerifyTitle = $data->getPhoneVerifyStatus();
+        $data->phoneVerifyBg = $data->getPhoneVerifyClass();
         $this->morphColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);

@@ -36,6 +36,12 @@ class LamManagementController extends Controller
     public function details($id): JsonResponse
     {
         $data = LocalAreaManager::with(['dm.operation_area', 'operation_sub_area', 'creater', 'updater'])->findOrFail($id);
+        $data->statusTitle = $data->getStatus();
+        $data->statusBg = $data->getStatusBadgeClass();
+        $data->kycVerifyTitle = $data->getKycStatus();
+        $data->kycVerifyBg = $data->getKycStatusClass();
+        $data->phoneVerifyTitle = $data->getPhoneVerifyStatus();
+        $data->phoneVerifyBg = $data->getPhoneVerifyClass();
         $this->morphColumnData($data);
         $data->image = auth_storage_url($data->image, $data->gender);
         return response()->json($data);
