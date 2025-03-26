@@ -233,7 +233,7 @@
                             </div>
                             <div class="form-group select_option" style="display:none">
                                 <label>Add select fields option and values (value = option) <small>(Eg. 0 = Off; 1 = On)</small> </label>
-                                <textarea class="form-control" name="formdata[${count}][option_data]"></textarea>
+                                <textarea class="form-control no-ckeditor5" name="formdata[${count}][option_data]"></textarea>
                             </div>
                         </div>
                         `;

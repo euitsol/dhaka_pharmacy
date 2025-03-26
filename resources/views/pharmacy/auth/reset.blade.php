@@ -40,10 +40,6 @@
                                                         class="fa-solid fa-eye-slash "></i></span>
                                             </div>
                                         </div>
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" id="rememberMe" class="form-check-input">
-                                            <label for="rememberMe" class="form-check-label">{{ __('Remember Me') }}</label>
-                                        </div>
                                         <button type="submit"
                                             class="btn btn-primary w-100 login-button">{{ __('SUBMIT') }}</button>
                                     </form>
