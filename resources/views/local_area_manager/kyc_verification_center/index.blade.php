@@ -264,6 +264,21 @@
                                                                 </a>
                                                             @endif
                                                         </div>
+                                                        @if (isImage(json_decode($submitted_kyc->submitted_data)->$a))
+                                                            <div class="imagePreviewDiv d-inline-block">
+                                                                <div id="lightbox" class="lightbox">
+                                                                    <div class="lightbox-content">
+                                                                        <img src="{{ storage_url(json_decode($submitted_kyc->submitted_data)->$a) }}"
+                                                                            class="lightbox_image">
+                                                                    </div>
+                                                                    <div class="close_button fa-beat">X</div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <a class="btn btn-info btn-sm"
+                                                                href="{{ route('lam.kyc.download.file', base64_encode(json_decode($submitted_kyc->submitted_data)->$a)) }}"><i
+                                                                    class="fa-regular fa-circle-down"></i></a>
+                                                        @endif
                                                     </div>
                                                 @endif
                                             </div>
@@ -347,6 +362,21 @@
                                                                     </a>
                                                                 @endif
                                                             </div>
+                                                            @if (isImage($url))
+                                                                <div class="imagePreviewDiv d-inline-block">
+                                                                    <div id="lightbox" class="lightbox">
+                                                                        <div class="lightbox-content">
+                                                                            <img src="{{ storage_url($url) }}"
+                                                                                class="lightbox_image">
+                                                                        </div>
+                                                                        <div class="close_button fa-beat">X</div>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <a class="btn btn-info btn-sm"
+                                                                    href="{{ route('lam.kyc.download.file', base64_encode($url)) }}"><i
+                                                                        class="fa-regular fa-circle-down"></i></a>
+                                                            @endif
                                                         </div>
                                                     @endforeach
                                                 @endif
