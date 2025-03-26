@@ -49,7 +49,7 @@ class EarningContorller extends Controller
     }
     public function report(EarningReportRequest $request): JsonResponse
     {
-        $query = Earning::with(['receiver', 'order'])->lam();
+        $query = Earning::with(['receiver'])->lam();
         if ($request->from_date != null && $request->to_date != null) {
             $query->whereDate('created_at', '>=', $request->from_date)
                 ->whereDate('created_at', '<=', $request->to_date);
@@ -63,7 +63,7 @@ class EarningContorller extends Controller
     public function withdraw()
     {
         $data['wms'] = WithdrawMethod::lam()->activated()->latest()->get();
-        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history'])->lam()->get();
+        $data['earnings'] = Earning::with(['receiver', 'point_history'])->lam()->get();
         return view('local_area_manager.earning.withdraw', $data);
     }
     public function withdrawConfirm(WithdrawConfirmRequest $request)

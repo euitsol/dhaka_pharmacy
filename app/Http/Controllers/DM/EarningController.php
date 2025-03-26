@@ -49,7 +49,7 @@ class EarningController extends Controller
     }
     public function report(EarningReportRequest $request): JsonResponse
     {
-        $query = Earning::with(['receiver', 'order'])->dm();
+        $query = Earning::with(['receiver'])->dm();
         if ($request->from_date != null && $request->to_date != null) {
             $query->whereDate('created_at', '>=', $request->from_date)
                 ->whereDate('created_at', '<=', $request->to_date);
@@ -64,7 +64,7 @@ class EarningController extends Controller
     public function withdraw()
     {
         $data['wms'] = WithdrawMethod::dm()->activated()->latest()->get();
-        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history'])->dm()->get();
+        $data['earnings'] = Earning::with(['receiver', 'point_history'])->dm()->get();
         return view('district_manager.earning.withdraw', $data);
     }
     public function withdrawConfirm(WithdrawConfirmRequest $request)

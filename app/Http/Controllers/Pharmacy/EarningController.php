@@ -30,7 +30,7 @@ class EarningController extends Controller
                 ->whereDate('created_at', '<=', $request->to);
         }
         $totalEarnings = $query->get();
-        $paginateEarnings = $query->with(['receiver', 'order', 'withdraw_earning.withdraw.withdraw_method'])->paginate(10)->withQueryString();
+        $paginateEarnings = $query->with(['receiver', 'withdraw_earning.withdraw.withdraw_method'])->paginate(10)->withQueryString();
         $paginateEarnings->getCollection()->each(function (&$earning) {
             $earning->creationDate = timeFormate($earning->created_at);
             $earning->activityBg = $earning->activityBg();
@@ -50,7 +50,7 @@ class EarningController extends Controller
     }
     public function report(EarningReportRequest $request): JsonResponse
     {
-        $query = Earning::with(['receiver', 'order'])->pharmacy();
+        $query = Earning::with(['receiver'])->pharmacy();
         if ($request->from_date != null && $request->to_date != null) {
             $query->whereDate('created_at', '>=', $request->from_date)
                 ->whereDate('created_at', '<=', $request->to_date);
@@ -64,7 +64,7 @@ class EarningController extends Controller
     public function withdraw()
     {
         $data['wms'] = WithdrawMethod::pharmacy()->activated()->latest()->get();
-        $data['earnings'] = Earning::with(['receiver', 'order', 'point_history'])->pharmacy()->get();
+        $data['earnings'] = Earning::with(['receiver', 'point_history'])->pharmacy()->get();
         return view('pharmacy.earning.withdraw', $data);
     }
     public function withdrawConfirm(WithdrawConfirmRequest $request)
