@@ -79,7 +79,7 @@
                             <strong class="text-danger">{{ __('Declined Reason: ') }}</strong>{!! $submitted_kyc->note !!}
                         </div>
                     @endif
-                    <div class="{{ empty($submitted_kyc) || $submitted_kyc->status == -1 ? 'col-8' : 'col-12' }}">
+                    <div class="{{ empty($submitted_kyc) || $submitted_kyc->status == -1 ? 'col-md-8' : 'col-md-12' }}">
                         <div class="card bg-transparent">
                             @php
                                 $disabled = !empty($submitted_kyc) && $submitted_kyc->status !== -1 ? true : false;
@@ -447,7 +447,7 @@
                         </div>
                     </div>
                     @if (empty($submitted_kyc) || $submitted_kyc->status == -1)
-                        <div class="col-md-4">
+                        <div class="col-md-4 d-none">
                             <div class="card card-user bg-transparent">
                                 <div class="card-body">
                                     <p class="card-text" style="font-weight: 600;">

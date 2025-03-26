@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="{{ asset('user/asset/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('user/asset/css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('user/asset/css/slide-cart.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/asset/css/prescription.css') }}">
     {{-- Local CSS --}}
     @if (app()->getLocale() == 'en')
         <link rel="stylesheet" href="{{ asset('user/asset/css/locale-en.css') }}">
@@ -73,12 +74,21 @@
                     'cities': @json(route('u.as.cities')),
                     'details': @json(route('u.as.details', 'id')),
                 },
+                'prescription': {
+                    'create': @json(route('u.obp.create')),
+                    'upload': @json(route('u.obp.upload')),
+                    'delete': @json(route('u.obp.delete', 'id')),
+                    'send_otp': @json(route('u.obp.send_otp')),
+                    'resend_otp': @json(route('u.obp.resend_otp')),
+                    'verify_otp': @json(route('u.obp.verify_otp')),
+                }
             }
         }
     </script>
 </head>
 
 <body>
+    @include('frontend.includes.new-upload-prescription')
     <!-------- Header Section start --------->
     @include('user.partials.header')
     <!------------ Header Section End --------->
@@ -118,6 +128,7 @@
     <script src="{{ asset('user/asset/js/notificaiton.js') }}"></script>
     <script src="{{ asset('user/asset/js/address.js') }}"></script>
     <script src="{{ asset('frontend/asset/js/cart.js') }}"></script>
+    <script src="{{ asset('frontend/asset/js/prescription.js') }}"></script>
     @stack('js')
 </body>
 

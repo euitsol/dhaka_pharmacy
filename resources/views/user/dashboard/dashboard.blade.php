@@ -315,15 +315,20 @@
                                     <div class="col-lg-6 col-12 order-1 order-lg-2">
                                         <div class="row mb-0 mb-xl-4 row-gap-3 row-gap-sm-4">
                                             <div class="col-xl-4 col-lg-4 col-md-2 col-4 px-2">
-                                                <a href="{{ route('u.kyc.verification') }}"
+                                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#prescriptionModal"
                                                     style="text-decoration: none; color:#212529;">
-                                                    <div class="single-box cancel-order">
+                                                    <div class="single-box cancel-order" style="
+                                                    min-height: 7rem;
+                                                ">
                                                         <div class="icon-imges">
-                                                            <img src="{{ asset('user/asset/img/kyc.png') }}"
-                                                                alt="">
+                                                            {{-- <img src="{{ asset('user/asset/img/kyc.png') }}"
+                                                                alt=""> --}}
+                                                                <i class="fa-solid fa-camera"style="
+                                                                font-size: 45px;
+                                                            "></i>
                                                         </div>
                                                         <div class="title">
-                                                            <h2>{{ __('Kyc') }}</h2>
+                                                            <h2 style="line-height: 15px">{{ __('Upload Prescription') }}</h2>
                                                         </div>
                                                     </div>
                                                 </a>
