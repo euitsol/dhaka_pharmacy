@@ -23,7 +23,14 @@ class OparetionalAreaController extends Controller
 
     public function index(): View
     {
-        $data['operational_areas'] = OperationArea::with(['operation_sub_areas', 'creater'])->activated()->orderBy('name')->get();
+        $data['operational_areas'] = OperationArea::with([
+            'creater',
+            'operation_sub_areas' => function ($query) {
+                $query->whereIn('status', [0, 1]);
+            }
+        ])->whereHas('operation_sub_areas', function ($query) {
+            $query->whereIn('status', [0, 1]);
+        })->activated()->orderBy('name')->get();
         return view('district_manager.lam_management.operational_areas.index', $data);
     }
     public function details($id): JsonResponse
