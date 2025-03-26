@@ -52,6 +52,7 @@ class LamProfileController extends Controller
         }
         $lam->name = $request->name;
         $lam->phone = $request->phone;
+        $lam->email = $request->email;
         $lam->age = $request->age;
         $lam->area = $request->area;
         $lam->identification_type = $request->identification_type;

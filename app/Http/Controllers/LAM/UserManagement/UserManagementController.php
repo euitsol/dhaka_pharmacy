@@ -16,6 +16,9 @@ use App\Models\Payment;
 use App\Models\Review;
 use App\Models\SubmittedKyc;
 use App\Models\WishList;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Http\Traits\SmsTrait;
 
 class UserManagementController extends Controller
 {
@@ -64,13 +67,35 @@ class UserManagementController extends Controller
     }
     public function store(UserRequest $req): RedirectResponse
     {
-        $user = new User();
-        $user->name = $req->name;
-        $user->phone = $req->phone;
-        $user->creater()->associate(lam());
-        $user->save();
-        flash()->addSuccess('User ' . $user->name . ' created successfully.');
-        return redirect()->route('lam.user.list');
+        DB::beginTransaction();
+        try {
+            // Create a new District Manager
+            $user = new User();
+            $user->name = $req->name;
+            $user->phone = $req->phone;
+            $user->creater()->associate(lam());
+            $user->save();
+
+            // Send SMS notification
+            // $message = "Your account has been created successfully. Your account registration phone number is: " . $user->phone . ". Please use this number to verify and login to your account. Thank you for choosing our services.";
+            // $smsSent = $this->send_single_sms($user->phone, $message);
+            $smsSent = false;
+
+            if ($smsSent === true) {
+                session()->flash('success', 'User ' . $user->name . ' created successfully.');
+            } else {
+                Log::error("Failed to send SMS to {$user->phone}");
+                session()->flash('warning', 'User created, but SMS could not be sent.');
+            }
+
+            DB::commit();
+            return redirect()->route('lam.user.list');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("User creation failed: " . $e->getMessage());
+            session()->flash('error', 'An error occurred while creating the user. Please try again.');
+            return redirect()->back();
+        }
     }
     public function edit($id): View
     {

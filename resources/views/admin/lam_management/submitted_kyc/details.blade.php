@@ -242,7 +242,7 @@
                                 <div class="form-group">
                                     <label>{{ __('Note') }} <span
                                             class="text-danger">{{ __('*') }}</span></label>
-                                    <textarea name="note" id="note" class="form-control"></textarea>
+                                    <textarea name="note" id="note" class="form-control no-ckeditor5"></textarea>
                                     @include('alerts.feedback', ['field' => 'note'])
                                 </div>
                                 <span type="submit" id="updateDeclinedNote"

@@ -90,13 +90,14 @@
                     <td>{{ timeFormate($earning->created_at) }}</td>
                     <td><span class="{{ $earning->activityBg() }}">{{ slugToTitle($earning->activityTitle()) }}</span>
                     </td>
-                    <td>{{ number_format($earning->point, 2) }}({!! get_taka_icon() !!}{{ number_format($earning->point_history->eq_amount, 2) }})
+                    <td>{{ number_format($earning->point, 2) }}({{ number_format($earning->point_history->eq_amount, 2) }}
+                        {{ __('BDT') }})
                     </td>
                     <td>{!! $earning->description ?? '--' !!}@if ($earning->activity == 3)
                             {{ ' - ' . $earning->withdraw_earning->withdraw->withdraw_method->account_name . ' ( ' . $earning->withdraw_earning->withdraw->withdraw_method->bank_name . ' )' }}
                         @endif
                     </td>
-                    <td>{!! get_taka_icon() !!}{{ number_format($earning->eq_amount, 2) }}</td>
+                    <td>{{ number_format($earning->eq_amount, 2) }}{{ __('BDT') }}</td>
                 </tr>
             @endforeach
 

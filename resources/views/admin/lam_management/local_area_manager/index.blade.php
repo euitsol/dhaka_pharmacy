@@ -228,7 +228,7 @@
                                         <th class="text-nowrap">CV</th>
                                         <th>:</th>
                                         <td>${data.cv ? `<a class='btn btn-primary' target='_blank' href='${data.cv}'><i
-                                                                            class='fa-solid fa-download'></i></a>` : `null`}</td>
+                                                                                    class='fa-solid fa-download'></i></a>` : `null`}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created Date</th>

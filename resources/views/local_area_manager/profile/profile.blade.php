@@ -22,7 +22,7 @@
                             <div class="row flex-xl-row flex-column-reverse">
                                 <div class="col-xl-7 col-xxl-8">
                                     <div class="row">
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
                                             <label>{{ __('Name') }}</label>
                                             <input type="text" name="name" class="form-control"
                                                 placeholder="{{ __('Enter Name') }}" value="{{ $lam->name }}">
@@ -49,11 +49,17 @@
                                             @include('alerts.feedback', ['field' => 'phone'])
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>{{ __('Parents Phone') }}</label>
+                                            <label>{{ __('Emergency Phone') }}</label>
                                             <input type="text" name="parent_phone" class="form-control"
-                                                placeholder="{{ __('Enter Parents Phone') }}"
+                                                placeholder="{{ __('Enter Emergency Phone') }}"
                                                 value="{{ $lam->parent_phone }}">
                                             @include('alerts.feedback', ['field' => 'parent_phone'])
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{ __('Email') }}</label>
+                                            <input type="text" name="email" class="form-control"
+                                                placeholder="{{ __('Enter Email') }}" value="{{ $lam->email }}">
+                                            @include('alerts.feedback', ['field' => 'email'])
                                         </div>
                                     </div>
                                 </div>

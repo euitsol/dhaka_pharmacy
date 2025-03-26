@@ -18,10 +18,11 @@ use App\Models\SubmittedKyc;
 use App\Models\WishList;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Traits\SmsTrait;
 
 class UserManagementController extends Controller
 {
-    use DetailsCommonDataTrait;
+    use DetailsCommonDataTrait, SmsTrait;
 
     public function __construct()
     {
