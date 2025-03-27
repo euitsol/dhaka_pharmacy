@@ -363,7 +363,7 @@
                                             </div>
                                             <div class="col-xl-8 col-lg-8 col-md-4  col-8 order-5 order-xl-4 px-2">
                                                 <div class="customer-supporrt p-sm-0">
-                                                    <a href="#">
+                                                    <a href="{{ route('contact_us') }}">
                                                         <div
                                                             class="single d-flex align-items-center justify-content-center">
                                                             <div class="support-img">
