@@ -92,17 +92,17 @@
             <tr>
                 <td class="fw-bolder">{{ __('Customer name') }}</td>
                 <td>:</td>
-                <td>{{ ucfirst(optional($order->customer)->name) ?? '--') }}</td>
+                <td>{{ ucfirst(optional($order->customer)->name) ?? '--' }}</td>
             </tr>
             <tr>
                 <td class="fw-bolder">{{ __('Customer phone') }}</td>
                 <td>:</td>
-                <td>{{ ucfirst(optional($order->customer)->phone) ?? '--') }}</td>
+                <td>{{ optional($order->customer)->phone ?? '--' }}</td>
             </tr>
             <tr>
                 <td class="fw-bolder">{{ __('Delivery address') }}</td>
                 <td>:</td>
-                <td>{{ optional($order->address)->address ?? '--') }}</td>
+                <td>{{ optional($order->address)->address ?? '--' }}</td>
             </tr>
             @endif
         </table>
