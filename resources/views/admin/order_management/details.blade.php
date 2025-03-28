@@ -16,7 +16,13 @@
     </style>
 @endpush
 @section('content')
-{{ 'order_'.titleToSlug($order->status_string, '_') }}
+@php
+    $initiated = \App\Models\Order::INITIATED == $order->status;
+    $submitted = \App\Models\Order::SUBMITTED == $order->status;
+    $assigend = \App\Models\Order::HUB_ASSIGNED == $order->status;
+    $collected = \App\Models\Order::ITEMS_COLLECTED == $order->status;
+    $prepared = \App\Models\Order::PACHAGE_PREPARED == $order->status;
+@endphp
     <div class="order_details_wrap">
         <div class="row px-3">
             <div class="card px-0">

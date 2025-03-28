@@ -88,6 +88,23 @@
                 <td>:</td>
                 <td>{{ ucfirst($order->payment_status ?? '--') }}</td>
             </tr>
+            @if ($submitted || $initiated)
+            <tr>
+                <td class="fw-bolder">{{ __('Customer name') }}</td>
+                <td>:</td>
+                <td>{{ ucfirst(optional($order->customer)->name) ?? '--') }}</td>
+            </tr>
+            <tr>
+                <td class="fw-bolder">{{ __('Customer phone') }}</td>
+                <td>:</td>
+                <td>{{ ucfirst(optional($order->customer)->phone) ?? '--') }}</td>
+            </tr>
+            <tr>
+                <td class="fw-bolder">{{ __('Delivery address') }}</td>
+                <td>:</td>
+                <td>{{ optional($order->address)->address ?? '--') }}</td>
+            </tr>
+            @endif
         </table>
     </div>
 </div>

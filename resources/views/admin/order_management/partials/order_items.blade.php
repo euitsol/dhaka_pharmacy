@@ -1,10 +1,3 @@
-@php
-    $submitted = \App\Models\Order::SUBMITTED == $order->status;
-    $assigend = \App\Models\Order::HUB_ASSIGNED == $order->status;
-    $collected = \App\Models\Order::ITEMS_COLLECTED == $order->status;
-    $prepared = \App\Models\Order::PACHAGE_PREPARED == $order->status;
-@endphp
-
 <form action="{{ route('om.order.hub_assign') }}" method="POST" class="px-0">
     @csrf
     <input type="hidden" name="order_id" value="{{ encrypt($order_id) }}" class="d-none">
