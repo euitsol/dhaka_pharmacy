@@ -104,6 +104,11 @@
                 <td>:</td>
                 <td>{{ optional($order->address)->address ?? '--' }}</td>
             </tr>
+            <tr>
+                <td class="fw-bolder">{{ __('Delivery Instruction') }}</td>
+                <td>:</td>
+                <td>{{ optional($order->address)->delivery_instruction ?? '--' }}</td>
+            </tr>
             @endif
         </table>
     </div>
